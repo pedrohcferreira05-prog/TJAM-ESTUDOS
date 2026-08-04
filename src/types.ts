@@ -310,7 +310,24 @@ export interface UserProgress {
 }
 
 export type ViewMode = 'student' | 'teacher' | 'admin' | 'superadmin';
-export type StudentTab = 'dashboard' | 'semana1' | 'disciplines' | 'schedule' | 'reviews' | 'simulados' | 'caderno-erros' | 'news' | 'turma' | 'certificados';
+export type StudentTab = 
+  | 'dashboard' 
+  | 'turma' 
+  | 'disciplina-hoje' 
+  | 'aula-hoje' 
+  | 'mapa-mental' 
+  | 'flashcards' 
+  | 'questoes' 
+  | 'progresso' 
+  | 'perfil' 
+  | 'semana1' 
+  | 'disciplines' 
+  | 'schedule' 
+  | 'reviews' 
+  | 'simulados' 
+  | 'caderno-erros' 
+  | 'news' 
+  | 'certificados';
 export type TeacherTab = 'turmas' | 'cronogramas' | 'materiais' | 'questoes-simulados' | 'correcoes' | 'desempenho' | 'avisos-lives' | 'biblioteca';
 export type LayoutStyle = 'tree-horizontal' | 'tree-vertical' | 'radial';
 

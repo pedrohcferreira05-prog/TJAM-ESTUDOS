@@ -30,7 +30,10 @@ import {
 } from './data/teacherData';
 
 import { Header } from './components/Header';
+import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
+import { PerfilView } from './components/PerfilView';
+import { AulaHojeView } from './components/AulaHojeView';
 import { DisciplineList } from './components/DisciplineList';
 import { DisciplineView } from './components/DisciplineView';
 import { StudyScheduleView } from './components/StudyScheduleView';
@@ -56,6 +59,7 @@ export function App() {
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
   const [studentTab, setStudentTab] = useState<StudentTab>('dashboard');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<'login' | 'register' | 'admin_login'>('login');
@@ -506,176 +510,231 @@ export function App() {
         }}
         currentUserEmail={currentUserEmail}
         isStaffAuthenticated={isStaffAuthenticated}
+        onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       />
 
-      {/* Main Workspace Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {viewMode !== 'student' && !isStaffAuthenticated ? (
-          <RestrictedAccessView
-            onBackToStudent={() => setViewMode('student')}
-            onAuthenticateStaff={handleStaffPasscode}
+      {/* Main Workspace Body with Sidebar */}
+      <div className="flex-1 max-w-7xl w-full mx-auto flex items-start">
+        {viewMode === 'student' && (
+          <Sidebar
+            currentTab={studentTab}
+            onSelectTab={(tab) => {
+              setSelectedDisciplineId(null);
+              setStudentTab(tab);
+            }}
             isDarkMode={isDarkMode}
+            isOpenMobile={isMobileMenuOpen}
+            onCloseMobile={() => setIsMobileMenuOpen(false)}
           />
-        ) : viewMode === 'admin' || viewMode === 'superadmin' ? (
-          <AdminPanel
-            isSuperAdmin={viewMode === 'superadmin'}
-            disciplines={disciplines}
-            mindMaps={mindMaps}
-            questions={questions}
-            flashcards={flashcards}
-            simulados={simulados}
-            news={news}
-            onSaveMindMap={handleSaveMindMap}
-            onDeleteMindMap={handleDeleteMindMap}
-            onAddQuestion={handleAddQuestion}
-            onAddFlashcard={handleAddFlashcard}
-            onAddNews={handleAddNews}
-            onExportBackup={handleExportBackup}
-            onImportBackup={handleImportBackup}
-            isDarkMode={isDarkMode}
-          />
-        ) : viewMode === 'teacher' ? (
-          <TeacherPortal
-            turmas={turmas}
-            announcements={announcements}
-            liveClasses={liveClasses}
-            publishedMaterials={publishedMaterials}
-            submissions={submissions}
-            disciplines={disciplines}
-            questions={questions}
-            flashcards={flashcards}
-            simulados={simulados}
-            mindMaps={mindMaps}
-            onAddTurma={handleAddTurma}
-            onUpdateTurma={handleUpdateTurma}
-            onDeleteTurma={handleDeleteTurma}
-            onAddAnnouncement={handleAddAnnouncement}
-            onDeleteAnnouncement={handleDeleteAnnouncement}
-            onAddLiveClass={handleAddLiveClass}
-            onDeleteLiveClass={handleDeleteLiveClass}
-            onAddPublishedMaterial={handleAddPublishedMaterial}
-            onToggleMaterialRelease={handleToggleMaterialRelease}
-            onDeleteMaterial={handleDeleteMaterial}
-            onGradeSubmission={handleGradeSubmission}
-            onAddQuestion={handleAddQuestion}
-            onAddFlashcard={handleAddFlashcard}
-            isDarkMode={isDarkMode}
-          />
-        ) : (
-          <>
-            {studentTab === 'dashboard' && (
-              <Dashboard
-                disciplines={disciplines}
-                progress={userProgress}
-                news={news}
-                simulados={simulados}
-                onSelectDiscipline={handleSelectDiscipline}
-                onNavigateTab={setStudentTab}
-                onLogStudyHours={handleLogStudyHours}
-                onToggleWeeklyGoal={handleToggleWeeklyGoal}
-                onAddWeeklyGoal={handleAddWeeklyGoal}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'semana1' && (
-              <Week1View
-                progress={userProgress}
-                onUpdateProgress={setUserProgress}
-                isDarkMode={isDarkMode}
-                viewMode={viewMode}
-                onSaveLessonContent={(updatedLessons) => {
-                  saveWeek1ContentToFirestore(updatedLessons);
-                }}
-                onSelectDiscipline={handleSelectDiscipline}
-              />
-            )}
-
-            {studentTab === 'turma' && (
-              <StudentPortal
-                progress={userProgress}
-                turmas={turmas}
-                announcements={announcements}
-                liveClasses={liveClasses}
-                publishedMaterials={publishedMaterials}
-                disciplines={disciplines}
-                onNavigateTab={setStudentTab}
-                onSelectDiscipline={handleSelectDiscipline}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'disciplines' && (
-              <>
-                {selectedDisciplineObj ? (
-                  <DisciplineView
-                    discipline={selectedDisciplineObj}
-                    questions={questions}
-                    flashcards={flashcards}
-                    mindMaps={mindMaps}
-                    progress={userProgress}
-                    onBack={() => setSelectedDisciplineId(null)}
-                    onToggleTopicCompletion={handleToggleTopicCompletion}
-                    onAnswerQuestion={handleAnswerQuestion}
-                    onReviewFlashcard={handleReviewFlashcard}
-                    onSavePersonalNote={handleSavePersonalNote}
-                    onOpenAIAssistant={handleOpenAIAssistant}
-                    onUpdateMindMap={handleSaveMindMap}
-                    isDarkMode={isDarkMode}
-                    initialSubTab={disciplineSubTab}
-                  />
-                ) : (
-                  <DisciplineList
-                    disciplines={disciplines}
-                    progress={userProgress}
-                    onSelectDiscipline={handleSelectDiscipline}
-                    isDarkMode={isDarkMode}
-                  />
-                )}
-              </>
-            )}
-
-            {studentTab === 'schedule' && (
-              <StudyScheduleView
-                schedule={weeklySchedule}
-                disciplines={disciplines}
-                onToggleScheduleTask={handleToggleScheduleTask}
-                onSelectDiscipline={handleSelectDiscipline}
-                onOpenAIAssistant={handleOpenAIAssistant}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'reviews' && (
-              <RevisionCenterView
-                progress={userProgress}
-                onToggleReviewCompleted={handleToggleReviewCompleted}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'simulados' && (
-              <SimuladosView
-                simulados={simulados}
-                progress={userProgress}
-                onSaveSimuladoAttempt={handleSaveSimuladoAttempt}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'caderno-erros' && (
-              <CadernoErrosView
-                questions={questions}
-                progress={userProgress}
-                onOpenAIAssistant={handleOpenAIAssistant}
-                isDarkMode={isDarkMode}
-              />
-            )}
-
-            {studentTab === 'news' && <NewsView news={news} isDarkMode={isDarkMode} />}
-          </>
         )}
-      </main>
+
+        <main className="flex-1 min-w-0 p-4 sm:p-6 space-y-6">
+          {viewMode !== 'student' && !isStaffAuthenticated ? (
+            <RestrictedAccessView
+              onBackToStudent={() => setViewMode('student')}
+              onAuthenticateStaff={handleStaffPasscode}
+              isDarkMode={isDarkMode}
+            />
+          ) : viewMode === 'admin' || viewMode === 'superadmin' ? (
+            <AdminPanel
+              isSuperAdmin={viewMode === 'superadmin'}
+              disciplines={disciplines}
+              mindMaps={mindMaps}
+              questions={questions}
+              flashcards={flashcards}
+              simulados={simulados}
+              news={news}
+              onSaveMindMap={handleSaveMindMap}
+              onDeleteMindMap={handleDeleteMindMap}
+              onAddQuestion={handleAddQuestion}
+              onAddFlashcard={handleAddFlashcard}
+              onAddNews={handleAddNews}
+              onExportBackup={handleExportBackup}
+              onImportBackup={handleImportBackup}
+              isDarkMode={isDarkMode}
+            />
+          ) : viewMode === 'teacher' ? (
+            <TeacherPortal
+              turmas={turmas}
+              announcements={announcements}
+              liveClasses={liveClasses}
+              publishedMaterials={publishedMaterials}
+              submissions={submissions}
+              disciplines={disciplines}
+              questions={questions}
+              flashcards={flashcards}
+              simulados={simulados}
+              mindMaps={mindMaps}
+              onAddTurma={handleAddTurma}
+              onUpdateTurma={handleUpdateTurma}
+              onDeleteTurma={handleDeleteTurma}
+              onAddAnnouncement={handleAddAnnouncement}
+              onDeleteAnnouncement={handleDeleteAnnouncement}
+              onAddLiveClass={handleAddLiveClass}
+              onDeleteLiveClass={handleDeleteLiveClass}
+              onAddPublishedMaterial={handleAddPublishedMaterial}
+              onToggleMaterialRelease={handleToggleMaterialRelease}
+              onDeleteMaterial={handleDeleteMaterial}
+              onGradeSubmission={handleGradeSubmission}
+              onAddQuestion={handleAddQuestion}
+              onAddFlashcard={handleAddFlashcard}
+              isDarkMode={isDarkMode}
+            />
+          ) : (
+            <>
+              {studentTab === 'dashboard' && (
+                <Dashboard
+                  progress={userProgress}
+                  onNavigateTab={setStudentTab}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'turma' && (
+                <StudentPortal
+                  progress={userProgress}
+                  turmas={turmas}
+                  announcements={announcements}
+                  liveClasses={liveClasses}
+                  publishedMaterials={publishedMaterials}
+                  disciplines={disciplines}
+                  onNavigateTab={setStudentTab}
+                  onSelectDiscipline={handleSelectDiscipline}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {(studentTab === 'disciplina-hoje' || studentTab === 'disciplines') && (
+                <>
+                  {selectedDisciplineObj ? (
+                    <DisciplineView
+                      discipline={selectedDisciplineObj}
+                      questions={questions}
+                      flashcards={flashcards}
+                      mindMaps={mindMaps}
+                      progress={userProgress}
+                      onBack={() => setSelectedDisciplineId(null)}
+                      onToggleTopicCompletion={handleToggleTopicCompletion}
+                      onAnswerQuestion={handleAnswerQuestion}
+                      onReviewFlashcard={handleReviewFlashcard}
+                      onSavePersonalNote={handleSavePersonalNote}
+                      onOpenAIAssistant={handleOpenAIAssistant}
+                      onUpdateMindMap={handleSaveMindMap}
+                      isDarkMode={isDarkMode}
+                      initialSubTab={disciplineSubTab}
+                    />
+                  ) : (
+                    <DisciplineList
+                      disciplines={disciplines}
+                      progress={userProgress}
+                      onSelectDiscipline={handleSelectDiscipline}
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                </>
+              )}
+
+              {(studentTab === 'aula-hoje' || studentTab === 'semana1') && (
+                <AulaHojeView isDarkMode={isDarkMode} onNavigateTab={setStudentTab} />
+              )}
+
+              {studentTab === 'mapa-mental' && (
+                <>
+                  {selectedDisciplineObj ? (
+                    <DisciplineView
+                      discipline={selectedDisciplineObj}
+                      questions={questions}
+                      flashcards={flashcards}
+                      mindMaps={mindMaps}
+                      progress={userProgress}
+                      onBack={() => setSelectedDisciplineId(null)}
+                      onToggleTopicCompletion={handleToggleTopicCompletion}
+                      onAnswerQuestion={handleAnswerQuestion}
+                      onReviewFlashcard={handleReviewFlashcard}
+                      onSavePersonalNote={handleSavePersonalNote}
+                      onOpenAIAssistant={handleOpenAIAssistant}
+                      onUpdateMindMap={handleSaveMindMap}
+                      isDarkMode={isDarkMode}
+                      initialSubTab="mapas"
+                    />
+                  ) : (
+                    <DisciplineList
+                      disciplines={disciplines}
+                      progress={userProgress}
+                      onSelectDiscipline={(discId) => {
+                        handleSelectDiscipline(discId);
+                        setDisciplineSubTab('mapas');
+                      }}
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                </>
+              )}
+
+              {studentTab === 'flashcards' && (
+                <RevisionCenterView
+                  progress={userProgress}
+                  onToggleReviewCompleted={handleToggleReviewCompleted}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'questoes' && (
+                <CadernoErrosView
+                  questions={questions}
+                  progress={userProgress}
+                  onOpenAIAssistant={handleOpenAIAssistant}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {(studentTab === 'progresso' || studentTab === 'perfil') && (
+                <PerfilView progress={userProgress} isDarkMode={isDarkMode} />
+              )}
+
+              {/* Preserved underlying views for full capabilities */}
+              {studentTab === 'schedule' && (
+                <StudyScheduleView
+                  schedule={weeklySchedule}
+                  disciplines={disciplines}
+                  onToggleScheduleTask={handleToggleScheduleTask}
+                  onSelectDiscipline={handleSelectDiscipline}
+                  onOpenAIAssistant={handleOpenAIAssistant}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'reviews' && (
+                <RevisionCenterView
+                  progress={userProgress}
+                  onToggleReviewCompleted={handleToggleReviewCompleted}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'simulados' && (
+                <SimuladosView
+                  simulados={simulados}
+                  progress={userProgress}
+                  onSaveSimuladoAttempt={handleSaveSimuladoAttempt}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'caderno-erros' && (
+                <CadernoErrosView
+                  questions={questions}
+                  progress={userProgress}
+                  onOpenAIAssistant={handleOpenAIAssistant}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {studentTab === 'news' && <NewsView news={news} isDarkMode={isDarkMode} />}
+            </>
+          )}
+        </main>
+      </div>
 
       {/* AI Assistant Modal */}
       <AIAssistantModal
