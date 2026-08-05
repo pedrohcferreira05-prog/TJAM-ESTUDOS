@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame } from 'lucide-react';
 import {
   Discipline,
   MindMap,
@@ -488,6 +489,156 @@ export function App() {
   };
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
+
+  // Locked Student Mode Notice - Hides entire site for students
+  if (viewMode === 'student') {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-6 sm:p-12 relative overflow-hidden font-sans select-none">
+        {/* Ambient Background Glows */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-2xl w-full mx-auto text-center space-y-6 relative z-10 my-auto">
+          {/* Header Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 text-xs font-bold tracking-wider uppercase shadow-inner">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+            TJ-AM — Preparatório Concurso Oficial
+          </div>
+
+          {/* Main Status Icon */}
+          <div className="relative mx-auto w-20 h-20 rounded-3xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-2xl group">
+            <div className="absolute inset-0 bg-red-500/20 rounded-3xl blur-xl transition-all" />
+            <Clock className="w-10 h-10 text-red-400 relative z-10 animate-bounce" />
+          </div>
+
+          {/* Main Notice Text requested by user */}
+          <div className="space-y-3">
+            <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight tracking-tight max-w-xl mx-auto">
+              Aula de hoje encerrada, volte amanhã às 14h para a próxima aula.
+            </h1>
+            
+            {/* Red Status Tag requested by user */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-sm shadow-lg">
+              <XCircle className="w-5 h-5 text-red-400 shrink-0" />
+              <span>A aula de hoje não foi concluída</span>
+            </div>
+          </div>
+
+          {/* Ranking da Dupla de Estudos */}
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl text-left space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                  Ranking da Dupla de Estudos
+                </h3>
+              </div>
+              <span className="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Dupla Ativa
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {/* 1° Lugar: Pedro Henrique */}
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+                    1º
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-extrabold text-sm text-white">Pedro Henrique</span>
+                      <Medal className="w-3.5 h-3.5 text-amber-400" />
+                    </div>
+                    <span className="text-[11px] text-slate-400">Líder do ranking</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-24 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+                    <div className="bg-amber-500 h-full rounded-full" style={{ width: '25%' }}></div>
+                  </div>
+                  <span className="text-sm font-black text-amber-400 min-w-[45px] text-right">25%</span>
+                </div>
+              </div>
+
+              {/* 2° Lugar: Eduardo Mateus */}
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 font-black text-xs flex items-center justify-center shrink-0">
+                    2º
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-extrabold text-sm text-white">Eduardo Mateus</span>
+                    </div>
+                    <span className="text-[11px] text-slate-400">Seu perfil</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-24 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+                    <div className="bg-emerald-500 h-full rounded-full" style={{ width: '3%' }}></div>
+                  </div>
+                  <span className="text-sm font-black text-emerald-400 min-w-[45px] text-right">3%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Metrics Cards */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
+              <div className="flex items-center justify-center gap-1 text-emerald-400 mb-1">
+                <Award className="w-4 h-4" />
+                <span className="text-[10px] font-bold uppercase text-slate-400">Progresso</span>
+              </div>
+              <p className="text-lg font-black text-white">3%</p>
+              <p className="text-[9px] text-slate-500">Progresso atual</p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
+              <div className="flex items-center justify-center gap-1 text-amber-400 mb-1">
+                <Flame className="w-4 h-4" />
+                <span className="text-[10px] font-bold uppercase text-slate-400">Sequência</span>
+              </div>
+              <p className="text-lg font-black text-white">1 dia</p>
+              <p className="text-[9px] text-slate-500">Estudos seguidos</p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
+              <div className="flex items-center justify-center gap-1 text-blue-400 mb-1">
+                <Clock className="w-4 h-4" />
+                <span className="text-[10px] font-bold uppercase text-slate-400">Tempo Diário</span>
+              </div>
+              <p className="text-lg font-black text-white">2h 20m</p>
+              <p className="text-[9px] text-slate-500">Tempo de estudo</p>
+            </div>
+          </div>
+
+          {/* Discreet Access Link for Staff */}
+          <div className="pt-2">
+            <button
+              onClick={() => {
+                setAuthMode('admin_login');
+                setIsAuthOpen(true);
+              }}
+              className="text-xs text-slate-500 hover:text-slate-300 transition-colors underline font-medium cursor-pointer"
+            >
+              Área Restrita (Servidores & Professores)
+            </button>
+          </div>
+        </div>
+
+        {/* Auth Modal for Staff Access */}
+        <AuthModal
+          isOpen={isAuthOpen}
+          onClose={() => setIsAuthOpen(false)}
+          onLoginSuccess={handleLoginSuccess}
+          isDarkMode={true}
+          initialMode={authMode}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
