@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame } from 'lucide-react';
+import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw } from 'lucide-react';
 import {
   Discipline,
   MindMap,
@@ -262,6 +262,46 @@ export function App() {
     localStorage.setItem('tjam_user_progress', JSON.stringify(userProgress));
   }, [userProgress]);
 
+  // Real-time automatic update engine (syncs without reloading page)
+  const [lastSyncTime, setLastSyncTime] = useState<string>(() => new Date().toLocaleTimeString('pt-BR'));
+
+  useEffect(() => {
+    // 1. Cross-tab storage listener
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'tjam_user_progress' && e.newValue) {
+        try { setUserProgress(JSON.parse(e.newValue)); } catch {}
+      }
+      if (e.key === 'tjam_announcements' && e.newValue) {
+        try { setAnnouncements(JSON.parse(e.newValue)); } catch {}
+      }
+      if (e.key === 'tjam_live_classes' && e.newValue) {
+        try { setLiveClasses(JSON.parse(e.newValue)); } catch {}
+      }
+      setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // 2. Periodic background ticker (every 2 seconds) for live state evaluation without page reloads
+    const syncInterval = setInterval(() => {
+      setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
+      const savedProgress = localStorage.getItem('tjam_user_progress');
+      if (savedProgress) {
+        try {
+          const parsed = JSON.parse(savedProgress);
+          if (JSON.stringify(parsed) !== JSON.stringify(userProgress)) {
+            setUserProgress(parsed);
+          }
+        } catch {}
+      }
+    }, 2000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(syncInterval);
+    };
+  }, [userProgress]);
+
   // AI Modal State
   const [isAIOpen, setIsAIOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
@@ -499,10 +539,16 @@ export function App() {
         <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-2xl w-full mx-auto text-center space-y-6 relative z-10 my-auto">
-          {/* Header Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 text-xs font-bold tracking-wider uppercase shadow-inner">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-            TJ-AM — Preparatório Concurso Oficial
+          {/* Header Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 text-xs font-bold tracking-wider uppercase shadow-inner">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+              TJ-AM — Preparatório Concurso Oficial
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold tracking-wide">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-400" style={{ animationDuration: '4s' }} />
+              <span>Atualização em tempo real ativa ({lastSyncTime})</span>
+            </div>
           </div>
 
           {/* Main Status Icon */}
