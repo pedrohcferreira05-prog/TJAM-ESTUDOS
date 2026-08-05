@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw } from 'lucide-react';
+import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw, Timer } from 'lucide-react';
 import {
   Discipline,
   MindMap,
@@ -302,6 +302,32 @@ export function App() {
     };
   }, [userProgress]);
 
+  // Countdown Timer for Next Class (Tomorrow at 14:00)
+  const [timeLeft, setTimeLeft] = useState<{ hours: number; minutes: number; seconds: number }>({ hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date();
+      const target = new Date();
+      target.setDate(target.getDate() + 1);
+      target.setHours(14, 0, 0, 0);
+
+      const diff = target.getTime() - now.getTime();
+      if (diff > 0) {
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        setTimeLeft({ hours, minutes, seconds });
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   // AI Modal State
   const [isAIOpen, setIsAIOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
@@ -563,10 +589,31 @@ export function App() {
               Aula de hoje encerrada, volte amanhã às 14h para a próxima aula.
             </h1>
             
-            {/* Red Status Tag requested by user */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-sm shadow-lg">
-              <XCircle className="w-5 h-5 text-red-400 shrink-0" />
-              <span>A aula de hoje não foi concluída</span>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {/* Red Status Tag requested by user */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-sm shadow-lg">
+                <XCircle className="w-5 h-5 text-red-400 shrink-0" />
+                <span>A aula de hoje não foi concluída</span>
+              </div>
+
+              {/* Small Countdown Timer for Next Class */}
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 shadow-lg">
+                <Timer className="w-4 h-4 text-amber-400 animate-pulse shrink-0" />
+                <div className="flex items-center gap-1 text-xs font-bold">
+                  <span className="text-slate-400 font-medium">Inicia em:</span>
+                  <span className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-amber-400 font-mono text-xs">
+                    {String(timeLeft.hours).padStart(2, '0')}h
+                  </span>
+                  <span className="text-slate-600">:</span>
+                  <span className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-amber-400 font-mono text-xs">
+                    {String(timeLeft.minutes).padStart(2, '0')}m
+                  </span>
+                  <span className="text-slate-600">:</span>
+                  <span className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-amber-400 font-mono text-xs">
+                    {String(timeLeft.seconds).padStart(2, '0')}s
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
