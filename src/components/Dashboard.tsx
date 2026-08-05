@@ -8,9 +8,9 @@ import {
   Play,
   ArrowRight,
   Sparkles,
-  CheckCircle2,
-  TrendingUp,
-  Target
+  Trophy,
+  Users,
+  Medal
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -52,9 +52,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <span className="text-[10px] uppercase font-black text-emerald-200 tracking-wider">
               Disciplina do Dia & Próxima Aula
             </span>
-            <h2 className="text-xl font-black">Direito Constitucional</h2>
+            <h2 className="text-xl font-black">Direito Administrativo</h2>
             <p className="text-xs text-emerald-100 font-medium">
-              Aula 1 — O que é Constituição?
+              Aula 1 — Administração Pública: Conceito e Finalidade
             </p>
           </div>
 
@@ -66,6 +66,109 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <span>Continuar estudando</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
+        </div>
+      </div>
+
+      {/* Ranking da Dupla de Estudos */}
+      <div
+        className={`p-6 rounded-3xl border shadow-sm space-y-4 ${
+          isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+        }`}
+      >
+        <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2">
+            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500">
+              <Trophy className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
+                Ranking da Dupla de Estudos
+              </h3>
+              <p className="text-[11px] text-slate-400">
+                Acompanhamento em tempo real do progresso da dupla
+              </p>
+            </div>
+          </div>
+          <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+            Dupla Ativa
+          </span>
+        </div>
+
+        <div className="space-y-3">
+          {/* 1° Lugar: Pedro Henrique */}
+          <div
+            className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+              isDarkMode
+                ? 'bg-amber-500/5 border-amber-500/20'
+                : 'bg-amber-50/60 border-amber-200'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-amber-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
+                1º
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-sm text-slate-900 dark:text-white">
+                    Pedro Henrique
+                  </span>
+                  <Medal className="w-4 h-4 text-amber-500" />
+                </div>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  Líder do ranking
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 sm:justify-end">
+              <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                <div
+                  className="bg-amber-500 h-full rounded-full transition-all duration-500"
+                  style={{ width: '25%' }}
+                ></div>
+              </div>
+              <span className="text-sm font-black text-amber-600 dark:text-amber-400 min-w-[50px] text-right">
+                25%
+              </span>
+            </div>
+          </div>
+
+          {/* 2° Lugar: Eduardo Mateus */}
+          <div
+            className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+              isDarkMode
+                ? 'bg-slate-800/40 border-slate-800'
+                : 'bg-slate-50 border-slate-200'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-slate-300 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-black text-xs flex items-center justify-center shrink-0">
+                2º
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-sm text-slate-900 dark:text-white">
+                    Eduardo Mateus
+                  </span>
+                </div>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  Seu perfil
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 sm:justify-end">
+              <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                <div
+                  className="bg-emerald-500 h-full rounded-full transition-all duration-500"
+                  style={{ width: '3%' }}
+                ></div>
+              </div>
+              <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 min-w-[50px] text-right">
+                3%
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -83,11 +186,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
             }`}
           >
             <div className="flex items-center justify-between text-emerald-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Progresso Geral</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase">Progresso Atual</span>
               <Award className="w-5 h-5" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">28%</p>
-            <p className="text-[10px] text-slate-400">Meta do curso concluída</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">3%</p>
+            <p className="text-[10px] text-slate-400">Meta do curso iniciada</p>
           </div>
 
           {/* Disciplina Atual */}
@@ -100,8 +203,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span className="text-[11px] font-bold text-slate-400 uppercase">Disciplina Atual</span>
               <BookOpen className="w-5 h-5" />
             </div>
-            <p className="text-base font-black text-slate-900 dark:text-white truncate">Direito Constitucional</p>
-            <p className="text-[10px] text-slate-400">Unidade 1 — Constituição Federal</p>
+            <p className="text-base font-black text-slate-900 dark:text-white truncate">Direito Administrativo</p>
+            <p className="text-[10px] text-slate-400">Unidade 1 — Administração Pública</p>
           </div>
 
           {/* Sequência de estudos */}
@@ -114,7 +217,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span className="text-[11px] font-bold text-slate-400 uppercase">Sequência</span>
               <Flame className="w-5 h-5" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{progress.streakDays || 5} Dias</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">1 dia</p>
             <p className="text-[10px] text-slate-400">Estudos consecutivos</p>
           </div>
 
@@ -128,8 +231,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span className="text-[11px] font-bold text-slate-400 uppercase">Tempo Hoje</span>
               <Clock className="w-5 h-5" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">1h 45m</p>
-            <p className="text-[10px] text-slate-400">Meta diária: 3h - 4h</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">2h 20m</p>
+            <p className="text-[10px] text-slate-400">Tempo de estudo diário</p>
           </div>
         </div>
       </div>

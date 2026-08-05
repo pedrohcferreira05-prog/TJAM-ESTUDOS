@@ -84,208 +84,212 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
 
-  // Lesson Content Data
+  // Lesson Content Data - Wednesday Lesson (Unidade 1 - Administração Pública: Conceito e Finalidade)
   const flashcardsData = [
     {
-      q: 'O que é a Constituição?',
-      a: 'A lei fundamental e suprema do Estado, que organiza seus poderes, forma de governo e garante os direitos e deveres fundamentais.'
+      q: 'O que é a Administração Pública em sentido subjetivo (formal)?',
+      a: 'É o conjunto de órgãos, entidades e agentes públicos responsáveis pela atividade administrativa.'
     },
     {
-      q: 'Qual é a Constituição vigente no Brasil?',
-      a: 'A Constituição Federal de 1988, conhecida como Constituição Cidadã.'
+      q: 'O que é a Administração Pública em sentido objetivo (material)?',
+      a: 'É a própria atividade ou função administrativa desempenhada pelo Estado para satisfazer necessidades da sociedade.'
     },
     {
-      q: 'Por que a Constituição é considerada suprema?',
-      a: 'Porque ocupa o topo da hierarquia das normas e todas as demais normas devem estar em estrita conformidade com ela.'
+      q: 'Qual a diferença entre Governo e Administração Pública?',
+      a: 'O Governo define as diretrizes e políticas públicas (função política); a Administração Pública executa essas decisões (função administrativa).'
     },
     {
-      q: 'O que acontece quando uma lei contraria a Constituição?',
-      a: 'Ela padece do vício de inconstitucionalidade e pode ser declarada inconstitucional pelo Poder Judiciário.'
+      q: 'Quem compõe a Administração Pública Direta?',
+      a: 'Os órgãos integrantes dos entes federativos: União, Estados, Distrito Federal e Municípios (órgãos sem personalidade jurídica própria).'
+    },
+    {
+      q: 'Quem compõe a Administração Pública Indireta?',
+      a: 'Entidades descentralizadas criadas para atividades específicas: Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista.'
     }
   ];
 
-  // Questions Data
+  // Questions Data - 20 Questions for Unidade 1 Aula 1 (Direito Administrativo - Conceito, Princípios e Poderes)
   const questionsData = [
     {
       id: 1,
-      enunciado: '1. A Constituição Federal pode ser definida como:',
+      enunciado: '1. A Administração Pública pode ser definida como:',
       alternativas: [
-        'Um conjunto de decretos do Poder Executivo.',
-        'A lei fundamental e suprema do Estado.',
-        'Uma norma criada apenas pelo Poder Judiciário.',
-        'Um regulamento administrativo.'
+        'O conjunto de atividades exclusivamente do Poder Judiciário.',
+        'O conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado.',
+        'O conjunto de leis editadas pelo Congresso Nacional.',
+        'O conjunto de empresas privadas contratadas pelo Estado.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: A Constituição é a lei fundamental e suprema do Estado, que organiza a estrutura política, limita o poder público e estabelece os direitos fundamentais.'
+      explicacao: '✅ Gabarito: B. A Administração Pública é o conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado.'
     },
     {
       id: 2,
-      enunciado: '2. A principal função da Constituição é:',
+      enunciado: '2. O principal objetivo da Administração Pública é:',
       alternativas: [
-        'Regular apenas o funcionamento dos municípios.',
-        'Organizar o Estado e garantir direitos fundamentais.',
-        'Criar impostos.',
-        'Regulamentar somente o Poder Judiciário.'
+        'Obter lucro.',
+        'Defender interesses particulares.',
+        'Atender ao interesse público.',
+        'Fiscalizar apenas empresas privadas.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: A função primordial da Carta Magna é estruturar as instituições do Estado, estabelecer a separação dos Poderes e proteger as garantias essenciais da pessoa humana.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O principal objetivo e razão de existir da Administração Pública é atender ao interesse público.'
     },
     {
       id: 3,
-      enunciado: '3. A Constituição Federal atualmente em vigor no Brasil foi promulgada em:',
+      enunciado: '3. A Administração Pública Direta é composta por:',
       alternativas: [
-        '1967',
-        '1985',
-        '1988',
-        '1990'
+        'Empresas Públicas e Autarquias.',
+        'União, Estados, Distrito Federal e Municípios.',
+        'Apenas o Governo Federal.',
+        'Empresas privadas contratadas pelo Estado.'
       ],
-      correta: 2,
-      explicacao: 'Gabarito C: A atual Carta Magna do Brasil foi promulgada pela Assembleia Nacional Constituintem em 5 de outubro de 1988.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A Administração Pública Direta é composta pelas pessoas políticas territoriais: União, Estados, Distrito Federal e Municípios.'
     },
     {
       id: 4,
-      enunciado: '4. A Constituição Federal de 1988 é conhecida como:',
+      enunciado: '4. Faz parte da Administração Pública Indireta:',
       alternativas: [
-        'Constituição Imperial.',
-        'Constituição Democrática.',
-        'Constituição Cidadã.',
-        'Constituição Republicana.'
+        'Câmara Municipal.',
+        'Senado Federal.',
+        'Autarquias.',
+        'Assembleia Legislativa.'
       ],
       correta: 2,
-      explicacao: 'Gabarito C: O apelido "Constituição Cidadã" foi consagrado por Ulysses Guimarães por conta do vasto rol de direitos e garantias sociais e fundamentais assegurados.'
+      explicacao: '✅ Gabarito: C. Faz parte da Administração Pública Indireta a categoria das Autarquias (junto com Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista).'
     },
     {
       id: 5,
-      enunciado: '5. O princípio da supremacia constitucional significa que:',
+      enunciado: '5. A Administração Pública em sentido subjetivo refere-se:',
       alternativas: [
-        'A Constituição está acima de todas as demais normas.',
-        'Os decretos possuem a mesma força da Constituição.',
-        'As leis municipais prevalecem sobre a Constituição.',
-        'Todas as leis possuem o mesmo nível hierárquico.'
+        'À atividade administrativa.',
+        'Aos órgãos, entidades e agentes públicos.',
+        'À Constituição Federal.',
+        'À atividade legislativa.'
       ],
-      correta: 0,
-      explicacao: 'Gabarito A: O princípio da supremacia estabelece que a Constituição ocupa o ápice do ordenamento jurídico, devendo toda e qualquer norma inferior conformar-se a ela.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Em sentido subjetivo (formal ou orgânico), refere-se aos sujeitos da atuação estatal: órgãos, entidades e agentes públicos.'
     },
     {
       id: 6,
-      enunciado: '6. Caso uma lei seja incompatível com a Constituição Federal, ela poderá ser:',
+      enunciado: '6. A Administração Pública em sentido objetivo refere-se:',
       alternativas: [
-        'Revogada pelo Prefeito.',
-        'Declarada inconstitucional.',
-        'Transformada automaticamente em decreto.',
-        'Aplicada normalmente.'
+        'À atividade administrativa exercida pelo Estado.',
+        'Aos agentes públicos.',
+        'Aos Poderes da República.',
+        'À organização política.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: Incompatibilidades formais ou materiais de normas inferiores com o texto constitucional geram o vício da inconstitucionalidade, passível de declaração pelo Poder Judiciário.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Em sentido objetivo (material ou funcional), refere-se à própria atividade ou função administrativa exercida pelo Estado.'
     },
     {
       id: 7,
-      enunciado: '7. A Constituição estabelece, entre outros assuntos:',
+      enunciado: '7. Qual alternativa diferencia corretamente Governo e Administração Pública?',
       alternativas: [
-        'Apenas regras tributárias.',
-        'Somente normas eleitorais.',
-        'Organização do Estado, direitos fundamentais e divisão dos Poderes.',
-        'Apenas normas penais.'
+        'Governo executa serviços; Administração cria leis.',
+        'Governo define políticas públicas; Administração Pública as executa.',
+        'Ambos exercem exatamente a mesma função.',
+        'Administração Pública cria políticas públicas.'
       ],
-      correta: 2,
-      explicacao: 'Gabarito C: A Carta Magna abrange matérias estruturantes do país, desde a repartição de competências até o funcionamento dos Poderes Executivo, Legislativo e Judiciário.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O Governo define diretrizes e políticas públicas; a Administração Pública as executa com imparcialidade técnica.'
     },
     {
       id: 8,
-      enunciado: '8. Os direitos fundamentais previstos na Constituição têm como objetivo principal:',
+      enunciado: '8. A Administração Pública deve atuar prioritariamente em favor:',
       alternativas: [
-        'Limitar apenas os cidadãos.',
-        'Garantir proteção à dignidade da pessoa humana.',
-        'Criar novos tributos.',
-        'Organizar apenas o Poder Executivo.'
+        'Dos governantes.',
+        'Dos servidores públicos.',
+        'Do interesse público.',
+        'Dos partidos políticos.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: O núcleo axiológico das Constituições modernas é a tutela da dignidade da pessoa humana, resguardando liberdades públicas e garantias sociais.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A Administração Pública deve atuar prioritariamente e indispensavelmente em favor do interesse público.'
     },
     {
       id: 9,
-      enunciado: '9. A Constituição ocupa qual posição na hierarquia das normas?',
+      enunciado: '9. O artigo da Constituição Federal que estabelece os princípios da Administração Pública é o:',
       alternativas: [
-        'A última.',
-        'A intermediária.',
-        'A mais alta.',
-        'A mesma das leis ordinárias.'
+        'Art. 5º',
+        'Art. 37',
+        'Art. 60',
+        'Art. 144'
       ],
-      correta: 2,
-      explicacao: 'Gabarito C: De acordo com a pirâmide normativa Kelseniana, a Constituição ocupa o ápice (posição mais elevada) da estrutura das normas.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O Art. 37 da Constituição Federal estabelece os princípios expressos da Administração Pública.'
     },
     {
       id: 10,
-      enunciado: '10. Todas as leis produzidas no Brasil devem:',
+      enunciado: '10. Qual dos princípios abaixo faz parte dos princípios constitucionais expressos da Administração Pública?',
       alternativas: [
-        'Ser aprovadas pelos municípios.',
-        'Respeitar a Constituição Federal.',
-        'Ser aprovadas pelo Supremo Tribunal Federal.',
-        'Ser editadas pelo Presidente da República.'
+        'Eficiência.',
+        'Competitividade.',
+        'Lucratividade.',
+        'Produtividade.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: O ordenamento jurídico pauta-se pelo princípio da compatibilidade vertical, obrigando a conformação de leis federais, estaduais e municipais à Constituição.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O princípio da Eficiência é um dos princípios expressos no caput do Art. 37 da CF/88 (Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência).'
     }
   ];
 
   const tfQuestionsData = [
     {
       id: 11,
-      enunciado: '11. A Constituição organiza a estrutura do Estado brasileiro.',
+      enunciado: '11. A Administração Pública existe para atender ao interesse coletivo.',
       correta: true,
-      explicacao: 'Gabarito: VERDADEIRO ✅. É função precípua da Constituição organizar a forma do Estado (Federação), a forma de Governo (República) e o sistema de governo.'
+      explicacao: '✅ Gabarito: Verdadeiro. A razão de existir da Administração Pública é o atendimento ao interesse coletivo.'
     },
     {
       id: 12,
-      enunciado: '12. Uma lei ordinária pode contrariar a Constituição Federal.',
+      enunciado: '12. A Administração Pública pode agir sem observar a lei.',
       correta: false,
-      explicacao: 'Gabarito: FALSO ❌. Nenhuma lei ordinária pode contrariar o texto constitucional. Se o fizer, será declarada inconstitucional.'
+      explicacao: '❌ Gabarito: Falso. Pelo princípio constitucional da legalidade, a Administração Pública é estritamente subordinada à lei.'
     },
     {
       id: 13,
-      enunciado: '13. A Constituição Federal protege direitos fundamentais.',
+      enunciado: '13. Autarquias fazem parte da Administração Pública Indireta.',
       correta: true,
-      explicacao: 'Gabarito: VERDADEIRO ✅. Os Direitos e Garantias Fundamentais constituem dogmática central da CF/88 (Art. 5º e ss).'
+      explicacao: '✅ Gabarito: Verdadeiro. As autarquias integram a estrutura da Administração Pública Indireta.'
     },
     {
       id: 14,
-      enunciado: '14. A Constituição Federal de 1988 marcou o fortalecimento da democracia no Brasil.',
-      correta: true,
-      explicacao: 'Gabarito: VERDADEIRO ✅. Promulgada após o regime militar, restabeleceu o Estado Democrático de Direito e o sufrágio universal.'
+      enunciado: '14. Governo e Administração Pública possuem exatamente a mesma função.',
+      correta: false,
+      explicacao: '❌ Gabarito: Falso. Governo possui função política de comando; a Administração Pública possui função técnica de execução.'
     },
     {
       id: 15,
-      enunciado: '15. A supremacia constitucional significa que todas as normas devem respeitar a Constituição.',
+      enunciado: '15. A Administração Pública presta serviços públicos à sociedade.',
       correta: true,
-      explicacao: 'Gabarito: VERDADEIRO ✅. Todas as leis, decretos e atos administrativos subordinam-se estritamente ao texto constitucional.'
+      explicacao: '✅ Gabarito: Verdadeiro. A prestação de serviços públicos à sociedade é atribuição fundamental da Administração Pública.'
     }
   ];
 
   const discursiveQuestionsData = [
     {
       id: 16,
-      enunciado: '16. Explique, com suas palavras, o que é a Constituição.',
-      respostaEsperada: 'A Constituição é a lei fundamental e suprema de um país. Ela organiza o Estado, limita o poder dos governantes, define a divisão dos Poderes (Executivo, Legislativo e Judiciário) e assegura os direitos e garantias fundamentais dos cidadãos.'
+      enunciado: '16. Explique o conceito de Administração Pública.',
+      respostaEsperada: 'Gabarito oficial: A Administração Pública é o conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado com o objetivo de atender ao interesse público e prestar serviços à sociedade.'
     },
     {
       id: 17,
-      enunciado: '17. Por que a Constituição é considerada a norma suprema do ordenamento jurídico brasileiro?',
-      respostaEsperada: 'Porque ela ocupa o topo da hierarquia das leis (Pirâmide de Kelsen). Nenhuma outra lei, decreto ou ato administrativo pode contrariar seus preceitos, devendo todas as normas guardar compatibilidade com o texto constitucional.'
+      enunciado: '17. Diferencie Administração Pública Direta e Administração Pública Indireta.',
+      respostaEsperada: 'Gabarito oficial: A Administração Direta é composta pelos entes políticos territoriais (União, Estados, Distrito Federal e Municípios) e seus órgãos despersonalizados. A Administração Indireta é formada pelas entidades descentralizadas dotadas de personalidade jurídica própria (Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista).'
     },
     {
       id: 18,
-      enunciado: '18. Cite três funções exercidas pela Constituição Federal.',
-      respostaEsperada: '1) Organizar a estrutura política do Estado e da Administração Pública; 2) Limitar o poder estatal para evitar arbitrariedades; 3) Definir e proteger os direitos e garantias fundamentais do indivíduo e da sociedade.'
+      enunciado: '18. Explique a diferença entre Governo e Administração Pública.',
+      respostaEsperada: 'Gabarito oficial: O Governo exerce a função política, definindo diretrizes, metas estratégicas e políticas públicas do Estado. A Administração Pública exerce a função técnica e neutra, responsável por executar as políticas públicas traçadas pelo Governo.'
     },
     {
       id: 19,
-      enunciado: '19. Qual é a importância dos direitos fundamentais previstos na Constituição?',
-      respostaEsperada: 'Os direitos fundamentais são essenciais para resguardar a dignidade da pessoa humana, protegendo os cidadãos contra abusos estatais e garantindo condições indispensáveis de vida, liberdade, igualdade e segurança jurídica.'
+      enunciado: '19. Qual é a finalidade da Administração Pública?',
+      respostaEsperada: 'Gabarito oficial: A finalidade primordial da Administração Pública é a plena satisfação do interesse público, garantindo os direitos dos cidadãos e o bem-estar da coletividade.'
     },
     {
       id: 20,
-      enunciado: '20. Explique o que pode acontecer quando uma lei contraria a Constituição Federal.',
-      respostaEsperada: 'Quando uma lei contraria a Constituição, ela padece do vício da inconstitucionalidade. Essa lei pode ser submetida ao controle de constitucionalidade e ser declarada inconstitucional pelo Poder Judiciário, sendo impedida de produzir efeitos no ordenamento.'
+      enunciado: '20. Por que o interesse público deve orientar a atuação da Administração Pública?',
+      respostaEsperada: 'Gabarito oficial: Porque o Estado existe em função da sociedade e os recursos públicos pertencem à coletividade. Portanto, todos os atos da Administração Pública devem buscar o benefício coletivo, sobrepondo-se aos interesses particulares.'
     }
   ];
 
@@ -309,20 +313,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Top Breadcrumb & Metadata Header */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-          <span>Direito Constitucional</span>
+          <span>Direito Administrativo</span>
           <span>•</span>
-          <span>Unidade 1 — Constituição Federal</span>
+          <span>Unidade 1 — Administração Pública</span>
           <span>•</span>
-          <span>Capítulo 1 — Conceitos Fundamentais</span>
+          <span>Capítulo 1 — Conceito, Princípios e Poderes</span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              Aula de Hoje (Terça-feira)
+              Aula de Hoje (Quarta-feira)
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Aula 1 — O que é Constituição?
+              Aula 1 — Administração Pública: Conceito e Finalidade
             </h1>
           </div>
 
@@ -333,7 +337,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </span>
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              Iniciante
+              Essencial
             </span>
           </div>
         </div>
@@ -348,10 +352,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <div className="space-y-1">
             <h2 className="text-xl font-black text-slate-900 dark:text-white">Parabéns!</h2>
             <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
-              O conteúdo de hoje foi concluído com sucesso.
+              O conteúdo de quarta-feira foi concluído com sucesso.
             </p>
             <p className="text-xs text-slate-500">
-              Retorne amanhã para continuar sua preparação.
+              Retorne amanhã para continuar sua preparação rumo à aprovação no TJAM.
             </p>
           </div>
           <div className="pt-2 flex justify-center gap-3">
@@ -445,10 +449,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  Direito Constitucional — Conceitos Fundamentais da Constituição
+                  Unidade 1 — Administração Pública: Conceito e Finalidade
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Capítulo 1 • Preparação Completa TJAM / Concursos
+                  Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos
                 </p>
               </div>
 
@@ -463,8 +467,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/ApUImPEZOu0?autoplay=0&rel=0"
-                title="Vídeo Aula - Conceitos Fundamentais da Constituição"
+                src="https://www.youtube.com/embed/5KTWPjRLcLo?autoplay=0&rel=0"
+                title="Vídeo Aula - Administração Pública: Conceito e Finalidade"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
@@ -479,19 +483,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Conceito sociológico, político e jurídico de Constituição.</span>
+                    <span>Conceito da Administração Pública em sentido subjetivo (formal) e objetivo (material).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Princípio da Supremacia Constitucional e Hierarquia das Normas (Pirâmide de Kelsen).</span>
+                    <span>Distinção essencial entre Governo (função política) e Administração Pública (função técnica).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Constituição Cidadã de 1988 e a proteção dos Direitos e Garantias Fundamentais.</span>
+                    <span>Estrutura da Administração Direta (União, Estados, DF, Municípios) e Indireta (Autarquias, Fundações, EP e SEM).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Organização dos Poderes e a estrutura do Estado brasileiro.</span>
+                    <span>Supremacia e indisponibilidade do Interesse Público e serviços essenciais.</span>
                   </li>
                 </ul>
               </div>
@@ -542,7 +546,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             }`}
           >
             <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula
+              <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula de Quarta-Feira
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
               Ao concluir esta aula, você será capaz de:
@@ -550,173 +554,216 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Compreender o conceito de Constituição.</span>
+                <span>Compreender o conceito de Administração Pública nos sentidos subjetivo e objetivo.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Entender a importância da Constituição para o Estado.</span>
+                <span>Diferenciar a função política do Governo da atuação da Administração Pública.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Identificar por que ela é considerada a norma mais importante do país.</span>
+                <span>Distinguir os entes da Administração Direta das entidades da Administração Indireta.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Reconhecer sua função na organização dos Poderes e na proteção dos direitos fundamentais.</span>
+                <span>Identificar a finalidade precípua do Estado e o princípio do Interesse Público.</span>
               </li>
             </ul>
           </section>
 
-          {/* Introdução */}
+          {/* Seção 1: O que é a Administração Pública */}
           <section className="space-y-3">
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              1. Introdução
+              1. O que é a Administração Pública?
             </h2>
             <p className="text-sm">
-              Toda sociedade precisa de regras para funcionar de maneira organizada. Essas regras determinam como o Estado é estruturado, quais são os direitos dos cidadãos e quais são os limites da atuação do governo.
+              A <strong>Administração Pública</strong> é o conjunto de órgãos, entidades, agentes e atividades que têm como finalidade atender às necessidades coletivas e promover o interesse público. Ela é responsável por executar as políticas públicas, prestar serviços essenciais à população e garantir o funcionamento regular do Estado.
             </p>
             <p className="text-sm">
-              No Brasil, essas regras fundamentais estão reunidas na <strong>Constituição Federal de 1988</strong>, conhecida como <em>Constituição Cidadã</em>. Ela é a base de todo o ordenamento jurídico brasileiro.
+              A Administração Pública pode ser compreendida sob <strong>dois aspectos essenciais</strong>:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Sentido Subjetivo (Formal ou Orgânico)
+                </span>
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
+                  Quem faz (Os Sujeitos)
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Refere-se ao conjunto de <strong>órgãos, entidades e agentes públicos</strong> responsáveis por desempenhar a atividade administrativa estatal.
+                </p>
+              </div>
+
+              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  Sentido Objetivo (Material ou Funcional)
+                </span>
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
+                  O que é feito (A Atividade)
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Refere-se à própria <strong>atividade administrativa</strong> desenvolvida pelo Estado para satisfazer as necessidades da sociedade.
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 italic pt-1">
+              A Constituição Federal estabelece que a Administração Pública deve atuar em conformidade rigorosa com a lei e com os princípios constitucionais, buscando sempre o interesse público e o bem-estar da coletividade.
             </p>
           </section>
 
-          {/* O que é a Constituição? */}
+          {/* Seção 2: Governo x Administração Pública */}
           <section className="space-y-3">
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              2. O que é a Constituição?
+              2. Governo x Administração Pública
             </h2>
             <p className="text-sm">
-              A Constituição é a <strong>lei fundamental e suprema do Estado</strong>.
+              Embora os termos sejam frequentemente utilizados como sinônimos no cotidiano, eles possuem <strong>significados jurídicos distintos</strong>:
             </p>
-            <div className={`p-5 rounded-2xl border space-y-2 text-xs ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-              <p className="font-extrabold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">
-                Ela estabelece:
-              </p>
-              <ul className="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300 font-medium">
-                <li>A organização do Estado;</li>
-                <li>A forma de governo;</li>
-                <li>A divisão dos Poderes (Executivo, Legislativo e Judiciário);</li>
-                <li>Os direitos e garantias fundamentais;</li>
-                <li>Os deveres do Estado;</li>
-                <li>Os princípios que orientam toda a Administração Pública.</li>
-              </ul>
-              <p className="pt-2 font-bold text-emerald-600 dark:text-emerald-400">
-                Todas as demais leis devem obrigatoriamente respeitar a Constituição.
-              </p>
+            <div className={`p-5 rounded-2xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/40 border-amber-200/80'}`}>
+              <div className="space-y-1">
+                <h3 className="text-sm font-black text-amber-900 dark:text-amber-300 flex items-center gap-2">
+                  <Bookmark className="w-4 h-4 text-amber-600" /> O Governo
+                </h3>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  Exerce a <strong>função política</strong> do Estado. É responsável por definir as diretrizes estratégicas, planos de ação, metas gerais e políticas públicas do país. Possui autonomia política e comando supremo.
+                </p>
+              </div>
+
+              <div className="border-t border-amber-200/60 dark:border-slate-800 pt-3 space-y-1">
+                <h3 className="text-sm font-black text-emerald-900 dark:text-emerald-300 flex items-center gap-2">
+                  <Bookmark className="w-4 h-4 text-emerald-600" /> A Administração Pública
+                </h3>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  Executa essas decisões. Coloca em prática as políticas estabelecidas pelo Governo por meio da <strong>prestação de serviços públicos</strong>, fiscalização, gestão de recursos e demais atividades administrativas técnicas. É neutra e subordinada à lei.
+                </p>
+              </div>
             </div>
           </section>
 
-          {/* Por que a Constituição é importante? */}
+          {/* Seção 3: Administração Pública Direta */}
           <section className="space-y-3">
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              3. Por que a Constituição é importante?
+              3. Administração Pública Direta
             </h2>
             <p className="text-sm">
-              A Constituição garante <strong>segurança jurídica</strong> e impede que o poder público atue de forma arbitrária.
+              É composta pelos <strong>órgãos públicos</strong> que integram diretamente a estrutura dos entes federativos (pessoas políticas territoriais):
             </p>
-            <p className="text-sm">Ela protege direitos fundamentais como:</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs font-bold">
+              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">União</span>
+                <span className="text-[10px] text-slate-500 font-normal">Nível Federal</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Estados</span>
+                <span className="text-[10px] text-slate-500 font-normal">Ex: Estado do Amazonas</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Distrito Federal</span>
+                <span className="text-[10px] text-slate-500 font-normal">Ente Híbrido</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Municípios</span>
+                <span className="text-[10px] text-slate-500 font-normal">Ex: Manaus</span>
+              </div>
+            </div>
+            <div className={`p-4 rounded-2xl border text-xs font-semibold ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-300' : 'bg-emerald-50/60 border-emerald-100 text-emerald-950'}`}>
+              ⚠️ <strong>Regra de Ouro para Concursos:</strong> Os órgãos da Administração Direta (como Ministérios, Tribunais e Secretarias) <u>NÃO possuem personalidade jurídica própria</u>. Eles atuam em nome da pessoa política a que pertencem.
+            </div>
+          </section>
+
+          {/* Seção 4: Administração Pública Indireta */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+              4. Administração Pública Indireta
+            </h2>
+            <p className="text-sm">
+              É formada por <strong>entidades dotadas de personalidade jurídica própria</strong>, criadas ou autorizadas por lei para desempenhar determinadas atividades administrativas com maior autonomia (descentralização):
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  1. Autarquias
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Pessoas jurídicas de direito público criadas por lei para serviços típicos de Estado (ex: INSS, Banco Central, DETRAN).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                  2. Fundações Públicas
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Entidades voltadas a atividades de interesse social, pesquisas, cultura ou assistência (ex: FUNAI, Fiocruz).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                <h4 className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  3. Empresas Públicas
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Pessoas jurídicas de direito privado com 100% de capital público (ex: Caixa Econômica Federal, Correios).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                <h4 className="text-xs font-black text-purple-600 dark:text-purple-400 uppercase tracking-wider">
+                  4. Sociedades de Economia Mista
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Entidades com capital misto (público + privado), sob forma de Sociedade Anônima (ex: Banco do Brasil, Petrobras).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Seção 5: Finalidade & Interesse Público */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+              5. Finalidade da Administração Pública & Interesse Público
+            </h2>
+            <p className="text-sm">
+              A Administração Pública existe para <strong>atender ao interesse público</strong>, garantindo direitos e promovendo serviços essenciais, tais como:
+            </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-bold">
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Vida</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Liberdade</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Igualdade</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Segurança</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Propriedade</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Devido processo legal</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Ampla defesa</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Contraditório</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🏥 Saúde</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🎓 Educação</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">👮 Segurança</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">⚖️ Justiça</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🏗️ Infraestrutura</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🚌 Transporte</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🤝 Assistência Social</span>
+              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🌳 Meio Ambiente</span>
             </div>
-            <p className="text-xs text-slate-500 italic">
-              Sem uma Constituição, não existiria uma regra superior capaz de limitar o poder do Estado sobre os cidadãos.
-            </p>
-          </section>
-
-          {/* A Constituição como norma suprema */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              4. A Constituição como norma suprema
-            </h2>
-            <p className="text-sm">
-              A Constituição ocupa o <strong>topo da hierarquia das normas</strong> (Pirâmide de Kelsen).
-            </p>
-            <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/60 border-amber-200'}`}>
-              <h3 className="text-xs font-black uppercase text-amber-800 dark:text-amber-400 mb-2">
-                Isso significa que:
+            <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/60 border-blue-200'}`}>
+              <h3 className="text-xs font-black uppercase text-blue-800 dark:text-blue-400 mb-1">
+                O Princípio da Supremacia do Interesse Público
               </h3>
-              <ul className="space-y-1.5 text-xs text-slate-800 dark:text-slate-200 font-medium">
-                <li>• <strong>Nenhuma lei</strong> pode contrariá-la;</li>
-                <li>• <strong>Nenhum decreto</strong> pode desrespeitá-la;</li>
-                <li>• <strong>Nenhum ato administrativo</strong> pode violá-la.</li>
-              </ul>
-              <p className="mt-2 text-xs font-bold text-amber-900 dark:text-amber-300">
-                Quando uma norma inferior desrespeita a Constituição, ela pode ser declarada <u>inconstitucional</u>.
+              <p className="text-xs text-slate-700 dark:text-slate-300">
+                O <strong>interesse público</strong> representa o conjunto de necessidades da coletividade que justificam a atuação do Estado. Por essa razão, em eventual conflito entre o interesse de um indivíduo e o interesse coletivo, a lei concede prerrogativas à Administração para que o interesse da sociedade prevaleça.
               </p>
             </div>
           </section>
 
-          {/* O que a Constituição organiza? */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              5. O que a Constituição organiza?
-            </h2>
-            <p className="text-sm">Entre outros temas cruciais, a Constituição disciplina:</p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold">
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">🏛️ Os Poderes Executivo, Legislativo e Judiciário</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">🇧🇷 A Federação brasileira</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">🏙️ Os Municípios, Estados e Distrito Federal</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">🛡️ Os direitos fundamentais</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">📈 A ordem econômica</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">👥 A ordem social</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">💰 A tributação e orçamento</li>
-              <li className="p-3 rounded-xl border border-slate-200 dark:border-slate-800">👮 A segurança pública</li>
-            </ul>
-          </section>
-
-          {/* Constituição Federal de 1988 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              6. Constituição Federal de 1988
-            </h2>
-            <p className="text-sm">
-              A atual Carta Magna entrou em vigor em <strong>5 de outubro de 1988</strong>. Ela foi promulgada após o período do regime militar e marcou formalmente a redemocratização e o retorno do <strong>Estado Democrático de Direito</strong> no Brasil.
-            </p>
-            <p className="text-sm">
-              Por ampliar significativamente a proteção aos direitos sociais e individuais, ficou consagrada como <strong>Constituição Cidadã</strong>.
-            </p>
-          </section>
-
-          {/* Exemplo Prático */}
-          <section className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/60 border-blue-200'}`}>
-            <h3 className="text-xs font-black uppercase text-blue-800 dark:text-blue-400 mb-2 flex items-center gap-1.5">
-              <Bookmark className="w-4 h-4 text-blue-600" /> Exemplo Prático
-            </h3>
-            <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed">
-              Imagine que uma lei estadual proibisse um cidadão de exercer um direito expressamente garantido pela Constituição Federal. Mesmo tendo sido votada e aprovada pela Assembleia Legislativa do Estado, essa lei estadual será declarada <strong>inconstitucional</strong> por contrariar a lei suprema do país.
-            </p>
-          </section>
-
-          {/* Atenção para provas */}
+          {/* Seção 6: Organização e Importância para Concursos */}
           <section className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/60 border-purple-200'}`}>
             <h3 className="text-xs font-black uppercase text-purple-800 dark:text-purple-400 mb-2 flex items-center gap-1.5">
-              <AlertTriangle className="w-4 h-4 text-purple-600" /> Atenção para Concursos & Provas
+              <AlertTriangle className="w-4 h-4 text-purple-600" /> Importância para Concursos (TJAM)
             </h3>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">
-              Bancas examinadoras (como FGV, Cebraspe, Vunesp) costumam cobrar frequentemente:
+            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2 leading-relaxed">
+              Os conceitos de <strong>Administração Pública</strong> (sentido objetivo vs subjetivo), <strong>Administração Direta e Indireta</strong>, diferença entre <strong>Governo e Administração</strong> e a <strong>finalidade do interesse público</strong> são temas cobrados com alta frequência em concursos públicos, inclusive para o cargo de <strong>Assistente Judiciário do TJAM</strong>. Dominar esses fundamentos facilitará o estudo dos princípios administrativos, atos administrativos e agentes públicos nas próximas aulas!
             </p>
-            <ul className="list-disc list-inside text-xs font-bold text-slate-800 dark:text-slate-200 space-y-1">
-              <li>Conceito político, jurídico e sociológico de Constituição</li>
-              <li>Princípio da Supremacia Constitucional</li>
-              <li>Marcos históricos da CF/1988 ("Constituição Cidadã")</li>
-              <li>Funções primordiais da Constituição e eficácia dos Direitos Fundamentais</li>
-            </ul>
           </section>
 
-          {/* Dicas de memorização */}
+          {/* Dica de Memorização */}
           <section className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-1">
             <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">
-              Dica de Memorização
+              Dica de Memorização Rápida
             </span>
             <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-              Constituição → Organiza o Estado → Protege Direitos → Limita o Poder → Orienta todas as leis.
+              Governo = Decide (Política) • Administração = Executa (Técnica) • Finalidade = Interesse Público!
             </p>
           </section>
 
@@ -727,11 +774,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </h3>
             <div className="space-y-2 text-xs font-semibold">
               {[
-                { id: 'c1', text: 'Compreendi o conceito de Constituição.' },
-                { id: 'c2', text: 'Entendi por que ela é a norma suprema do ordenamento.' },
-                { id: 'c3', text: 'Conheço a importância histórica da Constituição Federal de 1988.' },
-                { id: 'c4', text: 'Sei explicar suas principais funções de limitação do poder estatal.' },
-                { id: 'c5', text: 'Estou pronto para praticar exercícios e avançar para a Aula 2.' },
+                { id: 'c1', text: 'Compreendi o conceito de Administração Pública nos sentidos subjetivo e objetivo.' },
+                { id: 'c2', text: 'Sei diferenciar a função do Governo (política) da função da Administração (execução).' },
+                { id: 'c3', text: 'Conheço os entes da Administração Direta (União, Estados, DF e Municípios).' },
+                { id: 'c4', text: 'Entendi quais são as 4 entidades da Administração Indireta (Autarquias, Fundações, EP e SEM).' },
+                { id: 'c5', text: 'Reconheci que a finalidade precípua do Estado é a satisfação do Interesse Público.' },
               ].map(item => (
                 <div
                   key={item.id}
