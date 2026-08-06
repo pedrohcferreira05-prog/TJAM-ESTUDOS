@@ -48,6 +48,7 @@ import { StudentPortal } from './components/StudentPortal';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
+import { SiteLockedView } from './components/SiteLockedView';
 import { Week1View } from './components/Week1View';
 import { saveWeek1ContentToFirestore } from './lib/firestoreService';
 
@@ -60,6 +61,7 @@ export function App() {
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
   const [studentTab, setStudentTab] = useState<StudentTab>('dashboard');
+  const [isSiteHidden, setIsSiteHidden] = useState<boolean>(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -556,6 +558,15 @@ export function App() {
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
 
+  if (viewMode === 'student' && isSiteHidden) {
+    return (
+      <SiteLockedView
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Navigation Header */}
@@ -582,7 +593,7 @@ export function App() {
 
       {/* Main Workspace Body with Sidebar */}
       <div className="flex-1 max-w-7xl w-full mx-auto flex items-start">
-        {viewMode === 'student' && (
+        {viewMode === 'student' && !isSiteHidden && (
           <Sidebar
             currentTab={studentTab}
             onSelectTab={(tab) => {
@@ -649,6 +660,22 @@ export function App() {
             />
           ) : (
             <>
+              {/* Site Status Control Banner */}
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200">
+                <div className="flex items-center gap-2 text-xs font-bold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Site Visível Modo Aluno</span>
+                  <span className="text-amber-600 dark:text-amber-400 font-medium hidden sm:inline">• Aula de hoje concluída (Sexta-feira às 14h)</span>
+                </div>
+                <button
+                  onClick={() => setIsSiteHidden(true)}
+                  className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-950 dark:text-amber-100 font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Ocultar Site Novamente</span>
+                </button>
+              </div>
+
               {studentTab === 'dashboard' && (
                 <Dashboard
                   progress={userProgress}

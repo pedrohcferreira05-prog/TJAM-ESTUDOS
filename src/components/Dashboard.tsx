@@ -10,7 +10,8 @@ import {
   Sparkles,
   Trophy,
   Users,
-  Medal
+  Medal,
+  CheckCircle2
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -46,15 +47,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </p>
         </div>
 
-        {/* Primary CTA Box: Today's Class */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
-          <div className="space-y-1">
-            <span className="text-[10px] uppercase font-black text-emerald-200 tracking-wider">
-              Disciplina do Dia & Próxima Aula (Quinta-Feira)
+        {/* Primary CTA Box: Class Completed Notice */}
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
+          <div className="space-y-1.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Concluída • Próxima Aula: Sexta-Feira às 14h
             </span>
-            <h2 className="text-xl font-black">Informática</h2>
-            <p className="text-xs text-emerald-100 font-medium">
-              Aula 1 — Conceitos Básicos de Informática (Hardware, Software, Dado x Informação)
+            <h2 className="text-xl sm:text-2xl font-black">Aula de Hoje Finalizada com Sucesso!</h2>
+            <p className="text-xs text-emerald-100 font-medium max-w-lg">
+              Aguarde a próxima aula programada para <strong className="text-amber-300">Sexta-feira às 14:00</strong>. Bons estudos e excelente revisão!
             </p>
           </div>
 
@@ -62,8 +63,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
             onClick={() => onNavigateTab('aula-hoje')}
             className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-emerald-950 font-extrabold text-xs hover:bg-emerald-50 transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer flex-shrink-0"
           >
-            <Play className="w-4 h-4 fill-emerald-950" />
-            <span>Continuar estudando</span>
+            <Trophy className="w-4 h-4 text-emerald-800" />
+            <span>Ver Aula Concluída e Ranking</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -82,10 +83,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <div>
               <h3 className="text-base font-black text-slate-900 dark:text-white">
-                Ranking da Dupla de Estudos
+                Progresso e Ranking da Dupla
               </h3>
               <p className="text-[11px] text-slate-400">
-                Acompanhamento em tempo real do progresso da dupla
+                Acompanhamento em tempo real de progresso e atividades concluídas
               </p>
             </div>
           </div>
@@ -110,12 +111,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                    Pedro Henrique
+                    Pedro
                   </span>
                   <Medal className="w-4 h-4 text-amber-500" />
+                  <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold text-[10px]">
+                    Primeiro Lugar
+                  </span>
                 </div>
                 <span className="text-xs text-slate-500 dark:text-slate-400">
-                  Líder do ranking
+                  <strong className="text-emerald-600 dark:text-emerald-400">9%</strong> atividades concluídas
                 </span>
               </div>
             </div>
@@ -124,16 +128,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                 <div
                   className="bg-amber-500 h-full rounded-full transition-all duration-500"
-                  style={{ width: '25%' }}
+                  style={{ width: '10%' }}
                 ></div>
               </div>
               <span className="text-sm font-black text-amber-600 dark:text-amber-400 min-w-[50px] text-right">
-                25%
+                10%
               </span>
             </div>
           </div>
 
-          {/* 2° Lugar: Eduardo Mateus */}
+          {/* Eduardo Mateus */}
           <div
             className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
               isDarkMode
@@ -142,17 +146,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-300 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-black text-xs flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">
                 2º
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                    Eduardo Mateus
+                    Eduardo
                   </span>
+                  <span className="text-xs text-slate-400">(Seu perfil)</span>
                 </div>
                 <span className="text-xs text-slate-500 dark:text-slate-400">
-                  Seu perfil
+                  <strong className="text-emerald-600 dark:text-emerald-400">7%</strong> atividades concluídas
                 </span>
               </div>
             </div>
@@ -161,11 +166,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                 <div
                   className="bg-emerald-500 h-full rounded-full transition-all duration-500"
-                  style={{ width: '3%' }}
+                  style={{ width: '10%' }}
                 ></div>
               </div>
               <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 min-w-[50px] text-right">
-                3%
+                10%
               </span>
             </div>
           </div>
@@ -175,7 +180,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* Progress Section */}
       <div className="space-y-4">
         <h3 className="text-sm font-black uppercase text-slate-400 tracking-wider">
-          Seu Progresso
+          Seu Desempenho e Atividades
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -186,25 +191,25 @@ export const Dashboard: React.FC<DashboardProps> = ({
             }`}
           >
             <div className="flex items-center justify-between text-emerald-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Progresso Atual</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase">Progresso Geral</span>
               <Award className="w-5 h-5" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">3%</p>
-            <p className="text-[10px] text-slate-400">Meta do curso iniciada</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">10%</p>
+            <p className="text-[10px] text-slate-400">Progresso total no curso</p>
           </div>
 
-          {/* Disciplina Atual */}
+          {/* Atividades Concluídas */}
           <div
             className={`p-6 rounded-3xl border shadow-sm space-y-2 ${
               isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
             }`}
           >
             <div className="flex items-center justify-between text-blue-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Disciplina Atual</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase">Atividades Concluídas</span>
               <BookOpen className="w-5 h-5" />
             </div>
-            <p className="text-base font-black text-slate-900 dark:text-white truncate">Informática</p>
-            <p className="text-[10px] text-slate-400">Unidade 1 — Conceitos Básicos de Informática</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white truncate">7%</p>
+            <p className="text-[10px] text-slate-400">Exercícios e tarefas finalizadas</p>
           </div>
 
           {/* Sequência de estudos */}
