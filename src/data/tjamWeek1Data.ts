@@ -1234,6 +1234,226 @@ Nesta aula, analisamos as pegadinhas mais recorrentes nas bancas que organizam c
       institution: 'FGV'
     }],
     checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+  },
+
+  {
+    id: 'w1-inf-aula-1',
+    dayOfWeek: 'Quinta',
+    disciplineId: 'informatica',
+    disciplineName: 'Informática',
+    unitId: 'unid-inf-1',
+    unitName: 'Unidade 1 – Fundamentos de Informática',
+    chapterId: 'cap-inf-1',
+    chapterName: 'Capítulo 1 – Conceitos Básicos de Informática',
+    lessonNumber: 1,
+    title: 'Aula 1 – Conceitos Básicos de Informática',
+    description: 'Estudo dos fundamentos de informática, diferença entre dado e informação, hardware, software, periféricos e aplicações no Poder Judiciário (TJAM).',
+    professor: 'Prof. Renato da Costa',
+    estimatedMinutes: 50,
+    level: 'Fundamental',
+    objectives: [
+      'Diferenciar dado (bruto) de informação (processada).',
+      'Distinguir Hardware (físico) e Software (lógico).',
+      'Classificar periféricos de entrada, saída e mistos.',
+      'Identificar funções do sistema operacional e uso do PJe no TJAM.'
+    ],
+    competencies: ['Compreensão ampla da informática básica e sistemas eletrônicos no Poder Judiciário.'],
+    content: `
+### Conteúdo da Aula: Conceitos Básicos de Informática
+
+A informática é a ciência responsável pelo tratamento automático das informações por meio de computadores e outros dispositivos eletrônicos. Ela está presente em praticamente todas as atividades do cotidiano, sendo indispensável para a comunicação, o armazenamento de dados, a realização de cálculos, a automação de processos e a prestação de serviços públicos.
+
+No âmbito do Poder Judiciário, a informática é uma ferramenta essencial para a tramitação de processos eletrônicos, elaboração de documentos, comunicação institucional e consulta de sistemas judiciais. Por esse motivo, seu estudo é indispensável para candidatos ao cargo de Assistente Judiciário do TJAM.
+
+---
+
+### O que é informática?
+
+A palavra **informática** resulta da junção dos termos **informação** e **automática**, representando o conjunto de técnicas utilizadas para coletar, processar, armazenar e transmitir informações utilizando equipamentos computacionais.
+
+Seu principal objetivo é transformar dados em informações úteis para auxiliar pessoas e organizações na tomada de decisões.
+
+---
+
+### Dado e Informação
+
+Embora sejam frequentemente confundidos, dado e informação possuem significados distintos:
+
+* **Dado:** é um registro bruto, sem interpretação ou contexto. *Exemplo:* "25", "Manaus", "2026".
+* **Informação:** é o resultado do processamento dos dados, atribuindo-lhes significado. *Exemplo:* "Manaus registrou temperatura de 25°C hoje."
+
+Os computadores processam dados para produzir informações que auxiliam na resolução de problemas e na execução de tarefas.
+
+---
+
+### O que é um computador?
+
+O computador é um equipamento eletrônico capaz de receber dados, processá-los de acordo com instruções previamente definidas, armazenar informações e apresentar resultados ao usuário.
+
+Seu funcionamento depende da integração entre **hardware** e **software**.
+
+#### Hardware
+Hardware corresponde à parte física do computador, ou seja, todos os componentes que podem ser vistos e tocados.
+*Exemplos:* Monitor, Teclado, Mouse, Gabinete, Processador (CPU), Memória RAM, Disco SSD ou HD, Impressora, Scanner.
+Cada componente possui uma função específica para garantir o funcionamento adequado do equipamento.
+
+#### Software
+Software é a parte lógica do computador, formada pelos programas e sistemas responsáveis por controlar o hardware e permitir que o usuário realize suas atividades.
+*Exemplos:* Sistema Operacional Windows, Microsoft Word, Microsoft Excel, Navegadores de Internet, Antivírus, Sistemas do Poder Judiciário.
+*Sem software, o hardware não executa nenhuma tarefa útil.*
+
+---
+
+### Componentes básicos do computador
+
+Os principais componentes de um computador são:
+1. **CPU (Processador):** executa instruções e realiza cálculos.
+2. **Memória RAM:** armazena temporariamente os programas em execução.
+3. **HD ou SSD:** armazenam arquivos e programas de forma permanente.
+4. **Placa-mãe:** conecta todos os componentes do computador.
+5. **Fonte de alimentação:** fornece energia ao equipamento.
+
+---
+
+### Dispositivos de Entrada, Saída e Mistos
+
+* **Dispositivos de Entrada:** São equipamentos utilizados para inserir informações no computador.
+  * *Exemplos:* Teclado, Mouse, Scanner, Webcam, Microfone.
+* **Dispositivos de Saída:** Apresentam ao usuário os resultados do processamento.
+  * *Exemplos:* Monitor, Impressora, Alto-falantes, Projetor.
+* **Dispositivos de Entrada e Saída (Mistos):** Desempenham ambas as funções.
+  * *Exemplos:* Tela touchscreen, Pen drive, HD externo, Impressoras multifuncionais.
+
+---
+
+### Sistemas Operacionais
+
+O sistema operacional é o software responsável por gerenciar os recursos do computador e permitir a interação entre o usuário e o hardware.
+
+*Principais exemplos:* Windows, Linux, macOS, Android, iOS.
+
+*Entre suas funções estão:*
+* Gerenciar arquivos;
+* Controlar dispositivos;
+* Executar programas;
+* Gerenciar memória;
+* Garantir a segurança do sistema.
+
+---
+
+### Informática no Poder Judiciário
+
+No TJAM e em outros tribunais, a informática é utilizada para:
+* Processo Judicial Eletrônico (PJe);
+* Elaboração de documentos;
+* Consulta processual;
+* Comunicação institucional;
+* Armazenamento seguro de informações;
+* Atendimento ao público;
+* Gestão administrativa.
+
+O domínio dessas ferramentas é essencial para o exercício das atividades de um Assistente Judiciário.
+
+---
+
+### Dicas para concursos
+
+As bancas costumam cobrar:
+1. Diferença entre hardware e software.
+2. Conceitos de dado e informação.
+3. Dispositivos de entrada e saída.
+4. Componentes do computador.
+5. Funções da memória RAM e do armazenamento.
+6. Sistemas operacionais.
+7. Aplicações da informática no ambiente de trabalho.
+`,
+    summary: 'Informática = Informação + Automática. Dado (registro bruto) vs. Informação (dado processado). Hardware (físico) vs. Software (lógico). CPU (processamento), RAM (temporária volátil), SSD/HD (permanente). Dispositivos: Entrada (Teclado/Mouse/Scanner), Saída (Monitor/Impressora) e Mistos (Touchscreen/Pen Drive/Multifuncional). PJe e ferramentas no TJAM.',
+    glossary: [
+      { term: 'Informática', definition: 'Tratamento automático da informação através de computadores.' },
+      { term: 'Hardware', definition: 'Parte física do computador (componentes e periféricos).' },
+      { term: 'Software', definition: 'Parte lógica (sistemas operacionais, aplicativos e programas).' },
+      { term: 'Dado', definition: 'Registro bruto sem contexto ou interpretação.' },
+      { term: 'Informação', definition: 'Dado processado com significado atribuído.' }
+    ],
+    practicalExamples: [
+      { scenario: 'Servidor utiliza scanner para enviar petição física para o PJe.', explanation: 'O scanner é um dispositivo de entrada que digitaliza o documento físico.' }
+    ],
+    observations: ['Memória RAM é volátil (apaga ao desligar); SSD e HD são não-voláteis.'],
+    examTraps: [
+      { trap: 'Confundir pen drive ou tela touchscreen com dispositivos apenas de saída.', reality: 'São dispositivos de Entrada e Saída (Mistos).' }
+    ],
+    studyTips: ['Grave: Dado = Bruto; Informação = Processado. RAM = Volátil; SSD = Permanente.'],
+    bibliographicReferences: [
+      'VELLOSO, Fernando de Castro. Informática: Conceitos Básicos. Rio de Janeiro: Elsevier.',
+      'Resolução CNJ nº 185/2013 (Processo Judicial Eletrônico).'
+    ],
+    materials: [
+      { type: 'pdf', title: 'Fundamentos de Informatica - Conceitos Basicos.pdf', size: '2.4 MB' }
+    ],
+    mindMap: {
+      title: 'Mapa Mental: Fundamentos de Informática',
+      description: 'Hardware, Software, Dado/Informação e Periféricos.',
+      annotations: '',
+      version: '1.0',
+      comments: []
+    },
+    flashcards: [
+      {
+        id: 'fc-w1-inf-1',
+        disciplineId: 'informatica',
+        topicId: 'inf-1',
+        topicName: 'Conceitos Básicos',
+        front: 'Qual a diferença entre Dado e Informação em Informática?',
+        back: 'Dado é o registro bruto e descontextualizado. Informação é o dado processado com significado.'
+      },
+      {
+        id: 'fc-w1-inf-2',
+        disciplineId: 'informatica',
+        topicId: 'inf-1',
+        topicName: 'Conceitos Básicos',
+        front: 'Classifique a tela Touchscreen e a Impressora Multifuncional quanto aos dispositivos de E/S.',
+        back: 'São dispositivos de ENTRADA E SAÍDA (Mistos), pois enviam e recebem dados.'
+      }
+    ],
+    questions: [
+      {
+        id: 'q-w1-inf-1',
+        disciplineId: 'informatica',
+        topicId: 'inf-1',
+        topicName: 'Conceitos Básicos',
+        statement: 'No estudo dos conceitos fundamentais de informática, o componente responsável por executar instruções e realizar cálculos no computador é o(a):',
+        options: [
+          { id: 'a', text: 'Memória RAM' },
+          { id: 'b', text: 'CPU (Processador)' },
+          { id: 'c', text: 'Disco Rígido (HD)' },
+          { id: 'd', text: 'Placa-mãe' }
+        ],
+        correctOptionId: 'b',
+        explanation: 'A CPU (Unidade Central de Processamento) é o cérebro do computador, executando instruções e cálculos.',
+        difficulty: 'fácil',
+        year: 2026,
+        institution: 'FGV'
+      },
+      {
+        id: 'q-w1-inf-2',
+        disciplineId: 'informatica',
+        topicId: 'inf-1',
+        topicName: 'Conceitos Básicos',
+        statement: 'Assinale a alternativa que apresenta exclusivamente dispositivos de entrada de dados em um computador:',
+        options: [
+          { id: 'a', text: 'Teclado, Mouse e Scanner' },
+          { id: 'b', text: 'Monitor, Impressora e Alto-falantes' },
+          { id: 'c', text: 'Pen drive, HD externo e Touchscreen' },
+          { id: 'd', text: 'CPU, RAM e Placa-mãe' }
+        ],
+        correctOptionId: 'a',
+        explanation: 'Teclado, Mouse e Scanner são dispositivos exclusivamente de entrada de dados.',
+        difficulty: 'fácil',
+        year: 2026,
+        institution: 'FGV'
+      }
+    ],
+    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
   }
 ];
 

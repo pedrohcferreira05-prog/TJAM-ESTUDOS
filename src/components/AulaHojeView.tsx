@@ -33,6 +33,9 @@ interface AulaHojeViewProps {
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
 export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
+  // Selected Subject State: 'informatica' (default for current lesson) or 'direito_admin'
+  const [selectedSubject, setSelectedSubject] = useState<'informatica' | 'direito_admin'>('informatica');
+
   // Navigation inside lesson steps
   const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('video');
   
@@ -84,8 +87,223 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
 
-  // Lesson Content Data - Wednesday Lesson (Unidade 1 - Administração Pública: Conceito e Finalidade)
-  const flashcardsData = [
+  // Informática Flashcards Data
+  const infFlashcardsData = [
+    {
+      q: 'O que significa a palavra "Informática"?',
+      a: 'Resulta da junção de INFORMAÇÃO + AUTOMÁTICA, significando o tratamento automático da informação por computadores.'
+    },
+    {
+      q: 'Qual a diferença entre Dado e Informação em informática?',
+      a: 'Dado é o registro bruto e sem contexto (ex: "25", "Manaus"). Informação é o dado processado que ganha significado (ex: "Manaus registrou 25°C hoje").'
+    },
+    {
+      q: 'O que é Hardware e Software?',
+      a: 'Hardware é a parte física (CPU, RAM, SSD, Monitor). Software é a parte lógica (Sistemas Operacionais, Word, PJe).'
+    },
+    {
+      q: 'Por que a memória RAM é dita volátil?',
+      a: 'Porque seu conteúdo é apagado quando o computador é desligado. É usada apenas temporariamente durante a execução de programas.'
+    },
+    {
+      q: 'Como são classificados o Pen Drive, a Tela Touchscreen e a Impressora Multifuncional?',
+      a: 'São Dispositivos de ENTRADA E SAÍDA (Mistos), pois enviam e recebem dados.'
+    },
+    {
+      q: 'Qual a principal função do Sistema Operacional?',
+      a: 'Gerenciar os recursos do hardware, controlar arquivos e memória e permitir a interação entre o usuário e o computador.'
+    }
+  ];
+
+  // Informática Múltipla Escolha (1-10)
+  const infMcQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. A informática pode ser definida como:',
+      alternativas: [
+        'A ciência que estuda apenas computadores.',
+        'A ciência que trata do processamento automático da informação por meio de computadores e dispositivos eletrônicos.',
+        'O conjunto de programas instalados em um computador.',
+        'O estudo exclusivo da Internet.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A informática é a ciência encarregada do tratamento automático da informação utilizando computadores e sistemas eletrônicos.'
+    },
+    {
+      id: 2,
+      enunciado: '2. O que é um dado?',
+      alternativas: [
+        'Uma informação já interpretada.',
+        'Um registro bruto, sem significado por si só.',
+        'Um documento digital.',
+        'Um programa de computador.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Dado é um registro bruto, isolado e sem significado contextual imediato.'
+    },
+    {
+      id: 3,
+      enunciado: '3. Informação é:',
+      alternativas: [
+        'Um conjunto de programas.',
+        'Um equipamento eletrônico.',
+        'O resultado do processamento de dados, atribuindo-lhes significado.',
+        'Um tipo de hardware.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Informação é o dado devidamente processado, organizado e contextualizado para gerar conhecimento.'
+    },
+    {
+      id: 4,
+      enunciado: '4. Hardware corresponde:',
+      alternativas: [
+        'Aos programas instalados no computador.',
+        'À parte física do computador.',
+        'À Internet.',
+        'Ao sistema operacional.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Hardware representa toda a estrutura e componentes físicos (palpáveis) do computador.'
+    },
+    {
+      id: 5,
+      enunciado: '5. Software é:',
+      alternativas: [
+        'A parte física do computador.',
+        'O conjunto de programas e sistemas que permitem o funcionamento do computador.',
+        'Um dispositivo de entrada.',
+        'Um equipamento eletrônico.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Software corresponde à parte lógica, isto é, aos programas, rotinas e instruções operacionais.'
+    },
+    {
+      id: 6,
+      enunciado: '6. Qual componente é considerado o "cérebro" do computador?',
+      alternativas: [
+        'HD.',
+        'Monitor.',
+        'CPU (Processador).',
+        'Mouse.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A CPU (Unidade Central de Processamento) é o cérebro do computador, executando os cálculos e comandos.'
+    },
+    {
+      id: 7,
+      enunciado: '7. A memória RAM tem como principal função:',
+      alternativas: [
+        'Armazenar arquivos permanentemente.',
+        'Armazenar temporariamente os programas e dados em uso.',
+        'Executar programas.',
+        'Controlar a energia do computador.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A memória RAM é volátil e serve para armazenar temporariamente os dados e programas durante a execução.'
+    },
+    {
+      id: 8,
+      enunciado: '8. Qual dos dispositivos abaixo é de entrada?',
+      alternativas: [
+        'Monitor.',
+        'Impressora.',
+        'Mouse.',
+        'Caixa de som.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O mouse envia comandos de movimento e clique para o computador, sendo um periférico de entrada.'
+    },
+    {
+      id: 9,
+      enunciado: '9. Qual dos dispositivos abaixo é de saída?',
+      alternativas: [
+        'Scanner.',
+        'Webcam.',
+        'Monitor.',
+        'Teclado.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O monitor exibe visualmente os dados processados para o usuário, sendo um periférico de saída.'
+    },
+    {
+      id: 10,
+      enunciado: '10. Qual software gerencia os recursos do computador?',
+      alternativas: [
+        'Microsoft Word.',
+        'Sistema Operacional.',
+        'Navegador de Internet.',
+        'Microsoft Excel.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O Sistema Operacional (ex: Windows, Linux) é o programa fundamental que gerencia o hardware e os demais programas.'
+    }
+  ];
+
+  // Informática Verdadeiro ou Falso (11-15)
+  const infTfQuestionsData = [
+    {
+      id: 11,
+      enunciado: '11. O teclado é um dispositivo de entrada.',
+      correta: true,
+      explicacao: '✅ Verdadeiro. O teclado é um dispositivo de entrada que envia dados alfanuméricos ao sistema.'
+    },
+    {
+      id: 12,
+      enunciado: '12. O HD e o SSD armazenam dados permanentemente.',
+      correta: true,
+      explicacao: '✅ Verdadeiro. HD e SSD são memórias não-voláteis, que preservam os dados gravados mesmo quando desligados.'
+    },
+    {
+      id: 13,
+      enunciado: '13. Hardware e software são a mesma coisa.',
+      correta: false,
+      explicacao: '❌ Falso. Hardware é a parte física (equipamentos) e software é a parte lógica (programas).'
+    },
+    {
+      id: 14,
+      enunciado: '14. O Windows é um sistema operacional.',
+      correta: true,
+      explicacao: '✅ Verdadeiro. O Windows é um dos sistemas operacionais mais utilizados no mundo e em tribunais como o TJAM.'
+    },
+    {
+      id: 15,
+      enunciado: '15. A CPU é responsável por executar instruções e processar dados.',
+      correta: true,
+      explicacao: '✅ Verdadeiro. A CPU processa todas as ordens, cálculos e algoritmos exigidos pelos softwares.'
+    }
+  ];
+
+  // Informática Discursivas (16-20)
+  const infDiscursiveQuestionsData = [
+    {
+      id: 16,
+      enunciado: '16. Explique a diferença entre hardware e software.',
+      respostaEsperada: 'Gabarito oficial: Hardware é a parte física (ex: CPU, memória, monitor, teclado). Software é a parte lógica (programas, sistemas operacionais e aplicativos, como Windows e PJe).'
+    },
+    {
+      id: 17,
+      enunciado: '17. Diferencie dado e informação.',
+      respostaEsperada: 'Gabarito oficial: Dado é um registro bruto e isolado sem significado próprio ("25"). Informação é o dado processado, organizado e contextualizado de forma a fornecer sentido útil ("Manaus registrou 25°C hoje").'
+    },
+    {
+      id: 18,
+      enunciado: '18. Qual é a função da CPU em um computador?',
+      respostaEsperada: 'Gabarito oficial: A CPU (Unidade Central de Processamento) atua como o cérebro do computador, sendo responsável por buscar, interpretar e executar as instruções dos programas e efetuar os cálculos.'
+    },
+    {
+      id: 19,
+      enunciado: '19. Cite três dispositivos de entrada e três dispositivos de saída.',
+      respostaEsperada: 'Gabarito oficial: Dispositivos de Entrada: Teclado, Mouse e Scanner. Dispositivos de Saída: Monitor, Impressora e Caixa de Som.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Explique a importância da informática para o trabalho de um Assistente Judiciário no TJAM.',
+      respostaEsperada: 'Gabarito oficial: A informática é essencial para o manuseio e tramitação dos autos no PJe (Processo Judicial Eletrônico), elaboração de minutas de pareceres e decisões, realização de audiências por videoconferência e consulta ágil aos sistemas da justiça.'
+    }
+  ];
+
+  // Active Flashcards & Questions
+  const flashcardsData = selectedSubject === 'informatica' ? infFlashcardsData : [
     {
       q: 'O que é a Administração Pública em sentido subjetivo (formal)?',
       a: 'É o conjunto de órgãos, entidades e agentes públicos responsáveis pela atividade administrativa.'
@@ -293,6 +511,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
+  // Active Questions Selection
+  const activeMcQuestions = selectedSubject === 'informatica' ? infMcQuestionsData : questionsData;
+  const activeTfQuestions = selectedSubject === 'informatica' ? infTfQuestionsData : tfQuestionsData;
+  const activeDiscursiveQuestions = selectedSubject === 'informatica' ? infDiscursiveQuestionsData : discursiveQuestionsData;
+
   const toggleChecklist = (key: string) => {
     setChecklist(prev => ({ ...prev, [key]: !prev[key] }));
   };
@@ -310,34 +533,60 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-16">
+      {/* Subject Switcher Bar */}
+      <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+        <button
+          onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[220px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'informatica'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <Sparkles className="w-4 h-4 text-amber-300" />
+          <span>Aula de Hoje: Informática (Quinta-Feira)</span>
+        </button>
+        <button
+          onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[220px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'direito_admin'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>Aula de Quarta-Feira: Direito Administrativo</span>
+        </button>
+      </div>
+
       {/* Top Breadcrumb & Metadata Header */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-          <span>Direito Administrativo</span>
+          <span>{selectedSubject === 'informatica' ? 'Informática' : 'Direito Administrativo'}</span>
           <span>•</span>
-          <span>Unidade 1 — Administração Pública</span>
+          <span>{selectedSubject === 'informatica' ? 'Unidade 1 — Fundamentos de Informática' : 'Unidade 1 — Administração Pública'}</span>
           <span>•</span>
-          <span>Capítulo 1 — Conceito, Princípios e Poderes</span>
+          <span>{selectedSubject === 'informatica' ? 'Capítulo 1 — Conceitos Básicos de Informática' : 'Capítulo 1 — Conceito, Princípios e Poderes'}</span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              Aula de Hoje (Quarta-feira)
+              {selectedSubject === 'informatica' ? 'Aula de Hoje (Quinta-feira)' : 'Aula de Quarta-feira'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Aula 1 — Administração Pública: Conceito e Finalidade
+              {selectedSubject === 'informatica' ? 'Aula 1 — Conceitos Básicos de Informática' : 'Aula 1 — Administração Pública: Conceito e Finalidade'}
             </h1>
           </div>
 
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Clock className="w-3.5 h-3.5 text-emerald-500" />
-              45 min
+              {selectedSubject === 'informatica' ? '45-60 min' : '45 min'}
             </span>
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              Essencial
+              Iniciante / Essencial
             </span>
           </div>
         </div>
@@ -449,7 +698,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  Unidade 1 — Administração Pública: Conceito e Finalidade
+                  {selectedSubject === 'informatica'
+                    ? 'Unidade 1 — Conceitos Básicos de Informática'
+                    : 'Unidade 1 — Administração Pública: Conceito e Finalidade'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos
@@ -467,11 +718,36 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/5KTWPjRLcLo?autoplay=0&rel=0"
-                title="Vídeo Aula - Administração Pública: Conceito e Finalidade"
+                src={
+                  selectedSubject === 'informatica'
+                    ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
+                    : 'https://www.youtube.com/embed/5KTWPjRLcLo?autoplay=0&rel=0'
+                }
+                title={
+                  selectedSubject === 'informatica'
+                    ? 'Vídeo Aula - Conceitos Básicos de Informática'
+                    : 'Vídeo Aula - Administração Pública: Conceito e Finalidade'
+                }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
+            </div>
+
+            {/* Direct Link to YouTube */}
+            <div className="flex justify-end">
+              <a
+                href={
+                  selectedSubject === 'informatica'
+                    ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
+                    : 'https://www.youtube.com/watch?v=5KTWPjRLcLo'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 text-xs font-bold transition-all"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Abrir no YouTube</span>
+              </a>
             </div>
 
             {/* Video Details & Quick Next Actions */}
@@ -480,24 +756,49 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <h3 className="text-xs font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
                   <Lightbulb className="w-4 h-4 text-emerald-500" /> O que você vai aprender neste vídeo:
                 </h3>
-                <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Conceito da Administração Pública em sentido subjetivo (formal) e objetivo (material).</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Distinção essencial entre Governo (função política) e Administração Pública (função técnica).</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Estrutura da Administração Direta (União, Estados, DF, Municípios) e Indireta (Autarquias, Fundações, EP e SEM).</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>Supremacia e indisponibilidade do Interesse Público e serviços essenciais.</span>
-                  </li>
-                </ul>
+                {selectedSubject === 'informatica' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Conceito de Informática (Informação + Automática) e o papel do computador.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Diferença entre Dado (registro bruto) e Informação (dado contextualizado).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Divisão entre Hardware (físico) e Software (lógico), com exemplos.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Classificação de periféricos: Entrada, Saída e Entrada/Saída (Mistos).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Sistemas Operacionais e informática aplicada ao Poder Judiciário (PJe).</span>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Conceito da Administração Pública em sentido subjetivo (formal) e objetivo (material).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Distinção essencial entre Governo (função política) e Administração Pública (função técnica).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Estrutura da Administração Direta (União, Estados, DF, Municípios) e Indireta (Autarquias, Fundações, EP e SEM).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Supremacia e indisponibilidade do Interesse Público e serviços essenciais.</span>
+                    </li>
+                  </ul>
+                )}
               </div>
 
               <div className="space-y-3 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col justify-between">
@@ -509,7 +810,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     Pronto para praticar?
                   </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Após o vídeo, acesse o texto completo, mapa mental ou responda as 20 questões inéditas de fixação.
+                    Após o vídeo, acesse o texto completo, mapa mental ou responda as questões de fixação.
                   </p>
                 </div>
 
@@ -527,7 +828,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     className="w-full py-2.5 px-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs hover:bg-slate-800 dark:hover:bg-slate-700 cursor-pointer transition-all flex items-center justify-center gap-2"
                   >
                     <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Fazer 20 Questões (Fixação)</span>
+                    <span>Fazer Questões de Fixação</span>
                   </button>
                 </div>
               </div>
@@ -538,7 +839,290 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans">
+        selectedSubject === 'informatica' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Objetivos da Aula de Informática */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Informática
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Ao concluir esta aula, você será capaz de:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Compreender o conceito de informática (Informação + Automática).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar Dado (registro bruto) de Informação (dado processado com contexto).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Distinguir Hardware (físico) de Software (lógico).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Classificar os periféricos de Entrada, Saída e Entrada/Saída (Mistos).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Entender o papel do Sistema Operacional e das ferramentas de TI no TJAM (PJe).</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Seção 1: O que é Informática */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. O que é Informática?
+              </h2>
+              <p className="text-sm">
+                A <strong>informática</strong> é a ciência responsável pelo tratamento automático das informações por meio de computadores e outros dispositivos eletrônicos. Ela está presente em praticamente todas as atividades do cotidiano, sendo indispensável para a comunicação, o armazenamento de dados, a realização de cálculos, a automação de processos e a prestação de serviços públicos.
+              </p>
+              <p className="text-sm">
+                A palavra <strong>informática</strong> resulta da junção dos termos <strong>informação</strong> e <strong>automática</strong>, representando o conjunto de técnicas utilizadas para coletar, processar, armazenar e transmitir informações utilizando equipamentos computacionais.
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-100'}`}>
+                <p className="text-xs text-emerald-950 dark:text-emerald-300 font-bold">
+                  🎯 Principal Objetivo: Transformar dados em informações úteis para auxiliar pessoas e organizações na tomada de decisões e na execução de tarefas cotidianas.
+                </p>
+              </div>
+              <p className="text-xs text-slate-500 italic pt-1">
+                No âmbito do Poder Judiciário, a informática é uma ferramenta essencial para a tramitação de processos eletrônicos, elaboração de documentos, comunicação institucional e consulta de sistemas judiciais. Por esse motivo, seu estudo é indispensável para candidatos ao cargo de Assistente Judiciário do TJAM.
+              </p>
+            </section>
+
+            {/* Seção 2: Dado e Informação */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Dado e Informação
+              </h2>
+              <p className="text-sm">
+                Embora sejam frequentemente utilizados como sinônimos no cotidiano, <strong>dado</strong> e <strong>informação</strong> possuem significados distintos em informática e em provas de concurso público:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                    Dado (Registro Bruto)
+                  </span>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
+                    Sem Contexto / Sem Significado Próprio
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É um elemento bruto, um número, palavra ou símbolo isolado que, por si só, não transmite um conhecimento claro.
+                  </p>
+                  <div className="mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-700 dark:text-amber-300">
+                    Exemplos: "25", "Manaus", "2026".
+                  </div>
+                </div>
+
+                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                    Informação (Dado Processado)
+                  </span>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
+                    Com Contexto / Com Significado Útil
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É o resultado do processamento, organização e contextualização dos dados, permitindo a compreensão e tomada de decisão.
+                  </p>
+                  <div className="mt-3 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
+                    Exemplo: "Manaus registrou temperatura de 25°C hoje."
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 3: O que é um Computador? (Hardware e Software) */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. O que é um Computador? (Hardware x Software)
+              </h2>
+              <p className="text-sm">
+                O <strong>computador</strong> é uma máquina eletrônica capaz de receber dados, processá-los de acordo com um conjunto de instruções, armazenar informações e produzir resultados de forma rápida e precisa.
+              </p>
+              <p className="text-sm">
+                Todo sistema computacional é dividido em <strong>duas partes fundamentais</strong>:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
+                  <h3 className="text-sm font-black text-blue-800 dark:text-blue-400">
+                    🖥️ Hardware (Parte Física)
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Compreende todos os componentes mecânicos, elétricos e eletrônicos que compõem o computador — aquilo que é tangível (pode ser tocado).
+                  </p>
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
+                    <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                      Monitor, Teclado, Mouse, Processador (CPU), Memória RAM, Disco SSD / HD, Impressora e Scanner.
+                    </p>
+                  </div>
+                </div>
+
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/50 border-purple-200'}`}>
+                  <h3 className="text-sm font-black text-purple-800 dark:text-purple-400">
+                    ⚙️ Software (Parte Lógica)
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Compreende o conjunto de programas, instruções, algoritmos e dados que orientam o hardware sobre como executar cada tarefa.
+                  </p>
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
+                    <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                      Windows, Linux, Microsoft Word, Microsoft Excel, Navegadores (Chrome/Edge), Antivírus e Sistema PJe do TJAM.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 4: Componentes Básicos do Computador */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Componentes Básicos do Computador
+              </h2>
+              <p className="text-sm">
+                Os componentes principais que garantem o processamento e funcionamento do computador são:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">CPU (Processador)</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Unidade Central de Processamento</h4>
+                  <p className="text-slate-600 dark:text-slate-300">É o "cérebro" do computador, responsável por executar as instruções dos programas e realizar cálculos aritméticos e lógicos.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">Memória RAM</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Memória de Acesso Aleatório (Volátil)</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Armazena temporariamente as informações que estão sendo utilizadas no momento. Se o computador for desligado, os dados da RAM são perdidos.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">Dispositivos de Armazenamento (HD / SSD)</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Armazenamento Permanente (Não-Volátil)</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Guardam arquivos, documentos e programas de forma permanente, preservando-os mesmo quando o computador é desligado.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">Placa-Mãe & Fonte</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Integração e Alimentação Elétrica</h4>
+                  <p className="text-slate-600 dark:text-slate-300">A placa-mãe interconecta fisicamente todos os componentes do sistema. A fonte de alimentação converte a energia elétrica para uso dos circuitos.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 5: Dispositivos de Entrada, Saída e Mistos */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Dispositivos de Entrada, Saída e Mistos
+              </h2>
+              <p className="text-sm">
+                Os periféricos de entrada e saída permitem a comunicação entre o usuário e o computador:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black uppercase text-[10px]">
+                    Dispositivos de Entrada
+                  </span>
+                  <p className="text-slate-600 dark:text-slate-300">Permitem a inserção de dados e comandos para o computador.</p>
+                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
+                    <li>• Teclado & Mouse</li>
+                    <li>• Scanner</li>
+                    <li>• Webcam & Microfone</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-black uppercase text-[10px]">
+                    Dispositivos de Saída
+                  </span>
+                  <p className="text-slate-600 dark:text-slate-300">Exibem ou fornecem os resultados do processamento ao usuário.</p>
+                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
+                    <li>• Monitor / Tela</li>
+                    <li>• Impressora simples</li>
+                    <li>• Alto-falantes & Projetor</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <span className="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-black uppercase text-[10px]">
+                    Entrada e Saída (Mistos)
+                  </span>
+                  <p className="text-slate-600 dark:text-slate-300">Realizam ambas as funções: enviam e recebem dados simultaneamente.</p>
+                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
+                    <li>• Tela Touchscreen</li>
+                    <li>• Pen Drive & HD Externo</li>
+                    <li>• Impressora Multifuncional</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 6: Sistemas Operacionais & Informática no Poder Judiciário */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Sistemas Operacionais & Informática no Poder Judiciário (TJAM)
+              </h2>
+              <p className="text-sm">
+                O <strong>Sistema Operacional (SO)</strong> é o programa principal responsável por gerenciar o hardware do computador, controlar a memória, administrar arquivos e permitir a execução de outros aplicativos (exemplos: Windows, Linux, macOS, Android, iOS).
+              </p>
+              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/40 border-emerald-200'}`}>
+                <h3 className="text-sm font-black text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+                  ⚖️ Aplicação da Informática para o Assistente Judiciário do TJAM
+                </h3>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  No Tribunal de Justiça do Amazonas, o servidor público utiliza ferramentas de informática diariamente para garantir a celeridade dos processos judiciais:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Processo Judicial Eletrônico (PJe)</span>
+                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Elaboração de despachos e minuta de atos</span>
+                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Realização de audiências por videoconferência</span>
+                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Consulta a sistemas integrados e diário oficial</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 7: Resumo Rápido & Dica FGV */}
+            <section className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-2 text-xs text-slate-700 dark:text-slate-300">
+              <h3 className="font-black text-amber-800 dark:text-amber-400 uppercase text-[11px] flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-500" /> Dicas de Ouro para a Prova da FGV / TJAM:
+              </h3>
+              <ul className="space-y-1 list-disc pl-4 font-medium">
+                <li><strong>Hardware x Software:</strong> Lembre-se que o hardware é palpável (físico) e o software é o programa/instrução (lógico).</li>
+                <li><strong>Dado x Informação:</strong> O dado é neutro e isolado ("25"); a informação é processada e traz significado ("25°C em Manaus").</li>
+                <li><strong>RAM volátil:</strong> A memória RAM perde os dados ao desligar o PC. HD e SSD mantêm os arquivos salvos permanentemente.</li>
+                <li><strong>Periféricos Mistos:</strong> Fique atento às armadilhas com telas Touchscreen, Pen Drives e Impressoras Multifuncionais (são Entrada e Saída).</li>
+              </ul>
+            </section>
+
+            {/* Action Bottom Controls */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
+              <button
+                onClick={() => setActiveTab('mapa')}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Ver Mapa Mental</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleMarkAsCompleted}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Marcar Aula como Concluída</span>
+              </button>
+            </div>
+          </article>
+        ) : (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans">
           {/* Objetivos */}
           <section
             className={`p-6 rounded-3xl border ${
@@ -819,6 +1403,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </button>
           </div>
         </article>
+        )
       )}
 
       {/* TAB 2: MAPA MENTAL */}
@@ -830,10 +1415,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Esquema Visual de Fixação
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                Mapa Mental — Capítulo 1: Conceitos Fundamentais da Constituição
+                {selectedSubject === 'informatica'
+                  ? 'Mapa Mental — Capítulo 1: Conceitos Básicos de Informática'
+                  : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Constituição'}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Resumo visual dos conceitos, finalidade, importância, supremacia e aplicabilidade
+                {selectedSubject === 'informatica'
+                  ? 'Esquema visual sobre Informática, Dado x Informação, Hardware, Software e Periféricos'
+                  : 'Resumo visual dos conceitos, finalidade, importância, supremacia e aplicabilidade'}
               </p>
             </div>
 
@@ -841,7 +1430,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="relative group max-w-3xl mx-auto rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-md">
               <img
                 src={mindMapImg}
-                alt="Mapa Mental - Capítulo 1: Conceitos Fundamentais da Constituição"
+                alt={
+                  selectedSubject === 'informatica'
+                    ? 'Mapa Mental - Conceitos Básicos de Informática'
+                    : 'Mapa Mental - Capítulo 1: Conceitos Fundamentais da Constituição'
+                }
                 referrerPolicy="no-referrer"
                 onClick={() => setIsImageModalOpen(true)}
                 className="w-full h-auto object-contain cursor-zoom-in hover:scale-[1.01] transition-transform duration-300"
@@ -859,7 +1452,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Palavras-Chave & Download Controls */}
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap justify-center gap-2">
-                {['Constituição', 'Norma Suprema', 'Direitos Fundamentais', 'Organização do Estado', 'Supremacia Constitucional', 'CF/1988', 'Estado Democrático de Direito'].map(kw => (
+                {(selectedSubject === 'informatica'
+                  ? ['Informática', 'Hardware', 'Software', 'Dado x Informação', 'CPU e RAM', 'Periféricos', 'PJe TJAM']
+                  : ['Constituição', 'Norma Suprema', 'Direitos Fundamentais', 'Organização do Estado', 'Supremacia Constitucional', 'CF/1988', 'Estado Democrático de Direito']
+                ).map(kw => (
                   <span key={kw} className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[11px] font-bold text-slate-600 dark:text-slate-400">
                     #{kw}
                   </span>
@@ -1087,7 +1683,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span>Part I — Questões de Múltipla Escolha (1 a 10)</span>
                 </div>
 
-                {questionsData.map((q, qIndex) => (
+                {activeMcQuestions.map((q, qIndex) => (
                   <div
                     key={q.id}
                     className={`p-6 rounded-3xl border space-y-4 ${
@@ -1158,7 +1754,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span>Part II — Verdadeiro ou Falso (11 a 15)</span>
                 </div>
 
-                {tfQuestionsData.map((q) => (
+                {activeTfQuestions.map((q) => (
                   <div
                     key={q.id}
                     className={`p-6 rounded-3xl border space-y-4 ${
@@ -1236,7 +1832,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span>Part III — Questões Discursivas (16 a 20)</span>
                 </div>
 
-                {discursiveQuestionsData.map((q) => (
+                {activeDiscursiveQuestions.map((q) => (
                   <div
                     key={q.id}
                     className={`p-6 rounded-3xl border space-y-4 ${
@@ -1294,32 +1890,59 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Síntese Rápida
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                Resumo da Aula 1
+                {selectedSubject === 'informatica'
+                  ? 'Resumo — Conceitos Básicos de Informática'
+                  : 'Resumo — Administração Pública & Constituição'}
               </h2>
             </div>
 
-            <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                <span className="text-emerald-500 font-bold">•</span>
-                <span>A Constituição é a <strong>lei mais importante e suprema</strong> do país.</span>
-              </li>
-              <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                <span className="text-emerald-500 font-bold">•</span>
-                <span><strong>Nenhuma outra norma</strong> (lei, decreto, ato) pode contrariá-la sem padece de inconstitucionalidade.</span>
-              </li>
-              <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                <span className="text-emerald-500 font-bold">•</span>
-                <span>Organiza politicamente o Estado brasileiro e a divisão dos Três Poderes.</span>
-              </li>
-              <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                <span className="text-emerald-500 font-bold">•</span>
-                <span>Define e assegura os <strong>direitos e garantias fundamentais</strong> do cidadão.</span>
-              </li>
-              <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                <span className="text-emerald-500 font-bold">•</span>
-                <span>Limita o poder estatal evitando arbitrariedades e garantindo a segurança jurídica.</span>
-              </li>
-            </ul>
+            {selectedSubject === 'informatica' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Informática:</strong> Ciência que trata o processamento automático da informação por computadores (Informação + Automática).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Dado vs. Informação:</strong> Dado é o registro bruto e isolado sem significado; Informação é o dado processado com contexto e utilidade.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Hardware vs. Software:</strong> Hardware é a estrutura física (palpável); Software é a parte lógica (programas e instruções).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Componentes e Memória:</strong> A CPU processa dados, a RAM é a memória volátil de trabalho e o SSD/HD faz o armazenamento permanente.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Aplicação no TJAM:</strong> O Assistente Judiciário utiliza o Sistema Operacional e sistemas especializados como o PJe para a gestão de processos digitais.</span>
+                </li>
+              </ul>
+            ) : (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span>A Constituição é a <strong>lei mais importante e suprema</strong> do país.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Nenhuma outra norma</strong> (lei, decreto, ato) pode contrariá-la sem padece de inconstitucionalidade.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span>Organiza politicamente o Estado brasileiro e a divisão dos Três Poderes.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span>Define e assegura os <strong>direitos e garantias fundamentais</strong> do cidadão.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span>Limita o poder estatal evitando arbitrariedades e garantindo a segurança jurídica.</span>
+                </li>
+              </ul>
+            )}
 
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-center">
               <button

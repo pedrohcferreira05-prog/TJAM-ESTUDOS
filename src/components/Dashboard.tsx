@@ -50,11 +50,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
           <div className="space-y-1">
             <span className="text-[10px] uppercase font-black text-emerald-200 tracking-wider">
-              Disciplina do Dia & Próxima Aula
+              Disciplina do Dia & Próxima Aula (Quinta-Feira)
             </span>
-            <h2 className="text-xl font-black">Direito Administrativo</h2>
+            <h2 className="text-xl font-black">Informática</h2>
             <p className="text-xs text-emerald-100 font-medium">
-              Aula 1 — Administração Pública: Conceito e Finalidade
+              Aula 1 — Conceitos Básicos de Informática (Hardware, Software, Dado x Informação)
             </p>
           </div>
 
@@ -203,8 +203,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span className="text-[11px] font-bold text-slate-400 uppercase">Disciplina Atual</span>
               <BookOpen className="w-5 h-5" />
             </div>
-            <p className="text-base font-black text-slate-900 dark:text-white truncate">Direito Administrativo</p>
-            <p className="text-[10px] text-slate-400">Unidade 1 — Administração Pública</p>
+            <p className="text-base font-black text-slate-900 dark:text-white truncate">Informática</p>
+            <p className="text-[10px] text-slate-400">Unidade 1 — Conceitos Básicos de Informática</p>
           </div>
 
           {/* Sequência de estudos */}

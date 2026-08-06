@@ -356,6 +356,206 @@ const SPECIFIC_TOPIC_CONTENTS: Record<string, TopicFullStudyContent> = {
       'Lei nº 14.133/2021 (Nova Lei de Licitações e Contratos Administrativos).',
       'Manuais de Licitações do Tribunal de Contas da União (TCU).'
     ]
+  },
+
+  // --- INFORMÁTICA ---
+  'inf-1': {
+    topicId: 'inf-1',
+    topicName: 'Conceitos Básicos',
+    disciplineId: 'informatica',
+    disciplineName: 'Informática',
+    theoreticalModules: [
+      {
+        title: 'Unidade 1 – Fundamentos de Informática | Capítulo 1 – Conceitos Básicos de Informática | Aula 1 – Conceitos Básicos de Informática',
+        content: `### 1. Introdução à Informática
+
+A informática é a ciência responsável pelo tratamento automático das informações por meio de computadores e outros dispositivos eletrônicos. Ela está presente em praticamente todas as atividades do cotidiano, sendo indispensável para a comunicação, o armazenamento de dados, a realização de cálculos, a automação de processos e a prestação de serviços públicos.
+
+No âmbito do Poder Judiciário, a informática é uma ferramenta essencial para a tramitação de processos eletrônicos, elaboração de documentos, comunicação institucional e consulta de sistemas judiciais. Por esse motivo, seu estudo é indispensável para candidatos ao cargo de Assistente Judiciário do TJAM.
+
+---
+
+### 2. O que é Informática?
+
+A palavra **informática** resulta da junção dos termos **informação** e **automática**, representando o conjunto de técnicas utilizadas para coletar, processar, armazenar e transmitir informações utilizando equipamentos computacionais.
+
+Seu principal objetivo é **transformar dados em informações úteis** para auxiliar pessoas e organizações na tomada de decisões.
+
+---
+
+### 3. Dado e Informação
+
+Embora sejam frequentemente confundidos, dado e informação possuem significados distintos:
+
+* **Dado:** é um registro bruto, sem interpretação ou contexto. *Exemplo:* "25", "Manaus", "2026".
+* **Informação:** é o resultado do processamento dos dados, atribuindo-lhes significado. *Exemplo:* "Manaus registrou temperatura de 25°C hoje."
+
+Os computadores processam dados para produzir informações que auxiliam na resolução de problemas e na execução de tarefas.
+
+---
+
+### 4. O que é um Computador?
+
+O computador é um equipamento eletrônico capaz de receber dados, processá-los de acordo com instruções previamente definidas, armazenar informações e apresentar resultados ao usuário.
+
+Seu funcionamento depende da integração entre **hardware** e **software**.
+
+#### Hardware
+Hardware corresponde à parte física do computador, ou seja, todos os componentes que podem ser vistos e tocados.
+*Exemplos:* Monitor, Teclado, Mouse, Gabinete, Processador (CPU), Memória RAM, Disco SSD ou HD, Impressora, Scanner.
+Cada componente possui uma função específica para garantir o funcionamento adequado do equipamento.
+
+#### Software
+Software é a parte lógica do computador, formada pelos programas e sistemas responsáveis por controlar o hardware e permitir que o usuário realize suas atividades.
+*Exemplos:* Sistema Operacional Windows, Microsoft Word, Microsoft Excel, Navegadores de Internet, Antivírus, Sistemas do Poder Judiciário (PJe).
+*Sem software, o hardware não executa nenhuma tarefa útil.*
+
+---
+
+### 5. Componentes Básicos do Computador
+
+Os principais componentes de um computador são:
+1. **CPU (Processador):** executa instruções e realiza cálculos.
+2. **Memória RAM:** armazena temporariamente os programas em execução.
+3. **HD ou SSD:** armazenam arquivos e programas de forma permanente.
+4. **Placa-mãe:** conecta todos os componentes do computador.
+5. **Fonte de alimentação:** fornece energia ao equipamento.
+
+---
+
+### 6. Dispositivos e Periféricos
+
+* **Dispositivos de Entrada:** São equipamentos utilizados para inserir informações no computador.
+  * *Exemplos:* Teclado, Mouse, Scanner, Webcam, Microfone.
+* **Dispositivos de Saída:** Apresentam ao usuário os resultados do processamento.
+  * *Exemplos:* Monitor, Impressora, Alto-falantes, Projetor.
+* **Dispositivos de Entrada e Saída (Mistos):** Desempenham ambas as funções (enviam e recebem dados).
+  * *Exemplos:* Tela touchscreen, Pen drive, HD externo, Impressoras multifuncionais.
+
+---
+
+### 7. Sistemas Operacionais
+
+O sistema operacional é o software responsável por gerenciar os recursos do computador e permitir a interação entre o usuário e o hardware.
+
+*Principais exemplos:* Windows, Linux, macOS, Android, iOS.
+
+*Entre suas funções principais estão:*
+* Gerenciar arquivos e diretórios;
+* Controlar dispositivos de entrada/saída;
+* Executar programas e processos;
+* Gerenciar memória principal (RAM);
+* Garantir a segurança do sistema.
+
+---
+
+### 8. Informática no Poder Judiciário
+
+No TJAM e em outros tribunais, a informática é utilizada para:
+* Processo Judicial Eletrônico (PJe);
+* Elaboração e assinatura digital de documentos;
+* Consulta processual e publicação de diários eletrônicos;
+* Comunicação institucional e videoconferências de audiências;
+* Armazenamento seguro de informações e autos digitais;
+* Atendimento ao público e balcão virtual;
+* Gestão administrativa interna.`
+      }
+    ],
+    fullSummary: 'Informática é a ciência do processamento automático de informações. Hardware é a parte física (CPU, RAM, SSD/HD, Periféricos). Software é a parte lógica (Sistemas Operacionais e Aplicativos). Dados são elementos brutos e descontextualizados, enquanto Informações são dados processados com significado. Dispositivos dividem-se em Entrada (Teclado, Mouse), Saída (Monitor, Impressora) e Entrada/Saída ou Mistos (Touchscreen, Pen Drive, Multifuncional). A informática é a espinha dorsal do Processo Judicial Eletrônico (PJe) no TJAM.',
+    quickSummaryPoints: [
+      'Informática = Informação + Automática.',
+      'Dado (registro bruto) vs. Informação (dado processado com contexto).',
+      'Hardware (físico) vs. Software (lógico).',
+      'CPU = Cérebro/Processamento; RAM = Memória temporária; HD/SSD = Armazenamento permanente.',
+      'Entrada (Teclado/Mouse/Scanner) | Saída (Monitor/Impressora) | Mistos (Touchscreen/Pen Drive/Multifuncional).',
+      'Sistema Operacional = Gerenciador de hardware, memória, arquivos e programas.',
+      'Aplicação no TJAM: Suporte ao PJe, certidões e audiências virtuais.'
+    ],
+    dryLawArticles: [
+      {
+        act: 'Resolução CNJ nº 185/2013',
+        number: 'Art. 1º',
+        text: 'Institui o Sistema Processo Judicial Eletrônico - PJe como sistema de processamento de informações e prática de atos processuais nos Tribunais.',
+        keyHighlight: 'Informatização dos processos no Poder Judiciário.'
+      },
+      {
+        act: 'Lei nº 11.419/2006 (Lei do Processo Eletrônico)',
+        number: 'Art. 1º, § 2º',
+        text: 'Considera-se meio eletrônico qualquer forma de armazenamento ou tráfego de documentos e arquivos digitais, e transmissão eletrônica toda forma de comunicação a distância com redes de computadores.',
+        keyHighlight: 'Validade jurídica de atos e assinaturas eletrônicas.'
+      }
+    ],
+    jurisprudencePrecedents: [],
+    practicalExamples: [
+      {
+        scenario: 'Um servidor do TJAM utiliza um Scanner para digitalizar uma petição física e enviá-la ao sistema PJe.',
+        solution: 'O Scanner atua como Dispositivo de Entrada, convertendo o documento em papel (dado analógico) para formato digital processável no sistema.'
+      },
+      {
+        scenario: 'Usuário consulta o andamento do processo na tela sensível ao toque de um totem no fórum.',
+        solution: 'A tela Touchscreen atua como Dispositivo de Entrada e Saída (Misto), pois capta o toque do usuário e exibe o resultado visualmente.'
+      }
+    ],
+    comparativeTables: [
+      {
+        title: 'Classificação de Dispositivos e Exemplos Práticos',
+        headers: ['Tipo de Dispositivo', 'Função', 'Exemplos Frequentes em Prova'],
+        rows: [
+          ['Entrada', 'Inserir dados no computador', 'Teclado, Mouse, Scanner, Webcam, Microfone'],
+          ['Saída', 'Apresentar dados processados ao usuário', 'Monitor, Impressora, Alto-falantes, Projetor'],
+          ['Entrada e Saída (Misto)', 'Enviar e receber informações', 'Tela Touchscreen, Pen Drive, HD Externo, Multifuncional']
+        ]
+      },
+      {
+        title: 'Componentes Internos do Computador',
+        headers: ['Componente', 'Função Principal', 'Tipo de Armazenamento/Trabalho'],
+        rows: [
+          ['CPU (Processador)', 'Executa cálculos e instruções do sistema', 'Processamento central'],
+          ['Memória RAM', 'Armazena dados temporariamente em execução', 'Volátil (apaga ao desligar)'],
+          ['HD / SSD', 'Armazena dados de forma permanente', 'Não-volátil (preserva arquivos)'],
+          ['Placa-mãe', 'Interconecta todos os componentes físicos', 'Barramento de comunicação']
+        ]
+      }
+    ],
+    examTips: [
+      'Atenção às pegadinhas das bancas: a Memória RAM é VOLÁTIL (perde os dados ao desligar o PC), enquanto o SSD/HD é NÃO-VOLÁTIL (mantém os dados).',
+      'Lembre-se da diferença entre Dado (bruto/sem contexto) e Informação (estruturada/processada).',
+      'Multifuncionais e Telas Touchscreen são sempre classificados como de ENTRADA E SAÍDA (Mistos).'
+    ],
+    examTraps: [
+      {
+        trap: 'Classificar o Pen Drive ou HD Externo apenas como dispositivo de saída.',
+        correctReality: 'Incorreto! Mídias de armazenamento removíveis são dispositivos de ENTRADA E SAÍDA (Mistos), pois permitem gravar (saída) e ler (entrada) dados.'
+      },
+      {
+        trap: 'Achar que a memória RAM armazena arquivos permanentemente.',
+        correctReality: 'Errado! A memória RAM é volátil, usada apenas temporariamente durante a execução dos programas.'
+      }
+    ],
+    keywords: ['Informática', 'Hardware', 'Software', 'Dado e Informação', 'CPU', 'Memória RAM', 'Dispositivos de Entrada e Saída', 'Sistemas Operacionais', 'PJe'],
+    mnemonics: [
+      {
+        phrase: 'Dado x Informação',
+        expansion: 'Dado é o ingrediente bruto; Informação é o prato pronto e servido.'
+      },
+      {
+        phrase: 'Dispositivos de Entrada (E) vs Saída (S)',
+        expansion: 'Entrada ENTRA com dados no PC (Teclado/Mouse/Scanner); Saída SAI com resultado para o usuário (Monitor/Impressora).'
+      }
+    ],
+    checklist: [
+      'Compreendi a definição de Informática e a junção Informação + Automática.',
+      'Diferenciei Dado (bruto) de Informação (processado).',
+      'Identifiquei as diferenças entre Hardware e Software.',
+      'Memorizei as funções da CPU, RAM e HD/SSD.',
+      'Classifiquei corretamente os dispositivos de Entrada, Saída e Mistos.',
+      'Entendi a relevância do Sistema Operacional e do PJe no Poder Judiciário.'
+    ],
+    references: [
+      'Manuais de Conceitos Básicos de Informática para Concursos Públicos.',
+      'Resolução CNJ nº 185/2013 (Processo Judicial Eletrônico).',
+      'Lei nº 11.419/2006 (Informatização do Processo Judicial).'
+    ]
   }
 };
 
