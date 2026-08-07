@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw, Timer } from 'lucide-react';
+import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw, Timer, Sparkles } from 'lucide-react';
 import {
   Discipline,
   MindMap,
@@ -61,7 +61,6 @@ export function App() {
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
   const [studentTab, setStudentTab] = useState<StudentTab>('dashboard');
-  const [isSiteHidden, setIsSiteHidden] = useState<boolean>(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -558,15 +557,6 @@ export function App() {
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
 
-  if (viewMode === 'student' && isSiteHidden) {
-    return (
-      <SiteLockedView
-        isDarkMode={isDarkMode}
-        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
-      />
-    );
-  }
-
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Navigation Header */}
@@ -593,7 +583,7 @@ export function App() {
 
       {/* Main Workspace Body with Sidebar */}
       <div className="flex-1 max-w-7xl w-full mx-auto flex items-start">
-        {viewMode === 'student' && !isSiteHidden && (
+        {viewMode === 'student' && (
           <Sidebar
             currentTab={studentTab}
             onSelectTab={(tab) => {
@@ -661,18 +651,18 @@ export function App() {
           ) : (
             <>
               {/* Site Status Control Banner */}
-              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200">
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200">
                 <div className="flex items-center gap-2 text-xs font-bold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Site Visível Modo Aluno</span>
-                  <span className="text-amber-600 dark:text-amber-400 font-medium hidden sm:inline">• Aula de hoje concluída (Sexta-feira às 14h)</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-extrabold text-emerald-700 dark:text-emerald-300">Plataforma Totalmente Liberada</span>
+                  <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">• Acesse as aulas, materiais e resumos sem restrições</span>
                 </div>
                 <button
-                  onClick={() => setIsSiteHidden(true)}
-                  className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-950 dark:text-amber-100 font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer"
+                  onClick={() => setStudentTab('aula-hoje')}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
-                  <Lock className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Ocultar Site Novamente</span>
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Ir para Aula de Hoje</span>
                 </button>
               </div>
 

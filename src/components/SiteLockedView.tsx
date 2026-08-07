@@ -21,6 +21,7 @@ import {
 interface SiteLockedViewProps {
   isDarkMode: boolean;
   onToggleDarkMode?: () => void;
+  onUnlockSite?: () => void;
 }
 
 interface WeekClass {
@@ -40,6 +41,7 @@ interface WeekClass {
 export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   isDarkMode,
   onToggleDarkMode,
+  onUnlockSite,
 }) => {
   const [editingVideo, setEditingVideo] = useState<boolean>(false);
   const [inputVideoUrl, setInputVideoUrl] = useState<string>('');
@@ -130,6 +132,15 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {onUnlockSite && (
+              <button
+                onClick={onUnlockSite}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Eye className="w-4 h-4" />
+                <span>Entrar no Site de Estudos</span>
+              </button>
+            )}
             {onToggleDarkMode && (
               <button
                 onClick={onToggleDarkMode}

@@ -35,11 +35,11 @@ interface AulaHojeViewProps {
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
 export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
-  // Selected Subject State: 'informatica' (default for current lesson) or 'direito_admin'
-  const [selectedSubject, setSelectedSubject] = useState<'informatica' | 'direito_admin'>('informatica');
+  // Selected Subject State: 'processo_civil' (default for current lesson), 'informatica', or 'direito_admin'
+  const [selectedSubject, setSelectedSubject] = useState<'processo_civil' | 'informatica' | 'direito_admin'>('processo_civil');
 
-  // Navigation inside lesson steps
-  const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('video');
+  // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
+  const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
   
   // Flashcard State
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
@@ -88,6 +88,34 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
+
+  // Processo Civil Flashcards Data
+  const procCivilFlashcardsData = [
+    {
+      q: 'O que é Jurisdição?',
+      a: 'É a função exercida pelo Estado, por intermédio do Poder Judiciário, destinada a solucionar conflitos de interesses mediante a aplicação do Direito.'
+    },
+    {
+      q: 'Qual é a principal finalidade da jurisdição?',
+      a: 'Promover a pacificação social, aplicando a lei, protegendo direitos, solucionando conflitos e garantindo a segurança jurídica.'
+    },
+    {
+      q: 'O que é a Substitutividade da Jurisdição?',
+      a: 'É a característica pela qual o Estado substitui a vontade das partes envolvidas no conflito pela decisão judicial obrigatória proferida pelo juiz.'
+    },
+    {
+      q: 'Diferencie Jurisdição Contenciosa de Jurisdição Voluntária.',
+      a: 'Contenciosa: há conflito entre as partes (ex: ação de cobrança ou divórcio litigioso). Voluntária: não há conflito, o Judiciário atua fiscalizando ou homologando atos (ex: testamento, interdição).'
+    },
+    {
+      q: 'O que estabelece o Princípio da Inércia da Jurisdição?',
+      a: 'O juiz somente atua quando é provocado pela parte interessada, salvo exceções previstas expressamente em lei.'
+    },
+    {
+      q: 'Qual a diferença entre Jurisdição, Ação e Competência?',
+      a: 'Jurisdição é o poder do Estado de solucionar conflitos; Ação é o direito subjetivo de provocar o Judiciário; Competência é a medida e limite da atuação de cada juiz ou tribunal.'
+    }
+  ];
 
   // Informática Flashcards Data
   const infFlashcardsData = [
@@ -304,8 +332,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Active Flashcards & Questions
-  const flashcardsData = selectedSubject === 'informatica' ? infFlashcardsData : [
+  // Admin Flashcards Data
+  const adminFlashcardsData = [
     {
       q: 'O que é a Administração Pública em sentido subjetivo (formal)?',
       a: 'É o conjunto de órgãos, entidades e agentes públicos responsáveis pela atividade administrativa.'
@@ -513,10 +541,215 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Active Questions Selection
-  const activeMcQuestions = selectedSubject === 'informatica' ? infMcQuestionsData : questionsData;
-  const activeTfQuestions = selectedSubject === 'informatica' ? infTfQuestionsData : tfQuestionsData;
-  const activeDiscursiveQuestions = selectedSubject === 'informatica' ? infDiscursiveQuestionsData : discursiveQuestionsData;
+  // Processo Civil Questions (Exercícios - Capítulo 1 • Aula 1 — Jurisdição)
+  const procCivilMcQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. A jurisdição pode ser entendida como:',
+      alternativas: [
+        'A) A atividade exclusiva dos advogados na defesa de seus clientes.',
+        'B) A função estatal de solucionar conflitos mediante a aplicação do Direito.',
+        'C) A atividade administrativa exercida pelos servidores públicos.',
+        'D) A criação de novas leis pelo Poder Judiciário.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A jurisdição é a função estatal exercida pelo Poder Judiciário para aplicar o Direito aos casos concretos e solucionar conflitos.'
+    },
+    {
+      id: 2,
+      enunciado: '2. A principal finalidade da jurisdição é:',
+      alternativas: [
+        'A) Arrecadar tributos.',
+        'B) Elaborar políticas públicas.',
+        'C) Promover a pacificação social e solucionar conflitos.',
+        'D) Criar normas administrativas.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A principal finalidade da jurisdição é promover a pacificação social e solucionar conflitos.'
+    },
+    {
+      id: 3,
+      enunciado: '3. A característica da jurisdição segundo a qual o Estado substitui a vontade das partes pela decisão judicial é denominada:',
+      alternativas: [
+        'A) Imparcialidade.',
+        'B) Substitutividade.',
+        'C) Publicidade.',
+        'D) Competência.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Pela substitutividade, o Estado substitui a vontade das partes pela decisão judicial soberana.'
+    },
+    {
+      id: 4,
+      enunciado: '4. O princípio segundo o qual o juiz deve atuar sem favorecer qualquer das partes é o princípio da:',
+      alternativas: [
+        'A) Imparcialidade.',
+        'B) Inércia.',
+        'C) Publicidade.',
+        'D) Oralidade.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A imparcialidade exige que o magistrado atue sem favorecer nenhuma das partes litigantes.'
+    },
+    {
+      id: 5,
+      enunciado: '5. Em regra, a jurisdição é exercida quando:',
+      alternativas: [
+        'A) O juiz decide iniciar qualquer processo por iniciativa própria.',
+        'B) O Estado é provocado por meio do exercício do direito de ação.',
+        'C) Um servidor público solicita autorização administrativa.',
+        'D) Uma parte apresenta uma reclamação informal.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Pelo princípio da inércia, a jurisdição somente é exercida quando o Estado é provocado pelo exercício do direito de ação.'
+    },
+    {
+      id: 6,
+      enunciado: '6. Na jurisdição contenciosa:',
+      alternativas: [
+        'A) Não existe conflito entre as partes.',
+        'B) Existe um conflito de interesses que necessita de solução judicial.',
+        'C) O juiz apenas registra a vontade das partes.',
+        'D) Não há decisão judicial.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A jurisdição contenciosa pressupõe a existência de um conflito de interesses (litígio) que necessita de solução judicial.'
+    },
+    {
+      id: 7,
+      enunciado: '7. A jurisdição voluntária caracteriza-se, em regra, pela:',
+      alternativas: [
+        'A) Existência obrigatória de conflito entre as partes.',
+        'B) Ausência de conflito propriamente dito, com atuação judicial nos casos previstos em lei.',
+        'C) Atuação exclusiva do Poder Executivo.',
+        'D) Impossibilidade de participação judicial.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Na jurisdição voluntária não há conflito propriamente dito; o Poder Judiciário atua fiscalizando ou homologando atos.'
+    },
+    {
+      id: 8,
+      enunciado: '8. Assinale a alternativa que apresenta corretamente a diferença entre jurisdição, ação e competência:',
+      alternativas: [
+        'A) Jurisdição é o direito de provocar o Judiciário; ação é o limite do juiz; competência é a decisão judicial.',
+        'B) Jurisdição é a função estatal de solucionar conflitos; ação é o direito de provocar o Judiciário; competência é o limite da atuação de cada órgão jurisdicional.',
+        'C) Jurisdição, ação e competência são expressões sinônimas.',
+        'D) Competência é o poder de criar leis; jurisdição é o poder administrativo.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Jurisdição é a função estatal; Ação é o direito de provocar o Judiciário; Competência é a medida/limite de atuação do órgão.'
+    },
+    {
+      id: 9,
+      enunciado: '9. O princípio que garante às partes a possibilidade de participar do processo e influenciar a decisão judicial está relacionado ao:',
+      alternativas: [
+        'A) Contraditório.',
+        'B) Federalismo.',
+        'C) Poder regulamentar.',
+        'D) Sigilo administrativo.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O Contraditório assegura a ciência dos atos processuais e a oportunidade de manifestação e influência na decisão.'
+    },
+    {
+      id: 10,
+      enunciado: '10. A garantia de que ninguém será privado de seus direitos sem a observância de um procedimento adequado está relacionada ao:',
+      alternativas: [
+        'A) Devido Processo Legal.',
+        'B) Princípio da especialidade.',
+        'C) Princípio da autotutela.',
+        'D) Poder hierárquico.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O Devido Processo Legal assegura um julgamento mediante os ritos, garantias e procedimentos previstos em lei.'
+    }
+  ];
+
+  const procCivilTfQuestionsData = [
+    {
+      id: 11,
+      enunciado: '11. A jurisdição é uma função exercida pelo Estado para aplicar o Direito aos casos concretos.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. É exatamente a definição clássica da função jurisdicional estatal.'
+    },
+    {
+      id: 12,
+      enunciado: '12. O juiz pode favorecer uma das partes quando considerar que ela possui melhores argumentos.',
+      correta: false,
+      explicacao: '❌ Gabarito: Falso. Pelo princípio da imparcialidade, o juiz deve manter-se estritamente isento e imparcial.'
+    },
+    {
+      id: 13,
+      enunciado: '13. A competência determina os limites de atuação de determinado órgão jurisdicional.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. Competência é a medida ou limite da jurisdição conferido a cada juízo ou tribunal.'
+    },
+    {
+      id: 14,
+      enunciado: '14. A ação permite que a pessoa provoque o Poder Judiciário em busca de tutela jurisdicional.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. Ação é o direito subjetivo de invocar a prestação jurisdicional do Estado.'
+    },
+    {
+      id: 15,
+      enunciado: '15. A jurisdição contenciosa pressupõe a existência de uma controvérsia a ser solucionada.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. O litígio/controvérsia é o elemento definidor da jurisdição contenciosa.'
+    }
+  ];
+
+  const procCivilDiscursiveQuestionsData = [
+    {
+      id: 16,
+      enunciado: '16. Explique, com suas palavras, o que significa jurisdição.',
+      respostaEsperada: 'Gabarito oficial: A jurisdição é a função exercida pelo Estado, por intermédio do Poder Judiciário, destinada a solucionar conflitos de interesses mediante a aplicação do Direito ao caso concreto.'
+    },
+    {
+      id: 17,
+      enunciado: '17. Qual é a principal finalidade da jurisdição?',
+      respostaEsperada: 'Gabarito oficial: A principal finalidade da jurisdição é promover a pacificação social, além de aplicar corretamente a lei, proteger direitos, solucionar conflitos e garantir a segurança jurídica.'
+    },
+    {
+      id: 18,
+      enunciado: '18. Explique a diferença entre jurisdição contenciosa e jurisdição voluntária.',
+      respostaEsperada: 'Gabarito oficial: Na jurisdição contenciosa existe um conflito de interesses (litígio) entre as partes a ser solucionado. Na jurisdição voluntária não há conflito propriamente dito, atuando o Judiciário para fiscalizar ou homologar atos previstos em lei.'
+    },
+    {
+      id: 19,
+      enunciado: '19. Diferencie jurisdição, ação e competência.',
+      respostaEsperada: 'Gabarito oficial: Jurisdição é o poder do Estado de solucionar conflitos. Ação é o direito subjetivo da pessoa de provocar o Judiciário. Competência é a medida ou limite de atuação de cada órgão jurisdicional.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Por que a imparcialidade do juiz é importante para garantir um processo justo?',
+      respostaEsperada: 'Gabarito oficial: A imparcialidade assegura que o magistrado atue sem favorecer nenhuma das partes, garantindo a igualdade processual, o devido processo legal e a justiça das decisões judiciais.'
+    }
+  ];
+
+  // Active Questions & Flashcards Selection based on selectedSubject
+  const flashcardsData = selectedSubject === 'processo_civil'
+    ? procCivilFlashcardsData
+    : selectedSubject === 'informatica'
+    ? infFlashcardsData
+    : adminFlashcardsData;
+
+  const activeMcQuestions = selectedSubject === 'processo_civil'
+    ? procCivilMcQuestionsData
+    : selectedSubject === 'informatica'
+    ? infMcQuestionsData
+    : questionsData;
+
+  const activeTfQuestions = selectedSubject === 'processo_civil'
+    ? procCivilTfQuestionsData
+    : selectedSubject === 'informatica'
+    ? infTfQuestionsData
+    : tfQuestionsData;
+
+  const activeDiscursiveQuestions = selectedSubject === 'processo_civil'
+    ? procCivilDiscursiveQuestionsData
+    : selectedSubject === 'informatica'
+    ? infDiscursiveQuestionsData
+    : discursiveQuestionsData;
 
   const toggleChecklist = (key: string) => {
     setChecklist(prev => ({ ...prev, [key]: !prev[key] }));
@@ -535,30 +768,44 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-16">
-      {/* Primary Banner: Aula Concluída - Aguarde a Próxima Aula */}
+      {/* Primary Header Banner: Aula Liberada - Processo Civil */}
       <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white shadow-xl border border-emerald-500/30 space-y-6 relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Aula Concluída</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500 text-slate-950 shadow-md">
+                <Sparkles className="w-3.5 h-3.5" /> Aula Liberada
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-white/10 text-emerald-300 border border-white/10">
+                <Clock className="w-3.5 h-3.5 text-amber-400" /> 45 a 60 min
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-white/10 text-amber-300 border border-white/10">
+                Nível: Iniciante
+              </span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
-              Aula Finalizada! Aguarde a próxima aula
-            </h1>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 text-sm font-extrabold">
-              <Clock className="w-4 h-4 text-amber-400" />
-              <span>Próxima aula: Sexta-Feira às 14h</span>
+
+            <div className="space-y-1">
+              <span className="text-xs font-black uppercase tracking-widest text-emerald-400">
+                Processo Civil • Unidade 1 – Teoria Geral do Processo
+              </span>
+              <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
+                Aula 1 – Jurisdição: Conceito, Características e Princípios
+              </h1>
+              <p className="text-xs text-slate-300 font-medium">
+                Capítulo 1 – Jurisdição, Ação e Competência • Preparatório Especializado TJAM
+              </p>
             </div>
           </div>
 
-          <button
-            onClick={() => setIsLessonCompleted(!isLessonCompleted)}
-            className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition-all flex items-center gap-2 cursor-pointer shrink-0"
-          >
-            <RotateCcw className="w-4 h-4 text-emerald-400" />
-            <span>Rever Conteúdo da Aula</span>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setActiveTab('conteudo')}
+              className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Ler Texto da Aula</span>
+            </button>
+          </div>
         </div>
 
         {/* Stats Grid: Progresso e Ranking & Atividades Concluídas */}
@@ -571,25 +818,25 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
 
             <div className="space-y-2.5">
-              {/* Pedro */}
+              {/* Pedro Henrique */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
                 <div className="flex items-center gap-2.5">
                   <span className="w-6 h-6 rounded-lg bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center">1º</span>
                   <div>
                     <p className="text-xs font-black text-white flex items-center gap-1.5">
-                      Pedro <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/30 text-amber-200 font-extrabold uppercase">Primeiro Lugar</span>
+                      Pedro Henrique <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/30 text-amber-200 font-extrabold uppercase">1º Lugar</span>
                     </p>
                   </div>
                 </div>
                 <span className="text-sm font-black text-amber-400">10%</span>
               </div>
 
-              {/* Eduardo */}
+              {/* Eduardo Mateus */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center gap-2.5">
                   <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">2º</span>
                   <div>
-                    <p className="text-xs font-black text-white">Eduardo</p>
+                    <p className="text-xs font-black text-white">Eduardo Mateus</p>
                   </div>
                 </div>
                 <span className="text-sm font-black text-emerald-400">10%</span>
@@ -605,20 +852,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
 
             <div className="space-y-2.5">
-              {/* Pedro */}
+              {/* Pedro Henrique */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-200">Pedro</span>
+                  <span className="text-xs font-bold text-slate-200">Pedro Henrique</span>
                 </div>
                 <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-lg">
                   9% atividades concluídas
                 </span>
               </div>
 
-              {/* Eduardo */}
+              {/* Eduardo Mateus */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-200">Eduardo</span>
+                  <span className="text-xs font-bold text-slate-200">Eduardo Mateus</span>
                 </div>
                 <span className="text-xs font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg">
                   7% atividades concluídas
@@ -632,57 +879,94 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Subject Switcher Bar */}
       <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
         <button
-          onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[220px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'informatica'
+          onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'processo_civil'
               ? 'bg-emerald-600 text-white shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Aula de Hoje: Informática (Quinta-Feira)</span>
+          <span>Aula de Hoje: Processo Civil</span>
+        </button>
+        <button
+          onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'informatica'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>Aula Anterior: Informática</span>
         </button>
         <button
           onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[220px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
             selectedSubject === 'direito_admin'
               ? 'bg-emerald-600 text-white shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <BookOpen className="w-4 h-4" />
-          <span>Aula de Quarta-Feira: Direito Administrativo</span>
+          <span>Direito Administrativo</span>
         </button>
       </div>
 
       {/* Top Breadcrumb & Metadata Header */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-          <span>{selectedSubject === 'informatica' ? 'Informática' : 'Direito Administrativo'}</span>
+          <span>
+            {selectedSubject === 'processo_civil'
+              ? 'Processo Civil'
+              : selectedSubject === 'informatica'
+              ? 'Informática'
+              : 'Direito Administrativo'}
+          </span>
           <span>•</span>
-          <span>{selectedSubject === 'informatica' ? 'Unidade 1 — Fundamentos de Informática' : 'Unidade 1 — Administração Pública'}</span>
+          <span>
+            {selectedSubject === 'processo_civil'
+              ? 'Unidade 1 — Teoria Geral do Processo'
+              : selectedSubject === 'informatica'
+              ? 'Unidade 1 — Fundamentos de Informática'
+              : 'Unidade 1 — Administração Pública'}
+          </span>
           <span>•</span>
-          <span>{selectedSubject === 'informatica' ? 'Capítulo 1 — Conceitos Básicos de Informática' : 'Capítulo 1 — Conceito, Princípios e Poderes'}</span>
+          <span>
+            {selectedSubject === 'processo_civil'
+              ? 'Capítulo 1 — Jurisdição, Ação e Competência'
+              : selectedSubject === 'informatica'
+              ? 'Capítulo 1 — Conceitos Básicos de Informática'
+              : 'Capítulo 1 — Conceito, Princípios e Poderes'}
+          </span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              {selectedSubject === 'informatica' ? 'Aula de Hoje (Quinta-feira)' : 'Aula de Quarta-feira'}
+              {selectedSubject === 'processo_civil'
+                ? 'Aula de Hoje (Processo Civil)'
+                : selectedSubject === 'informatica'
+                ? 'Aula de Quinta-feira'
+                : 'Aula de Quarta-feira'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {selectedSubject === 'informatica' ? 'Aula 1 — Conceitos Básicos de Informática' : 'Aula 1 — Administração Pública: Conceito e Finalidade'}
+              {selectedSubject === 'processo_civil'
+                ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
+                : selectedSubject === 'informatica'
+                ? 'Aula 1 — Conceitos Básicos de Informática'
+                : 'Aula 1 — Administração Pública: Conceito e Finalidade'}
             </h1>
           </div>
 
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Clock className="w-3.5 h-3.5 text-emerald-500" />
-              {selectedSubject === 'informatica' ? '45-60 min' : '45 min'}
+              {selectedSubject === 'processo_civil' ? '45-60 min' : selectedSubject === 'informatica' ? '45-60 min' : '45 min'}
             </span>
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              Iniciante / Essencial
+              Iniciante
             </span>
           </div>
         </div>
@@ -794,7 +1078,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  {selectedSubject === 'informatica'
+                  {selectedSubject === 'processo_civil'
+                    ? 'Unidade 1 — Jurisdição: Conceito, Características e Princípios'
+                    : selectedSubject === 'informatica'
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
                     : 'Unidade 1 — Administração Pública: Conceito e Finalidade'}
                 </h2>
@@ -815,12 +1101,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <iframe
                 className="w-full h-full"
                 src={
-                  selectedSubject === 'informatica'
+                  selectedSubject === 'processo_civil'
+                    ? 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
+                    : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
-                    : 'https://www.youtube.com/embed/5KTWPjRLcLo?autoplay=0&rel=0'
+                    : 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
                 }
                 title={
-                  selectedSubject === 'informatica'
+                  selectedSubject === 'processo_civil'
+                    ? 'Vídeo Aula - Processo Civil: Jurisdição, Ação e Competência'
+                    : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
                     : 'Vídeo Aula - Administração Pública: Conceito e Finalidade'
                 }
@@ -833,9 +1123,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="flex justify-end">
               <a
                 href={
-                  selectedSubject === 'informatica'
+                  selectedSubject === 'processo_civil'
+                    ? 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
+                    : selectedSubject === 'informatica'
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
-                    : 'https://www.youtube.com/watch?v=5KTWPjRLcLo'
+                    : 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -852,7 +1144,30 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <h3 className="text-xs font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
                   <Lightbulb className="w-4 h-4 text-emerald-500" /> O que você vai aprender neste vídeo:
                 </h3>
-                {selectedSubject === 'informatica' ? (
+                {selectedSubject === 'processo_civil' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>O que é Jurisdição e como o Estado intervém para solucionar conflitos de forma imparcial.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Finalidade primordial da Jurisdição: promover a pacificação social e segurança jurídica.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Características essenciais: Substitutividade, Imparcialidade, Definitividade, Inércia e Unidade.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Distinção entre Jurisdição Contenciosa (litígio) e Jurisdição Voluntária (sem litígio).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Diferença prática entre os institutos da Jurisdição, Ação e Competência no TJAM.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'informatica' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -935,7 +1250,332 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        selectedSubject === 'informatica' ? (
+        selectedSubject === 'processo_civil' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Objetivos da Aula de Processo Civil */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Civil
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Ao concluir esta aula, você será capaz de:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Compreender o conceito e a função de Jurisdição no Estado Democrático.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Identificar as 5 características essenciais da jurisdição.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar a Jurisdição Contenciosa da Jurisdição Voluntária.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Dominar os princípios fundamentais do processo civil.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Distinguir claramente Jurisdição, Ação e Competência no dia a dia do TJAM.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Seção 1: Introdução à Jurisdição */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. O Estado e a Solução dos Conflitos
+              </h2>
+              <p className="text-sm">
+                O Estado é responsável por manter a paz social e solucionar os conflitos existentes entre as pessoas. Para cumprir essa função, exerce a <strong>jurisdição</strong>, que consiste no poder-dever de aplicar o Direito aos casos concretos, resolvendo conflitos e garantindo a efetividade das normas jurídicas.
+              </p>
+              <p className="text-sm">
+                Em outras palavras, quando duas pessoas não conseguem solucionar um conflito por conta própria, o Estado, por meio do Poder Judiciário, intervém para decidir a questão de forma imparcial, aplicando a lei ao caso concreto.
+              </p>
+            </section>
+
+            {/* Seção 2: O que é Jurisdição? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. O que é Jurisdição?
+              </h2>
+              <p className="text-sm">
+                A <strong>jurisdição</strong> é a função exercida pelo Estado, por intermédio do Poder Judiciário, destinada a solucionar conflitos de interesses mediante a aplicação do Direito.
+              </p>
+              <p className="text-sm">
+                Essa função <strong>substitui a vontade das partes</strong> pela decisão do juiz, que possui autoridade para proferir uma decisão obrigatória.
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-100'}`}>
+                <p className="text-xs text-emerald-950 dark:text-emerald-300 font-bold">
+                  ⚖️ Importância Fundamental: A jurisdição representa uma das funções essenciais do Estado Democrático de Direito, garantindo a aplicação da justiça e a preservação da ordem jurídica.
+                </p>
+              </div>
+            </section>
+
+            {/* Seção 3: Finalidade da Jurisdição */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Finalidade da Jurisdição
+              </h2>
+              <p className="text-sm">
+                A principal finalidade da jurisdição é <strong>promover a pacificação social</strong>.
+              </p>
+              <p className="text-sm">
+                Além disso, busca:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Aplicar corretamente a lei ao caso concreto</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Proteger direitos fundamentais e individuais</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Solucionar conflitos de interesses</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Garantir a segurança jurídica</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 sm:col-span-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Assegurar o cumprimento e a efetividade das decisões judiciais</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 4: Características da Jurisdição */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Características da Jurisdição
+              </h2>
+              <p className="text-sm">
+                A jurisdição possui diversas características importantes para provas de concursos públicos:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">1. Substitutividade</span>
+                  <p className="text-slate-600 dark:text-slate-300">O Estado substitui a vontade privada das partes envolvidas pela decisão imperativa do juiz.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">2. Imparcialidade</span>
+                  <p className="text-slate-600 dark:text-slate-300">O juiz deve atuar de maneira neutra, sem favorecer ou prejudicar qualquer das partes.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">3. Definitividade</span>
+                  <p className="text-slate-600 dark:text-slate-300">A decisão judicial produz efeitos jurídicos e torna-se imutável após o trânsito em julgado (coisa julgada).</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-rose-600 dark:text-rose-400 uppercase text-[10px]">4. Inércia</span>
+                  <p className="text-slate-600 dark:text-slate-300">O juiz somente atua quando é provocado pela parte interessada, salvo raras exceções previstas em lei.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2">
+                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">5. Unidade</span>
+                  <p className="text-slate-600 dark:text-slate-300">A jurisdição é una em todo o território nacional, embora seja distribuída entre diferentes órgãos do Poder Judiciário por razões de organização e competência.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 5: Espécies de Jurisdição */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Espécies de Jurisdição
+              </h2>
+              <p className="text-sm">
+                A jurisdição pode ser classificada em duas modalidades fundamentais:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-200'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                    Com Conflito de Interesses
+                  </span>
+                  <h3 className="text-sm font-black text-slate-900 dark:text-white">
+                    Jurisdição Contenciosa
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Existe conflito (litígio) entre as partes, sendo necessária uma decisão judicial imperativa para solucioná-lo.
+                  </p>
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Ação de cobrança, ação de indenização por danos morais ou ação de divórcio litigioso.
+                    </p>
+                  </div>
+                </div>
+
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                    Sem Conflito / Administração Pública de Interesses
+                  </span>
+                  <h3 className="text-sm font-black text-slate-900 dark:text-white">
+                    Jurisdição Voluntária
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Não há propriamente conflito entre partes. O Poder Judiciário atua para fiscalizar, integrar ou homologar determinados atos previstos em lei.
+                  </p>
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Homologação de testamento, processo de interdição e procedimentos consensuais previstos no CPC.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 6: Princípios da Jurisdição */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Princípios da Jurisdição
+              </h2>
+              <p className="text-sm">
+                O exercício da jurisdição é orientado por princípios fundamentais garantidos pela Constituição Federal:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Juiz Natural:</strong> Proíbe tribunais de exceção; o julgamento deve ser feito por juiz competente preexistente na lei.
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Devido Processo Legal:</strong> Ninguém será privado da liberdade ou bens sem o devido processo legal (Art. 5º, LIV).
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Contraditório e Ampla Defesa:</strong> Garantia de ser informado dos atos e de se manifestar e produzir provas.
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Inafastabilidade da Jurisdição:</strong> A lei não excluirá da apreciação judicial lesão ou ameaça a direito (Art. 5º, XXXV).
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Motivação das Decisões:</strong> Todas as decisões do Poder Judiciário serão fundamentadas sob pena de nulidade.
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Duração Razoável do Processo:</strong> Todos têm direito à razoável duração do processo e celeridade de sua tramitação.
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 7: Diferença entre Jurisdição, Ação e Competência */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                7. Diferença entre Jurisdição, Ação e Competência
+              </h2>
+              <p className="text-sm">
+                É comum confundir esses três conceitos, mas eles possuem significados bem delimitados:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">Jurisdição</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Poder do Estado</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Poder-dever estatal de julgar e aplicar o Direito para solucionar conflitos.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 space-y-1">
+                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">Ação</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Direito da Pessoa</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Direito subjetivo de provocar o Poder Judiciário buscando a prestação jurisdicional.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-1">
+                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">Competência</span>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white">Limite da Atuação</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Medida e fração do poder jurisdicional atribuída a cada juízo ou tribunal.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 8: Jurisdição no Dia a Dia do Assistente Judiciário */}
+            <section className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/40 border-emerald-200'}`}>
+              <h3 className="text-sm font-black text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+                🏛️ Jurisdição no Dia a Dia do Assistente Judiciário (TJAM)
+              </h3>
+              <p className="text-xs text-slate-700 dark:text-slate-300">
+                O Assistente Judiciário participa ativamente das atividades que tornam possível o exercício da jurisdição no TJAM:
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Organização e movimentação dos processos eletrônicos</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Cumprimento rigoroso dos atos processuais e prazos</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Elaboração de minutas de despacho e expedientes</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Atendimento qualificado a partes e advogados</li>
+                <li className="flex items-center gap-1.5 sm:col-span-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Suporte direto e assessoria aos magistrados e à vara judicial</li>
+              </ul>
+            </section>
+
+            {/* Seção 9: Dicas para Concursos */}
+            <section className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/60 border-purple-200'}`}>
+              <h3 className="text-xs font-black uppercase text-purple-800 dark:text-purple-400 mb-2 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-purple-600" /> Dicas Essenciais para Concursos (TJAM)
+              </h3>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Em provas de Processo Civil, atente-se para as bancas examinadoras cobrando o <strong>conceito de jurisdição</strong>, suas <strong>5 características essenciais</strong> (Substitutividade, Imparcialidade, Definitividade, Inércia e Unidade), a <strong>diferença entre jurisdição contenciosa e voluntária</strong> e a <strong>distinção técnica entre Jurisdição, Ação e Competência</strong>. Dominar estes pilares garante acertos decisivos no concurso do TJAM!
+              </p>
+            </section>
+
+            {/* Checklist da Aula */}
+            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula — Processo Civil
+              </h3>
+              <div className="space-y-2 text-xs font-semibold">
+                {[
+                  { id: 'c1', text: 'Entendi o conceito de Jurisdição como poder-dever do Estado de aplicar o Direito.' },
+                  { id: 'c2', text: 'Reconheci a pacificação social como finalidade primordial da jurisdição.' },
+                  { id: 'c3', text: 'Sei listar e explicar as 5 características da jurisdição (Substitutividade, Imparcialidade, Definitividade, Inércia e Unidade).' },
+                  { id: 'c4', text: 'Compreendi a diferença entre Jurisdição Contenciosa e Jurisdição Voluntária.' },
+                  { id: 'c5', text: 'Sei diferenciar Jurisdição (poder), Ação (direito) e Competência (limite).' },
+                ].map(item => (
+                  <div
+                    key={item.id}
+                    onClick={() => toggleChecklist(item.id)}
+                    className={`p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
+                      checklist[item.id]
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
+                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 rounded-md border flex items-center justify-center ${
+                      checklist[item.id] ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 dark:border-slate-600'
+                    }`}>
+                      {checklist[item.id] && <Check className="w-3.5 h-3.5" />}
+                    </div>
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Action Bottom Controls */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
+              <button
+                onClick={() => setActiveTab('mapa')}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Ver Mapa Mental</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleMarkAsCompleted}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Marcar aula como concluída</span>
+              </button>
+            </div>
+          </article>
+        ) : selectedSubject === 'informatica' ? (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Objetivos da Aula de Informática */}
             <section
@@ -1986,13 +2626,42 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Síntese Rápida
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'informatica'
+                {selectedSubject === 'processo_civil'
+                  ? 'Resumo da Aula — Processo Civil: Jurisdição'
+                  : selectedSubject === 'informatica'
                   ? 'Resumo — Conceitos Básicos de Informática'
                   : 'Resumo — Administração Pública & Constituição'}
               </h2>
             </div>
 
-            {selectedSubject === 'informatica' ? (
+            {selectedSubject === 'processo_civil' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span>A <strong>jurisdição</strong> é o poder-dever do Estado de solucionar conflitos aplicando o Direito.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span>Sua finalidade principal é <strong>promover a pacificação social</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span>O juiz atua de forma <strong>imparcial</strong> e somente quando <strong>provocado</strong> (inércia), salvo exceções legais.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span>A jurisdição pode ser <strong>contenciosa</strong> (com litígio) ou <strong>voluntária</strong> (sem litígio).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span>Os <strong>princípios processuais</strong> (Juiz Natural, Devido Processo Legal, Contraditório, Ampla Defesa, Inafastabilidade) garantem um julgamento justo.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Jurisdição, Ação e Competência</strong> são institutos distintos e fundamentais para o Direito Processual Civil.</span>
+                </li>
+              </ul>
+            ) : selectedSubject === 'informatica' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
                   <span className="text-emerald-500 font-bold">•</span>
