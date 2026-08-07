@@ -58,6 +58,12 @@ export function App() {
     return localStorage.getItem('tjam_theme') === 'dark';
   });
 
+  // Site lock state (default true so entire site is locked)
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
+    const saved = localStorage.getItem('tjam_site_locked');
+    return saved !== null ? saved === 'true' : true;
+  });
+
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
   const [studentTab, setStudentTab] = useState<StudentTab>('dashboard');
@@ -557,6 +563,23 @@ export function App() {
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
 
+  if (isSiteLocked) {
+    return (
+      <SiteLockedView
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => {
+          const newMode = !isDarkMode;
+          setIsDarkMode(newMode);
+          localStorage.setItem('tjam_theme', newMode ? 'dark' : 'light');
+        }}
+        onUnlockSite={() => {
+          setIsSiteLocked(false);
+          localStorage.setItem('tjam_site_locked', 'false');
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Navigation Header */}
@@ -654,16 +677,28 @@ export function App() {
               <div className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200">
                 <div className="flex items-center gap-2 text-xs font-bold">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-extrabold text-emerald-700 dark:text-emerald-300">Plataforma Totalmente Liberada</span>
-                  <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">• Acesse as aulas, materiais e resumos sem restrições</span>
+                  <span className="font-extrabold text-emerald-700 dark:text-emerald-300">Plataforma Desbloqueada</span>
+                  <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">• Acesse as aulas e materiais</span>
                 </div>
-                <button
-                  onClick={() => setStudentTab('aula-hoje')}
-                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Ir para Aula de Hoje</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setIsSiteLocked(true);
+                      localStorage.setItem('tjam_site_locked', 'true');
+                    }}
+                    className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Trancar Site</span>
+                  </button>
+                  <button
+                    onClick={() => setStudentTab('aula-hoje')}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Ir para Aula de Hoje</span>
+                  </button>
+                </div>
               </div>
 
               {studentTab === 'dashboard' && (

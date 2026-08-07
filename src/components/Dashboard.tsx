@@ -52,23 +52,28 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         {/* Primary CTA Banner */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-950/30 border border-emerald-500/30">
           <div className="space-y-1.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • Concurso TJAM
-            </span>
-            <h2 className="text-xl sm:text-2xl font-black">Processo Civil: Aula 1 – Jurisdição</h2>
-            <p className="text-xs text-emerald-100 font-medium max-w-lg">
-              Estude o conceito, características, espécies e princípios da jurisdição com videoaula, resumo, flashcards e questões.
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 shadow-md">
+                <Clock className="w-3.5 h-3.5" /> Próxima Aula: Sábado às 13h
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Aula Concluída
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black">Pausa nos Estudos — Próxima Aula no Sábado às 13h</h2>
+            <p className="text-xs text-slate-300 font-medium max-w-lg">
+              Você concluiu a aula de hoje! A próxima aula será liberada no Sábado às 13h. Aproveite a pausa para revisar questões, resumos e flashcards.
             </p>
           </div>
 
           <button
             onClick={() => onNavigateTab('aula-hoje')}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-emerald-950 font-extrabold text-xs hover:bg-emerald-50 transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer shrink-0"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer shrink-0"
           >
-            <BookOpen className="w-4 h-4 text-emerald-800" />
-            <span>Ir para a Página da Aula</span>
+            <BookOpen className="w-4 h-4" />
+            <span>Rever Conteúdo da Aula</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -324,7 +329,34 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
 
           <div className="space-y-2.5">
-            {/* 1° Pedro e Eduardo - 15% */}
+            {/* 1° Jonas e Carla - 20% */}
+            <div
+              className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
+                isDarkMode ? 'bg-amber-500/10 border-amber-500/30 ring-1 ring-amber-500/20' : 'bg-amber-50 border-amber-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
+                  1º
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">
+                    Jonas e Carla
+                  </span>
+                  <Medal className="w-4 h-4 text-amber-500" />
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-20 sm:w-28 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden hidden sm:block">
+                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '20%' }}></div>
+                </div>
+                <span className="text-sm font-black text-amber-600 dark:text-amber-400">
+                  20%
+                </span>
+              </div>
+            </div>
+
+            {/* 2° Pedro e Eduardo (Sua Dupla) - 15% */}
             <div
               className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                 isDarkMode
@@ -333,8 +365,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
-                  1º
+                <div className="w-8 h-8 rounded-xl bg-slate-400 text-white font-black text-xs flex items-center justify-center shrink-0">
+                  2º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -353,30 +385,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 </div>
                 <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
                   15%
-                </span>
-              </div>
-            </div>
-
-            {/* 2° Jonas e Carla - 13% */}
-            <div
-              className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
-                isDarkMode ? 'bg-slate-800/40 border-slate-800' : 'bg-slate-50 border-slate-200'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-slate-400 text-white font-black text-xs flex items-center justify-center shrink-0">
-                  2º
-                </div>
-                <span className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
-                  Jonas e Carla
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-20 sm:w-28 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden hidden sm:block">
-                  <div className="bg-blue-500 h-full rounded-full" style={{ width: '13%' }}></div>
-                </div>
-                <span className="text-sm font-black text-slate-700 dark:text-slate-300">
-                  13%
                 </span>
               </div>
             </div>

@@ -95,22 +95,23 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
 
   const currentClass: WeekClass = {
     id: 'quinta',
-    dayName: 'Quinta-Feira (Hoje)',
-    dateStr: '06/08',
-    discipline: 'Informática',
-    title: 'Aula 3 — Conceitos Básicos de Informática, Hardware, Software e Redes',
-    professor: 'Prof. André Castro',
+    dayName: 'Aula de Hoje (Concluída)',
+    dateStr: '07/08',
+    discipline: 'Processo Civil',
+    title: 'Aula 1 — Jurisdição: Conceito, Características, Espécies e Princípios',
+    professor: 'Prof. Processo Civil',
     youtubeEmbedUrl: customVideoUrls['quinta']
       ? getYouTubeEmbedUrl(customVideoUrls['quinta'])
-      : 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0',
-    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD',
-    badgeTag: 'Revisão de Hoje',
+      : 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0',
+    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD',
+    badgeTag: 'Aula Concluída',
     topics: [
-      'Sistemas Operacionais (Windows 11 e Linux)',
-      'Conceitos de Hardware: CPU, Memória RAM, SSD e Periféricos',
-      'Segurança da Informação, Redes de Computadores e Internet'
+      'Conceito de Jurisdição: Função soberana do Estado e pacificação social',
+      'Características: Substitutividade, Imparcialidade, Definitividade e Inércia',
+      'Espécies: Jurisdição Contenciosa e Voluntária',
+      'Princípios Fundamentais e Edital TJAM'
     ],
-    summary: 'Vídeo aula completa transmitida hoje de Informática, englobando questões inéditas e resolução comentada.'
+    summary: 'Vídeo aula completa transmitida de Processo Civil, abordando os conceitos essenciais da Teoria Geral do Processo, Jurisdição e Princípios para o concurso do TJAM.'
   };
 
   return (
@@ -126,7 +127,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               <h2 className="text-sm font-black text-white">TJAM Estudos 2026</h2>
               <p className="text-[11px] text-amber-400 font-bold flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                Plataforma em Pausa • Somente Revisão de Hoje
+                Plataforma Trancada • Próxima Aula no Sábado às 13h
               </p>
             </div>
           </div>
@@ -161,15 +162,15 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Aula de Hoje Concluída</span>
+                <span>Aula Encerada</span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-                Revisão do Dia — Informática
+                Pausa nos Estudos — Processo Civil
               </h1>
 
               <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-xl leading-relaxed">
-                O site está em pausa e indisponível para navegação até a próxima aula. Assista e revise abaixo o conteúdo transmitido hoje!
+                O site está trancado e em pausa para navegação. Acompanhe a revisão da aula de hoje abaixo. A próxima aula será liberada no Sábado às 13h.
               </p>
             </div>
 
@@ -179,27 +180,27 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 <Clock className="w-4 h-4" />
                 <span>Próxima Aula</span>
               </div>
-              <p className="text-lg font-black text-white">Sexta-Feira às 14:00h</p>
+              <p className="text-lg font-black text-white">Sábado às 13:00h</p>
               <p className="text-[11px] text-amber-200/80 font-medium max-w-xs">
-                O site permanecerá em pausa até a liberação do próximo encontro.
+                O site permanecerá trancado até a ordem de liberação no próximo encontro.
               </p>
             </div>
           </div>
 
           {/* Progresso e Ranking Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/10 relative z-10">
-            {/* Ranking Card */}
+            {/* Ranking Individual Card */}
             <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-amber-400 font-black text-xs uppercase tracking-wider">
                   <Trophy className="w-4 h-4 text-amber-400" />
-                  <span>Progresso e Ranking</span>
+                  <span>Ranking Individual</span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase">Dupla TJAM</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase">Sua Dupla</span>
               </div>
 
               <div className="space-y-2.5">
-                {/* Pedro */}
+                {/* Pedro Henrique */}
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
@@ -207,25 +208,22 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     </span>
                     <div>
                       <p className="text-xs font-black text-white flex items-center gap-1.5">
-                        Pedro
+                        Pedro Henrique
                         <Medal className="w-3.5 h-3.5 text-amber-400" />
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-200 font-extrabold uppercase">
-                          Primeiro Lugar
-                        </span>
                       </p>
                     </div>
                   </div>
                   <span className="text-sm font-black text-amber-400">10%</span>
                 </div>
 
-                {/* Eduardo */}
+                {/* Eduardo Mateus */}
                 <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">
                       2º
                     </span>
                     <div>
-                      <p className="text-xs font-black text-white">Eduardo</p>
+                      <p className="text-xs font-black text-white">Eduardo Mateus</p>
                     </div>
                   </div>
                   <span className="text-sm font-black text-emerald-400">10%</span>
@@ -233,31 +231,63 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               </div>
             </div>
 
-            {/* Atividades Concluídas Card */}
+            {/* Ranking Geral de Duplas Card */}
             <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-emerald-400 font-black text-xs uppercase tracking-wider">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Atividades Concluídas</span>
+                  <Trophy className="w-4 h-4 text-emerald-400" />
+                  <span>Ranking Geral de Duplas</span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase">Exercícios e Prática</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase">Classificação</span>
               </div>
 
-              <div className="space-y-2.5">
-                {/* Pedro */}
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
-                  <span className="text-xs font-extrabold text-white">Pedro</span>
-                  <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-lg">
-                    9% atividades concluídas
-                  </span>
+              <div className="space-y-2">
+                {/* 1° Jonas e Carla - 20% */}
+                <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">1º</span>
+                    <span className="text-xs font-black text-white">Jonas e Carla</span>
+                  </div>
+                  <span className="text-xs font-black text-amber-400">20%</span>
                 </div>
 
-                {/* Eduardo */}
-                <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
-                  <span className="text-xs font-extrabold text-white">Eduardo</span>
-                  <span className="text-xs font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg">
-                    7% atividades concluídas
-                  </span>
+                {/* 2° Pedro e Eduardo - 15% */}
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-slate-400 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">2º</span>
+                    <span className="text-xs font-black text-white flex items-center gap-1.5">
+                      Pedro e Eduardo
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
+                    </span>
+                  </div>
+                  <span className="text-xs font-black text-emerald-400">15%</span>
+                </div>
+
+                {/* 3° Pietro e Heitor - 10% */}
+                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-amber-800 text-white font-black text-[11px] flex items-center justify-center shrink-0">3º</span>
+                    <span className="text-xs font-bold text-slate-300">Pietro e Heitor</span>
+                  </div>
+                  <span className="text-xs font-black text-slate-400">10%</span>
+                </div>
+
+                {/* 4° João e Alicia - 08% */}
+                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-slate-700 text-slate-300 font-black text-[11px] flex items-center justify-center shrink-0">4º</span>
+                    <span className="text-xs font-bold text-slate-300">João e Alicia</span>
+                  </div>
+                  <span className="text-xs font-black text-slate-400">08%</span>
+                </div>
+
+                {/* 5° Martins e Márcio - 08% */}
+                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-slate-700 text-slate-300 font-black text-[11px] flex items-center justify-center shrink-0">5º</span>
+                    <span className="text-xs font-bold text-slate-300">Martins e Márcio</span>
+                  </div>
+                  <span className="text-xs font-black text-slate-400">08%</span>
                 </div>
               </div>
             </div>
@@ -270,10 +300,10 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             <div>
               <h2 className="text-xl font-black text-white flex items-center gap-2">
                 <Video className="w-5 h-5 text-emerald-400" />
-                <span>Revisão da Aula de Hoje — Informática</span>
+                <span>Revisão da Aula de Hoje — Processo Civil</span>
               </h2>
               <p className="text-xs text-slate-400 font-medium">
-                Vídeo aula completa transmitida nesta Quinta-Feira (06/08)
+                Vídeo aula completa transmitida sobre Jurisdição e Teoria Geral do Processo
               </p>
             </div>
           </div>
@@ -395,7 +425,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
         <div className="text-center pt-4 pb-8 border-t border-slate-800 space-y-2">
           <p className="text-xs text-slate-400 font-medium flex items-center justify-center gap-2">
             <Lock className="w-3.5 h-3.5 text-amber-400" />
-            <span>Site em pausa — O acesso ao sistema será liberado na próxima aula (Sexta-Feira às 14:00h)</span>
+            <span>Site em pausa — O acesso ao sistema está trancado e será liberado na próxima aula (Sábado às 13:00h)</span>
           </p>
           <p className="text-[11px] text-slate-500 font-semibold">TJAM Estudos 2026</p>
         </div>
