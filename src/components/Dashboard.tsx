@@ -52,28 +52,28 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         {/* Primary CTA Banner */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-950/30 border border-emerald-500/30">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 shadow-md">
-                <Clock className="w-3.5 h-3.5" /> Próxima Aula: Sábado às 13h
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • Concurso TJAM
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Aula Concluída
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 font-black">
+                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: Processo Penal
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">Pausa nos Estudos — Próxima Aula no Sábado às 13h</h2>
-            <p className="text-xs text-slate-300 font-medium max-w-lg">
-              Você concluiu a aula de hoje! A próxima aula será liberada no Sábado às 13h. Aproveite a pausa para revisar questões, resumos e flashcards.
+            <h2 className="text-xl sm:text-2xl font-black">Processo Penal: Aula 1 – Inquérito Policial</h2>
+            <p className="text-xs text-emerald-100 font-medium max-w-lg">
+              Estude o conceito, finalidade, características, natureza jurídica e indiciamento no inquérito policial com videoaula, resumo, flashcards e questões.
             </p>
           </div>
 
           <button
             onClick={() => onNavigateTab('aula-hoje')}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer shrink-0"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-emerald-950 font-extrabold text-xs hover:bg-emerald-50 transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer shrink-0"
           >
-            <BookOpen className="w-4 h-4" />
-            <span>Rever Conteúdo da Aula</span>
+            <BookOpen className="w-4 h-4 text-emerald-800" />
+            <span>Acessar Aula de Hoje</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -100,10 +100,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <span className="text-xs text-slate-400 font-medium">45 a 60 min • Nível Iniciante</span>
               </div>
               <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
-                Processo Civil — Unidade 1: Teoria Geral do Processo
+                Processo Penal — Capítulo 1: Inquérito Policial
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                Capítulo 1 – Jurisdição, Ação e Competência
+                Aula 1 – Conceito, finalidade e características
               </p>
             </div>
           </div>
@@ -127,40 +127,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <FileText className="w-4 h-4" />
-                <span>O que é Jurisdição?</span>
+                <span>O que é o Inquérito Policial?</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Poder-dever do Estado de solucionar conflitos aplicando o Direito ao caso concreto para pacificação social.
+                Procedimento administrativo investigativo prévio à ação penal destinado à apuração da infração e de suas circunstâncias.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Layers className="w-4 h-4" />
-                <span>Características Principais</span>
+                <span>Finalidade & Natureza</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Substitutividade, Imparcialidade, Definitividade, Inércia (o juiz atua quando provocado) e Unidade.
+                Natureza administrativa. Finalidade de reunir elementos sobre a materialidade (provisão do fato) e autoria da infração.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Brain className="w-4 h-4" />
-                <span>Espécies de Jurisdição</span>
+                <span>Sete Características Essenciais</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Diferença prática entre Jurisdição Contenciosa (com conflito) e Jurisdição Voluntária (sem litígio).
+                Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Award className="w-4 h-4" />
-                <span>Princípios Processuais & TJAM</span>
+                <span>Indiciamento vs. Condenação</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Juiz Natural, Devido Processo Legal, Contraditório, Ampla Defesa e Inafastabilidade da Jurisdição.
+                Ato da autoridade policial indicando provável autoria. Indiciado ≠ Condenado (não gera antecedente criminal).
               </p>
             </div>
           </div>

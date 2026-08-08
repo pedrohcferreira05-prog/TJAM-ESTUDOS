@@ -58,10 +58,10 @@ export function App() {
     return localStorage.getItem('tjam_theme') === 'dark';
   });
 
-  // Site lock state (default true so entire site is locked)
+  // Site lock state (default false so site is fully unlocked)
   const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
     const saved = localStorage.getItem('tjam_site_locked');
-    return saved !== null ? saved === 'true' : true;
+    return saved !== null ? saved === 'true' : false;
   });
 
   // Auth & View Mode state (MVP Mode: Default student interface)

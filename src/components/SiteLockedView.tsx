@@ -95,23 +95,23 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
 
   const currentClass: WeekClass = {
     id: 'quinta',
-    dayName: 'Aula de Hoje (Concluída)',
-    dateStr: '07/08',
-    discipline: 'Processo Civil',
-    title: 'Aula 1 — Jurisdição: Conceito, Características, Espécies e Princípios',
-    professor: 'Prof. Processo Civil',
+    dayName: 'Aula de Hoje',
+    dateStr: '08/08',
+    discipline: 'Processo Penal',
+    title: 'Aula 1 — Inquérito Policial: Conceito, Finalidade e Características',
+    professor: 'Prof. Processo Penal',
     youtubeEmbedUrl: customVideoUrls['quinta']
       ? getYouTubeEmbedUrl(customVideoUrls['quinta'])
-      : 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0',
-    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD',
-    badgeTag: 'Aula Concluída',
+      : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0',
+    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg',
+    badgeTag: 'Aula Liberada',
     topics: [
-      'Conceito de Jurisdição: Função soberana do Estado e pacificação social',
-      'Características: Substitutividade, Imparcialidade, Definitividade e Inércia',
-      'Espécies: Jurisdição Contenciosa e Voluntária',
-      'Princípios Fundamentais e Edital TJAM'
+      'Conceito de Inquérito Policial: Procedimento administrativo investigativo prévio',
+      'Finalidade e Pilares: Materialidade da infração e indícios de Autoria',
+      'Sete Características: Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial',
+      'Diligências, Indiciamento (Indiciado ≠ Condenado) e Encerramento'
     ],
-    summary: 'Vídeo aula completa transmitida de Processo Civil, abordando os conceitos essenciais da Teoria Geral do Processo, Jurisdição e Princípios para o concurso do TJAM.'
+    summary: 'Vídeo aula completa transmitida de Processo Penal, abordando os conceitos essenciais do Inquérito Policial para o concurso de Assistente Judiciário do TJAM.'
   };
 
   return (

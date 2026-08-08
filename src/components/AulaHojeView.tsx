@@ -35,8 +35,8 @@ interface AulaHojeViewProps {
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
 export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
-  // Selected Subject State: 'processo_civil' (default for current lesson), 'informatica', or 'direito_admin'
-  const [selectedSubject, setSelectedSubject] = useState<'processo_civil' | 'informatica' | 'direito_admin'>('processo_civil');
+  // Selected Subject State: 'processo_penal' (default for current lesson), 'processo_civil', 'informatica', or 'direito_admin'
+  const [selectedSubject, setSelectedSubject] = useState<'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin'>('processo_penal');
 
   // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
   const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
@@ -88,6 +88,42 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
+
+  // Processo Penal Flashcards Data
+  const procPenalFlashcardsData = [
+    {
+      q: 'O que é o Inquérito Policial?',
+      a: 'É um procedimento administrativo investigativo destinado à apuração da infração penal e de suas circunstâncias, buscando reunir elementos para a ação penal.'
+    },
+    {
+      q: 'Qual é a natureza jurídica do Inquérito Policial?',
+      a: 'Natureza administrativa. Não se trata de um processo judicial nem possui caráter jurisdicional.'
+    },
+    {
+      q: 'Quais são os dois pilares da finalidade do Inquérito Policial?',
+      a: '1. Materialidade (demonstração de que o crime ocorreu). 2. Autoria (identificação de quem praticou a infração).'
+    },
+    {
+      q: 'Quais são as 7 principais características do Inquérito Policial?',
+      a: 'Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial.'
+    },
+    {
+      q: 'Por que o Inquérito Policial é considerado DISPENSÁVEL?',
+      a: 'Porque se o Ministério Público ou o ofendido já possuir elementos suficientes de autoria e materialidade, a ação penal pode ser oferecida sem inquérito.'
+    },
+    {
+      q: 'Quem conduz o Inquérito Policial?',
+      a: 'A autoridade policial no exercício de suas atribuições legais (em regra, o Delegado de Polícia Civil ou Federal).'
+    },
+    {
+      q: 'O Indiciamento significa condenação?',
+      a: 'NÃO! O indiciamento é ato da investigação apontando provável autoria. Indiciado ≠ Condenado (não gera antecedente nem culpa).'
+    },
+    {
+      q: 'Qual a diferença entre Inquérito Policial e Processo Penal?',
+      a: 'Inquérito: administrativo, prévio, sem contraditório pleno, dispensável. Processo Penal: judicial, jurisdicional, com contraditório e ampla defesa.'
+    }
+  ];
 
   // Processo Civil Flashcards Data
   const procCivilFlashcardsData = [
@@ -726,26 +762,318 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
+  // Processo Penal Questions Data
+  const procPenalMcQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. O inquérito policial é:',
+      opcoes: [
+        'A) Um processo judicial destinado à condenação do investigado.',
+        'B) Um procedimento administrativo destinado à investigação de infrações penais.',
+        'C) Uma ação penal privada.',
+        'D) Uma sentença proferida pelo juiz.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O Inquérito Policial é um procedimento administrativo voltado para apuração e investigação de infrações penais e suas circunstâncias.'
+    },
+    {
+      id: 2,
+      enunciado: '2. A principal finalidade do inquérito policial é:',
+      opcoes: [
+        'A) Aplicar uma pena ao investigado.',
+        'B) Produzir uma sentença condenatória.',
+        'C) Apurar a existência da infração penal e reunir elementos relacionados à autoria e à materialidade.',
+        'D) Substituir o processo penal.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: A finalidade do IP é reunir justa causa: elementos probatórios da materialidade e indícios da autoria.'
+    },
+    {
+      id: 3,
+      enunciado: '3. A natureza jurídica do inquérito policial é:',
+      opcoes: [
+        'A) Jurisdicional.',
+        'B) Legislativa.',
+        'C) Administrativa.',
+        'D) Civil.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Possui natureza jurídica estritamente administrativa, conduzida pela polícia judiciária, não constituindo processo judicial.'
+    },
+    {
+      id: 4,
+      enunciado: '4. Em regra, o inquérito policial:',
+      opcoes: [
+        'A) É sempre indispensável para o oferecimento da ação penal.',
+        'B) É dispensável quando já existirem elementos suficientes para a acusação.',
+        'C) Substitui a ação penal.',
+        'D) Produz automaticamente uma condenação.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O IP é DISPENSÁVEL. Se o titular da ação penal já dispuser de elementos suficientes de autoria e materialidade, pode denunciar/queixar sem ele.'
+    },
+    {
+      id: 5,
+      enunciado: '5. Sobre o inquérito policial, assinale a alternativa correta:',
+      opcoes: [
+        'A) É conduzido pelo juiz.',
+        'B) É conduzido pela autoridade policial.',
+        'C) É conduzido exclusivamente pelo Ministério Público.',
+        'D) É conduzido pelo advogado do investigado.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O inquérito policial é conduzido pela autoridade policial (delegado de polícia).'
+    },
+    {
+      id: 6,
+      enunciado: '6. A característica segundo a qual o inquérito não possui, como regra, a mesma estrutura de contraditório pleno existente no processo judicial é denominada:',
+      opcoes: [
+        'A) Publicidade.',
+        'B) Inquisitividade.',
+        'C) Definitividade.',
+        'D) Oralidade.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Inquisitividade é a característica do procedimento investigativo prévio onde não vigora o contraditório pleno e a ampla defesa nos moldes do processo judicial.'
+    },
+    {
+      id: 7,
+      enunciado: '7. O caráter sigiloso do inquérito policial significa que:',
+      opcoes: [
+        'A) Nenhuma informação pode ser acessada pelo defensor.',
+        'B) O sigilo pode ser utilizado para preservar a eficácia da investigação, respeitadas as garantias legais.',
+        'C) O procedimento é sempre completamente secreto.',
+        'D) O juiz não pode ter conhecimento da investigação.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O sigilo assegura a eficácia da investigação (art. 20 do CPP), ressalvado o direito de acesso do defensor às provas já documentadas (Súmula Vinculante 14).'
+    },
+    {
+      id: 8,
+      enunciado: '8. A materialidade de uma infração penal corresponde:',
+      opcoes: [
+        'A) À identificação obrigatória do suspeito.',
+        'B) À demonstração da existência do fato criminoso.',
+        'C) À condenação do acusado.',
+        'D) À decisão do delegado.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Materialidade é a comprovação de que o fato delituoso efetivamente ocorreu.'
+    },
+    {
+      id: 9,
+      enunciado: '9. A autoria está relacionada:',
+      opcoes: [
+        'A) À identificação de quem, em tese, praticou a infração.',
+        'B) À existência do processo judicial.',
+        'C) À sentença definitiva.',
+        'D) À aplicação da pena.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Autoria diz respeito à identificação da pessoa responsável pela prática do fato criminoso.'
+    },
+    {
+      id: 10,
+      enunciado: '10. Durante a investigação, a autoridade policial pode realizar:',
+      opcoes: [
+        'A) Perícias e oitivas, entre outras diligências legalmente permitidas.',
+        'B) Sentenças condenatórias.',
+        'C) Julgamentos definitivos.',
+        'D) Leis penais.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: A autoridade policial realiza diligências de coleta de prova (exames periciais, oitiva de testemunhas e acareações).'
+    },
+    {
+      id: 11,
+      enunciado: '11. O indiciamento:',
+      opcoes: [
+        'A) Significa que o investigado foi definitivamente condenado.',
+        'B) É uma decisão judicial irrecorrível.',
+        'C) É ato relacionado à investigação que aponta determinada pessoa como provável autora ou partícipe, diante dos elementos reunidos.',
+        'D) Encerra automaticamente o processo penal.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: O indiciamento é ato fundamentado da autoridade policial atribuindo a autoria a determinado indivíduo com base nos indícios colhidos.'
+    },
+    {
+      id: 12,
+      enunciado: '12. Assinale a alternativa INCORRETA sobre o indiciamento:',
+      opcoes: [
+        'A) Ocorre durante a investigação.',
+        'B) Está relacionado aos elementos reunidos no inquérito.',
+        'C) Equivale a uma condenação definitiva.',
+        'D) Não significa, por si só, que haverá condenação.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C (Incorreta): Indiciamento jamais equivale a uma condenação definitiva; indiciado não é condenado.'
+    },
+    {
+      id: 13,
+      enunciado: '13. O inquérito policial é considerado escrito porque:',
+      opcoes: [
+        'A) Todos os atos investigativos devem ser documentados nos autos, conforme a legislação.',
+        'B) Somente o delegado pode ler o procedimento.',
+        'C) Não são permitidos registros eletrônicos.',
+        'D) O investigado não pode apresentar documentos.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Conforme o art. 9º do CPP, todas as peças do inquérito serão reduzidas a termo ou digitadas e assinadas.'
+    },
+    {
+      id: 14,
+      enunciado: '14. A instauração do inquérito:',
+      opcoes: [
+        'A) Pode ocorrer de diferentes formas, conforme a natureza da infração e as regras legais aplicáveis.',
+        'B) Depende sempre de sentença judicial.',
+        'C) Somente pode ocorrer por iniciativa do investigado.',
+        'D) É proibida nos crimes de ação pública.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: O IP pode iniciar-se de ofício, por requisição da autoridade judiciária ou do MP, ou por requerimento do ofendido.'
+    },
+    {
+      id: 15,
+      enunciado: '15. Sobre o inquérito policial e o processo penal, é correto afirmar:',
+      opcoes: [
+        'A) São exatamente a mesma coisa.',
+        'B) O inquérito possui natureza administrativa e investigativa, enquanto o processo penal se desenvolve perante o Poder Judiciário.',
+        'C) O processo penal é exclusivamente administrativo.',
+        'D) O inquérito é sempre posterior ao processo.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O IP é prévio, investigativo e administrativo; o Processo Penal é posterior, jurisdicional e instaurado perante o Judiciário.'
+    },
+    {
+      id: 16,
+      enunciado: '16. O encerramento do inquérito policial:',
+      opcoes: [
+        'A) Significa necessariamente que o investigado será condenado.',
+        'B) Significa necessariamente que haverá processo penal.',
+        'C) Ocorre após as providências investigativas cabíveis, seguindo-se as medidas previstas em lei.',
+        'D) Impede qualquer providência posterior.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Ao concluir as diligências, o delegado elabora o relatório final e remete os autos ao Poder Judiciário/MP para as providências cabíveis.'
+    },
+    {
+      id: 17,
+      enunciado: '17. Assinale a alternativa correta:',
+      opcoes: [
+        'A) Investigado, indiciado e condenado são expressões com o mesmo significado.',
+        'B) O indiciamento não equivale à condenação.',
+        'C) O inquérito sempre termina com uma sentença.',
+        'D) A autoridade policial pode aplicar pena criminal.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Indiciar alguém é apontar probabilidade de autoria na fase investigativa; não produz condenação nem antecedentes criminais.'
+    },
+    {
+      id: 18,
+      enunciado: '18. A Polícia Civil exerce, nos termos da legislação, funções relacionadas:',
+      opcoes: [
+        'A) À polícia judiciária e à apuração de infrações penais, ressalvadas as competências previstas constitucionalmente.',
+        'B) À elaboração de sentenças judiciais.',
+        'C) À criação de leis penais.',
+        'D) Ao julgamento dos processos criminais.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Conforme o art. 144, § 4º da Constituição Federal, à polícia civil incumbem as funções de polícia judiciária e a apuração de infrações penais.'
+    },
+    {
+      id: 19,
+      enunciado: '19. Um dos objetivos do inquérito é reunir elementos que auxiliem na formação da convicção para a futura persecução penal. Portanto:',
+      opcoes: [
+        'A) O inquérito já é o julgamento definitivo do caso.',
+        'B) A investigação antecede, em regra, a fase judicial.',
+        'C) O delegado substitui o juiz no julgamento.',
+        'D) O investigado é automaticamente condenado.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A fase de investigação é preparatória e antecede, em regra, a fase de processo judicial.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Sobre o inquérito policial, assinale a alternativa correta:',
+      opcoes: [
+        'A) É procedimento administrativo e investigativo, busca esclarecer a infração penal, pode reunir elementos sobre autoria e materialidade e, em regra, antecede o processo penal.',
+        'B) É uma sentença judicial provisória.',
+        'C) É sempre indispensável para o oferecimento da ação penal.',
+        'D) Tem como finalidade principal aplicar pena ao investigado.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Síntese perfeita do conceito, natureza, finalidade e utilidade do Inquérito Policial.'
+    }
+  ];
+
+  const procPenalTfQuestionsData = [
+    {
+      id: 101,
+      enunciado: '1. O Inquérito Policial é indispensável para o oferecimento da ação penal, não podendo o Ministério Público denunciar sem a sua realização.',
+      correta: false,
+      explicacao: 'Falso: O Inquérito é DISPENSÁVEL. Se houver justa causa com elementos colhidos em outras fontes, a denúncia pode ser apresentada sem inquérito.'
+    },
+    {
+      id: 102,
+      enunciado: '2. A natureza jurídica do Inquérito Policial é de procedimento administrativo e não de processo judicial.',
+      correta: true,
+      explicacao: 'Verdadeiro: Trata-se de um procedimento informativo de caráter administrativo conduzido pela polícia judiciária.'
+    },
+    {
+      id: 103,
+      enunciado: '3. O indiciamento promovido pelo delegado de polícia impõe condenação prévia e antecedentes criminais ao investigado.',
+      correta: false,
+      explicacao: 'Falso: O indiciamento é um juízo de probabilidade e não equivale a condenação nem gera antecedentes.'
+    },
+    {
+      id: 104,
+      enunciado: '4. Durante o inquérito policial, a autoridade policial pode realizar diligências como oitiva de testemunhas, interrogatório do investigado e exames periciais.',
+      correta: true,
+      explicacao: 'Verdadeiro: Essas são diligências investigativas típicas para elucidação da autoria e materialidade.'
+    }
+  ];
+
+  const procPenalDiscursiveQuestionsData = [
+    {
+      id: 201,
+      enunciado: '1. Explique a diferença entre "Materialidade" e "Autoria" no âmbito do Inquérito Policial.',
+      respostaEsperada: 'Gabarito oficial: Materialidade diz respeito à comprovação da existência da infração penal (ex: laudo pericial atestando o furto/lesão). Autoria refere-se à identificação do sujeito responsável pela prática da infração penal.'
+    },
+    {
+      id: 202,
+      enunciado: '2. Por que se afirma que o Inquérito Policial possui a característica de ser "dispensável"? Exemplifique.',
+      respostaEsperada: 'Gabarito oficial: É dispensável porque não é obrigatório para o início da ação penal. Se o Ministério Público ou o querelante já dispuser de provas suficientes de autoria e materialidade, pode propor a ação sem o inquérito.'
+    }
+  ];
+
   // Active Questions & Flashcards Selection based on selectedSubject
-  const flashcardsData = selectedSubject === 'processo_civil'
+  const flashcardsData = selectedSubject === 'processo_penal'
+    ? procPenalFlashcardsData
+    : selectedSubject === 'processo_civil'
     ? procCivilFlashcardsData
     : selectedSubject === 'informatica'
     ? infFlashcardsData
     : adminFlashcardsData;
 
-  const activeMcQuestions = selectedSubject === 'processo_civil'
+  const activeMcQuestions = selectedSubject === 'processo_penal'
+    ? procPenalMcQuestionsData
+    : selectedSubject === 'processo_civil'
     ? procCivilMcQuestionsData
     : selectedSubject === 'informatica'
     ? infMcQuestionsData
     : questionsData;
 
-  const activeTfQuestions = selectedSubject === 'processo_civil'
+  const activeTfQuestions = selectedSubject === 'processo_penal'
+    ? procPenalTfQuestionsData
+    : selectedSubject === 'processo_civil'
     ? procCivilTfQuestionsData
     : selectedSubject === 'informatica'
     ? infTfQuestionsData
     : tfQuestionsData;
 
-  const activeDiscursiveQuestions = selectedSubject === 'processo_civil'
+  const activeDiscursiveQuestions = selectedSubject === 'processo_penal'
+    ? procPenalDiscursiveQuestionsData
+    : selectedSubject === 'processo_civil'
     ? procCivilDiscursiveQuestionsData
     : selectedSubject === 'informatica'
     ? infDiscursiveQuestionsData
@@ -768,31 +1096,28 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-16">
-      {/* Primary Header Banner: Pausa nos Estudos - Próxima Aula no Sábado às 13h */}
-      <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white shadow-xl border border-emerald-500/30 space-y-6 relative overflow-hidden">
+      {/* Primary Header Banner: Processo Penal - Aula Liberada */}
+      <div className="p-8 rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 text-white shadow-xl border border-emerald-500/30 space-y-6 relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
-                <Clock className="w-3.5 h-3.5" /> Próxima Aula: Sábado às 13h
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm shadow-md">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • TJAM 2026
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Aula Concluída
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-white/10 text-amber-300 border border-white/10">
-                Pausa de Estudos
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
+                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: Processo Penal
               </span>
             </div>
 
             <div className="space-y-1">
-              <span className="text-xs font-black uppercase tracking-widest text-emerald-400">
-                Processo Civil • Unidade 1 – Teoria Geral do Processo
+              <span className="text-xs font-black uppercase tracking-widest text-emerald-200">
+                ⚖️ Processo Penal • Capítulo 1 – Inquérito Policial
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
-                Pausa nos Estudos — Próxima Aula: Sábado às 13h
+                Aula 1 — Conceito, finalidade e características
               </h1>
-              <p className="text-xs text-slate-300 font-medium">
-                Aula 1 – Jurisdição Concluída • Preparatório Especializado TJAM
+              <p className="text-xs text-emerald-100 font-medium max-w-xl">
+                Nível: Iniciante • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM
               </p>
             </div>
           </div>
@@ -800,10 +1125,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setActiveTab('conteudo')}
-              className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-5 py-3 rounded-2xl bg-white text-emerald-950 hover:bg-emerald-50 font-extrabold text-xs shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
-              <BookOpen className="w-4 h-4" />
-              <span>Rever Texto da Aula</span>
+              <BookOpen className="w-4 h-4 text-emerald-700" />
+              <span>Ler Texto da Aula</span>
             </button>
           </div>
         </div>
@@ -814,32 +1139,35 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
             <div className="flex items-center gap-2 text-amber-400 font-black text-xs uppercase tracking-wider">
               <Trophy className="w-4 h-4" />
-              <span>Progresso e Ranking</span>
+              <span>Ranking Geral de Duplas</span>
             </div>
 
-            <div className="space-y-2.5">
-              {/* Pedro Henrique */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-6 h-6 rounded-lg bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center">1º</span>
-                  <div>
-                    <p className="text-xs font-black text-white flex items-center gap-1.5">
-                      Pedro Henrique <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/30 text-amber-200 font-extrabold uppercase">1º Lugar</span>
-                    </p>
-                  </div>
+            <div className="space-y-2">
+              {/* 1st Place: Jonas e Carla */}
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center">1º</span>
+                  <span className="text-xs font-black text-white">Jonas e Carla</span>
                 </div>
-                <span className="text-sm font-black text-amber-400">10%</span>
+                <span className="text-xs font-black text-amber-400">20%</span>
               </div>
 
-              {/* Eduardo Mateus */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">2º</span>
-                  <div>
-                    <p className="text-xs font-black text-white">Eduardo Mateus</p>
-                  </div>
+              {/* 2nd Place: Pietro e Heitor */}
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-slate-300 text-slate-950 font-black text-[10px] flex items-center justify-center">2º</span>
+                  <span className="text-xs font-black text-slate-200">Pietro e Heitor</span>
                 </div>
-                <span className="text-sm font-black text-emerald-400">10%</span>
+                <span className="text-xs font-black text-emerald-400">17%</span>
+              </div>
+
+              {/* 3rd Place: Pedro e Eduardo */}
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-amber-700 text-white font-black text-[10px] flex items-center justify-center">3º</span>
+                  <span className="text-xs font-black text-slate-200">Pedro e Eduardo</span>
+                </div>
+                <span className="text-xs font-black text-amber-500">15%</span>
               </div>
             </div>
           </div>
@@ -848,28 +1176,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
             <div className="flex items-center gap-2 text-emerald-400 font-black text-xs uppercase tracking-wider">
               <CheckCircle2 className="w-4 h-4" />
-              <span>Atividades Concluídas</span>
+              <span>Atividades de Hoje</span>
             </div>
 
-            <div className="space-y-2.5">
-              {/* Pedro Henrique */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-200">Pedro Henrique</span>
-                </div>
-                <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-lg">
-                  9% atividades concluídas
-                </span>
+            <div className="space-y-2">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-200">10 Seções Teóricas</span>
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Liberado</span>
               </div>
-
-              {/* Eduardo Mateus */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-200">Eduardo Mateus</span>
-                </div>
-                <span className="text-xs font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg">
-                  7% atividades concluídas
-                </span>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-200">20 Questões + Flashcards</span>
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">Pronto</span>
               </div>
             </div>
           </div>
@@ -879,30 +1196,41 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Subject Switcher Bar */}
       <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
         <button
-          onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'processo_civil'
+          onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'processo_penal'
               ? 'bg-emerald-600 text-white shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Aula de Hoje: Processo Civil</span>
+          <span>Aula de Hoje: Processo Penal</span>
+        </button>
+        <button
+          onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'processo_civil'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>Processo Civil</span>
         </button>
         <button
           onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
             selectedSubject === 'informatica'
               ? 'bg-emerald-600 text-white shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <BookOpen className="w-4 h-4" />
-          <span>Aula Anterior: Informática</span>
+          <span>Informática</span>
         </button>
         <button
           onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[200px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
             selectedSubject === 'direito_admin'
               ? 'bg-emerald-600 text-white shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -917,7 +1245,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
           <span>
-            {selectedSubject === 'processo_civil'
+            {selectedSubject === 'processo_penal'
+              ? 'Processo Penal'
+              : selectedSubject === 'processo_civil'
               ? 'Processo Civil'
               : selectedSubject === 'informatica'
               ? 'Informática'
@@ -925,7 +1255,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'processo_civil'
+            {selectedSubject === 'processo_penal'
+              ? 'Capítulo 1 — Inquérito Policial'
+              : selectedSubject === 'processo_civil'
               ? 'Unidade 1 — Teoria Geral do Processo'
               : selectedSubject === 'informatica'
               ? 'Unidade 1 — Fundamentos de Informática'
@@ -933,7 +1265,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'processo_civil'
+            {selectedSubject === 'processo_penal'
+              ? 'Aula 1 — Conceito, finalidade e características'
+              : selectedSubject === 'processo_civil'
               ? 'Capítulo 1 — Jurisdição, Ação e Competência'
               : selectedSubject === 'informatica'
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
@@ -944,14 +1278,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              {selectedSubject === 'processo_civil'
-                ? 'Aula de Hoje (Processo Civil)'
+              {selectedSubject === 'processo_penal'
+                ? 'Aula de Hoje (Processo Penal)'
+                : selectedSubject === 'processo_civil'
+                ? 'Processo Civil'
                 : selectedSubject === 'informatica'
-                ? 'Aula de Quinta-feira'
-                : 'Aula de Quarta-feira'}
+                ? 'Informática'
+                : 'Direito Administrativo'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {selectedSubject === 'processo_civil'
+              {selectedSubject === 'processo_penal'
+                ? 'Aula 1 — Inquérito Policial: Conceito, finalidade e características'
+                : selectedSubject === 'processo_civil'
                 ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
                 : selectedSubject === 'informatica'
                 ? 'Aula 1 — Conceitos Básicos de Informática'
@@ -962,11 +1300,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Clock className="w-3.5 h-3.5 text-emerald-500" />
-              {selectedSubject === 'processo_civil' ? '45-60 min' : selectedSubject === 'informatica' ? '45-60 min' : '45 min'}
+              Tempo estimado: 45–60 min
             </span>
             <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              Iniciante
+              Nível: Iniciante
             </span>
           </div>
         </div>
@@ -1101,18 +1439,22 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <iframe
                 className="w-full h-full"
                 src={
-                  selectedSubject === 'processo_civil'
+                  selectedSubject === 'processo_penal'
+                    ? 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
+                    : selectedSubject === 'processo_civil'
                     ? 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
-                    : 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
+                    : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
                 }
                 title={
-                  selectedSubject === 'processo_civil'
+                  selectedSubject === 'processo_penal'
+                    ? 'Vídeo Aula - Processo Penal: Inquérito Policial'
+                    : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Jurisdição, Ação e Competência'
                     : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
-                    : 'Vídeo Aula - Administração Pública: Conceito e Finalidade'
+                    : 'Vídeo Aula - Administração Pública'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -1123,11 +1465,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="flex justify-end">
               <a
                 href={
-                  selectedSubject === 'processo_civil'
+                  selectedSubject === 'processo_penal'
+                    ? 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
+                    : selectedSubject === 'processo_civil'
                     ? 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
                     : selectedSubject === 'informatica'
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
-                    : 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
+                    : 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1144,7 +1488,30 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <h3 className="text-xs font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
                   <Lightbulb className="w-4 h-4 text-emerald-500" /> O que você vai aprender neste vídeo:
                 </h3>
-                {selectedSubject === 'processo_civil' ? (
+                {selectedSubject === 'processo_penal' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>O que é o Inquérito Policial e sua natureza jurídica de procedimento administrativo.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Os dois pilares fundamentais da finalidade: Materialidade (provas do fato) e Autoria.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>As 7 características essenciais: Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Diligências investigativas, indiciamento (indiciado ≠ condenado) e encerramento do inquérito.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Tabela comparativa direta entre Inquérito Policial e Processo Penal focada no TJAM.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'processo_civil' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -1250,7 +1617,404 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        selectedSubject === 'processo_civil' ? (
+        selectedSubject === 'processo_penal' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Header Objectives */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Penal: Inquérito Policial
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Ao concluir esta aula, você será capaz de:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Definir a natureza jurídica e conceito de Inquérito Policial.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar os pilares de Materialidade e Autoria.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Dominar as 7 características essenciais cobradas nas bancas.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Entender quem conduz o inquérito e as formas de instauração.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar Indiciamento de Condenado e Inquérito de Processo Penal.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* 1. O que é o Inquérito Policial? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. O que é o Inquérito Policial?
+              </h2>
+              <p className="text-sm">
+                O <strong>inquérito policial</strong> é um procedimento administrativo destinado à apuração da existência de uma infração penal e de suas circunstâncias, buscando reunir elementos que auxiliem na identificação da autoria e na formação da convicção para a futura persecução penal.
+              </p>
+              <p className="text-sm">
+                Ele ocorre, em regra, <strong>antes do processo penal</strong>.
+              </p>
+              <p className="text-sm">
+                É importante compreender que o inquérito <strong>não é um processo judicial</strong>. Trata-se de uma etapa de investigação realizada pela autoridade policial, observadas as regras previstas na legislação.
+              </p>
+
+              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/80 border-amber-200/80'}`}>
+                <p className="text-xs font-black text-amber-900 dark:text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <Lightbulb className="w-4 h-4 text-amber-600" /> Exemplo Prático
+                </p>
+                <p className="text-xs text-slate-800 dark:text-slate-200 font-semibold">
+                  Imagine que ocorra um furto. A autoridade policial poderá realizar diligências para:
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Descobrir o que aconteceu;
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Identificar possíveis envolvidos;
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Ouvir pessoas;
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Reunir documentos e outros elementos;
+                  </li>
+                  <li className="flex items-center gap-2 sm:col-span-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Realizar perícias quando necessárias para elucidação do caso.
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            {/* 2. Finalidade do Inquérito Policial */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Finalidade do Inquérito Policial
+              </h2>
+              <p className="text-sm">
+                A finalidade principal é investigar a infração penal, reunindo elementos relacionados à <strong>materialidade</strong> e à <strong>autoria</strong>.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400">Materialidade</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    É a demonstração de que a infração penal ocorreu. <em>Exemplo:</em> em um crime que deixa vestígios, um exame pericial pode contribuir para demonstrar a ocorrência do fato.
+                  </p>
+                </div>
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-xs font-black uppercase text-blue-600 dark:text-blue-400">Autoria</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    Relaciona-se à identificação da pessoa que, em tese, praticou a infração penal.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 3. Natureza jurídica */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Natureza jurídica
+              </h2>
+              <p className="text-sm">
+                O inquérito policial possui <strong>natureza administrativa</strong>.
+              </p>
+              <p className="text-sm">
+                Isso significa que ele <strong>não constitui um processo judicial</strong>. A investigação é conduzida pela autoridade policial, enquanto a ação penal será posteriormente submetida ao Poder Judiciário, quando presentes os requisitos legais.
+              </p>
+            </section>
+
+            {/* 4. Características do Inquérito Policial */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Características do Inquérito Policial
+              </h2>
+              <p className="text-sm">
+                As características do inquérito policial são recorrentes em questões de concursos públicos:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">🔹 Administrativo</span>
+                  <p className="text-slate-600 dark:text-slate-300">É um procedimento de natureza administrativa e investigativa.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">🔹 Investigativo</span>
+                  <p className="text-slate-600 dark:text-slate-300">Seu objetivo é reunir elementos relacionados à infração penal investigada.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">🔹 Inquisitivo</span>
+                  <p className="text-slate-600 dark:text-slate-300">Classificado como procedimento inquisitivo por não possuir a mesma estrutura de contraditório pleno existente na fase judicial (embora respeite os direitos do investigado).</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">🔹 Escrito</span>
+                  <p className="text-slate-600 dark:text-slate-300">Os atos realizados durante a investigação devem ser documentados nos autos, observadas as exigências legais.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-rose-600 dark:text-rose-400 uppercase text-[10px]">🔹 Dispensável</span>
+                  <p className="text-slate-600 dark:text-slate-300">Não é indispensável em todos os casos para o oferecimento da ação penal. Se existirem elementos suficientes, a ação pode ser proposta sem inquérito.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <span className="font-black text-teal-600 dark:text-teal-400 uppercase text-[10px]">🔹 Sigiloso</span>
+                  <p className="text-slate-600 dark:text-slate-300">A investigação pode possuir sigilo quando necessário para preservar sua eficácia, respeitando as garantias do investigado e do defensor.</p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2">
+                  <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">🔹 Oficial</span>
+                  <p className="text-slate-600 dark:text-slate-300">Quando realizado pela autoridade policial, trata-se de atividade desenvolvida por órgão estatal competente.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* 5. Quem conduz o Inquérito Policial? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Quem conduz o Inquérito Policial?
+              </h2>
+              <p className="text-sm">
+                A investigação policial é conduzida pela <strong>autoridade policial</strong>, dentro de suas atribuições legais.
+              </p>
+              <p className="text-sm">
+                No âmbito da <strong>Polícia Civil</strong>, a autoridade policial responsável é, em regra, o <strong>delegado de polícia</strong>.
+              </p>
+              <p className="text-sm">
+                A <strong>Polícia Federal</strong> exerce atribuições de polícia judiciária da União nos casos previstos constitucional e legalmente.
+              </p>
+            </section>
+
+            {/* 6. Início do Inquérito Policial */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Início do Inquérito Policial
+              </h2>
+              <p className="text-sm">
+                A forma de instauração pode variar conforme a natureza da ação penal e as circunstâncias do caso. Entre as possibilidades previstas em lei estão situações em que a investigação é iniciada:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>De ofício pela autoridade policial;</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Mediante requisição da autoridade competente;</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Mediante requerimento do ofendido ou seu representante;</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>A partir de comunicações ou notícias de crime.</span>
+                </div>
+              </div>
+            </section>
+
+            {/* 7. Diligências investigativas */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                7. Diligências investigativas
+              </h2>
+              <p className="text-sm">
+                Durante o inquérito, podem ser realizadas diversas diligências para esclarecer os fatos:
+              </p>
+
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Ouvir o ofendido;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Ouvir testemunhas;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Interrogar o investigado;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Realizar perícias;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Apreender objetos relacionados ao fato;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Realizar reconhecimentos de pessoas e coisas;
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 md:col-span-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Reunir documentos e outras diligências legalmente permitidas.
+                </li>
+              </ul>
+            </section>
+
+            {/* 8. Indiciamento */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                8. Indiciamento
+              </h2>
+              <p className="text-sm">
+                O <strong>indiciamento</strong> é um ato relacionado à investigação por meio do qual a autoridade policial, diante dos elementos disponíveis e observados os requisitos legais, aponta determinada pessoa como provável autora ou partícipe da infração investigada.
+              </p>
+
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 space-y-1">
+                <span className="text-xs font-black uppercase flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-500" /> Ponto Importante para Prova
+                </span>
+                <p className="text-xs font-bold">
+                  Indiciado ≠ Condenado. O indiciamento não significa condenação penal. Trata-se de juízo de probabilidade na fase investigativa.
+                </p>
+              </div>
+            </section>
+
+            {/* 9. Encerramento do Inquérito */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                9. Encerramento do Inquérito
+              </h2>
+              <p className="text-sm">
+                Concluídas as diligências investigativas, o procedimento segue para as providências previstas na legislação.
+              </p>
+              <p className="text-sm">
+                O encerramento do inquérito não significa necessariamente que haverá condenação ou mesmo processo penal. A existência de elementos suficientes e as providências posteriores dependem das circunstâncias do caso e das regras aplicáveis à ação penal.
+              </p>
+            </section>
+
+            {/* 10. Inquérito x Processo Penal */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                10. Inquérito x Processo Penal
+              </h2>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-black border-b border-slate-200 dark:border-slate-700">
+                      <th className="p-3.5 rounded-tl-xl">Inquérito Policial</th>
+                      <th className="p-3.5 rounded-tr-xl">Processo Penal</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Investigativo</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Judicial</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Administrativo</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Jurisdicional</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Busca reunir elementos (materialidade + autoria)</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Busca solucionar a pretensão penal</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Precede, em regra, o processo</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Desenvolve-se perante o Judiciário</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Não possui contraditório pleno como regra</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Possui contraditório e ampla defesa plenos</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
+                      <td className="p-3">Pode ser dispensável</td>
+                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Fase judicial imperativa para condenação</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* 🎯 O que você precisa memorizar */}
+            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/70 border-emerald-200'}`}>
+              <h2 className="text-base font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-500" /> 🎯 O que você precisa memorizar
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Procedimento administrativo</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Investigativo</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Busca esclarecer a infração penal</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Elementos sobre materialidade e autoria</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Em regra, antecede o processo penal</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Pode ser sigiloso e é escrito</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>É DISPENSÁVEL</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Conduzido pela autoridade policial</span>
+                </div>
+              </div>
+            </section>
+
+            {/* 📌 Para o concurso de Assistente Judiciário do TJAM */}
+            <section className="space-y-4 p-6 rounded-3xl bg-slate-900 text-white border border-slate-800">
+              <h2 className="text-base font-black text-amber-400 flex items-center gap-2">
+                <Medal className="w-5 h-5 text-amber-400" /> 📌 Para o concurso de Assistente Judiciário do TJAM
+              </h2>
+              <p className="text-xs text-slate-300">
+                Dê atenção especial aos seguintes 10 pontos nas suas revisões para a banca:
+              </p>
+              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-200 list-decimal list-inside">
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Conceito de inquérito policial</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Finalidade (Materialidade + Autoria)</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Natureza jurídica (Administrativa)</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Características (As 7 essenciais)</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Formas de instauração</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Papel da autoridade policial</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Diligências investigativas</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Indiciamento (Indiciado ≠ Condenado)</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Sigilo e acesso da defesa</li>
+                <li className="p-2.5 rounded-lg bg-slate-800/80">Diferença entre inquérito e processo</li>
+              </ol>
+
+              {/* Next Steps Card */}
+              <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-xs text-emerald-300 font-bold">
+                  🚀 Próxima etapa do estudo: mapa mental do Inquérito Policial → 20 questões → videoaula → revisão dos erros.
+                </div>
+                <button
+                  onClick={() => setActiveTab('mapa')}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shrink-0 cursor-pointer flex items-center gap-2"
+                >
+                  <span>Ir para o Mapa Mental</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </section>
+          </article>
+        ) : selectedSubject === 'processo_civil' ? (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Objetivos da Aula de Processo Civil */}
             <section
