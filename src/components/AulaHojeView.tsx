@@ -767,7 +767,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 1,
       enunciado: '1. O inquérito policial é:',
-      opcoes: [
+      alternativas: [
         'A) Um processo judicial destinado à condenação do investigado.',
         'B) Um procedimento administrativo destinado à investigação de infrações penais.',
         'C) Uma ação penal privada.',
@@ -779,7 +779,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 2,
       enunciado: '2. A principal finalidade do inquérito policial é:',
-      opcoes: [
+      alternativas: [
         'A) Aplicar uma pena ao investigado.',
         'B) Produzir uma sentença condenatória.',
         'C) Apurar a existência da infração penal e reunir elementos relacionados à autoria e à materialidade.',
@@ -791,7 +791,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 3,
       enunciado: '3. A natureza jurídica do inquérito policial é:',
-      opcoes: [
+      alternativas: [
         'A) Jurisdicional.',
         'B) Legislativa.',
         'C) Administrativa.',
@@ -803,7 +803,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 4,
       enunciado: '4. Em regra, o inquérito policial:',
-      opcoes: [
+      alternativas: [
         'A) É sempre indispensável para o oferecimento da ação penal.',
         'B) É dispensável quando já existirem elementos suficientes para a acusação.',
         'C) Substitui a ação penal.',
@@ -815,7 +815,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 5,
       enunciado: '5. Sobre o inquérito policial, assinale a alternativa correta:',
-      opcoes: [
+      alternativas: [
         'A) É conduzido pelo juiz.',
         'B) É conduzido pela autoridade policial.',
         'C) É conduzido exclusivamente pelo Ministério Público.',
@@ -827,7 +827,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 6,
       enunciado: '6. A característica segundo a qual o inquérito não possui, como regra, a mesma estrutura de contraditório pleno existente no processo judicial é denominada:',
-      opcoes: [
+      alternativas: [
         'A) Publicidade.',
         'B) Inquisitividade.',
         'C) Definitividade.',
@@ -839,7 +839,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 7,
       enunciado: '7. O caráter sigiloso do inquérito policial significa que:',
-      opcoes: [
+      alternativas: [
         'A) Nenhuma informação pode ser acessada pelo defensor.',
         'B) O sigilo pode ser utilizado para preservar a eficácia da investigação, respeitadas as garantias legais.',
         'C) O procedimento é sempre completamente secreto.',
@@ -850,8 +850,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     },
     {
       id: 8,
-      enunciado: '8. A materialidade de uma infração penal corresponde:',
-      opcoes: [
+      enunciado: '8. A materialidade de uma infração penal corresponds:',
+      alternativas: [
         'A) À identificação obrigatória do suspeito.',
         'B) À demonstração da existência do fato criminoso.',
         'C) À condenação do acusado.',
@@ -863,7 +863,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 9,
       enunciado: '9. A autoria está relacionada:',
-      opcoes: [
+      alternativas: [
         'A) À identificação de quem, em tese, praticou a infração.',
         'B) À existência do processo judicial.',
         'C) À sentença definitiva.',
@@ -875,7 +875,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 10,
       enunciado: '10. Durante a investigação, a autoridade policial pode realizar:',
-      opcoes: [
+      alternativas: [
         'A) Perícias e oitivas, entre outras diligências legalmente permitidas.',
         'B) Sentenças condenatórias.',
         'C) Julgamentos definitivos.',
@@ -887,7 +887,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 11,
       enunciado: '11. O indiciamento:',
-      opcoes: [
+      alternativas: [
         'A) Significa que o investigado foi definitivamente condenado.',
         'B) É uma decisão judicial irrecorrível.',
         'C) É ato relacionado à investigação que aponta determinada pessoa como provável autora ou partícipe, diante dos elementos reunidos.',
@@ -899,7 +899,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 12,
       enunciado: '12. Assinale a alternativa INCORRETA sobre o indiciamento:',
-      opcoes: [
+      alternativas: [
         'A) Ocorre durante a investigação.',
         'B) Está relacionado aos elementos reunidos no inquérito.',
         'C) Equivale a uma condenação definitiva.',
@@ -911,7 +911,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 13,
       enunciado: '13. O inquérito policial é considerado escrito porque:',
-      opcoes: [
+      alternativas: [
         'A) Todos os atos investigativos devem ser documentados nos autos, conforme a legislação.',
         'B) Somente o delegado pode ler o procedimento.',
         'C) Não são permitidos registros eletrônicos.',
@@ -923,7 +923,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 14,
       enunciado: '14. A instauração do inquérito:',
-      opcoes: [
+      alternativas: [
         'A) Pode ocorrer de diferentes formas, conforme a natureza da infração e as regras legais aplicáveis.',
         'B) Depende sempre de sentença judicial.',
         'C) Somente pode ocorrer por iniciativa do investigado.',
@@ -935,7 +935,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 15,
       enunciado: '15. Sobre o inquérito policial e o processo penal, é correto afirmar:',
-      opcoes: [
+      alternativas: [
         'A) São exatamente a mesma coisa.',
         'B) O inquérito possui natureza administrativa e investigativa, enquanto o processo penal se desenvolve perante o Poder Judiciário.',
         'C) O processo penal é exclusivamente administrativo.',
@@ -947,7 +947,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 16,
       enunciado: '16. O encerramento do inquérito policial:',
-      opcoes: [
+      alternativas: [
         'A) Significa necessariamente que o investigado será condenado.',
         'B) Significa necessariamente que haverá processo penal.',
         'C) Ocorre após as providências investigativas cabíveis, seguindo-se as medidas previstas em lei.',
@@ -959,7 +959,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 17,
       enunciado: '17. Assinale a alternativa correta:',
-      opcoes: [
+      alternativas: [
         'A) Investigado, indiciado e condenado são expressões com o mesmo significado.',
         'B) O indiciamento não equivale à condenação.',
         'C) O inquérito sempre termina com uma sentença.',
@@ -971,7 +971,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 18,
       enunciado: '18. A Polícia Civil exerce, nos termos da legislação, funções relacionadas:',
-      opcoes: [
+      alternativas: [
         'A) À polícia judiciária e à apuração de infrações penais, ressalvadas as competências previstas constitucionalmente.',
         'B) À elaboração de sentenças judiciais.',
         'C) À criação de leis penais.',
@@ -983,7 +983,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 19,
       enunciado: '19. Um dos objetivos do inquérito é reunir elementos que auxiliem na formação da convicção para a futura persecução penal. Portanto:',
-      opcoes: [
+      alternativas: [
         'A) O inquérito já é o julgamento definitivo do caso.',
         'B) A investigação antecede, em regra, a fase judicial.',
         'C) O delegado substitui o juiz no julgamento.',
@@ -995,7 +995,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     {
       id: 20,
       enunciado: '20. Sobre o inquérito policial, assinale a alternativa correta:',
-      opcoes: [
+      alternativas: [
         'A) É procedimento administrativo e investigativo, busca esclarecer a infração penal, pode reunir elementos sobre autoria e materialidade e, em regra, antecede o processo penal.',
         'B) É uma sentença judicial provisória.',
         'C) É sempre indispensável para o oferecimento da ação penal.',
@@ -3200,7 +3200,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     </p>
 
                     <div className="space-y-2">
-                      {q.alternativas.map((alt, altIdx) => {
+                      {(q.alternativas || (q as any).opcoes || []).map((alt: string, altIdx: number) => {
                         const isSelected = selectedAnswers[q.id] === altIdx;
                         const isSubmitted = showQuestionResults[q.id];
                         const isCorrect = altIdx === q.correta;
