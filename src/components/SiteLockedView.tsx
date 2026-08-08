@@ -242,49 +242,49 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               </div>
 
               <div className="space-y-2">
-                {/* 1° Pedro e Eduardo - 25% */}
-                <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">1º</span>
-                    <span className="text-xs font-black text-white flex items-center gap-1.5">
-                      Pedro e Eduardo
-                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
-                    </span>
-                  </div>
-                  <span className="text-xs font-black text-amber-400">25%</span>
-                </div>
-
-                {/* 1° Jonas e Carla - 25% */}
+                {/* 1° Jonas e Carla - 33% */}
                 <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">1º</span>
                     <span className="text-xs font-black text-white">Jonas e Carla</span>
                   </div>
-                  <span className="text-xs font-black text-amber-400">25%</span>
+                  <span className="text-xs font-black text-amber-400">33%</span>
                 </div>
 
-                {/* 2° Pietro e Heitor - 23% */}
+                {/* 2° Pietro e Heitor - 28% */}
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-slate-400 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">2º</span>
                     <span className="text-xs font-black text-white">Pietro e Heitor</span>
                   </div>
-                  <span className="text-xs font-black text-slate-300">23%</span>
+                  <span className="text-xs font-black text-slate-300">28%</span>
                 </div>
 
-                {/* 3° João e Alicia - 19% */}
+                {/* 3° João e Alicia - 25% */}
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-slate-700 text-slate-300 font-black text-[11px] flex items-center justify-center shrink-0">3º</span>
+                    <span className="w-6 h-6 rounded-md bg-amber-800 text-white font-black text-[11px] flex items-center justify-center shrink-0">3º</span>
                     <span className="text-xs font-bold text-slate-300">João e Alicia</span>
                   </div>
-                  <span className="text-xs font-black text-slate-400">19%</span>
+                  <span className="text-xs font-black text-amber-500">25%</span>
                 </div>
 
-                {/* 4° Martins e Márcio - 15% */}
-                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+                {/* 4° Pedro e Eduardo - 23% */}
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-slate-700 text-slate-300 font-black text-[11px] flex items-center justify-center shrink-0">4º</span>
+                    <span className="text-xs font-black text-white flex items-center gap-1.5">
+                      Pedro e Eduardo
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
+                    </span>
+                  </div>
+                  <span className="text-xs font-black text-emerald-400">23%</span>
+                </div>
+
+                {/* 5° Martins e Márcio - 15% */}
+                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-slate-700 text-slate-300 font-black text-[11px] flex items-center justify-center shrink-0">5º</span>
                     <span className="text-xs font-bold text-slate-300">Martins e Márcio</span>
                   </div>
                   <span className="text-xs font-black text-slate-400">15%</span>

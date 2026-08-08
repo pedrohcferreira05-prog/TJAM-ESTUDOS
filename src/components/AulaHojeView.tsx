@@ -1143,24 +1143,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
 
             <div className="space-y-2">
-              {/* 1st Place (Empatados): Pedro e Eduardo & Jonas e Carla */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center">1º</span>
-                  <span className="text-xs font-black text-white flex items-center gap-1.5">
-                    Pedro e Eduardo
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
-                  </span>
-                </div>
-                <span className="text-xs font-black text-amber-400">25%</span>
-              </div>
-
+              {/* 1st Place: Jonas e Carla */}
               <div className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
                 <div className="flex items-center gap-2">
                   <span className="w-5 h-5 rounded bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center">1º</span>
                   <span className="text-xs font-black text-white">Jonas e Carla</span>
                 </div>
-                <span className="text-xs font-black text-amber-400">25%</span>
+                <span className="text-xs font-black text-amber-400">33%</span>
               </div>
 
               {/* 2nd Place: Pietro e Heitor */}
@@ -1169,7 +1158,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span className="w-5 h-5 rounded bg-slate-300 text-slate-950 font-black text-[10px] flex items-center justify-center">2º</span>
                   <span className="text-xs font-black text-slate-200">Pietro e Heitor</span>
                 </div>
-                <span className="text-xs font-black text-emerald-400">23%</span>
+                <span className="text-xs font-black text-emerald-400">28%</span>
               </div>
 
               {/* 3rd Place: João e Alicia */}
@@ -1178,7 +1167,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span className="w-5 h-5 rounded bg-amber-700 text-white font-black text-[10px] flex items-center justify-center">3º</span>
                   <span className="text-xs font-black text-slate-200">João e Alicia</span>
                 </div>
-                <span className="text-xs font-black text-amber-500">19%</span>
+                <span className="text-xs font-black text-amber-500">25%</span>
+              </div>
+
+              {/* 4th Place: Pedro e Eduardo */}
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-slate-700 text-slate-300 font-black text-[10px] flex items-center justify-center">4º</span>
+                  <span className="text-xs font-black text-white flex items-center gap-1.5">
+                    Pedro e Eduardo
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
+                  </span>
+                </div>
+                <span className="text-xs font-black text-emerald-400">23%</span>
               </div>
             </div>
           </div>
