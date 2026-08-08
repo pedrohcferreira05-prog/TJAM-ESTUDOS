@@ -251,25 +251,25 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                   <span className="text-xs font-black text-amber-400">20%</span>
                 </div>
 
-                {/* 2° Pedro e Eduardo - 15% */}
-                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                {/* 2° Pietro e Heitor - 17% */}
+                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-slate-400 text-slate-950 font-black text-[11px] flex items-center justify-center shrink-0">2º</span>
+                    <span className="text-xs font-black text-white">Pietro e Heitor</span>
+                  </div>
+                  <span className="text-xs font-black text-slate-300">17%</span>
+                </div>
+
+                {/* 3° Pedro e Eduardo - 15% */}
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-amber-800 text-white font-black text-[11px] flex items-center justify-center shrink-0">3º</span>
                     <span className="text-xs font-black text-white flex items-center gap-1.5">
                       Pedro e Eduardo
                       <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
                     </span>
                   </div>
                   <span className="text-xs font-black text-emerald-400">15%</span>
-                </div>
-
-                {/* 3° Pietro e Heitor - 10% */}
-                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-amber-800 text-white font-black text-[11px] flex items-center justify-center shrink-0">3º</span>
-                    <span className="text-xs font-bold text-slate-300">Pietro e Heitor</span>
-                  </div>
-                  <span className="text-xs font-black text-slate-400">10%</span>
                 </div>
 
                 {/* 4° João e Alicia - 08% */}

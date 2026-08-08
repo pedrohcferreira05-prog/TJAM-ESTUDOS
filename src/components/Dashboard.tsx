@@ -356,7 +356,31 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
             </div>
 
-            {/* 2° Pedro e Eduardo (Sua Dupla) - 15% */}
+            {/* 2° Pietro e Heitor - 17% */}
+            <div
+              className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
+                isDarkMode ? 'bg-slate-800/40 border-slate-800' : 'bg-slate-50 border-slate-200'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-slate-400 text-white font-black text-xs flex items-center justify-center shrink-0">
+                  2º
+                </div>
+                <span className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                  Pietro e Heitor
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-20 sm:w-28 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden hidden sm:block">
+                  <div className="bg-blue-500 h-full rounded-full" style={{ width: '17%' }}></div>
+                </div>
+                <span className="text-sm font-black text-slate-700 dark:text-slate-300">
+                  17%
+                </span>
+              </div>
+            </div>
+
+            {/* 3° Pedro e Eduardo (Sua Dupla) - 15% */}
             <div
               className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                 isDarkMode
@@ -365,8 +389,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-slate-400 text-white font-black text-xs flex items-center justify-center shrink-0">
-                  2º
+                <div className="w-8 h-8 rounded-xl bg-amber-700/80 text-white font-black text-xs flex items-center justify-center shrink-0">
+                  3º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -385,30 +409,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 </div>
                 <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
                   15%
-                </span>
-              </div>
-            </div>
-
-            {/* 3° Pietro e Heitor - 10% */}
-            <div
-              className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
-                isDarkMode ? 'bg-slate-800/40 border-slate-800' : 'bg-slate-50 border-slate-200'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-700/80 text-white font-black text-xs flex items-center justify-center shrink-0">
-                  3º
-                </div>
-                <span className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
-                  Pietro e Heitor
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-20 sm:w-28 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden hidden sm:block">
-                  <div className="bg-amber-600 h-full rounded-full" style={{ width: '10%' }}></div>
-                </div>
-                <span className="text-sm font-black text-slate-700 dark:text-slate-300">
-                  10%
                 </span>
               </div>
             </div>
