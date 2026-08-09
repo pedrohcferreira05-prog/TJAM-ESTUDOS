@@ -97,21 +97,21 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
     id: 'quinta',
     dayName: 'Aula de Hoje',
     dateStr: '08/08',
-    discipline: 'Processo Penal',
-    title: 'Aula 1 — Inquérito Policial: Conceito, Finalidade e Características',
-    professor: 'Prof. Processo Penal',
+    discipline: 'LIBRAS',
+    title: 'Aula 1 — LIBRAS: Conceitos básicos, história e legislação',
+    professor: 'Profª. LIBRAS e Inclusão',
     youtubeEmbedUrl: customVideoUrls['quinta']
       ? getYouTubeEmbedUrl(customVideoUrls['quinta'])
-      : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0',
-    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg',
+      : 'https://www.youtube.com/embed/WqUexIfQ_aQ?autoplay=0&rel=0',
+    youtubeDirectUrl: customVideoUrls['quinta'] || 'https://youtu.be/WqUexIfQ_aQ?is=MSdtBlG9aSokP_fR',
     badgeTag: 'Aula Liberada',
     topics: [
-      'Conceito de Inquérito Policial: Procedimento administrativo investigativo prévio',
-      'Finalidade e Pilares: Materialidade da infração e indícios de Autoria',
-      'Sete Características: Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial',
-      'Diligências, Indiciamento (Indiciado ≠ Condenado) e Encerramento'
+      'Conceito de LIBRAS: Língua autônoma de modalidade gestual-visual com estrutura gramatical própria',
+      '5 Parâmetros Fundamentais: Configuração de mão, Movimento, Ponto de articulação, Orientação e Expressões não manuais',
+      'Datilologia x LIBRAS: Alfabeto manual auxiliar para nomes próprios e vocábulos específicos',
+      'Legislação para Concurso: Lei nº 10.436/2002 e Decreto nº 5.626/2005 no serviço público do TJAM'
     ],
-    summary: 'Vídeo aula completa transmitida de Processo Penal, abordando os conceitos essenciais do Inquérito Policial para o concurso de Assistente Judiciário do TJAM.'
+    summary: 'Vídeo aula e material completo de LIBRAS, abordando os conceitos fundamentais, parâmetros dos sinais e legislação de acessibilidade para o concurso do TJAM.'
   };
 
   return (

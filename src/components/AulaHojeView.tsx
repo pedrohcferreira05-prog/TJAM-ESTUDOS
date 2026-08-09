@@ -35,8 +35,8 @@ interface AulaHojeViewProps {
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
 export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
-  // Selected Subject State: 'processo_penal' (default for current lesson), 'processo_civil', 'informatica', or 'direito_admin'
-  const [selectedSubject, setSelectedSubject] = useState<'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin'>('processo_penal');
+  // Selected Subject State: 'libras' (default), 'processo_penal', 'processo_civil', 'informatica', or 'direito_admin'
+  const [selectedSubject, setSelectedSubject] = useState<'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin'>('libras');
 
   // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
   const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
@@ -88,6 +88,333 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
+
+  // LIBRAS Datasets
+  const librasFlashcardsData = [
+    {
+      q: 'O que significa a sigla LIBRAS?',
+      a: 'Língua Brasileira de Sinais. É a língua de modalidade gestual-visual utilizada pela comunidade surda brasileira.'
+    },
+    {
+      q: 'LIBRAS é uma simples tradução do Português?',
+      a: 'NÃO. LIBRAS é uma língua autônoma com estrutura gramatical, vocabulário e regras sintáticas próprias.'
+    },
+    {
+      q: 'Qual é a lei federal que reconhece a LIBRAS no Brasil?',
+      a: 'Lei nº 10.436, de 24 de abril de 2002 (regulamentada pelo Decreto nº 5.626/2005).'
+    },
+    {
+      q: 'O que é a Datilologia?',
+      a: 'É a representação das letras do alfabeto manual utilizando as mãos. É um recurso auxiliar e NÃO é sinônimo de LIBRAS.'
+    },
+    {
+      q: 'Quais são os 5 parâmetros fundamentais dos sinais em LIBRAS?',
+      a: '1. Configuração de mão; 2. Movimento; 3. Localização (Ponto de Articulação); 4. Orientação da palma; 5. Expressões não manuais (faciais/corporais).'
+    },
+    {
+      q: 'Qual o marco histórico de 1857 na educação de surdos no Brasil?',
+      a: 'A fundação do Instituto Nacional de Educação de Surdos (INES), primeira instituição histórica dedicada à educação de surdos no país.'
+    },
+    {
+      q: 'A Lei nº 10.436/2002 substitui a Língua Portuguesa escrita?',
+      a: 'NÃO. A lei deixa claro que a LIBRAS não substitui a modalidade escrita da Língua Portuguesa.'
+    },
+    {
+      q: 'Qual o papel das expressões faciais e corporais na LIBRAS?',
+      a: 'Desempenham função gramatical decisiva, indicando intenção (interrogação, negação, afirmação), emoção e intensidade.'
+    },
+    {
+      q: 'Qual decreto regulamenta a Lei da LIBRAS?',
+      a: 'Decreto nº 5.626, de 22 de dezembro de 2005.'
+    },
+    {
+      q: 'Qual a importância da LIBRAS para o Assistente Judiciário no serviço público?',
+      a: 'Garante os princípios da acessibilidade, igualdade e inclusão, assegurando o pleno acesso do cidadão surdo à Justiça.'
+    }
+  ];
+
+  const librasMcQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. LIBRAS significa:',
+      alternativas: [
+        'A) Linguagem Brasileira de Sinais.',
+        'B) Língua Brasileira de Sinais.',
+        'C) Língua Brasileira para Surdos.',
+        'D) Linguagem Brasileira para Surdos.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: LIBRAS é a sigla para Língua Brasileira de Sinais, reconhecida legalmente pela Lei nº 10.436/2002.'
+    },
+    {
+      id: 2,
+      enunciado: '2. A LIBRAS é:',
+      alternativas: [
+        'A) Uma simples tradução do português.',
+        'B) Um código universal utilizado por todas as pessoas surdas.',
+        'C) Uma língua com estrutura gramatical própria.',
+        'D) Apenas um alfabeto manual.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: A LIBRAS é uma língua viva e autônoma, de modalidade gestual-visual, com estrutura gramatical e sintaxe próprias.'
+    },
+    {
+      id: 3,
+      enunciado: '3. A Lei nº 10.436/2002 é importante porque:',
+      alternativas: [
+        'A) Criou o alfabeto manual brasileiro.',
+        'B) Reconheceu a LIBRAS como meio legal de comunicação e expressão.',
+        'C) Determinou que LIBRAS substitui o português.',
+        'D) Criou o INES.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A Lei nº 10.436/2002 é o marco legal histórico que reconhece a LIBRAS como meio legal de comunicação e expressão no Brasil.'
+    },
+    {
+      id: 4,
+      enunciado: '4. O Decreto nº 5.626/2005:',
+      alternativas: [
+        'A) Regulamenta a Lei nº 10.436/2002.',
+        'B) Revoga o reconhecimento da LIBRAS.',
+        'C) Determina que somente intérpretes podem utilizar LIBRAS.',
+        'D) Cria uma nova língua de sinais.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: O Decreto nº 5.626/2005 regulamenta a Lei nº 10.436/2002, disciplinando o ensino da LIBRAS, a formação profissional e a acessibilidade.'
+    },
+    {
+      id: 5,
+      enunciado: '5. A LIBRAS utiliza principalmente recursos:',
+      alternativas: [
+        'A) Sonoros e auditivos.',
+        'B) Visuais e espaciais.',
+        'C) Exclusivamente escritos.',
+        'D) Exclusivamente orais.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Por ser uma língua de modalidade gestual-visual, a LIBRAS utiliza recursos visuais e espaciais para a produção e percepção dos sinais.'
+    },
+    {
+      id: 6,
+      enunciado: '6. A datilologia corresponde:',
+      alternativas: [
+        'A) À tradução automática do português.',
+        'B) Ao conjunto de expressões faciais da LIBRAS.',
+        'C) À representação manual das letras do alfabeto.',
+        'D) À gramática completa da LIBRAS.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Datilologia é o uso do alfabeto manual para soletrar letras e formar palavras, nomes próprios ou termos sem sinal específico.'
+    },
+    {
+      id: 7,
+      enunciado: '7. É correto afirmar que:',
+      alternativas: [
+        'A) Datilologia e LIBRAS são exatamente a mesma coisa.',
+        'B) A datilologia é um recurso utilizado na comunicação em língua de sinais.',
+        'C) A datilologia substitui todos os sinais.',
+        'D) A datilologia existe somente para números.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A datilologia é um recurso auxiliar na comunicação em LIBRAS, não se confundindo com a totalidade da língua de sinais.'
+    },
+    {
+      id: 8,
+      enunciado: '8. Entre os elementos envolvidos na produção dos sinais estão:',
+      alternativas: [
+        'A) Configuração de mão, movimento, localização e orientação.',
+        'B) Apenas movimento dos braços.',
+        'C) Apenas configuração das mãos.',
+        'D) Som, ritmo e entonação.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Os sinais são produzidos através de 5 parâmetros: Configuração de mão, Movimento, Localização (Ponto de Articulação), Orientação e Expressões não manuais.'
+    },
+    {
+      id: 9,
+      enunciado: '9. As expressões faciais na LIBRAS:',
+      alternativas: [
+        'A) Não possuem nenhuma função comunicativa.',
+        'B) Podem contribuir para a construção do significado.',
+        'C) Servem apenas para demonstrar emoções.',
+        'D) São utilizadas somente em conversas informais.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: As expressões faciais e corporais são parâmetros fundamentais da LIBRAS, com função gramatical direta no sentido dos sinais.'
+    },
+    {
+      id: 10,
+      enunciado: '10. O INES possui importância histórica porque:',
+      alternativas: [
+        'A) Foi criado para substituir o Poder Judiciário.',
+        'B) É uma instituição histórica relacionada à educação de pessoas surdas no Brasil.',
+        'C) É responsável por criar todas as línguas de sinais.',
+        'D) É um órgão responsável exclusivamente pela fiscalização de intérpretes.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Fundado em 1857, o Instituto Nacional de Educação de Surdos (INES) é o marco pioneiro da educação de surdos no Brasil.'
+    },
+    {
+      id: 11,
+      enunciado: '11. A LIBRAS e a Língua Portuguesa:',
+      alternativas: [
+        'A) São exatamente a mesma língua.',
+        'B) Possuem estruturas e características próprias.',
+        'C) Diferem apenas no alfabeto.',
+        'D) Possuem obrigatoriamente a mesma organização das frases.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: LIBRAS e Português são línguas distintas, com gramática, léxico e estruturas sintáticas independentes.'
+    },
+    {
+      id: 12,
+      enunciado: '12. Uma pessoa surda:',
+      alternativas: [
+        'A) Necessariamente utiliza apenas LIBRAS.',
+        'B) Necessariamente utiliza apenas português oral.',
+        'C) Pode utilizar diferentes recursos e formas de comunicação, conforme suas necessidades e preferências.',
+        'D) Não pode utilizar português escrito.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Cada indivíduo possui sua identidade e preferências comunicativas (LIBRAS, português oral, escrita, leitura labial ou tecnologia assistiva).'
+    },
+    {
+      id: 13,
+      enunciado: '13. No atendimento público, a acessibilidade busca:',
+      alternativas: [
+        'A) Restringir o atendimento às pessoas que dominam português oral.',
+        'B) Garantir condições adequadas de acesso aos serviços.',
+        'C) Substituir todos os servidores por intérpretes.',
+        'D) Impedir o uso de tecnologias assistivas.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A acessibilidade no serviço público visa assegurar igualdade de condições e dignidade a todos os cidadãos.'
+    },
+    {
+      id: 14,
+      enunciado: '14. Sobre a Lei nº 10.436/2002, assinale a alternativa correta:',
+      alternativas: [
+        'A) Reconhece a LIBRAS como meio legal de comunicação e expressão.',
+        'B) Determina que a LIBRAS substitua a língua portuguesa escrita.',
+        'C) Estabelece que LIBRAS é apenas um conjunto de gestos.',
+        'D) Proíbe o uso da LIBRAS em órgãos públicos.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: O artigo 1º da Lei nº 10.436/2002 estabelece expressamente o reconhecimento da LIBRAS como meio legal de comunicação e expressão.'
+    },
+    {
+      id: 15,
+      enunciado: '15. O Decreto nº 5.626/2005 aborda, entre outros assuntos:',
+      alternativas: [
+        'A) Apenas o alfabeto manual.',
+        'B) Educação, formação de profissionais e aspectos relacionados à LIBRAS.',
+        'C) Somente a criação de sinais.',
+        'D) Exclusivamente questões trabalhistas.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O Decreto nº 5.626/2005 detalha a inclusão da LIBRAS nos cursos de formação, a habilitação de intérpretes e a garantia de direitos educacionais e de saúde.'
+    },
+    {
+      id: 16,
+      enunciado: '16. Assinale a alternativa INCORRETA:',
+      alternativas: [
+        'A) LIBRAS possui estrutura própria.',
+        'B) LIBRAS é uma língua.',
+        'C) LIBRAS é simplesmente português sinalizado.',
+        'D) A comunicação em LIBRAS pode envolver expressões não manuais.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C (Incorreta): LIBRAS NÃO é português sinalizado nem tradução palavra por palavra, mas sim uma língua autônoma.'
+    },
+    {
+      id: 17,
+      enunciado: '17. No contexto do Poder Judiciário, o conhecimento sobre acessibilidade é importante porque:',
+      alternativas: [
+        'A) Facilita o acesso das pessoas aos serviços públicos e à Justiça.',
+        'B) Serve apenas para servidores especializados em informática.',
+        'C) É necessário somente para magistrados.',
+        'D) Elimina a necessidade de atendimento ao público.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: No TJAM, a acessibilidade e o correto atendimento garantem o exercício pleno dos direitos e o livre acesso à Justiça.'
+    },
+    {
+      id: 18,
+      enunciado: '18. Sobre os sinais em LIBRAS, é correto afirmar que:',
+      alternativas: [
+        'A) Somente o formato das mãos importa.',
+        'B) Diferentes elementos podem participar da construção do sinal e do significado.',
+        'C) As expressões faciais nunca interferem na comunicação.',
+        'D) O movimento não possui importância.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A produção dos sinais articula diversos elementos simultâneos (configuração, movimento, ponto de articulação, orientação e expressão facial).'
+    },
+    {
+      id: 19,
+      enunciado: '19. Assinale a sequência correta:',
+      alternativas: [
+        'A) LIBRAS = linguagem → Datilologia = língua.',
+        'B) LIBRAS = língua → Datilologia = representação manual das letras.',
+        'C) LIBRAS = alfabeto → Datilologia = gramática.',
+        'D) LIBRAS = português sinalizado → Datilologia = tradução.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A LIBRAS é uma língua propriamente dita, enquanto a datilologia é o alfabeto manual de apoio para soletração.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Sobre a Aula 1, assinale a alternativa correta:',
+      alternativas: [
+        'A) A LIBRAS é universal e possui exatamente os mesmos sinais em todos os países.',
+        'B) A LIBRAS é uma língua brasileira com estrutura própria, reconhecida pela Lei nº 10.436/2002.',
+        'C) A LIBRAS é apenas um sistema de gestos sem regras linguísticas.',
+        'D) A datilologia corresponde à totalidade da LIBRAS.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Resumo perfeito da Aula 1: LIBRAS é a língua de sinais brasileira, com sistema linguístico autônomo e amparo legal na Lei nº 10.436/2002.'
+    }
+  ];
+
+  const librasTfQuestionsData = [
+    {
+      id: 101,
+      enunciado: '1. A LIBRAS não é uma simples tradução do português para sinais, pois possui estrutura gramatical e regras linguísticas próprias.',
+      correta: true,
+      explicacao: 'Verdadeiro: LIBRAS é uma língua viva, independente, com gramática visual-espacial própria.'
+    },
+    {
+      id: 102,
+      enunciado: '2. A Lei nº 10.436/2002 substituiu a Língua Portuguesa escrita pela LIBRAS em todos os documentos oficiais.',
+      correta: false,
+      explicacao: 'Falso: A lei deixa claro que a LIBRAS não substitui a modalidade escrita da Língua Portuguesa.'
+    },
+    {
+      id: 103,
+      enunciado: '3. As expressões faciais e corporais na LIBRAS são mero adorno estético e não influenciam no significado dos sinais.',
+      correta: false,
+      explicacao: 'Falso: Expressões faciais e corporais são parâmetros fundamentais da LIBRAS, conferindo sentido gramatical, emoção e intensidade.'
+    },
+    {
+      id: 104,
+      enunciado: '4. O Instituto Nacional de Educação de Surdos (INES), fundado em 1857, é um marco histórico fundamental na educação de pessoas surdas no Brasil.',
+      correta: true,
+      explicacao: 'Verdadeiro: O INES é uma instituição histórica voltada à educação de surdos criada em 1857.'
+    }
+  ];
+
+  const librasDiscursiveQuestionsData = [
+    {
+      id: 201,
+      enunciado: '1. Explique por que se afirma que "LIBRAS é uma língua e não uma linguagem improvisada", destacando sua previsão na Lei nº 10.436/2002.',
+      respostaEsperada: 'Gabarito oficial: A LIBRAS é reconhecida como sistema linguístico de natureza visual-espacial pela Lei nº 10.436/2002. Trata-se de uma língua autônoma, pois possui gramática, vocabulário, regras sintáticas e parâmetros estruturados próprios (configuração de mão, movimento, ponto de articulação, orientação e expressões faciais), diferindo de simples códigos gestuais ou imitações.'
+    },
+    {
+      id: 202,
+      enunciado: '2. Diferencie LIBRAS de Datilologia e explique em quais momentos a datilologia deve ser utilizada.',
+      respostaEsperada: 'Gabarito oficial: A LIBRAS é a língua de sinais completa utilizada pela comunidade surda. A Datilologia é apenas o recurso do alfabeto manual (representação de letras com as mãos). A datilologia deve ser utilizada de forma pontual para soletrar nomes próprios, endereços ou palavras/termos que ainda não possuem sinal específico em LIBRAS.'
+    }
+  ];
 
   // Processo Penal Flashcards Data
   const procPenalFlashcardsData = [
@@ -1047,7 +1374,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   ];
 
   // Active Questions & Flashcards Selection based on selectedSubject
-  const flashcardsData = selectedSubject === 'processo_penal'
+  const flashcardsData = selectedSubject === 'libras'
+    ? librasFlashcardsData
+    : selectedSubject === 'processo_penal'
     ? procPenalFlashcardsData
     : selectedSubject === 'processo_civil'
     ? procCivilFlashcardsData
@@ -1055,7 +1384,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infFlashcardsData
     : adminFlashcardsData;
 
-  const activeMcQuestions = selectedSubject === 'processo_penal'
+  const activeMcQuestions = selectedSubject === 'libras'
+    ? librasMcQuestionsData
+    : selectedSubject === 'processo_penal'
     ? procPenalMcQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilMcQuestionsData
@@ -1063,7 +1394,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infMcQuestionsData
     : questionsData;
 
-  const activeTfQuestions = selectedSubject === 'processo_penal'
+  const activeTfQuestions = selectedSubject === 'libras'
+    ? librasTfQuestionsData
+    : selectedSubject === 'processo_penal'
     ? procPenalTfQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilTfQuestionsData
@@ -1071,7 +1404,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infTfQuestionsData
     : tfQuestionsData;
 
-  const activeDiscursiveQuestions = selectedSubject === 'processo_penal'
+  const activeDiscursiveQuestions = selectedSubject === 'libras'
+    ? librasDiscursiveQuestionsData
+    : selectedSubject === 'processo_penal'
     ? procPenalDiscursiveQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilDiscursiveQuestionsData
@@ -1096,7 +1431,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-16">
-      {/* Primary Header Banner: Processo Penal - Aula Liberada */}
+      {/* Primary Header Banner: Dynamic Subject - Aula Liberada */}
       <div className="p-8 rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 text-white shadow-xl border border-emerald-500/30 space-y-6 relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
@@ -1105,19 +1440,40 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • TJAM 2026
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
-                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: Processo Penal
+                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: {
+                  selectedSubject === 'libras' ? 'LIBRAS'
+                  : selectedSubject === 'processo_penal' ? 'Processo Penal'
+                  : selectedSubject === 'processo_civil' ? 'Processo Civil'
+                  : selectedSubject === 'informatica' ? 'Informática'
+                  : 'Direito Administrativo'
+                }
               </span>
             </div>
 
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200">
-                ⚖️ Processo Penal • Capítulo 1 – Inquérito Policial
+                {
+                  selectedSubject === 'libras' ? '🤟 LIBRAS • Unidade 1 – Conceitos Básicos e Legislação'
+                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Capítulo 1 – Inquérito Policial'
+                  : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Unidade 1 – Teoria Geral do Processo'
+                  : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
+                  : '📜 Direito Administrativo • Capítulo 1 – Princípios Fundamentais'
+                }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
-                Aula 1 — Conceito, finalidade e características
+                {
+                  selectedSubject === 'libras' ? 'Aula 1 — LIBRAS: Conceitos básicos, história e legislação'
+                  : selectedSubject === 'processo_penal' ? 'Aula 1 — Conceito, finalidade e características'
+                  : selectedSubject === 'processo_civil' ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
+                  : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
+                  : 'Aula 1 — Princípios Expressos e Implícitos da Administração Pública'
+                }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
-                Nível: Iniciante • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM
+                {
+                  selectedSubject === 'libras' ? 'Acessibilidade e Inclusão • Nível: Iniciante • Tempo estimado: 45–60 min • Preparatório Assistente Judiciário TJAM'
+                  : 'Nível: Iniciante • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
+                }
               </p>
             </div>
           </div>
@@ -1208,6 +1564,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Subject Switcher Bar */}
       <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
         <button
+          onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            selectedSubject === 'libras'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <Sparkles className="w-4 h-4 text-amber-300" />
+          <span>Aula de Hoje: LIBRAS</span>
+        </button>
+        <button
           onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
           className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
             selectedSubject === 'processo_penal'
@@ -1215,8 +1582,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Aula de Hoje: Processo Penal</span>
+          <BookOpen className="w-4 h-4" />
+          <span>Processo Penal</span>
         </button>
         <button
           onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
@@ -1257,7 +1624,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
           <span>
-            {selectedSubject === 'processo_penal'
+            {selectedSubject === 'libras'
+              ? 'Acessibilidade e Inclusão'
+              : selectedSubject === 'processo_penal'
               ? 'Processo Penal'
               : selectedSubject === 'processo_civil'
               ? 'Processo Civil'
@@ -1267,7 +1636,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'processo_penal'
+            {selectedSubject === 'libras'
+              ? 'Unidade 1 — Fundamentos da LIBRAS'
+              : selectedSubject === 'processo_penal'
               ? 'Capítulo 1 — Inquérito Policial'
               : selectedSubject === 'processo_civil'
               ? 'Unidade 1 — Teoria Geral do Processo'
@@ -1277,7 +1648,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'processo_penal'
+            {selectedSubject === 'libras'
+              ? 'Aula 1 — Conceitos básicos, história e legislação'
+              : selectedSubject === 'processo_penal'
               ? 'Aula 1 — Conceito, finalidade e características'
               : selectedSubject === 'processo_civil'
               ? 'Capítulo 1 — Jurisdição, Ação e Competência'
@@ -1290,8 +1663,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              {selectedSubject === 'processo_penal'
-                ? 'Aula de Hoje (Processo Penal)'
+              {selectedSubject === 'libras'
+                ? 'Aula de Hoje: LIBRAS (Acessibilidade e Inclusão)'
+                : selectedSubject === 'processo_penal'
+                ? 'Processo Penal'
                 : selectedSubject === 'processo_civil'
                 ? 'Processo Civil'
                 : selectedSubject === 'informatica'
@@ -1299,7 +1674,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : 'Direito Administrativo'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {selectedSubject === 'processo_penal'
+              {selectedSubject === 'libras'
+                ? '🤟 LIBRAS — Aula 1: Conceitos básicos, história e legislação'
+                : selectedSubject === 'processo_penal'
                 ? 'Aula 1 — Inquérito Policial: Conceito, finalidade e características'
                 : selectedSubject === 'processo_civil'
                 ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
@@ -1428,7 +1805,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  {selectedSubject === 'processo_civil'
+                  {selectedSubject === 'libras'
+                    ? 'Unidade 1 — LIBRAS: Conceitos básicos, história e legislação'
+                    : selectedSubject === 'processo_civil'
                     ? 'Unidade 1 — Jurisdição: Conceito, Características e Princípios'
                     : selectedSubject === 'informatica'
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
@@ -1451,7 +1830,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <iframe
                 className="w-full h-full"
                 src={
-                  selectedSubject === 'processo_penal'
+                  selectedSubject === 'libras'
+                    ? 'https://www.youtube.com/embed/WqUexIfQ_aQ?autoplay=0&rel=0'
+                    : selectedSubject === 'processo_penal'
                     ? 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
                     ? 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
@@ -1460,7 +1841,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
                 }
                 title={
-                  selectedSubject === 'processo_penal'
+                  selectedSubject === 'libras'
+                    ? 'Vídeo Aula - LIBRAS: Conceitos básicos, história e legislação'
+                    : selectedSubject === 'processo_penal'
                     ? 'Vídeo Aula - Processo Penal: Inquérito Policial'
                     : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Jurisdição, Ação e Competência'
@@ -1477,7 +1860,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="flex justify-end">
               <a
                 href={
-                  selectedSubject === 'processo_penal'
+                  selectedSubject === 'libras'
+                    ? 'https://youtu.be/WqUexIfQ_aQ?is=MSdtBlG9aSokP_fR'
+                    : selectedSubject === 'processo_penal'
                     ? 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
                     : selectedSubject === 'processo_civil'
                     ? 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
@@ -1500,7 +1885,30 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <h3 className="text-xs font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
                   <Lightbulb className="w-4 h-4 text-emerald-500" /> O que você vai aprender neste vídeo:
                 </h3>
-                {selectedSubject === 'processo_penal' ? (
+                {selectedSubject === 'libras' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>O que é LIBRAS e sua natureza jurídica como língua autônoma e com sistema linguístico próprio.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Diferença crucial entre LIBRAS e Língua Portuguesa (LIBRAS não é tradução palavra por palavra).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Os 5 parâmetros formadores dos sinais (Configuração de mão, Movimento, Ponto de articulação, Orientação e Expressões faciais).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Conceito de Datilologia (alfabeto manual) e o papel decisivo das expressões faciais/corporais.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>A legislação para concursos: Lei nº 10.436/2002 e Decreto nº 5.626/2005 para o serviço público e o TJAM.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'processo_penal' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -1629,7 +2037,447 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        selectedSubject === 'processo_penal' ? (
+        selectedSubject === 'libras' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Header Objectives */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — LIBRAS: Conceitos básicos, história e legislação
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Disciplina: Acessibilidade e Inclusão | Nível: Iniciante
+              </p>
+              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
+                <strong>Objetivo:</strong> Compreender os fundamentos da LIBRAS e sua importância no atendimento ao cidadão no serviço público e Poder Judiciário.
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Compreender a natureza da LIBRAS como língua autônoma e não simples tradução.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Identificar os usuários da LIBRAS e os 5 parâmetros formadores dos sinais.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar LIBRAS de Datilologia e entender o papel da expressão facial.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Dominar a legislação essencial de concurso: Lei nº 10.436/2002 e Decreto nº 5.626/2005.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Aplicar os princípios de acessibilidade no atendimento do Assistente Judiciário.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* 1. O que é LIBRAS? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. O que é LIBRAS?
+              </h2>
+              <p className="text-sm">
+                <strong>LIBRAS</strong> significa <strong>Língua Brasileira de Sinais</strong>.
+              </p>
+              <p className="text-sm">
+                É uma língua utilizada principalmente pela comunidade surda brasileira para comunicação e expressão.
+              </p>
+
+              <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-amber-500/10 border-amber-500/30' : 'bg-amber-50 border-amber-200'}`}>
+                <p className="text-xs font-black text-amber-700 dark:text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-500" /> Um Ponto Fundamental Para a Prova!
+                </p>
+                <blockquote className="text-sm font-extrabold text-slate-900 dark:text-amber-100 italic border-l-2 border-amber-500 pl-3 py-1">
+                  "LIBRAS não é uma simples tradução do português para sinais."
+                </blockquote>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  Ela possui <strong>estrutura gramatical própria</strong>, com regras e características linguísticas específicas. A LIBRAS utiliza principalmente elementos <strong>visuais e espaciais</strong>, enquanto o português é uma língua predominantemente oral-auditiva.
+                </p>
+              </div>
+            </section>
+
+            {/* 2. LIBRAS é uma língua? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. LIBRAS é uma língua?
+              </h2>
+              <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                Sim.
+              </p>
+              <p className="text-sm">
+                A LIBRAS é reconhecida legalmente como meio de comunicação e expressão. A <strong>Lei nº 10.436/2002</strong> reconhece a LIBRAS como meio legal de comunicação e expressão.
+              </p>
+              <p className="text-sm">
+                A lei também estabelece que a LIBRAS possui um <strong>sistema linguístico próprio</strong>, constituído por estrutura gramatical específica.
+              </p>
+
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <span className="text-xs font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-widest">
+                  Para Memorizar em Prova
+                </span>
+                <p className="text-base font-black text-slate-900 dark:text-white mt-1">
+                  LIBRAS = Língua (com sistema linguístico próprio), NÃO linguagem improvisada ou gestos informais.
+                </p>
+              </div>
+            </section>
+
+            {/* 3. Quem utiliza a LIBRAS? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Quem utiliza a LIBRAS?
+              </h2>
+              <p className="text-sm">
+                A LIBRAS é utilizada principalmente por <strong>pessoas surdas no Brasil</strong>.
+              </p>
+              <p className="text-sm font-medium">
+                Entretanto, também é amplamente utilizada por:
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 pl-2">
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Familiares de pessoas surdas;
+                </li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Professores e educadores;
+                </li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Tradutores e intérpretes;
+                </li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Profissionais da saúde;
+                </li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Servidores públicos (ex: Assistente Judiciário);
+                </li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <Check className="w-4 h-4 text-emerald-500" /> Pessoas que convivem com a comunidade surda.
+                </li>
+              </ul>
+              <p className="text-sm text-slate-600 dark:text-slate-400 italic">
+                Portanto, aprender LIBRAS contribui para ampliar a comunicação e a acessibilidade na sociedade.
+              </p>
+            </section>
+
+            {/* 4. LIBRAS e Língua Portuguesa */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. LIBRAS e Língua Portuguesa
+              </h2>
+              <p className="text-sm">
+                LIBRAS e Português são <strong>línguas diferentes</strong>.
+              </p>
+              <p className="text-sm">
+                A LIBRAS possui:
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">Vocabulário próprio</div>
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">Regras gramaticais</div>
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">Estrutura autônoma</div>
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">Elementos visuais e espaciais</div>
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">Variações linguísticas regionais</div>
+              </div>
+              <p className="text-sm font-semibold text-rose-600 dark:text-rose-400">
+                Por isso, não devemos simplesmente pegar uma frase em português e substituir cada palavra por um sinal.
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
+                <p className="text-xs font-bold text-slate-500 uppercase">Exemplo de Aplicação</p>
+                <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
+                  Uma frase em português pode possuir uma organização sintática completamente diferente quando expressada em LIBRAS. Isso ocorre porque cada língua possui sua própria estrutura gramatical autônoma.
+                </p>
+              </div>
+            </section>
+
+            {/* 5. Como a LIBRAS funciona? */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Como a LIBRAS funciona? (Parâmetros dos Sinais)
+              </h2>
+              <p className="text-sm">
+                Os sinais são produzidos utilizando diferentes elementos e parâmetros formativos. Entre os principais aspectos estão:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase">1. Configuração de mão</span>
+                  <p className="text-slate-700 dark:text-slate-300">É o formato assumido pela mão durante a realização do sinal.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase">2. Movimento</span>
+                  <p className="text-slate-700 dark:text-slate-300">É a maneira como a mão ou as mãos se movimentam no espaço.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase">3. Localização (Ponto de Articulação)</span>
+                  <p className="text-slate-700 dark:text-slate-300">É o local do corpo ou do espaço onde o sinal é realizado.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase">4. Orientação da palma</span>
+                  <p className="text-slate-700 dark:text-slate-300">Refere-se à direção para a qual a palma da mão está voltada (para cima, para baixo, para dentro, etc.).</p>
+                </div>
+                <div className="p-4 rounded-2xl md:col-span-2 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase">5. Expressões não manuais</span>
+                  <p className="text-slate-700 dark:text-slate-300">Incluem expressões faciais e movimentos corporais que participam ativamente da construção do significado do sinal.</p>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 italic">
+                Esses elementos combinados fazem toda a diferença na identificação e no significado dos sinais.
+              </p>
+            </section>
+
+            {/* 6. Datilologia */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Datilologia
+              </h2>
+              <p className="text-sm">
+                A <strong>datilologia</strong> é a representação de letras do alfabeto por meio das mãos (conhecida como <strong>alfabeto manual</strong>).
+              </p>
+              <p className="text-sm font-semibold">
+                Pode ser utilizada, por exemplo, para:
+              </p>
+              <ul className="list-disc list-inside text-xs text-slate-700 dark:text-slate-300 space-y-1 pl-2">
+                <li>Soletrar nomes próprios de pessoas ou lugares;</li>
+                <li>Representar palavras específicas ou siglas;</li>
+                <li>Indicar termos que ainda não possuem um sinal conhecido pelo interlocutor;</li>
+                <li>Auxiliar na comunicação de determinadas informações pontuais.</li>
+              </ul>
+
+              <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-amber-500/10 border-amber-500/30' : 'bg-amber-50 border-amber-200'}`}>
+                <span className="text-xs font-black text-amber-700 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-500" /> Atenção de Prova
+                </span>
+                <p className="text-xs font-extrabold text-slate-900 dark:text-amber-100">
+                  Datilologia NÃO é sinônimo de LIBRAS.
+                </p>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  Ela é apenas um dos recursos complementares utilizados na comunicação em língua de sinais.
+                </p>
+              </div>
+            </section>
+
+            {/* 7. A importância da expressão facial */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                7. A importância da expressão facial
+              </h2>
+              <p className="text-sm">
+                Na LIBRAS, a comunicação não depende somente das mãos. As <strong>expressões faciais e corporais</strong> desempenham papel importante na construção do significado.
+              </p>
+              <p className="text-sm font-semibold">
+                Elas podem contribuir para indicar, por exemplo:
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-bold text-center">
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Emoções</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Intensidade</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Perguntas (Interrogação)</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Negação</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Afirmação</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Características gramaticais</div>
+              </div>
+              <p className="text-xs text-slate-500 italic">
+                Por isso, observar apenas as mãos pode não ser suficiente para compreender completamente uma mensagem em LIBRAS.
+              </p>
+            </section>
+
+            {/* 8. História e reconhecimento legal */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                8. História e reconhecimento legal
+              </h2>
+              <p className="text-sm">
+                A educação de pessoas surdas no Brasil possui uma história marcada por diferentes métodos e debates sobre comunicação e educação.
+              </p>
+
+              <div className="space-y-3 text-xs">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+                  <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-black text-xs shrink-0">1857</span>
+                  <div>
+                    <span className="font-extrabold text-slate-900 dark:text-white">Criação do INES (Instituto Nacional de Educação de Surdos)</span>
+                    <p className="text-slate-700 dark:text-slate-300 mt-0.5">Um marco histórico fundamental, sendo a primeira instituição histórica dedicada à educação de pessoas surdas no Brasil.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+                  <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-black text-xs shrink-0">2002</span>
+                  <div>
+                    <span className="font-extrabold text-slate-900 dark:text-white">Lei nº 10.436/2002</span>
+                    <p className="text-slate-700 dark:text-slate-300 mt-0.5">Marco fundamental que reconheceu a LIBRAS como meio legal de comunicação e expressão no Brasil.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+                  <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-black text-xs shrink-0">2005</span>
+                  <div>
+                    <span className="font-extrabold text-slate-900 dark:text-white">Decreto nº 5.626/2005</span>
+                    <p className="text-slate-700 dark:text-slate-300 mt-0.5">Regulamentou a Lei nº 10.436/2002, tratando da formação de professores e intérpretes, ensino de LIBRAS e acessibilidade.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 9. Lei nº 10.436/2002 */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                9. Lei nº 10.436/2002
+              </h2>
+              <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                Essa lei é de extrema relevância para concursos públicos.
+              </p>
+              <p className="text-sm">
+                Ela:
+              </p>
+              <ul className="list-disc list-inside text-xs text-slate-700 dark:text-slate-300 space-y-1.5 pl-2">
+                <li>Reconhece a LIBRAS como meio legal de comunicação e expressão;</li>
+                <li>Reconhece sua natureza de sistema linguístico próprio;</li>
+                <li>Determina que o poder público deve apoiar o uso e a difusão da LIBRAS.</li>
+              </ul>
+
+              <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-rose-500/10 border-rose-500/30' : 'bg-rose-50 border-rose-200'}`}>
+                <span className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-500" /> Pegadinha Frequente de Prova ⚠️
+                </span>
+                <p className="text-xs text-slate-800 dark:text-slate-200 font-bold">
+                  A lei NÃO transforma a LIBRAS em substituta da língua portuguesa escrita.
+                </p>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  A LIBRAS e o Português possuem funções e estruturas próprias. A legislação garante a LIBRAS sem substituir a modalidade escrita da Língua Portuguesa.
+                </p>
+              </div>
+            </section>
+
+            {/* 10. Decreto nº 5.626/2005 */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                10. Decreto nº 5.626/2005
+              </h2>
+              <p className="text-sm">
+                O <strong>Decreto nº 5.626/2005</strong> regulamenta a Lei nº 10.436/2002.
+              </p>
+              <p className="text-sm font-semibold">
+                Ele trata, entre outros assuntos essenciais, de:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Educação de pessoas surdas (educação bilíngue);
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Formação de professores de LIBRAS;
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Formação de tradutores e intérpretes;
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Utilização da LIBRAS nos serviços públicos;
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Atendimento adequado às pessoas surdas;
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Acessibilidade e comunicação integral.
+                </div>
+              </div>
+            </section>
+
+            {/* 11. LIBRAS no serviço público */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                11. LIBRAS no serviço público
+              </h2>
+              <p className="text-sm">
+                Para o cargo de <strong>Assistente Judiciário no TJAM</strong>, compreender acessibilidade e comunicação com pessoas surdas é especialmente importante.
+              </p>
+              <p className="text-sm">
+                O atendimento público deve buscar garantir que a pessoa surda tenha condições adequadas de acesso aos serviços públicos. Isso está fundamentado nos princípios de:
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-extrabold">
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Acessibilidade</span>
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Igualdade</span>
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Inclusão</span>
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Respeito à Dignidade</span>
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Atendimento Adequado</span>
+              </div>
+              <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                No ambiente do Poder Judiciário, a comunicação acessível contribui para que a pessoa surda possa exercer seus direitos e ter acesso efetivo à Justiça.
+              </p>
+            </section>
+
+            {/* 12. Pessoa surda e deficiência auditiva */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                12. Pessoa surda e deficiência auditiva
+              </h2>
+              <p className="text-sm">
+                É importante não tratar todas as pessoas com perda auditiva como se tivessem exatamente as mesmas necessidades. Existem diferentes experiências relacionadas à surdez e à deficiência auditiva.
+              </p>
+              <p className="text-sm font-semibold">
+                Uma pessoa pode utilizar:
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">LIBRAS</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">Português Oral</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">Português Escrito</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">Aparelhos Auditivos</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">Implante Coclear</div>
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-center font-bold">Combinação de Recursos</div>
+              </div>
+              <p className="text-xs text-slate-500 italic">
+                Por isso, o atendimento público deve considerar sempre as necessidades e preferências individuais de comunicação da própria pessoa.
+              </p>
+            </section>
+
+            {/* Resumo para memorizar */}
+            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50 border-emerald-200'}`}>
+              <h3 className="text-base font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+                <Brain className="w-5 h-5 text-emerald-600" /> 🧠 Resumo Para Memorizar
+              </h3>
+
+              <div className="p-4 rounded-2xl bg-white dark:bg-slate-800/90 border border-emerald-500/20 text-center">
+                <p className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">LIBRAS</p>
+                <p className="text-lg font-black text-slate-900 dark:text-white mt-1">
+                  <span className="text-emerald-600">L</span>íngua <span className="text-emerald-600">B</span>rasileira de <span className="text-emerald-600">S</span>inais
+                </p>
+              </div>
+
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-extrabold text-slate-800 dark:text-slate-200">
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ É uma LÍNGUA (não linguagem).</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Possui estrutura gramatical própria.</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Utiliza recursos visuais e espaciais.</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Não é simples tradução do português.</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Reconhecida pela Lei nº 10.436/2002.</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Regulamentada pelo Decreto nº 5.626/2005.</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Datilologia = alfabeto manual (não a própria LIBRAS).</li>
+                <li className="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/10">➡️ Expressões faciais/corporais integram a comunicação.</li>
+              </ul>
+
+              <div className="pt-2">
+                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2">🎯 Foco do Concurso (Prioridade de Memorização):</h4>
+                <div className="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <p><strong className="text-emerald-600 dark:text-emerald-400">Lei 10.436/2002</strong> → Reconhecimento legal da LIBRAS como meio de comunicação e sistema linguístico.</p>
+                  <p><strong className="text-emerald-600 dark:text-emerald-400">Decreto 5.626/2005</strong> → Regulamentação e aspectos de implementação, ensino e acessibilidade.</p>
+                  <p><strong className="text-emerald-600 dark:text-emerald-400">LIBRAS</strong> → Língua com estrutura e regras gramaticais próprias.</p>
+                  <p><strong className="text-emerald-600 dark:text-emerald-400">Datilologia</strong> → Representação manual das letras (recurso auxiliar).</p>
+                  <p><strong className="text-emerald-600 dark:text-emerald-400">Acessibilidade</strong> → Garantir comunicação e acesso aos serviços em condições adequadas no Poder Judiciário.</p>
+                </div>
+              </div>
+
+              {/* Botão de transição para o mapa mental */}
+              <div className="pt-4 flex justify-end">
+                <button
+                  onClick={() => setActiveTab('mapa')}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shrink-0 cursor-pointer flex items-center gap-2"
+                >
+                  <span>Ir para o Mapa Mental</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </section>
+          </article>
+        ) : selectedSubject === 'processo_penal' ? (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Header Objectives */}
             <section
@@ -2927,12 +3775,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Esquema Visual de Fixação
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'informatica'
+                {selectedSubject === 'libras'
+                  ? 'Mapa Mental — Aula 1: Conceitos Básicos de LIBRAS e Legislação'
+                  : selectedSubject === 'informatica'
                   ? 'Mapa Mental — Capítulo 1: Conceitos Básicos de Informática'
                   : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Constituição'}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {selectedSubject === 'informatica'
+                {selectedSubject === 'libras'
+                  ? 'Esquema visual sobre LIBRAS, Parâmetros dos Sinais, Datilologia, Lei 10.436/2002 e Decreto 5.626/2005'
+                  : selectedSubject === 'informatica'
                   ? 'Esquema visual sobre Informática, Dado x Informação, Hardware, Software e Periféricos'
                   : 'Resumo visual dos conceitos, finalidade, importância, supremacia e aplicabilidade'}
               </p>
@@ -2943,7 +3795,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <img
                 src={mindMapImg}
                 alt={
-                  selectedSubject === 'informatica'
+                  selectedSubject === 'libras'
+                    ? 'Mapa Mental - LIBRAS: Conceitos e Legislação'
+                    : selectedSubject === 'informatica'
                     ? 'Mapa Mental - Conceitos Básicos de Informática'
                     : 'Mapa Mental - Capítulo 1: Conceitos Fundamentais da Constituição'
                 }
@@ -2964,7 +3818,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Palavras-Chave & Download Controls */}
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap justify-center gap-2">
-                {(selectedSubject === 'informatica'
+                {(selectedSubject === 'libras'
+                  ? ['LIBRAS', 'Lei 10.436/2002', 'Decreto 5.626/2005', 'Datilologia', 'Parâmetros dos Sinais', 'Acessibilidade', 'TJAM']
+                  : selectedSubject === 'informatica'
                   ? ['Informática', 'Hardware', 'Software', 'Dado x Informação', 'CPU e RAM', 'Periféricos', 'PJe TJAM']
                   : ['Constituição', 'Norma Suprema', 'Direitos Fundamentais', 'Organização do Estado', 'Supremacia Constitucional', 'CF/1988', 'Estado Democrático de Direito']
                 ).map(kw => (
@@ -3402,7 +4258,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Síntese Rápida
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'processo_civil'
+                {selectedSubject === 'libras'
+                  ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
+                  : selectedSubject === 'processo_civil'
                   ? 'Resumo da Aula — Processo Civil: Jurisdição'
                   : selectedSubject === 'informatica'
                   ? 'Resumo — Conceitos Básicos de Informática'
@@ -3410,7 +4268,34 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </h2>
             </div>
 
-            {selectedSubject === 'processo_civil' ? (
+            {selectedSubject === 'libras' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Conceito de LIBRAS:</strong> Língua Brasileira de Sinais, reconhecida pela Lei nº 10.436/2002. Possui sistema linguístico e gramática autônomos.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Autonomia Linguística:</strong> NÃO é tradução palavra por palavra do Português. Modalidade visual-espacial com regras sintáticas próprias.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>5 Parâmetros dos Sinais:</strong> Configuração de mão, Movimento, Ponto de Articulação, Orientação da palma e Expressões não manuais.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Datilologia:</strong> Uso do alfabeto manual para soletrar nomes e termos pontuais. Recurso auxiliar que NÃO se confunde com a LIBRAS.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Expressões Faciais/Corporais:</strong> Função gramatical essencial para conferir tipo de frase (interrogação, negação) e intensidade.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Legislação do Concurso:</strong> Lei nº 10.436/2002 (reconhecimento legal) e Decreto nº 5.626/2005 (regulamentação e acessibilidade).</span>
+                </li>
+              </ul>
+            ) : selectedSubject === 'processo_civil' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>

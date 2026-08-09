@@ -59,12 +59,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • Concurso TJAM
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: Processo Penal
+                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: LIBRAS
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">Processo Penal: Aula 1 – Inquérito Policial</h2>
+            <h2 className="text-xl sm:text-2xl font-black">LIBRAS: Aula 1 – Conceitos básicos, história e legislação</h2>
             <p className="text-xs text-emerald-100 font-medium max-w-lg">
-              Estude o conceito, finalidade, características, natureza jurídica e indiciamento no inquérito policial com videoaula, resumo, flashcards e questões.
+              Estude os conceitos básicos de LIBRAS, estrutura de língua autônoma visual-espacial, os 5 parâmetros dos sinais, datilologia, Lei nº 10.436/2002 e Decreto nº 5.626/2005 para o TJAM.
             </p>
           </div>
 
@@ -100,10 +100,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <span className="text-xs text-slate-400 font-medium">45 a 60 min • Nível Iniciante</span>
               </div>
               <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
-                Processo Penal — Capítulo 1: Inquérito Policial
+                LIBRAS — Unidade 1: Conceitos Básicos e Legislação
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                Aula 1 – Conceito, finalidade e características
+                Aula 1 – Conceitos básicos, história e legislação
               </p>
             </div>
           </div>
@@ -127,40 +127,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <FileText className="w-4 h-4" />
-                <span>O que é o Inquérito Policial?</span>
+                <span>O que é LIBRAS?</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Procedimento administrativo investigativo prévio à ação penal destinado à apuração da infração e de suas circunstâncias.
+                Língua de sinais autônoma, de modalidade gestual-visual, com estrutura gramatical, vocabulário e sintaxe próprios.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Layers className="w-4 h-4" />
-                <span>Finalidade & Natureza</span>
+                <span>5 Parâmetros dos Sinais</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Natureza administrativa. Finalidade de reunir elementos sobre a materialidade (provisão do fato) e autoria da infração.
+                Configuração de mão, Movimento, Ponto de articulação, Orientação da palma e Expressões não manuais.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Brain className="w-4 h-4" />
-                <span>Sete Características Essenciais</span>
+                <span>Datilologia e Expressões Faciais</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial.
+                Datilologia (alfabeto manual para nomes próprios); Expressões faciais/corporais possuem função gramatical essencial.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 space-y-1">
               <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs">
                 <Award className="w-4 h-4" />
-                <span>Indiciamento vs. Condenação</span>
+                <span>Legislação TJAM (Lei & Decreto)</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Ato da autoridade policial indicando provável autoria. Indiciado ≠ Condenado (não gera antecedente criminal).
+                Lei nº 10.436/2002 e Decreto nº 5.626/2005 — Princípios de acessibilidade, inclusão e atendimento adequado no serviço público.
               </p>
             </div>
           </div>
