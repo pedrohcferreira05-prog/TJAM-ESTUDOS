@@ -58,7 +58,7 @@ export function App() {
     return localStorage.getItem('tjam_theme') === 'dark';
   });
 
-  // Site lock state (default true so site is locked into exam mode)
+  // Site lock state (default true so site is paused for next class)
   const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
     const saved = localStorage.getItem('tjam_site_locked');
     return saved !== null ? saved === 'true' : true;
