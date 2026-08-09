@@ -194,6 +194,35 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
+      {/* SIMULADO GERAL TJAM - Featured Action Card */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-slate-900 text-slate-950 dark:text-white border border-amber-400/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden">
+        <div className="space-y-2 max-w-xl">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-950 text-amber-400">
+              📝 Prova Simulada Completa
+            </span>
+            <span className="text-xs font-bold text-slate-950 dark:text-amber-200">
+              40 Questões • 60 Minutos
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-950 dark:text-white leading-tight">
+            Simulado Geral Oficial — TJAM (Assistente Judiciário)
+          </h2>
+          <p className="text-xs font-medium text-slate-950/90 dark:text-slate-200 leading-relaxed">
+            Testes abrangendo Língua Portuguesa, Direito Constitucional, Direito Administrativo, Informática, Processo Civil, Processo Penal, LIBRAS e Questões Interdisciplinares. Receba o gabarito comentado, diagnóstico e opção de download em PDF.
+          </p>
+        </div>
+
+        <button
+          onClick={() => onNavigateTab('simulados')}
+          className="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-900 text-amber-400 font-extrabold text-xs shadow-lg shadow-slate-950/30 flex items-center justify-center gap-2 transition-all cursor-pointer group shrink-0"
+        >
+          <Play className="w-4 h-4 fill-amber-400 group-hover:scale-110 transition-transform" />
+          <span>Fazer Simulado Agora</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
+
       {/* Ranking da Dupla de Estudos & Ranking Geral de Duplas */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Ranking Individual (Atual) */}

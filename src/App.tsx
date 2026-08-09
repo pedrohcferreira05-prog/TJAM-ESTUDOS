@@ -58,10 +58,10 @@ export function App() {
     return localStorage.getItem('tjam_theme') === 'dark';
   });
 
-  // Site lock state (default false so site is fully unlocked)
+  // Site lock state (default true so site is locked into exam mode)
   const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
     const saved = localStorage.getItem('tjam_site_locked');
-    return saved !== null ? saved === 'true' : false;
+    return saved !== null ? saved === 'true' : true;
   });
 
   // Auth & View Mode state (MVP Mode: Default student interface)
@@ -567,6 +567,9 @@ export function App() {
     return (
       <SiteLockedView
         isDarkMode={isDarkMode}
+        simulados={simulados}
+        progress={userProgress}
+        onSaveSimuladoAttempt={handleSaveSimuladoAttempt}
         onToggleDarkMode={() => {
           const newMode = !isDarkMode;
           setIsDarkMode(newMode);
