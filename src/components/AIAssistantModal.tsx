@@ -157,7 +157,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
         </div>
 
         {/* AI Modes Selector */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => setAiMode('chat')}
             className={`p-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
@@ -169,19 +169,6 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
             }`}
           >
             <Sparkles className="w-4 h-4" /> Esclarecer Dúvida
-          </button>
-
-          <button
-            onClick={() => setAiMode('mindmap')}
-            className={`p-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-              aiMode === 'mindmap'
-                ? 'bg-purple-600 text-white border-purple-600 shadow-md'
-                : isDarkMode
-                ? 'bg-slate-800 border-slate-700 text-slate-300'
-                : 'bg-slate-100 border-slate-200 text-slate-700'
-            }`}
-          >
-            <FileSpreadsheet className="w-4 h-4" /> Gerar Mapa Mental
           </button>
 
           <button

@@ -306,13 +306,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
             </div>
 
             <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-center space-y-0.5">
-              <span className="text-[10px] uppercase text-slate-400 font-extrabold block">Mapas Mentais</span>
-              <span className="text-base font-extrabold text-white flex items-center justify-center gap-1">
-                <Brain className="w-3.5 h-3.5 text-teal-400" /> {discMindMaps.length}
-              </span>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-center space-y-0.5">
               <span className="text-[10px] uppercase text-slate-400 font-extrabold block">Flashcards</span>
               <span className="text-base font-extrabold text-white flex items-center justify-center gap-1">
                 <Zap className="w-3.5 h-3.5 text-yellow-400" /> {discFlashcards.length}
@@ -381,17 +374,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
             }`}
           >
             <Zap className="w-4 h-4 text-amber-500" /> Flashcards Anki ({discFlashcards.length})
-          </button>
-
-          <button
-            onClick={() => setActiveTab('mapas')}
-            className={`px-4 py-2 rounded-xl flex items-center gap-2 transition-all ${
-              activeTab === 'mapas'
-                ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-            }`}
-          >
-            <Brain className="w-4 h-4 text-teal-500" /> Mapas Mentais ({discMindMaps.length})
           </button>
 
           <button

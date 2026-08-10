@@ -275,6 +275,22 @@ export interface StudentSubmission {
   status: 'pendente' | 'corrigido';
 }
 
+export interface LessonProgressData {
+  subjectKey: string;
+  completed: boolean;
+  completedAt?: string;
+  selectedAnswers: Record<number, number>;
+  showQuestionResults: Record<number, boolean>;
+  tfAnswers: Record<number, boolean>;
+  tfSubmitted: Record<number, boolean>;
+  discursiveAnswers: Record<number, string>;
+  discursiveSubmitted: Record<number, boolean>;
+  checklist: Record<string, boolean>;
+  learnedCards?: Record<number, boolean>;
+  videoWatched?: boolean;
+  lastUpdated?: string;
+}
+
 export interface Certificate {
   id: string;
   studentName: string;
@@ -307,6 +323,7 @@ export interface UserProgress {
   weeklyGoals: Array<{ id: string; text: string; completed: boolean }>;
   submissions?: StudentSubmission[];
   certificates?: Certificate[];
+  savedLessons?: Record<string, LessonProgressData>;
 }
 
 export type ViewMode = 'student' | 'teacher' | 'admin' | 'superadmin';

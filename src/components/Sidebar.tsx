@@ -33,7 +33,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'turma', label: 'Meu Curso', icon: GraduationCap },
     { id: 'disciplina-hoje', label: 'Disciplina de Hoje', icon: BookOpen },
     { id: 'aula-hoje', label: 'Aula de Hoje', icon: FileText },
-    { id: 'mapa-mental', label: 'Mapa Mental', icon: Brain },
     { id: 'flashcards', label: 'Flashcards', icon: Layers },
     { id: 'questoes', label: 'Questões', icon: HelpCircle },
     { id: 'progresso', label: 'Meu Progresso', icon: TrendingUp },

@@ -8,6 +8,13 @@ interface PerfilViewProps {
 }
 
 export const PerfilView: React.FC<PerfilViewProps> = ({ progress, isDarkMode }) => {
+  const completedTopics = progress.completedTopicIds?.length || 0;
+  const progressPct = Math.min(100, Math.round((completedTopics / 30) * 100));
+  const hours = progress.hoursStudiedToday || 0;
+  const h = Math.floor(hours);
+  const m = Math.round((hours % 1) * 60);
+  const timeTodayFormatted = h > 0 ? `${h}h ${m}m` : `${m}m`;
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Profile Header Card */}
@@ -73,7 +80,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({ progress, isDarkMode }) 
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Progresso Geral</span>
             <Award className="w-5 h-5" />
           </div>
-          <p className="text-3xl font-black text-slate-900 dark:text-white">28%</p>
+          <p className="text-3xl font-black text-slate-900 dark:text-white">{progressPct}%</p>
           <p className="text-[11px] text-slate-500">Módulos e aulas concluídos</p>
         </div>
 
@@ -86,7 +93,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({ progress, isDarkMode }) 
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Sequência</span>
             <Flame className="w-5 h-5" />
           </div>
-          <p className="text-3xl font-black text-slate-900 dark:text-white">{progress.streakDays || 5} Dias</p>
+          <p className="text-3xl font-black text-slate-900 dark:text-white">{progress.streakDays || 0} {progress.streakDays === 1 ? 'Dia' : 'Dias'}</p>
           <p className="text-[11px] text-slate-500">Estudos diários consecutivos</p>
         </div>
 
@@ -99,7 +106,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({ progress, isDarkMode }) 
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Tempo Hoje</span>
             <Clock className="w-5 h-5" />
           </div>
-          <p className="text-3xl font-black text-slate-900 dark:text-white">1h 45m</p>
+          <p className="text-3xl font-black text-slate-900 dark:text-white">{timeTodayFormatted}</p>
           <p className="text-[11px] text-slate-500">Meta diária: 3h a 4h</p>
         </div>
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Question } from '../types';
 import {
   BookOpen,
   CheckCircle2,
@@ -35,8 +36,47 @@ interface AulaHojeViewProps {
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
 export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
-  // Selected Subject State: 'libras' (default), 'processo_penal', 'processo_civil', 'informatica', or 'direito_admin'
-  const [selectedSubject, setSelectedSubject] = useState<'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin'>('libras');
+  const [realProgressPct] = useState(() => {
+    try {
+      const p = localStorage.getItem('tjam_user_progress');
+      if (p) {
+        const parsed = JSON.parse(p);
+        return Math.min(100, Math.round(((parsed.completedTopicIds?.length || 0) / 30) * 100));
+      }
+    } catch (e) {}
+    return 0;
+  });
+
+  // Selected Subject State: 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', or 'direito_const'
+  const [selectedSubject, setSelectedSubjectState] = useState<'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const'>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_selected_subject');
+      if (saved && ['portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const'].includes(saved)) {
+        return saved as any;
+      }
+    } catch (e) {}
+    return 'portugues';
+  });
+
+  const setSelectedSubject = (subject: 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
+    try {
+      localStorage.setItem('tjam_selected_subject', subject);
+    } catch (e) {}
+    setSelectedSubjectState(subject);
+  };
+
+  useEffect(() => {
+    const handleSubjectChange = () => {
+      try {
+        const saved = localStorage.getItem('tjam_selected_subject');
+        if (saved && ['portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const'].includes(saved)) {
+          setSelectedSubjectState(saved as any);
+        }
+      } catch (e) {}
+    };
+    window.addEventListener('tjam_subject_change', handleSubjectChange);
+    return () => window.removeEventListener('tjam_subject_change', handleSubjectChange);
+  }, []);
 
   // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
   const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
@@ -88,6 +128,437 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
+
+  // Saved lessons store for real-time local database sync
+  const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_lessons_progress');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return {};
+  });
+
+  // Load saved state when selectedSubject changes
+  useEffect(() => {
+    try {
+      const savedStr = localStorage.getItem('tjam_lessons_progress');
+      const store = savedStr ? JSON.parse(savedStr) : {};
+      setSavedLessonsStore(store);
+
+      const subjectData = store[selectedSubject];
+      if (subjectData) {
+        setSelectedAnswers(subjectData.selectedAnswers || {});
+        setShowQuestionResults(subjectData.showQuestionResults || {});
+        setTfAnswers(subjectData.tfAnswers || {});
+        setTfSubmitted(subjectData.tfSubmitted || {});
+        setDiscursiveAnswers(subjectData.discursiveAnswers || {});
+        setDiscursiveSubmitted(subjectData.discursiveSubmitted || {});
+        setChecklist(subjectData.checklist || { c1: false, c2: false, c3: false, c4: false, c5: false });
+        setIsLessonCompleted(!!subjectData.completed);
+        if (subjectData.learnedCards) setLearnedCards(subjectData.learnedCards);
+      } else {
+        setSelectedAnswers({});
+        setShowQuestionResults({});
+        setTfAnswers({});
+        setTfSubmitted({});
+        setDiscursiveAnswers({});
+        setDiscursiveSubmitted({});
+        setChecklist({ c1: false, c2: false, c3: false, c4: false, c5: false });
+        setIsLessonCompleted(false);
+        setLearnedCards({});
+      }
+    } catch (e) {
+      console.error('Error restoring lesson progress:', e);
+    }
+  }, [selectedSubject]);
+
+  // Persist state when answers, checklist or completion status change
+  useEffect(() => {
+    try {
+      const savedStr = localStorage.getItem('tjam_lessons_progress');
+      const store = savedStr ? JSON.parse(savedStr) : {};
+
+      const currentData = {
+        subjectKey: selectedSubject,
+        completed: isLessonCompleted,
+        completedAt: isLessonCompleted ? (store[selectedSubject]?.completedAt || new Date().toISOString()) : undefined,
+        selectedAnswers,
+        showQuestionResults,
+        tfAnswers,
+        tfSubmitted,
+        discursiveAnswers,
+        discursiveSubmitted,
+        checklist,
+        learnedCards,
+        lastUpdated: new Date().toISOString(),
+      };
+
+      store[selectedSubject] = currentData;
+      setSavedLessonsStore(store);
+      localStorage.setItem('tjam_lessons_progress', JSON.stringify(store));
+
+      // Also sync into main tjam_user_progress object
+      const userProgressStr = localStorage.getItem('tjam_user_progress');
+      if (userProgressStr) {
+        const userProg = JSON.parse(userProgressStr);
+        userProg.savedLessons = store;
+
+        const topicIdMap: Record<string, string> = {
+          portugues: 'port-1',
+          libras: 'acess-1',
+          processo_penal: 'pp-3',
+          processo_civil: 'pc-1',
+          informatica: 'inf-1',
+          direito_admin: 'adm-1',
+          direito_const: 'const-3',
+        };
+        const tid = topicIdMap[selectedSubject];
+        if (tid) {
+          let completedTopicIds: string[] = userProg.completedTopicIds || [];
+          if (isLessonCompleted && !completedTopicIds.includes(tid)) {
+            completedTopicIds = [...completedTopicIds, tid];
+          } else if (!isLessonCompleted && completedTopicIds.includes(tid)) {
+            completedTopicIds = completedTopicIds.filter((id) => id !== tid);
+          }
+          userProg.completedTopicIds = completedTopicIds;
+        }
+
+        localStorage.setItem('tjam_user_progress', JSON.stringify(userProg));
+        window.dispatchEvent(new Event('storage'));
+      }
+    } catch (e) {
+      console.error('Error saving lesson progress:', e);
+    }
+  }, [
+    selectedSubject,
+    selectedAnswers,
+    showQuestionResults,
+    tfAnswers,
+    tfSubmitted,
+    discursiveAnswers,
+    discursiveSubmitted,
+    checklist,
+    isLessonCompleted,
+    learnedCards,
+  ]);
+
+  const handleResetLessonExercises = () => {
+    if (window.confirm('Deseja refazer os exercícios desta aula? Suas respostas serão zeradas para que você possa praticar novamente, mas o registro de leitura/aula continuará salvo.')) {
+      setSelectedAnswers({});
+      setShowQuestionResults({});
+      setTfAnswers({});
+      setTfSubmitted({});
+      setDiscursiveAnswers({});
+      setDiscursiveSubmitted({});
+    }
+  };
+
+  // Português Datasets (Aula 1 — Compreensão e Interpretação de Textos)
+  const portuguesFlashcardsData = [
+    {
+      q: 'Qual é a diferença entre Compreensão e Interpretação de textos?',
+      a: 'Compreensão busca informações explícitas (está escrito no texto). Interpretação envolve conclusões e inferências lógicas (está implícito, mas sustentado pelo texto).'
+    },
+    {
+      q: 'O que caracteriza uma informação explícita?',
+      a: 'É aquela apresentada diretamente e de forma clara no texto, sem necessidade de deduções.'
+    },
+    {
+      q: 'O que é uma informação implícita e o que requer para ser válida?',
+      a: 'É aquela deduzida do texto. Toda inferência válida precisa ter sustentação e fundamento nas pistas fornecidas pelo texto, sem inventar dados.'
+    },
+    {
+      q: 'Qual a diferença entre Tema e Ideia Principal?',
+      a: 'Tema é o assunto abrangente (ex: tecnologia no Judiciário). Ideia principal é a posição ou mensagem central do autor sobre esse assunto.'
+    },
+    {
+      q: 'Qual a diferença entre Tipo Textual e Gênero Textual?',
+      a: 'Tipo textual é a estrutura linguística predominante (Narrativo, Descritivo, Dissertativo, Injuntivo). Gênero textual é a forma concreta de comunicação social (Notícia, Edital, Artigo, E-mail).'
+    },
+    {
+      q: 'O que significa inferência em questões de concurso?',
+      a: 'É chegar a uma conclusão fundamentada a partir de informações disponíveis no texto, sem extrapolá-las.'
+    }
+  ];
+
+  const portuguesMcQuestionsData = [
+    // Texto 1: Questões 1 a 5
+    {
+      id: 101,
+      enunciado: '1. [Texto 1] O tema principal do texto é:',
+      textoApoio: 'O avanço da tecnologia modificou a maneira como os serviços públicos são prestados. No Poder Judiciário, ferramentas digitais podem facilitar o acesso aos processos, reduzir o tempo de determinadas atividades e melhorar a comunicação com os usuários. Entretanto, a utilização da tecnologia não elimina a necessidade de servidores capacitados. A eficiência depende tanto das ferramentas disponíveis quanto da preparação das pessoas que as utilizam.',
+      opcoes: [
+        'A) A substituição dos servidores pela tecnologia.',
+        'B) A importância dos processos físicos.',
+        'C) Os efeitos da tecnologia na prestação dos serviços públicos.',
+        'D) A dificuldade de acesso ao Poder Judiciário.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: O texto aborda os impactos da tecnologia na prestação dos serviços públicos e a relação de complementaridade com a capacitação dos servidores.'
+    },
+    {
+      id: 102,
+      enunciado: '2. [Texto 1] Segundo o texto, a tecnologia pode:',
+      opcoes: [
+        'A) Eliminar completamente o trabalho dos servidores.',
+        'B) Facilitar o acesso aos processos e melhorar a comunicação.',
+        'C) Impedir a comunicação com os usuários.',
+        'D) Tornar desnecessária a capacitação profissional.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Está expresso literalmente no texto: "ferramentas digitais podem facilitar o acesso aos processos, reduzir o tempo de determinadas atividades e melhorar a comunicação com os usuários".'
+    },
+    {
+      id: 103,
+      enunciado: '3. [Texto 1] De acordo com o texto, a eficiência depende:',
+      opcoes: [
+        'A) Somente das ferramentas tecnológicas.',
+        'B) Somente da quantidade de servidores.',
+        'C) Das ferramentas disponíveis e da preparação das pessoas que as utilizam.',
+        'D) Exclusivamente da redução de custos.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Conforme a frase final: "A eficiência depende tanto das ferramentas disponíveis quanto da preparação das pessoas que as utilizam."'
+    },
+    {
+      id: 104,
+      enunciado: '4. [Texto 1] A palavra "Entretanto" estabelece uma relação de:',
+      opcoes: [
+        'A) Adição.',
+        'B) Oposição/contraste.',
+        'C) Conclusão.',
+        'D) Explicação.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: "Entretanto" é uma conjunção adversativa que introduz uma ideia de oposição ou contraste em relação ao que foi dito anteriormente.'
+    },
+    {
+      id: 105,
+      enunciado: '5. [Texto 1] Pode-se inferir do texto que:',
+      opcoes: [
+        'A) A tecnologia, sozinha, não garante eficiência.',
+        'B) Servidores não são mais necessários.',
+        'C) Processos digitais são sempre mais rápidos.',
+        'D) O atendimento público deve ser exclusivamente virtual.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: Como a eficiência exige também servidores capacitados, infere-se logicamente que a tecnologia isolada não assegura a eficiência.'
+    },
+
+    // Texto 2: Questões 6 a 10
+    {
+      id: 106,
+      enunciado: '6. [Texto 2] A ideia principal do texto é que:',
+      textoApoio: 'Estudar para um concurso exige mais do que acumular horas diante dos livros. É necessário estabelecer objetivos, organizar o tempo e acompanhar o próprio desempenho. Quando o estudante identifica os assuntos em que apresenta maior dificuldade, consegue direcionar melhor sua revisão. Dessa forma, estudar com planejamento pode ser mais produtivo do que simplesmente aumentar a quantidade de horas estudadas.',
+      opcoes: [
+        'A) Estudar muitas horas é sempre suficiente.',
+        'B) O planejamento pode tornar os estudos mais produtivos.',
+        'C) Revisões devem ser evitadas.',
+        'D) O estudante deve estudar apenas as matérias fáceis.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A mensagem central é que o planejamento e a organização trazem maior produtividade ao processo de estudo do que o mero acúmulo de horas.'
+    },
+    {
+      id: 107,
+      enunciado: '7. [Texto 2] Segundo o texto, identificar dificuldades permite ao estudante:',
+      opcoes: [
+        'A) Abandonar os assuntos difíceis.',
+        'B) Direcionar melhor sua revisão.',
+        'C) Diminuir obrigatoriamente o tempo de estudo.',
+        'D) Estudar somente uma disciplina.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O texto afirma expressamente: "Quando o estudante identifica os assuntos em que apresenta maior dificuldade, consegue direcionar melhor sua revisão."'
+    },
+    {
+      id: 108,
+      enunciado: '8. [Texto 2] A expressão "Dessa forma" introduz uma ideia de:',
+      opcoes: [
+        'A) Conclusão.',
+        'B) Oposição.',
+        'C) Dúvida.',
+        'D) Comparação.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: "Dessa forma" atua como elemento de coesão conclusiva, sintetizando a dedução final do parágrafo.'
+    },
+    {
+      id: 109,
+      enunciado: '9. [Texto 2] O texto afirma que estudar com planejamento pode ser:',
+      opcoes: [
+        'A) Menos produtivo que aumentar as horas de estudo.',
+        'B) Mais produtivo que simplesmente aumentar a quantidade de horas estudadas.',
+        'C) Desnecessário para concursos.',
+        'D) Útil apenas para estudantes iniciantes.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Transcrição direta da conclusão: "estudar com planejamento pode ser mais produtivo do que simplesmente aumentar a quantidade de horas estudadas."'
+    },
+    {
+      id: 110,
+      enunciado: '10. [Texto 2] A finalidade predominante do texto é:',
+      opcoes: [
+        'A) Narrar uma história.',
+        'B) Dar uma orientação sobre a organização dos estudos.',
+        'C) Descrever um local.',
+        'D) Divulgar um produto.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: O texto tem caráter orientativo/instrutivo, fornecendo recomendações práticas sobre o planejamento de estudos para concursos.'
+    },
+
+    // Questões Gerais: 11 a 20
+    {
+      id: 111,
+      enunciado: '11. Informação explícita é aquela que:',
+      opcoes: [
+        'A) Pode ser imaginada pelo leitor.',
+        'B) Está diretamente apresentada no texto.',
+        'C) Contradiz o texto.',
+        'D) Depende exclusivamente do conhecimento pessoal.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Informação explícita é aquela manifesta de forma clara e literal no próprio texto (compreensão).'
+    },
+    {
+      id: 112,
+      enunciado: '12. Uma informação implícita é aquela que:',
+      opcoes: [
+        'A) Está necessariamente escrita com todas as palavras.',
+        'B) Pode ser inferida a partir das informações apresentadas.',
+        'C) Não possui nenhuma relação com o texto.',
+        'D) É sempre uma opinião pessoal.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: Informação implícita não se encontra explícita com todas as palavras, mas é deduzida/inferida com base nas pistas dadas pelo autor.'
+    },
+    {
+      id: 113,
+      enunciado: '13. O tema de um texto corresponde:',
+      opcoes: [
+        'A) Ao assunto central abordado.',
+        'B) À primeira frase.',
+        'C) À última palavra.',
+        'D) Ao título obrigatoriamente.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: O tema representa o tópico ou assunto central em torno do qual todo o texto é construído.'
+    },
+    {
+      id: 114,
+      enunciado: '14. A ideia principal corresponde:',
+      opcoes: [
+        'A) A qualquer detalhe do texto.',
+        'B) À mensagem central desenvolvida pelo autor.',
+        'C) Apenas aos exemplos apresentados.',
+        'D) À opinião do leitor.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A ideia principal é o núcleo informativo ou a tese mais importante sustentada pelo autor.'
+    },
+    {
+      id: 115,
+      enunciado: '15. Um texto predominantemente narrativo apresenta principalmente:',
+      opcoes: [
+        'A) Argumentos jurídicos.',
+        'B) Acontecimentos, personagens e circunstâncias.',
+        'C) Instruções de uso.',
+        'D) Características gramaticais.'
+      ],
+      correta: 1,
+      explicacao: 'Gabarito B: A narração é caracterizada por relatar uma sequência de ações/fatos vivenciados por personagens num espaço e tempo.'
+    },
+    {
+      id: 116,
+      enunciado: '16. Um texto predominantemente descritivo tem como característica:',
+      opcoes: [
+        'A) Apresentar características de pessoas, objetos, lugares ou situações.',
+        'B) Defender necessariamente uma opinião.',
+        'C) Apresentar somente ordens.',
+        'D) Narrar obrigatoriamente acontecimentos.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: A descrição detalha atributos, aspectos e propriedades de objetos, cenários, seres ou estados.'
+    },
+    {
+      id: 117,
+      enunciado: '17. Um artigo de opinião é um exemplo de:',
+      opcoes: [
+        'A) Gênero textual.',
+        'B) Figura de linguagem.',
+        'C) Classe gramatical.',
+        'D) Tipo de pontuação.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: O artigo de opinião é um gênero textual concreto de base predominantemente dissertativo-argumentativa.'
+    },
+    {
+      id: 118,
+      enunciado: '18. Em uma questão de interpretação, uma alternativa deve ser considerada suspeita quando:',
+      opcoes: [
+        'A) Está de acordo com o texto.',
+        'B) Apresenta uma informação comprovada pelo texto.',
+        'C) Acrescenta uma informação que não pode ser sustentada pelo texto.',
+        'D) Retoma corretamente a ideia principal.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: Trata-se do erro clássico de Extrapolação — quando a alternativa introduz dados não respaldados pelo texto original.'
+    },
+    {
+      id: 119,
+      enunciado: '19. Em um texto argumentativo, a tese é:',
+      opcoes: [
+        'A) A opinião ou posição central defendida pelo autor.',
+        'B) Um exemplo secundário.',
+        'C) Uma informação sem relação com o assunto.',
+        'D) A conclusão obrigatoriamente apresentada em uma única frase.'
+      ],
+      correta: 0,
+      explicacao: 'Gabarito A: A tese é o posicionamento crítico ou perspectiva teórica que o autor defende ao longo da argumentação.'
+    },
+    {
+      id: 200,
+      enunciado: '20. Para interpretar corretamente um texto em uma prova, é mais adequado:',
+      opcoes: [
+        'A) Responder de acordo com opiniões pessoais.',
+        'B) Considerar apenas palavras isoladas.',
+        'C) Relacionar a alternativa às informações e ideias presentes no texto.',
+        'D) Escolher a alternativa mais longa.'
+      ],
+      correta: 2,
+      explicacao: 'Gabarito C: A resolução correta exige vinculação estrita entre a opção escolhida e os argumentos/dados demonstrados pelo texto.'
+    }
+  ];
+
+  const portuguesTfQuestionsData = [
+    {
+      id: 201,
+      statement: 'A compreensão textual busca identificar dados diretamente explícitos no texto.',
+      isTrue: true,
+      explicacao: 'Verdadeiro. A compreensão foca em localizar o que está claramente escrito.'
+    },
+    {
+      id: 202,
+      statement: 'Toda inferência em interpretação de texto permite ao candidato criar hipóteses sem necessidade de prova no texto.',
+      isTrue: false,
+      explicacao: 'Falso. Para ser uma inferência válida e não uma extrapolação, precisa obrigatoriamente estar sustentada pelo texto.'
+    },
+    {
+      id: 203,
+      statement: 'Manual de instruções, edital de concurso e receitas culinárias são exemplos do gênero textual de tipo predominantemente injuntivo.',
+      isTrue: true,
+      explicacao: 'Verdadeiro. Apresentam instruções, comandos e orientações ao leitor.'
+    }
+  ];
+
+  const portuguesDiscursiveQuestionsData = [
+    {
+      id: 301,
+      enunciado: '1. Diferencie informação explícita de informação implícita e explique a cautela necessária ao realizar inferências em provas de concurso.',
+      respostaEsperada: 'Gabarito Oficial: A informação explícita está diretamente escrita no texto. A informação implícita não está explícita, mas é deduzida logicamente do texto. A cautela necessária é garantir que a inferência esteja rigorosamente sustentada pelas pistas do texto, evitando inventar informações ou extrapolar a intenção do autor.'
+    }
+  ];
 
   // LIBRAS Datasets
   const librasFlashcardsData = [
@@ -1373,8 +1844,340 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
+  // Direito Constitucional Flashcards Data (Aula 2 — Princípios Fundamentais)
+  const constFlashcardsData = [
+    {
+      q: 'Quais são os 5 Fundamentos da República (Art. 1º CF/88)?',
+      a: 'Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho e da livre iniciativa, Pluralismo político. (Mnemônico: SO-CI-DI-VA-PLU)'
+    },
+    {
+      q: 'Como memorizar os Fundamentos do Art. 1º da CF/88?',
+      a: 'SO-CI-DI-VA-PLU: Soberania → Cidadania → Dignidade → Valores sociais → Pluralismo político.'
+    },
+    {
+      q: 'O que significa o Brasil constituir-se em Estado Democrático de Direito?',
+      a: 'Significa que o poder estatal está submetido à Constituição e às leis, os cidadãos possuem direitos/garantias e as autoridades devem respeitar a ordem jurídica.'
+    },
+    {
+      q: 'Quais são os três Poderes da União (Art. 2º CF/88) e sua relação?',
+      a: 'Legislativo, Executivo e Judiciário. São independentes e harmônicos entre si.'
+    },
+    {
+      q: 'Quais são as funções típicas dos três Poderes da União?',
+      a: 'Legislativo: Elaborar leis e fiscalizar. Executivo: Administrar e executar políticas públicas. Judiciário: Julgar e solucionar conflitos (jurisdição).'
+    },
+    {
+      q: 'Quais são os Objetivos Fundamentais da República (Art. 3º CF/88)?',
+      a: 'I- Construir sociedade livre, justa e solidária; II- Garantir o desenvolvimento nacional; III- Erradicar a pobreza/marginalização e reduzir desigualdades; IV- Promover o bem de todos.'
+    },
+    {
+      q: 'Como resumir os verbos dos Objetivos Fundamentais (Art. 3º CF/88)?',
+      a: 'Construir → Desenvolver → Erradicar/Reduzir → Promover (Todos começam por verbos no infinitivo - CONERGAPRO).'
+    },
+    {
+      q: 'Quais são os princípios que regem o Brasil nas Relações Internacionais (Art. 4º CF/88)?',
+      a: 'Independência nacional, Direitos humanos, Autodeterminação dos povos, Não intervenção, Igualdade entre Estados, Defesa da paz, Solução pacífica de conflitos, Repúdio ao terrorismo/racismo, Cooperação e Asilo político.'
+    },
+    {
+      q: 'Como diferenciar Fundamentos (Art. 1º) e Objetivos (Art. 3º) para a prova da FGV?',
+      a: 'Fundamentos são substantivos/bases (SO-CI-DI-VA-PLU). Objetivos são metas/ações futuras iniciadas por VERBOS no infinitivo (Construir, Garantir, Erradicar, Promover).'
+    },
+    {
+      q: 'Qual a prioridade geográfica constitucional de integração do Brasil (Art. 4º, Parágrafo Único)?',
+      a: 'Integração econômica, política, social e cultural dos povos da América Latina.'
+    }
+  ];
+
+  // Direito Constitucional Multiple Choice Questions Data
+  const constMcQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. A República Federativa do Brasil constitui-se em:',
+      alternativas: [
+        'Estado Unitário de Direito.',
+        'Estado Democrático de Direito.',
+        'Estado Parlamentarista.',
+        'Estado Absolutista.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Conforme o caput do Art. 1º da CF/88, "A República Federativa do Brasil, formada pela união indissolúvel dos Estados e Municípios e do Distrito Federal, constitui-se em Estado Democrático de Direito".'
+    },
+    {
+      id: 2,
+      enunciado: '2. É fundamento da República Federativa do Brasil:',
+      alternativas: [
+        'Defesa da paz.',
+        'Desenvolvimento nacional.',
+        'Dignidade da pessoa humana.',
+        'Solução pacífica dos conflitos.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A Dignidade da pessoa humana é um dos 5 fundamentos previstos no Art. 1º, III da CF/88 (Mnemônico SOCIVADIPLU). As demais opções são objetivos (Art. 3º) ou princípios de relações internacionais (Art. 4º).'
+    },
+    {
+      id: 3,
+      enunciado: '3. Assinale a alternativa que apresenta apenas fundamentos da República:',
+      alternativas: [
+        'Soberania, cidadania e dignidade da pessoa humana.',
+        'Defesa da paz, soberania e desenvolvimento nacional.',
+        'Erradicação da pobreza, cidadania e pluralismo político.',
+        'Igualdade entre os Estados, soberania e defesa da paz.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Soberania (inc. I), Cidadania (inc. II) e Dignidade da pessoa humana (inc. III) são todos fundamentos previstos no Art. 1º da CF/88.'
+    },
+    {
+      id: 4,
+      enunciado: '4. O pluralismo político está relacionado:',
+      alternativas: [
+        'À existência de diferentes ideias e posições políticas.',
+        'À proibição de opiniões divergentes.',
+        'À concentração do poder político.',
+        'À ausência de participação popular.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O pluralismo político (Art. 1º, V) assegura a livre circulação de ideias, a diversidade ideológica, filosófica e política na sociedade.'
+    },
+    {
+      id: 5,
+      enunciado: '5. A soberania constitui:',
+      alternativas: [
+        'Um objetivo fundamental.',
+        'Um princípio das relações internacionais exclusivamente.',
+        'Um fundamento da República.',
+        'Um direito social.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A Soberania é o primeiro fundamento elencado no Art. 1º, I da Constituição Federal de 1988.'
+    },
+    {
+      id: 6,
+      enunciado: '6. São Poderes da União:',
+      alternativas: [
+        'Executivo, Legislativo e Ministério Público.',
+        'Legislativo, Executivo e Judiciário.',
+        'Judiciário, Ministério Público e Defensoria Pública.',
+        'Executivo, Judiciário e Tribunal de Contas.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Conforme o Art. 2º da CF/88, "São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário".'
+    },
+    {
+      id: 7,
+      enunciado: '7. Segundo a Constituição Federal, os Poderes da União são:',
+      alternativas: [
+        'Dependentes e subordinados.',
+        'Independentes e harmônicos entre si.',
+        'Independentes e hierarquizados.',
+        'Subordinados ao Poder Executivo.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. De acordo com o Art. 2º da CF/88, os Poderes da União são independentes e harmônicos entre si (mecanismo de freios e contrapesos).'
+    },
+    {
+      id: 8,
+      enunciado: '8. É objetivo fundamental da República Federativa do Brasil:',
+      alternativas: [
+        'Conceder asilo político.',
+        'Defender a paz.',
+        'Garantir o desenvolvimento nacional.',
+        'Promover a igualdade entre os Estados.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Garantir o desenvolvimento nacional é um objetivo fundamental previsto no Art. 3º, II da CF/88.'
+    },
+    {
+      id: 9,
+      enunciado: '9. Assinale a alternativa que não corresponde a um objetivo fundamental do art. 3º:',
+      alternativas: [
+        'Construir uma sociedade livre, justa e solidária.',
+        'Garantir o desenvolvimento nacional.',
+        'Defender a paz.',
+        'Promover o bem de todos.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. "Defender a paz" não é um objetivo fundamental (Art. 3º), mas sim um princípio regente das Relações Internacionais (Art. 4º, VII).'
+    },
+    {
+      id: 10,
+      enunciado: '10. A Constituição estabelece como objetivo fundamental:',
+      alternativas: [
+        'Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais.',
+        'Eliminar a livre iniciativa.',
+        'Restringir a cidadania.',
+        'Concentrar o poder político.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Art. 3º, III da CF/88: "erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais" é um objetivo fundamental.'
+    },
+    {
+      id: 11,
+      enunciado: '11. Promover o bem de todos, sem preconceitos ou formas de discriminação, é:',
+      alternativas: [
+        'Fundamento da República.',
+        'Objetivo fundamental da República.',
+        'Princípio do Poder Judiciário.',
+        'Princípio exclusivo da Administração Pública.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. "Promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação" é objetivo fundamental (Art. 3º, IV).'
+    },
+    {
+      id: 12,
+      enunciado: '12. A dignidade da pessoa humana é:',
+      alternativas: [
+        'Um fundamento da República.',
+        'Um objetivo fundamental.',
+        'Um princípio exclusivamente internacional.',
+        'Uma competência municipal.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A dignidade da pessoa humana é um fundamento insculpido no Art. 1º, III da CF/88.'
+    },
+    {
+      id: 13,
+      enunciado: '13. Os valores sociais do trabalho e da livre iniciativa são:',
+      alternativas: [
+        'Objetivos fundamentais.',
+        'Fundamentos da República.',
+        'Princípios das relações internacionais.',
+        'Direitos políticos.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Os valores sociais do trabalho e da livre iniciativa constituem fundamento da República (Art. 1º, IV).'
+    },
+    {
+      id: 14,
+      enunciado: '14. Nas relações internacionais, o Brasil deve observar:',
+      alternativas: [
+        'A intervenção obrigatória em outros Estados.',
+        'A prevalência dos direitos humanos.',
+        'A superioridade militar brasileira.',
+        'A eliminação da soberania dos demais países.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A prevalência dos direitos humanos é princípio regente do Brasil nas suas relações internacionais (Art. 4º, II).'
+    },
+    {
+      id: 15,
+      enunciado: '15. É princípio que rege as relações internacionais do Brasil:',
+      alternativas: [
+        'Não intervenção.',
+        'Censura política.',
+        'Subordinação internacional.',
+        'Intervenção obrigatória.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A "não intervenção" é princípio consagrado no Art. 4º, IV da CF/88 para a condução das relações internacionais.'
+    },
+    {
+      id: 16,
+      enunciado: '16. A defesa da paz está prevista como:',
+      alternativas: [
+        'Fundamento da República.',
+        'Objetivo fundamental.',
+        'Princípio das relações internacionais.',
+        'Direito social.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A defesa da paz rege a atuação internacional da República Federativa do Brasil (Art. 4º, VI).'
+    },
+    {
+      id: 17,
+      enunciado: '17. A autodeterminação dos povos significa, em linhas gerais:',
+      alternativas: [
+        'Reconhecimento do direito dos povos de determinar livremente seu destino político.',
+        'Obrigação de um Estado controlar outros povos.',
+        'Proibição da soberania nacional.',
+        'Subordinação dos Estados menores aos maiores.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O princípio da autodeterminação dos povos (Art. 4º, III) garante que cada povo decida soberanamente sobre seu sistema político e desenvolvimento.'
+    },
+    {
+      id: 18,
+      enunciado: '18. O repúdio ao terrorismo e ao racismo é:',
+      alternativas: [
+        'Fundamento da República.',
+        'Objetivo fundamental.',
+        'Princípio das relações internacionais.',
+        'Direito trabalhista.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O repúdio ao terrorismo e ao racismo é princípio regente das relações internacionais (Art. 4º, VIII).'
+    },
+    {
+      id: 19,
+      enunciado: '19. Assinale a associação correta:',
+      alternativas: [
+        'Art. 1º — objetivos fundamentais.',
+        'Art. 2º — relações internacionais.',
+        'Art. 3º — objetivos fundamentais.',
+        'Art. 4º — fundamentos da República.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O Art. 3º estabelece os objetivos fundamentais da República. O Art. 1º cuida dos fundamentos, o Art. 2º da separação de poderes e o Art. 4º das relações internacionais.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Um candidato afirma: “A dignidade da pessoa humana e a soberania são objetivos que o Brasil busca alcançar.” Essa afirmação está:',
+      alternativas: [
+        'Correta.',
+        'Correta apenas em relação à soberania.',
+        'Incorreta, pois ambos são fundamentos da República.',
+        'Incorreta, pois ambos são princípios das relações internacionais.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A afirmação está incorreta porque Soberania e Dignidade da pessoa humana são FUNDAMENTOS (Art. 1º, I e III) e não objetivos (Art. 3º).'
+    }
+  ];
+
+  // Direito Constitucional True/False Questions Data
+  const constTfQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. O pluralismo político (Art. 1º, V, CF/88) significa exclusivamente a garantia de existência de múltiplos partidos políticos no sistema eleitoral.',
+      correta: false,
+      explicacao: '✅ Gabarito: Falso. O pluralismo político é um conceito amplo que abrange a convivência harmoniosa de diferentes ideias, ideologias, crenças e convicções filosóficas e políticas, não se restringindo ao multipartidarismo.'
+    },
+    {
+      id: 2,
+      enunciado: '2. Os Objetivos Fundamentais da República (Art. 3º) iniciam-se formalmente por verbos no infinitivo, como Construir, Garantir, Erradicar/Reduzir e Promover.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. Esta é a regra de ouro das bancas (FGV): Objetivos representam metas futuras e iniciam com VERBOS no infinitivo.'
+    },
+    {
+      id: 3,
+      enunciado: '3. A concessão de asilo político e a prevalência dos direitos humanos são princípios constitucionais regentes das Relações Internacionais do Brasil (Art. 4º).',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. Ambos estão elencados expressamente no Art. 4º, incisos II e X da Constituição Federal.'
+    },
+    {
+      id: 4,
+      enunciado: '4. No âmbito do artigo 2º da CF/88, a função típica do Poder Executivo é legislar e fiscalizar as contas públicas.',
+      correta: false,
+      explicacao: '✅ Gabarito: Falso. A função típica de legislar e fiscalizar pertence ao Poder LEGISLATIVO. A função típica do Executivo é administrar e gerir as políticas públicas.'
+    }
+  ];
+
+  // Direito Constitucional Discursive Questions Data
+  const constDiscursiveQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. Explique a diferença teórica e prática entre os Fundamentos da República (Art. 1º) e os Objetivos Fundamentais (Art. 3º) da Constituição Federal de 1988, exemplificando dois de cada categoria.',
+      respostaEsperada: 'Gabarito oficial: Os Fundamentos (Art. 1º) representam a base de sustentação e os valores essenciais sobre os quais o Estado brasileiro está edificado (ex: Soberania e Dignidade da Pessoa Humana - SOCIVADIPLU). Já os Objetivos Fundamentais (Art. 3º) correspondem às metas morfológicas e programas de ação governamental que a República busca alcançar no tempo (ex: Erradicar a pobreza e Garantir o desenvolvimento nacional - verbos no infinitivo).'
+    },
+    {
+      id: 2,
+      enunciado: '2. Discorra sobre o princípio da Separação dos Poderes consagrado no Artigo 2º da CF/88, especificando as funções típicas do Legislativo, Executivo e Judiciário, bem como o sentido de "independentes e harmônicos entre si".',
+      respostaEsperada: 'Gabarito oficial: O Art. 2º estabelece os Poderes da União (Legislativo - função típica de legislar e fiscalizar; Executivo - função típica de administrar; Judiciário - função típica de julgar). Serem independentes significa que não há hierarquia entre eles e que nenhum Poder pode usurpar as competências do outro. Harmônicos refere-se ao dever de cooperação institucional e ao funcionamento do sistema de freios e contrapesos (checks and balances).'
+    }
+  ];
+
   // Active Questions & Flashcards Selection based on selectedSubject
-  const flashcardsData = selectedSubject === 'libras'
+  const flashcardsData = selectedSubject === 'portugues'
+    ? portuguesFlashcardsData
+    : selectedSubject === 'libras'
     ? librasFlashcardsData
     : selectedSubject === 'processo_penal'
     ? procPenalFlashcardsData
@@ -1382,9 +2185,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? procCivilFlashcardsData
     : selectedSubject === 'informatica'
     ? infFlashcardsData
+    : selectedSubject === 'direito_const'
+    ? constFlashcardsData
     : adminFlashcardsData;
 
-  const activeMcQuestions = selectedSubject === 'libras'
+  const activeMcQuestions = selectedSubject === 'portugues'
+    ? portuguesMcQuestionsData
+    : selectedSubject === 'libras'
     ? librasMcQuestionsData
     : selectedSubject === 'processo_penal'
     ? procPenalMcQuestionsData
@@ -1392,9 +2199,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? procCivilMcQuestionsData
     : selectedSubject === 'informatica'
     ? infMcQuestionsData
+    : selectedSubject === 'direito_const'
+    ? constMcQuestionsData
     : questionsData;
 
-  const activeTfQuestions = selectedSubject === 'libras'
+  const activeTfQuestions = selectedSubject === 'portugues'
+    ? portuguesTfQuestionsData
+    : selectedSubject === 'libras'
     ? librasTfQuestionsData
     : selectedSubject === 'processo_penal'
     ? procPenalTfQuestionsData
@@ -1402,9 +2213,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? procCivilTfQuestionsData
     : selectedSubject === 'informatica'
     ? infTfQuestionsData
+    : selectedSubject === 'direito_const'
+    ? constTfQuestionsData
     : tfQuestionsData;
 
-  const activeDiscursiveQuestions = selectedSubject === 'libras'
+  const activeDiscursiveQuestions = selectedSubject === 'portugues'
+    ? portuguesDiscursiveQuestionsData
+    : selectedSubject === 'libras'
     ? librasDiscursiveQuestionsData
     : selectedSubject === 'processo_penal'
     ? procPenalDiscursiveQuestionsData
@@ -1412,25 +2227,203 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? procCivilDiscursiveQuestionsData
     : selectedSubject === 'informatica'
     ? infDiscursiveQuestionsData
+    : selectedSubject === 'direito_const'
+    ? constDiscursiveQuestionsData
     : discursiveQuestionsData;
+
+  const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 4500);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
 
   const toggleChecklist = (key: string) => {
     setChecklist(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleMarkAsCompleted = () => {
-    setIsLessonCompleted(true);
-    setChecklist({
-      c1: true,
-      c2: true,
-      c3: true,
-      c4: true,
-      c5: true,
-    });
+    const newCompletedState = !isLessonCompleted;
+    setIsLessonCompleted(newCompletedState);
+
+    if (newCompletedState) {
+      setChecklist({
+        c1: true,
+        c2: true,
+        c3: true,
+        c4: true,
+        c5: true,
+      });
+    }
+
+    try {
+      const userProgressStr = localStorage.getItem('tjam_user_progress');
+      if (userProgressStr) {
+        const userProg = JSON.parse(userProgressStr);
+        const topicIdMap: Record<string, string> = {
+          portugues: 'port-1',
+          libras: 'acess-1',
+          processo_penal: 'pp-3',
+          processo_civil: 'pc-1',
+          informatica: 'inf-1',
+          direito_admin: 'adm-1',
+          direito_const: 'const-3',
+        };
+        const tid = topicIdMap[selectedSubject];
+        if (tid) {
+          let completedTopicIds: string[] = userProg.completedTopicIds || [];
+          if (newCompletedState && !completedTopicIds.includes(tid)) {
+            completedTopicIds = [...completedTopicIds, tid];
+          } else if (!newCompletedState && completedTopicIds.includes(tid)) {
+            completedTopicIds = completedTopicIds.filter((id) => id !== tid);
+          }
+          userProg.completedTopicIds = completedTopicIds;
+          userProg.totalHoursStudied = Math.round(((userProg.totalHoursStudied || 0) + (newCompletedState ? 1.5 : -1.5)) * 10) / 10;
+          if (userProg.totalHoursStudied < 0) userProg.totalHoursStudied = 0;
+        }
+
+        localStorage.setItem('tjam_user_progress', JSON.stringify(userProg));
+        window.dispatchEvent(new Event('storage'));
+
+        const totalCount = userProg.completedTopicIds?.length || 0;
+        const totalPercentage = Math.min(100, Math.round((totalCount / 30) * 100));
+
+        const subjectNameMap: Record<string, string> = {
+          portugues: 'Língua Portuguesa',
+          libras: 'LIBRAS',
+          processo_penal: 'Processo Penal',
+          processo_civil: 'Processo Civil',
+          informatica: 'Informática',
+          direito_admin: 'Direito Administrativo',
+          direito_const: 'Direito Constitucional',
+        };
+
+        if (newCompletedState) {
+          setToastMessage({
+            text: `🎉 Aula de ${subjectNameMap[selectedSubject]} concluída! Progresso no site atualizado para ${totalPercentage}% (${totalCount} de 30 tópicos).`,
+            type: 'success',
+          });
+        } else {
+          setToastMessage({
+            text: `Aula de ${subjectNameMap[selectedSubject]} reaberta. Progresso atualizado para ${totalPercentage}%.`,
+            type: 'info',
+          });
+        }
+      }
+    } catch (e) {
+      console.error('Error updating site progress:', e);
+    }
+  };
+
+  const registerQuestionAttempt = (q: any, type: 'mc' | 'vf', isCorrect: boolean, selectedOptionId: string) => {
+    const qIdStr = `aula-${selectedSubject}-${type}-${q.id}`;
+    
+    const topicNameMap: Record<string, string> = {
+      portugues: 'Língua Portuguesa',
+      libras: 'LIBRAS',
+      processo_penal: 'Processo Penal',
+      processo_civil: 'Processo Civil',
+      informatica: 'Informática',
+      direito_admin: 'Direito Administrativo',
+      direito_const: 'Direito Constitucional',
+    };
+
+    const formattedQuestion: Question = {
+      id: qIdStr,
+      disciplineId: selectedSubject,
+      topicId: `${selectedSubject}-1`,
+      topicName: topicNameMap[selectedSubject] || 'Aula de Hoje',
+      statement: q.textoApoio ? `[Texto de Apoio: "${q.textoApoio}"]\n\n${q.enunciado}` : q.enunciado,
+      options: type === 'mc'
+        ? (q.alternativas || q.opcoes || []).map((optStr: string, idx: number) => ({
+            id: `opt-${idx}`,
+            text: optStr,
+          }))
+        : [
+            { id: 'opt-true', text: '✅ Verdadeiro' },
+            { id: 'opt-false', text: '❌ Falso' },
+          ],
+      correctOptionId: type === 'mc' ? `opt-${q.correta}` : q.correta ? 'opt-true' : 'opt-false',
+      explanation: q.explicacao,
+      difficulty: 'médio',
+      institution: 'TJAM 2026',
+    };
+
+    try {
+      // 1. Save question object to tjam_questions
+      const savedQuestions = localStorage.getItem('tjam_questions');
+      let questionsList: Question[] = savedQuestions ? JSON.parse(savedQuestions) : [];
+      if (!questionsList.some((item) => item.id === qIdStr)) {
+        questionsList.push(formattedQuestion);
+        localStorage.setItem('tjam_questions', JSON.stringify(questionsList));
+      }
+
+      // 2. Save progress attempt & register in Caderno de Erros if incorrect on first try
+      const savedProgress = localStorage.getItem('tjam_user_progress');
+      if (savedProgress) {
+        const userProg = JSON.parse(savedProgress);
+        const errorQuestionIds: string[] = userProg.errorQuestionIds || [];
+        const questionAttempts = userProg.questionAttempts || [];
+
+        questionAttempts.push({
+          id: `att-${Date.now()}`,
+          questionId: qIdStr,
+          selectedOptionId,
+          isCorrect,
+          answeredAt: new Date().toISOString(),
+        });
+
+        if (!isCorrect) {
+          if (!errorQuestionIds.includes(qIdStr)) {
+            userProg.errorQuestionIds = [...errorQuestionIds, qIdStr];
+          }
+          setToastMessage({
+            text: `❌ Questão errada registrada no Caderno de Erros para revisão focalizada!`,
+            type: 'error',
+          });
+        } else {
+          setToastMessage({
+            text: `🎉 Resposta Correta! Ótimo desempenho.`,
+            type: 'success',
+          });
+        }
+
+        userProg.questionAttempts = questionAttempts;
+        localStorage.setItem('tjam_user_progress', JSON.stringify(userProg));
+        window.dispatchEvent(new Event('storage'));
+      }
+    } catch (e) {
+      console.error('Error saving question attempt to Caderno de Erros:', e);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
+    <div className="max-w-4xl mx-auto space-y-8 pb-16 relative">
+      {/* Toast Notification Banner */}
+      {toastMessage && (
+        <div className={`fixed bottom-6 right-6 z-50 p-4 rounded-2xl shadow-2xl border backdrop-blur-md flex items-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-300 max-w-md text-xs font-bold ${
+          toastMessage.type === 'success'
+            ? 'bg-emerald-900/95 text-emerald-100 border-emerald-500/50'
+            : toastMessage.type === 'error'
+            ? 'bg-rose-900/95 text-rose-100 border-rose-500/50'
+            : 'bg-slate-900/95 text-slate-100 border-slate-700/50'
+        }`}>
+          <span className="text-base">
+            {toastMessage.type === 'success' ? '🎉' : toastMessage.type === 'error' ? '📌' : 'ℹ️'}
+          </span>
+          <div className="flex-1 leading-snug">
+            {toastMessage.text}
+          </div>
+          <button
+            onClick={() => setToastMessage(null)}
+            className="p-1 hover:bg-white/10 rounded-lg text-slate-300 hover:text-white cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       {/* Primary Header Banner: Dynamic Subject - Aula Liberada */}
       <div className="p-8 rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 text-white shadow-xl border border-emerald-500/30 space-y-6 relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
@@ -1441,10 +2434,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5" /> Aula de Hoje: {
-                  selectedSubject === 'libras' ? 'LIBRAS'
+                  selectedSubject === 'portugues' ? 'Língua Portuguesa'
+                  : selectedSubject === 'libras' ? 'LIBRAS'
                   : selectedSubject === 'processo_penal' ? 'Processo Penal'
                   : selectedSubject === 'processo_civil' ? 'Processo Civil'
                   : selectedSubject === 'informatica' ? 'Informática'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional'
                   : 'Direito Administrativo'
                 }
               </span>
@@ -1453,19 +2448,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200">
                 {
-                  selectedSubject === 'libras' ? '🤟 LIBRAS • Unidade 1 – Conceitos Básicos e Legislação'
+                  selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
+                  : selectedSubject === 'libras' ? '🤟 LIBRAS • Unidade 1 – Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Capítulo 1 – Inquérito Policial'
                   : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Unidade 1 – Teoria Geral do Processo'
                   : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
+                  : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Aula 2 – Princípios Fundamentais'
                   : '📜 Direito Administrativo • Capítulo 1 – Princípios Fundamentais'
                 }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
                 {
-                  selectedSubject === 'libras' ? 'Aula 1 — LIBRAS: Conceitos básicos, história e legislação'
+                  selectedSubject === 'portugues' ? 'Aula 1 — Compreensão e Interpretação de Textos'
+                  : selectedSubject === 'libras' ? 'Aula 1 — LIBRAS: Conceitos básicos, história e legislação'
                   : selectedSubject === 'processo_penal' ? 'Aula 1 — Conceito, finalidade e características'
                   : selectedSubject === 'processo_civil' ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
                   : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
+                  : selectedSubject === 'direito_const' ? 'Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
                   : 'Aula 1 — Princípios Expressos e Implícitos da Administração Pública'
                 }
               </h1>
@@ -1553,7 +2552,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
                   </span>
                 </div>
-                <span className="text-xs font-black text-emerald-400">15%</span>
+                <span className="text-xs font-black text-emerald-400">{realProgressPct}%</span>
               </div>
             </div>
           </div>
@@ -1579,70 +2578,174 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         </div>
       </div>
 
-      {/* Subject Switcher Bar */}
-      <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-        <button
-          onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'libras'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Aula de Hoje: LIBRAS</span>
-        </button>
-        <button
-          onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'processo_penal'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Processo Penal</span>
-        </button>
-        <button
-          onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'processo_civil'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Processo Civil</span>
-        </button>
-        <button
-          onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'informatica'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Informática</span>
-        </button>
-        <button
-          onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-          className={`flex-1 min-w-[180px] py-2.5 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            selectedSubject === 'direito_admin'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Direito Administrativo</span>
-        </button>
+      {/* Subject Switcher Bar & Saved Progress Banner */}
+      <div className="space-y-3">
+        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5">
+            <span className="p-2 rounded-xl bg-emerald-600 text-white font-bold">💾</span>
+            <div>
+              <p className="font-black text-emerald-900 dark:text-emerald-200">
+                Aulas e Exercícios Salvos no Banco de Dados
+              </p>
+              <p className="text-slate-600 dark:text-slate-400">
+                Seu progresso, respostas de questões e conteúdos lidos são salvos para você revisar a qualquer momento.
+              </p>
+            </div>
+          </div>
+          {isLessonCompleted && (
+            <span className="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-[10px] uppercase tracking-wider shrink-0 shadow">
+              ✓ Aula Concluída
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <button
+            onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'portugues'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <span>1. Português</span>
+            </div>
+            {savedLessonsStore['portugues']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['portugues']?.selectedAnswers && Object.keys(savedLessonsStore['portugues'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : (
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula de Hoje</span>
+            )}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[180px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'direito_const'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
+              <span>2. Dir. Constitucional</span>
+            </div>
+            {savedLessonsStore['direito_const']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : (
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula de Hoje</span>
+            )}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'libras'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>LIBRAS</span>
+            </div>
+            {savedLessonsStore['libras']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['libras']?.selectedAnswers && Object.keys(savedLessonsStore['libras'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'processo_penal'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Proc. Penal</span>
+            </div>
+            {savedLessonsStore['processo_penal']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'processo_civil'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Proc. Civil</span>
+            </div>
+            {savedLessonsStore['processo_civil']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'informatica'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Informática</span>
+            </div>
+            {savedLessonsStore['informatica']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'direito_admin'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Dir. Admin.</span>
+            </div>
+            {savedLessonsStore['direito_admin']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+        </div>
       </div>
 
       {/* Top Breadcrumb & Metadata Header */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
           <span>
-            {selectedSubject === 'libras'
+            {selectedSubject === 'portugues'
+              ? 'Língua Portuguesa'
+              : selectedSubject === 'libras'
               ? 'Acessibilidade e Inclusão'
               : selectedSubject === 'processo_penal'
               ? 'Processo Penal'
@@ -1650,11 +2753,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Processo Civil'
               : selectedSubject === 'informatica'
               ? 'Informática'
+              : selectedSubject === 'direito_const'
+              ? 'Direito Constitucional'
               : 'Direito Administrativo'}
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'libras'
+            {selectedSubject === 'portugues'
+              ? 'Unidade 1 — Compreensão e Interpretação'
+              : selectedSubject === 'libras'
               ? 'Unidade 1 — Fundamentos da LIBRAS'
               : selectedSubject === 'processo_penal'
               ? 'Capítulo 1 — Inquérito Policial'
@@ -1662,11 +2769,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Unidade 1 — Teoria Geral do Processo'
               : selectedSubject === 'informatica'
               ? 'Unidade 1 — Fundamentos de Informática'
+              : selectedSubject === 'direito_const'
+              ? 'Aula 2 — Princípios Fundamentais'
               : 'Unidade 1 — Administração Pública'}
           </span>
           <span>•</span>
           <span>
-            {selectedSubject === 'libras'
+            {selectedSubject === 'portugues'
+              ? 'Aula 1 — Compreensão e Interpretação de Textos'
+              : selectedSubject === 'libras'
               ? 'Aula 1 — Conceitos básicos, história e legislação'
               : selectedSubject === 'processo_penal'
               ? 'Aula 1 — Conceito, finalidade e características'
@@ -1674,6 +2785,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Capítulo 1 — Jurisdição, Ação e Competência'
               : selectedSubject === 'informatica'
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
+              : selectedSubject === 'direito_const'
+              ? 'Arts. 1º a 4º da Constituição Federal'
               : 'Capítulo 1 — Conceito, Princípios e Poderes'}
           </span>
         </div>
@@ -1681,7 +2794,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-              {selectedSubject === 'libras'
+              {selectedSubject === 'portugues'
+                ? '🇧🇷 Língua Portuguesa (Aula 1)'
+                : selectedSubject === 'libras'
                 ? 'Aula de Hoje: LIBRAS (Acessibilidade e Inclusão)'
                 : selectedSubject === 'processo_penal'
                 ? 'Processo Penal'
@@ -1689,10 +2804,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Processo Civil'
                 : selectedSubject === 'informatica'
                 ? 'Informática'
+                : selectedSubject === 'direito_const'
+                ? '⚖️ Direito Constitucional (Aula 2)'
                 : 'Direito Administrativo'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {selectedSubject === 'libras'
+              {selectedSubject === 'portugues'
+                ? '🇧🇷 Língua Portuguesa — Aula 1: Compreensão e Interpretação de Textos'
+                : selectedSubject === 'libras'
                 ? '🤟 LIBRAS — Aula 1: Conceitos básicos, história e legislação'
                 : selectedSubject === 'processo_penal'
                 ? 'Aula 1 — Inquérito Policial: Conceito, finalidade e características'
@@ -1700,6 +2819,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
                 : selectedSubject === 'informatica'
                 ? 'Aula 1 — Conceitos Básicos de Informática'
+                : selectedSubject === 'direito_const'
+                ? 'Aula 2 — Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
                 : 'Aula 1 — Administração Pública: Conceito e Finalidade'}
             </h1>
           </div>
@@ -1772,16 +2893,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <BookOpen className="w-4 h-4" /> Texto da Aula
         </button>
         <button
-          onClick={() => setActiveTab('mapa')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
-            activeTab === 'mapa'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <Brain className="w-4 h-4" /> Mapa Mental
-        </button>
-        <button
           onClick={() => setActiveTab('flashcards')}
           className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
             activeTab === 'flashcards'
@@ -1823,12 +2934,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  {selectedSubject === 'libras'
+                  {selectedSubject === 'portugues'
+                    ? 'Unidade 1 — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                    : selectedSubject === 'libras'
                     ? 'Unidade 1 — LIBRAS: Conceitos básicos, história e legislação'
                     : selectedSubject === 'processo_civil'
                     ? 'Unidade 1 — Jurisdição: Conceito, Características e Princípios'
                     : selectedSubject === 'informatica'
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
+                    : selectedSubject === 'processo_penal'
+                    ? 'Unidade 1 — Processo Penal: Inquérito Policial'
                     : 'Unidade 1 — Administração Pública: Conceito e Finalidade'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -1848,7 +2963,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <iframe
                 className="w-full h-full"
                 src={
-                  selectedSubject === 'libras'
+                  selectedSubject === 'portugues'
+                    ? 'https://www.youtube.com/embed/OxTNN-IKcEQ?autoplay=0&rel=0'
+                    : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/WqUexIfQ_aQ?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
                     ? 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
@@ -1856,10 +2973,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
+                    : selectedSubject === 'direito_const'
+                    ? 'https://www.youtube.com/embed/Od6WAj4LWbI?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
                 }
                 title={
-                  selectedSubject === 'libras'
+                  selectedSubject === 'portugues'
+                    ? 'Vídeo Aula - Língua Portuguesa: Compreensão e Interpretação de Textos'
+                    : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: Conceitos básicos, história e legislação'
                     : selectedSubject === 'processo_penal'
                     ? 'Vídeo Aula - Processo Penal: Inquérito Policial'
@@ -1867,6 +2988,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Vídeo Aula - Processo Civil: Jurisdição, Ação e Competência'
                     : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
+                    : selectedSubject === 'direito_const'
+                    ? 'Vídeo Aula - Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º)'
                     : 'Vídeo Aula - Administração Pública'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1878,7 +3001,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="flex justify-end">
               <a
                 href={
-                  selectedSubject === 'libras'
+                  selectedSubject === 'portugues'
+                    ? 'https://youtu.be/OxTNN-IKcEQ?is=bzHSDcftIpBprD6X'
+                    : selectedSubject === 'libras'
                     ? 'https://youtu.be/WqUexIfQ_aQ?is=MSdtBlG9aSokP_fR'
                     : selectedSubject === 'processo_penal'
                     ? 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
@@ -1886,6 +3011,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
                     : selectedSubject === 'informatica'
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
+                    : selectedSubject === 'direito_const'
+                    ? 'https://youtu.be/Od6WAj4LWbI?is=TKCeFjJh24E1EA1_'
                     : 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
                 }
                 target="_blank"
@@ -1903,7 +3030,30 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <h3 className="text-xs font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
                   <Lightbulb className="w-4 h-4 text-emerald-500" /> O que você vai aprender neste vídeo:
                 </h3>
-                {selectedSubject === 'libras' ? (
+                {selectedSubject === 'portugues' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Diferença entre Compreensão (informações explícitas) e Interpretação (inferências/deduções lógicas).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Como identificar a Ideia Principal e a Tese desenvolvida pelo autor do texto.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Identificação de marcadores de coesão e conectivos (adversativos, conclusivos, explicativos).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Prevenção contra erros clássicos de bancas de concurso: Extrapolação, Redução e Contradição.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Resolução e análise crítica de exercícios no padrão Assistente Judiciário TJAM.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'libras' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -1995,6 +3145,29 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                       <span>Sistemas Operacionais e informática aplicada ao Poder Judiciário (PJe).</span>
                     </li>
                   </ul>
+                ) : selectedSubject === 'direito_const' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Os 5 Fundamentos da República e o mnemônico SO-CI-DI-VA-PLU (Art. 1º).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Conceito de Estado Democrático de Direito e submissão do poder às leis.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Tripartição dos Poderes (Legislativo, Executivo e Judiciário) e harmonia (Art. 2º).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Objetivos Fundamentais da República (Art. 3º) e a regra dos verbos no infinitivo.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Princípios das Relações Internacionais e integração da América Latina (Art. 4º).</span>
+                    </li>
+                  </ul>
                 ) : (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
@@ -2055,7 +3228,636 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        selectedSubject === 'libras' ? (
+        selectedSubject === 'direito_const' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Header Objectives */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Direito Constitucional: Princípios Fundamentais
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Disciplina: ⚖️ Direito Constitucional | Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)
+              </p>
+              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
+                Ao concluir esta aula, você dominará as bases da organização do Estado brasileiro e os valores constitucionais essenciais cobrados pela banca FGV para o TJAM:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Mnemônico dos Fundamentos: SOCIVADIPLU (Art. 1º)</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Características do Estado Democrático de Direito</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Separação e Funções Típicas dos Poderes (Art. 2º)</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Objetivos Fundamentais e Mnemônico CONERGAPRO (Art. 3º)</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Princípios das Relações Internacionais (Art. 4º)</li>
+                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Regra de Ouro da FGV: Diferença entre Fundamentos x Objetivos</li>
+              </ul>
+            </section>
+
+            {/* Seção 1: Constituição Federal */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. Constituição Federal & Princípios Fundamentais
+              </h2>
+              <p className="text-sm">
+                Os <strong>Princípios Fundamentais</strong> estão consagrados principalmente nos <strong>arts. 1º a 4º da Constituição Federal de 1988</strong>.
+              </p>
+              <p className="text-sm">
+                Eles estabelecem as bases estruturais da organização do Estado brasileiro, fixam as diretrizes políticas indispensáveis e traduzem os valores supremos que orientam toda a atuação estatal e a interpretação das demais normas jurídicas.
+              </p>
+            </section>
+
+            {/* Seção 2: Fundamentos da República — Art. 1º */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Fundamentos da República — Art. 1º
+              </h2>
+              <p className="text-sm">
+                A República Federativa do Brasil, formada pela união indissolúvel dos Estados e Municípios e do Distrito Federal, constitui-se em <strong>Estado Democrático de Direito</strong> e possui <strong>cinco fundamentos</strong> essenciais:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">I — SOBERANIA</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    O Brasil possui autonomia para organizar seu Estado e exercer seu poder sem submissão a outro Estado.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">II — CIDADANIA</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    Representa a participação do indivíduo na sociedade e na vida política, por meio do exercício de direitos e deveres.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">III — DIGNIDADE DA PESSOA HUMANA</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    Estabelece a valorização e proteção da pessoa humana, sendo um dos principais fundamentos do Estado brasileiro.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">IV — VALORES SOCIAIS DO TRABALHO E DA LIVRE INICIATIVA</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    A Constituição valoriza tanto o trabalho quanto a liberdade de iniciativa econômica.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border md:col-span-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">V — PLURALISMO POLÍTICO</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    Garante a convivência de diferentes ideias, opiniões e posições políticas na sociedade.
+                  </p>
+                </div>
+              </div>
+
+              {/* Mnemônico Box */}
+              <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-emerald-600 text-white shrink-0 font-black text-xs">
+                  🧠 MNEMÔNICO
+                </div>
+                <div>
+                  <h4 className="text-xs font-extrabold text-emerald-800 dark:text-emerald-300 uppercase">
+                    Para Memorizar os Fundamentos (Art. 1º):
+                  </h4>
+                  <p className="text-sm font-black text-emerald-700 dark:text-emerald-400 tracking-wider mt-1">
+                    SO – CI – DI – VA – PLU
+                  </p>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    <strong>Soberania</strong> → <strong>Cidadania</strong> → <strong>Dignidade</strong> → <strong>Valores sociais</strong> → <strong>Pluralismo</strong>
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 3: Estado Democrático de Direito */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Estado Democrático de Direito
+              </h2>
+              <p className="text-sm">
+                O Brasil é um <strong>Estado Democrático de Direito</strong>. Isso significa que:
+              </p>
+              <div className={`p-5 rounded-2xl border space-y-2 text-xs ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>O poder estatal está submetido à Constituição e às leis;</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Os cidadãos possuem direitos e garantias;</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>A democracia participa da organização do poder;</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>As autoridades também devem respeitar a ordem jurídica.</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 4: Poderes da União — Art. 2º */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Poderes da União — Art. 2º
+              </h2>
+              <p className="text-sm">
+                São Poderes da União:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                    ⚖️ LEGISLATIVO
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Tem como função típica elaborar leis e fiscalizar.
+                  </p>
+                </div>
+
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                    🏛️ EXECUTIVO
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Tem como função típica administrar o Estado e executar políticas públicas.
+                  </p>
+                </div>
+
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                    ⚖️ JUDICIÁRIO
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Tem como função típica exercer a jurisdição e solucionar conflitos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-900 text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">
+                Os três Poderes são: <strong>independentes e harmônicos entre si</strong>.
+              </div>
+            </section>
+
+            {/* Seção 5: Objetivos Fundamentais — Art. 3º */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Objetivos Fundamentais — Art. 3º
+              </h2>
+              <p className="text-sm">
+                São objetivos fundamentais da República Federativa do Brasil:
+              </p>
+
+              <div className="space-y-2 text-xs">
+                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <strong>I — Construir</strong> uma sociedade livre, justa e solidária.
+                </div>
+                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <strong>II — Garantir</strong> o desenvolvimento nacional.
+                </div>
+                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <strong>III — Erradicar</strong> a pobreza e a marginalização e <strong>reduzir</strong> as desigualdades sociais e regionais.
+                </div>
+                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <strong>IV — Promover</strong> o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.
+                </div>
+              </div>
+
+              {/* Resumindo CONERGAPRO */}
+              <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-amber-600 text-white shrink-0 font-black text-xs">
+                  🧠 RESUMINDO
+                </div>
+                <div>
+                  <h4 className="text-xs font-extrabold text-amber-800 dark:text-amber-300 uppercase">
+                    Sequência de Verbos dos Objetivos (Art. 3º):
+                  </h4>
+                  <p className="text-sm font-black text-amber-700 dark:text-amber-400 tracking-wider mt-1">
+                    Construir → Desenvolver → Erradicar/Reduzir → Promover
+                  </p>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                    Mnemônico: <strong>CONERGAPRO</strong>
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 6: Princípios das Relações Internacionais — Art. 4º */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Princípios das Relações Internacionais — Art. 4º
+              </h2>
+              <p className="text-sm">
+                O Brasil rege-se, em suas relações internacionais, por princípios como:
+              </p>
+
+              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Independência nacional;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Prevalência dos direitos humanos;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Autodeterminação dos povos;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Não intervenção;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Igualdade entre os Estados;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Defesa da paz;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Solução pacífica dos conflitos;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Repúdio ao terrorismo e ao racismo;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Cooperação entre os povos para o progresso da humanidade;</li>
+                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Concessão de asilo político.</li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Seção 7: Diferença Importante para a Prova */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                7. Diferença Importante para a Prova
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-1.5">
+                  <span className="font-black text-emerald-800 dark:text-emerald-300 uppercase block">FUNDAMENTOS (Art. 1º)</span>
+                  <p className="text-slate-700 dark:text-slate-300">Bases da República.</p>
+                  <p className="font-bold text-emerald-700 dark:text-emerald-400">Exemplo: Dignidade da pessoa humana.</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Substantivos (SOCIVADIPLU).</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5">
+                  <span className="font-black text-amber-800 dark:text-amber-300 uppercase block">OBJETIVOS (Art. 3º)</span>
+                  <p className="text-slate-700 dark:text-slate-300">O que a República busca alcançar.</p>
+                  <p className="font-bold text-amber-700 dark:text-amber-400">Exemplo: Erradicar a pobreza e reduzir as desigualdades.</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Verbos no infinitivo (CONERGAPRO).</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-xs space-y-1.5">
+                  <span className="font-black text-blue-800 dark:text-blue-300 uppercase block">RELAÇÕES INTERNACIONAIS (Art. 4º)</span>
+                  <p className="text-slate-700 dark:text-slate-300">Princípios que orientam atuação perante outros países.</p>
+                  <p className="font-bold text-blue-700 dark:text-blue-400">Exemplo: Defesa da paz.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 8: O que você precisa memorizar */}
+            <section className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-3 text-xs text-slate-700 dark:text-slate-300">
+              <h3 className="font-black text-amber-800 dark:text-amber-400 uppercase text-xs flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-500" /> 🎯 O QUE VOCÊ PRECISA MEMORIZAR
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold">
+                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
+                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 1º:</span>
+                  🇧🇷 SO-CI-DI-VA-PLU
+                </div>
+                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
+                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 2º:</span>
+                  ⚖️ Legislativo + Executivo + Judiciário
+                </div>
+                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
+                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 3º:</span>
+                  🎯 Construir + Desenvolver + Erradicar/Reduzir + Promover
+                </div>
+                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
+                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 4º:</span>
+                  🌎 Princípios das relações internacionais
+                </div>
+              </div>
+            </section>
+
+            {/* Action Bottom Controls */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
+              <button
+                onClick={() => setActiveTab('flashcards')}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Ver Flashcards</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleMarkAsCompleted}
+                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                  isLessonCompleted
+                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                }`}
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
+              </button>
+            </div>
+          </article>
+        ) : selectedSubject === 'portugues' ? (
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Header Objectives */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
+              }`}
+            >
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Língua Portuguesa: Compreensão e Interpretação de Textos
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Disciplina: 🇧🇷 Língua Portuguesa | Aula 1
+              </p>
+              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
+                <strong>Objetivo:</strong> Aprender a identificar o que o texto realmente diz, interpretar informações e responder questões de concurso com segurança.
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar Compreensão (explícito) de Interpretação (implícito).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Identificar o Tema e a Ideia Principal em qualquer texto de prova.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Fazer inferências válidas sem extrapolar ou inventar dados.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Distinguir Tipos Textuais de Gêneros Textuais e reconhecer finalidades.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Aplicar o método de 6 etapas para resolver questões e eliminar alternativas.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* 1. Compreensão x Interpretação */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. Compreensão x Interpretação
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+                  <h3 className="text-base font-black text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                    📌 Compreensão
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-3">
+                    É identificar informações que estão <strong>diretamente apresentadas</strong> no texto (explícitas).
+                  </p>
+                  <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-xs space-y-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200">Exemplo:</p>
+                    <p className="italic text-slate-600 dark:text-slate-400">"O servidor chegou ao tribunal às 8 horas."</p>
+                    <p className="font-bold text-emerald-600 dark:text-emerald-400 pt-1">Pergunta: A que horas o servidor chegou?</p>
+                    <p className="font-medium text-slate-800 dark:text-slate-200">Resposta: Às 8 horas (A informação está explícita).</p>
+                  </div>
+                </div>
+
+                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+                  <h3 className="text-base font-black text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+                    📌 Interpretação
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-3">
+                    É compreender informações que podem ser <strong>deduzidas</strong> a partir do texto, relacionando as ideias apresentadas.
+                  </p>
+                  <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-xs space-y-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200">Exemplo:</p>
+                    <p className="italic text-slate-600 dark:text-slate-400">"O servidor chegou ao tribunal às 8 horas. Pouco depois, iniciou o atendimento ao público."</p>
+                    <p className="font-bold text-blue-600 dark:text-blue-400 pt-1">Conclusão:</p>
+                    <p className="font-medium text-slate-800 dark:text-slate-200">Podemos concluir que o servidor começou suas atividades após chegar ao tribunal (inferência fundada no texto).</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 2. Informações explícitas e implícitas */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Informações explícitas e implícitas
+              </h2>
+              <div className="space-y-3">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                  <h4 className="font-black text-sm text-emerald-700 dark:text-emerald-300 mb-1">Explícita</h4>
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                    Está claramente escrita. <em>Exemplo: "Manaus é a capital do Amazonas."</em> → Informação explícita: Manaus é a capital do Amazonas.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                  <h4 className="font-black text-sm text-blue-700 dark:text-blue-300 mb-1">Implícita</h4>
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                    Não está diretamente escrita, mas pode ser deduzida. <em>Exemplo: "João saiu de casa levando um guarda-chuva."</em> → Inferência: Havia possibilidade de chuva.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border flex items-center gap-3 ${isDarkMode ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-900'}`}>
+                  <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
+                  <p className="text-xs font-bold">
+                    ⚠️ Cuidado: uma inferência precisa estar sustentada pelo texto. Não devemos inventar informações (evite extrapolação).
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 3. Tema do texto */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Tema do texto
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                O tema é o assunto principal abordado pelo texto. Responde à pergunta: <strong>"Sobre o que esse texto fala?"</strong>
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'} space-y-2`}>
+                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Exemplo: Um texto apresenta informações sobre o aumento do uso de tecnologia nos tribunais.</p>
+                <div className="flex flex-col sm:flex-row gap-2 text-xs">
+                  <span className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/30">
+                    ✅ Tema: Uso da tecnologia no Poder Judiciário.
+                  </span>
+                  <span className="p-2.5 rounded-xl bg-rose-500/20 text-rose-700 dark:text-rose-300 font-bold border border-rose-500/30">
+                    ❌ Errado: "O computador utilizado pelos servidores" (apenas detalhe secundário).
+                  </span>
+                </div>
+              </div>
+            </section>
+
+            {/* 4. Ideia principal */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Ideia principal
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                A ideia principal representa aquilo que o autor pretende destacar sobre o tema.
+              </p>
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs sm:text-sm space-y-2">
+                <p><strong>Tema:</strong> Tecnologia no Judiciário.</p>
+                <p><strong>Ideia principal:</strong> A utilização de novas tecnologias pode tornar os serviços judiciais mais rápidos e acessíveis.</p>
+                <p className="text-emerald-700 dark:text-emerald-400 font-bold pt-1 border-t border-emerald-500/20">
+                  Diferença fundamental: Tema = assunto. Ideia principal = o que o texto afirma/defende sobre esse assunto.
+                </p>
+              </div>
+            </section>
+
+            {/* 5. Ideias secundárias */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Ideias secundárias
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                São informações que explicam, desenvolvem ou complementam a ideia principal (exemplos, explicações, dados estatísticos, consequências, comparações e argumentos secundários).
+              </p>
+              <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs font-bold text-amber-700 dark:text-amber-400">
+                ⚠️ Dica de Concurso: Não confunda uma informação secundária (detalhe) com a ideia central do texto.
+              </div>
+            </section>
+
+            {/* 6. Inferência */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Inferência
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                Inferir significa chegar a uma conclusão a partir das informações disponíveis no texto.
+              </p>
+              <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-2 text-xs sm:text-sm">
+                <p className="italic text-slate-300">"Maria pegou o guarda-chuva antes de sair e observou o céu escuro."</p>
+                <p>O texto não afirma expressamente: <em>"Vai chover."</em></p>
+                <p className="text-emerald-400 font-bold">Mas podemos inferir que Maria esperava chuva devido às pistas do texto.</p>
+              </div>
+            </section>
+
+            {/* 7. Tipos textuais */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                7. Tipos textuais
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📝 Narrativo</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Relata acontecimentos com personagens, tempo e espaço.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📖 Descritivo</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Apresenta características de pessoas, lugares, objetos ou situações.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">💡 Dissertativo</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Expositivo (explica assunto) ou Argumentativo (defende opinião/tese com argumentos).</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📢 Injuntivo</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Oferece instruções, orientações ou comandos (ex: manuais, editais, receitas).</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">🗣️ Dialogal</h4>
+                  <p className="text-slate-600 dark:text-slate-300">Interação verbal direta entre interlocutores.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* 8. Gênero textual */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                8. Gênero textual
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                O gênero textual é a forma concreta que o texto assume em determinada situação de comunicação na sociedade.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-bold">
+                {['notícia', 'reportagem', 'artigo de opinião', 'carta', 'e-mail', 'anúncio', 'receita', 'manual', 'edital', 'ofício', 'crônica'].map(g => (
+                  <span key={g} className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300">
+                    {g}
+                  </span>
+                ))}
+              </div>
+              <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs font-semibold space-y-1">
+                <p className="text-amber-400 font-bold">⚠️ Não confunda em provas:</p>
+                <p>• Tipo textual → Estrutura linguística predominante (narrativo, dissertativo...).</p>
+                <p>• Gênero textual → Forma social utilizada para comunicar (edital, notícia, e-mail...).</p>
+              </div>
+            </section>
+
+            {/* 9. Finalidade do texto */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                9. Finalidade do texto
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                Refere-se ao objetivo principal do autor. Pergunte: <strong>"Para que esse texto foi escrito?"</strong> (informar, explicar, convencer, orientar, criticar, narrar, descrever, divertir, instruir).
+              </p>
+            </section>
+
+            {/* 10. Ponto de vista do autor */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                10. Ponto de vista do autor
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                Em textos argumentativos, identifique a <strong>Tese</strong> (opinião ou posição defendida) e os <strong>Argumentos</strong> (razões e provas utilizadas para sustentar a tese).
+              </p>
+            </section>
+
+            {/* 11. Palavras-chave */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                11. Palavras-chave & Conectivos de Relação
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-2">
+                Preste atenção nos conectivos que estabelecem relações lógicas entre as frases:
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-black">
+                {['portanto', 'porém', 'entretanto', 'porque', 'embora', 'além disso', 'consequentemente', 'assim', 'contudo', 'dessa forma'].map(p => (
+                  <span key={p} className="px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400">
+                    {p}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* 12. Método de resolução */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                12. Como resolver questões de interpretação (Método de 6 Etapas)
+              </h2>
+              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold">
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">1️⃣ Leia o texto inteiro</strong>
+                  Não tente responder lendo apenas frases soltas.
+                </li>
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">2️⃣ Identifique o assunto</strong>
+                  Sobre o que o texto está falando em linhas gerais?
+                </li>
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">3️⃣ Encontre a ideia principal</strong>
+                  Qual a mensagem central que o autor quer transmitir?
+                </li>
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">4️⃣ Observe informações importantes</strong>
+                  Atente para dados, exemplos e conclusões.
+                </li>
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">5️⃣ Releia o enunciado</strong>
+                  Entenda exatamente se a banca pede COMPREENSÃO (explícito) ou INTERPRETAÇÃO (implícito).
+                </li>
+                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">6️⃣ Elimine alternativas</strong>
+                  Desconfie das opções que contradizem, exageram, inventam dados sem fundamento ou generalizam.
+                </li>
+              </ol>
+            </section>
+
+            {/* Resumo da Aula */}
+            <section className="p-6 rounded-3xl bg-slate-900 text-white space-y-4 shadow-xl border border-amber-500/30">
+              <h3 className="text-lg font-black text-amber-400 flex items-center gap-2">
+                🎯 RESUMO DA AULA & 🏆 FOCO PARA O CONCURSO
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-medium">
+                <li>• <strong>COMPREENSÃO:</strong> busca o que está escrito diretamente (explícito).</li>
+                <li>• <strong>INTERPRETAÇÃO:</strong> relaciona informações e realiza inferências (implícito com fundamentação).</li>
+                <li>• <strong>TEMA ≠ IDEIA PRINCIPAL:</strong> Tema é o assunto abrangente; Ideia Principal é a posição central do autor.</li>
+                <li>• <strong>TIPO TEXTUAL ≠ GÊNERO TEXTUAL:</strong> Tipo é a estrutura; Gênero é a forma social concreta.</li>
+              </ul>
+            </section>
+          </article>
+        ) : selectedSubject === 'libras' ? (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Header Objectives */}
             <section
@@ -2483,13 +4285,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 </div>
               </div>
 
-              {/* Botão de transição para o mapa mental */}
+              {/* Botão de transição para flashcards */}
               <div className="pt-4 flex justify-end">
                 <button
-                  onClick={() => setActiveTab('mapa')}
+                  onClick={() => setActiveTab('flashcards')}
                   className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shrink-0 cursor-pointer flex items-center gap-2"
                 >
-                  <span>Ir para o Mapa Mental</span>
+                  <span>Ir para os Flashcards</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -2880,13 +4682,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               {/* Next Steps Card */}
               <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="text-xs text-emerald-300 font-bold">
-                  🚀 Próxima etapa do estudo: mapa mental do Inquérito Policial → 20 questões → videoaula → revisão dos erros.
+                  🚀 Próxima etapa do estudo: flashcards do Inquérito Policial → 20 questões → videoaula.
                 </div>
                 <button
-                  onClick={() => setActiveTab('mapa')}
+                  onClick={() => setActiveTab('flashcards')}
                   className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shrink-0 cursor-pointer flex items-center gap-2"
                 >
-                  <span>Ir para o Mapa Mental</span>
+                  <span>Ir para os Flashcards</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -3201,19 +5003,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Action Bottom Controls */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
               <button
-                onClick={() => setActiveTab('mapa')}
+                onClick={() => setActiveTab('flashcards')}
                 className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Ver Mapa Mental</span>
+                <span>Ver Flashcards</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={handleMarkAsCompleted}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                  isLessonCompleted
+                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                }`}
               >
                 <CheckCircle2 className="w-4 h-4" />
-                <span>Marcar aula como concluída</span>
+                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
               </button>
             </div>
           </article>
@@ -3483,19 +5289,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Action Bottom Controls */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
               <button
-                onClick={() => setActiveTab('mapa')}
+                onClick={() => setActiveTab('flashcards')}
                 className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Ver Mapa Mental</span>
+                <span>Ver Flashcards</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={handleMarkAsCompleted}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                  isLessonCompleted
+                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                }`}
               >
                 <CheckCircle2 className="w-4 h-4" />
-                <span>Marcar Aula como Concluída</span>
+                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
               </button>
             </div>
           </article>
@@ -3765,19 +5575,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           {/* Action Bottom Controls */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
             <button
-              onClick={() => setActiveTab('mapa')}
+              onClick={() => setActiveTab('flashcards')}
               className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Ver Mapa Mental</span>
+              <span>Ver Flashcards</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
             <button
               onClick={handleMarkAsCompleted}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+              className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                isLessonCompleted
+                  ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                  : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+              }`}
             >
               <CheckCircle2 className="w-4 h-4" />
-              <span>Marcar aula como concluída</span>
+              <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
             </button>
           </div>
         </article>
@@ -3793,18 +5607,34 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Esquema Visual de Fixação
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'libras'
+                {selectedSubject === 'portugues'
+                  ? 'Mapa Mental — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                  : selectedSubject === 'libras'
                   ? 'Mapa Mental — Aula 1: Conceitos Básicos de LIBRAS e Legislação'
                   : selectedSubject === 'informatica'
                   ? 'Mapa Mental — Capítulo 1: Conceitos Básicos de Informática'
-                  : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Constituição'}
+                  : selectedSubject === 'direito_const'
+                  ? 'Mapa Mental — Aula 2: Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
+                  : selectedSubject === 'processo_penal'
+                  ? 'Mapa Mental — Aula 1: Inquérito Policial'
+                  : selectedSubject === 'processo_civil'
+                  ? 'Mapa Mental — Aula 1: Jurisdição e Princípios Processuais'
+                  : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Administração Pública'}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {selectedSubject === 'libras'
+                {selectedSubject === 'portugues'
+                  ? 'Esquema visual sobre Compreensão x Interpretação, Tipologia Textual, Coesão e Dicas FGV'
+                  : selectedSubject === 'libras'
                   ? 'Esquema visual sobre LIBRAS, Parâmetros dos Sinais, Datilologia, Lei 10.436/2002 e Decreto 5.626/2005'
                   : selectedSubject === 'informatica'
                   ? 'Esquema visual sobre Informática, Dado x Informação, Hardware, Software e Periféricos'
-                  : 'Resumo visual dos conceitos, finalidade, importância, supremacia e aplicabilidade'}
+                  : selectedSubject === 'direito_const'
+                  ? 'Esquema visual sobre os 5 Fundamentos (SOCIVADIPLU), Tripartição dos Poderes e Objetivos (CONERGAPRO)'
+                  : selectedSubject === 'processo_penal'
+                  ? 'Esquema visual sobre Inquérito Policial, características e instauração'
+                  : selectedSubject === 'processo_civil'
+                  ? 'Esquema visual sobre Jurisdição, Ação, Competência e Princípios'
+                  : 'Resumo visual sobre conceitos, princípios e organização da Administração Pública'}
               </p>
             </div>
 
@@ -3813,11 +5643,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <img
                 src={mindMapImg}
                 alt={
-                  selectedSubject === 'libras'
+                  selectedSubject === 'portugues'
+                    ? 'Mapa Mental - Língua Portuguesa'
+                    : selectedSubject === 'libras'
                     ? 'Mapa Mental - LIBRAS: Conceitos e Legislação'
                     : selectedSubject === 'informatica'
                     ? 'Mapa Mental - Conceitos Básicos de Informática'
-                    : 'Mapa Mental - Capítulo 1: Conceitos Fundamentais da Constituição'
+                    : selectedSubject === 'direito_const'
+                    ? 'Mapa Mental - Direito Constitucional: Princípios Fundamentais'
+                    : selectedSubject === 'processo_penal'
+                    ? 'Mapa Mental - Processo Penal'
+                    : selectedSubject === 'processo_civil'
+                    ? 'Mapa Mental - Processo Civil'
+                    : 'Mapa Mental - Direito Administrativo'
                 }
                 referrerPolicy="no-referrer"
                 onClick={() => setIsImageModalOpen(true)}
@@ -3836,11 +5674,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Palavras-Chave & Download Controls */}
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap justify-center gap-2">
-                {(selectedSubject === 'libras'
+                {(selectedSubject === 'portugues'
+                  ? ['Língua Portuguesa', 'FGV', 'Compreensão', 'Interpretação', 'Coesão', 'Inferências', 'TJAM']
+                  : selectedSubject === 'libras'
                   ? ['LIBRAS', 'Lei 10.436/2002', 'Decreto 5.626/2005', 'Datilologia', 'Parâmetros dos Sinais', 'Acessibilidade', 'TJAM']
                   : selectedSubject === 'informatica'
                   ? ['Informática', 'Hardware', 'Software', 'Dado x Informação', 'CPU e RAM', 'Periféricos', 'PJe TJAM']
-                  : ['Constituição', 'Norma Suprema', 'Direitos Fundamentais', 'Organização do Estado', 'Supremacia Constitucional', 'CF/1988', 'Estado Democrático de Direito']
+                  : selectedSubject === 'direito_const'
+                  ? ['Constituição', 'SOCIVADIPLU', 'Tripartição dos Poderes', 'CONERGAPRO', 'Art. 1º ao 4º', 'CF/88', 'TJAM']
+                  : selectedSubject === 'processo_penal'
+                  ? ['Processo Penal', 'Inquérito Policial', 'Polícia Judiciária', 'CPP', 'TJAM']
+                  : selectedSubject === 'processo_civil'
+                  ? ['Processo Civil', 'Jurisdição', 'Ação', 'Competência', 'CPC', 'TJAM']
+                  : ['Direito Admin', 'Administração Pública', 'Princípios', 'LIMPE', 'TJAM']
                 ).map(kw => (
                   <span key={kw} className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[11px] font-bold text-slate-600 dark:text-slate-400">
                     #{kw}
@@ -4005,16 +5851,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* TAB 4: QUESTÕES */}
       {activeTab === 'questoes' && (
         <div className="space-y-6 max-w-2xl mx-auto">
-          <div className="text-center space-y-1">
-            <span className="text-[10px] uppercase font-black text-emerald-600 dark:text-emerald-400">
-              Treinamento de Fixação — Capítulo 1
-            </span>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">
-              Exercícios de Fixação (20 Questões)
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Questões inéditas organizadas para validar seu aprendizado
-            </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-center sm:text-left space-y-1">
+              <span className="text-[10px] uppercase font-black text-emerald-600 dark:text-emerald-400">
+                Treinamento de Fixação — Salvo no Seu Perfil
+              </span>
+              <h2 className="text-xl font-black text-slate-900 dark:text-white">
+                Exercícios de Fixação (20 Questões)
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Suas respostas ficam salvas para você consultar e revisar a qualquer momento.
+              </p>
+            </div>
+
+            <button
+              onClick={handleResetLessonExercises}
+              className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shrink-0 shadow-sm"
+              title="Limpar respostas para refazer os exercícios"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>Refazer Exercícios</span>
+            </button>
           </div>
 
           {/* Sub-Filter Tabs for 20 questions */}
@@ -4077,9 +5934,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     }`}
                   >
                     <div className="flex items-center justify-between text-xs text-slate-400">
-                      <span className="font-extrabold uppercase">Questão {qIndex + 1} de 20</span>
+                      <span className="font-extrabold uppercase">Questão {qIndex + 1} de {activeMcQuestions.length}</span>
                       <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md font-bold">Múltipla Escolha</span>
                     </div>
+
+                    {(q as any).textoApoio && (
+                      <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                        <span className="font-black text-[10px] uppercase tracking-wider text-amber-600 dark:text-amber-400">📖 Texto de Apoio:</span>
+                        <p className="italic font-medium leading-relaxed">"{ (q as any).textoApoio }"</p>
+                      </div>
+                    )}
 
                     <p className="text-sm font-bold text-slate-900 dark:text-white leading-relaxed">
                       {q.enunciado}
@@ -4115,10 +5979,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     {!showQuestionResults[q.id] ? (
                       <button
                         disabled={selectedAnswers[q.id] === undefined}
-                        onClick={() => setShowQuestionResults(prev => ({ ...prev, [q.id]: true }))}
-                        className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md"
+                        onClick={() => {
+                          const selectedIdx = selectedAnswers[q.id];
+                          const isCorrect = selectedIdx === q.correta;
+                          setShowQuestionResults(prev => ({ ...prev, [q.id]: true }));
+                          registerQuestionAttempt(q, 'mc', isCorrect, `opt-${selectedIdx}`);
+                        }}
+                        className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md transition-all flex items-center justify-center gap-2"
                       >
-                        Responder Questão
+                        <span>Responder Questão</span>
                       </button>
                     ) : (
                       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
@@ -4193,10 +6062,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     {!tfSubmitted[q.id] ? (
                       <button
                         disabled={tfAnswers[q.id] === undefined}
-                        onClick={() => setTfSubmitted(prev => ({ ...prev, [q.id]: true }))}
-                        className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md"
+                        onClick={() => {
+                          const chosenBool = tfAnswers[q.id];
+                          const isCorrect = chosenBool === q.correta;
+                          setTfSubmitted(prev => ({ ...prev, [q.id]: true }));
+                          registerQuestionAttempt(q, 'vf', isCorrect, chosenBool ? 'opt-true' : 'opt-false');
+                        }}
+                        className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md transition-all flex items-center justify-center gap-2"
                       >
-                        Responder
+                        <span>Responder</span>
                       </button>
                     ) : (
                       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
@@ -4276,17 +6150,61 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 Síntese Rápida
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'libras'
+                {selectedSubject === 'portugues'
+                  ? 'Resumo — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                  : selectedSubject === 'direito_const'
+                  ? 'Resumo — Direito Constitucional: Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
+                  : selectedSubject === 'libras'
                   ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_civil'
                   ? 'Resumo da Aula — Processo Civil: Jurisdição'
                   : selectedSubject === 'informatica'
                   ? 'Resumo — Conceitos Básicos de Informática'
-                  : 'Resumo — Administração Pública & Constituição'}
+                  : selectedSubject === 'processo_penal'
+                  ? 'Resumo — Processo Penal: Inquérito Policial'
+                  : 'Resumo — Direito Administrativo: Administração Pública'}
               </h2>
             </div>
 
-            {selectedSubject === 'libras' ? (
+            {selectedSubject === 'portugues' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Compreensão vs. Interpretação:</strong> Compreensão refere-se ao que está EXPLÍCITO no texto ("segundo o texto"). Interpretação exige DEDUÇÕES e INFERÊNCIAS autorizadas ("infere-se do texto").</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Armadilhas Clássicas FGV:</strong> Extrapolação (criar ideias inexistentes), Redução (focar em detalhe secundário) e Contradição (afirmar o oposto).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Coesão Textual:</strong> Anafórica (retoma elemento anterior) e Catafórica (antecipa elemento posterior). Essenciais para compreensão global.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Conectivos Logico-Semânticos:</strong> Atenção especial aos adversativos (mas, porém, contudo) e concessivos (embora, ainda que) muito cobrados nas provas do TJAM.</span>
+                </li>
+              </ul>
+            ) : selectedSubject === 'direito_const' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Fundamentos da RFB (Art. 1º):</strong> Mnemônico <strong>SO-CI-DI-VA-PLU</strong> (Soberania, Cidadania, Dignidade da Pessoa Humana, Valores Sociais do Trabalho/Livre Iniciativa, Pluralismo Político).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Separação de Poderes (Art. 2º):</strong> Poderes independentes e harmônicos (Legislativo, Executivo e Judiciário) com funções típicas e atípicas.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Objetivos Fundamentais (Art. 3º):</strong> Verbos no infinitivo — Mnemônico <strong>CONERGAPRO</strong> (Construir, Garantir, Erradicar/Reduzir, Promover).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold text-base">•</span>
+                  <span><strong>Relações Internacionais (Art. 4º):</strong> 10 princípios orientadores da atuação internacional do Brasil (Prevalência dos DH, Autodeterminação, Asilo Político, etc.).</span>
+                </li>
+              </ul>
+            ) : selectedSubject === 'libras' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>
@@ -4391,9 +6309,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-center">
               <button
                 onClick={handleMarkAsCompleted}
-                className="w-full sm:w-auto px-8 py-3 rounded-2xl bg-emerald-600 text-white font-extrabold text-xs hover:bg-emerald-700 shadow-md cursor-pointer flex items-center justify-center gap-2"
+                className={`w-full sm:w-auto px-8 py-3 rounded-2xl font-extrabold text-xs shadow-md cursor-pointer flex items-center justify-center gap-2 transition-all ${
+                  isLessonCompleted
+                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                }`}
               >
-                <CheckCircle2 className="w-4 h-4" /> Marcar aula como concluída
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
               </button>
             </div>
           </div>

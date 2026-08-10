@@ -84,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Streak Counter */}
           <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-bold">
             <Flame className="w-4 h-4 fill-amber-500 text-amber-500 animate-pulse" />
-            <span>{streakDays || 5} Dias Seguidos</span>
+            <span>{streakDays || 0} {streakDays === 1 ? 'Dia Seguido' : 'Dias Seguidos'}</span>
           </div>
 
           {/* AI Assistant Button */}

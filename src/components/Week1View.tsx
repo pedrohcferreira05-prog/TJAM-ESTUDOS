@@ -329,15 +329,7 @@ export const Week1View: React.FC<Week1ViewProps> = ({
           </div>
 
           {/* Quick Stats Grid for Revision */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-2xl border bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700">
-              <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-xs">
-                <Brain className="w-4 h-4" /> Mapas Mentais da Semana
-              </div>
-              <p className="text-xl font-black mt-2">4 Mapas Prontos</p>
-              <p className="text-[11px] text-slate-500">Português e Constitucional</p>
-            </div>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-2xl border bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700">
               <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-xs">
                 <Zap className="w-4 h-4" /> Deck de Flashcards
@@ -618,7 +610,6 @@ export const Week1View: React.FC<Week1ViewProps> = ({
                   { id: 'teoria', label: 'Teoria Escrita', icon: BookOpen },
                   { id: 'resumo', label: 'Resumo & Dicas', icon: FileText },
                   { id: 'materiais', label: `Materiais (${currentLesson.materials.length})`, icon: Download },
-                  { id: 'mapa', label: 'Mapa Mental', icon: Brain },
                   { id: 'flashcards', label: `Flashcards (${currentLesson.flashcards.length})`, icon: Zap },
                   { id: 'questoes', label: `Questões (${currentLesson.questions.length})`, icon: HelpCircle },
                   { id: 'checklist', label: 'Checklist', icon: CheckSquare }

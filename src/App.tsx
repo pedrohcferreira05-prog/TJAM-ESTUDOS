@@ -58,15 +58,12 @@ export function App() {
     return localStorage.getItem('tjam_theme') === 'dark';
   });
 
-  // Site lock state (default true so site is paused for next class)
-  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
-    const saved = localStorage.getItem('tjam_site_locked');
-    return saved !== null ? saved === 'true' : true;
-  });
+  // Site lock state (default false so study site opens directly)
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
 
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
-  const [studentTab, setStudentTab] = useState<StudentTab>('dashboard');
+  const [studentTab, setStudentTab] = useState<StudentTab>('aula-hoje');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -185,15 +182,35 @@ export function App() {
 
   const [userProgress, setUserProgress] = useState<UserProgress>(() => {
     const saved = localStorage.getItem('tjam_user_progress');
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Sanitize legacy fake hardcoded initial defaults if present
+        if (parsed.totalHoursStudied === 48.5) parsed.totalHoursStudied = 0;
+        if (parsed.hoursStudiedToday === 2.5) parsed.hoursStudiedToday = 0;
+        if (parsed.streakDays === 12) parsed.streakDays = 0;
+        if (parsed.completedTopicIds && parsed.completedTopicIds.includes('port-[2]')) {
+          parsed.completedTopicIds = [];
+        }
+        if (parsed.reviewQueue && parsed.reviewQueue.some((r: any) => r.id === 'rev-1')) {
+          parsed.reviewQueue = [];
+        }
+        if (parsed.weeklyGoals && parsed.weeklyGoals.some((g: any) => g.id === 'g1')) {
+          parsed.weeklyGoals = [];
+        }
+        return parsed;
+      } catch (e) {
+        console.error('Error parsing user progress:', e);
+      }
+    }
     return {
       dailyGoalHours: 4,
-      hoursStudiedToday: 2.5,
-      totalHoursStudied: 48.5,
-      streakDays: 12,
+      hoursStudiedToday: 0,
+      totalHoursStudied: 0,
+      streakDays: 0,
       lastStudiedDate: new Date().toISOString(),
       targetExamDate: '2026-11-15',
-      completedTopicIds: ['port-1', 'port-[2]', 'const-1', 'const-4', 'adm-1', 'tjam-1'],
+      completedTopicIds: [],
       studiedMapIds: [],
       favoriteMapIds: [],
       favoriteFlashcardIds: [],
@@ -203,40 +220,8 @@ export function App() {
       personalNotes: {},
       nodeNotes: {},
       simuladoAttempts: [],
-      reviewQueue: [
-        {
-          id: 'rev-1',
-          disciplineId: 'direito-constitucional',
-          disciplineName: 'Direito Constitucional',
-          topicName: 'Remédios Constitucionais',
-          type: '24h',
-          dueDate: 'Hoje',
-          completed: false,
-        },
-        {
-          id: 'rev-2',
-          disciplineId: 'direito-administrativo',
-          disciplineName: 'Direito Administrativo',
-          topicName: 'Atos Administrativos (Atributos PATI)',
-          type: '7d',
-          dueDate: 'Amanhã',
-          completed: false,
-        },
-        {
-          id: 'rev-3',
-          disciplineId: 'legislacao-tjam',
-          disciplineName: 'Legislação Institucional do TJAM',
-          topicName: 'Regimento Interno e Plantão Judiciário',
-          type: '30d',
-          dueDate: 'Em 3 dias',
-          completed: false,
-        },
-      ],
-      weeklyGoals: [
-        { id: 'g1', text: 'Resolver 50 questões de Português e Constitucional', completed: true },
-        { id: 'g2', text: 'Revisar o Regimento Interno do TJAM (Art. 12 ao 45)', completed: true },
-        { id: 'g3', text: 'Realizar Simulado Reta Final #01 no Domingo', completed: false },
-      ],
+      reviewQueue: [],
+      weeklyGoals: [],
     };
   });
 
@@ -676,34 +661,6 @@ export function App() {
             />
           ) : (
             <>
-              {/* Site Status Control Banner */}
-              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200">
-                <div className="flex items-center gap-2 text-xs font-bold">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-extrabold text-emerald-700 dark:text-emerald-300">Plataforma Desbloqueada</span>
-                  <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">• Acesse as aulas e materiais</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => {
-                      setIsSiteLocked(true);
-                      localStorage.setItem('tjam_site_locked', 'true');
-                    }}
-                    className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-                  >
-                    <Lock className="w-3.5 h-3.5" />
-                    <span>Trancar Site</span>
-                  </button>
-                  <button
-                    onClick={() => setStudentTab('aula-hoje')}
-                    className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Ir para Aula de Hoje</span>
-                  </button>
-                </div>
-              </div>
-
               {studentTab === 'dashboard' && (
                 <Dashboard
                   progress={userProgress}
@@ -758,39 +715,6 @@ export function App() {
 
               {(studentTab === 'aula-hoje' || studentTab === 'semana1') && (
                 <AulaHojeView isDarkMode={isDarkMode} onNavigateTab={setStudentTab} />
-              )}
-
-              {studentTab === 'mapa-mental' && (
-                <>
-                  {selectedDisciplineObj ? (
-                    <DisciplineView
-                      discipline={selectedDisciplineObj}
-                      questions={questions}
-                      flashcards={flashcards}
-                      mindMaps={mindMaps}
-                      progress={userProgress}
-                      onBack={() => setSelectedDisciplineId(null)}
-                      onToggleTopicCompletion={handleToggleTopicCompletion}
-                      onAnswerQuestion={handleAnswerQuestion}
-                      onReviewFlashcard={handleReviewFlashcard}
-                      onSavePersonalNote={handleSavePersonalNote}
-                      onOpenAIAssistant={handleOpenAIAssistant}
-                      onUpdateMindMap={handleSaveMindMap}
-                      isDarkMode={isDarkMode}
-                      initialSubTab="mapas"
-                    />
-                  ) : (
-                    <DisciplineList
-                      disciplines={disciplines}
-                      progress={userProgress}
-                      onSelectDiscipline={(discId) => {
-                        handleSelectDiscipline(discId);
-                        setDisciplineSubTab('mapas');
-                      }}
-                      isDarkMode={isDarkMode}
-                    />
-                  )}
-                </>
               )}
 
               {studentTab === 'flashcards' && (
