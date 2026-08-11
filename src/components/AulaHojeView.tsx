@@ -55,7 +55,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'portugues';
+    return 'direito_admin';
   });
 
   const setSelectedSubject = (subject: 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
@@ -1166,214 +1166,277 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Admin Flashcards Data
+  // Admin Flashcards Data (Atos Administrativos)
   const adminFlashcardsData = [
     {
-      q: 'O que é a Administração Pública em sentido subjetivo (formal)?',
-      a: 'É o conjunto de órgãos, entidades e agentes públicos responsáveis pela atividade administrativa.'
+      q: 'O que é ato administrativo?',
+      a: 'É a manifestação de vontade da Administração Pública ou de quem a represente, sob regime de direito público, com o fim de produzir efeitos jurídicos imediatos.'
     },
     {
-      q: 'O que é a Administração Pública em sentido objetivo (material)?',
-      a: 'É a própria atividade ou função administrativa desempenhada pelo Estado para satisfazer necessidades da sociedade.'
+      q: 'Quais são os 5 elementos (requisitos) do ato administrativo e qual o seu mnemônico?',
+      a: 'Competência, Finalidade, Forma, Motivo e Objeto. Mnemônico: CO–FI–FO–MO–OB.'
     },
     {
-      q: 'Qual a diferença entre Governo e Administração Pública?',
-      a: 'O Governo define as diretrizes e políticas públicas (função política); a Administração Pública executa essas decisões (função administrativa).'
+      q: 'Quais são os principais atributos do ato administrativo?',
+      a: 'Presunção de legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade (PATI/PAT).'
     },
     {
-      q: 'Quem compõe a Administração Pública Direta?',
-      a: 'Os órgãos integrantes dos entes federativos: União, Estados, Distrito Federal e Municípios (órgãos sem personalidade jurídica própria).'
+      q: 'Qual a diferença entre Anulação e Revogação?',
+      a: 'Anulação decorre de ILEGALIDADE (efeitos ex tunc). Revogação decorre de CONVENIÊNCIA e OPORTUNIDADE (efeitos ex nunc).'
     },
     {
-      q: 'Quem compõe a Administração Pública Indireta?',
-      a: 'Entidades descentralizadas criadas para atividades específicas: Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista.'
+      q: 'O que é Convalidação do ato administrativo?',
+      a: 'É o ato de sanar um vício sanável (como defeito de competência não exclusiva ou forma não essencial), restaurando a validade do ato com efeitos retroativos.'
     }
   ];
 
-  // Questions Data - 20 Questions for Unidade 1 Aula 1 (Direito Administrativo - Conceito, Princípios e Poderes)
+  // Questions Data - 20 Questions for Aula 3 (Direito Administrativo - Atos Administrativos)
   const questionsData = [
     {
       id: 1,
-      enunciado: '1. A Administração Pública pode ser definida como:',
+      enunciado: '1. Ato administrativo pode ser compreendido como:',
       alternativas: [
-        'O conjunto de atividades exclusivamente do Poder Judiciário.',
-        'O conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado.',
-        'O conjunto de leis editadas pelo Congresso Nacional.',
-        'O conjunto de empresas privadas contratadas pelo Estado.'
+        'A) Qualquer ato praticado por um cidadão.',
+        'B) Manifestação da Administração Pública, ou de quem exerça função administrativa, capaz de produzir efeitos jurídicos.',
+        'C) Somente uma decisão judicial.',
+        'D) Exclusivamente uma lei aprovada pelo Legislativo.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. A Administração Pública é o conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado.'
+      explicacao: '✅ Gabarito: B. Ato administrativo é a manifestação de vontade da Administração Pública, ou de quem lhe faça as vezes, sob regime público, capaz de produzir efeitos jurídicos.'
     },
     {
       id: 2,
-      enunciado: '2. O principal objetivo da Administração Pública é:',
+      enunciado: '2. São elementos clássicos do ato administrativo:',
       alternativas: [
-        'Obter lucro.',
-        'Defender interesses particulares.',
-        'Atender ao interesse público.',
-        'Fiscalizar apenas empresas privadas.'
+        'A) Competência, finalidade, forma, motivo e objeto.',
+        'B) Legalidade, publicidade, moralidade, eficiência e impessoalidade.',
+        'C) Hierarquia, disciplina, polícia, regulamentação e fiscalização.',
+        'D) Autoridade, publicidade, sentença, recurso e competência.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. O principal objetivo e razão de existir da Administração Pública é atender ao interesse público.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Os cinco elementos do ato administrativo são: Competência, Finalidade, Forma, Motivo e Objeto (CO-FI-FO-MO-OB).'
     },
     {
       id: 3,
-      enunciado: '3. A Administração Pública Direta é composta por:',
+      enunciado: '3. A competência corresponde:',
       alternativas: [
-        'Empresas Públicas e Autarquias.',
-        'União, Estados, Distrito Federal e Municípios.',
-        'Apenas o Governo Federal.',
-        'Empresas privadas contratadas pelo Estado.'
+        'A) Ao resultado produzido pelo ato.',
+        'B) À finalidade pública pretendida.',
+        'C) Ao poder legal atribuído ao agente ou órgão para praticar o ato.',
+        'D) À justificativa de fato do ato.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. A Administração Pública Direta é composta pelas pessoas políticas territoriais: União, Estados, Distrito Federal e Municípios.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A Competência é o poder legal atribuído pela lei ao agente público ou órgão para praticar validamente o ato.'
     },
     {
       id: 4,
-      enunciado: '4. Faz parte da Administração Pública Indireta:',
+      enunciado: '4. A finalidade do ato administrativo deve estar relacionada:',
       alternativas: [
-        'Câmara Municipal.',
-        'Senado Federal.',
-        'Autarquias.',
-        'Assembleia Legislativa.'
+        'A) Ao interesse exclusivamente particular do agente.',
+        'B) Ao interesse público previsto pelo ordenamento jurídico.',
+        'C) À vontade pessoal do servidor.',
+        'D) À obtenção de vantagem econômica pelo agente.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. Faz parte da Administração Pública Indireta a categoria das Autarquias (junto com Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista).'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O ato administrativo deve sempre buscar o interesse público explicitado em lei.'
     },
     {
       id: 5,
-      enunciado: '5. A Administração Pública em sentido subjetivo refere-se:',
+      enunciado: '5. O motivo do ato administrativo corresponde:',
       alternativas: [
-        'À atividade administrativa.',
-        'Aos órgãos, entidades e agentes públicos.',
-        'À Constituição Federal.',
-        'À atividade legislativa.'
+        'A) Ao efeito jurídico produzido.',
+        'B) À forma de publicação.',
+        'C) À situação de fato e de direito que fundamenta o ato.',
+        'D) À autoridade que praticou o ato.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. Em sentido subjetivo (formal ou orgânico), refere-se aos sujeitos da atuação estatal: órgãos, entidades e agentes públicos.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. O Motivo é a situação de fato e o fundamento de direito que servem de base para a prática do ato.'
     },
     {
       id: 6,
-      enunciado: '6. A Administração Pública em sentido objetivo refere-se:',
+      enunciado: '6. O objeto do ato administrativo corresponde:',
       alternativas: [
-        'À atividade administrativa exercida pelo Estado.',
-        'Aos agentes públicos.',
-        'Aos Poderes da República.',
-        'À organização política.'
+        'A) Ao conteúdo ou efeito jurídico produzido pelo ato.',
+        'B) À competência do agente.',
+        'C) À finalidade pública.',
+        'D) À justificativa do ato.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. Em sentido objetivo (material ou funcional), refere-se à própria atividade ou função administrativa exercida pelo Estado.'
+      explicacao: '✅ Gabarito: A. O Objeto (conteúdo) é a alteração no mundo jurídico produzida de imediato pelo ato.'
     },
     {
       id: 7,
-      enunciado: '7. Qual alternativa diferencia corretamente Governo e Administração Pública?',
+      enunciado: '7. Assinale a alternativa que apresenta corretamente os cinco elementos do ato administrativo:',
       alternativas: [
-        'Governo executa serviços; Administração cria leis.',
-        'Governo define políticas públicas; Administração Pública as executa.',
-        'Ambos exercem exatamente a mesma função.',
-        'Administração Pública cria políticas públicas.'
+        'A) Competência, finalidade, forma, motivo e objeto.',
+        'B) Publicidade, eficiência, motivo, hierarquia e objeto.',
+        'C) Competência, moralidade, publicidade, motivo e forma.',
+        'D) Finalidade, eficiência, hierarquia, objeto e publicidade.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. O Governo define diretrizes e políticas públicas; a Administração Pública as executa com imparcialidade técnica.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Mnemônico CO-FI-FO-MO-OB (Competência, Finalidade, Forma, Motivo e Objeto).'
     },
     {
       id: 8,
-      enunciado: '8. A Administração Pública deve atuar prioritariamente em favor:',
+      enunciado: '8. A presunção de legitimidade significa que:',
       alternativas: [
-        'Dos governantes.',
-        'Dos servidores públicos.',
-        'Do interesse público.',
-        'Dos partidos políticos.'
+        'A) Todo ato administrativo é definitivamente válido.',
+        'B) O ato é considerado legítimo até que seja demonstrada sua ilegalidade.',
+        'C) Nenhum ato administrativo pode ser questionado.',
+        'D) Apenas o Poder Judiciário pode praticar atos administrativos.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. A Administração Pública deve atuar prioritariamente e indispensavelmente em favor do interesse público.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A Presunção de Legitimidade estabelece que os atos reputam-se verdadeiros e legais até prova em contrário.'
     },
     {
       id: 9,
-      enunciado: '9. O artigo da Constituição Federal que estabelece os princípios da Administração Pública é o:',
+      enunciado: '9. A imperatividade significa que determinados atos administrativos:',
       alternativas: [
-        'Art. 5º',
-        'Art. 37',
-        'Art. 60',
-        'Art. 144'
+        'A) Dependem sempre da concordância do particular.',
+        'B) Podem impor obrigações independentemente da concordância do particular, quando cabível.',
+        'C) Nunca produzem obrigações.',
+        'D) São necessariamente atos judiciais.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. O Art. 37 da Constituição Federal estabelece os princípios expressos da Administração Pública.'
+      explicacao: '✅ Gabarito: B. A Imperatividade vincula o administrado independentemente do seu consentimento prévio.'
     },
     {
       id: 10,
-      enunciado: '10. Qual dos princípios abaixo faz parte dos princípios constitucionais expressos da Administração Pública?',
+      enunciado: '10. A autoexecutoriedade permite, em determinadas hipóteses:',
       alternativas: [
-        'Eficiência.',
-        'Competitividade.',
-        'Lucratividade.',
-        'Produtividade.'
+        'A) Que a Administração execute diretamente sua decisão, sem necessidade de autorização judicial prévia.',
+        'B) Que qualquer servidor pratique qualquer ato.',
+        'C) Que a Administração deixe de observar a lei.',
+        'D) Que todo ato seja executado sem qualquer limite.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. O princípio da Eficiência é um dos princípios expressos no caput do Art. 37 da CF/88 (Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência).'
-    }
-  ];
-
-  const tfQuestionsData = [
+      explicacao: '✅ Gabarito: A. A Autoexecutoriedade permite que a Administração execute diretamente a providência administrativa sem socorrer-se previamente do Judiciário.'
+    },
     {
       id: 11,
-      enunciado: '11. A Administração Pública existe para atender ao interesse coletivo.',
-      correta: true,
-      explicacao: '✅ Gabarito: Verdadeiro. A razão de existir da Administração Pública é o atendimento ao interesse coletivo.'
+      enunciado: '11. A tipicidade significa que:',
+      alternativas: [
+        'A) Todo ato deve corresponder a uma figura prevista no ordenamento jurídico.',
+        'B) Todo ato precisa ser judicialmente autorizado.',
+        'C) O agente pode criar livremente qualquer ato administrativo.',
+        'D) Apenas atos privados possuem forma definida.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Tipicidade exige a definição prévia em lei de cada tipo de ato administrativo e seus efeitos.'
     },
     {
       id: 12,
-      enunciado: '12. A Administração Pública pode agir sem observar a lei.',
-      correta: false,
-      explicacao: '❌ Gabarito: Falso. Pelo princípio constitucional da legalidade, a Administração Pública é estritamente subordinada à lei.'
+      enunciado: '12. A anulação de um ato administrativo ocorre quando:',
+      alternativas: [
+        'A) O ato é válido, mas deixou de ser conveniente.',
+        'B) Existe ilegalidade no ato.',
+        'C) O agente muda de opinião.',
+        'D) O particular solicita sua revogação.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A Anulação pressupõe a existência de ilegalidade ou vício de validade no ato administrativo.'
     },
     {
       id: 13,
-      enunciado: '13. Autarquias fazem parte da Administração Pública Indireta.',
-      correta: true,
-      explicacao: '✅ Gabarito: Verdadeiro. As autarquias integram a estrutura da Administração Pública Indireta.'
+      enunciado: '13. A revogação está relacionada:',
+      alternativas: [
+        'A) À ilegalidade do ato.',
+        'B) À conveniência e oportunidade administrativas.',
+        'C) À inexistência do agente público.',
+        'D) À nulidade obrigatória do ato.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. A Revogação baseia-se em razões de mérito administrativo (conveniência e oportunidade para o interesse público).'
     },
     {
       id: 14,
-      enunciado: '14. Governo e Administração Pública possuem exatamente a mesma função.',
-      correta: false,
-      explicacao: '❌ Gabarito: Falso. Governo possui função política de comando; a Administração Pública possui função técnica de execução.'
+      enunciado: '14. Um ato administrativo válido deixa de ser conveniente para a Administração. Nesse caso, em regra, poderá ocorrer:',
+      alternativas: [
+        'A) Anulação.',
+        'B) Revogação.',
+        'C) Convalidação obrigatória.',
+        'D) Judicialização automática.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Havendo ato perfeito e legítimo que se torna inoportuno ou inconveniente, a medida é a Revogação.'
     },
     {
       id: 15,
-      enunciado: '15. A Administração Pública presta serviços públicos à sociedade.',
-      correta: true,
-      explicacao: '✅ Gabarito: Verdadeiro. A prestação de serviços públicos à sociedade é atribuição fundamental da Administração Pública.'
-    }
-  ];
-
-  const discursiveQuestionsData = [
+      enunciado: '15. Um ato administrativo apresenta ilegalidade. A providência adequada é:',
+      alternativas: [
+        'A) Revogação por conveniência.',
+        'B) Anulação.',
+        'C) Convalidação obrigatória em qualquer situação.',
+        'D) Manutenção obrigatória.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Atos ilegais devem ser Anulados (Súmula 473 do STF).'
+    },
     {
       id: 16,
-      enunciado: '16. Explique o conceito de Administração Pública.',
-      respostaEsperada: 'Gabarito oficial: A Administração Pública é o conjunto de órgãos, entidades, agentes e atividades que executam as funções administrativas do Estado com o objetivo de atender ao interesse público e prestar serviços à sociedade.'
+      enunciado: '16. A convalidação consiste, em linhas gerais, na:',
+      alternativas: [
+        'A) Criação de um novo Poder.',
+        'B) Correção de determinados vícios sanáveis do ato administrativo.',
+        'C) Revogação de todos os atos administrativos.',
+        'D) Transformação de ato administrativo em lei.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Convalidação é a correção com efeito retroativo de atos com vícios sanáveis (ex: competência não exclusiva ou forma não essencial).'
     },
     {
       id: 17,
-      enunciado: '17. Diferencie Administração Pública Direta e Administração Pública Indireta.',
-      respostaEsperada: 'Gabarito oficial: A Administração Direta é composta pelos entes políticos territoriais (União, Estados, Distrito Federal e Municípios) e seus órgãos despersonalizados. A Administração Indireta é formada pelas entidades descentralizadas dotadas de personalidade jurídica própria (Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista).'
+      enunciado: '17. Assinale a alternativa correta:',
+      alternativas: [
+        'A) Anulação ocorre por conveniência e oportunidade.',
+        'B) Revogação ocorre necessariamente por ilegalidade.',
+        'C) Anulação relaciona-se à ilegalidade, enquanto revogação relaciona-se à conveniência e oportunidade.',
+        'D) Anulação e revogação são exatamente a mesma coisa.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A Anulação combate a ilegalidade, enquanto a Revogação analisa conveniência e oportunidade.'
     },
     {
       id: 18,
-      enunciado: '18. Explique a diferença entre Governo e Administração Pública.',
-      respostaEsperada: 'Gabarito oficial: O Governo exerce a função política, definindo diretrizes, metas estratégicas e políticas públicas do Estado. A Administração Pública exerce a função técnica e neutra, responsável por executar as políticas públicas traçadas pelo Governo.'
+      enunciado: '18. Um servidor pratica ato administrativo sem possuir competência legal para fazê-lo. O problema está relacionado ao elemento:',
+      alternativas: [
+        'A) Objeto.',
+        'B) Motivo.',
+        'C) Competência.',
+        'D) Finalidade.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Falta de atribuição legal para praticar o ato constitui vício no elemento Competência.'
     },
     {
       id: 19,
-      enunciado: '19. Qual é a finalidade da Administração Pública?',
-      respostaEsperada: 'Gabarito oficial: A finalidade primordial da Administração Pública é a plena satisfação do interesse público, garantindo os direitos dos cidadãos e o bem-estar da coletividade.'
+      enunciado: '19. A Administração utiliza determinado ato para alcançar finalidade pessoal do agente, em vez da finalidade pública prevista em lei. O elemento comprometido é:',
+      alternativas: [
+        'A) Forma.',
+        'B) Finalidade.',
+        'C) Objeto.',
+        'D) Competência.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O desvio de poder/finalidade atinge o elemento Finalidade do ato administrativo.'
     },
     {
       id: 20,
-      enunciado: '20. Por que o interesse público deve orientar a atuação da Administração Pública?',
-      respostaEsperada: 'Gabarito oficial: Porque o Estado existe em função da sociedade e os recursos públicos pertencem à coletividade. Portanto, todos os atos da Administração Pública devem buscar o benefício coletivo, sobrepondo-se aos interesses particulares.'
+      enunciado: '20. Um ato administrativo válido deixa de atender ao interesse da Administração por razões de conveniência e oportunidade. Sobre o caso, é correto afirmar:',
+      alternativas: [
+        'A) Pode ocorrer revogação, observados os limites legais.',
+        'B) Deve ocorrer anulação por ilegalidade.',
+        'C) O ato se torna automaticamente inexistente.',
+        'D) A Administração perde definitivamente sua competência.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Diante de inconveniência superveniente em ato perfeito, a Administração pode revogá-lo.'
     }
   ];
+
+  const tfQuestionsData: any[] = [];
+
+  const discursiveQuestionsData: any[] = [];
 
   // Processo Civil Questions (Exercícios - Capítulo 1 • Aula 1 — Jurisdição)
   const procCivilMcQuestionsData = [
@@ -2454,7 +2517,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Unidade 1 – Teoria Geral do Processo'
                   : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
                   : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Aula 2 – Princípios Fundamentais'
-                  : '📜 Direito Administrativo • Capítulo 1 – Princípios Fundamentais'
+                  : '📜 Direito Administrativo • Aula 3 – Atos Administrativos'
                 }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
@@ -2465,7 +2528,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_civil' ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
                   : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
                   : selectedSubject === 'direito_const' ? 'Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
-                  : 'Aula 1 — Princípios Expressos e Implícitos da Administração Pública'
+                  : 'Aula 3 — Atos Administrativos'
                 }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
@@ -2498,62 +2561,53 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
 
             <div className="space-y-2">
-              {/* 1st Place: Jonas e Carla */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center">1º</span>
-                  <span className="text-xs font-black text-white">Jonas e Carla</span>
-                </div>
-                <span className="text-xs font-black text-amber-400">35%</span>
-              </div>
-
-              {/* 2nd Place: Pietro e Heitor */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-slate-300 text-slate-950 font-black text-[10px] flex items-center justify-center">2º</span>
-                  <span className="text-xs font-black text-slate-200">Pietro e Heitor</span>
-                </div>
-                <span className="text-xs font-black text-emerald-400">32%</span>
-              </div>
-
-              {/* 3rd Place: João e Alicia */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-amber-700 text-white font-black text-[10px] flex items-center justify-center">3º</span>
-                  <span className="text-xs font-black text-slate-200">João e Alicia</span>
-                </div>
-                <span className="text-xs font-black text-amber-500">28%</span>
-              </div>
-
-              {/* 4th Place: Martins e Márcio */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-slate-700 text-slate-300 font-black text-[10px] flex items-center justify-center">4º</span>
-                  <span className="text-xs font-black text-slate-200">Martins e Márcio</span>
-                </div>
-                <span className="text-xs font-black text-slate-300">25%</span>
-              </div>
-
-              {/* 5th Place: Lucas e Mariana (Aleatório) */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-slate-700 text-slate-300 font-black text-[10px] flex items-center justify-center">5º</span>
-                  <span className="text-xs font-black text-slate-200">Lucas e Mariana</span>
-                </div>
-                <span className="text-xs font-black text-slate-300">22%</span>
-              </div>
-
-              {/* 7th Place: Pedro e Eduardo (Sua Dupla) */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-emerald-600 text-white font-black text-[10px] flex items-center justify-center">7º</span>
-                  <span className="text-xs font-black text-white flex items-center gap-1.5">
-                    Pedro e Eduardo
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">Sua Dupla</span>
+              {[
+                { pos: 1, name: 'Pedro e Eduardo', pct: '3%', isUser: true },
+                { pos: 2, name: 'Lucas e Mariana', pct: '2.5%', isUser: false },
+                { pos: 3, name: 'Gabriel e Sofia', pct: '2.0%', isUser: false },
+                { pos: 4, name: 'Matheus e Beatriz', pct: '1.5%', isUser: false },
+                { pos: 5, name: 'Rafael e Amanda', pct: '1.0%', isUser: false },
+              ].map((d) => (
+                <div
+                  key={d.pos}
+                  className={`flex items-center justify-between p-2.5 rounded-xl border ${
+                    d.isUser
+                      ? 'bg-emerald-500/10 border-emerald-500/30'
+                      : 'bg-slate-800/60 border-slate-700/80'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center ${
+                        d.isUser
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-slate-700 text-slate-300'
+                      }`}
+                    >
+                      {d.pos}º
+                    </span>
+                    <span
+                      className={`text-xs font-extrabold flex items-center gap-1.5 ${
+                        d.isUser ? 'text-white' : 'text-slate-300'
+                      }`}
+                    >
+                      {d.name}
+                      {d.isUser && (
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">
+                          Sua Dupla
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <span
+                    className={`text-xs font-black ${
+                      d.isUser ? 'text-emerald-400' : 'text-slate-400'
+                    }`}
+                  >
+                    {d.pct}
                   </span>
                 </div>
-                <span className="text-xs font-black text-emerald-400">{realProgressPct}%</span>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -2771,7 +2825,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Unidade 1 — Fundamentos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Aula 2 — Princípios Fundamentais'
-              : 'Unidade 1 — Administração Pública'}
+              : 'Unidade 1 — Atos Administrativos'}
           </span>
           <span>•</span>
           <span>
@@ -2787,7 +2841,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Arts. 1º a 4º da Constituição Federal'
-              : 'Capítulo 1 — Conceito, Princípios e Poderes'}
+              : 'Aula 3 — Atos Administrativos'}
           </span>
         </div>
 
@@ -2806,7 +2860,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Informática'
                 : selectedSubject === 'direito_const'
                 ? '⚖️ Direito Constitucional (Aula 2)'
-                : 'Direito Administrativo'}
+                : '🏛️ Direito Administrativo (Aula 3)'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               {selectedSubject === 'portugues'
@@ -2821,7 +2875,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Aula 1 — Conceitos Básicos de Informática'
                 : selectedSubject === 'direito_const'
                 ? 'Aula 2 — Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
-                : 'Aula 1 — Administração Pública: Conceito e Finalidade'}
+                : '🏛️ Direito Administrativo — Aula 3: Atos Administrativos'}
             </h1>
           </div>
 
@@ -2944,7 +2998,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
                     : selectedSubject === 'processo_penal'
                     ? 'Unidade 1 — Processo Penal: Inquérito Policial'
-                    : 'Unidade 1 — Administração Pública: Conceito e Finalidade'}
+                    : 'Unidade 1 — Direito Administrativo: Atos Administrativos'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos
@@ -2975,7 +3029,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
                     ? 'https://www.youtube.com/embed/Od6WAj4LWbI?autoplay=0&rel=0'
-                    : 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
+                    : 'https://www.youtube.com/embed/L2lXiq54qno?autoplay=0&rel=0'
                 }
                 title={
                   selectedSubject === 'portugues'
@@ -2990,7 +3044,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
                     : selectedSubject === 'direito_const'
                     ? 'Vídeo Aula - Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º)'
-                    : 'Vídeo Aula - Administração Pública'
+                    : 'Vídeo Aula - Direito Administrativo: Atos Administrativos'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -3013,7 +3067,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
                     : selectedSubject === 'direito_const'
                     ? 'https://youtu.be/Od6WAj4LWbI?is=TKCeFjJh24E1EA1_'
-                    : 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
+                    : 'https://youtu.be/L2lXiq54qno?is=KueIwsYpZML6aWQx'
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -3172,19 +3226,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Conceito da Administração Pública em sentido subjetivo (formal) e objetivo (material).</span>
+                      <span>Conceito de Ato Administrativo e exemplos práticos (nomeação, licença, autorização e sanção).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Distinção essencial entre Governo (função política) e Administração Pública (função técnica).</span>
+                      <span>Os 5 Elementos do ato administrativo e o mnemônico CO–FI–FO–MO–OB (Competência, Finalidade, Forma, Motivo, Objeto).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Estrutura da Administração Direta (União, Estados, DF, Municípios) e Indireta (Autarquias, Fundações, EP e SEM).</span>
+                      <span>Atributos dos atos: Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Supremacia e indisponibilidade do Interesse Público e serviços essenciais.</span>
+                      <span>Diferença crucial para a prova: Anulação (ilegalidade) x Revogação (conveniência e oportunidade) x Convalidação (vício sanável).</span>
                     </li>
                   </ul>
                 )}
@@ -5310,291 +5364,334 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
           </article>
         ) : (
-          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans">
-          {/* Objetivos */}
-          <section
-            className={`p-6 rounded-3xl border ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
-            }`}
-          >
-            <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula de Quarta-Feira
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-              Ao concluir esta aula, você será capaz de:
-            </p>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Compreender o conceito de Administração Pública nos sentidos subjetivo e objetivo.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Diferenciar a função política do Governo da atuação da Administração Pública.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Distinguir os entes da Administração Direta das entidades da Administração Indireta.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <span>Identificar a finalidade precípua do Estado e o princípio do Interesse Público.</span>
-              </li>
-            </ul>
-          </section>
-
-          {/* Seção 1: O que é a Administração Pública */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              1. O que é a Administração Pública?
-            </h2>
-            <p className="text-sm">
-              A <strong>Administração Pública</strong> é o conjunto de órgãos, entidades, agentes e atividades que têm como finalidade atender às necessidades coletivas e promover o interesse público. Ela é responsável por executar as políticas públicas, prestar serviços essenciais à população e garantir o funcionamento regular do Estado.
-            </p>
-            <p className="text-sm">
-              A Administração Pública pode ser compreendida sob <strong>dois aspectos essenciais</strong>:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  Sentido Subjetivo (Formal ou Orgânico)
-                </span>
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
-                  Quem faz (Os Sujeitos)
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Refere-se ao conjunto de <strong>órgãos, entidades e agentes públicos</strong> responsáveis por desempenhar a atividade administrativa estatal.
-                </p>
-              </div>
-
-              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                  Sentido Objetivo (Material ou Funcional)
-                </span>
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
-                  O que é feito (A Atividade)
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Refere-se à própria <strong>atividade administrativa</strong> desenvolvida pelo Estado para satisfazer as necessidades da sociedade.
-                </p>
-              </div>
-            </div>
-            <p className="text-xs text-slate-500 italic pt-1">
-              A Constituição Federal estabelece que a Administração Pública deve atuar em conformidade rigorosa com a lei e com os princípios constitucionais, buscando sempre o interesse público e o bem-estar da coletividade.
-            </p>
-          </section>
-
-          {/* Seção 2: Governo x Administração Pública */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              2. Governo x Administração Pública
-            </h2>
-            <p className="text-sm">
-              Embora os termos sejam frequentemente utilizados como sinônimos no cotidiano, eles possuem <strong>significados jurídicos distintos</strong>:
-            </p>
-            <div className={`p-5 rounded-2xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/40 border-amber-200/80'}`}>
-              <div className="space-y-1">
-                <h3 className="text-sm font-black text-amber-900 dark:text-amber-300 flex items-center gap-2">
-                  <Bookmark className="w-4 h-4 text-amber-600" /> O Governo
-                </h3>
-                <p className="text-xs text-slate-700 dark:text-slate-300">
-                  Exerce a <strong>função política</strong> do Estado. É responsável por definir as diretrizes estratégicas, planos de ação, metas gerais e políticas públicas do país. Possui autonomia política e comando supremo.
-                </p>
-              </div>
-
-              <div className="border-t border-amber-200/60 dark:border-slate-800 pt-3 space-y-1">
-                <h3 className="text-sm font-black text-emerald-900 dark:text-emerald-300 flex items-center gap-2">
-                  <Bookmark className="w-4 h-4 text-emerald-600" /> A Administração Pública
-                </h3>
-                <p className="text-xs text-slate-700 dark:text-slate-300">
-                  Executa essas decisões. Coloca em prática as políticas estabelecidas pelo Governo por meio da <strong>prestação de serviços públicos</strong>, fiscalização, gestão de recursos e demais atividades administrativas técnicas. É neutra e subordinada à lei.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Seção 3: Administração Pública Direta */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              3. Administração Pública Direta
-            </h2>
-            <p className="text-sm">
-              É composta pelos <strong>órgãos públicos</strong> que integram diretamente a estrutura dos entes federativos (pessoas políticas territoriais):
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs font-bold">
-              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">União</span>
-                <span className="text-[10px] text-slate-500 font-normal">Nível Federal</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Estados</span>
-                <span className="text-[10px] text-slate-500 font-normal">Ex: Estado do Amazonas</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Distrito Federal</span>
-                <span className="text-[10px] text-slate-500 font-normal">Ente Híbrido</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <span className="block text-emerald-600 dark:text-emerald-400 text-sm font-black">Municípios</span>
-                <span className="text-[10px] text-slate-500 font-normal">Ex: Manaus</span>
-              </div>
-            </div>
-            <div className={`p-4 rounded-2xl border text-xs font-semibold ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-300' : 'bg-emerald-50/60 border-emerald-100 text-emerald-950'}`}>
-              ⚠️ <strong>Regra de Ouro para Concursos:</strong> Os órgãos da Administração Direta (como Ministérios, Tribunais e Secretarias) <u>NÃO possuem personalidade jurídica própria</u>. Eles atuam em nome da pessoa política a que pertencem.
-            </div>
-          </section>
-
-          {/* Seção 4: Administração Pública Indireta */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              4. Administração Pública Indireta
-            </h2>
-            <p className="text-sm">
-              É formada por <strong>entidades dotadas de personalidade jurídica própria</strong>, criadas ou autorizadas por lei para desempenhar determinadas atividades administrativas com maior autonomia (descentralização):
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                  1. Autarquias
-                </h4>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Pessoas jurídicas de direito público criadas por lei para serviços típicos de Estado (ex: INSS, Banco Central, DETRAN).
-                </p>
-              </div>
-
-              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                  2. Fundações Públicas
-                </h4>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Entidades voltadas a atividades de interesse social, pesquisas, cultura ou assistência (ex: FUNAI, Fiocruz).
-                </p>
-              </div>
-
-              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                <h4 className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                  3. Empresas Públicas
-                </h4>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Pessoas jurídicas de direito privado com 100% de capital público (ex: Caixa Econômica Federal, Correios).
-                </p>
-              </div>
-
-              <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                <h4 className="text-xs font-black text-purple-600 dark:text-purple-400 uppercase tracking-wider">
-                  4. Sociedades de Economia Mista
-                </h4>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Entidades com capital misto (público + privado), sob forma de Sociedade Anônima (ex: Banco do Brasil, Petrobras).
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Seção 5: Finalidade & Interesse Público */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-              5. Finalidade da Administração Pública & Interesse Público
-            </h2>
-            <p className="text-sm">
-              A Administração Pública existe para <strong>atender ao interesse público</strong>, garantindo direitos e promovendo serviços essenciais, tais como:
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-bold">
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🏥 Saúde</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🎓 Educação</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">👮 Segurança</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">⚖️ Justiça</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🏗️ Infraestrutura</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🚌 Transporte</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🤝 Assistência Social</span>
-              <span className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🌳 Meio Ambiente</span>
-            </div>
-            <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/60 border-blue-200'}`}>
-              <h3 className="text-xs font-black uppercase text-blue-800 dark:text-blue-400 mb-1">
-                O Princípio da Supremacia do Interesse Público
-              </h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300">
-                O <strong>interesse público</strong> representa o conjunto de necessidades da coletividade que justificam a atuação do Estado. Por essa razão, em eventual conflito entre o interesse de um indivíduo e o interesse coletivo, a lei concede prerrogativas à Administração para que o interesse da sociedade prevaleça.
-              </p>
-            </div>
-          </section>
-
-          {/* Seção 6: Organização e Importância para Concursos */}
-          <section className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/60 border-purple-200'}`}>
-            <h3 className="text-xs font-black uppercase text-purple-800 dark:text-purple-400 mb-2 flex items-center gap-1.5">
-              <AlertTriangle className="w-4 h-4 text-purple-600" /> Importância para Concursos (TJAM)
-            </h3>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2 leading-relaxed">
-              Os conceitos de <strong>Administração Pública</strong> (sentido objetivo vs subjetivo), <strong>Administração Direta e Indireta</strong>, diferença entre <strong>Governo e Administração</strong> e a <strong>finalidade do interesse público</strong> são temas cobrados com alta frequência em concursos públicos, inclusive para o cargo de <strong>Assistente Judiciário do TJAM</strong>. Dominar esses fundamentos facilitará o estudo dos princípios administrativos, atos administrativos e agentes públicos nas próximas aulas!
-            </p>
-          </section>
-
-          {/* Dica de Memorização */}
-          <section className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-1">
-            <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">
-              Dica de Memorização Rápida
-            </span>
-            <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-              Governo = Decide (Política) • Administração = Executa (Técnica) • Finalidade = Interesse Público!
-            </p>
-          </section>
-
-          {/* Checklist da Aula */}
-          <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula
-            </h3>
-            <div className="space-y-2 text-xs font-semibold">
-              {[
-                { id: 'c1', text: 'Compreendi o conceito de Administração Pública nos sentidos subjetivo e objetivo.' },
-                { id: 'c2', text: 'Sei diferenciar a função do Governo (política) da função da Administração (execução).' },
-                { id: 'c3', text: 'Conheço os entes da Administração Direta (União, Estados, DF e Municípios).' },
-                { id: 'c4', text: 'Entendi quais são as 4 entidades da Administração Indireta (Autarquias, Fundações, EP e SEM).' },
-                { id: 'c5', text: 'Reconheci que a finalidade precípua do Estado é a satisfação do Interesse Público.' },
-              ].map(item => (
-                <div
-                  key={item.id}
-                  onClick={() => toggleChecklist(item.id)}
-                  className={`p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
-                    checklist[item.id]
-                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
-                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300'
-                  }`}
-                >
-                  <div className={`w-5 h-5 rounded-md border flex items-center justify-center ${
-                    checklist[item.id] ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 dark:border-slate-600'
-                  }`}>
-                    {checklist[item.id] && <Check className="w-3.5 h-3.5" />}
-                  </div>
-                  <span>{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Action Bottom Controls */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
-            <button
-              onClick={() => setActiveTab('flashcards')}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>Ver Flashcards</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={handleMarkAsCompleted}
-              className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
-                isLessonCompleted
-                  ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
-                  : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+            {/* Objetivos */}
+            <section
+              className={`p-6 rounded-3xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
               }`}
             >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
-            </button>
-          </div>
-        </article>
+              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — 🏛️ Direito Administrativo (Aula 3: Atos Administrativos)
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                Ao concluir esta aula, você dominará o conceito, os 5 elementos (CO–FI–FO–MO–OB), os atributos e as formas de anulação, revogação e convalidação cobradas pela banca FGV:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Conceituar ato administrativo e identificar seus exemplos práticos.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Memorizar os 5 elementos do ato pelo mnemônico CO–FI–FO–MO–OB.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Compreender os atributos (Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Diferenciar Anulação (ilegalidade) de Revogação (conveniência e oportunidade) e Convalidação.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Seção 1: Conceito */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                1. Conceito
+              </h2>
+              <p className="text-sm">
+                Ato administrativo é a <strong>manifestação da Administração Pública</strong>, ou de quem exerça função administrativa, destinada a produzir efeitos jurídicos conforme o Direito.
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                <h3 className="text-xs font-black uppercase text-slate-900 dark:text-white mb-2 flex items-center gap-1.5">
+                  <BookOpen className="w-4 h-4 text-emerald-500" /> Exemplos de Atos Administrativos:
+                </h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Nomeação de servidor público</li>
+                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Aplicação de uma penalidade administrativa</li>
+                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Concessão de uma licença</li>
+                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Autorização administrativa</li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Seção 2: Elementos do ato administrativo */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Elementos do ato administrativo
+              </h2>
+              <p className="text-sm">
+                Os <strong>cinco elementos clássicos</strong> que compõem a validade de um ato administrativo são:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                    👤 Competência
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É o poder legal atribuído ao agente ou órgão para praticar o ato.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1">
+                    🎯 Finalidade
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Todo ato administrativo deve buscar o interesse público previsto pela lei.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                    📄 Forma
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É o modo pelo qual o ato deve ser exteriorizado.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1">
+                    🔎 Motivo
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É a situação de fato e de direito que justifica a prática do ato.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2 lg:col-span-1">
+                  <h4 className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1">
+                    📌 Objeto
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    É o efeito jurídico produzido pelo ato, aquilo que o ato determina, concede, modifica ou extingue.
+                  </p>
+                </div>
+              </div>
+
+              {/* Mnemônico Card */}
+              <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
+                  🧠 Mnemônico para Memorizar
+                </span>
+                <p className="text-base font-black text-slate-900 dark:text-white">
+                  CO – FI – FO – MO – OB
+                </p>
+                <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                  Competência → Finalidade → Forma → Motivo → Objeto
+                </p>
+              </div>
+            </section>
+
+            {/* Seção 3: Atributos dos atos administrativos */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Atributos dos atos administrativos
+              </h2>
+              <p className="text-sm">
+                Os principais atributos que conferem características especiais aos atos administrativos são:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <h3 className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 uppercase mb-1">
+                    Presunção de Legitimidade
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    O ato é considerado válido e legítimo até que seja demonstrado o contrário.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <h3 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase mb-1">
+                    Imperatividade
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Em determinadas situações, o ato pode impor obrigações independentemente da concordância do particular.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <h3 className="text-xs font-extrabold text-amber-600 dark:text-amber-400 uppercase mb-1">
+                    Autoexecutoriedade
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mb-1">
+                    Em determinadas hipóteses, a Administração pode executar diretamente sua decisão, sem precisar de autorização judicial prévia.
+                  </p>
+                  <span className="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-500/20 text-amber-600 dark:text-amber-300">
+                    ⚠️ Não está presente em todos os atos.
+                  </span>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+                  <h3 className="text-xs font-extrabold text-purple-600 dark:text-purple-400 uppercase mb-1">
+                    Tipicidade
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    O ato administrativo deve corresponder a uma figura previamente prevista no ordenamento jurídico.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 4: Anulação */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Anulação
+              </h2>
+              <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/50 border-rose-200'}`}>
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  A <strong>anulação</strong> ocorre quando existe <strong>ilegalidade</strong> no ato.
+                </p>
+                <div className="flex items-center gap-2 text-xs font-extrabold text-rose-700 dark:text-rose-400">
+                  <span>➡️ Pode ser realizada pela própria Administração e, quando provocado, pelo Poder Judiciário.</span>
+                </div>
+                <div className="pt-1">
+                  <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 font-black text-[11px]">
+                    Motivo: Ilegalidade
+                  </span>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 5: Revogação */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Revogação
+              </h2>
+              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  A <strong>revogação</strong> ocorre quando um ato <strong>válido</strong> deixa de ser conveniente ou oportuno para a Administração.
+                </p>
+                <div className="flex items-center gap-2 text-xs font-extrabold text-blue-700 dark:text-blue-400">
+                  <span>📌 A revogação é realizada EXCLUSIVAMENTE pela própria Administração (o Judiciário não revoga ato do Executivo no exercício da função jurisdicional).</span>
+                </div>
+                <div>
+                  <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-300 font-black text-[11px]">
+                    Motivo: Conveniência e Oportunidade
+                  </span>
+                </div>
+              </div>
+
+              {/* Quadro Não Confunda */}
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5">
+                <span className="font-black uppercase text-amber-600 dark:text-amber-400 text-[10px]">
+                  ⚠️ Não Confunda na Prova da FGV:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 font-bold">
+                  <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-slate-700">
+                    Anulação → Ilegalidade
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700">
+                    Revogação → Conveniência e Oportunidade
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 6: Convalidação */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Convalidação
+              </h2>
+              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-200'}`}>
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  A <strong>convalidação</strong> permite corrigir determinados <strong>vícios sanáveis</strong> de um ato administrativo (em regra, nos elementos <i>Competência</i> não exclusiva e <i>Forma</i> não essencial), desde que sejam atendidos os requisitos legais e não cause lesão ao interesse público nem prejuízo a terceiros.
+                </p>
+              </div>
+            </section>
+
+            {/* Seção 7: O que memorizar para a prova */}
+            <section className="p-6 rounded-3xl bg-slate-900 text-white border border-slate-800 space-y-4">
+              <h3 className="text-sm font-black uppercase text-amber-400 tracking-wider flex items-center gap-2">
+                🎯 O que Memorizar para a Prova (Resumo Definitivo)
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                  <span className="font-extrabold text-emerald-400 uppercase text-[10px]">Elementos</span>
+                  <p className="font-bold text-white">
+                    Competência + Finalidade + Forma + Motivo + Objeto
+                  </p>
+                  <p className="text-[10px] text-amber-300 font-mono pt-1">(CO-FI-FO-MO-OB)</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                  <span className="font-extrabold text-blue-400 uppercase text-[10px]">Atributos</span>
+                  <p className="font-bold text-white">
+                    Presunção de legitimidade + Imperatividade + Autoexecutoriedade + Tipicidade
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                  <span className="font-extrabold text-purple-400 uppercase text-[10px]">Extinção / Correção</span>
+                  <p className="font-medium text-slate-200">
+                    <strong className="text-rose-400">Anulação</strong> → ato ilegal<br />
+                    <strong className="text-blue-400">Revogação</strong> → ato válido, mas inconveniente ou inoportuno<br />
+                    <strong className="text-emerald-400">Convalidação</strong> → correção de vício sanável
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Checklist da Aula */}
+            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula 3
+              </h3>
+              <div className="space-y-2 text-xs font-semibold">
+                {[
+                  { id: 'c1', text: 'Compreendi o conceito de ato administrativo e reconheço exemplos práticos (nomeação, licença, etc.).' },
+                  { id: 'c2', text: 'Decorei os 5 elementos do ato pelo mnemônico CO–FI–FO–MO–OB.' },
+                  { id: 'c3', text: 'Entendi os 4 atributos: Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade.' },
+                  { id: 'c4', text: 'Sei que a Anulação decorre de ilegalidade e a Revogação de conveniência/oportunidade.' },
+                  { id: 'c5', text: 'Compreendi que a Convalidação corrige vícios sanáveis de atos com defeitos sanáveis.' },
+                ].map(item => (
+                  <div
+                    key={item.id}
+                    onClick={() => toggleChecklist(item.id)}
+                    className={`p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
+                      checklist[item.id]
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
+                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 rounded-md border flex items-center justify-center ${
+                      checklist[item.id] ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 dark:border-slate-600'
+                    }`}>
+                      {checklist[item.id] && <Check className="w-3.5 h-3.5" />}
+                    </div>
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Action Bottom Controls */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
+              <button
+                onClick={() => setActiveTab('flashcards')}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Ver Flashcards</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleMarkAsCompleted}
+                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                  isLessonCompleted
+                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                }`}
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
+              </button>
+            </div>
+          </article>
         )
       )}
 

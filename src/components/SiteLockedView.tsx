@@ -34,14 +34,11 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   };
 
   const duplasRanking = [
-    { rank: 1, name: 'Jonas e Carla', score: '35%', isUser: false, bgClass: 'bg-amber-500/10 border-amber-500/30', badgeClass: 'bg-amber-500 text-slate-950', barClass: 'bg-amber-500', barWidth: '35%' },
-    { rank: 2, name: 'Pietro e Heitor', score: '32%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-300 text-slate-950', barClass: 'bg-blue-500', barWidth: '32%' },
-    { rank: 3, name: 'João e Alicia', score: '28%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-amber-700 text-white', barClass: 'bg-amber-600', barWidth: '28%' },
-    { rank: 4, name: 'Martins e Márcio', score: '25%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '25%' },
-    { rank: 5, name: 'Lucas e Mariana', score: '22%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '22%' },
-    { rank: 6, name: 'Gabriel e Beatriz', score: '18%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '18%' },
-    { rank: 7, name: 'Pedro e Eduardo', score: '15%', isUser: true, bgClass: 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20', badgeClass: 'bg-emerald-600 text-white shadow-sm', barClass: 'bg-emerald-500', barWidth: '15%' },
-    { rank: 8, name: 'Bruno e Camila', score: '12%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '12%' },
+    { rank: 1, name: 'Pedro e Eduardo', score: '3%', isUser: true, bgClass: 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20', badgeClass: 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20', barClass: 'bg-emerald-500', barWidth: '3%' },
+    { rank: 2, name: 'Lucas e Mariana', score: '2.5%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '2.5%' },
+    { rank: 3, name: 'Gabriel e Sofia', score: '2.0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '2.0%' },
+    { rank: 4, name: 'Matheus e Beatriz', score: '1.5%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '1.5%' },
+    { rank: 5, name: 'Rafael e Amanda', score: '1.0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '1.0%' },
   ];
 
   return (
