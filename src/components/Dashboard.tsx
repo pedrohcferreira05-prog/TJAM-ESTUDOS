@@ -58,41 +58,49 @@ export const Dashboard: React.FC<DashboardProps> = ({
       >
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-            <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • Aula do Dia Liberada
+            <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 2 Aulas do Dia Liberadas
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
             Olá, Pedro Henrique & Eduardo Mateus!
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl">
-            Sua meta diária está disponível. A <strong>Aula Principal de Hoje</strong> é <strong>Direito Administrativo — Aula 3: Atos Administrativos</strong> (Vídeo Aula, Teoria, Flashcards e 20 Exercícios).
+            Sua meta diária está disponível com <strong>2 aulas para assistir hoje</strong>: <strong className="text-emerald-600 dark:text-emerald-400">Processo Penal (Aula 6: Princípios e Aplicação)</strong> e <strong className="text-emerald-600 dark:text-emerald-400">Processo Civil (Aula 5: Atos Processuais)</strong>.
           </p>
         </div>
 
-        {/* Primary CTA Banner */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
+        {/* Primary CTA Banner with Two Buttons */}
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg shadow-emerald-600/20">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula do Dia • TJAM 2026
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> 2 Aulas de Hoje • TJAM
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> Meta Diária
+                <Clock className="w-3.5 h-3.5" /> Meta Diária Liberada
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🏛️ Direito Administrativo — Aula 3: Atos Administrativos</h2>
+            <h2 className="text-xl sm:text-2xl font-black">⚖️ Processo Penal (Aula 6) & Processo Civil (Aula 5)</h2>
             <p className="text-xs text-emerald-100 font-medium max-w-lg">
-              Assista à vídeo aula, leia o resumo dos 5 elementos (CO–FI–FO–MO–OB), atributos e responda aos 20 exercícios com gabarito.
+              Assista às vídeo aulas completas, resumos, mapas mentais, flashcards e responda às listas de exercícios com gabarito.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto shrink-0">
             <button
-              onClick={() => handleOpenLesson('direito_admin')}
-              className="px-5 py-3.5 rounded-xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer"
+              onClick={() => handleOpenLesson('processo_penal')}
+              className="px-4 py-3 rounded-xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <BookOpen className="w-4 h-4 text-slate-950" />
-              <span>Acessar Aula de Dir. Administrativo</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>Aula 1: Proc. Penal</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => handleOpenLesson('processo_civil')}
+              className="px-4 py-3 rounded-xl bg-emerald-500 text-white hover:bg-emerald-400 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-emerald-400/40"
+            >
+              <BookOpen className="w-4 h-4 text-white" />
+              <span>Aula 2: Proc. Civil</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -104,86 +112,114 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             <h2 className="text-lg font-black text-slate-900 dark:text-white">
-              Aulas Disponíveis Hoje (Acesse na Aba Aula de Hoje)
+              Aulas para Assistir Hoje (Disponíveis na Aba Aula de Hoje)
             </h2>
           </div>
           <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-            Aulas Atualizadas
+            2 Aulas Liberadas
           </span>
         </div>
 
-        {/* Featured Card 1: Direito Administrativo */}
-        <div
-          className={`p-6 sm:p-7 rounded-3xl border shadow-lg space-y-5 transition-all ${
-            isDarkMode
-              ? 'bg-slate-900 border-emerald-500/30 shadow-emerald-950/20 ring-1 ring-emerald-500/20'
-              : 'bg-emerald-50/40 border-emerald-200 shadow-emerald-500/5'
-          }`}
-        >
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-3 border-emerald-200 dark:border-slate-800">
-              <span className="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" /> AULA DE HOJE • EM DESTAQUE
-              </span>
-              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">
-                60 min • Nível Assistente Judiciário TJAM
-              </span>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-                🏛️ Direito Administrativo — Aula 3: Atos Administrativos
-              </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1.5 leading-relaxed">
-                Aprenda o conceito, os 5 elementos (Competência, Finalidade, Forma, Motivo e Objeto), os atributos (Presunção de Legitimidade, Imperatividade, Autoexecutoriedade, Tipicidade) e os institutos de Anulação, Revogação e Convalidação.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                  <Video className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-black text-slate-900 dark:text-white">Vídeo Aula</div>
-                  <div className="text-[10px] text-slate-500">Atos Administrativos</div>
-                </div>
+        {/* Featured Today's Lessons Grid (Two Cards Side-by-Side) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Featured Card 1: Processo Penal (Aula 6) */}
+          <div
+            className={`p-6 sm:p-7 rounded-3xl border shadow-lg space-y-5 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-emerald-500/30 shadow-emerald-950/20 ring-1 ring-emerald-500/20'
+                : 'bg-emerald-50/40 border-emerald-200 shadow-emerald-500/5'
+            }`}
+          >
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-3 border-emerald-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" /> AULA 1 DE HOJE • PROCESSO PENAL
+                </span>
+                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">
+                  Aula 6
+                </span>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                  <FileText className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-black text-slate-900 dark:text-white">20 Exercícios</div>
-                  <div className="text-[10px] text-slate-500">Com Gabarito Comentado</div>
-                </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  ⚖️ Processo Penal — Aula 6
+                </h3>
+                <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                  Princípios e Aplicação da Lei Processual Penal
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 leading-relaxed">
+                  Estude Devido Processo Legal, Contraditório, Ampla Defesa, Presunção de Inocência, Juiz Natural, o princípio <em>tempus regit actum</em> e a eficácia da lei no tempo e no espaço.
+                </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
-                  <Brain className="w-4 h-4" />
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                  <Video className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Vídeo Aula HD</span>
                 </div>
-                <div>
-                  <div className="text-[11px] font-black text-slate-900 dark:text-white">Flashcards & Resumo</div>
-                  <div className="text-[10px] text-slate-500">Revisão Rápida</div>
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                  <FileText className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">20 Questões</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-emerald-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-slate-500">
-              <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">CO-FI-FO-MO-OB</span>
-              <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">Anulação x Revogação</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Convalidação</span>
             </div>
 
             <button
-              onClick={() => handleOpenLesson('direito_admin')}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer group shrink-0"
+              onClick={() => handleOpenLesson('processo_penal')}
+              className="w-full px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer group"
             >
-              <span>Acessar Aula de Direito Administrativo</span>
+              <span>Assistir Aula 1 (Processo Penal)</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Featured Card 2: Processo Civil (Aula 5) */}
+          <div
+            className={`p-6 sm:p-7 rounded-3xl border shadow-lg space-y-5 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-teal-500/30 shadow-teal-950/20 ring-1 ring-teal-500/20'
+                : 'bg-teal-50/40 border-teal-200 shadow-teal-500/5'
+            }`}
+          >
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-3 border-teal-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-teal-600 text-white font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" /> AULA 2 DE HOJE • PROCESSO CIVIL
+                </span>
+                <span className="text-xs font-bold text-teal-700 dark:text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded-full">
+                  Aula 5
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  ⚖️ Processo Civil — Aula 5
+                </h3>
+                <p className="text-xs font-bold text-teal-600 dark:text-teal-400 mt-0.5">
+                  Atos Processuais (CPC/2015)
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 leading-relaxed">
+                  Aprenda a classificação dos atos, atos das partes, pronunciamentos do juiz (sentença, decisão interlocutória e despacho), citação, intimação e contagem de prazos em dias úteis.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                  <Video className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Vídeo Aula HD</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                  <FileText className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">20 Questões</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleOpenLesson('processo_civil')}
+              className="w-full px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs shadow-md shadow-teal-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <span>Assistir Aula 2 (Processo Civil)</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -467,11 +503,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Pedro e Eduardo', pct: '3%', isUser: true, barWidth: '3%' },
-              { pos: 2, name: 'Lucas e Mariana', pct: '2.5%', isUser: false, barWidth: '2.5%' },
-              { pos: 3, name: 'Gabriel e Sofia', pct: '2.0%', isUser: false, barWidth: '2.0%' },
-              { pos: 4, name: 'Matheus e Beatriz', pct: '1.5%', isUser: false, barWidth: '1.5%' },
-              { pos: 5, name: 'Rafael e Amanda', pct: '1.0%', isUser: false, barWidth: '1.0%' },
+              { pos: 1, name: 'Lucas e Mariana', pct: '4,0%', isUser: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel e Sofia', pct: '3,8%', isUser: false, barWidth: '95%' },
+              { pos: 3, name: 'Matheus e Beatriz', pct: '3,5%', isUser: false, barWidth: '87.5%' },
+              { pos: 4, name: 'Rafael e Amanda', pct: '3,3%', isUser: false, barWidth: '82.5%' },
+              { pos: 5, name: 'Pedro e Eduardo', pct: '3,1%', isUser: true, barWidth: '77.5%' },
             ].map((dupla) => (
               <div
                 key={dupla.pos}

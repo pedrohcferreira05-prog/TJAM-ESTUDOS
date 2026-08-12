@@ -55,7 +55,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'direito_admin';
+    return 'processo_penal';
   });
 
   const setSelectedSubject = (subject: 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
@@ -80,6 +80,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
   const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
+  const [selectedVideoPart, setSelectedVideoPart] = useState<'video1' | 'video2' | 'video_extra'>('video1');
   
   // Flashcard State
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
@@ -887,67 +888,75 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Processo Penal Flashcards Data
+  // Processo Penal Flashcards Data (Aula 6 • Princípios e Aplicação da Lei)
   const procPenalFlashcardsData = [
     {
-      q: 'O que é o Inquérito Policial?',
-      a: 'É um procedimento administrativo investigativo destinado à apuração da infração penal e de suas circunstâncias, buscando reunir elementos para a ação penal.'
+      q: 'O que é o Direito Processual Penal?',
+      a: 'É o conjunto de regras utilizadas para a investigação, o processo e o julgamento de infrações penais, garantindo que a atuação do Estado respeite os direitos fundamentais.'
     },
     {
-      q: 'Qual é a natureza jurídica do Inquérito Policial?',
-      a: 'Natureza administrativa. Não se trata de um processo judicial nem possui caráter jurisdicional.'
+      q: 'O que assegura o Princípio do Devido Processo Legal?',
+      a: 'Ninguém pode ser privado da liberdade ou de seus bens sem o devido processo legal, devendo o processo respeitar todas as regras e garantias previstas na Constituição e nas leis.'
     },
     {
-      q: 'Quais são os dois pilares da finalidade do Inquérito Policial?',
-      a: '1. Materialidade (demonstração de que o crime ocorreu). 2. Autoria (identificação de quem praticou a infração).'
+      q: 'Qual a diferença essencial entre Contraditório e Ampla Defesa?',
+      a: 'Contraditório = direito de ciência e de manifestação/resposta sobre os atos processuais. Ampla Defesa = direito de utilizar todos os meios legais e adequados para se defender (defesa técnica, provas, recursos).'
     },
     {
-      q: 'Quais são as 7 principais características do Inquérito Policial?',
-      a: 'Administrativo, Investigativo, Inquisitivo, Escrito, Dispensável, Sigiloso e Oficial.'
+      q: 'O que estabelece a Presunção de Inocência?',
+      a: 'Ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória (Art. 5º, LVII da CF). A culpa jamais é presumida por mera acusação.'
     },
     {
-      q: 'Por que o Inquérito Policial é considerado DISPENSÁVEL?',
-      a: 'Porque se o Ministério Público ou o ofendido já possuir elementos suficientes de autoria e materialidade, a ação penal pode ser oferecida sem inquérito.'
+      q: 'O que veda o Princípio do Juiz Natural?',
+      a: 'Impede a criação de tribunais ou juízos de exceção post factum, garantindo que ninguém seja processado ou sentenciado senão pela autoridade previamente competente.'
     },
     {
-      q: 'Quem conduz o Inquérito Policial?',
-      a: 'A autoridade policial no exercício de suas atribuições legais (em regra, o Delegado de Polícia Civil ou Federal).'
+      q: 'O silêncio do acusado pode ser interpretado em seu prejuízo?',
+      a: 'NÃO! O acusado possui o direito constitucional de permanecer calado (nemo tenetur se detegere) e seu silêncio não pode ser usado para prejudicar sua defesa nem como confissão.'
     },
     {
-      q: 'O Indiciamento significa condenação?',
-      a: 'NÃO! O indiciamento é ato da investigação apontando provável autoria. Indiciado ≠ Condenado (não gera antecedente nem culpa).'
+      q: 'Como é aplicada a lei processual penal no tempo?',
+      a: 'Aplica-se desde logo (tempus regit actum) aos processos em andamento, resguardando-se a validade dos atos processuais já praticados sob a lei anterior.'
     },
     {
-      q: 'Qual a diferença entre Inquérito Policial e Processo Penal?',
-      a: 'Inquérito: administrativo, prévio, sem contraditório pleno, dispensável. Processo Penal: judicial, jurisdicional, com contraditório e ampla defesa.'
+      q: 'Qual a regra geral de aplicação da lei processual penal no espaço?',
+      a: 'Aplica-se em todo o território nacional (Princípio da Territorialidade - Art. 1º do CPP), ressalvadas as exceções previstas em leis, tratados e convenções internacionais.'
     }
   ];
 
-  // Processo Civil Flashcards Data
+  // Processo Civil Flashcards Data (Aula 5 • Atos Processuais)
   const procCivilFlashcardsData = [
     {
-      q: 'O que é Jurisdição?',
-      a: 'É a função exercida pelo Estado, por intermédio do Poder Judiciário, destinada a solucionar conflitos de interesses mediante a aplicação do Direito.'
+      q: 'O que são Atos Processuais?',
+      a: 'São as manifestações praticadas pelas partes, pelo juiz e demais participantes do processo que produzem efeitos jurídicos na relação processual.'
     },
     {
-      q: 'Qual é a principal finalidade da jurisdição?',
-      a: 'Promover a pacificação social, aplicando a lei, protegendo direitos, solucionando conflitos e garantindo a segurança jurídica.'
+      q: 'O que é Sentença no CPC?',
+      a: 'É o pronunciamento pelo qual o juiz, em regra, encerra a fase cognitiva do procedimento comum ou extingue a execução.'
     },
     {
-      q: 'O que é a Substitutividade da Jurisdição?',
-      a: 'É a característica pela qual o Estado substitui a vontade das partes envolvidas no conflito pela decisão judicial obrigatória proferida pelo juiz.'
+      q: 'O que é Decisão Interlocutória?',
+      a: 'É o pronunciamento judicial de natureza decisória praticado no processo que não se enquadra como sentença.'
     },
     {
-      q: 'Diferencie Jurisdição Contenciosa de Jurisdição Voluntária.',
-      a: 'Contenciosa: há conflito entre as partes (ex: ação de cobrança ou divórcio litigioso). Voluntária: não há conflito, o Judiciário atua fiscalizando ou homologando atos (ex: testamento, interdição).'
+      q: 'O que é Despacho no processo civil?',
+      a: 'São os pronunciamentos do juiz praticados no processo que não possuem natureza decisória.'
     },
     {
-      q: 'O que estabelece o Princípio da Inércia da Jurisdição?',
-      a: 'O juiz somente atua quando é provocado pela parte interessada, salvo exceções previstas expressamente em lei.'
+      q: 'Como são contados os prazos processuais em dias no CPC?',
+      a: 'Quando a lei estabelece prazo processual em dias, a contagem considera, em regra, somente os dias úteis.'
     },
     {
-      q: 'Qual a diferença entre Jurisdição, Ação e Competência?',
-      a: 'Jurisdição é o poder do Estado de solucionar conflitos; Ação é o direito subjetivo de provocar o Judiciário; Competência é a medida e limite da atuação de cada juiz ou tribunal.'
+      q: 'Qual a diferença entre Citação e Intimação?',
+      a: 'Citação: convoca o réu/executado/interessado para integrar a relação processual. Intimação: dá ciência de atos e termos do processo.'
+    },
+    {
+      q: 'O que é Negócio Jurídico Processual?',
+      a: 'É a convenção em que as partes estipulam mudanças no procedimento e ajustam seus ônus, poderes, faculdades e deveres processuais.'
+    },
+    {
+      q: 'Como funciona a regra de Nulidades no CPC?',
+      a: 'A existência de irregularidade não invalida automaticamente o ato; o sistema busca preservar os atos que possam ser aproveitados sem prejuízo.'
     }
   ];
 
@@ -1438,127 +1447,247 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   const discursiveQuestionsData: any[] = [];
 
-  // Processo Civil Questions (Exercícios - Capítulo 1 • Aula 1 — Jurisdição)
+  // Processo Civil Questions (Exercícios - Aula 5 • Atos Processuais)
   const procCivilMcQuestionsData = [
     {
       id: 1,
-      enunciado: '1. A jurisdição pode ser entendida como:',
+      enunciado: '1. São considerados atos processuais:',
       alternativas: [
-        'A) A atividade exclusiva dos advogados na defesa de seus clientes.',
-        'B) A função estatal de solucionar conflitos mediante a aplicação do Direito.',
-        'C) A atividade administrativa exercida pelos servidores públicos.',
-        'D) A criação de novas leis pelo Poder Judiciário.'
+        'A) Somente os atos praticados pelo juiz.',
+        'B) Manifestações praticadas no processo que produzem efeitos processuais.',
+        'C) Apenas os atos praticados pelo autor.',
+        'D) Somente os atos realizados fora do processo.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. A jurisdição é a função estatal exercida pelo Poder Judiciário para aplicar o Direito aos casos concretos e solucionar conflitos.'
+      explicacao: '✅ Gabarito: B. Atos processuais são as manifestações praticadas no processo pelas partes, juiz e demais participantes que produzem efeitos na relação processual.'
     },
     {
       id: 2,
-      enunciado: '2. A principal finalidade da jurisdição é:',
+      enunciado: '2. É exemplo de ato praticado pela parte:',
       alternativas: [
-        'A) Arrecadar tributos.',
-        'B) Elaborar políticas públicas.',
-        'C) Promover a pacificação social e solucionar conflitos.',
-        'D) Criar normas administrativas.'
+        'A) Sentença.',
+        'B) Despacho.',
+        'C) Contestação.',
+        'D) Decisão interlocutória.'
       ],
       correta: 2,
-      explicacao: '✅ Gabarito: C. A principal finalidade da jurisdição é promover a pacificação social e solucionar conflitos.'
+      explicacao: '✅ Gabarito: C. A contestação é a principal modalidade de defesa apresentada pela parte ré no processo.'
     },
     {
       id: 3,
-      enunciado: '3. A característica da jurisdição segundo a qual o Estado substitui a vontade das partes pela decisão judicial é denominada:',
+      enunciado: '3. A sentença é, em regra, o pronunciamento judicial que:',
       alternativas: [
-        'A) Imparcialidade.',
-        'B) Substitutividade.',
-        'C) Publicidade.',
-        'D) Competência.'
+        'A) Não possui conteúdo decisório.',
+        'B) Encerra a fase cognitiva do procedimento comum ou extingue a execução.',
+        'C) Apenas comunica um ato processual.',
+        'D) Convoca o réu para participar do processo.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. Pela substitutividade, o Estado substitui a vontade das partes pela decisão judicial soberana.'
+      explicacao: '✅ Gabarito: B. A sentença é o pronunciamento pelo qual o juiz, em regra, põe fim à fase cognitiva ou extingue a execução.'
     },
     {
       id: 4,
-      enunciado: '4. O princípio segundo o qual o juiz deve atuar sem favorecer qualquer das partes é o princípio da:',
+      enunciado: '4. A decisão interlocutória é:',
       alternativas: [
-        'A) Imparcialidade.',
-        'B) Inércia.',
-        'C) Publicidade.',
-        'D) Oralidade.'
+        'A) Todo ato praticado pelo autor.',
+        'B) Pronunciamento judicial de natureza decisória que não se enquadra como sentença.',
+        'C) A comunicação oficial de um processo.',
+        'D) Um ato exclusivamente administrativo.'
       ],
-      correta: 0,
-      explicacao: '✅ Gabarito: A. A imparcialidade exige que o magistrado atue sem favorecer nenhuma das partes litigantes.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Decisão interlocutória é o pronunciamento de natureza decisória que resolve questão incidente no curso do processo sem ser sentença.'
     },
     {
       id: 5,
-      enunciado: '5. Em regra, a jurisdição é exercida quando:',
+      enunciado: '5. Os despachos são, em regra:',
       alternativas: [
-        'A) O juiz decide iniciar qualquer processo por iniciativa própria.',
-        'B) O Estado é provocado por meio do exercício do direito de ação.',
-        'C) Um servidor público solicita autorização administrativa.',
-        'D) Uma parte apresenta uma reclamação informal.'
+        'A) Pronunciamentos judiciais sem conteúdo decisório.',
+        'B) Sentenças definitivas.',
+        'C) Recursos apresentados pelas partes.',
+        'D) Decisões administrativas.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. Pelo princípio da inércia, a jurisdição somente é exercida quando o Estado é provocado pelo exercício do direito de ação.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Despachos são pronunciamentos meramente ordinatórios para impulsionar o processo, sem carga decisória.'
     },
     {
       id: 6,
-      enunciado: '6. Na jurisdição contenciosa:',
+      enunciado: '6. A citação tem como finalidade:',
       alternativas: [
-        'A) Não existe conflito entre as partes.',
-        'B) Existe um conflito de interesses que necessita de solução judicial.',
-        'C) O juiz apenas registra a vontade das partes.',
-        'D) Não há decisão judicial.'
+        'A) Dar ciência de qualquer ato processual.',
+        'B) Convocar o réu, o executado ou o interessado para integrar a relação processual.',
+        'C) Encerrar o processo.',
+        'D) Aplicar uma penalidade ao réu.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. A jurisdição contenciosa pressupõe a existência de um conflito de interesses (litígio) que necessita de solução judicial.'
+      explicacao: '✅ Gabarito: B. Citação é o ato pelo qual o réu, executado ou interessado é convocado para integrar o polo passivo da relação processual.'
     },
     {
       id: 7,
-      enunciado: '7. A jurisdição voluntária caracteriza-se, em regra, pela:',
+      enunciado: '7. A intimação consiste, em regra:',
       alternativas: [
-        'A) Existência obrigatória de conflito entre as partes.',
-        'B) Ausência de conflito propriamente dito, com atuação judicial nos casos previstos em lei.',
-        'C) Atuação exclusiva do Poder Executivo.',
-        'D) Impossibilidade de participação judicial.'
+        'A) Na convocação inicial para integrar o processo.',
+        'B) Na ciência dada a alguém dos atos e termos do processo.',
+        'C) Na apresentação da contestação.',
+        'D) Na sentença proferida pelo juiz.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. Na jurisdição voluntária não há conflito propriamente dito; o Poder Judiciário atua fiscalizando ou homologando atos.'
+      explicacao: '✅ Gabarito: B. Intimação dá ciência às partes ou terceiros dos atos e termos do processo já instaurado.'
     },
     {
       id: 8,
-      enunciado: '8. Assinale a alternativa que apresenta corretamente a diferença entre jurisdição, ação e competência:',
+      enunciado: '8. Assinale a alternativa correta:',
       alternativas: [
-        'A) Jurisdição é o direito de provocar o Judiciário; ação é o limite do juiz; competência é a decisão judicial.',
-        'B) Jurisdição é a função estatal de solucionar conflitos; ação é o direito de provocar o Judiciário; competência é o limite da atuação de cada órgão jurisdicional.',
-        'C) Jurisdição, ação e competência são expressões sinônimas.',
-        'D) Competência é o poder de criar leis; jurisdição é o poder administrativo.'
+        'A) Citação e intimação são sempre sinônimos.',
+        'B) A citação chama o réu para integrar o processo, enquanto a intimação dá ciência dos atos e termos processuais.',
+        'C) A intimação somente pode ocorrer antes da citação.',
+        'D) A citação somente existe em processos criminais.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. Jurisdição é a função estatal; Ação é o direito de provocar o Judiciário; Competência é a medida/limite de atuação do órgão.'
+      explicacao: '✅ Gabarito: B. Citação integra o sujeito à relação processual; intimação apenas cientifica sobre atos e prazos do processo.'
     },
     {
       id: 9,
-      enunciado: '9. O princípio que garante às partes a possibilidade de participar do processo e influenciar a decisão judicial está relacionado ao:',
+      enunciado: '9. No CPC, quando um prazo processual é contado em dias, considera-se, em regra:',
       alternativas: [
-        'A) Contraditório.',
-        'B) Federalismo.',
-        'C) Poder regulamentar.',
-        'D) Sigilo administrativo.'
+        'A) Dias corridos.',
+        'B) Apenas domingos e feriados.',
+        'C) Dias úteis.',
+        'D) Apenas dias úteis para o juiz.'
       ],
-      correta: 0,
-      explicacao: '✅ Gabarito: A. O Contraditório assegura a ciência dos atos processuais e a oportunidade de manifestação e influência na decisão.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Na contagem de prazos processuais em dias no CPC, computam-se somente os dias úteis.'
     },
     {
       id: 10,
-      enunciado: '10. A garantia de que ninguém será privado de seus direitos sem a observância de um procedimento adequado está relacionada ao:',
+      enunciado: '10. Sobre os prazos processuais, é correto afirmar que:',
       alternativas: [
-        'A) Devido Processo Legal.',
-        'B) Princípio da especialidade.',
-        'C) Princípio da autotutela.',
-        'D) Poder hierárquico.'
+        'A) Podem ser ignorados pelas partes.',
+        'B) Devem ser observados conforme as regras estabelecidas pela legislação e pelo juiz.',
+        'C) Nunca produzem consequências processuais.',
+        'D) São sempre determinados livremente pelas partes.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O cumprimento dos prazos processuais dentro das normas legais/judiciais é indispensável para evitar a preclusão.'
+    },
+    {
+      id: 11,
+      enunciado: '11. Quanto à forma dos atos processuais:',
+      alternativas: [
+        'A) Todos dependem obrigatoriamente de forma específica.',
+        'B) Em regra, independem de forma determinada, salvo quando a lei exigir.',
+        'C) Nunca podem ser realizados por meio eletrônico.',
+        'D) Somente podem ser praticados oralmente.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Vigora no CPC o princípio da liberdade das formas (os atos independem de forma determinada, salvo previsão legal expressa).'
+    },
+    {
+      id: 12,
+      enunciado: '12. A finalidade das regras sobre forma dos atos processuais inclui:',
+      alternativas: [
+        'A) Impedir o acesso à Justiça.',
+        'B) Garantir organização e segurança jurídica ao procedimento.',
+        'C) Eliminar a participação das partes.',
+        'D) Aumentar obrigatoriamente a duração do processo.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. As exigências formais visam a assegurar a segurança jurídica, previsibilidade, validade e proteção às partes.'
+    },
+    {
+      id: 13,
+      enunciado: '13. O negócio jurídico processual permite, em determinadas situações:',
+      alternativas: [
+        'A) Que as partes convencionem sobre aspectos do procedimento, observados os requisitos legais.',
+        'B) Que as partes eliminem qualquer norma do CPC.',
+        'C) Que o juiz deixe de exercer sua função jurisdicional.',
+        'D) Que uma parte imponha sua vontade à outra sem qualquer limite.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. O Devido Processo Legal assegura um julgamento mediante os ritos, garantias e procedimentos previstos em lei.'
+      explicacao: '✅ Gabarito: A. As partes plenamente capazes podem negociar adaptações ao procedimento e ajustar seus ônus e faculdades processuais.'
+    },
+    {
+      id: 14,
+      enunciado: '14. A respeito das nulidades processuais, é correto afirmar que:',
+      alternativas: [
+        'A) Qualquer irregularidade sempre torna todo o processo inválido.',
+        'B) O sistema processual busca preservar e aproveitar os atos quando possível, conforme a lei.',
+        'C) Nenhum ato processual pode ser considerado inválido.',
+        'D) Somente o autor pode alegar nulidades.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O CPC adota o princípio do aproveitamento dos atos processuais e da ausência de nulidade sem prejuízo.'
+    },
+    {
+      id: 15,
+      enunciado: '15. João recebeu comunicação oficial sobre a existência de um processo e foi chamado para participar da relação processual como réu. Trata-se de:',
+      alternativas: [
+        'A) Intimação.',
+        'B) Despacho.',
+        'C) Citação.',
+        'D) Sentença.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. A convocação oficial do réu para tomar ciência do processo e integrar o polo passivo é a citação.'
+    },
+    {
+      id: 16,
+      enunciado: '16. Durante o processo, Maria recebeu comunicação para tomar conhecimento de uma decisão judicial e apresentar manifestação. Trata-se de:',
+      alternativas: [
+        'A) Citação.',
+        'B) Intimação.',
+        'C) Contestação.',
+        'D) Sentença.'
+      ],
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Dar ciência à parte já integrante do processo para se manifestar sobre ato ou decisão é a função da intimação.'
+    },
+    {
+      id: 17,
+      enunciado: '17. O juiz profere um pronunciamento que resolve determinada questão durante o processo, mas não se enquadra como sentença. Trata-se de:',
+      alternativas: [
+        'A) Decisão interlocutória.',
+        'B) Despacho.',
+        'C) Citação.',
+        'D) Petição inicial.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Decisão com conteúdo decisório proferida no curso do processo que não o encerra é decisão interlocutória.'
+    },
+    {
+      id: 18,
+      enunciado: '18. Um pronunciamento judicial determina apenas o andamento do processo, sem conteúdo decisório. Em regra, trata-se de:',
+      alternativas: [
+        'A) Sentença.',
+        'B) Decisão interlocutória.',
+        'C) Despacho.',
+        'D) Recurso.'
+      ],
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Pronunciamentos sem conteúdo decisório destinados a dar andamento ao feito são despachos.'
+    },
+    {
+      id: 19,
+      enunciado: '19. Assinale a alternativa INCORRETA:',
+      alternativas: [
+        'A) A contestação é um ato praticado pela parte.',
+        'B) A sentença é um pronunciamento judicial.',
+        'C) A intimação dá ciência dos atos e termos do processo.',
+        'D) A citação serve exclusivamente para comunicar uma sentença já proferida.'
+      ],
+      correta: 3,
+      explicacao: '✅ Gabarito: D. A citação serve para convocar o réu a integrar o processo no início da ação, e não exclusivamente para comunicar sentença.'
+    },
+    {
+      id: 20,
+      enunciado: '20. Sobre os atos processuais, assinale a alternativa correta:',
+      alternativas: [
+        'A) Citação, intimação, sentença, contestação e despacho podem integrar a dinâmica processual, cada qual com sua finalidade própria.',
+        'B) Todos os atos processuais possuem a mesma finalidade.',
+        'C) Somente o juiz pratica atos processuais.',
+        'D) Somente as partes praticam atos processuais.'
+      ],
+      correta: 0,
+      explicacao: '✅ Gabarito: A. Os diversos atos processuais são praticados por partes, juiz e auxiliares, cada um cumprindo sua finalidade legal.'
     }
   ];
 
@@ -1623,287 +1752,167 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Processo Penal Questions Data
+  // Processo Penal Questions Data (Aula 6 • Princípios e Aplicação da Lei)
   const procPenalMcQuestionsData = [
     {
       id: 1,
-      enunciado: '1. O inquérito policial é:',
+      enunciado: '1. O Direito Processual Penal tem por finalidade principal:',
       alternativas: [
-        'A) Um processo judicial destinado à condenação do investigado.',
-        'B) Um procedimento administrativo destinado à investigação de infrações penais.',
-        'C) Uma ação penal privada.',
-        'D) Uma sentença proferida pelo juiz.'
+        'A) Punir imediatamente qualquer suspeito sem necessidade de julgamento.',
+        'B) Estabelecer as regras para a investigação, o processo e o julgamento de infrações penais, respeitando os direitos fundamentais.',
+        'C) Criar crimes e penas no ordenamento jurídico.',
+        'D) Substituir a Constituição Federal em matérias criminais.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: O Inquérito Policial é um procedimento administrativo voltado para apuração e investigação de infrações penais e suas circunstâncias.'
+      explicacao: 'Gabarito B: O Direito Processual Penal regulamenta a persecução penal do Estado (investigação, processo e julgamento) garantindo o respeito aos direitos fundamentais.'
     },
     {
       id: 2,
-      enunciado: '2. A principal finalidade do inquérito policial é:',
+      enunciado: '2. O Princípio do Devido Processo Legal assegura que:',
       alternativas: [
-        'A) Aplicar uma pena ao investigado.',
-        'B) Produzir uma sentença condenatória.',
-        'C) Apurar a existência da infração penal e reunir elementos relacionados à autoria e à materialidade.',
-        'D) Substituir o processo penal.'
+        'A) Ninguém será privado da liberdade ou de seus bens sem o devido processo legal.',
+        'B) O juiz pode condenar o réu sem ouvir a defesa.',
+        'C) As provas ilícitas são sempre admitidas no processo penal.',
+        'D) O processo penal pode ignorar prazos constitucionais.'
       ],
-      correta: 2,
-      explicacao: 'Gabarito C: A finalidade do IP é reunir justa causa: elementos probatórios da materialidade e indícios da autoria.'
+      correta: 0,
+      explicacao: 'Gabarito A: O devido processo legal (Art. 5º, LIV da CF) garante que a privação da liberdade ou de bens exige a observância do procedimento legal e das garantias constitucionais.'
     },
     {
       id: 3,
-      enunciado: '3. A natureza jurídica do inquérito policial é:',
+      enunciado: '3. A garantia conferida ao acusado de conhecer todos os atos do processo e poder se manifestar sobre eles diz respeito ao princípio do:',
       alternativas: [
-        'A) Jurisdicional.',
-        'B) Legislativa.',
-        'C) Administrativa.',
-        'D) Civil.'
+        'A) Juiz natural.',
+        'B) Contraditório.',
+        'C) In dubio pro societate.',
+        'D) Promotor natural.'
       ],
-      correta: 2,
-      explicacao: 'Gabarito C: Possui natureza jurídica estritamente administrativa, conduzida pela polícia judiciária, não constituindo processo judicial.'
+      correta: 1,
+      explicacao: 'Gabarito B: O contraditório traduz-se no binômio informação (conhecer os atos) e possibilidade de reação (se manifestar sobre eles).'
     },
     {
       id: 4,
-      enunciado: '4. Em regra, o inquérito policial:',
+      enunciado: '4. Sobre a distinção entre Contraditório e Ampla Defesa, é correto afirmar:',
       alternativas: [
-        'A) É sempre indispensável para o oferecimento da ação penal.',
-        'B) É dispensável quando já existirem elementos suficientes para a acusação.',
-        'C) Substitui a ação penal.',
-        'D) Produz automaticamente uma condenação.'
+        'A) Contraditório e ampla defesa são conceitos idênticos e sem qualquer diferença técnica.',
+        'B) Contraditório é o direito de participar e se manifestar; Ampla Defesa é o direito de utilizar todos os meios legais e adequados para se defender.',
+        'C) Ampla defesa aplica-se apenas à acusação.',
+        'D) O contraditório veda a presença de advogado no interrogatório.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: O IP é DISPENSÁVEL. Se o titular da ação penal já dispuser de elementos suficientes de autoria e materialidade, pode denunciar/queixar sem ele.'
+      explicacao: 'Gabarito B: O contraditório é o direito de informação e manifestação; a ampla defesa assegura os instrumentos e meios jurídicos para exercer a defesa efetiva.'
     },
     {
       id: 5,
-      enunciado: '5. Sobre o inquérito policial, assinale a alternativa correta:',
+      enunciado: '5. O Princípio da Presunção de Inocência (ou Não Culpabilidade) estabelece que:',
       alternativas: [
-        'A) É conduzido pelo juiz.',
-        'B) É conduzido pela autoridade policial.',
-        'C) É conduzido exclusivamente pelo Ministério Público.',
-        'D) É conduzido pelo advogado do investigado.'
+        'A) Ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.',
+        'B) A simples acusação formal já presume a culpa do réu.',
+        'C) A prisão preventiva equivale a uma condenação definitiva.',
+        'D) O réu deve provar sua inocência para não ser preso.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: O inquérito policial é conduzido pela autoridade policial (delegado de polícia).'
+      correta: 0,
+      explicacao: 'Gabarito A: Nos termos do Art. 5º, LVII da CF, a presunção de inocência vigora até o trânsito em julgado da sentença condenatória.'
     },
     {
       id: 6,
-      enunciado: '6. A característica segundo a qual o inquérito não possui, como regra, a mesma estrutura de contraditório pleno existente no processo judicial é denominada:',
+      enunciado: '6. A vedação à criação de tribunais de exceção e a garantia de que o réu será julgado pela autoridade previamente competente decorrem do princípio do:',
       alternativas: [
-        'A) Publicidade.',
-        'B) Inquisitividade.',
-        'C) Definitividade.',
-        'D) Oralidade.'
+        'A) Promotor de exceção.',
+        'B) Juiz Natural.',
+        'C) Duplo grau facultativo.',
+        'D) Livre convencimento absoluto.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: Inquisitividade é a característica do procedimento investigativo prévio onde não vigora o contraditório pleno e a ampla defesa nos moldes do processo judicial.'
+      explicacao: 'Gabarito B: O princípio do Juiz Natural (Art. 5º, LIII e XXXVII da CF) proíbe juízos/tribunais de exceção e exige julgamento por autoridade predeterminada por lei.'
     },
     {
       id: 7,
-      enunciado: '7. O caráter sigiloso do inquérito policial significa que:',
+      enunciado: '7. Quanto ao Direito ao Silêncio assegurado ao acusado, assinale a alternativa correta:',
       alternativas: [
-        'A) Nenhuma informação pode ser acessada pelo defensor.',
-        'B) O sigilo pode ser utilizado para preservar a eficácia da investigação, respeitadas as garantias legais.',
-        'C) O procedimento é sempre completamente secreto.',
-        'D) O juiz não pode ter conhecimento da investigação.'
+        'A) O silêncio pode ser interpretado pelo juiz como confissão de culpa.',
+        'B) O acusado pode permanecer calado e seu silêncio não deve ser utilizado em prejuízo de sua defesa.',
+        'C) O silêncio do réu gera presunção absoluta de veracidade da denúncia.',
+        'D) O réu é obrigado a responder a todas as perguntas sob pena de crime de desobediência.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: O sigilo assegura a eficácia da investigação (art. 20 do CPP), ressalvado o direito de acesso do defensor às provas já documentadas (Súmula Vinculante 14).'
+      explicacao: 'Gabarito B: O direito ao silêncio (nemo tenetur se detegere) é garantia constitucional e não pode ser interpretado em prejuízo da defesa.'
     },
     {
       id: 8,
-      enunciado: '8. A materialidade de uma infração penal corresponds:',
+      enunciado: '8. Em relação à aplicação da lei processual penal no tempo, vigorando o princípio tempus regit actum (Art. 2º do CPP):',
       alternativas: [
-        'A) À identificação obrigatória do suspeito.',
-        'B) À demonstração da existência do fato criminoso.',
-        'C) À condenação do acusado.',
-        'D) À decisão do delegado.'
+        'A) A nova lei processual aplica-se desde logo aos processos em andamento, preservando-se a validade dos atos já realizados.',
+        'B) A nova lei processual anula retroativamente todos os atos praticados sob a vigência da lei anterior.',
+        'C) A nova lei processual só entra em vigor após o trânsito em julgado do processo.',
+        'D) Leis processuais nunca podem ter aplicação imediata.'
       ],
-      correta: 1,
-      explicacao: 'Gabarito B: Materialidade é a comprovação de que o fato delituoso efetivamente ocorreu.'
+      correta: 0,
+      explicacao: 'Gabarito A: A lei processual penal tem aplicação imediata (tempus regit actum), sem prejuízo da validade dos atos realizados sob a vigência da lei anterior.'
     },
     {
       id: 9,
-      enunciado: '9. A autoria está relacionada:',
+      enunciado: '9. Quanto à aplicação da lei processual penal no espaço, a regra geral adotada pelo Código de Processo Penal brasileiro é o princípio da:',
       alternativas: [
-        'A) À identificação de quem, em tese, praticou a infração.',
-        'B) À existência do processo judicial.',
-        'C) À sentença definitiva.',
-        'D) À aplicação da pena.'
+        'A) Extraterritorialidade irrestrita.',
+        'B) Territorialidade, aplicando-se o CPP em todo o território nacional, ressalvadas exceções de leis, tratados e convenções internacionais.',
+        'C) Personalidade passiva exclusiva.',
+        'D) Universalidade absoluta.'
       ],
-      correta: 0,
-      explicacao: 'Gabarito A: Autoria diz respeito à identificação da pessoa responsável pela prática do fato criminoso.'
+      correta: 1,
+      explicacao: 'Gabarito B: O Art. 1º do CPP adota o princípio da territorialidade como regra, ressalvando raras exceções diplomáticas ou previstas em tratados.'
     },
     {
       id: 10,
-      enunciado: '10. Durante a investigação, a autoridade policial pode realizar:',
+      enunciado: '10. Sobre a interpretação da lei processual penal, é correto afirmar que:',
       alternativas: [
-        'A) Perícias e oitivas, entre outras diligências legalmente permitidas.',
-        'B) Sentenças condenatórias.',
-        'C) Julgamentos definitivos.',
-        'D) Leis penais.'
-      ],
-      correta: 0,
-      explicacao: 'Gabarito A: A autoridade policial realiza diligências de coleta de prova (exames periciais, oitiva de testemunhas e acareações).'
-    },
-    {
-      id: 11,
-      enunciado: '11. O indiciamento:',
-      alternativas: [
-        'A) Significa que o investigado foi definitivamente condenado.',
-        'B) É uma decisão judicial irrecorrível.',
-        'C) É ato relacionado à investigação que aponta determinada pessoa como provável autora ou partícipe, diante dos elementos reunidos.',
-        'D) Encerra automaticamente o processo penal.'
-      ],
-      correta: 2,
-      explicacao: 'Gabarito C: O indiciamento é ato fundamentado da autoridade policial atribuindo a autoria a determinado indivíduo com base nos indícios colhidos.'
-    },
-    {
-      id: 12,
-      enunciado: '12. Assinale a alternativa INCORRETA sobre o indiciamento:',
-      alternativas: [
-        'A) Ocorre durante a investigação.',
-        'B) Está relacionado aos elementos reunidos no inquérito.',
-        'C) Equivale a uma condenação definitiva.',
-        'D) Não significa, por si só, que haverá condenação.'
-      ],
-      correta: 2,
-      explicacao: 'Gabarito C (Incorreta): Indiciamento jamais equivale a uma condenação definitiva; indiciado não é condenado.'
-    },
-    {
-      id: 13,
-      enunciado: '13. O inquérito policial é considerado escrito porque:',
-      alternativas: [
-        'A) Todos os atos investigativos devem ser documentados nos autos, conforme a legislação.',
-        'B) Somente o delegado pode ler o procedimento.',
-        'C) Não são permitidos registros eletrônicos.',
-        'D) O investigado não pode apresentar documentos.'
-      ],
-      correta: 0,
-      explicacao: 'Gabarito A: Conforme o art. 9º do CPP, todas as peças do inquérito serão reduzidas a termo ou digitadas e assinadas.'
-    },
-    {
-      id: 14,
-      enunciado: '14. A instauração do inquérito:',
-      alternativas: [
-        'A) Pode ocorrer de diferentes formas, conforme a natureza da infração e as regras legais aplicáveis.',
-        'B) Depende sempre de sentença judicial.',
-        'C) Somente pode ocorrer por iniciativa do investigado.',
-        'D) É proibida nos crimes de ação pública.'
-      ],
-      correta: 0,
-      explicacao: 'Gabarito A: O IP pode iniciar-se de ofício, por requisição da autoridade judiciária ou do MP, ou por requerimento do ofendido.'
-    },
-    {
-      id: 15,
-      enunciado: '15. Sobre o inquérito policial e o processo penal, é correto afirmar:',
-      alternativas: [
-        'A) São exatamente a mesma coisa.',
-        'B) O inquérito possui natureza administrativa e investigativa, enquanto o processo penal se desenvolve perante o Poder Judiciário.',
-        'C) O processo penal é exclusivamente administrativo.',
-        'D) O inquérito é sempre posterior ao processo.'
+        'A) É vedada qualquer forma de interpretação da norma processual.',
+        'B) Admite-se a interpretação da lei processual para determinar seu correto significado e alcance, podendo utilizar métodos literal, sistemático, histórico e teleológico.',
+        'C) Apenas o método literal é admitido no Direito Processual Penal.',
+        'D) A interpretação teleológica é proibida no processo penal.'
       ],
       correta: 1,
-      explicacao: 'Gabarito B: O IP é prévio, investigativo e administrativo; o Processo Penal é posterior, jurisdicional e instaurado perante o Judiciário.'
-    },
-    {
-      id: 16,
-      enunciado: '16. O encerramento do inquérito policial:',
-      alternativas: [
-        'A) Significa necessariamente que o investigado será condenado.',
-        'B) Significa necessariamente que haverá processo penal.',
-        'C) Ocorre após as providências investigativas cabíveis, seguindo-se as medidas previstas em lei.',
-        'D) Impede qualquer providência posterior.'
-      ],
-      correta: 2,
-      explicacao: 'Gabarito C: Ao concluir as diligências, o delegado elabora o relatório final e remete os autos ao Poder Judiciário/MP para as providências cabíveis.'
-    },
-    {
-      id: 17,
-      enunciado: '17. Assinale a alternativa correta:',
-      alternativas: [
-        'A) Investigado, indiciado e condenado são expressões com o mesmo significado.',
-        'B) O indiciamento não equivale à condenação.',
-        'C) O inquérito sempre termina com uma sentença.',
-        'D) A autoridade policial pode aplicar pena criminal.'
-      ],
-      correta: 1,
-      explicacao: 'Gabarito B: Indiciar alguém é apontar probabilidade de autoria na fase investigativa; não produz condenação nem antecedentes criminais.'
-    },
-    {
-      id: 18,
-      enunciado: '18. A Polícia Civil exerce, nos termos da legislação, funções relacionadas:',
-      alternativas: [
-        'A) À polícia judiciária e à apuração de infrações penais, ressalvadas as competências previstas constitucionalmente.',
-        'B) À elaboração de sentenças judiciais.',
-        'C) À criação de leis penais.',
-        'D) Ao julgamento dos processos criminais.'
-      ],
-      correta: 0,
-      explicacao: 'Gabarito A: Conforme o art. 144, § 4º da Constituição Federal, à polícia civil incumbem as funções de polícia judiciária e a apuração de infrações penais.'
-    },
-    {
-      id: 19,
-      enunciado: '19. Um dos objetivos do inquérito é reunir elementos que auxiliem na formação da convicção para a futura persecução penal. Portanto:',
-      alternativas: [
-        'A) O inquérito já é o julgamento definitivo do caso.',
-        'B) A investigação antecede, em regra, a fase judicial.',
-        'C) O delegado substitui o juiz no julgamento.',
-        'D) O investigado é automaticamente condenado.'
-      ],
-      correta: 1,
-      explicacao: 'Gabarito B: A fase de investigação é preparatória e antecede, em regra, a fase de processo judicial.'
-    },
-    {
-      id: 20,
-      enunciado: '20. Sobre o inquérito policial, assinale a alternativa correta:',
-      alternativas: [
-        'A) É procedimento administrativo e investigativo, busca esclarecer a infração penal, pode reunir elementos sobre autoria e materialidade e, em regra, antecede o processo penal.',
-        'B) É uma sentença judicial provisória.',
-        'C) É sempre indispensável para o oferecimento da ação penal.',
-        'D) Tem como finalidade principal aplicar pena ao investigado.'
-      ],
-      correta: 0,
-      explicacao: 'Gabarito A: Síntese perfeita do conceito, natureza, finalidade e utilidade do Inquérito Policial.'
+      explicacao: 'Gabarito B: O Art. 3º do CPP admite a interpretação extensiva e a aplicação analógica, bem como a utilização dos diversos métodos hermenêuticos para fixar o alcance da norma.'
     }
   ];
 
   const procPenalTfQuestionsData = [
     {
       id: 101,
-      enunciado: '1. O Inquérito Policial é indispensável para o oferecimento da ação penal, não podendo o Ministério Público denunciar sem a sua realização.',
-      correta: false,
-      explicacao: 'Falso: O Inquérito é DISPENSÁVEL. Se houver justa causa com elementos colhidos em outras fontes, a denúncia pode ser apresentada sem inquérito.'
+      enunciado: '1. O Princípio do Devido Processo Legal assegura que ninguém será privado de sua liberdade ou de seus bens sem o cumprimento das regras e garantias previstas na legislação.',
+      correta: true,
+      explicacao: 'Verdadeiro: O devido processo legal (Art. 5º, LIV da CF) condiciona qualquer restrição de liberdade ou propriedade ao processo regular.'
     },
     {
       id: 102,
-      enunciado: '2. A natureza jurídica do Inquérito Policial é de procedimento administrativo e não de processo judicial.',
-      correta: true,
-      explicacao: 'Verdadeiro: Trata-se de um procedimento informativo de caráter administrativo conduzido pela polícia judiciária.'
+      enunciado: '2. O direito de permanecer em silêncio pode ser interpretado pelo magistrado como confissão tácita dos fatos alegados pela acusação.',
+      correta: false,
+      explicacao: 'Falso: O silêncio do acusado é direito constitucional (nemo tenetur se detegere) e jamais pode ser usado em prejuízo da defesa nem como confissão.'
     },
     {
       id: 103,
-      enunciado: '3. O indiciamento promovido pelo delegado de polícia impõe condenação prévia e antecedentes criminais ao investigado.',
-      correta: false,
-      explicacao: 'Falso: O indiciamento é um juízo de probabilidade e não equivale a condenação nem gera antecedentes.'
+      enunciado: '3. Em regra, a lei processual penal brasileira aplica-se imediatamente aos processos em andamento (tempus regit actum), respeitada a validade dos atos processuais praticados sob a lei anterior.',
+      correta: true,
+      explicacao: 'Verdadeiro: Conforme o Art. 2º do CPP, a norma processual tem incidência imediata sem retroagir para anular atos válidos já consolidados.'
     },
     {
       id: 104,
-      enunciado: '4. Durante o inquérito policial, a autoridade policial pode realizar diligências como oitiva de testemunhas, interrogatório do investigado e exames periciais.',
-      correta: true,
-      explicacao: 'Verdadeiro: Essas são diligências investigativas típicas para elucidação da autoria e materialidade.'
+      enunciado: '4. O princípio da territorialidade estabelece que o Código de Processo Penal será aplicado em todo o território brasileiro, sem qualquer ressalva a tratados ou convenções internacionais.',
+      correta: false,
+      explicacao: 'Falso: O Art. 1º do CPP ressalva expressamente as exceções decorrentes de tratados, convenções e regras de direito internacional.'
     }
   ];
 
   const procPenalDiscursiveQuestionsData = [
     {
       id: 201,
-      enunciado: '1. Explique a diferença entre "Materialidade" e "Autoria" no âmbito do Inquérito Policial.',
-      respostaEsperada: 'Gabarito oficial: Materialidade diz respeito à comprovação da existência da infração penal (ex: laudo pericial atestando o furto/lesão). Autoria refere-se à identificação do sujeito responsável pela prática da infração penal.'
+      enunciado: '1. Diferencie o Princípio do Contraditório do Princípio da Ampla Defesa no Direito Processual Penal.',
+      respostaEsperada: 'Gabarito oficial: O Contraditório assegura o direito de informação (ciência dos atos do processo) e a oportunidade de reação/manifestação. A Ampla Defesa garante ao acusado a utilização de todos os meios e recursos juridicamente válidos para exercer sua defesa (defesa técnica e autodefesa).'
     },
     {
       id: 202,
-      enunciado: '2. Por que se afirma que o Inquérito Policial possui a característica de ser "dispensável"? Exemplifique.',
-      respostaEsperada: 'Gabarito oficial: É dispensável porque não é obrigatório para o início da ação penal. Se o Ministério Público ou o querelante já dispuser de provas suficientes de autoria e materialidade, pode propor a ação sem o inquérito.'
+      enunciado: '2. Explique como funciona a aplicação da lei processual penal no tempo, citando o princípio regente.',
+      respostaEsperada: 'Gabarito oficial: A aplicação da lei processual penal no tempo rege-se pelo princípio tempus regit actum (Art. 2º do CPP). A nova lei aplica-se imediatamente aos processos em andamento, sem necessidade de aguardar o término da demanda, mas preservando-se inteiramente a validade dos atos processuais praticados sob a égide da lei anterior.'
     }
   ];
 
@@ -2513,8 +2522,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 {
                   selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
                   : selectedSubject === 'libras' ? '🤟 LIBRAS • Unidade 1 – Conceitos Básicos e Legislação'
-                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Capítulo 1 – Inquérito Policial'
-                  : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Unidade 1 – Teoria Geral do Processo'
+                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Aula 6 – Princípios e Aplicação da Lei Processual Penal'
+                  : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Aula 5 – Atos Processuais'
                   : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
                   : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Aula 2 – Princípios Fundamentais'
                   : '📜 Direito Administrativo • Aula 3 – Atos Administrativos'
@@ -2524,8 +2533,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 {
                   selectedSubject === 'portugues' ? 'Aula 1 — Compreensão e Interpretação de Textos'
                   : selectedSubject === 'libras' ? 'Aula 1 — LIBRAS: Conceitos básicos, história e legislação'
-                  : selectedSubject === 'processo_penal' ? 'Aula 1 — Conceito, finalidade e características'
-                  : selectedSubject === 'processo_civil' ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
+                  : selectedSubject === 'processo_penal' ? 'Aula 6 — Princípios e Aplicação da Lei Processual Penal'
+                  : selectedSubject === 'processo_civil' ? 'Aula 5 — Atos Processuais'
                   : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
                   : selectedSubject === 'direito_const' ? 'Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
                   : 'Aula 3 — Atos Administrativos'
@@ -2562,11 +2571,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Pedro e Eduardo', pct: '3%', isUser: true },
-                { pos: 2, name: 'Lucas e Mariana', pct: '2.5%', isUser: false },
-                { pos: 3, name: 'Gabriel e Sofia', pct: '2.0%', isUser: false },
-                { pos: 4, name: 'Matheus e Beatriz', pct: '1.5%', isUser: false },
-                { pos: 5, name: 'Rafael e Amanda', pct: '1.0%', isUser: false },
+                { pos: 1, name: 'Lucas e Mariana', pct: '4,0%', isUser: false },
+                { pos: 2, name: 'Gabriel e Sofia', pct: '3,8%', isUser: false },
+                { pos: 3, name: 'Matheus e Beatriz', pct: '3,5%', isUser: false },
+                { pos: 4, name: 'Rafael e Amanda', pct: '3,3%', isUser: false },
+                { pos: 5, name: 'Pedro e Eduardo', pct: '3,1%', isUser: true },
               ].map((d) => (
                 <div
                   key={d.pos}
@@ -2655,29 +2664,69 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
         <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
           <button
-            onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
             className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'portugues'
+              selectedSubject === 'processo_penal'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <div className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>1. Português</span>
+              <span>1. Proc. Penal (Aula 6)</span>
+            </div>
+            {savedLessonsStore['processo_penal']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : (
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula 1 de Hoje</span>
+            )}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'processo_civil'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <span>2. Proc. Civil (Aula 5)</span>
+            </div>
+            {savedLessonsStore['processo_civil']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : (
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula 2 de Hoje</span>
+            )}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'portugues'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
+              <span>Português</span>
             </div>
             {savedLessonsStore['portugues']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
             ) : savedLessonsStore['portugues']?.selectedAnswers && Object.keys(savedLessonsStore['portugues'].selectedAnswers).length > 0 ? (
               <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula de Hoje</span>
-            )}
+            ) : null}
           </button>
 
           <button
             onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[180px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'direito_const'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2685,89 +2734,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           >
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>2. Dir. Constitucional</span>
+              <span>Dir. Constitucional</span>
             </div>
             {savedLessonsStore['direito_const']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
             ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula de Hoje</span>
-            )}
-          </button>
-
-          <button
-            onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'libras'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>LIBRAS</span>
-            </div>
-            {savedLessonsStore['libras']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['libras']?.selectedAnswers && Object.keys(savedLessonsStore['libras'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
-
-          <button
-            onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'processo_penal'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Proc. Penal</span>
-            </div>
-            {savedLessonsStore['processo_penal']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
-
-          <button
-            onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'processo_civil'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Proc. Civil</span>
-            </div>
-            {savedLessonsStore['processo_civil']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
-
-          <button
-            onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'informatica'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Informática</span>
-            </div>
-            {savedLessonsStore['informatica']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
               <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
             ) : null}
           </button>
@@ -2787,6 +2758,44 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {savedLessonsStore['direito_admin']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
             ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'libras'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>LIBRAS</span>
+            </div>
+            {savedLessonsStore['libras']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['libras']?.selectedAnswers && Object.keys(savedLessonsStore['libras'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : null}
+          </button>
+
+          <button
+            onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'informatica'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Informática</span>
+            </div>
+            {savedLessonsStore['informatica']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
               <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
             ) : null}
           </button>
@@ -2818,9 +2827,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'libras'
               ? 'Unidade 1 — Fundamentos da LIBRAS'
               : selectedSubject === 'processo_penal'
-              ? 'Capítulo 1 — Inquérito Policial'
+              ? 'Capítulo 1 — Princípios e Eficácia da Lei'
               : selectedSubject === 'processo_civil'
-              ? 'Unidade 1 — Teoria Geral do Processo'
+              ? 'Unidade 1 — Atos Processuais'
               : selectedSubject === 'informatica'
               ? 'Unidade 1 — Fundamentos de Informática'
               : selectedSubject === 'direito_const'
@@ -2834,9 +2843,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'libras'
               ? 'Aula 1 — Conceitos básicos, história e legislação'
               : selectedSubject === 'processo_penal'
-              ? 'Aula 1 — Conceito, finalidade e características'
+              ? 'Aula 6 — Princípios e Aplicação da Lei Processual Penal'
               : selectedSubject === 'processo_civil'
-              ? 'Capítulo 1 — Jurisdição, Ação e Competência'
+              ? 'Aula 5 — Atos Processuais'
               : selectedSubject === 'informatica'
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
               : selectedSubject === 'direito_const'
@@ -2853,9 +2862,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'libras'
                 ? 'Aula de Hoje: LIBRAS (Acessibilidade e Inclusão)'
                 : selectedSubject === 'processo_penal'
-                ? 'Processo Penal'
+                ? '🔥 AULA 1 DE HOJE • Processo Penal (Aula 6)'
                 : selectedSubject === 'processo_civil'
-                ? 'Processo Civil'
+                ? '🔥 AULA 2 DE HOJE • Processo Civil (Aula 5)'
                 : selectedSubject === 'informatica'
                 ? 'Informática'
                 : selectedSubject === 'direito_const'
@@ -2868,9 +2877,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'libras'
                 ? '🤟 LIBRAS — Aula 1: Conceitos básicos, história e legislação'
                 : selectedSubject === 'processo_penal'
-                ? 'Aula 1 — Inquérito Policial: Conceito, finalidade e características'
+                ? '⚖️ Processo Penal — Aula 6: Princípios e Aplicação da Lei Processual Penal'
                 : selectedSubject === 'processo_civil'
-                ? 'Aula 1 — Jurisdição: Conceito, Características e Princípios'
+                ? '⚖️ Processo Civil — Aula 5: Atos Processuais'
                 : selectedSubject === 'informatica'
                 ? 'Aula 1 — Conceitos Básicos de Informática'
                 : selectedSubject === 'direito_const'
@@ -2993,11 +3002,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'Unidade 1 — LIBRAS: Conceitos básicos, história e legislação'
                     : selectedSubject === 'processo_civil'
-                    ? 'Unidade 1 — Jurisdição: Conceito, Características e Princípios'
+                    ? 'Unidade 1 — Processo Civil: Atos Processuais (Aula 5)'
                     : selectedSubject === 'informatica'
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
                     : selectedSubject === 'processo_penal'
-                    ? 'Unidade 1 — Processo Penal: Inquérito Policial'
+                    ? 'Capítulo 1 — Processo Penal: Princípios e Aplicação da Lei (Aula 6)'
                     : 'Unidade 1 — Direito Administrativo: Atos Administrativos'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -3012,6 +3021,34 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </div>
             </div>
 
+            {/* Selector de Partes / Vídeos exclusivamente para Processo Penal */}
+            {selectedSubject === 'processo_penal' && (
+              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                <button
+                  onClick={() => setSelectedVideoPart('video1')}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video1'
+                      ? 'bg-rose-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Parte 1 (DMzz7MSkeTs)</span>
+                </button>
+                <button
+                  onClick={() => setSelectedVideoPart('video2')}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video2'
+                      ? 'bg-rose-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Parte 2 (U-oy5WXts3Q)</span>
+                </button>
+              </div>
+            )}
+
             {/* Embedded YouTube Video Player */}
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
               <iframe
@@ -3022,9 +3059,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/WqUexIfQ_aQ?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://www.youtube.com/embed/BR6ajRR8Sng?autoplay=0&rel=0'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://www.youtube.com/embed/U-oy5WXts3Q?autoplay=0&rel=0'
+                      : 'https://www.youtube.com/embed/DMzz7MSkeTs?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
-                    ? 'https://www.youtube.com/embed/SYNsAONzzOE?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/z1aED3CBGJk?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
@@ -3037,9 +3076,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: Conceitos básicos, história e legislação'
                     : selectedSubject === 'processo_penal'
-                    ? 'Vídeo Aula - Processo Penal: Inquérito Policial'
+                    ? `Vídeo Aula - Processo Penal: Princípios e Aplicação da Lei Processual Penal (${selectedVideoPart === 'video2' ? 'Parte 2' : 'Parte 1'})`
                     : selectedSubject === 'processo_civil'
-                    ? 'Vídeo Aula - Processo Civil: Jurisdição, Ação e Competência'
+                    ? 'Vídeo Aula - Processo Civil: Atos Processuais (Aula 5)'
                     : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
                     : selectedSubject === 'direito_const'
@@ -3060,9 +3099,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'https://youtu.be/WqUexIfQ_aQ?is=MSdtBlG9aSokP_fR'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://youtu.be/BR6ajRR8Sng?is=sRXsgaXpmTci1dVg'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://youtu.be/U-oy5WXts3Q?is=OkDpWRHA_U_WMRYp'
+                      : 'https://youtu.be/DMzz7MSkeTs?is=F8VMLeGMwxJnWO61'
                     : selectedSubject === 'processo_civil'
-                    ? 'https://youtu.be/SYNsAONzzOE?is=wSIAukUjS4Fr9zBD'
+                    ? 'https://youtu.be/z1aED3CBGJk?is=rCCVaBUjfDHK9RW7'
                     : selectedSubject === 'informatica'
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
                     : selectedSubject === 'direito_const'
@@ -3074,7 +3115,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 text-xs font-bold transition-all"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>Abrir no YouTube</span>
+                <span>
+                  Abrir no YouTube{selectedSubject === 'processo_penal' ? ` (${selectedVideoPart === 'video2' ? 'Parte 2' : 'Parte 1'})` : ''}
+                </span>
               </a>
             </div>
 
@@ -4360,7 +4403,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               }`}
             >
               <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Penal: Inquérito Policial
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Penal: Princípios e Eficácia da Lei Processual
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
                 Ao concluir esta aula, você será capaz de:
@@ -4368,383 +4411,153 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Definir a natureza jurídica e conceito de Inquérito Policial.</span>
+                  <span>Compreender a natureza, conceito e finalidade do Direito Processual Penal.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar os pilares de Materialidade e Autoria.</span>
+                  <span>Dominar o Devido Processo Legal, Contraditório, Ampla Defesa e Presunção de Inocência.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Dominar as 7 características essenciais cobradas nas bancas.</span>
+                  <span>Entender o Princípio do Juiz Natural e a vedação do Tribunal de Exceção.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Entender quem conduz o inquérito e as formas de instauração.</span>
+                  <span>Aplicar o princípio tempus regit actum na eficácia da lei no tempo (Art. 2º CPP).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar Indiciamento de Condenado e Inquérito de Processo Penal.</span>
+                  <span>Analisar a eficácia da lei no espaço (Territorialidade) e regras de interpretação (Art. 3º CPP).</span>
                 </li>
               </ul>
             </section>
 
-            {/* 1. O que é o Inquérito Policial? */}
+            {/* 1. Conceito e Finalidade do Processo Penal */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. O que é o Inquérito Policial?
+                1. Conceito e Finalidade do Direito Processual Penal
               </h2>
               <p className="text-sm">
-                O <strong>inquérito policial</strong> é um procedimento administrativo destinado à apuração da existência de uma infração penal e de suas circunstâncias, buscando reunir elementos que auxiliem na identificação da autoria e na formação da convicção para a futura persecução penal.
+                O <strong>Direito Processual Penal</strong> é o conjunto de princípios e normas que regulam a atividade do Estado destinada à aplicação do Direito Penal substantivo, delimitando o exercício da pretensão punitiva e assegurando os direitos e garantias fundamentais do acusado.
               </p>
               <p className="text-sm">
-                Ele ocorre, em regra, <strong>antes do processo penal</strong>.
-              </p>
-              <p className="text-sm">
-                É importante compreender que o inquérito <strong>não é um processo judicial</strong>. Trata-se de uma etapa de investigação realizada pela autoridade policial, observadas as regras previstas na legislação.
-              </p>
-
-              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/80 border-amber-200/80'}`}>
-                <p className="text-xs font-black text-amber-900 dark:text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <Lightbulb className="w-4 h-4 text-amber-600" /> Exemplo Prático
-                </p>
-                <p className="text-xs text-slate-800 dark:text-slate-200 font-semibold">
-                  Imagine que ocorra um furto. A autoridade policial poderá realizar diligências para:
-                </p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Descobrir o que aconteceu;
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Identificar possíveis envolvidos;
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Ouvir pessoas;
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Reunir documentos e outros elementos;
-                  </li>
-                  <li className="flex items-center gap-2 sm:col-span-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Realizar perícias quando necessárias para elucidação do caso.
-                  </li>
-                </ul>
-              </div>
-            </section>
-
-            {/* 2. Finalidade do Inquérito Policial */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. Finalidade do Inquérito Policial
-              </h2>
-              <p className="text-sm">
-                A finalidade principal é investigar a infração penal, reunindo elementos relacionados à <strong>materialidade</strong> e à <strong>autoria</strong>.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400">Materialidade</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    É a demonstração de que a infração penal ocorreu. <em>Exemplo:</em> em um crime que deixa vestígios, um exame pericial pode contribuir para demonstrar a ocorrência do fato.
-                  </p>
-                </div>
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-xs font-black uppercase text-blue-600 dark:text-blue-400">Autoria</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Relaciona-se à identificação da pessoa que, em tese, praticou a infração penal.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* 3. Natureza jurídica */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. Natureza jurídica
-              </h2>
-              <p className="text-sm">
-                O inquérito policial possui <strong>natureza administrativa</strong>.
-              </p>
-              <p className="text-sm">
-                Isso significa que ele <strong>não constitui um processo judicial</strong>. A investigação é conduzida pela autoridade policial, enquanto a ação penal será posteriormente submetida ao Poder Judiciário, quando presentes os requisitos legais.
+                Sua função essencial é instrumentalizar o <em>jus puniendi</em> estatal, servindo como escudo de proteção contra o arbítrio estatal e garantindo que ninguém seja privado de sua liberdade sem o devido processo legal.
               </p>
             </section>
 
-            {/* 4. Características do Inquérito Policial */}
+            {/* 2. Garantias Constitucionais do Processo Penal */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Características do Inquérito Policial
+                2. Garantias Constitucionais Fundamentais
               </h2>
               <p className="text-sm">
-                As características do inquérito policial são recorrentes em questões de concursos públicos:
+                As garantias processuais penais estão enraizadas no artigo 5º da Constituição Federal de 1988 e estruturam todo o processo penal acusatório brasileiro:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">🔹 Administrativo</span>
-                  <p className="text-slate-600 dark:text-slate-300">É um procedimento de natureza administrativa e investigativa.</p>
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">🔹 Devido Processo Legal (Art. 5º, LIV, CF)</span>
+                  <p className="text-slate-600 dark:text-slate-300">Ninguém será privado da liberdade ou de seus bens sem o devido processo legal, assegurando observância às normas processuais e garantias fundamentais.</p>
                 </div>
 
                 <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">🔹 Investigativo</span>
-                  <p className="text-slate-600 dark:text-slate-300">Seu objetivo é reunir elementos relacionados à infração penal investigada.</p>
+                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">🔹 Contraditório e Ampla Defesa (Art. 5º, LV, CF)</span>
+                  <p className="text-slate-600 dark:text-slate-300">Ciência de todos os atos do processo (informação) + oportunidade real de manifestação e produção de provas (reação), mediante defesa técnica obrigatória.</p>
                 </div>
 
                 <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">🔹 Inquisitivo</span>
-                  <p className="text-slate-600 dark:text-slate-300">Classificado como procedimento inquisitivo por não possuir a mesma estrutura de contraditório pleno existente na fase judicial (embora respeite os direitos do investigado).</p>
+                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">🔹 Presunção de Inocência (Art. 5º, LVII, CF)</span>
+                  <p className="text-slate-600 dark:text-slate-300">Ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória. A carga da prova incumbe integralmente à acusação.</p>
                 </div>
 
                 <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">🔹 Escrito</span>
-                  <p className="text-slate-600 dark:text-slate-300">Os atos realizados durante a investigação devem ser documentados nos autos, observadas as exigências legais.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-rose-600 dark:text-rose-400 uppercase text-[10px]">🔹 Dispensável</span>
-                  <p className="text-slate-600 dark:text-slate-300">Não é indispensável em todos os casos para o oferecimento da ação penal. Se existirem elementos suficientes, a ação pode ser proposta sem inquérito.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-teal-600 dark:text-teal-400 uppercase text-[10px]">🔹 Sigiloso</span>
-                  <p className="text-slate-600 dark:text-slate-300">A investigação pode possuir sigilo quando necessário para preservar sua eficácia, respeitando as garantias do investigado e do defensor.</p>
+                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">🔹 Juiz Natural (Art. 5º, LIII e XXXVII, CF)</span>
+                  <p className="text-slate-600 dark:text-slate-300">Ninguém será processado nem sentenciado senão pela autoridade competente previamente estabelecida em lei, sendo vedados os tribunais de exceção.</p>
                 </div>
 
                 <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2">
-                  <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">🔹 Oficial</span>
-                  <p className="text-slate-600 dark:text-slate-300">Quando realizado pela autoridade policial, trata-se de atividade desenvolvida por órgão estatal competente.</p>
+                  <span className="font-black text-rose-600 dark:text-rose-400 uppercase text-[10px]">🔹 Direito ao Silêncio e Não Autoincriminação (Art. 5º, LXIII, CF)</span>
+                  <p className="text-slate-600 dark:text-slate-300">O réu/investigado possui o direito de permanecer em silêncio (<em>nemo tenetur se detegere</em>), o qual não poderá ser interpretado em seu prejuízo nem como confissão.</p>
                 </div>
               </div>
             </section>
 
-            {/* 5. Quem conduz o Inquérito Policial? */}
+            {/* 3. Eficácia da Lei Processual Penal no Tempo */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Quem conduz o Inquérito Policial?
+                3. Eficácia da Lei Processual Penal no Tempo (Art. 2º, CPP)
               </h2>
               <p className="text-sm">
-                A investigação policial é conduzida pela <strong>autoridade policial</strong>, dentro de suas atribuições legais.
-              </p>
-              <p className="text-sm">
-                No âmbito da <strong>Polícia Civil</strong>, a autoridade policial responsável é, em regra, o <strong>delegado de polícia</strong>.
-              </p>
-              <p className="text-sm">
-                A <strong>Polícia Federal</strong> exerce atribuições de polícia judiciária da União nos casos previstos constitucional e legalmente.
-              </p>
-            </section>
-
-            {/* 6. Início do Inquérito Policial */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Início do Inquérito Policial
-              </h2>
-              <p className="text-sm">
-                A forma de instauração pode variar conforme a natureza da ação penal e as circunstâncias do caso. Entre as possibilidades previstas em lei estão situações em que a investigação é iniciada:
+                Conforme o artigo 2º do Código de Processo Penal, a lei processual penal aplica-se <strong>imediatamente</strong>, sem prejuízo da validade dos atos realizados sob a vigência da lei anterior:
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>De ofício pela autoridade policial;</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Mediante requisição da autoridade competente;</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Mediante requerimento do ofendido ou seu representante;</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>A partir de comunicações ou notícias de crime.</span>
-                </div>
-              </div>
-            </section>
-
-            {/* 7. Diligências investigativas */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                7. Diligências investigativas
-              </h2>
-              <p className="text-sm">
-                Durante o inquérito, podem ser realizadas diversas diligências para esclarecer os fatos:
-              </p>
-
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Ouvir o ofendido;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Ouvir testemunhas;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Interrogar o investigado;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Realizar perícias;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Apreender objetos relacionados ao fato;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Realizar reconhecimentos de pessoas e coisas;
-                </li>
-                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 md:col-span-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Reunir documentos e outras diligências legalmente permitidas.
-                </li>
-              </ul>
-            </section>
-
-            {/* 8. Indiciamento */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                8. Indiciamento
-              </h2>
-              <p className="text-sm">
-                O <strong>indiciamento</strong> é um ato relacionado à investigação por meio do qual a autoridade policial, diante dos elementos disponíveis e observados os requisitos legais, aponta determinada pessoa como provável autora ou partícipe da infração investigada.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 space-y-1">
-                <span className="text-xs font-black uppercase flex items-center gap-1.5">
-                  <AlertTriangle className="w-4 h-4 text-amber-500" /> Ponto Importante para Prova
-                </span>
-                <p className="text-xs font-bold">
-                  Indiciado ≠ Condenado. O indiciamento não significa condenação penal. Trata-se de juízo de probabilidade na fase investigativa.
+              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/80 border-emerald-200/80'}`}>
+                <p className="text-xs font-black text-emerald-900 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <Lightbulb className="w-4 h-4 text-emerald-600" /> Regra Geral: Tempus Regit Actum
+                </p>
+                <p className="text-xs text-slate-800 dark:text-slate-200 font-semibold leading-relaxed">
+                  A nova norma processual incide imediatamente sobre os processos em andamento. Os atos processuais já praticados e consolidados sob a lei anterior permanecem perfeitamente válidos e não precisam ser refeitos.
                 </p>
               </div>
             </section>
 
-            {/* 9. Encerramento do Inquérito */}
+            {/* 4. Eficácia da Lei Processual Penal no Espaço */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                9. Encerramento do Inquérito
+                4. Eficácia da Lei Processual Penal no Espaço (Art. 1º, CPP)
               </h2>
               <p className="text-sm">
-                Concluídas as diligências investigativas, o procedimento segue para as providências previstas na legislação.
-              </p>
-              <p className="text-sm">
-                O encerramento do inquérito não significa necessariamente que haverá condenação ou mesmo processo penal. A existência de elementos suficientes e as providências posteriores dependem das circunstâncias do caso e das regras aplicáveis à ação penal.
+                O CPP adota o <strong>Princípio da Territorialidade</strong> como regra geral (Art. 1º): o Código de Processo Penal será aplicado em todo o território brasileiro, sem prejuízo das exceções previstas em tratados, convenções e regras de direito internacional.
               </p>
             </section>
 
-            {/* 10. Inquérito x Processo Penal */}
+            {/* 5. Interpretação e Analogia no CPP */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                10. Inquérito x Processo Penal
+                5. Interpretação e Aplicação Analógica (Art. 3º, CPP)
               </h2>
+              <p className="text-sm">
+                O Artigo 3º do CPP dispõe expressamente que a lei processual penal admitirá:
+              </p>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-black border-b border-slate-200 dark:border-slate-700">
-                      <th className="p-3.5 rounded-tl-xl">Inquérito Policial</th>
-                      <th className="p-3.5 rounded-tr-xl">Processo Penal</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Investigativo</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Judicial</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Administrativo</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Jurisdicional</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Busca reunir elementos (materialidade + autoria)</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Busca solucionar a pretensão penal</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Precede, em regra, o processo</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Desenvolve-se perante o Judiciário</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Não possui contraditório pleno como regra</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Possui contraditório e ampla defesa plenos</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                      <td className="p-3">Pode ser dispensável</td>
-                      <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400">Fase judicial imperativa para condenação</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs font-medium">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span><strong>Interpretação Extensiva</strong> (ampliação do alcance formal do texto)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span><strong>Aplicação Analógica</strong> (integração de lacunas legislativas)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span><strong>Princípios Gerais do Direito</strong> (suplementação das normas)</span>
+                </div>
               </div>
             </section>
 
             {/* 🎯 O que você precisa memorizar */}
             <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/70 border-emerald-200'}`}>
               <h2 className="text-base font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-500" /> 🎯 O que você precisa memorizar
+                <Trophy className="w-5 h-5 text-amber-500" /> 🎯 Quadro Resumo para o Concurso TJAM
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Procedimento administrativo</span>
+                  <span>Tempus regit actum: incidência imediata da lei processual</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Investigativo</span>
+                  <span>Nemo tenetur se detegere: direito ao silêncio sem prejuízo</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Busca esclarecer a infração penal</span>
+                  <span>Territorialidade com ressalvas a tratados internacionais</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Elementos sobre materialidade e autoria</span>
+                  <span>Admissibilidade de interpretação extensiva e analogia (Art. 3º)</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Em regra, antecede o processo penal</span>
-                </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Pode ser sigiloso e é escrito</span>
-                </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>É DISPENSÁVEL</span>
-                </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Conduzido pela autoridade policial</span>
-                </div>
-              </div>
-            </section>
-
-            {/* 📌 Para o concurso de Assistente Judiciário do TJAM */}
-            <section className="space-y-4 p-6 rounded-3xl bg-slate-900 text-white border border-slate-800">
-              <h2 className="text-base font-black text-amber-400 flex items-center gap-2">
-                <Medal className="w-5 h-5 text-amber-400" /> 📌 Para o concurso de Assistente Judiciário do TJAM
-              </h2>
-              <p className="text-xs text-slate-300">
-                Dê atenção especial aos seguintes 10 pontos nas suas revisões para a banca:
-              </p>
-              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-200 list-decimal list-inside">
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Conceito de inquérito policial</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Finalidade (Materialidade + Autoria)</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Natureza jurídica (Administrativa)</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Características (As 7 essenciais)</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Formas de instauração</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Papel da autoridade policial</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Diligências investigativas</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Indiciamento (Indiciado ≠ Condenado)</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Sigilo e acesso da defesa</li>
-                <li className="p-2.5 rounded-lg bg-slate-800/80">Diferença entre inquérito e processo</li>
-              </ol>
-
-              {/* Next Steps Card */}
-              <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-xs text-emerald-300 font-bold">
-                  🚀 Próxima etapa do estudo: flashcards do Inquérito Policial → 20 questões → videoaula.
-                </div>
-                <button
-                  onClick={() => setActiveTab('flashcards')}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shrink-0 cursor-pointer flex items-center gap-2"
-                >
-                  <span>Ir para os Flashcards</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
               </div>
             </section>
           </article>
@@ -4757,7 +4570,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               }`}
             >
               <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Civil
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Processo Civil: Atos Processuais
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
                 Ao concluir esta aula, você será capaz de:
@@ -4765,274 +4578,292 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Compreender o conceito e a função de Jurisdição no Estado Democrático.</span>
+                  <span>Compreender o conceito e os efeitos dos Atos Processuais.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Identificar as 5 características essenciais da jurisdição.</span>
+                  <span>Identificar e exemplificar os atos praticados pelas partes.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar a Jurisdição Contenciosa da Jurisdição Voluntária.</span>
+                  <span>Diferenciar os Pronunciamentos do Juiz (Sentença, Decisão Interlocutória e Despacho).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Dominar os princípios fundamentais do processo civil.</span>
+                  <span>Dominar as regras de Formas e Prazos Processuais (dias úteis no CPC).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Distinguir claramente Jurisdição, Ação e Competência no dia a dia do TJAM.</span>
+                  <span>Distinguir com precisão Citação e Intimação, além do regramento de Nulidades e Negócio Jurídico Processual.</span>
                 </li>
               </ul>
             </section>
 
-            {/* Seção 1: Introdução à Jurisdição */}
+            {/* 1. Conceito */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. O Estado e a Solução dos Conflitos
+                1. Conceito de Atos Processuais
               </h2>
               <p className="text-sm">
-                O Estado é responsável por manter a paz social e solucionar os conflitos existentes entre as pessoas. Para cumprir essa função, exerce a <strong>jurisdição</strong>, que consiste no poder-dever de aplicar o Direito aos casos concretos, resolvendo conflitos e garantindo a efetividade das normas jurídicas.
+                Atos processuais são as manifestações praticadas pelas partes, pelo juiz e pelos demais participantes do processo que produzem efeitos dentro da relação processual.
               </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs font-medium">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Petição apresentada pelo autor</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Contestação apresentada pelo réu</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Despacho do juiz</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Sentença</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Intimação</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Citação</span>
+                </div>
+              </div>
+            </section>
+
+            {/* 2. Atos das partes */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                2. Atos das Partes
+              </h2>
               <p className="text-sm">
-                Em outras palavras, quando duas pessoas não conseguem solucionar um conflito por conta própria, o Estado, por meio do Poder Judiciário, intervém para decidir a questão de forma imparcial, aplicando a lei ao caso concreto.
+                As partes praticam diversos atos durante o processo para resguardar seus direitos e movimentar o procedimento:
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500" /> Apresentar petições e formular pedidos
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500" /> Apresentar defesa (contestação/reconvenção)
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500" /> Produzir provas e interpor recursos
+                </li>
+                <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-500" /> Celebrar acordos e transações
+                </li>
+              </ul>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Esses atos produzem efeitos processuais imediatos conforme estabelece a legislação processual civil.
               </p>
             </section>
 
-            {/* Seção 2: O que é Jurisdição? */}
-            <section className="space-y-3">
+            {/* 3. Atos do juiz */}
+            <section className="space-y-4">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. O que é Jurisdição?
+                3. Atos do Juiz (Pronunciamentos Judiciais)
               </h2>
               <p className="text-sm">
-                A <strong>jurisdição</strong> é a função exercida pelo Estado, por intermédio do Poder Judiciário, destinada a solucionar conflitos de interesses mediante a aplicação do Direito.
+                Entre os principais pronunciamentos proferidos pelo magistrado no curso do processo civil estão:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-slate-900 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📝</span>
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Sentença</h3>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    É o pronunciamento por meio do qual o juiz, em regra, <strong>encerra a fase cognitiva</strong> do procedimento comum ou <strong>extingue a execução</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-slate-900 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📌</span>
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Decisão Interlocutória</h3>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    É o pronunciamento judicial de <strong>natureza decisória</strong> que não se enquadra como sentença (ex: decisão de tutela provisória).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-slate-900 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📄</span>
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Despacho</h3>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    São os demais pronunciamentos do juiz praticados no processo que <strong>não possuem natureza decisória</strong> (ex: "diga a parte autora").
+                  </p>
+                </div>
+              </div>
+
+              {/* Box Memorize */}
+              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/70 border-purple-200'}`}>
+                <h4 className="text-xs font-black uppercase text-purple-800 dark:text-purple-300 mb-2 flex items-center gap-1.5">
+                  🧠 Memorize Obrigatório para a Prova:
+                </h4>
+                <ul className="space-y-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600 dark:text-purple-400">➔ Sentença:</span> Encerra a fase cognitiva ou extingue a execução.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600 dark:text-purple-400">➔ Decisão Interlocutória:</span> Decisão no curso do processo que não é sentença.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600 dark:text-purple-400">➔ Despacho:</span> Ato de mero expediente, sem conteúdo decisório.
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            {/* 4. Forma dos atos processuais */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Forma dos Atos Processuais
+              </h2>
+              <p className="text-sm">
+                Em regra, os atos processuais <strong>não dependem de forma determinada</strong>, salvo quando a lei expressamente exigir (princípio da liberdade das formas ou instrumentalidade das formas).
               </p>
               <p className="text-sm">
-                Essa função <strong>substitui a vontade das partes</strong> pela decisão do juiz, que possui autoridade para proferir uma decisão obrigatória.
+                Quando a lei estabelecer determinada forma, ela deve ser observada para garantir:
               </p>
-              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-100'}`}>
-                <p className="text-xs text-emerald-950 dark:text-emerald-300 font-bold">
-                  ⚖️ Importância Fundamental: A jurisdição representa uma das funções essenciais do Estado Democrático de Direito, garantindo a aplicação da justiça e a preservação da ordem jurídica.
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-center font-bold">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-700 dark:text-emerald-400">
+                  Segurança Jurídica
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-700 dark:text-emerald-400">
+                  Organização
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-700 dark:text-emerald-400">
+                  Validade do Procedimento
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-700 dark:text-emerald-400">
+                  Proteção das Partes
+                </div>
+              </div>
+            </section>
+
+            {/* 5. Prazos processuais */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Prazos Processuais
+              </h2>
+              <p className="text-sm">
+                Os atos processuais devem ser realizados dentro dos prazos estabelecidos pela legislação ou fixados pelo juiz. O cumprimento correto dos prazos é fundamental para evitar preclusão ou penalidades processuais.
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-amber-950/20 border-amber-800/40 text-amber-200' : 'bg-amber-50 border-amber-200 text-amber-900'} space-y-1`}>
+                <div className="flex items-center gap-1.5 font-black text-xs uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                  <AlertTriangle className="w-4 h-4" /> Atenção Regra de Ouro do CPC
+                </div>
+                <p className="text-xs font-semibold">
+                  No CPC, quando a lei estabelece prazo processual contado em dias, a contagem considera, em regra, <strong>somente os dias úteis</strong>.
                 </p>
               </div>
             </section>
 
-            {/* Seção 3: Finalidade da Jurisdição */}
+            {/* 6. Citação */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. Finalidade da Jurisdição
+                6. Citação
               </h2>
               <p className="text-sm">
-                A principal finalidade da jurisdição é <strong>promover a pacificação social</strong>.
+                A <strong>citação</strong> é o ato pelo qual o réu, o executado ou o interessado é convocado para <strong>integrar a relação processual</strong>.
               </p>
-              <p className="text-sm">
-                Além disso, busca:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Aplicar corretamente a lei ao caso concreto</span>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Proteger direitos fundamentais e individuais</span>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Solucionar conflitos de interesses</span>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Garantir a segurança jurídica</span>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 sm:col-span-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>Assegurar o cumprimento e a efetividade das decisões judiciais</span>
-                </div>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-100'} text-xs space-y-1`}>
+                <strong className="text-emerald-700 dark:text-emerald-400 font-extrabold">📌 Exemplo Prático:</strong>
+                <p>Uma pessoa é processada perante o TJAM. A <strong>citação</strong> comunica formalmente a existência do processo e chama o réu para fazer parte dele e apresentar sua defesa.</p>
               </div>
             </section>
 
-            {/* Seção 4: Características da Jurisdição */}
+            {/* 7. Intimação */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Características da Jurisdição
+                7. Intimação
               </h2>
               <p className="text-sm">
-                A jurisdição possui diversas características importantes para provas de concursos públicos:
+                A <strong>intimação</strong> é o ato pelo qual se dá ciência a alguém dos atos e termos do processo.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">1. Substitutividade</span>
-                  <p className="text-slate-600 dark:text-slate-300">O Estado substitui a vontade privada das partes envolvidas pela decisão imperativa do juiz.</p>
-                </div>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/60 border-blue-100'} text-xs space-y-1`}>
+                <strong className="text-blue-700 dark:text-blue-400 font-extrabold">📌 Exemplo Prático:</strong>
+                <p>O juiz determina que uma parte se manifeste sobre um documento novo juntado aos autos. A parte é <strong>intimada</strong> para tomar conhecimento e apresentar manifestação no prazo legal.</p>
+              </div>
 
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">2. Imparcialidade</span>
-                  <p className="text-slate-600 dark:text-slate-300">O juiz deve atuar de maneira neutra, sem favorecer ou prejudicar qualquer das partes.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">3. Definitividade</span>
-                  <p className="text-slate-600 dark:text-slate-300">A decisão judicial produz efeitos jurídicos e torna-se imutável após o trânsito em julgado (coisa julgada).</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-rose-600 dark:text-rose-400 uppercase text-[10px]">4. Inércia</span>
-                  <p className="text-slate-600 dark:text-slate-300">O juiz somente atua quando é provocado pela parte interessada, salvo raras exceções previstas em lei.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2">
-                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">5. Unidade</span>
-                  <p className="text-slate-600 dark:text-slate-300">A jurisdição é una em todo o território nacional, embora seja distribuída entre diferentes órgãos do Poder Judiciário por razões de organização e competência.</p>
-                </div>
+              {/* Diferença fundamental Box */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-xs space-y-1 shadow-md">
+                <span className="text-[10px] uppercase tracking-widest text-emerald-200 font-black">🧠 Diferença Fundamental para Concursos</span>
+                <p>• CITAÇÃO ➔ chama para INTEGRAR o processo.</p>
+                <p>• INTIMAÇÃO ➔ dá CIÊNCIA dos atos e termos do processo.</p>
               </div>
             </section>
 
-            {/* Seção 5: Espécies de Jurisdição */}
+            {/* 8. Nulidades */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Espécies de Jurisdição
+                8. Nulidades
               </h2>
               <p className="text-sm">
-                A jurisdição pode ser classificada em duas modalidades fundamentais:
+                Um ato processual pode apresentar vício quando não observa determinada exigência legal. Entretanto, a existência de uma irregularidade não significa automaticamente que todo ato será considerado inválido.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-200'}`}>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Com Conflito de Interesses
-                  </span>
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white">
-                    Jurisdição Contenciosa
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Existe conflito (litígio) entre as partes, sendo necessária uma decisão judicial imperativa para solucioná-lo.
-                  </p>
-                  <div className="pt-2">
-                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
-                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                      Ação de cobrança, ação de indenização por danos morais ou ação de divórcio litigioso.
-                    </p>
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                    Sem Conflito / Administração Pública de Interesses
-                  </span>
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white">
-                    Jurisdição Voluntária
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Não há propriamente conflito entre partes. O Poder Judiciário atua para fiscalizar, integrar ou homologar determinados atos previstos em lei.
-                  </p>
-                  <div className="pt-2">
-                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
-                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                      Homologação de testamento, processo de interdição e procedimentos consensuais previstos no CPC.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <p className="text-sm">
+                O sistema processual pauta-se no princípio do aproveitamento dos atos processuais (pas de nullité sans grief), buscando preservar os atos que possam ser aproveitados sem causar prejuízo às partes.
+              </p>
             </section>
 
-            {/* Seção 6: Princípios da Jurisdição */}
+            {/* 9. Negócio jurídico processual */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Princípios da Jurisdição
+                9. Negócio Jurídico Processual
               </h2>
               <p className="text-sm">
-                O exercício da jurisdição é orientado por princípios fundamentais garantidos pela Constituição Federal:
+                Em determinadas situações, as partes plenamente capazes podem estipular mudanças no procedimento e convencionar sobre seus ônus, poderes, faculdades e deveres processuais, desde que observados os requisitos legais. Isso é chamado de <strong>negócio jurídico processual</strong> (Art. 190 do CPC).
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Juiz Natural:</strong> Proíbe tribunais de exceção; o julgamento deve ser feito por juiz competente preexistente na lei.
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Devido Processo Legal:</strong> Ninguém será privado da liberdade ou bens sem o devido processo legal (Art. 5º, LIV).
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Contraditório e Ampla Defesa:</strong> Garantia de ser informado dos atos e de se manifestar e produzir provas.
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Inafastabilidade da Jurisdição:</strong> A lei não excluirá da apreciação judicial lesão ou ameaça a direito (Art. 5º, XXXV).
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Motivação das Decisões:</strong> Todas as decisões do Poder Judiciário serão fundamentadas sob pena de nulidade.
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Duração Razoável do Processo:</strong> Todos têm direito à razoável duração do processo e celeridade de sua tramitação.
-                </div>
-              </div>
             </section>
 
-            {/* Seção 7: Diferença entre Jurisdição, Ação e Competência */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                7. Diferença entre Jurisdição, Ação e Competência
+            {/* 🎯 RESUMO DA AULA DA BANCA */}
+            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/70 border-emerald-200'}`}>
+              <h2 className="text-base font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-500" /> 🎯 RESUMO SÍNTESE DA AULA — ATOS PROCESSUAIS
               </h2>
-              <p className="text-sm">
-                É comum confundir esses três conceitos, mas eles possuem significados bem delimitados:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
-                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">Jurisdição</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Poder do Estado</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Poder-dever estatal de julgar e aplicar o Direito para solucionar conflitos.</p>
+              <div className="space-y-3 text-xs text-slate-800 dark:text-slate-200">
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 space-y-1">
+                  <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">ATOS PROCESSUAIS:</strong>
+                  <p>Manifestações praticadas no processo que produzem efeitos processuais.</p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 space-y-1">
-                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">Ação</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Direito da Pessoa</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Direito subjetivo de provocar o Poder Judiciário buscando a prestação jurisdicional.</p>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 space-y-1">
+                  <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">PRONUNCIAMENTOS DO JUIZ:</strong>
+                  <p>• Sentença ➔ encerra a fase cognitiva ou extingue a execução.<br />• Decisão interlocutória ➔ decisão que não é sentença.<br />• Despacho ➔ sem conteúdo decisório.</p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-1">
-                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">Competência</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Limite da Atuação</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Medida e fração do poder jurisdicional atribuída a cada juízo ou tribunal.</p>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 space-y-1">
+                  <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">COMUNICAÇÃO:</strong>
+                  <p>• Citação ➔ integra o réu/executado/interessado ao processo.<br />• Intimação ➔ dá ciência dos atos e termos processuais.</p>
+                </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-800 space-y-1">
+                  <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">PRAZOS:</strong>
+                  <p>Devem ser observados conforme as regras legais; nos prazos processuais contados em dias, o CPC prevê, em regra, DIAS ÚTEIS.</p>
                 </div>
               </div>
-            </section>
-
-            {/* Seção 8: Jurisdição no Dia a Dia do Assistente Judiciário */}
-            <section className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/40 border-emerald-200'}`}>
-              <h3 className="text-sm font-black text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
-                🏛️ Jurisdição no Dia a Dia do Assistente Judiciário (TJAM)
-              </h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300">
-                O Assistente Judiciário participa ativamente das atividades que tornam possível o exercício da jurisdição no TJAM:
-              </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Organização e movimentação dos processos eletrônicos</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Cumprimento rigoroso dos atos processuais e prazos</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Elaboração de minutas de despacho e expedientes</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Atendimento qualificado a partes e advogados</li>
-                <li className="flex items-center gap-1.5 sm:col-span-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Suporte direto e assessoria aos magistrados e à vara judicial</li>
-              </ul>
-            </section>
-
-            {/* Seção 9: Dicas para Concursos */}
-            <section className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/60 border-purple-200'}`}>
-              <h3 className="text-xs font-black uppercase text-purple-800 dark:text-purple-400 mb-2 flex items-center gap-1.5">
-                <AlertTriangle className="w-4 h-4 text-purple-600" /> Dicas Essenciais para Concursos (TJAM)
-              </h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                Em provas de Processo Civil, atente-se para as bancas examinadoras cobrando o <strong>conceito de jurisdição</strong>, suas <strong>5 características essenciais</strong> (Substitutividade, Imparcialidade, Definitividade, Inércia e Unidade), a <strong>diferença entre jurisdição contenciosa e voluntária</strong> e a <strong>distinção técnica entre Jurisdição, Ação e Competência</strong>. Dominar estes pilares garante acertos decisivos no concurso do TJAM!
-              </p>
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-300 text-xs font-bold">
+                🔥 Foco para a prova do TJAM: não confundir citação × intimação e sentença × decisão interlocutória × despacho.
+              </div>
             </section>
 
             {/* Checklist da Aula */}
             <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
               <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula — Processo Civil
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula — Processo Civil (Atos Processuais)
               </h3>
               <div className="space-y-2 text-xs font-semibold">
                 {[
-                  { id: 'c1', text: 'Entendi o conceito de Jurisdição como poder-dever do Estado de aplicar o Direito.' },
-                  { id: 'c2', text: 'Reconheci a pacificação social como finalidade primordial da jurisdição.' },
-                  { id: 'c3', text: 'Sei listar e explicar as 5 características da jurisdição (Substitutividade, Imparcialidade, Definitividade, Inércia e Unidade).' },
-                  { id: 'c4', text: 'Compreendi a diferença entre Jurisdição Contenciosa e Jurisdição Voluntária.' },
-                  { id: 'c5', text: 'Sei diferenciar Jurisdição (poder), Ação (direito) e Competência (limite).' },
+                  { id: 'c1', text: 'Entendi o conceito de Atos Processuais e os atos praticados pelas partes.' },
+                  { id: 'c2', text: 'Sei diferenciar Sentença (encerra fase/extingue execução), Decisão Interlocutória (decisório) e Despacho (sem conteúdo decisório).' },
+                  { id: 'c3', text: 'Compreendi a regra da contagem de prazos em dias úteis no CPC.' },
+                  { id: 'c4', text: 'Sei diferenciar Citação (integrar relação) e Intimação (dar ciência de atos).' },
+                  { id: 'c5', text: 'Compreendi as regras de Nulidades (aproveitamento do ato) e Negócio Jurídico Processual.' },
                 ].map(item => (
                   <div
                     key={item.id}
