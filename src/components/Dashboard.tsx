@@ -503,11 +503,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas e Mariana', pct: '4,0%', isUser: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel e Sofia', pct: '3,8%', isUser: false, barWidth: '95%' },
-              { pos: 3, name: 'Matheus e Beatriz', pct: '3,5%', isUser: false, barWidth: '87.5%' },
-              { pos: 4, name: 'Rafael e Amanda', pct: '3,3%', isUser: false, barWidth: '82.5%' },
-              { pos: 5, name: 'Pedro e Eduardo', pct: '3,1%', isUser: true, barWidth: '77.5%' },
+              { pos: 1, name: 'Lucas e Mariana', pct: '5,0%', isUser: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel e Sofia', pct: '4,6%', isUser: false, barWidth: '92%' },
+              { pos: 3, name: 'Matheus e Beatriz', pct: '4,3%', isUser: false, barWidth: '86%' },
+              { pos: 4, name: 'Rafael e Amanda', pct: '4,0%', isUser: false, barWidth: '80%' },
+              { pos: 5, name: 'Carlos e Juliana', pct: '3,8%', isUser: false, barWidth: '76%' },
+              { pos: 6, name: 'Bruno e Camila', pct: '3,6%', isUser: false, barWidth: '72%' },
+              { pos: 7, name: 'Diego e Fernanda', pct: '3,5%', isUser: false, barWidth: '70%' },
+              { pos: 8, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true, barWidth: '68%' },
             ].map((dupla) => (
               <div
                 key={dupla.pos}
