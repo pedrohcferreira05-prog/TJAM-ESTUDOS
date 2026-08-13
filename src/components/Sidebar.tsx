@@ -42,24 +42,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const content = (
     <div className="flex flex-col h-full py-4 px-3 space-y-6">
       {/* User Info Header in Sidebar */}
-      <div className="px-3 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-sm overflow-hidden flex-shrink-0">
+      <div className="px-3 py-3 rounded-2xl bg-slate-850 bg-slate-800/60 border border-slate-800 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm overflow-hidden flex-shrink-0">
           <img 
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256" 
             alt="Eduardo Mateus Alexandre Amorim"
             className="w-full h-full object-cover"
             onError={(e) => {
-              // fallback if image fails
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
           <span className="text-xs font-bold">EA</span>
         </div>
         <div className="min-w-0 flex-1">
-          <h2 className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+          <h2 className="text-xs font-extrabold text-white truncate">
             Eduardo Mateus A. Amorim
           </h2>
-          <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full inline-block mt-0.5">
+          <span className="text-[10px] font-bold text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded-full inline-block mt-0.5 border border-sky-500/20">
             Aluno TJAM
           </span>
         </div>
@@ -69,7 +68,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <nav className="space-y-1.5 flex-1">
         {menuItems.map((item) => {
           const Icon = item.icon;
-          // Map aula-hoje / semana1 equivalence if needed
           const isActive = currentTab === item.id || (item.id === 'aula-hoje' && currentTab === 'semana1');
 
           return (
@@ -79,13 +77,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onSelectTab(item.id);
                 if (onCloseMobile) onCloseMobile();
               }}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-left ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-left cursor-pointer ${
                 isActive
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-900/30'
+                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'
               }`}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500'}`} />
               <span className="truncate">{item.label}</span>
             </button>
           );
@@ -93,9 +91,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       {/* Course Footnote */}
-      <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 px-3 text-[11px] text-slate-400 space-y-1">
-        <p className="font-semibold text-slate-600 dark:text-slate-300">Curso Ativo:</p>
-        <p className="text-[10px] truncate text-slate-500 dark:text-slate-400">TJAM – Assistente Judiciário</p>
+      <div className="pt-4 border-t border-slate-800 px-3 text-[11px] text-slate-400 space-y-1">
+        <p className="font-semibold text-slate-300">Curso Ativo:</p>
+        <p className="text-[10px] truncate text-slate-400">TJAM – Assistente Judiciário</p>
       </div>
     </div>
   );
@@ -104,9 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <>
       {/* Desktop Persistent Sidebar */}
       <aside
-        className={`hidden lg:block w-64 flex-shrink-0 border-r transition-colors h-[calc(100vh-4rem)] sticky top-16 ${
-          isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-        }`}
+        className="hidden lg:block w-64 flex-shrink-0 border-r border-slate-800/80 transition-colors h-[calc(100vh-4rem)] sticky top-16 bg-slate-900/70 backdrop-blur-sm"
       >
         {content}
       </aside>
@@ -115,19 +111,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {isOpenMobile && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
             onClick={onCloseMobile}
           />
           <div
-            className={`relative w-72 max-w-[80vw] h-full shadow-2xl flex flex-col z-10 ${
-              isDarkMode ? 'bg-slate-900 border-r border-slate-800' : 'bg-white border-r border-slate-200'
-            }`}
+            className="relative w-72 max-w-[80vw] h-full shadow-2xl flex flex-col z-10 bg-slate-900 border-r border-slate-800"
           >
-            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
-              <span className="font-extrabold text-sm text-slate-900 dark:text-white">Menu do Aluno</span>
+            <div className="flex items-center justify-between p-4 border-b border-slate-800">
+              <span className="font-extrabold text-sm text-white">Menu do Aluno</span>
               <button
                 onClick={onCloseMobile}
-                className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
+                className="p-1.5 rounded-full hover:bg-slate-800 text-slate-400 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>

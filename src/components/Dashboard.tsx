@@ -503,22 +503,26 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas e Mariana', pct: '5,0%', isUser: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel e Sofia', pct: '4,6%', isUser: false, barWidth: '92%' },
-              { pos: 3, name: 'Matheus e Beatriz', pct: '4,3%', isUser: false, barWidth: '86%' },
-              { pos: 4, name: 'Rafael e Amanda', pct: '4,0%', isUser: false, barWidth: '80%' },
-              { pos: 5, name: 'Carlos e Juliana', pct: '3,8%', isUser: false, barWidth: '76%' },
-              { pos: 6, name: 'Bruno e Camila', pct: '3,6%', isUser: false, barWidth: '72%' },
-              { pos: 7, name: 'Diego e Fernanda', pct: '3,5%', isUser: false, barWidth: '70%' },
-              { pos: 8, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true, barWidth: '68%' },
+              { pos: 1, name: 'Lucas e Mariana', pct: '6,0%', isUser: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel e Sofia', pct: '5,7%', isUser: false, barWidth: '95%' },
+              { pos: 3, name: 'Matheus e Beatriz', pct: '5,4%', isUser: false, barWidth: '90%' },
+              { pos: 4, name: 'Rafael e Amanda', pct: '5,1%', isUser: false, barWidth: '85%' },
+              { pos: 5, name: 'Carlos e Juliana', pct: '4,8%', isUser: false, barWidth: '80%' },
+              { pos: 6, name: 'Bruno e Camila', pct: '4,5%', isUser: false, barWidth: '75%' },
+              { pos: 7, name: 'Diego e Fernanda', pct: '4,2%', isUser: false, barWidth: '70%' },
+              { pos: 8, name: 'Rodrigo e Larissa', pct: '4,0%', isUser: false, barWidth: '66.7%' },
+              { pos: 9, name: 'Vinícius e Letícia', pct: '3,8%', isUser: false, barWidth: '63.3%' },
+              { pos: 10, name: 'Thiago e Natália', pct: '3,7%', isUser: false, barWidth: '61.7%' },
+              { pos: 11, name: 'Felipe e Isabela', pct: '3,5%', isUser: false, barWidth: '58.3%' },
+              { pos: 12, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true, barWidth: '56.7%' },
             ].map((dupla) => (
               <div
                 key={dupla.pos}
                 className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                   dupla.isUser
                     ? isDarkMode
-                      ? 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20'
-                      : 'bg-emerald-50 border-emerald-300'
+                      ? 'bg-sky-500/15 border-sky-400/40 ring-1 ring-sky-400/30'
+                      : 'bg-sky-50 border-sky-300'
                     : isDarkMode
                     ? 'bg-slate-800/40 border-slate-800/80'
                     : 'bg-slate-50 border-slate-200'
@@ -528,9 +532,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div
                     className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 shadow-sm ${
                       dupla.isUser
-                        ? 'bg-emerald-600 text-white'
+                        ? 'bg-sky-600 text-white'
+                        : dupla.pos === 1
+                        ? 'bg-amber-500 text-slate-950 font-black'
                         : dupla.pos === 2
                         ? 'bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                        : dupla.pos === 3
+                        ? 'bg-amber-700/60 text-white'
                         : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                     }`}
                   >
@@ -538,12 +546,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className={`font-extrabold text-xs sm:text-sm ${dupla.isUser ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
+                      <span className={`font-extrabold text-xs sm:text-sm ${dupla.isUser ? 'text-sky-400 dark:text-sky-300' : 'text-slate-700 dark:text-slate-300'}`}>
                         {dupla.name}
                       </span>
                       {dupla.isUser && (
-                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-extrabold text-[10px]">
-                          Sua Dupla
+                        <span className="px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-400/30 font-extrabold text-[10px] flex items-center gap-1">
+                          <span>Sua Dupla</span>
+                          <span>🧊</span>
                         </span>
                       )}
                     </div>
@@ -552,11 +561,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="flex items-center gap-3">
                   <div className="w-20 sm:w-28 bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
                     <div
-                      className={`${dupla.isUser ? 'bg-emerald-500' : 'bg-slate-400 dark:bg-slate-600'} h-full rounded-full`}
+                      className={`${dupla.isUser ? 'bg-sky-400' : 'bg-slate-400 dark:bg-slate-600'} h-full rounded-full`}
                       style={{ width: dupla.barWidth }}
                     ></div>
                   </div>
-                  <span className={`text-sm font-black ${dupla.isUser ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                  <span className={`text-sm font-black ${dupla.isUser ? 'text-sky-500 dark:text-sky-300' : 'text-slate-500 dark:text-slate-400'}`}>
                     {dupla.pct}
                   </span>
                 </div>

@@ -1,1 +1,65 @@
 @import "tailwindcss";
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10vh) translateX(0px) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(50vh) translateX(25px) rotate(180deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(105vh) translateX(-20px) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes frost-shimmer {
+  0%, 100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+  }
+  50% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 14px rgba(186, 230, 253, 0.8));
+  }
+}
+
+.animate-snow {
+  animation: snowfall linear infinite;
+}
+
+.animate-frost {
+  animation: frost-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes wave-hand {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  20%, 60% {
+    transform: rotate(24deg);
+  }
+  40%, 80% {
+    transform: rotate(-12deg);
+  }
+}
+
+@keyframes pet-bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-wave {
+  transform-origin: bottom left;
+  animation: wave-hand 2s ease-in-out infinite;
+}
+
+.animate-pet-bounce {
+  animation: pet-bounce 3.5s ease-in-out infinite;
+}

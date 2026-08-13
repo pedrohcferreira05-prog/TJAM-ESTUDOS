@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Lock, Sun, Moon, Key, AlertCircle, ShieldAlert, Trophy, Users, Clock, Sparkles } from 'lucide-react';
 import { Simulado, UserProgress, SimuladoAttempt } from '../types';
+import { FrozenTopBanner } from './FrozenTopBanner';
+import { SnowfallEffect } from './SnowfallEffect';
 
 interface SiteLockedViewProps {
   isDarkMode: boolean;
@@ -34,18 +36,27 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   };
 
   const duplasRanking = [
-    { rank: 1, name: 'Lucas e Mariana', score: '5,0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '100%' },
-    { rank: 2, name: 'Gabriel e Sofia', score: '4,6%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '92%' },
-    { rank: 3, name: 'Matheus e Beatriz', score: '4,3%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '86%' },
-    { rank: 4, name: 'Rafael e Amanda', score: '4,0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '80%' },
-    { rank: 5, name: 'Carlos e Juliana', score: '3,8%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '76%' },
-    { rank: 6, name: 'Bruno e Camila', score: '3,6%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '72%' },
-    { rank: 7, name: 'Diego e Fernanda', score: '3,5%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '70%' },
-    { rank: 8, name: 'Pedro e Eduardo', score: '3,4%', isUser: true, bgClass: 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20', badgeClass: 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20', barClass: 'bg-emerald-500', barWidth: '68%' },
+    { rank: 1, name: 'Lucas e Mariana', score: '6,0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
+    { rank: 2, name: 'Gabriel e Sofia', score: '5,7%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
+    { rank: 3, name: 'Matheus e Beatriz', score: '5,4%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
+    { rank: 4, name: 'Rafael e Amanda', score: '5,1%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '85%' },
+    { rank: 5, name: 'Carlos e Juliana', score: '4,8%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '80%' },
+    { rank: 6, name: 'Bruno e Camila', score: '4,5%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '75%' },
+    { rank: 7, name: 'Diego e Fernanda', score: '4,2%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '70%' },
+    { rank: 8, name: 'Rodrigo e Larissa', score: '4,0%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '66.7%' },
+    { rank: 9, name: 'Vinícius e Letícia', score: '3,8%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '63.3%' },
+    { rank: 10, name: 'Thiago e Natália', score: '3,7%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '61.7%' },
+    { rank: 11, name: 'Felipe e Isabela', score: '3,5%', isUser: false, bgClass: 'bg-slate-800/40 border-slate-800', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '58.3%' },
+    { rank: 12, name: 'Pedro e Eduardo', score: '3,4%', isUser: true, bgClass: 'bg-sky-500/15 border-sky-400/30 ring-1 ring-sky-400/20', badgeClass: 'bg-sky-600 text-white shadow-md shadow-sky-500/20', barClass: 'bg-sky-400', barWidth: '56.7%' },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-3 sm:p-6 lg:p-8 flex flex-col space-y-6">
+    <div className="min-h-screen bg-slate-950 text-slate-100 p-3 sm:p-6 lg:p-8 flex flex-col space-y-6 relative overflow-hidden">
+      <SnowfallEffect />
+      <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
+        <FrozenTopBanner isDarkMode={isDarkMode} />
+      </div>
+
       {/* Top Header Controls Bar */}
       <div className="w-full max-w-5xl mx-auto flex items-center justify-between p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl backdrop-blur-md">
         <div className="flex items-center gap-3">
@@ -78,16 +89,6 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             >
               <Key className="w-3.5 h-3.5 text-amber-400" />
               <span className="hidden sm:inline">Desbloquear Site</span>
-            </button>
-          )}
-
-          {onToggleDarkMode && (
-            <button
-              onClick={onToggleDarkMode}
-              className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all cursor-pointer border border-slate-700"
-              title="Alternar Tema"
-            >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
             </button>
           )}
         </div>

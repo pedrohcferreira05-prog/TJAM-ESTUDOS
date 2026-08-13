@@ -2571,20 +2571,24 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas e Mariana', pct: '5,0%', isUser: false },
-                { pos: 2, name: 'Gabriel e Sofia', pct: '4,6%', isUser: false },
-                { pos: 3, name: 'Matheus e Beatriz', pct: '4,3%', isUser: false },
-                { pos: 4, name: 'Rafael e Amanda', pct: '4,0%', isUser: false },
-                { pos: 5, name: 'Carlos e Juliana', pct: '3,8%', isUser: false },
-                { pos: 6, name: 'Bruno e Camila', pct: '3,6%', isUser: false },
-                { pos: 7, name: 'Diego e Fernanda', pct: '3,5%', isUser: false },
-                { pos: 8, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true },
+                { pos: 1, name: 'Lucas e Mariana', pct: '6,0%', isUser: false },
+                { pos: 2, name: 'Gabriel e Sofia', pct: '5,7%', isUser: false },
+                { pos: 3, name: 'Matheus e Beatriz', pct: '5,4%', isUser: false },
+                { pos: 4, name: 'Rafael e Amanda', pct: '5,1%', isUser: false },
+                { pos: 5, name: 'Carlos e Juliana', pct: '4,8%', isUser: false },
+                { pos: 6, name: 'Bruno e Camila', pct: '4,5%', isUser: false },
+                { pos: 7, name: 'Diego e Fernanda', pct: '4,2%', isUser: false },
+                { pos: 8, name: 'Rodrigo e Larissa', pct: '4,0%', isUser: false },
+                { pos: 9, name: 'Vinícius e Letícia', pct: '3,8%', isUser: false },
+                { pos: 10, name: 'Thiago e Natália', pct: '3,7%', isUser: false },
+                { pos: 11, name: 'Felipe e Isabela', pct: '3,5%', isUser: false },
+                { pos: 12, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true },
               ].map((d) => (
                 <div
                   key={d.pos}
                   className={`flex items-center justify-between p-2.5 rounded-xl border ${
                     d.isUser
-                      ? 'bg-emerald-500/10 border-emerald-500/30'
+                      ? 'bg-sky-500/15 border-sky-400/40 shadow-sm ring-1 ring-sky-400/20'
                       : 'bg-slate-800/60 border-slate-700/80'
                   }`}
                 >
@@ -2592,7 +2596,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span
                       className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center ${
                         d.isUser
-                          ? 'bg-emerald-600 text-white'
+                          ? 'bg-sky-600 text-white'
+                          : d.pos === 1
+                          ? 'bg-amber-500 text-slate-950'
                           : 'bg-slate-700 text-slate-300'
                       }`}
                     >
@@ -2600,20 +2606,21 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     </span>
                     <span
                       className={`text-xs font-extrabold flex items-center gap-1.5 ${
-                        d.isUser ? 'text-white' : 'text-slate-300'
+                        d.isUser ? 'text-sky-300' : 'text-slate-300'
                       }`}
                     >
                       {d.name}
                       {d.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 font-extrabold uppercase">
-                          Sua Dupla
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/30 text-sky-200 border border-sky-400/30 font-extrabold uppercase flex items-center gap-0.5">
+                          <span>Sua Dupla</span>
+                          <span>🧊</span>
                         </span>
                       )}
                     </span>
                   </div>
                   <span
                     className={`text-xs font-black ${
-                      d.isUser ? 'text-emerald-400' : 'text-slate-400'
+                      d.isUser ? 'text-sky-400' : 'text-slate-400'
                     }`}
                   >
                     {d.pct}

@@ -50,13 +50,19 @@ import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
 import { SiteLockedView } from './components/SiteLockedView';
 import { Week1View } from './components/Week1View';
+import { FrozenTopBanner } from './components/FrozenTopBanner';
+import { SnowfallEffect } from './components/SnowfallEffect';
+import { FrozenPetCompanion } from './components/FrozenPetCompanion';
 import { saveWeek1ContentToFirestore } from './lib/firestoreService';
 
 export function App() {
-  // Theme state
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('tjam_theme') === 'dark';
-  });
+  // Permanent Dark Mode
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('tjam_theme', 'dark');
+  }, []);
 
   // Site lock state (default false so study site opens directly)
   const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
@@ -569,7 +575,16 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative selection:bg-sky-500/30">
+      {/* Subtle Falling Flakes Overlay */}
+      <SnowfallEffect />
+
+      {/* Floating Movable Frozen Pet Companion */}
+      <FrozenPetCompanion />
+
+      {/* Frozen Studies Clean Banner */}
+      <FrozenTopBanner isDarkMode={isDarkMode} />
+
       {/* Navigation Header */}
       <Header
         viewMode={viewMode}
