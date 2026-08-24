@@ -64,8 +64,11 @@ export function App() {
     localStorage.setItem('tjam_theme', 'dark');
   }, []);
 
-  // Site lock state (default false so study site opens directly)
-  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
+  // Site lock state (default true: gate panel is active)
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
+    const saved = localStorage.getItem('tjam_site_locked');
+    return saved !== null ? saved === 'true' : true;
+  });
 
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
@@ -598,6 +601,10 @@ export function App() {
         setIsDarkMode={setIsDarkMode}
         onOpenAIAssistant={() => handleOpenAIAssistant()}
         streakDays={userProgress.streakDays}
+        onLockSite={() => {
+          setIsSiteLocked(true);
+          localStorage.setItem('tjam_site_locked', 'true');
+        }}
         onOpenAuthModal={() => {
           setAuthMode('login');
           setIsAuthOpen(true);

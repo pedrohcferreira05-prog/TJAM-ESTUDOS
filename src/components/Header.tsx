@@ -22,12 +22,14 @@ interface HeaderProps {
   currentUserEmail?: string;
   isStaffAuthenticated?: boolean;
   onToggleMobileMenu?: () => void;
+  onLockSite?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   setStudentTab,
   onOpenAIAssistant,
   onToggleMobileMenu,
+  onLockSite,
 }) => {
   return (
     <header className="sticky top-0 z-40 border-b bg-slate-900/95 border-slate-800/90 backdrop-blur-md transition-colors">
@@ -75,6 +77,17 @@ export const Header: React.FC<HeaderProps> = ({
             <Snowflake className="w-3.5 h-3.5 text-sky-400" />
             <span>Sequência: <strong className="text-slate-200">0 dias</strong></span>
           </div>
+
+          {onLockSite && (
+            <button
+              onClick={onLockSite}
+              className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-sky-300 border border-slate-700 transition-colors cursor-pointer"
+              title="Travar / Bloquear Painel de Acesso"
+              aria-label="Bloquear Painel"
+            >
+              <Snowflake className="w-4 h-4 text-sky-400" />
+            </button>
+          )}
 
           {/* AI Assistant Button */}
           <button
