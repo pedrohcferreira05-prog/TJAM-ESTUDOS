@@ -50,9 +50,6 @@ import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
 import { SiteLockedView } from './components/SiteLockedView';
 import { Week1View } from './components/Week1View';
-import { FrozenTopBanner } from './components/FrozenTopBanner';
-import { SnowfallEffect } from './components/SnowfallEffect';
-import { FrozenPetCompanion } from './components/FrozenPetCompanion';
 import { saveWeek1ContentToFirestore } from './lib/firestoreService';
 
 export function App() {
@@ -62,13 +59,11 @@ export function App() {
   useEffect(() => {
     document.documentElement.classList.add('dark');
     localStorage.setItem('tjam_theme', 'dark');
+    localStorage.removeItem('tjam_site_locked');
   }, []);
 
-  // Site lock state (default true: gate panel is active)
-  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(() => {
-    const saved = localStorage.getItem('tjam_site_locked');
-    return saved !== null ? saved === 'true' : true;
-  });
+  // Site lock state (unlocked by default)
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
 
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
@@ -579,15 +574,6 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative selection:bg-sky-500/30">
-      {/* Subtle Falling Flakes Overlay */}
-      <SnowfallEffect />
-
-      {/* Floating Movable Frozen Pet Companion */}
-      <FrozenPetCompanion />
-
-      {/* Frozen Studies Clean Banner */}
-      <FrozenTopBanner isDarkMode={isDarkMode} />
-
       {/* Navigation Header */}
       <Header
         viewMode={viewMode}
@@ -601,10 +587,6 @@ export function App() {
         setIsDarkMode={setIsDarkMode}
         onOpenAIAssistant={() => handleOpenAIAssistant()}
         streakDays={userProgress.streakDays}
-        onLockSite={() => {
-          setIsSiteLocked(true);
-          localStorage.setItem('tjam_site_locked', 'true');
-        }}
         onOpenAuthModal={() => {
           setAuthMode('login');
           setIsAuthOpen(true);

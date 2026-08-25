@@ -55,7 +55,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'processo_penal';
+    return 'direito_admin';
   });
 
   const setSelectedSubject = (subject: 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
@@ -210,7 +210,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           processo_penal: 'pp-3',
           processo_civil: 'pc-1',
           informatica: 'inf-1',
-          direito_admin: 'adm-1',
+          direito_admin: 'adm-3',
           direito_const: 'const-3',
         };
         const tid = topicIdMap[selectedSubject];
@@ -1175,277 +1175,313 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   ];
 
-  // Admin Flashcards Data (Atos Administrativos)
+  // Admin Flashcards Data (Aula 7: Poderes da Administração Pública)
   const adminFlashcardsData = [
     {
-      q: 'O que é ato administrativo?',
-      a: 'É a manifestação de vontade da Administração Pública ou de quem a represente, sob regime de direito público, com o fim de produzir efeitos jurídicos imediatos.'
+      q: 'O que é o Poder Hierárquico e quais prerrogativas ele confere?',
+      a: 'É o poder de organizar e estruturar a Administração, estabelecendo relações de subordinação e coordenação entre órgãos e agentes. Permite distribuir funções, dar ordens, fiscalizar, delegar competências e avocar competências (nos limites legais). Atenção: não existe hierarquia entre os diferentes Poderes da República.'
     },
     {
-      q: 'Quais são os 5 elementos (requisitos) do ato administrativo e qual o seu mnemônico?',
-      a: 'Competência, Finalidade, Forma, Motivo e Objeto. Mnemônico: CO–FI–FO–MO–OB.'
+      q: 'Em que consiste o Poder Disciplinar da Administração Pública?',
+      a: 'É o poder de a Administração apurar infrações e aplicar sanções a servidores públicos e a outras pessoas sujeitas à disciplina administrativa (como particulares com vínculo contratual ou específico).'
     },
     {
-      q: 'Quais são os principais atributos do ato administrativo?',
-      a: 'Presunção de legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade (PATI/PAT).'
+      q: 'O que é o Poder Regulamentar e quais são seus limites essenciais?',
+      a: 'É o poder atribuído ao Executivo para editar atos normativos (decretos e regulamentos) destinados à fiel execução das leis, dentro dos limites do ordenamento. NÃO significa poder criar livremente uma nova lei nem inovar originariamente na ordem jurídica.'
     },
     {
-      q: 'Qual a diferença entre Anulação e Revogação?',
-      a: 'Anulação decorre de ILEGALIDADE (efeitos ex tunc). Revogação decorre de CONVENIÊNCIA e OPORTUNIDADE (efeitos ex nunc).'
+      q: 'O que é o Poder de Polícia e quais são seus exemplos clássicos?',
+      a: 'É a atividade administrativa que limita ou condiciona direitos, interesses ou liberdades individuais em benefício do interesse público coletivo. Exemplos: fiscalização sanitária, fiscalização de trânsito, controle de estabelecimentos e fiscalização de atividades potencialmente prejudiciais.'
     },
     {
-      q: 'O que é Convalidação do ato administrativo?',
-      a: 'É o ato de sanar um vício sanável (como defeito de competência não exclusiva ou forma não essencial), restaurando a validade do ato com efeitos retroativos.'
+      q: 'Como diferenciar Excesso de Poder de Desvio de Finalidade no Abuso de Poder?',
+      a: 'Ambos são espécies de Abuso de Poder. Excesso de poder = vício na competência (o agente possui competência, mas ultrapassa seus limites legais). Desvio de finalidade = vício na finalidade (o agente atua na competência, mas com fim alheio à lei ou de interesse pessoal). Mnemônico: Excesso → competência; Desvio → finalidade.'
     }
   ];
 
-  // Questions Data - 20 Questions for Aula 3 (Direito Administrativo - Atos Administrativos)
+  // Questions Data - 20 Questions for Aula 7 (Direito Administrativo - Poderes da Administração Pública)
   const questionsData = [
     {
       id: 1,
-      enunciado: '1. Ato administrativo pode ser compreendido como:',
+      enunciado: '1. O poder hierárquico está relacionado principalmente à:',
       alternativas: [
-        'A) Qualquer ato praticado por um cidadão.',
-        'B) Manifestação da Administração Pública, ou de quem exerça função administrativa, capaz de produzir efeitos jurídicos.',
-        'C) Somente uma decisão judicial.',
-        'D) Exclusivamente uma lei aprovada pelo Legislativo.'
+        'A) Aplicação de penas criminais.',
+        'B) Organização e estruturação interna da Administração Pública.',
+        'C) Criação de leis pelo Poder Judiciário.',
+        'D) Limitação de direitos individuais exclusivamente.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. Ato administrativo é a manifestação de vontade da Administração Pública, ou de quem lhe faça as vezes, sob regime público, capaz de produzir efeitos jurídicos.'
+      explicacao: '✅ Gabarito: B. O poder hierárquico organiza e estrutura internamente a Administração Pública, estabelecendo relações de subordinação e coordenação entre seus órgãos e agentes.'
     },
     {
       id: 2,
-      enunciado: '2. São elementos clássicos do ato administrativo:',
+      enunciado: '2. Entre as características do poder hierárquico está:',
       alternativas: [
-        'A) Competência, finalidade, forma, motivo e objeto.',
-        'B) Legalidade, publicidade, moralidade, eficiência e impessoalidade.',
-        'C) Hierarquia, disciplina, polícia, regulamentação e fiscalização.',
-        'D) Autoridade, publicidade, sentença, recurso e competência.'
+        'A) Distribuição e organização das funções administrativas.',
+        'B) Aplicação de penas privativas de liberdade.',
+        'C) Criação de crimes.',
+        'D) Controle exclusivo pelo Poder Legislativo.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. Os cinco elementos do ato administrativo são: Competência, Finalidade, Forma, Motivo e Objeto (CO-FI-FO-MO-OB).'
+      explicacao: '✅ Gabarito: A. O poder hierárquico permite a distribuição, escalonamento e organização das funções administrativas internamente.'
     },
     {
       id: 3,
-      enunciado: '3. A competência corresponde:',
+      enunciado: '3. O poder disciplinar permite à Administração:',
       alternativas: [
-        'A) Ao resultado produzido pelo ato.',
-        'B) À finalidade pública pretendida.',
-        'C) Ao poder legal atribuído ao agente ou órgão para praticar o ato.',
-        'D) À justificativa de fato do ato.'
+        'A) Criar leis ordinárias.',
+        'B) Apurar infrações e aplicar sanções administrativas aos sujeitos submetidos à disciplina administrativa.',
+        'C) Julgar definitivamente crimes.',
+        'D) Alterar a Constituição.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. A Competência é o poder legal atribuído pela lei ao agente público ou órgão para praticar validamente o ato.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O poder disciplinar é a prerrogativa conferida à Administração para apurar infrações e aplicar penalidades funcionais e contratuais a quem possui vínculo de sujeição especial.'
     },
     {
       id: 4,
-      enunciado: '4. A finalidade do ato administrativo deve estar relacionada:',
+      enunciado: '4. Um servidor público pratica uma infração funcional. A Administração, observados o devido processo e as regras aplicáveis, poderá utilizar o:',
       alternativas: [
-        'A) Ao interesse exclusivamente particular do agente.',
-        'B) Ao interesse público previsto pelo ordenamento jurídico.',
-        'C) À vontade pessoal do servidor.',
-        'D) À obtenção de vantagem econômica pelo agente.'
+        'A) Poder disciplinar.',
+        'B) Poder constituinte.',
+        'C) Poder jurisdicional.',
+        'D) Poder legislativo.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. O ato administrativo deve sempre buscar o interesse público explicitado em lei.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A apuração de infração funcional praticada por servidor e a consequente aplicação de penalidade decorrem diretamente do poder disciplinar.'
     },
     {
       id: 5,
-      enunciado: '5. O motivo do ato administrativo corresponde:',
+      enunciado: '5. O poder regulamentar está relacionado à:',
       alternativas: [
-        'A) Ao efeito jurídico produzido.',
-        'B) À forma de publicação.',
-        'C) À situação de fato e de direito que fundamenta o ato.',
-        'D) À autoridade que praticou o ato.'
+        'A) Aplicação de sanções criminais.',
+        'B) Edição de atos normativos destinados à fiel execução das leis, dentro dos limites legais.',
+        'C) Organização do Poder Judiciário.',
+        'D) Criação ilimitada de novas obrigações por decreto.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. O Motivo é a situação de fato e o fundamento de direito que servem de base para a prática do ato.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O poder regulamentar é a prerrogativa de expedir decretos e regulamentos destinados à fiel execução das leis (atos secundários secundum legem).'
     },
     {
       id: 6,
-      enunciado: '6. O objeto do ato administrativo corresponde:',
+      enunciado: '6. O poder de polícia consiste, em linhas gerais, na atividade administrativa que:',
       alternativas: [
-        'A) Ao conteúdo ou efeito jurídico produzido pelo ato.',
-        'B) À competência do agente.',
-        'C) À finalidade pública.',
-        'D) À justificativa do ato.'
+        'A) Elimina todos os direitos individuais.',
+        'B) Condiciona ou limita direitos e liberdades em benefício do interesse público.',
+        'C) Substitui o Poder Judiciário.',
+        'D) Cria normas constitucionais.'
       ],
-      correta: 0,
-      explicacao: '✅ Gabarito: A. O Objeto (conteúdo) é a alteração no mundo jurídico produzida de imediato pelo ato.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. Conforme o Art. 78 do CTN, o poder de polícia restringe e condiciona o exercício de direitos, liberdades e uso de bens individuais em proveito do interesse público coletivo.'
     },
     {
       id: 7,
-      enunciado: '7. Assinale a alternativa que apresenta corretamente os cinco elementos do ato administrativo:',
+      enunciado: '7. É exemplo de exercício do poder de polícia:',
       alternativas: [
-        'A) Competência, finalidade, forma, motivo e objeto.',
-        'B) Publicidade, eficiência, motivo, hierarquia e objeto.',
-        'C) Competência, moralidade, publicidade, motivo e forma.',
-        'D) Finalidade, eficiência, hierarquia, objeto e publicidade.'
+        'A) Fiscalização sanitária de estabelecimentos.',
+        'B) Prolação de sentença judicial.',
+        'C) Aprovação de uma emenda constitucional.',
+        'D) Julgamento de um processo criminal.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. Mnemônico CO-FI-FO-MO-OB (Competência, Finalidade, Forma, Motivo e Objeto).'
+      explicacao: '✅ Gabarito: A. A fiscalização sanitária, interdição e apreensão de alimentos impróprios constituem manifestações clássicas do poder de polícia.'
     },
     {
       id: 8,
-      enunciado: '8. A presunção de legitimidade significa que:',
+      enunciado: '8. A fiscalização de trânsito realizada pelo Poder Público constitui exemplo de:',
       alternativas: [
-        'A) Todo ato administrativo é definitivamente válido.',
-        'B) O ato é considerado legítimo até que seja demonstrada sua ilegalidade.',
-        'C) Nenhum ato administrativo pode ser questionado.',
-        'D) Apenas o Poder Judiciário pode praticar atos administrativos.'
+        'A) Poder disciplinar exclusivamente.',
+        'B) Poder de polícia.',
+        'C) Poder constituinte.',
+        'D) Poder jurisdicional.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. A Presunção de Legitimidade estabelece que os atos reputam-se verdadeiros e legais até prova em contrário.'
+      explicacao: '✅ Gabarito: B. A fiscalização e autuação no trânsito decorrem do poder de polícia administrativo, limitando e disciplinando o uso das vias públicas em favor da coletividade.'
     },
     {
       id: 9,
-      enunciado: '9. A imperatividade significa que determinados atos administrativos:',
+      enunciado: '9. O poder hierárquico permite à Administração, nos limites legais:',
       alternativas: [
-        'A) Dependem sempre da concordância do particular.',
-        'B) Podem impor obrigações independentemente da concordância do particular, quando cabível.',
-        'C) Nunca produzem obrigações.',
-        'D) São necessariamente atos judiciais.'
+        'A) Distribuir e organizar funções.',
+        'B) Criar crimes.',
+        'C) Julgar definitivamente processos judiciais.',
+        'D) Suspender direitos políticos.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. A Imperatividade vincula o administrado independentemente do seu consentimento prévio.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O poder hierárquico autoriza ordenar, fiscalizar, estruturar, distribuir funções, delegar e avocar competências nos estritos limites da lei.'
     },
     {
       id: 10,
-      enunciado: '10. A autoexecutoriedade permite, em determinadas hipóteses:',
+      enunciado: '10. Sobre hierarquia administrativa, assinale a alternativa correta:',
       alternativas: [
-        'A) Que a Administração execute diretamente sua decisão, sem necessidade de autorização judicial prévia.',
-        'B) Que qualquer servidor pratique qualquer ato.',
-        'C) Que a Administração deixe de observar a lei.',
-        'D) Que todo ato seja executado sem qualquer limite.'
+        'A) Existe hierarquia entre os Poderes Legislativo, Executivo e Judiciário.',
+        'B) O poder hierárquico está relacionado à organização interna da Administração.',
+        'C) Todo servidor possui poder hierárquico sobre qualquer autoridade pública.',
+        'D) Hierarquia permite ao superior praticar qualquer ato sem limites legais.'
       ],
-      correta: 0,
-      explicacao: '✅ Gabarito: A. A Autoexecutoriedade permite que a Administração execute diretamente a providência administrativa sem socorrer-se previamente do Judiciário.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O poder hierárquico restringe-se ao âmbito interno da organização administrativa. Não há hierarquia entre Poderes da República nem com cidadãos.'
     },
     {
       id: 11,
-      enunciado: '11. A tipicidade significa que:',
+      enunciado: '11. O abuso de poder ocorre quando:',
       alternativas: [
-        'A) Todo ato deve corresponder a uma figura prevista no ordenamento jurídico.',
-        'B) Todo ato precisa ser judicialmente autorizado.',
-        'C) O agente pode criar livremente qualquer ato administrativo.',
-        'D) Apenas atos privados possuem forma definida.'
+        'A) O agente atua sempre dentro dos limites legais.',
+        'B) O agente público ultrapassa ou utiliza inadequadamente os limites de sua atuação.',
+        'C) O cidadão exerce seu direito de petição.',
+        'D) A Administração pratica um ato obrigatório.'
       ],
-      correta: 0,
-      explicacao: '✅ Gabarito: A. Tipicidade exige a definição prévia em lei de cada tipo de ato administrativo e seus efeitos.'
+      correta: 1,
+      explicacao: '✅ Gabarito: B. O abuso de poder (gênero) ocorre quando o agente público atua além de sua competência legal (excesso de poder) ou desvia a finalidade pública da conduta (desvio de finalidade).'
     },
     {
       id: 12,
-      enunciado: '12. A anulação de um ato administrativo ocorre quando:',
+      enunciado: '12. O excesso de poder ocorre quando o agente:',
       alternativas: [
-        'A) O ato é válido, mas deixou de ser conveniente.',
-        'B) Existe ilegalidade no ato.',
-        'C) O agente muda de opinião.',
-        'D) O particular solicita sua revogação.'
+        'A) Atua fora dos limites de sua competência.',
+        'B) Atua com finalidade pública adequada.',
+        'C) Deixa de exercer qualquer função.',
+        'D) Pratica ato exclusivamente privado.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. A Anulação pressupõe a existência de ilegalidade ou vício de validade no ato administrativo.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O excesso de poder caracteriza-se por vício no elemento Competência: o agente pratica ato que extrapola os limites legais que lhe foram atribuídos.'
     },
     {
       id: 13,
-      enunciado: '13. A revogação está relacionada:',
+      enunciado: '13. O desvio de finalidade ocorre quando:',
       alternativas: [
-        'A) À ilegalidade do ato.',
-        'B) À conveniência e oportunidade administrativas.',
-        'C) À inexistência do agente público.',
-        'D) À nulidade obrigatória do ato.'
+        'A) O agente não possui qualquer competência.',
+        'B) O agente utiliza sua competência para alcançar finalidade diferente daquela prevista em lei.',
+        'C) A Administração publica um ato oficial.',
+        'D) O servidor cumpre uma ordem legal.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. A Revogação baseia-se em razões de mérito administrativo (conveniência e oportunidade para o interesse público).'
+      explicacao: '✅ Gabarito: B. No desvio de finalidade (vício na Finalidade), o agente detém a competência formal, mas direciona o ato para fim alheio ao interesse público ou para fins particulares.'
     },
     {
       id: 14,
-      enunciado: '14. Um ato administrativo válido deixa de ser conveniente para a Administração. Nesse caso, em regra, poderá ocorrer:',
+      enunciado: '14. Assinale a associação correta:',
       alternativas: [
-        'A) Anulação.',
-        'B) Revogação.',
-        'C) Convalidação obrigatória.',
-        'D) Judicialização automática.'
+        'A) Excesso de poder → finalidade inadequada.',
+        'B) Desvio de finalidade → excesso de competência.',
+        'C) Excesso de poder → ultrapassagem da competência.',
+        'D) Poder disciplinar → organização interna exclusivamente.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. Havendo ato perfeito e legítimo que se torna inoportuno ou inconveniente, a medida é a Revogação.'
+      correta: 2,
+      explicacao: '✅ Gabarito: C. Excesso de poder = vício na competência (ultrapassagem de atribuições). Desvio de finalidade = vício no fim pretendido.'
     },
     {
       id: 15,
-      enunciado: '15. Um ato administrativo apresenta ilegalidade. A providência adequada é:',
+      enunciado: '15. Um agente público competente para praticar determinado ato utiliza essa competência para perseguir pessoalmente um cidadão. Há indício de:',
       alternativas: [
-        'A) Revogação por conveniência.',
-        'B) Anulação.',
-        'C) Convalidação obrigatória em qualquer situação.',
-        'D) Manutenção obrigatória.'
+        'A) Desvio de finalidade.',
+        'B) Poder regulamentar legítimo.',
+        'C) Poder hierárquico regular.',
+        'D) Poder disciplinar obrigatório.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. Atos ilegais devem ser Anulados (Súmula 473 do STF).'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A utilização da função pública para fins de perseguição pessoal, vingança ou favorecimento ilegítimo configura notório desvio de finalidade.'
     },
     {
       id: 16,
-      enunciado: '16. A convalidação consiste, em linhas gerais, na:',
+      enunciado: '16. Um agente recebe competência para aplicar determinada medida, mas ultrapassa os limites estabelecidos pela lei. Nesse caso, há:',
       alternativas: [
-        'A) Criação de um novo Poder.',
-        'B) Correção de determinados vícios sanáveis do ato administrativo.',
-        'C) Revogação de todos os atos administrativos.',
-        'D) Transformação de ato administrativo em lei.'
+        'A) Desvio de finalidade necessariamente.',
+        'B) Excesso de poder.',
+        'C) Poder regulamentar.',
+        'D) Poder de polícia legítimo.'
       ],
       correta: 1,
-      explicacao: '✅ Gabarito: B. Convalidação é a correção com efeito retroativo de atos com vícios sanáveis (ex: competência não exclusiva ou forma não essencial).'
+      explicacao: '✅ Gabarito: B. Ultrapassar os limites de atuação legalmente estabelecidos para a sua competência caracteriza excesso de poder.'
     },
     {
       id: 17,
-      enunciado: '17. Assinale a alternativa correta:',
+      enunciado: '17. Assinale a alternativa INCORRETA:',
       alternativas: [
-        'A) Anulação ocorre por conveniência e oportunidade.',
-        'B) Revogação ocorre necessariamente por ilegalidade.',
-        'C) Anulação relaciona-se à ilegalidade, enquanto revogação relaciona-se à conveniência e oportunidade.',
-        'D) Anulação e revogação são exatamente a mesma coisa.'
+        'A) O poder disciplinar permite aplicação de sanções administrativas nos casos cabíveis.',
+        'B) O poder hierárquico está relacionado à organização administrativa.',
+        'C) O poder de polícia pode limitar determinados direitos em benefício do interesse público.',
+        'D) O poder regulamentar permite ao Executivo criar livremente qualquer obrigação não prevista no ordenamento jurídico.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. A Anulação combate a ilegalidade, enquanto a Revogação analisa conveniência e oportunidade.'
+      correta: 3,
+      explicacao: '✅ Gabarito: D (Incorreta). O poder regulamentar é subordinado à lei; não autoriza o Poder Executivo a inovar primariamente na ordem jurídica nem a criar livremente obrigações inexistentes na lei.'
     },
     {
       id: 18,
-      enunciado: '18. Um servidor pratica ato administrativo sem possuir competência legal para fazê-lo. O problema está relacionado ao elemento:',
+      enunciado: '18. Sobre o poder de polícia, é correto afirmar:',
       alternativas: [
-        'A) Objeto.',
-        'B) Motivo.',
-        'C) Competência.',
-        'D) Finalidade.'
+        'A) Sua finalidade está relacionada à proteção do interesse público.',
+        'B) Permite ao Estado eliminar definitivamente todos os direitos individuais.',
+        'C) É exercido exclusivamente pelo Poder Judiciário.',
+        'D) Não pode envolver fiscalização.'
       ],
-      correta: 2,
-      explicacao: '✅ Gabarito: C. Falta de atribuição legal para praticar o ato constitui vício no elemento Competência.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. O poder de polícia destina-se exclusivamente a tutelar e salvaguardar o interesse público, a ordem social, a segurança e a saúde da coletividade.'
     },
     {
       id: 19,
-      enunciado: '19. A Administração utiliza determinado ato para alcançar finalidade pessoal do agente, em vez da finalidade pública prevista em lei. O elemento comprometido é:',
+      enunciado: '19. Um órgão público organiza a distribuição de tarefas entre seus servidores e estabelece mecanismos de fiscalização interna. Está exercendo principalmente o:',
       alternativas: [
-        'A) Forma.',
-        'B) Finalidade.',
-        'C) Objeto.',
-        'D) Competência.'
+        'A) Poder hierárquico.',
+        'B) Poder de polícia.',
+        'C) Poder constituinte.',
+        'D) Poder jurisdicional.'
       ],
-      correta: 1,
-      explicacao: '✅ Gabarito: B. O desvio de poder/finalidade atinge o elemento Finalidade do ato administrativo.'
+      correta: 0,
+      explicacao: '✅ Gabarito: A. A distribuição de atribuições e o controle/fiscalização interna de servidores constituem expressões típicas do poder hierárquico.'
     },
     {
       id: 20,
-      enunciado: '20. Um ato administrativo válido deixa de atender ao interesse da Administração por razões de conveniência e oportunidade. Sobre o caso, é correto afirmar:',
+      enunciado: '20. Um estabelecimento é fiscalizado pela Administração e, constatada uma irregularidade, recebe uma sanção administrativa prevista em lei. Nesse caso, podem estar presentes:',
       alternativas: [
-        'A) Pode ocorrer revogação, observados os limites legais.',
-        'B) Deve ocorrer anulação por ilegalidade.',
-        'C) O ato se torna automaticamente inexistente.',
-        'D) A Administração perde definitivamente sua competência.'
+        'A) Poder de polícia e atuação administrativa sancionadora, conforme a situação.',
+        'B) Apenas poder jurisdicional.',
+        'C) Poder constituinte derivado.',
+        'D) Exclusivamente poder legislativo.'
       ],
       correta: 0,
-      explicacao: '✅ Gabarito: A. Diante de inconveniência superveniente em ato perfeito, a Administração pode revogá-lo.'
+      explicacao: '✅ Gabarito: A. A fiscalização de estabelecimentos e a aplicação de sanções administrativas por descumprimento de normas sanitárias ou de funcionamento integram a atividade de poder de polícia.'
     }
   ];
 
-  const tfQuestionsData: any[] = [];
+  const tfQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. O poder disciplinar confere à Administração a prerrogativa de punir qualquer cidadão indistintamente, mesmo sem qualquer vínculo funcional ou contratual específico.',
+      correta: false,
+      explicacao: '✅ Gabarito: Falso. O Poder Disciplinar atinge exclusivamente pessoas com vínculo de sujeição especial com o Estado (servidores públicos e contratados). A supremacia geral sobre a coletividade decorre do Poder de Polícia.'
+    },
+    {
+      id: 2,
+      enunciado: '2. No abuso de poder, o excesso de poder caracteriza-se quando a autoridade atua fora dos limites de sua competência legalmente estabelecida.',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. O excesso de poder ocorre quando o agente extrapola as atribuições que lhe foram conferidas por lei (vício na competência).'
+    },
+    {
+      id: 3,
+      enunciado: '3. O poder regulamentar permite ao Chefe do Executivo editar decretos para criar novas obrigações originárias não previstas em lei, inovando livremente na ordem jurídica.',
+      correta: false,
+      explicacao: '✅ Gabarito: Falso. O Poder Regulamentar serve para a fiel execução das leis, sendo vedado inovar originariamente na ordem jurídica ou criar novas obrigações sem base legal.'
+    },
+    {
+      id: 4,
+      enunciado: '4. Não existe relação de subordinação hierárquica entre os diferentes Poderes da República (Executivo, Legislativo e Judiciário).',
+      correta: true,
+      explicacao: '✅ Gabarito: Verdadeiro. Os Poderes da União são independentes e harmônicos entre si (Art. 2º da CF/88), inexistindo hierarquia entre eles.'
+    }
+  ];
 
-  const discursiveQuestionsData: any[] = [];
+  const discursiveQuestionsData = [
+    {
+      id: 1,
+      enunciado: '1. Diferencie detalhadamente o Poder Hierárquico do Poder Disciplinar, apontando o objetivo principal de cada um e seus respectivos reflexos no âmbito da Administração Pública.',
+      respostaEsperada: 'Gabarito oficial: O Poder Hierárquico é o poder de organizar, estruturar e coordenar as funções da Administração, estabelecendo relações de coordenação e subordinação entre órgãos e agentes (permite distribuir funções, dar ordens, fiscalizar, delegar e avocar competências). Não há hierarquia entre Poderes da República. Já o Poder Disciplinar é o poder de apurar infrações e aplicar sanções a servidores e pessoas sujeitas à disciplina administrativa (com vínculo específico). Em síntese: Poder Hierárquico cuida da organização interna; Poder Disciplinar cuida da punição por faltas funcionais.'
+    },
+    {
+      id: 2,
+      enunciado: '2. Explique as duas modalidades de Abuso de Poder (Excesso de Poder e Desvio de Finalidade), indicando o vício de validade presente em cada uma e fornecendo um exemplo prático para cada caso.',
+      respostaEsperada: 'Gabarito oficial: O Abuso de Poder é gênero que se desdobra em: 1) Excesso de Poder: ocorre quando o agente ultrapassa os limites de sua competência legal (vício no elemento Competência; Exemplo: autoridade sem competência legal que aplica demissão a servidor público); 2) Desvio de Finalidade: ocorre quando o agente atua dentro dos limites de sua competência, mas utiliza o poder para finalidade alheia à prevista em lei ou para interesse pessoal (vício no elemento Finalidade; Exemplo: remoção de servidor público com intuito de perseguição pessoal ou política).'
+    }
+  ];
 
   // Processo Civil Questions (Exercícios - Aula 5 • Atos Processuais)
   const procCivilMcQuestionsData = [
@@ -2340,7 +2376,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           processo_penal: 'pp-3',
           processo_civil: 'pc-1',
           informatica: 'inf-1',
-          direito_admin: 'adm-1',
+          direito_admin: 'adm-3',
           direito_const: 'const-3',
         };
         const tid = topicIdMap[selectedSubject];
@@ -2526,7 +2562,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_civil' ? '⚖️ Processo Civil • Aula 5 – Atos Processuais'
                   : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
                   : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Aula 2 – Princípios Fundamentais'
-                  : '📜 Direito Administrativo • Aula 3 – Atos Administrativos'
+                  : '⚖️ Direito Administrativo • Aula 7 – Poderes da Administração Pública'
                 }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
@@ -2537,13 +2573,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_civil' ? 'Aula 5 — Atos Processuais'
                   : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
                   : selectedSubject === 'direito_const' ? 'Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
-                  : 'Aula 3 — Atos Administrativos'
+                  : 'Aula 7 — Poderes da Administração Pública'
                 }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
                 {
                   selectedSubject === 'libras' ? 'Acessibilidade e Inclusão • Nível: Iniciante • Tempo estimado: 45–60 min • Preparatório Assistente Judiciário TJAM'
-                  : 'Nível: Iniciante • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
+                  : 'Nível: Intermediário / Foco FGV • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
                 }
               </p>
             </div>
@@ -2571,18 +2607,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas e Mariana', pct: '6,0%', isUser: false },
-                { pos: 2, name: 'Gabriel e Sofia', pct: '5,7%', isUser: false },
-                { pos: 3, name: 'Matheus e Beatriz', pct: '5,4%', isUser: false },
-                { pos: 4, name: 'Rafael e Amanda', pct: '5,1%', isUser: false },
-                { pos: 5, name: 'Carlos e Juliana', pct: '4,8%', isUser: false },
-                { pos: 6, name: 'Bruno e Camila', pct: '4,5%', isUser: false },
-                { pos: 7, name: 'Diego e Fernanda', pct: '4,2%', isUser: false },
-                { pos: 8, name: 'Rodrigo e Larissa', pct: '4,0%', isUser: false },
-                { pos: 9, name: 'Vinícius e Letícia', pct: '3,8%', isUser: false },
-                { pos: 10, name: 'Thiago e Natália', pct: '3,7%', isUser: false },
-                { pos: 11, name: 'Felipe e Isabela', pct: '3,5%', isUser: false },
-                { pos: 12, name: 'Pedro e Eduardo', pct: '3,4%', isUser: true },
+                { pos: 1, name: 'Lucas Silveira', pct: '6,0%', isUser: false },
+                { pos: 2, name: 'Mariana Costa', pct: '5,7%', isUser: false },
+                { pos: 3, name: 'Gabriel Souza', pct: '5,4%', isUser: false },
+                { pos: 4, name: 'Sofia Albuquerque', pct: '5,1%', isUser: false },
+                { pos: 5, name: 'Matheus Ribeiro', pct: '4,8%', isUser: false },
+                { pos: 6, name: 'Beatriz Lima', pct: '4,5%', isUser: false },
+                { pos: 7, name: 'Rafael Mendes', pct: '4,2%', isUser: false },
+                { pos: 8, name: 'Amanda Rocha', pct: '4,0%', isUser: false },
+                { pos: 9, name: 'Carlos Eduardo', pct: '3,8%', isUser: false },
+                { pos: 10, name: 'Juliana Castro', pct: '3,7%', isUser: false },
+                { pos: 11, name: 'Bruno Carvalho', pct: '3,5%', isUser: false },
+                { pos: 12, name: 'Eduardo Mateus', pct: '3,4%', isUser: true },
               ].map((d) => (
                 <div
                   key={d.pos}
@@ -2612,8 +2648,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                       {d.name}
                       {d.isUser && (
                         <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/30 text-sky-200 border border-sky-400/30 font-extrabold uppercase flex items-center gap-0.5">
-                          <span>Sua Dupla</span>
-                          <span>🧊</span>
+                          <span>Você</span>
                         </span>
                       )}
                     </span>
@@ -2674,50 +2709,67 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
         <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
           <button
+            onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+            className={`flex-1 min-w-[190px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              selectedSubject === 'direito_admin'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <span>⚖️ Dir. Admin (Aula 7)</span>
+            </div>
+            {savedLessonsStore['direito_admin']?.completed ? (
+              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+            ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
+            ) : (
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula de Hoje</span>
+            )}
+          </button>
+
+          <button
             onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'processo_penal'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <div className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>1. Proc. Penal (Aula 6)</span>
+              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
+              <span>Proc. Penal (Aula 6)</span>
             </div>
             {savedLessonsStore['processo_penal']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
             ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
               <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula 1 de Hoje</span>
-            )}
+            ) : null}
           </button>
 
           <button
             onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'processo_civil'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <div className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>2. Proc. Civil (Aula 5)</span>
+              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
+              <span>Proc. Civil (Aula 5)</span>
             </div>
             {savedLessonsStore['processo_civil']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
             ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
               <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula 2 de Hoje</span>
-            )}
+            ) : null}
           </button>
 
           <button
             onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'portugues'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2736,7 +2788,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
           <button
             onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'direito_const'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2744,7 +2796,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           >
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Dir. Constitucional</span>
+              <span>Constitucional</span>
             </div>
             {savedLessonsStore['direito_const']?.completed ? (
               <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
@@ -2754,27 +2806,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </button>
 
           <button
-            onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'direito_admin'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Dir. Admin.</span>
-            </div>
-            {savedLessonsStore['direito_admin']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
-
-          <button
             onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'libras'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2793,7 +2826,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
           <button
             onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
               selectedSubject === 'informatica'
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2844,7 +2877,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Unidade 1 — Fundamentos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Aula 2 — Princípios Fundamentais'
-              : 'Unidade 1 — Atos Administrativos'}
+              : 'Unidade 3 — Poderes da Administração Pública'}
           </span>
           <span>•</span>
           <span>
@@ -2860,7 +2893,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Arts. 1º a 4º da Constituição Federal'
-              : 'Aula 3 — Atos Administrativos'}
+              : 'Aula 7 — Poderes da Administração Pública'}
           </span>
         </div>
 
@@ -2872,14 +2905,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'libras'
                 ? 'Aula de Hoje: LIBRAS (Acessibilidade e Inclusão)'
                 : selectedSubject === 'processo_penal'
-                ? '🔥 AULA 1 DE HOJE • Processo Penal (Aula 6)'
+                ? '⚖️ Processo Penal (Aula 6)'
                 : selectedSubject === 'processo_civil'
-                ? '🔥 AULA 2 DE HOJE • Processo Civil (Aula 5)'
+                ? '⚖️ Processo Civil (Aula 5)'
                 : selectedSubject === 'informatica'
-                ? 'Informática'
+                ? 'Informática (Aula 1)'
                 : selectedSubject === 'direito_const'
                 ? '⚖️ Direito Constitucional (Aula 2)'
-                : '🏛️ Direito Administrativo (Aula 3)'}
+                : '🔥 AULA DE HOJE • Direito Administrativo (Aula 7)'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               {selectedSubject === 'portugues'
@@ -2894,7 +2927,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Aula 1 — Conceitos Básicos de Informática'
                 : selectedSubject === 'direito_const'
                 ? 'Aula 2 — Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
-                : '🏛️ Direito Administrativo — Aula 3: Atos Administrativos'}
+                : '⚖️ Direito Administrativo — Aula 7: Poderes da Administração Pública'}
             </h1>
           </div>
 
@@ -3017,10 +3050,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
                     : selectedSubject === 'processo_penal'
                     ? 'Capítulo 1 — Processo Penal: Princípios e Aplicação da Lei (Aula 6)'
-                    : 'Unidade 1 — Direito Administrativo: Atos Administrativos'}
+                    : 'Aula 7 — Direito Administrativo: Poderes da Administração Pública'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos
+                  {selectedSubject === 'direito_admin' ? 'Unidade 3: Poderes Administrativos • Foco FGV / TJAM' : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
                 </p>
               </div>
 
@@ -3279,19 +3312,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Conceito de Ato Administrativo e exemplos práticos (nomeação, licença, autorização e sanção).</span>
+                      <span>Poder Hierárquico: relações de subordinação interna, dar ordens, fiscalizar, delegar e avocar competências.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Os 5 Elementos do ato administrativo e o mnemônico CO–FI–FO–MO–OB (Competência, Finalidade, Forma, Motivo, Objeto).</span>
+                      <span>Poder Disciplinar: apuração de infrações e punição de servidores e particulares com vínculo especial.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Atributos dos atos: Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade.</span>
+                      <span>Poder Regulamentar: decretos e regulamentos para fiel execução da lei (secundum legem, sem inovar primariamente).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Diferença crucial para a prova: Anulação (ilegalidade) x Revogação (conveniência e oportunidade) x Convalidação (vício sanável).</span>
+                      <span>Poder de Polícia: restrição e condicionamento de direitos individuais em prol do interesse público (atributos: Discricionariedade, Autoexecutoriedade e Coercibilidade).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Poder Vinculado vs. Discricionário, e Abuso de Poder (Excesso de Poder x Desvio de Finalidade).</span>
                     </li>
                   </ul>
                 )}
@@ -5213,265 +5250,314 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               }`}
             >
               <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — 🏛️ Direito Administrativo (Aula 3: Atos Administrativos)
+                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — ⚖️ Direito Administrativo (Aula 7: Poderes da Administração Pública)
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                Ao concluir esta aula, você dominará o conceito, os 5 elementos (CO–FI–FO–MO–OB), os atributos e as formas de anulação, revogação e convalidação cobradas pela banca FGV:
+                Ao concluir esta aula, você dominará com precisão as prerrogativas de Estado, a diferença entre supremacia geral e especial, os atributos do poder de polícia e as hipóteses de abuso de poder mais cobradas pela banca FGV:
               </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Conceituar ato administrativo e identificar seus exemplos práticos.</span>
+                  <span>Compreender a natureza jurídica dos Poderes como poderes-deveres instrumentais.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Memorizar os 5 elementos do ato pelo mnemônico CO–FI–FO–MO–OB.</span>
+                  <span>Dominar o Poder Hierárquico (ordem, controle, delegação e avocação de competência).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Compreender os atributos (Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade).</span>
+                  <span>Diferenciar a Supremacia Especial (Poder Disciplinar) da Supremacia Geral (Poder de Polícia).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar Anulação (ilegalidade) de Revogação (conveniência e oportunidade) e Convalidação.</span>
+                  <span>Conhecer os limites do Poder Regulamentar e as hipóteses de decretos autônomos (Art. 84, VI, CF).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Memorizar os atributos do Poder de Polícia pelo mnemônico DAC (Discricionariedade, Autoexecutoriedade, Coercibilidade).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>Distinguir Excesso de Poder (vício na Competência) de Desvio de Finalidade (vício na Finalidade).</span>
                 </li>
               </ul>
             </section>
 
-            {/* Seção 1: Conceito */}
+            {/* Seção 1: Conceito e Natureza dos Poderes */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. Conceito
+                1. Conceito e Natureza: Poder-Dever
               </h2>
               <p className="text-sm">
-                Ato administrativo é a <strong>manifestação da Administração Pública</strong>, ou de quem exerça função administrativa, destinada a produzir efeitos jurídicos conforme o Direito.
+                Os <strong>Poderes Administrativos</strong> não constituem privilégios pessoais dos governantes ou agentes públicos, mas sim <strong>instrumentos jurídicos conferidos pela lei</strong> para que a Administração Pública possa atingir a sua finalidade essencial: a <strong>satisfação do interesse público</strong>.
               </p>
               <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                <h3 className="text-xs font-black uppercase text-slate-900 dark:text-white mb-2 flex items-center gap-1.5">
-                  <BookOpen className="w-4 h-4 text-emerald-500" /> Exemplos de Atos Administrativos:
-                </h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Nomeação de servidor público</li>
-                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Aplicação de uma penalidade administrativa</li>
-                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Concessão de uma licença</li>
-                  <li className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">• Autorização administrativa</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Seção 2: Elementos do ato administrativo */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. Elementos do ato administrativo
-              </h2>
-              <p className="text-sm">
-                Os <strong>cinco elementos clássicos</strong> que compõem a validade de um ato administrativo são:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1">
-                    👤 Competência
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É o poder legal atribuído ao agente ou órgão para praticar o ato.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1">
-                    🎯 Finalidade
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Todo ato administrativo deve buscar o interesse público previsto pela lei.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <h4 className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
-                    📄 Forma
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É o modo pelo qual o ato deve ser exteriorizado.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <h4 className="text-xs font-black text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1">
-                    🔎 Motivo
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É a situação de fato e de direito que justifica a prática do ato.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1 md:col-span-2 lg:col-span-1">
-                  <h4 className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1">
-                    📌 Objeto
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É o efeito jurídico produzido pelo ato, aquilo que o ato determina, concede, modifica ou extingue.
-                  </p>
-                </div>
-              </div>
-
-              {/* Mnemônico Card */}
-              <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
-                  🧠 Mnemônico para Memorizar
-                </span>
-                <p className="text-base font-black text-slate-900 dark:text-white">
-                  CO – FI – FO – MO – OB
-                </p>
-                <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
-                  Competência → Finalidade → Forma → Motivo → Objeto
+                <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                  📌 <strong>Poder-Dever (ou Dever-Poder):</strong> Para o administrador público, o exercício do poder é irrenunciável e obrigatório. Diante de uma situação prevista em lei, o administrador tem o <em>dever de agir</em>, sob pena de incorrer em abuso de poder por omissão.
                 </p>
               </div>
             </section>
 
-            {/* Seção 3: Atributos dos atos administrativos */}
+            {/* Seção 2: Poder Hierárquico */}
             <section className="space-y-3">
               <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. Atributos dos atos administrativos
+                2. Poder Hierárquico
               </h2>
               <p className="text-sm">
-                Os principais atributos que conferem características especiais aos atos administrativos são:
+                É a prerrogativa que a Administração Pública possui de <strong>estruturar, organizar, distribuir e escalonar suas funções</strong>, estabelecendo uma relação de coordenação e subordinação entre seus órgãos e agentes.
               </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+                  <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase mb-1">
+                    Prerrogativas do Poder Hierárquico:
+                  </h4>
+                  <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                    <li>• Dar ordens aos subordinados (dever de obediência, salvo ordens manifestamente ilegais);</li>
+                    <li>• Fiscalizar e revisar a conduta e os atos dos subordinados;</li>
+                    <li>• Delegar e avocar competências administrativas (Lei 9.784/99).</li>
+                  </ul>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/50 border-amber-200'}`}>
+                  <h4 className="text-xs font-black text-amber-700 dark:text-amber-400 uppercase mb-1 flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5" /> Pegadinhas de Prova FGV:
+                  </h4>
+                  <ul className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
+                    <li>❌ <strong>NÃO há hierarquia</strong> entre os Poderes da República (Executivo, Legislativo e Judiciário são independentes e harmônicos).</li>
+                    <li>❌ <strong>NÃO há hierarquia</strong> entre a Administração e o cidadão comum.</li>
+                    <li>❌ <strong>NÃO há hierarquia</strong> entre a Administração Direta e a Indireta (há apenas tutela, vinculação ou controle finalístico).</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Delegação e Avocação Box */}
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs space-y-2">
+                <h4 className="font-black text-emerald-800 dark:text-emerald-400 uppercase">
+                  Delegação vs. Avocação de Competência (Lei nº 9.784/99):
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700 dark:text-slate-300">
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <strong>Delegação:</strong> Transferência temporária do exercício de parte da competência a outro órgão/agente, <em>mesmo que não haja subordinação hierárquica</em>.<br />
+                    <span className="text-[11px] text-rose-600 dark:text-rose-400 font-bold">Vedações (NOREX):</span> Atos Normativos, Recursos Administrativos e Competência Exclusiva.
+                  </div>
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <strong>Avocação:</strong> O superior hierárquico atrai para si temporariamente a competência atribuída a um subordinado. É medida <em>excepcional, temporária e exige fundamentação</em>.
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 3: Poder Disciplinar */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                3. Poder Disciplinar
+              </h2>
+              <p className="text-sm">
+                É o poder atribuído à Administração Pública para <strong>apurar infrações e aplicar penalidades administrativas</strong> àqueles que possuem um <strong>vínculo jurídico específico (supremacia especial)</strong> com o Estado.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+                  <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase mb-1">
+                    Quem está sujeito ao Poder Disciplinar?
+                  </h4>
+                  <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                    <li>• Servidores públicos (estatutários ou celetistas);</li>
+                    <li>• Particulares com contrato administrativo com o Poder Público (ex: empresa concessionária ou fornecedora de merenda/serviços);</li>
+                    <li>• Alunos de escola pública estadual/municipal.</li>
+                  </ul>
+                </div>
+
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+                  <h4 className="text-xs font-black text-purple-600 dark:text-purple-400 uppercase mb-1">
+                    Diferenciação FGV: Disciplinar x Polícia
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    • <strong>Poder Disciplinar:</strong> decorre da <em>Supremacia Especial</em> (vínculo contratual ou funcional específico).<br />
+                    • <strong>Poder de Polícia:</strong> decorre da <em>Supremacia Geral</em> (incide sobre qualquer cidadão da coletividade).
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 4: Poder Regulamentar / Normativo */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                4. Poder Regulamentar (ou Normativo)
+              </h2>
+              <p className="text-sm">
+                É a prerrogativa conferida aos <strong>Chefes do Poder Executivo</strong> (Presidente, Governadores e Prefeitos) para expedir atos gerais e abstratos (decretos e regulamentos) destinados a <strong>garantir a fiel execução das leis</strong> (Art. 84, IV da CF/88).
+              </p>
+              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} space-y-2`}>
+                <h4 className="text-xs font-black uppercase text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <BookOpen className="w-4 h-4 text-emerald-500" /> Regra Geral: Atos Secundários (Secundum Legem)
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  O regulamento é ato <strong>subordinado à lei</strong>. Não pode inovar primariamente na ordem jurídica, não pode criar direitos, obrigações ou proibições que não estejam previstos na lei regulamentada.
+                </p>
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-slate-700 dark:text-slate-300">
+                  <strong>Exceção Constitucional — Decretos Autônomos (Art. 84, VI da CF/88):</strong><br />
+                  O Chefe do Executivo pode editar decreto originário SEM lei prévia apenas em duas hipóteses expressas:
+                  <ol className="list-decimal pl-4 pt-1 space-y-0.5 font-medium">
+                    <li>Organização e funcionamento da administração federal, quando não implicar aumento de despesa nem criação/extinção de órgãos públicos;</li>
+                    <li>Extinção de funções ou cargos públicos, quando vagos.</li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 5: Poder de Polícia */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                5. Poder de Polícia
+              </h2>
+              <p className="text-sm">
+                Conforme o <strong>art. 78 do Código Tributário Nacional (CTN)</strong>, é a atividade da Administração Pública que <strong>condiciona ou restringe o uso de bens, o exercício de direitos e a prática de atividades individuais</strong> em prol do interesse da coletividade (segurança, higiene, trânsito, costumes, ordem pública e meio ambiente).
+              </p>
+
+              {/* Atributos do Poder de Polícia - DAC */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                    D • Discricionariedade
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    A Administração tem liberdade de escolha quanto à conveniência e oportunidade da medida (regra geral; na licença, o ato é vinculado).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                    A • Autoexecutoriedade
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    A Administração pode executar suas decisões diretamente, sem autorização prévia do Poder Judiciário (ex: interdição de fábrica, apreensão de alimentos).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
+                  <h4 className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider">
+                    C • Coercibilidade
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    O ato impõe-se de maneira obrigatória e coativa ao particular, inclusive com uso legítimo da força pública quando necessário.
+                  </p>
+                </div>
+              </div>
+
+              {/* Polícia Administrativa vs. Polícia Judiciária */}
+              <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+                <h4 className="font-black text-slate-900 dark:text-white uppercase">
+                  Diferença Crucial: Polícia Administrativa x Polícia Judiciária
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <strong className="text-emerald-600 dark:text-emerald-400">Polícia Administrativa:</strong><br />
+                    • Incide sobre <strong>bens, direitos e atividades</strong>;<br />
+                    • Caráter predominantemente <strong>preventivo</strong>;<br />
+                    • Exercida por múltiplos órgãos (PROCON, Vigilância Sanitária, DETRAN, fiscalização tributária e ambiental).
+                  </div>
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <strong className="text-blue-600 dark:text-blue-400">Polícia Judiciária:</strong><br />
+                    • Incide sobre <strong>pessoas</strong> (infratores da lei penal);<br />
+                    • Caráter predominantemente <strong>repressivo</strong> (investigação criminal);<br />
+                    • Exercida por corporações de segurança especializadas (Polícia Civil e Polícia Federal).
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Seção 6: Poder Vinculado vs. Poder Discricionário */}
+            <section className="space-y-3">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
+                6. Poder Vinculado vs. Poder Discricionário
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <h3 className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 uppercase mb-1">
-                    Presunção de Legitimidade
-                  </h3>
+                  <h4 className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase mb-1">
+                    Poder Vinculado
+                  </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-300">
-                    O ato é considerado válido e legítimo até que seja demonstrado o contrário.
+                    A lei estabelece todos os requisitos e a conduta exata a ser adotada. Não há margem de escolha para o administrador. Cumpridos os requisitos legais, o ato DEVE ser praticado (ex: concessão de aposentadoria por tempo ou licença para construir).
                   </p>
                 </div>
 
                 <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <h3 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase mb-1">
-                    Imperatividade
-                  </h3>
+                  <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase mb-1">
+                    Poder Discricionário
+                  </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Em determinadas situações, o ato pode impor obrigações independentemente da concordância do particular.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <h3 className="text-xs font-extrabold text-amber-600 dark:text-amber-400 uppercase mb-1">
-                    Autoexecutoriedade
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mb-1">
-                    Em determinadas hipóteses, a Administração pode executar diretamente sua decisão, sem precisar de autorização judicial prévia.
-                  </p>
-                  <span className="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-500/20 text-amber-600 dark:text-amber-300">
-                    ⚠️ Não está presente em todos os atos.
-                  </span>
-                </div>
-
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <h3 className="text-xs font-extrabold text-purple-600 dark:text-purple-400 uppercase mb-1">
-                    Tipicidade
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    O ato administrativo deve corresponder a uma figura previamente prevista no ordenamento jurídico.
+                    A lei confere ao administrador uma margem de liberdade para decidir segundo critérios de <strong>conveniência e oportunidade (mérito administrativo)</strong>, sempre respeitando os limites da lei, a razoabilidade e a proporcionalidade (ex: autorização de uso de bem público).
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Seção 4: Anulação */}
+            {/* Seção 7: Abuso de Poder e suas Espécies */}
             <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Anulação
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-rose-500 pl-3">
+                7. Abuso de Poder e suas Espécies (Tema Preferido da FGV)
               </h2>
-              <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/50 border-rose-200'}`}>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                  A <strong>anulação</strong> ocorre quando existe <strong>ilegalidade</strong> no ato.
-                </p>
-                <div className="flex items-center gap-2 text-xs font-extrabold text-rose-700 dark:text-rose-400">
-                  <span>➡️ Pode ser realizada pela própria Administração e, quando provocado, pelo Poder Judiciário.</span>
-                </div>
-                <div className="pt-1">
-                  <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 font-black text-[11px]">
-                    Motivo: Ilegalidade
-                  </span>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 5: Revogação */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Revogação
-              </h2>
-              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                  A <strong>revogação</strong> ocorre quando um ato <strong>válido</strong> deixa de ser conveniente ou oportuno para a Administração.
-                </p>
-                <div className="flex items-center gap-2 text-xs font-extrabold text-blue-700 dark:text-blue-400">
-                  <span>📌 A revogação é realizada EXCLUSIVAMENTE pela própria Administração (o Judiciário não revoga ato do Executivo no exercício da função jurisdicional).</span>
-                </div>
-                <div>
-                  <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-300 font-black text-[11px]">
-                    Motivo: Conveniência e Oportunidade
-                  </span>
-                </div>
-              </div>
-
-              {/* Quadro Não Confunda */}
-              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5">
-                <span className="font-black uppercase text-amber-600 dark:text-amber-400 text-[10px]">
-                  ⚠️ Não Confunda na Prova da FGV:
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 font-bold">
-                  <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-slate-700">
-                    Anulação → Ilegalidade
+              <p className="text-sm">
+                O <strong>Abuso de Poder</strong> é gênero que abrange todo ato administrativo praticado em desconformidade com a lei ou com as finalidades públicas. Subdivide-se em duas espécies essenciais:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/50 border-rose-200'}`}>
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black uppercase text-rose-700 dark:text-rose-400">
+                      Excesso de Poder
+                    </h4>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-black bg-rose-500/20 text-rose-700 dark:text-rose-300">Vício na Competência</span>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700">
-                    Revogação → Conveniência e Oportunidade
+                  <p className="text-xs text-slate-700 dark:text-slate-300">
+                    Ocorre quando o agente público atua <strong>além dos limites legais de suas atribuições</strong> ou pratica ato para o qual não tem competência prevista em lei.
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <em>Exemplo: Policial que aplica pena disciplinar de demissão sem ter competência legal para tanto.</em>
+                  </p>
+                </div>
+
+                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/50 border-amber-200'}`}>
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black uppercase text-amber-700 dark:text-amber-400">
+                      Desvio de Finalidade
+                    </h4>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-black bg-amber-500/20 text-amber-700 dark:text-amber-300">Vício na Finalidade</span>
                   </div>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">
+                    Ocorre quando o agente é competente para praticar o ato, mas o realiza buscando <strong>fim diverso do interesse público</strong> (perseguição política, favorecimento pessoal ou vingança).
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <em>Exemplo: Remoção compulsória de servidor para comarca distante com objetivo de castigo pessoal.</em>
+                  </p>
                 </div>
               </div>
             </section>
 
-            {/* Seção 6: Convalidação */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Convalidação
-              </h2>
-              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-200'}`}>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                  A <strong>convalidação</strong> permite corrigir determinados <strong>vícios sanáveis</strong> de um ato administrativo (em regra, nos elementos <i>Competência</i> não exclusiva e <i>Forma</i> não essencial), desde que sejam atendidos os requisitos legais e não cause lesão ao interesse público nem prejuízo a terceiros.
-                </p>
-              </div>
-            </section>
-
-            {/* Seção 7: O que memorizar para a prova */}
+            {/* Seção 8: O que memorizar para a prova */}
             <section className="p-6 rounded-3xl bg-slate-900 text-white border border-slate-800 space-y-4">
               <h3 className="text-sm font-black uppercase text-amber-400 tracking-wider flex items-center gap-2">
-                🎯 O que Memorizar para a Prova (Resumo Definitivo)
+                🎯 O que Memorizar para a Prova (Quadro Síntese)
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                 <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
-                  <span className="font-extrabold text-emerald-400 uppercase text-[10px]">Elementos</span>
+                  <span className="font-extrabold text-emerald-400 uppercase text-[10px]">Poder Hierárquico</span>
                   <p className="font-bold text-white">
-                    Competência + Finalidade + Forma + Motivo + Objeto
-                  </p>
-                  <p className="text-[10px] text-amber-300 font-mono pt-1">(CO-FI-FO-MO-OB)</p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
-                  <span className="font-extrabold text-blue-400 uppercase text-[10px]">Atributos</span>
-                  <p className="font-bold text-white">
-                    Presunção de legitimidade + Imperatividade + Autoexecutoriedade + Tipicidade
+                    Organização interna, ordens, fiscalização, delegação e avocação de atribuições.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
-                  <span className="font-extrabold text-purple-400 uppercase text-[10px]">Extinção / Correção</span>
+                  <span className="font-extrabold text-blue-400 uppercase text-[10px]">Poder de Polícia (DAC)</span>
+                  <p className="font-bold text-white">
+                    Discricionariedade + Autoexecutoriedade + Coercibilidade. Restringe direitos em prol da coletividade.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                  <span className="font-extrabold text-rose-400 uppercase text-[10px]">Abuso de Poder</span>
                   <p className="font-medium text-slate-200">
-                    <strong className="text-rose-400">Anulação</strong> → ato ilegal<br />
-                    <strong className="text-blue-400">Revogação</strong> → ato válido, mas inconveniente ou inoportuno<br />
-                    <strong className="text-emerald-400">Convalidação</strong> → correção de vício sanável
+                    <strong className="text-rose-400">Excesso de Poder</strong> → vício na Competência<br />
+                    <strong className="text-amber-400">Desvio de Finalidade</strong> → vício na Finalidade
                   </p>
                 </div>
               </div>
@@ -5480,15 +5566,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* Checklist da Aula */}
             <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
               <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula 3
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação da Aula 7
               </h3>
               <div className="space-y-2 text-xs font-semibold">
                 {[
-                  { id: 'c1', text: 'Compreendi o conceito de ato administrativo e reconheço exemplos práticos (nomeação, licença, etc.).' },
-                  { id: 'c2', text: 'Decorei os 5 elementos do ato pelo mnemônico CO–FI–FO–MO–OB.' },
-                  { id: 'c3', text: 'Entendi os 4 atributos: Presunção de Legitimidade, Imperatividade, Autoexecutoriedade e Tipicidade.' },
-                  { id: 'c4', text: 'Sei que a Anulação decorre de ilegalidade e a Revogação de conveniência/oportunidade.' },
-                  { id: 'c5', text: 'Compreendi que a Convalidação corrige vícios sanáveis de atos com defeitos sanáveis.' },
+                  { id: 'c1', text: 'Entendi que os poderes administrativos são poderes-deveres vinculados à indisponibilidade do interesse público.' },
+                  { id: 'c2', text: 'Sei que o Poder Hierárquico existe apenas internamente e não vincula outros Poderes nem cidadãos.' },
+                  { id: 'c3', text: 'Compreendi as vedações à delegação (NOREX: atos Normativos, Recursos e competência Exclusiva).' },
+                  { id: 'c4', text: 'Diferenciei Poder Disciplinar (supremacia especial) de Poder de Polícia (supremacia geral).' },
+                  { id: 'c5', text: 'Memorizei os atributos do Poder de Polícia pelo mnemônico DAC (Discricionariedade, Autoexecutoriedade e Coercibilidade).' },
+                  { id: 'c6', text: 'Distingo Excesso de Poder (vício na Competência) de Desvio de Finalidade (vício na Finalidade).' },
                 ].map(item => (
                   <div
                     key={item.id}
@@ -6100,7 +6187,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   ? 'Resumo — Conceitos Básicos de Informática'
                   : selectedSubject === 'processo_penal'
                   ? 'Resumo — Processo Penal: Inquérito Policial'
-                  : 'Resumo — Direito Administrativo: Administração Pública'}
+                  : 'Resumo — Direito Administrativo: Poderes da Administração Pública (Aula 7)'}
               </h2>
             </div>
 
@@ -6221,25 +6308,33 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </ul>
             ) : (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold">•</span>
-                  <span>A Constituição é a <strong>lei mais importante e suprema</strong> do país.</span>
+                  <span><strong>Conceito de Poder-Dever:</strong> Os poderes administrativos são prerrogativas instrumentais e obrigatórias conferidas pela lei para atender com eficiência ao interesse público coletivo.</span>
                 </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Nenhuma outra norma</strong> (lei, decreto, ato) pode contrariá-la sem padece de inconstitucionalidade.</span>
+                  <span><strong>Poder Hierárquico:</strong> Estrutura interna de coordenação e subordinação. Permite dar ordens, fiscalizar, delegar e avocar competências. <em>Não existe hierarquia entre Poderes da República nem com o cidadão.</em></span>
                 </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold">•</span>
-                  <span>Organiza politicamente o Estado brasileiro e a divisão dos Três Poderes.</span>
+                  <span><strong>Vedações à Delegação (NOREX):</strong> Não podem ser delegados atos normativos, a decisão de recursos administrativos e matérias de competência exclusiva.</span>
                 </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold">•</span>
-                  <span>Define e assegura os <strong>direitos e garantias fundamentais</strong> do cidadão.</span>
+                  <span><strong>Poder Disciplinar (Supremacia Especial):</strong> Apura e pune servidores e contratados que possuem vínculo jurídico específico com a Administração.</span>
                 </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold">•</span>
-                  <span>Limita o poder estatal evitando arbitrariedades e garantindo a segurança jurídica.</span>
+                  <span><strong>Poder Regulamentar:</strong> Exclusivo do Chefe do Executivo para expedir decretos de execução das leis. Excepcionalmente permite Decretos Autônomos (Art. 84, VI da CF/88).</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Poder de Polícia (DAC):</strong> Condiciona bens, direitos e condutas em prol da coletividade. Atributos: <strong>Discricionariedade, Autoexecutoriedade e Coercibilidade</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Abuso de Poder na FGV:</strong> <em>Excesso de Poder</em> = vício na competência (agente vai além do permitido); <em>Desvio de Finalidade</em> = vício na finalidade (agente usa competência para fim particular/vingança).</span>
                 </li>
               </ul>
             )}

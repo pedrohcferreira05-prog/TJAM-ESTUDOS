@@ -268,6 +268,140 @@ const SPECIFIC_TOPIC_CONTENTS: Record<string, TopicFullStudyContent> = {
   },
 
   // --- DIREITO ADMINISTRATIVO ---
+  'adm-3': {
+    topicId: 'adm-3',
+    topicName: 'Poderes Administrativos',
+    disciplineId: 'direito-administrativo',
+    disciplineName: 'Direito Administrativo',
+    theoreticalModules: [
+      {
+        title: 'Módulo 1: Poder Hierárquico e Poder Disciplinar',
+        content: 'O Poder Hierárquico organiza e estrutura internamente a Administração, permitindo ordenar, fiscalizar, delegar e avocar competências entre órgãos e agentes subordinados (não há hierarquia entre Poderes nem entre Administração Direta e Indireta). O Poder Disciplinar apura infrações e aplica penalidades a quem possui vínculo de sujeição especial (servidores e contratados).'
+      },
+      {
+        title: 'Módulo 2: Poder Regulamentar e Poder de Polícia',
+        content: 'O Poder Regulamentar permite ao Chefe do Executivo expedir decretos para fiel execução da lei (secundum legem), sendo vedado inovar originariamente na ordem jurídica. O Poder de Polícia condiciona e restringe direitos e liberdades individuais em favor do interesse público (atributos: Discricionariedade, Autoexecutoriedade e Coercibilidade).'
+      },
+      {
+        title: 'Módulo 3: Poder Vinculado, Discricionário e Abuso de Poder',
+        content: 'O Poder Vinculado não confere margem de escolha; o Discricionário permite conveniência e oportunidade dentro da lei. O Abuso de Poder divide-se em Excesso de Poder (vício na Competência) e Desvio de Finalidade (vício na Finalidade).'
+      }
+    ],
+    fullSummary: 'Os Poderes da Administração Pública são instrumentos conferidos pelo ordenamento jurídico para a persecução do interesse público. O Poder Hierárquico cuida da coordenação interna; o Poder Disciplinar, das sanções funcionais e a contratados; o Poder Regulamentar, da fiel execução das leis; e o Poder de Polícia, da restrição legítima a direitos individuais em prol da coletividade. O Abuso de Poder (Excesso de Poder e Desvio de Finalidade) torna o ato nulo e passível de controle judicial.',
+    quickSummaryPoints: [
+      'Poder Hierárquico: Distribuição de competências, ordens, fiscalização, delegação e avocação interna.',
+      'Poder Disciplinar: Punição de servidores e particulares com vínculo especial (supremacia especial).',
+      'Poder Regulamentar: Atos normativos secundários para fiel execução da lei (sem inovar primariamente).',
+      'Poder de Polícia: Condicionamento de direitos/bens em prol da coletividade (Discricionariedade, Autoexecutoriedade, Coercibilidade).',
+      'Abuso de Poder: Excesso de Poder (vício na Competência) x Desvio de Finalidade (vício na Finalidade).'
+    ],
+    dryLawArticles: [
+      {
+        act: 'Constituição Federal de 1988',
+        number: 'Art. 84, IV e VI',
+        text: 'Compete privativamente ao Presidente da República: IV - sancionar, promulgar e fazer publicar as leis, bem como expedir decretos e regulamentos para sua fiel execução; VI - dispor, mediante decreto, sobre: a) organização e funcionamento da administração federal, quando não implicar aumento de despesa nem criação ou extinção de órgãos públicos; b) extinção de funções ou cargos públicos, quando vagos.',
+        keyHighlight: 'Poder Regulamentar e hipóteses restritas de Decretos Autônomos.'
+      },
+      {
+        act: 'Código Tributário Nacional (CTN)',
+        number: 'Art. 78',
+        text: 'Considera-se poder de polícia a atividade da administração pública que, limitando ou disciplinando direito, interêsse ou liberdade, regula a prática de ato ou a abstenção de fato, em razão de interêsse público concernente à segurança, à higiene, à ordem, aos costumes, à disciplina da produção e do mercado, ao exercício de atividades econômicas dependentes de concessão ou autorização do Poder Público, à tranqüilidade pública ou ao respeito à propriedade e aos direitos individuais ou coletivos.',
+        keyHighlight: 'Conceito legal e clássico do Poder de Polícia.'
+      }
+    ],
+    jurisprudencePrecedents: [
+      {
+        court: 'STF',
+        reference: 'Súmula 473 STF',
+        title: 'Autotutela e Controle dos Atos',
+        summary: 'A administração pode anular seus próprios atos, quando eivados de vícios que os tornam ilegais, porque deles não se originam direitos; ou revogá-los, por motivo de conveniência ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciação judicial.'
+      },
+      {
+        court: 'STF',
+        reference: 'Súmula Vinculante 13',
+        title: 'Vedação ao Nepotismo e Desvio de Finalidade',
+        summary: 'A nomeação de cônjuge, companheiro ou parente em linha reta, colateral ou por afinidade, até o terceiro grau, da autoridade nomeante ou de servidor da mesma pessoa jurídica violam a Constituição Federal e configuram desvio de finalidade/violação aos princípios da administração.'
+      }
+    ],
+    practicalExamples: [
+      {
+        scenario: 'A Vigilância Sanitária fiscaliza um estabelecimento e interdita imediatamente o local por comercializar alimentos impróprios para consumo.',
+        solution: 'Exercício legítimo do Poder de Polícia, dotado do atributo da Autoexecutoriedade (execução direta e imediata sem necessidade de autorização judicial prévia) e Coercibilidade.'
+      },
+      {
+        scenario: 'Um Secretário de Estado transfere compulsoriamente um servidor público exclusivamente para puni-lo por divergência política pessoal.',
+        solution: 'Configuração de Abuso de Poder na modalidade Desvio de Finalidade (o agente é formalmente competente para lotar servidores, mas praticou o ato com finalidade alheia ao interesse público).'
+      }
+    ],
+    comparativeTables: [
+      {
+        title: 'Espécies de Abuso de Poder',
+        headers: ['Espécie', 'Elemento Viciado', 'Característica Principal', 'Exemplo Prático'],
+        rows: [
+          ['Excesso de Poder', 'Competência', 'O agente ultrapassa os limites legais de suas atribuições', 'Autoridade sem competência legal que aplica demissão a servidor'],
+          ['Desvio de Finalidade', 'Finalidade', 'O agente competente pratica ato buscando fim alheio ao interesse público', 'Remoção de servidor público como forma de perseguição pessoal']
+        ]
+      },
+      {
+        title: 'Polícia Administrativa vs. Polícia Judiciária',
+        headers: ['Critério', 'Polícia Administrativa', 'Polícia Judiciária'],
+        rows: [
+          ['Incidência', 'Bens, direitos e atividades', 'Pessoas (infratores da lei penal)'],
+          ['Caráter predominante', 'Preventivo (condicionamento/fiscalização)', 'Repressivo (investigação criminal e punição)'],
+          ['Órgãos executores', 'Órgãos administrativos diversos (Vigilância, DETRAN, PROCON)', 'Polícia Civil e Polícia Federal']
+        ]
+      }
+    ],
+    examTips: [
+      'Lembre-se do mnemônico DAC para os atributos do Poder de Polícia: Discricionariedade, Autoexecutoriedade e Coercibilidade.',
+      'Atenção à FGV: NÃO há hierarquia entre os Três Poderes da República, nem entre a Administração Direta e as entidades da Administração Indireta (autarquias, fundações, estatais).',
+      'Poder Disciplinar exige supremacia especial (vínculo específico com servidores ou contratados); o Poder de Polícia decorre da supremacia geral (coletividade).'
+    ],
+    examTraps: [
+      {
+        trap: 'Afirmar que a aplicação de penalidade a empresa fornecedora contratada decorre do Poder de Polícia.',
+        correctReality: 'Decorre do PODER DISCIPLINAR, pois existe vínculo contratual prévio com a Administração (supremacia especial).'
+      },
+      {
+        trap: 'Afirmar que todo ato de polícia é autoexecutório.',
+        correctReality: 'A autoexecutoriedade não é absoluta; a cobrança de multa administrativa, por exemplo, exige ação judicial de execução fiscal se o particular não pagar voluntariamente.'
+      }
+    ],
+    keywords: [
+      'Poder Hierárquico',
+      'Poder Disciplinar',
+      'Poder Regulamentar',
+      'Poder de Polícia',
+      'Atributos do Poder de Polícia (DAC)',
+      'Supremacia Especial',
+      'Supremacia Geral',
+      'Excesso de Poder',
+      'Desvio de Finalidade',
+      'Decreto Autônomo (Art. 84, VI, CF)'
+    ],
+    mnemonics: [
+      {
+        phrase: 'Abuso de Poder: Excesso vs. Desvio',
+        expansion: 'Excesso = vício na COMPETÊNCIA (ultrapassou limites legais). Desvio = vício na FINALIDADE (buscou interesse pessoal ou alheio à lei).'
+      },
+      {
+        phrase: 'Atributos do Poder de Polícia: DAC',
+        expansion: 'Discricionariedade (margem de escolha), Autoexecutoriedade (execução direta sem judiciário), Coercibilidade (imposição obrigatória).'
+      }
+    ],
+    checklist: [
+      'Diferencio com precisão o Poder Hierárquico do Poder Disciplinar.',
+      'Compreendo os limites do Poder Regulamentar (atos secundários sem inovação originária).',
+      'Conheço os atributos e as fases do Poder de Polícia (DAC).',
+      'Sei identificar se um caso prático envolve Excesso de Poder ou Desvio de Finalidade.'
+    ],
+    references: [
+      'Constituição Federal de 1988 (Arts. 2º, 37 e 84).',
+      'Lei nº 9.784/1999 (Processo Administrativo Federal).',
+      'Código Tributário Nacional (Art. 78 - Conceito de Poder de Polícia).',
+      'Jurisprudência consolidada do STF e STJ.'
+    ]
+  },
   'adm-8': {
     topicId: 'adm-8',
     topicName: 'Licitações',

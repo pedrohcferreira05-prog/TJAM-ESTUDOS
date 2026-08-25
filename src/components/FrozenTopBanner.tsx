@@ -29,7 +29,7 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
               </span>
             </div>
             <p className="text-slate-400 text-xs mt-0.5 leading-normal">
-              As novas aulas não foram liberadas porque a dupla não entregou os exercícios e a sequência diária foi perdida.
+              As novas aulas não foram liberadas porque você não entregou os exercícios e a sequência diária foi perdida.
             </p>
           </div>
         </div>
@@ -38,7 +38,7 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
         <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-300">
             <Lock className="w-3.5 h-3.5 text-sky-400" />
-            <span>Pedro & Eduardo: <strong className="text-sky-300 font-bold">12º lugar (3,4%)</strong></span>
+            <span>Eduardo: <strong className="text-sky-300 font-bold">12º lugar (3,4%)</strong></span>
           </div>
 
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-400">
