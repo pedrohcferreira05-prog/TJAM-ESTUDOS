@@ -134,9 +134,9 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   };
 
   const duplasRanking = [
-    { rank: 1, name: 'Lucas Silveira', score: '6,0%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
-    { rank: 2, name: 'Mariana Costa', score: '5,7%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
-    { rank: 3, name: 'Gabriel Souza', score: '5,4%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
+    { rank: 1, name: 'Lucas Silveira & Mariana Costa', score: '6,0%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
+    { rank: 2, name: 'Gabriel Souza & Sofia Albuquerque', score: '5,7%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
+    { rank: 3, name: 'Matheus Ribeiro & Beatriz Lima', score: '5,4%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
     { rank: 12, name: 'Eduardo Mateus', score: '3,4%', isUser: true, bgClass: 'bg-sky-950/40 border-sky-500/30 ring-1 ring-sky-500/20', badgeClass: 'bg-sky-600 text-white shadow-md shadow-sky-500/20', barClass: 'bg-sky-400', barWidth: '56.7%' },
   ];
 
@@ -485,8 +485,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     {item.name}
                   </span>
                   {item.isUser && (
-                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 font-bold uppercase">
-                      Sua Dupla (Congelada 🧊)
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold uppercase">
+                      Sem Dupla (Você)
                     </span>
                   )}
                 </div>

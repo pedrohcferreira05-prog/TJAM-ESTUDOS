@@ -252,6 +252,22 @@ export const TJAM_DISCIPLINES: Discipline[] = [
       { id: 'acess-13', name: 'Inclusão Social' },
     ],
   },
+  {
+    id: 'libras',
+    name: 'LIBRAS (Língua Brasileira de Sinais)',
+    code: 'LIBRAS',
+    order: 10,
+    icon: 'MessageSquare',
+    color: 'emerald',
+    description: 'Comunicação básica e intermediária em LIBRAS, datilologia, cumprimentos, atendimento judiciário e parâmetros.',
+    topics: [
+      { id: 'lib-1', name: 'Aula 1: Fundamentos, Alfabeto Manual e Datilologia' },
+      { id: 'lib-2', name: 'Aula 2: Prática de Comunicação, Cumprimentos e Atendimento' },
+      { id: 'lib-3', name: 'Parâmetros Fonológicos da LIBRAS (CM, PA, M, O, EF/EC)' },
+      { id: 'lib-4', name: 'Vocabulário Jurídico e Atendimento ao Cidadão no TJAM' },
+      { id: 'lib-5', name: 'Expressões Não Manuais e Gramática Espacial' },
+    ],
+  },
 ];
 
 export const INITIAL_SIMULADOS: Simulado[] = [
@@ -296,6 +312,26 @@ export const INITIAL_SIMULADOS: Simulado[] = [
 ];
 
 export const INITIAL_NEWS: NewsItem[] = [
+  {
+    id: 'news-libras-02',
+    title: 'Nova Aula Liberada: LIBRAS — Aula 2 (Prática de Comunicação e Atendimento)',
+    category: 'Novas Aulas',
+    date: '28/08/2026',
+    author: 'Coordenação Pedagógica TJAM',
+    important: true,
+    summary: 'Acesse o módulo interativo completo com cronômetro de metas de 40 minutos, cumprimentos, apresentação, perguntas e simulador de diálogo para atendimento judiciário.',
+    content: 'Já está disponível na plataforma a Aula 2 de LIBRAS com foco prático: 9 cumprimentos essenciais, estrutura de apresentação em datilologia com treinador de soletração, perguntas e respostas com expressões faciais e simulador de conversação entre servidor do TJAM e cidadão surdo.',
+  },
+  {
+    id: 'news-adm-07',
+    title: 'Aula 7 Liberada: Direito Administrativo — Poderes da Administração Pública (FGV)',
+    category: 'Direito Administrativo',
+    date: '27/08/2026',
+    author: 'Prof. Dr. Alberto Silva',
+    important: true,
+    summary: 'Estude Poder Hierárquico, Disciplinar, Regulamentar, Poder de Polícia e Abuso de Poder com 20 questões FGV comentadas.',
+    content: 'O módulo de Poderes Administrativos contempla todos os atributos do Poder de Polícia (Discricionariedade, Autoexecutoriedade e Coercibilidade), as distinções de Abuso de Poder (Excesso x Desvio de Finalidade) e teoria aprofundada com mnemônicos.',
+  },
   {
     id: 'news-1',
     title: 'Edital TJAM: Comissão Organizadora confirma banca e cronograma de provas',

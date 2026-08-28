@@ -100,6 +100,24 @@ export const INITIAL_TURMAS: Turma[] = [
 
 export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
   {
+    id: 'aviso-libras-02',
+    turmaId: 'turma-tjam-2026-01',
+    title: '🤟 NOVA AULA: LIBRAS Aula 2 — Prática de Comunicação & Diálogos no TJAM',
+    content: 'Caros alunos, o módulo prático de LIBRAS com foco no atendimento ao cidadão surdo nas secretarias e balcões do Tribunal de Justiça já está ativo com simulador de diálogo, cronômetro de 40 min e treino de datilologia.',
+    authorName: 'Profa. Especialista em Acessibilidade',
+    createdAt: '2026-08-28',
+    priority: 'alta',
+  },
+  {
+    id: 'aviso-adm-07',
+    turmaId: 'turma-tjam-2026-01',
+    title: '⚖️ DIR. ADMINISTRATIVO: Aula 7 — Poderes da Administração Pública (FGV)',
+    content: 'Liberamos a aula completa sobre Poder Hierárquico, Disciplinar, Regulamentar e Poder de Polícia com 20 questões resolvidas.',
+    authorName: 'Prof. Dr. Alberto Silva',
+    createdAt: '2026-08-27',
+    priority: 'alta',
+  },
+  {
     id: 'aviso-01',
     turmaId: 'turma-tjam-2026-01',
     title: '📢 Liberação da Etapa 2: Regimento Interno do TJAM e Resolução de Questões FGV',
@@ -148,6 +166,36 @@ export const INITIAL_LIVE_CLASSES: LiveClass[] = [
 ];
 
 export const INITIAL_PUBLISHED_MATERIALS: PublishedMaterial[] = [
+  {
+    id: 'mat-libras-02',
+    turmaId: 'turma-tjam-2026-01',
+    disciplineId: 'acessibilidade-inclusao',
+    topicId: 'acess-9',
+    title: 'Guia Prático: Vocabulário, Cumprimentos e Diálogos de Atendimento em LIBRAS',
+    type: 'pdf',
+    content: 'Guia visual com os 9 cumprimentos essenciais, estrutura gramatical de apresentações, soletração manual e simulação de atendimento judiciário em LIBRAS.',
+    attachmentUrl: 'https://tjam.jus.br/docs/libras_atendimento_tjam_aula2.pdf',
+    releaseStage: 'Etapa 2: Acessibilidade & LIBRAS',
+    releaseDate: '2026-08-28',
+    isReleased: true,
+    createdAt: '2026-08-28',
+    authorName: 'Profa. Especialista em Acessibilidade',
+  },
+  {
+    id: 'mat-adm-07',
+    turmaId: 'turma-tjam-2026-01',
+    disciplineId: 'direito-administrativo',
+    topicId: 'adm-3',
+    title: 'Resumo Esquematizado: Poderes da Administração Pública e Jurisprudência FGV',
+    type: 'pdf',
+    content: 'Esquema detalhado dos Poderes Hierárquico, Disciplinar, Regulamentar, Poder de Polícia e distinção entre Excesso de Poder e Desvio de Finalidade.',
+    attachmentUrl: 'https://tjam.jus.br/docs/poderes_administrativos_tjam.pdf',
+    releaseStage: 'Etapa 2: Legislação Específica',
+    releaseDate: '2026-08-27',
+    isReleased: true,
+    createdAt: '2026-08-27',
+    authorName: 'Prof. Alberto Silva',
+  },
   {
     id: 'mat-01',
     turmaId: 'turma-tjam-2026-01',
