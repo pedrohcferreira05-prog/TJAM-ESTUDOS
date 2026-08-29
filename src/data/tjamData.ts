@@ -268,6 +268,22 @@ export const TJAM_DISCIPLINES: Discipline[] = [
       { id: 'lib-5', name: 'Expressões Não Manuais e Gramática Espacial' },
     ],
   },
+  {
+    id: 'ingles',
+    name: 'Língua Inglesa',
+    code: 'ING',
+    order: 11,
+    icon: 'Languages',
+    color: 'indigo',
+    description: 'Comunicação básica, cumprimentos, apresentações, vocabulário do cotidiano e interpretação de textos em inglês.',
+    topics: [
+      { id: 'ing-1', name: 'Aula 1: Fundamentos e Estruturas Iniciais' },
+      { id: 'ing-2', name: 'Aula 2: Vocabulário e Gramática Básica' },
+      { id: 'ing-3', name: 'Aula 3: Apresentação e Comunicação Básica' },
+      { id: 'ing-4', name: 'Compreensão e Interpretação de Textos em Inglês' },
+      { id: 'ing-5', name: 'Vocabulário Jurídico e Institucional em Inglês' },
+    ],
+  },
 ];
 
 export const INITIAL_SIMULADOS: Simulado[] = [

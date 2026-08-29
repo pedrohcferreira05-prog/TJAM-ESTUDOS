@@ -15,19 +15,27 @@ import {
   HelpCircle,
   Layers,
   Brain,
-  Video
+  Video,
+  Languages,
+  Trees,
+  Landmark,
+  Check
 } from 'lucide-react';
 
 interface DashboardProps {
   progress: UserProgress;
   onNavigateTab: (tab: any) => void;
   isDarkMode: boolean;
+  isDuo?: boolean;
+  onOpenDuoInvite?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
   progress,
   onNavigateTab,
   isDarkMode,
+  isDuo = false,
+  onOpenDuoInvite,
 }) => {
   const completedTopicsCount = progress.completedTopicIds?.length || 0;
   const questionAttemptsCount = progress.questionAttempts?.length || 0;
@@ -38,7 +46,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const m = Math.round((timeTodayHours % 1) * 60);
   const timeTodayFormatted = h > 0 ? `${h}h ${m}m` : `${m}m`;
 
-  const handleOpenLesson = (subject: 'direito_admin' | 'portugues' | 'direito_const' | string) => {
+  const handleOpenLesson = (subject: string) => {
     try {
       localStorage.setItem('tjam_selected_subject', subject);
       window.dispatchEvent(new Event('tjam_subject_change'));
@@ -57,129 +65,295 @@ export const Dashboard: React.FC<DashboardProps> = ({
         }`}
       >
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold text-xs">
-            <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • Aula do Dia Liberada
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold text-xs">
+              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • Metas do Dia Liberadas
+            </div>
+
+            {onOpenDuoInvite && (
+              <button
+                onClick={onOpenDuoInvite}
+                className={`px-3 py-1 rounded-full text-xs font-black transition-all border flex items-center gap-1.5 cursor-pointer ${
+                  isDuo
+                    ? 'bg-indigo-500/15 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/25'
+                    : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                <span>{isDuo ? '👥 Dupla Ativa: Pedro & Eduardo' : '👤 Modo Individual (Eduardo)'}</span>
+                <span className="text-[10px] text-slate-400 underline">Alterar</span>
+              </button>
+            )}
           </div>
+
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-            Olá, Eduardo Mateus!
+            {isDuo ? 'Olá, Pedro Henrique & Eduardo Mateus!' : 'Olá, Eduardo Mateus!'}
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl">
-            Sua meta de estudo de hoje está liberada: <strong className="text-sky-600 dark:text-sky-400">LIBRAS (Aula 2: Prática de Comunicação & Atendimento TJAM)</strong> com cronômetro de 40 min, vocabulário e diálogo prático no balcão do tribunal.
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
+            {isDuo ? (
+              <span>
+                Vocês estão estudando em <strong className="text-indigo-400">Dupla Oficial</strong> para o TJAM 2026! As metas de hoje estão liberadas: <strong className="text-indigo-600 dark:text-indigo-400">🇬🇧 Língua Inglesa (Aula 3)</strong>, <strong className="text-emerald-600 dark:text-emerald-400">🌳 Geografia do AM (Aula 2)</strong>, <strong className="text-purple-600 dark:text-purple-400">🏛️ Legislação TJAM</strong> e <strong className="text-sky-600 dark:text-sky-400">🤟 LIBRAS</strong>.
+              </span>
+            ) : (
+              <span>
+                Suas metas de estudo de hoje estão liberadas: <strong className="text-indigo-600 dark:text-indigo-400">🇬🇧 Língua Inglesa (Aula 3: 100% Prática)</strong>, <strong className="text-emerald-600 dark:text-emerald-400">🌳 Geografia do Amazonas (Aula 2)</strong>, <strong className="text-purple-600 dark:text-purple-400">🏛️ Legislação do TJAM (Aula 1)</strong> e <strong className="text-sky-600 dark:text-sky-400">🤟 LIBRAS (Aula 2)</strong>.
+              </span>
+            )}
           </p>
         </div>
 
-        {/* Primary CTA Banner */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-sky-600 via-teal-700 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg shadow-sky-600/20">
-          <div className="space-y-1.5">
+        {/* Primary CTA Banner: Língua Inglesa Aula 3 */}
+        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-indigo-700 via-sky-800 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-xl shadow-indigo-950/30 border border-indigo-500/30">
+          <div className="space-y-2 max-w-xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
-                <CheckCircle2 className="w-3.5 h-3.5 text-sky-300" /> Aula de Hoje • TJAM
+                <CheckCircle2 className="w-3.5 h-3.5 text-indigo-300" /> Nova Aula Liberada
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-500 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> Meta Diária Liberada
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
+                <Clock className="w-3.5 h-3.5" /> 100% Prática • 40 min
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🤟 LIBRAS — Aula 2: Prática de Comunicação & Atendimento</h2>
-            <p className="text-xs text-sky-100 font-medium max-w-lg">
-              Aprenda os 9 cumprimentos essenciais, estrutura de apresentação em datilologia com simulador de soletração, perguntas com expressões faciais e simulação de diálogo no balcão do TJAM.
+            <h2 className="text-xl sm:text-2xl font-black">🇬🇧 Língua Inglesa — Aula 3: Apresentação e Comunicação Básica</h2>
+            <p className="text-xs sm:text-sm text-indigo-100 font-medium leading-relaxed">
+              Cumprimentos formais e informais, apresentação pessoal (<em>My name is, I am, I live in Manaus</em>), vocabulário do cotidiano, vídeo aula prática e 20 questões comentadas para o TJAM.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto shrink-0">
             <button
-              onClick={() => handleOpenLesson('libras')}
-              className="px-5 py-3.5 rounded-xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              onClick={() => handleOpenLesson('ingles')}
+              className="px-6 py-3.5 rounded-2xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer group"
             >
               <BookOpen className="w-4 h-4 text-slate-950" />
-              <span>Acessar Aula de Hoje (LIBRAS)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>Iniciar Aula de Inglês</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Featured Today's Lesson Section Header */}
+      {/* Featured Today's Lessons Section Header */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            <Sparkles className="w-5 h-5 text-indigo-500" />
             <h2 className="text-lg font-black text-slate-900 dark:text-white">
-              Aula de Hoje • Meta em Foco
+              Aulas de Hoje • Metas em Foco
             </h2>
           </div>
-          <span className="text-xs font-extrabold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
-            🤟 Exclusiva do Dia
+          <span className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+            Trilha do TJAM 2026
           </span>
         </div>
 
-        {/* Solo Featured Hero Card: LIBRAS (Aula 2) */}
-        <div
-          className={`p-6 sm:p-8 rounded-3xl border shadow-xl space-y-6 transition-all ${
-            isDarkMode
-              ? 'bg-slate-900 border-sky-500/40 shadow-sky-950/20 ring-1 ring-sky-500/20'
-              : 'bg-gradient-to-br from-sky-50/70 via-white to-sky-50/30 border-sky-200 shadow-sky-500/10'
-          }`}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4 border-sky-200 dark:border-slate-800">
-            <div className="flex items-center gap-2">
-              <span className="px-3.5 py-1.5 rounded-full bg-sky-600 text-white font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" /> AULA DE HOJE
-              </span>
-              <span className="text-xs font-black text-sky-700 dark:text-sky-300 bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
-                Acessibilidade & LIBRAS • Aula 2
-              </span>
-            </div>
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-sky-500" /> Meta: 40 minutos
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-              🤟 LIBRAS — Aula 2: Prática de Comunicação
-            </h3>
-            <p className="text-sm font-bold text-sky-600 dark:text-sky-400">
-              Cumprimentos, Apresentação & Atendimento Judiciário no TJAM
-            </p>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-              Módulo interativo completo com os 9 cumprimentos essenciais em LIBRAS, estrutura de apresentação com treinador dinâmico de datilologia, perguntas e respostas com expressões faciais gramaticais e simulador de diálogo entre servidor e cidadão surdo no balcão de atendimento.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex flex-col gap-1">
-              <div className="flex items-center gap-1.5 text-rose-500 font-black text-xs">
-                <Video className="w-4 h-4" /> 3 Vídeos
-              </div>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Vídeo Aulas 1, 2 e 3</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex flex-col gap-1">
-              <div className="flex items-center gap-1.5 text-emerald-500 font-black text-xs">
-                <Brain className="w-4 h-4" /> Datilologia
-              </div>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Soletrador de nomes</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex flex-col gap-1">
-              <div className="flex items-center gap-1.5 text-amber-500 font-black text-xs">
-                <Sparkles className="w-4 h-4" /> 9 Sinais
-              </div>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Cumprimentos básicos</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex flex-col gap-1">
-              <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-black text-xs">
-                <HelpCircle className="w-4 h-4" /> WhatsApp
-              </div>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Exercícios do Professor</span>
-            </div>
-          </div>
-
-          <button
-            onClick={() => handleOpenLesson('libras')}
-            className="w-full py-4 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-black text-sm shadow-lg shadow-sky-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer group"
+        {/* 4 Primary Today's Lessons Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Card 1: Língua Inglesa (Aula 3) */}
+          <div
+            className={`p-6 rounded-3xl border shadow-lg space-y-4 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-indigo-500/40 ring-1 ring-indigo-500/20 shadow-indigo-950/20'
+                : 'bg-gradient-to-br from-indigo-50/70 via-white to-sky-50/40 border-indigo-200'
+            }`}
           >
-            <span>Iniciar Aula de Hoje (LIBRAS)</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b pb-3 border-slate-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-indigo-600/15 text-indigo-600 dark:text-indigo-400 font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 border border-indigo-500/20">
+                  <Languages className="w-3.5 h-3.5" /> LÍNGUA INGLESA
+                </span>
+                <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-md">
+                  Aula 3 • Prática
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  🇬🇧 Apresentação e Comunicação Básica
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">
+                  Estruturas essenciais, pronúncia aproximada, saudações formais/informais e 20 exercícios focados no TJAM.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Video className="w-3.5 h-3.5 text-rose-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Vídeo Aula</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <FileText className="w-3.5 h-3.5 text-emerald-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">20 Questões</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Layers className="w-3.5 h-3.5 text-amber-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">15 Cards</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleOpenLesson('ingles')}
+              className="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <span>Acessar Aula de Inglês</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Card 2: Geografia do Amazonas (Aula 2) */}
+          <div
+            className={`p-6 rounded-3xl border shadow-lg space-y-4 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-emerald-500/40 ring-1 ring-emerald-500/20 shadow-emerald-950/20'
+                : 'bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/40 border-emerald-200'
+            }`}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b pb-3 border-slate-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-emerald-600/15 text-emerald-600 dark:text-emerald-400 font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 border border-emerald-500/20">
+                  <Trees className="w-3.5 h-3.5" /> GEOGRAFIA DO AMAZONAS
+                </span>
+                <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                  Aula 2 • Aspectos Físicos
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  🌳 Relevo, Clima, Rios e Vegetação
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">
+                  Fronteiras com 3 países (Peru, Colômbia e Venezuela), Bacia Amazônica, as 3 Matas e clima Equatorial Úmido.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Video className="w-3.5 h-3.5 text-rose-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Vídeo HD</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <FileText className="w-3.5 h-3.5 text-emerald-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">20 Questões</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Layers className="w-3.5 h-3.5 text-amber-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">15 Cards</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleOpenLesson('geografia_amazonas')}
+              className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <span>Acessar Aula de Geografia AM</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Card 3: Legislação do TJAM (Aula 1) */}
+          <div
+            className={`p-6 rounded-3xl border shadow-lg space-y-4 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-purple-500/40 ring-1 ring-purple-500/20 shadow-purple-950/20'
+                : 'bg-gradient-to-br from-purple-50/70 via-white to-indigo-50/40 border-purple-200'
+            }`}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b pb-3 border-slate-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-purple-600/15 text-purple-600 dark:text-purple-400 font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 border border-purple-500/20">
+                  <Landmark className="w-3.5 h-3.5" /> LEGISLAÇÃO DO TJAM
+                </span>
+                <span className="text-[11px] font-bold text-purple-600 dark:text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md">
+                  Aula 1 • LC 261/2023
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  🏛️ Estrutura do Poder Judiciário do Amazonas
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">
+                  Órgãos da Justiça estadual, Tribunal Pleno, Câmaras Reunidas e Isoladas, Comarcas, Varas e Juizados.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Video className="w-3.5 h-3.5 text-rose-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Vídeo HD</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <FileText className="w-3.5 h-3.5 text-emerald-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">20 Questões</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Layers className="w-3.5 h-3.5 text-amber-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">15 Cards</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleOpenLesson('legislacao_tjam')}
+              className="w-full py-3 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <span>Acessar Aula de Legislação TJAM</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Card 4: LIBRAS (Aula 2) */}
+          <div
+            className={`p-6 rounded-3xl border shadow-lg space-y-4 transition-all flex flex-col justify-between ${
+              isDarkMode
+                ? 'bg-slate-900 border-sky-500/40 ring-1 ring-sky-500/20 shadow-sky-950/20'
+                : 'bg-gradient-to-br from-sky-50/70 via-white to-indigo-50/40 border-sky-200'
+            }`}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b pb-3 border-slate-200 dark:border-slate-800">
+                <span className="px-3 py-1 rounded-full bg-sky-600/15 text-sky-600 dark:text-sky-400 font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 border border-sky-500/20">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" /> ACESSIBILIDADE & LIBRAS
+                </span>
+                <span className="text-[11px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded-md">
+                  Aula 2 • Comunicação
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  🤟 Prática de Comunicação & Atendimento
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">
+                  9 cumprimentos fundamentais, soletrador dinâmico de datilologia e simulação de diálogo no balcão do tribunal.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Video className="w-3.5 h-3.5 text-rose-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">3 Vídeos</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <Brain className="w-3.5 h-3.5 text-sky-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Datilologia</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
+                  <HelpCircle className="w-3.5 h-3.5 text-emerald-500 mb-0.5" />
+                  <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Exercícios</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleOpenLesson('libras')}
+              className="w-full py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <span>Acessar Aula de LIBRAS</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -189,7 +363,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             <h2 className="text-lg font-black text-slate-900 dark:text-white">
-              Demais Aulas Liberadas no Preparatório
+              Demais Disciplinas do Preparatório
             </h2>
           </div>
           <span className="text-xs font-semibold text-slate-500">
@@ -476,7 +650,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Simulado Geral Oficial — TJAM (Assistente Judiciário)
           </h2>
           <p className="text-xs font-medium text-slate-950/90 dark:text-slate-200 leading-relaxed">
-            Testes abrangendo Língua Portuguesa, Direito Constitucional, Direito Administrativo, Informática, Processo Civil, Processo Penal, LIBRAS e Questões Interdisciplinares. Receba o gabarito comentado, diagnóstico e opção de download em PDF.
+            Testes abrangendo Língua Portuguesa, Direito Constitucional, Direito Administrativo, Informática, Processo Civil, Processo Penal, LIBRAS, Geografia do Amazonas, Legislação TJAM e Língua Inglesa. Receba o gabarito comentado, diagnóstico e opção de download em PDF.
           </p>
         </div>
 
@@ -492,7 +666,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* Ranking da Dupla de Estudos & Ranking Geral de Duplas */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Ranking Individual (Atual) */}
+        {/* Ranking Individual ou Dupla */}
         <div
           className={`p-6 rounded-3xl border shadow-sm space-y-4 ${
             isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
@@ -500,50 +674,70 @@ export const Dashboard: React.FC<DashboardProps> = ({
         >
           <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500">
+              <div className={`p-2 rounded-xl ${isDuo ? 'bg-indigo-500/10 text-indigo-400' : 'bg-amber-500/10 text-amber-500'}`}>
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Seu Progresso no Ranking Geral
+                  {isDuo ? 'Sua Dupla no Ranking Geral' : 'Seu Progresso no Ranking Geral'}
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Desempenho comparativo no Preparatório TJAM 2026
+                  {isDuo ? 'Desempenho sincronizado da dupla no TJAM 2026' : 'Desempenho individual no TJAM 2026'}
                 </p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              Estudante
+            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+              isDuo
+                ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
+            }`}>
+              {isDuo ? 'Dupla Ativa' : 'Estudante'}
             </span>
           </div>
 
           <div className="space-y-3">
-            {/* Seu Perfil: Eduardo Mateus */}
+            {/* Perfil: Eduardo Mateus ou Pedro & Eduardo */}
             <div
               className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                isDarkMode
-                  ? 'bg-sky-500/10 border-sky-500/30 ring-1 ring-sky-500/20'
-                  : 'bg-sky-50 border-sky-300'
+                isDuo
+                  ? isDarkMode
+                    ? 'bg-indigo-500/15 border-indigo-500/40 ring-1 ring-indigo-500/30'
+                    : 'bg-indigo-50 border-indigo-300'
+                  : isDarkMode
+                    ? 'bg-sky-500/10 border-sky-500/30 ring-1 ring-sky-500/20'
+                    : 'bg-sky-50 border-sky-300'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-sky-600 text-white font-black text-xs flex items-center justify-center shadow-md shadow-sky-500/20 shrink-0">
+                <div className={`w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 ${
+                  isDuo ? 'bg-indigo-600 shadow-indigo-500/30' : 'bg-sky-600 shadow-sky-500/20'
+                }`}>
                   12º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                      Eduardo Mateus
+                      {isDuo ? 'Pedro Henrique & Eduardo Mateus' : 'Eduardo Mateus'}
                     </span>
-                    <span className="px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-700 dark:text-sky-300 font-extrabold text-[10px]">
-                      Seu Perfil
+                    <span className={`px-2 py-0.5 rounded-md font-extrabold text-[10px] ${
+                      isDuo ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-400/30' : 'bg-sky-500/20 text-sky-700 dark:text-sky-300'
+                    }`}>
+                      {isDuo ? 'Sua Dupla' : 'Seu Perfil'}
                     </span>
-                    <span className="px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-600 dark:text-rose-300 border border-rose-400/20 font-extrabold text-[10px]">
-                      Sem Dupla
-                    </span>
+                    {isDuo ? (
+                      <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-400/20 font-extrabold text-[10px]">
+                        Dupla Oficial
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-600 dark:text-rose-300 border border-rose-400/20 font-extrabold text-[10px]">
+                        Sem Dupla
+                      </span>
+                    )}
                   </div>
-                  <span className="text-xs text-sky-600 dark:text-sky-400 font-semibold flex items-center gap-1 mt-0.5">
-                    📊 12º Lugar Geral • Modalidade Individual
+                  <span className={`text-xs font-semibold flex items-center gap-1 mt-0.5 ${
+                    isDuo ? 'text-indigo-400' : 'text-sky-600 dark:text-sky-400'
+                  }`}>
+                    {isDuo ? '👥 12º Lugar Geral • Dupla TJAM Sincronizada' : '📊 12º Lugar Geral • Modalidade Individual'}
                   </span>
                 </div>
               </div>
@@ -551,12 +745,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-4 sm:justify-end">
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-sky-500 h-full rounded-full transition-all duration-500"
-                    style={{ width: `${Math.max(realProgressPct, 3)}%` }}
+                    className={`h-full rounded-full transition-all duration-500 ${isDuo ? 'bg-indigo-500' : 'bg-sky-500'}`}
+                    style={{ width: `${Math.max(realProgressPct, isDuo ? 8 : 3)}%` }}
                   ></div>
                 </div>
-                <span className="text-sm font-black text-sky-600 dark:text-sky-400 min-w-[50px] text-right">
-                  {Math.max(realProgressPct, 3)}%
+                <span className={`text-sm font-black min-w-[50px] text-right ${isDuo ? 'text-indigo-400' : 'text-sky-600 dark:text-sky-400'}`}>
+                  {Math.max(realProgressPct, isDuo ? 8 : 3)}%
                 </span>
               </div>
             </div>
@@ -601,15 +795,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
               { pos: 9, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '3,8%', isUser: false, isSolo: false, barWidth: '63.3%' },
               { pos: 10, name: 'Vinícius Dias & Patrícia Santos', pct: '3,7%', isUser: false, isSolo: false, barWidth: '61.7%' },
               { pos: 11, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '3,5%', isUser: false, isSolo: false, barWidth: '58.3%' },
-              { pos: 12, name: 'Eduardo Mateus', pct: '3,4%', isUser: true, isSolo: true, barWidth: '56.7%' },
+              { pos: 12, name: isDuo ? 'Pedro Henrique & Eduardo Mateus' : 'Eduardo Mateus', pct: isDuo ? '4,1%' : '3,4%', isUser: true, isSolo: !isDuo, barWidth: isDuo ? '68%' : '56.7%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}
                 className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                   aluno.isUser
                     ? isDarkMode
-                      ? 'bg-sky-500/15 border-sky-400/40 ring-1 ring-sky-400/30'
-                      : 'bg-sky-50 border-sky-300'
+                      ? isDuo ? 'bg-indigo-500/15 border-indigo-400/40 ring-1 ring-indigo-400/30' : 'bg-sky-500/15 border-sky-400/40 ring-1 ring-sky-400/30'
+                      : isDuo ? 'bg-indigo-50 border-indigo-300' : 'bg-sky-50 border-sky-300'
                     : isDarkMode
                     ? 'bg-slate-800/40 border-slate-800/80'
                     : 'bg-slate-50 border-slate-200'
@@ -619,7 +813,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div
                     className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 shadow-sm ${
                       aluno.isUser
-                        ? 'bg-sky-600 text-white'
+                        ? isDuo ? 'bg-indigo-600 text-white' : 'bg-sky-600 text-white'
                         : aluno.pos === 1
                         ? 'bg-amber-500 text-slate-950 font-black'
                         : aluno.pos === 2
@@ -633,7 +827,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-sky-400 dark:text-sky-300' : 'text-slate-700 dark:text-slate-300'}`}>
+                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? isDuo ? 'text-indigo-300' : 'text-sky-400 dark:text-sky-300' : 'text-slate-700 dark:text-slate-300'}`}>
                         {aluno.name}
                       </span>
                       {aluno.isSolo ? (
@@ -642,12 +836,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         </span>
                       ) : (
                         <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-extrabold text-[9px] whitespace-nowrap hidden sm:inline-block">
-                          Dupla
+                          {aluno.isUser ? 'Sua Dupla' : 'Dupla'}
                         </span>
                       )}
                       {aluno.isUser && (
-                        <span className="px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-400/30 font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap">
-                          <span>Você</span>
+                        <span className={`px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap ${
+                          isDuo ? 'bg-indigo-500/20 text-indigo-300 border-indigo-400/30' : 'bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-400/30'
+                        }`}>
+                          <span>{isDuo ? 'Vocês' : 'Você'}</span>
                         </span>
                       )}
                     </div>
