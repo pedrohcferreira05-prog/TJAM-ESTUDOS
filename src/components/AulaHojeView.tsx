@@ -35,7 +35,8 @@ import {
   Flame,
   Landmark,
   Trees,
-  Languages
+  Languages,
+  Scale
 } from 'lucide-react';
 import {
   legislacaoTjamFlashcardsData,
@@ -58,9 +59,25 @@ import {
   inglesDiscursiveQuestionsData,
   inglesSummaryPoints
 } from '../data/inglesLessonData';
+import {
+  direitoAdminFlashcardsData,
+  direitoAdminMcQuestionsData,
+  direitoAdminTfQuestionsData,
+  direitoAdminDiscursiveQuestionsData,
+  direitoAdminSummaryPoints
+} from '../data/direitoAdminLessonData';
+import {
+  portuguesAula3FlashcardsData,
+  portuguesAula3McQuestionsData,
+  portuguesAula3TfQuestionsData,
+  portuguesAula3DiscursiveQuestionsData,
+  portuguesAula3SummaryPoints
+} from '../data/portuguesLessonData';
 import { LegislacaoTjamContent } from './LegislacaoTjamContent';
 import { GeografiaAmazonasContent } from './GeografiaAmazonasContent';
 import { InglesContent } from './InglesContent';
+import { DireitoAdminContent } from './DireitoAdminContent';
+import { PortuguesContent } from './PortuguesContent';
 
 interface AulaHojeViewProps {
   isDarkMode: boolean;
@@ -2366,7 +2383,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'geografia_amazonas'
     ? geografiaAmazonasFlashcardsData
     : selectedSubject === 'portugues'
-    ? portuguesFlashcardsData
+    ? portuguesAula3FlashcardsData
     : selectedSubject === 'libras'
     ? librasFlashcardsData
     : selectedSubject === 'processo_penal'
@@ -2377,6 +2394,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infFlashcardsData
     : selectedSubject === 'direito_const'
     ? constFlashcardsData
+    : selectedSubject === 'direito_admin'
+    ? direitoAdminFlashcardsData
     : adminFlashcardsData;
 
   const activeMcQuestions = selectedSubject === 'ingles'
@@ -2386,7 +2405,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'geografia_amazonas'
     ? geografiaAmazonasMcQuestionsData
     : selectedSubject === 'portugues'
-    ? portuguesMcQuestionsData
+    ? portuguesAula3McQuestionsData
     : selectedSubject === 'libras'
     ? librasMcQuestionsData
     : selectedSubject === 'processo_penal'
@@ -2397,6 +2416,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infMcQuestionsData
     : selectedSubject === 'direito_const'
     ? constMcQuestionsData
+    : selectedSubject === 'direito_admin'
+    ? direitoAdminMcQuestionsData
     : questionsData;
 
   const activeTfQuestions = selectedSubject === 'ingles'
@@ -2406,7 +2427,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'geografia_amazonas'
     ? geografiaAmazonasTfQuestionsData
     : selectedSubject === 'portugues'
-    ? portuguesTfQuestionsData
+    ? portuguesAula3TfQuestionsData
     : selectedSubject === 'libras'
     ? librasTfQuestionsData
     : selectedSubject === 'processo_penal'
@@ -2417,6 +2438,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infTfQuestionsData
     : selectedSubject === 'direito_const'
     ? constTfQuestionsData
+    : selectedSubject === 'direito_admin'
+    ? direitoAdminTfQuestionsData
     : tfQuestionsData;
 
   const activeDiscursiveQuestions = selectedSubject === 'ingles'
@@ -2426,7 +2449,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'geografia_amazonas'
     ? geografiaAmazonasDiscursiveQuestionsData
     : selectedSubject === 'portugues'
-    ? portuguesDiscursiveQuestionsData
+    ? portuguesAula3DiscursiveQuestionsData
     : selectedSubject === 'libras'
     ? librasDiscursiveQuestionsData
     : selectedSubject === 'processo_penal'
@@ -2437,6 +2460,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? infDiscursiveQuestionsData
     : selectedSubject === 'direito_const'
     ? constDiscursiveQuestionsData
+    : selectedSubject === 'direito_admin'
+    ? direitoAdminDiscursiveQuestionsData
     : discursiveQuestionsData;
 
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
@@ -2728,24 +2753,24 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '6,0%', isUser: false, isSolo: false },
-                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '5,7%', isUser: false, isSolo: false },
-                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '5,4%', isUser: false, isSolo: false },
-                { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '5,1%', isUser: false, isSolo: false },
-                { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '4,8%', isUser: false, isSolo: false },
-                { pos: 6, name: 'Bruno Carvalho & Larissa Ferreira', pct: '4,5%', isUser: false, isSolo: false },
-                { pos: 7, name: 'Thiago Martins & Camila Duarte', pct: '4,2%', isUser: false, isSolo: false },
-                { pos: 8, name: 'Felipe Andrade & Letícia Ramos', pct: '4,0%', isUser: false, isSolo: false },
-                { pos: 9, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '3,8%', isUser: false, isSolo: false },
-                { pos: 10, name: 'Vinícius Dias & Patrícia Santos', pct: '3,7%', isUser: false, isSolo: false },
-                { pos: 11, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '3,5%', isUser: false, isSolo: false },
-                { pos: 12, name: 'Eduardo Mateus', pct: '3,4%', isUser: true, isSolo: true },
+                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '21,0%', isUser: false },
+                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '20,2%', isUser: false },
+                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '19,4%', isUser: false },
+                { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '18,5%', isUser: false },
+                { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '17,3%', isUser: false },
+                { pos: 6, name: 'Bruno Carvalho & Larissa Ferreira', pct: '16,1%', isUser: false },
+                { pos: 7, name: 'Thiago Martins & Camila Duarte', pct: '15,0%', isUser: false },
+                { pos: 8, name: 'Felipe Andrade & Letícia Ramos', pct: '14,1%', isUser: false },
+                { pos: 9, name: 'Eduardo Mateus & Pedro Henrique', pct: '13,0%', isUser: true },
+                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '12,2%', isUser: false },
+                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '11,0%', isUser: false },
+                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '9,5%', isUser: false },
               ].map((d) => (
                 <div
                   key={d.pos}
                   className={`flex items-center justify-between p-2.5 rounded-xl border ${
                     d.isUser
-                      ? 'bg-sky-500/15 border-sky-400/40 shadow-sm ring-1 ring-sky-400/20'
+                      ? 'bg-indigo-500/15 border-indigo-400/40 shadow-sm ring-1 ring-indigo-400/30'
                       : 'bg-slate-800/60 border-slate-700/80'
                   }`}
                 >
@@ -2753,7 +2778,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span
                       className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center shrink-0 ${
                         d.isUser
-                          ? 'bg-sky-600 text-white'
+                          ? 'bg-indigo-600 text-white'
                           : d.pos === 1
                           ? 'bg-amber-500 text-slate-950'
                           : 'bg-slate-700 text-slate-300'
@@ -2764,26 +2789,21 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                       <span
                         className={`text-xs font-extrabold truncate ${
-                          d.isUser ? 'text-sky-300' : 'text-slate-300'
+                          d.isUser ? 'text-indigo-300' : 'text-slate-300'
                         }`}
                       >
                         {d.name}
                       </span>
-                      {d.isSolo ? (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-400/30 font-bold whitespace-nowrap">
-                          Sem Dupla
-                        </span>
-                      ) : null}
                       {d.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/30 text-sky-200 border border-sky-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
-                          <span>Você</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
+                          <span>Sua Dupla • Subindo ⬆️</span>
                         </span>
                       )}
                     </div>
                   </div>
                   <span
                     className={`text-xs font-black shrink-0 ${
-                      d.isUser ? 'text-sky-400' : 'text-slate-400'
+                      d.isUser ? 'text-indigo-400' : 'text-slate-400'
                     }`}
                   >
                     {d.pct}
@@ -2815,228 +2835,263 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       </div>
 
       {/* Subject Switcher Bar & Saved Progress Banner */}
-      <div className="space-y-3">
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+      <div className="space-y-4">
+        {/* Metas do Dia Banner */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-blue-950/40 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-emerald-600 text-white font-bold">💾</span>
+            <span className="p-2 rounded-xl bg-emerald-600 text-white font-bold text-base">🎯</span>
             <div>
-              <p className="font-black text-emerald-900 dark:text-emerald-200">
-                Aulas e Exercícios Salvos no Banco de Dados
+              <p className="font-black text-emerald-300 dark:text-emerald-200 flex items-center gap-2">
+                <span>Metas de Hoje: 2 Aulas Programadas para Conclusão</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold text-[10px]">
+                  {((savedLessonsStore['portugues']?.completed ? 1 : 0) + (savedLessonsStore['direito_admin']?.completed ? 1 : 0))}/2 Concluídas
+                </span>
               </p>
-              <p className="text-slate-600 dark:text-slate-400">
-                Seu progresso, respostas de questões e conteúdos lidos são salvos para você revisar a qualquer momento.
+              <p className="text-slate-400">
+                1. Português (Aula 3: Classes de Palavras) • 2. Direito Administrativo (Aula 4: Poderes da Administração Pública).
               </p>
             </div>
           </div>
           {isLessonCompleted && (
             <span className="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-[10px] uppercase tracking-wider shrink-0 shadow">
-              ✓ Aula Concluída
+              ✓ Esta Aula Está Concluída
             </span>
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          {/* Inglês: Aula 3 */}
-          <button
-            onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'ingles'
-                ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <Languages className="w-3.5 h-3.5 text-indigo-300" />
-              <span>🇬🇧 Inglês (Aula 3)</span>
-            </div>
-            {savedLessonsStore['ingles']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['ingles']?.selectedAnswers && Object.keys(savedLessonsStore['ingles'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-indigo-500/20 text-indigo-200 font-extrabold px-1.5 py-0.5 rounded">Aula 3 de Hoje</span>
-            )}
-          </button>
+        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between px-1">
+            <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
+              <span>⭐ As 2 Aulas de Hoje (Metas Obrigatórias)</span>
+            </span>
+            <span className="text-[10px] text-slate-400 font-semibold">
+              Prioridade do dia para a dupla
+            </span>
+          </div>
 
-          {/* Geografia do Amazonas: Aula 2 */}
-          <button
-            onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'geografia_amazonas'
-                ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/40'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <Trees className="w-3.5 h-3.5 text-emerald-300" />
-              <span>🌳 Geografia AM (Aula 2)</span>
-            </div>
-            {savedLessonsStore['geografia_amazonas']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['geografia_amazonas']?.selectedAnswers && Object.keys(savedLessonsStore['geografia_amazonas'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-1.5 py-0.5 rounded">Aula 2 de Hoje</span>
-            )}
-          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-2 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-slate-900 to-blue-500/10 border-2 border-emerald-500/40 shadow-md">
+            {/* Português: Aula 3 */}
+            <button
+              onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'portugues'
+                  ? 'bg-amber-400 text-slate-950 shadow-lg ring-2 ring-amber-300 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-base">🇧🇷</span>
+                <div className="text-left">
+                  <div className="text-[10px] uppercase tracking-wider opacity-80">Meta 1 de Hoje</div>
+                  <div className="font-extrabold text-xs">Português — Aula 3 (Classes de Palavras)</div>
+                </div>
+              </div>
+              {savedLessonsStore['portugues']?.completed ? (
+                <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+              ) : savedLessonsStore['portugues']?.selectedAnswers && Object.keys(savedLessonsStore['portugues'].selectedAnswers).length > 0 ? (
+                <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+              ) : (
+                <span className="text-[10px] bg-emerald-500/30 text-emerald-300 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+              )}
+            </button>
 
-          {/* Legislação TJAM: Aula 1 de Hoje */}
-          <button
-            onClick={() => { setSelectedSubject('legislacao_tjam'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[170px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'legislacao_tjam'
-                ? 'bg-purple-600 text-white shadow-md ring-2 ring-purple-400/40'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <Landmark className="w-3.5 h-3.5 text-amber-300" />
-              <span>🏛️ Legislação TJAM (Aula 1)</span>
-            </div>
-            {savedLessonsStore['legislacao_tjam']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['legislacao_tjam']?.selectedAnswers && Object.keys(savedLessonsStore['legislacao_tjam'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-1.5 py-0.5 rounded">Aula 1 de Hoje</span>
-            )}
-          </button>
+            {/* Direito Administrativo: Aula 4 */}
+            <button
+              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'direito_admin'
+                  ? 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-400 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-base">⚖️</span>
+                <div className="text-left">
+                  <div className="text-[10px] uppercase tracking-wider opacity-80">Meta 2 de Hoje</div>
+                  <div className="font-extrabold text-xs">Dir. Administrativo — Aula 4 (Poderes)</div>
+                </div>
+              </div>
+              {savedLessonsStore['direito_admin']?.completed ? (
+                <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+              ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+                <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+              ) : (
+                <span className="text-[10px] bg-blue-500/30 text-blue-200 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+              )}
+            </button>
+          </div>
+        </div>
 
-          {/* LIBRAS: Aula 2 */}
-          <button
-            onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'libras'
-                ? 'bg-sky-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>🤟 LIBRAS (Aula 2)</span>
-            </div>
-            {savedLessonsStore['libras']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['libras']?.selectedAnswers && Object.keys(savedLessonsStore['libras'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : (
-              <span className="text-[10px] bg-sky-500/20 text-sky-300 font-extrabold px-1.5 py-0.5 rounded">Aula 2</span>
-            )}
-          </button>
+        {/* 2. SEÇÃO SECUNDÁRIA: DEMAIS DISCIPLINAS LIBERADAS */}
+        <div className="space-y-2 pt-1">
+          <div className="flex items-center justify-between px-1">
+            <span className="text-[11px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-1.5">
+              <span>📚 Demais Aulas & Disciplinas do Preparatório</span>
+            </span>
+          </div>
 
-          <button
-            onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'direito_admin'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>⚖️ Dir. Admin (Aula 7)</span>
-            </div>
-            {savedLessonsStore['direito_admin']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            {/* Inglês: Aula 3 */}
+            <button
+              onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'ingles'
+                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <Languages className="w-3.5 h-3.5 text-indigo-300" />
+                <span>🇬🇧 Inglês (Aula 3)</span>
+              </div>
+              {savedLessonsStore['ingles']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 3</span>
+              )}
+            </button>
 
-          <button
-            onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'processo_penal'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Proc. Penal (Aula 6)</span>
-            </div>
-            {savedLessonsStore['processo_penal']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+            {/* Geografia do Amazonas: Aula 2 */}
+            <button
+              onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'geografia_amazonas'
+                  ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <Trees className="w-3.5 h-3.5 text-emerald-300" />
+                <span>🌳 Geografia AM (Aula 2)</span>
+              </div>
+              {savedLessonsStore['geografia_amazonas']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+              )}
+            </button>
 
-          <button
-            onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'processo_civil'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Proc. Civil (Aula 5)</span>
-            </div>
-            {savedLessonsStore['processo_civil']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+            {/* Legislação TJAM: Aula 1 */}
+            <button
+              onClick={() => { setSelectedSubject('legislacao_tjam'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'legislacao_tjam'
+                  ? 'bg-purple-600 text-white shadow-md ring-2 ring-purple-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <Landmark className="w-3.5 h-3.5 text-amber-300" />
+                <span>🏛️ Legislação TJAM (Aula 1)</span>
+              </div>
+              {savedLessonsStore['legislacao_tjam']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+              )}
+            </button>
 
-          <button
-            onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'portugues'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Português (Aula 1)</span>
-            </div>
-            {savedLessonsStore['portugues']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['portugues']?.selectedAnswers && Object.keys(savedLessonsStore['portugues'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+            {/* LIBRAS: Aula 2 */}
+            <button
+              onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'libras'
+                  ? 'bg-sky-600 text-white shadow-md ring-2 ring-sky-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>🤟 LIBRAS (Aula 2)</span>
+              </div>
+              {savedLessonsStore['libras']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+              )}
+            </button>
 
-          <button
-            onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'direito_const'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Constitucional</span>
-            </div>
-            {savedLessonsStore['direito_const']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+            {/* Processo Penal: Aula 6 */}
+            <button
+              onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'processo_penal'
+                  ? 'bg-teal-600 text-white shadow-md ring-2 ring-teal-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-teal-300" />
+                <span>⚖️ Proc. Penal (Aula 6)</span>
+              </div>
+              {savedLessonsStore['processo_penal']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 6</span>
+              )}
+            </button>
 
-          <button
-            onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-            className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-              selectedSubject === 'informatica'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Informática</span>
-            </div>
-            {savedLessonsStore['informatica']?.completed ? (
-              <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-            ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
-              <span className="text-[10px] bg-amber-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">Em andamento</span>
-            ) : null}
-          </button>
+            {/* Processo Civil: Aula 5 */}
+            <button
+              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'processo_civil'
+                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-indigo-300" />
+                <span>⚖️ Proc. Civil (Aula 5)</span>
+              </div>
+              {savedLessonsStore['processo_civil']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 5</span>
+              )}
+            </button>
+
+            {/* Direito Constitucional: Aula 2 */}
+            <button
+              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'direito_const'
+                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <Landmark className="w-3.5 h-3.5 text-amber-300" />
+                <span>⚖️ Dir. Const (Aula 2)</span>
+              </div>
+              {savedLessonsStore['direito_const']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+              )}
+            </button>
+
+            {/* Informática: Aula 1 */}
+            <button
+              onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'informatica'
+                  ? 'bg-cyan-600 text-white shadow-md ring-2 ring-cyan-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-cyan-300" />
+                <span>💻 Informática (Aula 1)</span>
+              </div>
+              {savedLessonsStore['informatica']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -3073,7 +3128,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'legislacao_tjam'
               ? 'Unidade 1 — Lei Complementar nº 261/2023'
               : selectedSubject === 'portugues'
-              ? 'Unidade 1 — Compreensão e Interpretação'
+              ? 'Unidade 2 — Morfologia & Classes de Palavras'
               : selectedSubject === 'libras'
               ? 'Unidade 1 — Fundamentos & Comunicação em LIBRAS'
               : selectedSubject === 'processo_penal'
@@ -3084,7 +3139,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Unidade 1 — Fundamentos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Aula 2 — Princípios Fundamentais'
-              : 'Unidade 3 — Poderes da Administração Pública'}
+              : 'Unidade 4 — Agentes Públicos'}
           </span>
           <span>•</span>
           <span>
@@ -3095,7 +3150,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'legislacao_tjam'
               ? 'Aula 1 — Estrutura e Órgãos do Poder Judiciário'
               : selectedSubject === 'portugues'
-              ? 'Aula 1 — Compreensão e Interpretação de Textos'
+              ? 'Aula 3 — Classes de Palavras: Substantivo, Adjetivo e Verbo'
               : selectedSubject === 'libras'
               ? 'Aula 2 — Prática de Comunicação, Cumprimentos e Atendimento'
               : selectedSubject === 'processo_penal'
@@ -3106,7 +3161,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Capítulo 1 — Conceitos Básicos de Informática'
               : selectedSubject === 'direito_const'
               ? 'Arts. 1º a 4º da Constituição Federal'
-              : 'Aula 7 — Poderes da Administração Pública'}
+              : 'Aula 4 — Agentes Públicos (Conceito, Classificação e Regimes)'}
           </span>
         </div>
 
@@ -3120,7 +3175,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM (Aula 1 de 3)'
                 : selectedSubject === 'portugues'
-                ? '🇧🇷 Língua Portuguesa (Aula 1)'
+                ? '🇧🇷 Língua Portuguesa (Aula 3)'
                 : selectedSubject === 'libras'
                 ? '🔥 AULA DE HOJE • 🤟 LIBRAS (Aula 2 • Comunicação & Atendimento)'
                 : selectedSubject === 'processo_penal'
@@ -3131,7 +3186,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Informática (Aula 1)'
                 : selectedSubject === 'direito_const'
                 ? '⚖️ Direito Constitucional (Aula 2)'
-                : '⚖️ Direito Administrativo (Aula 7 • Poderes)'}
+                : '⚖️ Direito Administrativo (Aula 4 • Agentes Públicos)'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               {selectedSubject === 'ingles'
@@ -3141,7 +3196,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas'
                 : selectedSubject === 'portugues'
-                ? '🇧🇷 Língua Portuguesa — Aula 1: Compreensão e Interpretação de Textos'
+                ? '🇧🇷 Língua Portuguesa — Aula 3: Classes de Palavras (Substantivo, Adjetivo e Verbo)'
                 : selectedSubject === 'libras'
                 ? '🤟 LIBRAS — Aula 2: Prática de Comunicação, Cumprimentos e Atendimento Judiciário'
                 : selectedSubject === 'processo_penal'
@@ -3152,7 +3207,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ? 'Aula 1 — Conceitos Básicos de Informática'
                 : selectedSubject === 'direito_const'
                 ? 'Aula 2 — Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
-                : '⚖️ Direito Administrativo — Aula 7: Poderes da Administração Pública'}
+                : '⚖️ Direito Administrativo — Aula 4: Agentes Públicos'}
             </h1>
           </div>
 
@@ -3272,7 +3327,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                     : selectedSubject === 'portugues'
-                    ? 'Unidade 1 — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                    ? 'Língua Portuguesa — Aula 3: Classes de Palavras (Substantivo, Adjetivo e Verbo)'
                     : selectedSubject === 'libras'
                     ? `🤟 LIBRAS — Aula 2: Prática de Comunicação & Atendimento (${
                         selectedVideoPart === 'video3'
@@ -3299,7 +3354,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? '3 Vídeos com orientações práticas • Exercícios via WhatsApp pelo Professor'
                     : selectedSubject === 'direito_admin'
-                    ? 'Unidade 3: Poderes Administrativos • Foco FGV / TJAM'
+                    ? 'Aula 4 de Hoje • Agentes Públicos • Conceito, Classificação, Regimes e Responsabilidades'
                     : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
                 </p>
               </div>
@@ -3407,7 +3462,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
                     ? 'https://www.youtube.com/embed/Od6WAj4LWbI?autoplay=0&rel=0'
-                    : 'https://www.youtube.com/embed/L2lXiq54qno?autoplay=0&rel=0'
+                    : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
                 }
                 title={
                   selectedSubject === 'ingles'
@@ -3430,7 +3485,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Vídeo Aula - Conceitos Básicos de Informática'
                     : selectedSubject === 'direito_const'
                     ? 'Vídeo Aula - Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º)'
-                    : 'Vídeo Aula - Direito Administrativo: Atos Administrativos'
+                    : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -3465,7 +3520,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
                     : selectedSubject === 'direito_const'
                     ? 'https://youtu.be/Od6WAj4LWbI?is=TKCeFjJh24E1EA1_'
-                    : 'https://youtu.be/L2lXiq54qno?is=KueIwsYpZML6aWQx'
+                    : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -3706,24 +3761,28 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ) : (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Poder Hierárquico: relações de subordinação interna, dar ordens, fiscalizar, delegar e avocar competências.</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Conceito amplo de Agente Público (Art. 2º da Lei de Improbidade): toda pessoa que exerce função pública, ainda que transitória ou sem remuneração.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Poder Disciplinar: apuração de infrações e punição de servidores e particulares com vínculo especial.</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Classificação dos agentes: Políticos, Administrativos (Servidores estatutários, Empregados públicos CLT e Temporários), Honoríficos, Delegados e Credenciados.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Poder Regulamentar: decretos e regulamentos para fiel execução da lei (secundum legem, sem inovar primariamente).</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Diferença crucial entre Cargo Público (estatuto/lei), Emprego Público (CLT) e Função Pública (atribuições sem cargo/emprego).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Poder de Polícia: restrição e condicionamento de direitos individuais em prol do interesse público (atributos: Discricionariedade, Autoexecutoriedade e Coercibilidade).</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Regras de Concurso Público (Art. 37, II e III da CF/88): validade de até 2 anos prorrogável uma vez por igual período.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Poder Vinculado vs. Discricionário, e Abuso de Poder (Excesso de Poder x Desvio de Finalidade).</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Cargos em Comissão x Funções de Confiança (direção, chefia e assessoramento) e vedação ao nepotismo (Súmula Vinculante nº 13).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>Responsabilidade tríplice do servidor (Civil, Penal e Administrativa): regra da independência e exceção da absolvição criminal que nega a existência do fato ou a autoria.</span>
                     </li>
                   </ul>
                 )}
@@ -3767,7 +3826,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* TAB 1: TEXTO COMPLETO DA AULA */}
       {activeTab === 'conteudo' && (
-        selectedSubject === 'ingles' ? (
+        selectedSubject === 'direito_admin' ? (
+          <DireitoAdminContent
+            isDarkMode={isDarkMode}
+            checklist={checklist}
+            toggleChecklist={toggleChecklist}
+            isLessonCompleted={isLessonCompleted}
+            handleMarkAsCompleted={handleMarkAsCompleted}
+            setActiveTab={setActiveTab}
+          />
+        ) : selectedSubject === 'ingles' ? (
           <InglesContent
             isDarkMode={isDarkMode}
             isLessonCompleted={isLessonCompleted}
@@ -4110,313 +4178,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </div>
           </article>
         ) : selectedSubject === 'portugues' ? (
-          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
-            {/* Header Objectives */}
-            <section
-              className={`p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
-              }`}
-            >
-              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Língua Portuguesa: Compreensão e Interpretação de Textos
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                Disciplina: 🇧🇷 Língua Portuguesa | Aula 1
-              </p>
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
-                <strong>Objetivo:</strong> Aprender a identificar o que o texto realmente diz, interpretar informações e responder questões de concurso com segurança.
-              </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar Compreensão (explícito) de Interpretação (implícito).</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Identificar o Tema e a Ideia Principal em qualquer texto de prova.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Fazer inferências válidas sem extrapolar ou inventar dados.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Distinguir Tipos Textuais de Gêneros Textuais e reconhecer finalidades.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Aplicar o método de 6 etapas para resolver questões e eliminar alternativas.</span>
-                </li>
-              </ul>
-            </section>
-
-            {/* 1. Compreensão x Interpretação */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. Compreensão x Interpretação
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-                  <h3 className="text-base font-black text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
-                    📌 Compreensão
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-3">
-                    É identificar informações que estão <strong>diretamente apresentadas</strong> no texto (explícitas).
-                  </p>
-                  <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-xs space-y-1">
-                    <p className="font-semibold text-slate-800 dark:text-slate-200">Exemplo:</p>
-                    <p className="italic text-slate-600 dark:text-slate-400">"O servidor chegou ao tribunal às 8 horas."</p>
-                    <p className="font-bold text-emerald-600 dark:text-emerald-400 pt-1">Pergunta: A que horas o servidor chegou?</p>
-                    <p className="font-medium text-slate-800 dark:text-slate-200">Resposta: Às 8 horas (A informação está explícita).</p>
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-                  <h3 className="text-base font-black text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
-                    📌 Interpretação
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-3">
-                    É compreender informações que podem ser <strong>deduzidas</strong> a partir do texto, relacionando as ideias apresentadas.
-                  </p>
-                  <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-xs space-y-1">
-                    <p className="font-semibold text-slate-800 dark:text-slate-200">Exemplo:</p>
-                    <p className="italic text-slate-600 dark:text-slate-400">"O servidor chegou ao tribunal às 8 horas. Pouco depois, iniciou o atendimento ao público."</p>
-                    <p className="font-bold text-blue-600 dark:text-blue-400 pt-1">Conclusão:</p>
-                    <p className="font-medium text-slate-800 dark:text-slate-200">Podemos concluir que o servidor começou suas atividades após chegar ao tribunal (inferência fundada no texto).</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* 2. Informações explícitas e implícitas */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. Informações explícitas e implícitas
-              </h2>
-              <div className="space-y-3">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-                  <h4 className="font-black text-sm text-emerald-700 dark:text-emerald-300 mb-1">Explícita</h4>
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                    Está claramente escrita. <em>Exemplo: "Manaus é a capital do Amazonas."</em> → Informação explícita: Manaus é a capital do Amazonas.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
-                  <h4 className="font-black text-sm text-blue-700 dark:text-blue-300 mb-1">Implícita</h4>
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                    Não está diretamente escrita, mas pode ser deduzida. <em>Exemplo: "João saiu de casa levando um guarda-chuva."</em> → Inferência: Havia possibilidade de chuva.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border flex items-center gap-3 ${isDarkMode ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-900'}`}>
-                  <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <p className="text-xs font-bold">
-                    ⚠️ Cuidado: uma inferência precisa estar sustentada pelo texto. Não devemos inventar informações (evite extrapolação).
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* 3. Tema do texto */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. Tema do texto
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                O tema é o assunto principal abordado pelo texto. Responde à pergunta: <strong>"Sobre o que esse texto fala?"</strong>
-              </p>
-              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'} space-y-2`}>
-                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Exemplo: Um texto apresenta informações sobre o aumento do uso de tecnologia nos tribunais.</p>
-                <div className="flex flex-col sm:flex-row gap-2 text-xs">
-                  <span className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/30">
-                    ✅ Tema: Uso da tecnologia no Poder Judiciário.
-                  </span>
-                  <span className="p-2.5 rounded-xl bg-rose-500/20 text-rose-700 dark:text-rose-300 font-bold border border-rose-500/30">
-                    ❌ Errado: "O computador utilizado pelos servidores" (apenas detalhe secundário).
-                  </span>
-                </div>
-              </div>
-            </section>
-
-            {/* 4. Ideia principal */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Ideia principal
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                A ideia principal representa aquilo que o autor pretende destacar sobre o tema.
-              </p>
-              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs sm:text-sm space-y-2">
-                <p><strong>Tema:</strong> Tecnologia no Judiciário.</p>
-                <p><strong>Ideia principal:</strong> A utilização de novas tecnologias pode tornar os serviços judiciais mais rápidos e acessíveis.</p>
-                <p className="text-emerald-700 dark:text-emerald-400 font-bold pt-1 border-t border-emerald-500/20">
-                  Diferença fundamental: Tema = assunto. Ideia principal = o que o texto afirma/defende sobre esse assunto.
-                </p>
-              </div>
-            </section>
-
-            {/* 5. Ideias secundárias */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Ideias secundárias
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                São informações que explicam, desenvolvem ou complementam a ideia principal (exemplos, explicações, dados estatísticos, consequências, comparações e argumentos secundários).
-              </p>
-              <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs font-bold text-amber-700 dark:text-amber-400">
-                ⚠️ Dica de Concurso: Não confunda uma informação secundária (detalhe) com a ideia central do texto.
-              </div>
-            </section>
-
-            {/* 6. Inferência */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Inferência
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                Inferir significa chegar a uma conclusão a partir das informações disponíveis no texto.
-              </p>
-              <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-2 text-xs sm:text-sm">
-                <p className="italic text-slate-300">"Maria pegou o guarda-chuva antes de sair e observou o céu escuro."</p>
-                <p>O texto não afirma expressamente: <em>"Vai chover."</em></p>
-                <p className="text-emerald-400 font-bold">Mas podemos inferir que Maria esperava chuva devido às pistas do texto.</p>
-              </div>
-            </section>
-
-            {/* 7. Tipos textuais */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                7. Tipos textuais
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
-                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📝 Narrativo</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Relata acontecimentos com personagens, tempo e espaço.</p>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
-                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📖 Descritivo</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Apresenta características de pessoas, lugares, objetos ou situações.</p>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
-                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">💡 Dissertativo</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Expositivo (explica assunto) ou Argumentativo (defende opinião/tese com argumentos).</p>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
-                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">📢 Injuntivo</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Oferece instruções, orientações ou comandos (ex: manuais, editais, receitas).</p>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
-                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">🗣️ Dialogal</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Interação verbal direta entre interlocutores.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* 8. Gênero textual */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                8. Gênero textual
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                O gênero textual é a forma concreta que o texto assume em determinada situação de comunicação na sociedade.
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs font-bold">
-                {['notícia', 'reportagem', 'artigo de opinião', 'carta', 'e-mail', 'anúncio', 'receita', 'manual', 'edital', 'ofício', 'crônica'].map(g => (
-                  <span key={g} className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300">
-                    {g}
-                  </span>
-                ))}
-              </div>
-              <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs font-semibold space-y-1">
-                <p className="text-amber-400 font-bold">⚠️ Não confunda em provas:</p>
-                <p>• Tipo textual → Estrutura linguística predominante (narrativo, dissertativo...).</p>
-                <p>• Gênero textual → Forma social utilizada para comunicar (edital, notícia, e-mail...).</p>
-              </div>
-            </section>
-
-            {/* 9. Finalidade do texto */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                9. Finalidade do texto
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                Refere-se ao objetivo principal do autor. Pergunte: <strong>"Para que esse texto foi escrito?"</strong> (informar, explicar, convencer, orientar, criticar, narrar, descrever, divertir, instruir).
-              </p>
-            </section>
-
-            {/* 10. Ponto de vista do autor */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                10. Ponto de vista do autor
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                Em textos argumentativos, identifique a <strong>Tese</strong> (opinião ou posição defendida) e os <strong>Argumentos</strong> (razões e provas utilizadas para sustentar a tese).
-              </p>
-            </section>
-
-            {/* 11. Palavras-chave */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                11. Palavras-chave & Conectivos de Relação
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-2">
-                Preste atenção nos conectivos que estabelecem relações lógicas entre as frases:
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs font-black">
-                {['portanto', 'porém', 'entretanto', 'porque', 'embora', 'além disso', 'consequentemente', 'assim', 'contudo', 'dessa forma'].map(p => (
-                  <span key={p} className="px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400">
-                    {p}
-                  </span>
-                ))}
-              </div>
-            </section>
-
-            {/* 12. Método de resolução */}
-            <section className="space-y-4">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                12. Como resolver questões de interpretação (Método de 6 Etapas)
-              </h2>
-              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold">
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">1️⃣ Leia o texto inteiro</strong>
-                  Não tente responder lendo apenas frases soltas.
-                </li>
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">2️⃣ Identifique o assunto</strong>
-                  Sobre o que o texto está falando em linhas gerais?
-                </li>
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">3️⃣ Encontre a ideia principal</strong>
-                  Qual a mensagem central que o autor quer transmitir?
-                </li>
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">4️⃣ Observe informações importantes</strong>
-                  Atente para dados, exemplos e conclusões.
-                </li>
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">5️⃣ Releia o enunciado</strong>
-                  Entenda exatamente se a banca pede COMPREENSÃO (explícito) ou INTERPRETAÇÃO (implícito).
-                </li>
-                <li className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-slate-800 dark:text-slate-200">
-                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">6️⃣ Elimine alternativas</strong>
-                  Desconfie das opções que contradizem, exageram, inventam dados sem fundamento ou generalizam.
-                </li>
-              </ol>
-            </section>
-
-            {/* Resumo da Aula */}
-            <section className="p-6 rounded-3xl bg-slate-900 text-white space-y-4 shadow-xl border border-amber-500/30">
-              <h3 className="text-lg font-black text-amber-400 flex items-center gap-2">
-                🎯 RESUMO DA AULA & 🏆 FOCO PARA O CONCURSO
-              </h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-medium">
-                <li>• <strong>COMPREENSÃO:</strong> busca o que está escrito diretamente (explícito).</li>
-                <li>• <strong>INTERPRETAÇÃO:</strong> relaciona informações e realiza inferências (implícito com fundamentação).</li>
-                <li>• <strong>TEMA ≠ IDEIA PRINCIPAL:</strong> Tema é o assunto abrangente; Ideia Principal é a posição central do autor.</li>
-                <li>• <strong>TIPO TEXTUAL ≠ GÊNERO TEXTUAL:</strong> Tipo é a estrutura; Gênero é a forma social concreta.</li>
-              </ul>
-            </section>
-          </article>
+          <PortuguesContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+          />
         ) : selectedSubject === 'libras' ? (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Header Objectives */}
@@ -7021,11 +6787,25 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   ? 'Resumo — Conceitos Básicos de Informática'
                   : selectedSubject === 'processo_penal'
                   ? 'Resumo — Processo Penal: Inquérito Policial'
-                  : 'Resumo — Direito Administrativo: Poderes da Administração Pública (Aula 7)'}
+                  : 'Resumo — Direito Administrativo: Agentes Públicos (Aula 4)'}
               </h2>
             </div>
 
-            {selectedSubject === 'ingles' ? (
+            {selectedSubject === 'direito_admin' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {direitoAdminSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-blue-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : selectedSubject === 'ingles' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 {inglesSummaryPoints.map((pt, idx) => {
                   const parts = pt.split(': ');
@@ -7084,19 +6864,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Compreensão vs. Interpretação:</strong> Compreensão refere-se ao que está EXPLÍCITO no texto ("segundo o texto"). Interpretação exige DEDUÇÕES e INFERÊNCIAS autorizadas ("infere-se do texto").</span>
+                  <span><strong>Substantivo:</strong> Nomeia pessoas, lugares, objetos, seres e sentimentos. Pode ser núcleo do sujeito ou complemento.</span>
                 </li>
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Armadilhas Clássicas FGV:</strong> Extrapolação (criar ideias inexistentes), Redução (focar em detalhe secundário) e Contradição (afirmar o oposto).</span>
+                  <span><strong>Adjetivo:</strong> Caracteriza e qualifica o substantivo ("servidor <em>público</em>", "decisão <em>judicial</em>"). Concorda em gênero e número.</span>
                 </li>
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Coesão Textual:</strong> Anafórica (retoma elemento anterior) e Catafórica (antecipa elemento posterior). Essenciais para compreensão global.</span>
+                  <span><strong>Verbo:</strong> Expressa ação (estudar, trabalhar), estado (ser, estar) ou fenômeno da natureza (chover, trovejar). Núcleo do predicado.</span>
                 </li>
                 <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                   <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Conectivos Logico-Semânticos:</strong> Atenção especial aos adversativos (mas, porém, contudo) e concessivos (embora, ainda que) muito cobrados nas provas do TJAM.</span>
+                  <span><strong>Pegadinha FGV (Mudança de Classe):</strong> Palavras podem mudar de classe pelo contexto (Ex: "O <em>jovem</em> estudou" = substantivo vs. "O candidato <em>jovem</em>" = adjetivo; "O <em>andar</em> do processo" = substantivação).</span>
                 </li>
               </ul>
             ) : selectedSubject === 'direito_const' ? (

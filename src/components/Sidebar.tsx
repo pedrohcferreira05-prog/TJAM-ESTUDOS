@@ -29,7 +29,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isDarkMode,
   isOpenMobile = false,
   onCloseMobile,
-  isDuo = false
+  isDuo = true
 }) => {
   const menuItems: { id: StudentTab; label: string; icon: React.FC<{ className?: string }> }[] = [
     { id: 'dashboard', label: 'Início', icon: Home },
@@ -45,39 +45,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const content = (
     <div className="flex flex-col h-full py-4 px-3 space-y-6">
       {/* User Info Header in Sidebar */}
-      <div className={`px-3 py-3 rounded-2xl border flex items-center gap-3 ${
-        isDuo 
-          ? 'bg-indigo-950/40 border-indigo-500/30' 
-          : 'bg-slate-800/60 border-slate-800'
-      }`}>
-        {isDuo ? (
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-600 text-white flex items-center justify-center font-black text-xs shadow-md shrink-0">
-            <Users className="w-5 h-5 text-amber-300" />
-          </div>
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm overflow-hidden flex-shrink-0">
-            <img 
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256" 
-              alt="Eduardo Mateus Alexandre Amorim"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
-              }}
-            />
-            <span className="text-xs font-bold">EA</span>
-          </div>
-        )}
+      <div className="px-3 py-3 rounded-2xl border flex items-center gap-3 bg-indigo-950/40 border-indigo-500/30">
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-600 text-white flex items-center justify-center font-black text-xs shadow-md shrink-0">
+          <Users className="w-5 h-5 text-amber-300" />
+        </div>
 
         <div className="min-w-0 flex-1">
           <h2 className="text-xs font-extrabold text-white truncate">
-            {isDuo ? 'Pedro & Eduardo' : 'Eduardo Mateus A. Amorim'}
+            Eduardo & Pedro
           </h2>
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border ${
-            isDuo 
-              ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' 
-              : 'text-sky-400 bg-sky-500/10 border-sky-500/20'
-          }`}>
-            {isDuo ? 'Dupla TJAM' : 'Aluno TJAM'}
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-amber-400 bg-amber-500/10 border-amber-500/20">
+            Dupla Oficial TJAM
           </span>
         </div>
       </div>

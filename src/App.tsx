@@ -47,7 +47,6 @@ import { TeacherPortal } from './components/TeacherPortal';
 import { StudentPortal } from './components/StudentPortal';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { AuthModal } from './components/AuthModal';
-import { DuoInviteModal } from './components/DuoInviteModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
 import { SiteLockedView } from './components/SiteLockedView';
 import { Week1View } from './components/Week1View';
@@ -106,34 +105,8 @@ export function App() {
   const [selectedDisciplineId, setSelectedDisciplineId] = useState<string | null>(null);
   const [disciplineSubTab, setDisciplineSubTab] = useState<string>('aulas');
 
-  // Duo Mode state ("Pedro Henrique & Eduardo Mateus" partnership)
-  const [isDuo, setIsDuo] = useState<boolean>(() => {
-    const status = localStorage.getItem('tjam_duo_status');
-    return status === 'accepted';
-  });
-
-  const [isDuoModalOpen, setIsDuoModalOpen] = useState<boolean>(() => {
-    const decided = localStorage.getItem('tjam_duo_decided');
-    return decided !== 'true';
-  });
-
-  const handleAcceptDuo = () => {
-    setIsDuo(true);
-    setIsDuoModalOpen(false);
-    localStorage.setItem('tjam_duo_status', 'accepted');
-    localStorage.setItem('tjam_duo_decided', 'true');
-  };
-
-  const handleDeclineDuo = () => {
-    setIsDuo(false);
-    setIsDuoModalOpen(false);
-    localStorage.setItem('tjam_duo_status', 'declined');
-    localStorage.setItem('tjam_duo_decided', 'true');
-  };
-
-  const handleOpenDuoInvite = () => {
-    setIsDuoModalOpen(true);
-  };
+  // Duo Mode permanently active: Eduardo Mateus & Pedro Henrique
+  const isDuo = true;
 
   // Core App State persisted in localStorage
   const [disciplines] = useState<Discipline[]>(TJAM_DISCIPLINES);
@@ -625,7 +598,6 @@ export function App() {
         isStaffAuthenticated={isStaffAuthenticated}
         onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         isDuo={isDuo}
-        onOpenDuoInvite={handleOpenDuoInvite}
       />
 
       {/* Main Workspace Body with Sidebar */}
@@ -704,7 +676,6 @@ export function App() {
                   onNavigateTab={setStudentTab}
                   isDarkMode={isDarkMode}
                   isDuo={isDuo}
-                  onOpenDuoInvite={handleOpenDuoInvite}
                 />
               )}
 
@@ -778,7 +749,6 @@ export function App() {
                   progress={userProgress}
                   isDarkMode={isDarkMode}
                   isDuo={isDuo}
-                  onOpenDuoInvite={handleOpenDuoInvite}
                 />
               )}
 
@@ -825,15 +795,6 @@ export function App() {
           )}
         </main>
       </div>
-
-      {/* Duo Request Modal Panel */}
-      <DuoInviteModal
-        isOpen={isDuoModalOpen}
-        onAccept={handleAcceptDuo}
-        onDecline={handleDeclineDuo}
-        onClose={() => setIsDuoModalOpen(false)}
-        isDarkMode={isDarkMode}
-      />
 
       {/* AI Assistant Modal */}
       <AIAssistantModal

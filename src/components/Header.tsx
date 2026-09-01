@@ -24,15 +24,13 @@ interface HeaderProps {
   isStaffAuthenticated?: boolean;
   onToggleMobileMenu?: () => void;
   isDuo?: boolean;
-  onOpenDuoInvite?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   setStudentTab,
   onOpenAIAssistant,
   onToggleMobileMenu,
-  isDuo = false,
-  onOpenDuoInvite,
+  isDuo = true,
 }) => {
   return (
     <header className="sticky top-0 z-40 border-b bg-slate-900/95 border-slate-800/90 backdrop-blur-md transition-colors">
@@ -75,21 +73,15 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Controls */}
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Duo or Solo Mode Badge / Button */}
-          {onOpenDuoInvite && (
-            <button
-              onClick={onOpenDuoInvite}
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
-                isDuo
-                  ? 'bg-indigo-500/15 border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/25'
-                  : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200'
-              }`}
-              title="Gerenciar Dupla de Estudos"
-            >
-              <Users className="w-3.5 h-3.5 text-amber-400" />
-              <span>{isDuo ? 'Dupla Ativa' : 'Solicitação Dupla'}</span>
-            </button>
-          )}
+          {/* Duo Badge linking to Perfil */}
+          <button
+            onClick={() => setStudentTab('perfil')}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border bg-indigo-500/15 border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/25 text-xs font-bold transition-all cursor-pointer"
+            title="Ver Dupla Oficial no Perfil"
+          >
+            <Users className="w-3.5 h-3.5 text-amber-400" />
+            <span>Dupla Oficial: Eduardo & Pedro</span>
+          </button>
 
           {/* Streak Counter - Frozen Status */}
           <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 text-slate-300 border border-slate-700/80 text-xs font-semibold">
@@ -110,30 +102,15 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Student Profile Pill */}
           <button
             onClick={() => setStudentTab('perfil')}
-            className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer ${
-              isDuo
-                ? 'bg-indigo-950/40 border-indigo-500/40 text-indigo-200 hover:border-indigo-400'
-                : 'bg-slate-800/80 border-slate-700 hover:border-slate-600 text-slate-200'
-            }`}
+            className="px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer bg-indigo-950/40 border-indigo-500/40 text-indigo-200 hover:border-indigo-400"
           >
-            {isDuo ? (
-              <>
-                <Users className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="hidden sm:inline truncate max-w-[170px] font-bold">
-                  Pedro & Eduardo
-                </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/30 text-indigo-300 font-extrabold hidden md:inline">
-                  Dupla
-                </span>
-              </>
-            ) : (
-              <>
-                <User className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                <span className="hidden sm:inline truncate max-w-[150px]">
-                  Eduardo Mateus
-                </span>
-              </>
-            )}
+            <Users className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="hidden sm:inline truncate max-w-[170px] font-bold">
+              Eduardo & Pedro
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/30 text-indigo-300 font-extrabold hidden md:inline">
+              Dupla
+            </span>
           </button>
         </div>
       </div>
