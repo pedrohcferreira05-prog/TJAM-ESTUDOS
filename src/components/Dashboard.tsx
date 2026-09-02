@@ -51,7 +51,7 @@ interface ScheduledLesson {
   orderNumber: number;
 }
 
-// As 2 Aulas Programadas para Conclusão Hoje
+// As 4 Aulas Programadas para Conclusão Hoje
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
     id: 'portugues',
@@ -85,6 +85,38 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
     tag: '⚖️ DIR. ADMINISTRATIVO (AULA 4)',
     orderNumber: 2,
   },
+  {
+    id: 'processo_civil',
+    subjectKey: 'processo_civil',
+    title: 'Processo Civil — Aula 2',
+    subtitle: 'Partes e Procuradores no CPC/2015 (Capacidade Processual, Litisconsórcio, Representação e Deveres)',
+    category: 'Conhecimentos Específicos',
+    badge: 'Meta 3 de Hoje • CPC/2015',
+    color: 'indigo',
+    icon: Scale,
+    duration: '45 min',
+    questionsCount: 20,
+    cardsCount: 15,
+    highlight: true,
+    tag: '📚 PROC. CIVIL (AULA 2)',
+    orderNumber: 3,
+  },
+  {
+    id: 'processo_penal',
+    subjectKey: 'processo_penal',
+    title: 'Processo Penal — Quarta Aula de Hoje',
+    subtitle: 'Aplicação da Lei Processual Penal no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação e Fontes',
+    category: 'Conhecimentos Específicos',
+    badge: 'Meta 4 de Hoje • Eficácia do CPP',
+    color: 'teal',
+    icon: BookOpen,
+    duration: '45 min',
+    questionsCount: 20,
+    cardsCount: 10,
+    highlight: true,
+    tag: '⚖️ PROC. PENAL (QUARTA AULA)',
+    orderNumber: 4,
+  },
 ];
 
 // Demais Disciplinas e Aulas Disponíveis
@@ -102,7 +134,7 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     questionsCount: 20,
     cardsCount: 15,
     tag: '🇬🇧 INGLÊS',
-    orderNumber: 3,
+    orderNumber: 5,
   },
   {
     id: 'geografia_amazonas',
@@ -117,7 +149,7 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     questionsCount: 20,
     cardsCount: 15,
     tag: '🌳 GEOGRAFIA AM',
-    orderNumber: 4,
+    orderNumber: 6,
   },
   {
     id: 'legislacao_tjam',
@@ -132,7 +164,7 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     questionsCount: 20,
     cardsCount: 15,
     tag: '🏛️ LEGISLAÇÃO TJAM',
-    orderNumber: 5,
+    orderNumber: 7,
   },
   {
     id: 'libras',
@@ -147,36 +179,6 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     questionsCount: 15,
     cardsCount: 12,
     tag: '🤟 LIBRAS',
-    orderNumber: 6,
-  },
-  {
-    id: 'processo_penal',
-    subjectKey: 'processo_penal',
-    title: 'Processo Penal — Aula 6',
-    subtitle: 'Princípios Fundamentais e Aplicação da Lei Processual Penal no Tempo e Espaço',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 6 • Princípios',
-    color: 'teal',
-    icon: BookOpen,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '⚖️ PROC. PENAL',
-    orderNumber: 7,
-  },
-  {
-    id: 'processo_civil',
-    subjectKey: 'processo_civil',
-    title: 'Processo Civil — Aula 5',
-    subtitle: 'Teoria Geral do Processo, Prazos Processuais e Atos de Comunicação (CPC/2015)',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 5 • CPC/2015',
-    color: 'indigo',
-    icon: FileText,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '⚖️ PROC. CIVIL',
     orderNumber: 8,
   },
   {
@@ -288,7 +290,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 2 Aulas Programadas para Hoje
+              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 4 Aulas Programadas para Hoje
             </div>
 
             <div className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 flex items-center gap-1.5">
@@ -300,49 +302,61 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Olá, Eduardo Mateus & Pedro Henrique!
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Vocês estão estudando em <strong className="text-indigo-400">Dupla Oficial</strong> para o TJAM 2026! As <strong className="text-emerald-500 font-bold">2 aulas programadas para conclusão hoje</strong> são: <strong className="text-emerald-400">1. Língua Portuguesa (Aula 3)</strong> e <strong className="text-blue-400">2. Direito Administrativo (Aula 4)</strong>. Concluam as teorias, questões e flashcards abaixo para bater a meta diária!
+            Vocês estão estudando em <strong className="text-indigo-400">Dupla Oficial</strong> para o TJAM 2026! As <strong className="text-emerald-500 font-bold">4 aulas programadas para conclusão hoje</strong> são: <strong className="text-emerald-400">1. Língua Portuguesa (Aula 3)</strong>, <strong className="text-blue-400">2. Direito Administrativo (Aula 4)</strong>, <strong className="text-indigo-400">3. Processo Civil (Aula 2)</strong> e <strong className="text-teal-400">4. Processo Penal (Quarta Aula)</strong>. Concluam as teorias, questões e flashcards abaixo para bater a meta diária!
           </p>
         </div>
 
-        {/* Primary CTA Banner: Duas Aulas de Hoje */}
-        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-emerald-800 via-teal-900 to-blue-950 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-xl shadow-emerald-950/30 border border-emerald-500/30">
+        {/* Primary CTA Banner: Quatro Aulas de Hoje */}
+        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-emerald-800 via-teal-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-emerald-950/30 border border-emerald-500/30">
           <div className="space-y-2 max-w-xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
                 <Target className="w-3.5 h-3.5 text-emerald-300" /> Metas Obrigatórias do Dia
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 2 Aulas • 95 min total
+                <Clock className="w-3.5 h-3.5" /> 4 Aulas de Hoje • 185 min total
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 2 Aulas de Hoje: Português & Direito Administrativo</h2>
+            <h2 className="text-xl sm:text-2xl font-black">🎯 4 Aulas de Hoje: Português, Dir. Admin, Proc. Civil & Proc. Penal</h2>
             <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed">
-              <strong>Aula 1:</strong> Classes de Palavras (Morfologia e Casos Especiais FGV) • <strong>Aula 2:</strong> Poderes da Administração Pública (Polícia, Hierárquico, Disciplinar e Regulamentar).
+              <strong>1. Português:</strong> Morfologia FGV • <strong>2. Dir. Admin:</strong> Poderes • <strong>3. Proc. Civil:</strong> Partes e Procuradores • <strong>4. Proc. Penal:</strong> Aplicação da Lei Processual.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 xl:flex items-center gap-2 w-full xl:w-auto shrink-0">
             <button
               onClick={() => handleOpenLesson('portugues')}
-              className="px-5 py-3.5 rounded-2xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer group"
+              className="px-3.5 py-3 rounded-2xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <BookOpen className="w-4 h-4 text-slate-950" />
-              <span>1. Português (Aula 3)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>1. Português</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
               onClick={() => handleOpenLesson('direito_admin')}
-              className="px-5 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer group"
+              className="px-3.5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <Scale className="w-4 h-4 text-blue-200" />
-              <span>2. Dir. Administrativo (Aula 4)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>2. Dir. Admin</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => handleOpenLesson('processo_civil')}
+              className="px-3.5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+            >
+              <span>3. Proc. Civil</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => handleOpenLesson('processo_penal')}
+              className="px-3.5 py-3 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+            >
+              <span>4. Proc. Penal</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
+      {/* METAS DO DIA: AS 4 AULAS A SEREM CONCLUÍDAS HOJE */}
       <div className="space-y-5">
         <div
           className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
@@ -357,11 +371,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-500" />
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 2 Aulas Programadas
+                  Metas de Hoje • 4 Aulas Programadas
                 </h2>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 2 disciplinas do dia.
+                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 4 disciplinas do dia.
               </p>
             </div>
 
@@ -387,9 +401,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
               />
             </div>
             <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400">
-              <span>{completedDailyCount} de 2 Aulas Concluídas</span>
-              <span>{inProgressDailyCount > 0 ? '1 Em Andamento' : 'Status Sincronizado'}</span>
-              <span>{2 - completedDailyCount} Pendentes</span>
+              <span>{completedDailyCount} de {TODAY_PRIMARY_LESSONS.length} Aulas Concluídas</span>
+              <span>{inProgressDailyCount > 0 ? `${inProgressDailyCount} Em Andamento` : 'Status Sincronizado'}</span>
+              <span>{TODAY_PRIMARY_LESSONS.length - completedDailyCount} Pendentes</span>
             </div>
           </div>
         </div>
@@ -475,7 +489,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
                       : lesson.subjectKey === 'portugues'
                       ? 'bg-amber-400 hover:bg-amber-300 text-slate-950'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                      : lesson.subjectKey === 'direito_admin'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                      : lesson.subjectKey === 'processo_civil'
+                      ? 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                      : 'bg-teal-600 hover:bg-teal-500 text-white'
                   }`}
                 >
                   <span>{isCompleted ? 'Revisar Aula de Hoje' : `Iniciar Aula de Hoje (${lesson.title.split('—')[0].trim()})`}</span>
