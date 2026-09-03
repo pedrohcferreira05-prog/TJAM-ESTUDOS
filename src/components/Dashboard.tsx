@@ -636,7 +636,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-indigo-600 shadow-indigo-500/30">
-                  6º
+                  4º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -651,7 +651,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     </span>
                   </div>
                   <span className="text-xs font-semibold flex items-center gap-1 mt-0.5 text-indigo-400">
-                    👥 6º Lugar Geral • Subindo no ranking com 25,0% concluído! 🚀
+                    👥 4º Lugar Geral • Subindo no ranking com 30,0% concluído! 🚀
                   </span>
                 </div>
               </div>
@@ -660,11 +660,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-indigo-500"
-                    style={{ width: '74%' }}
+                    style={{ width: '85.7%' }}
                   ></div>
                 </div>
                 <span className="text-sm font-black min-w-[50px] text-right text-indigo-400">
-                  25,0%
+                  30,0%
                 </span>
               </div>
             </div>
@@ -698,18 +698,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '34,2%', isUser: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '31,8%', isUser: false, barWidth: '93.0%' },
-              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '29,5%', isUser: false, barWidth: '86.3%' },
-              { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '27,8%', isUser: false, barWidth: '81.3%' },
-              { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '26,4%', isUser: false, barWidth: '77.2%' },
-              { pos: 6, name: 'Eduardo Mateus & Pedro Henrique', pct: '25,0%', isUser: true, barWidth: '73.1%' },
-              { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '23,6%', isUser: false, barWidth: '69.0%' },
-              { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,2%', isUser: false, barWidth: '62.0%' },
-              { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,8%', isUser: false, barWidth: '57.9%' },
-              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '18,1%', isUser: false, barWidth: '52.9%' },
-              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '16,5%', isUser: false, barWidth: '48.2%' },
-              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '14,0%', isUser: false, barWidth: '40.9%' },
+              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, barWidth: '95.4%' },
+              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, barWidth: '90.3%' },
+              { pos: 4, name: 'Eduardo Mateus & Pedro Henrique', pct: '30,0%', isUser: true, barWidth: '85.7%' },
+              { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, barWidth: '80.6%' },
+              { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, barWidth: '75.7%' },
+              { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false, barWidth: '68.6%' },
+              { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,8%', isUser: false, barWidth: '62.3%' },
+              { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false, barWidth: '55.7%' },
+              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false, barWidth: '49.1%' },
+              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '15,0%', isUser: false, barWidth: '42.9%' },
+              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '12,8%', isUser: false, barWidth: '36.6%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}

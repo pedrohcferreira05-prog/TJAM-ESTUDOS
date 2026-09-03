@@ -46,7 +46,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-indigo-200 mt-0.5">
-              Eduardo Mateus tem como dupla oficial <strong>Pedro Henrique</strong>. Ambos estão com metas integradas e subindo no ranking geral (25%).
+              Eduardo Mateus tem como dupla oficial <strong>Pedro Henrique</strong>. Ambos estão com metas integradas e subindo no ranking geral (30%).
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           <span className="px-3 py-1.5 rounded-xl bg-indigo-500/20 text-indigo-200 text-xs font-black border border-indigo-400/30 flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-amber-400" />
-            <span>6º Lugar Geral (25%)</span>
+            <span>4º Lugar Geral (30%)</span>
           </span>
         </div>
       </div>
@@ -158,9 +158,9 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <Award className="w-5 h-5" />
           </div>
           <div className="flex items-baseline gap-2">
-            <p className="text-3xl font-black text-slate-900 dark:text-white">25%</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">30%</p>
             <span className="text-xs font-bold text-emerald-400 flex items-center">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 6º Lugar
+              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 4º Lugar
             </span>
           </div>
           <p className="text-[11px] text-slate-400">Subiram no ranking geral das duplas</p>

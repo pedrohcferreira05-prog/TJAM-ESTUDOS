@@ -2229,18 +2229,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '34,2%', isUser: false },
-                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '31,8%', isUser: false },
-                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '29,5%', isUser: false },
-                { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '27,8%', isUser: false },
-                { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '26,4%', isUser: false },
-                { pos: 6, name: 'Eduardo Mateus & Pedro Henrique', pct: '25,0%', isUser: true },
-                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '23,6%', isUser: false },
-                { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,2%', isUser: false },
-                { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,8%', isUser: false },
-                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '18,1%', isUser: false },
-                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '16,5%', isUser: false },
-                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '14,0%', isUser: false },
+                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false },
+                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false },
+                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false },
+                { pos: 4, name: 'Eduardo Mateus & Pedro Henrique', pct: '30,0%', isUser: true },
+                { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false },
+                { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false },
+                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false },
+                { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,8%', isUser: false },
+                { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false },
+                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false },
+                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '15,0%', isUser: false },
+                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '12,8%', isUser: false },
               ].map((d) => (
                 <div
                   key={d.pos}
