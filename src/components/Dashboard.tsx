@@ -51,23 +51,58 @@ interface ScheduledLesson {
   orderNumber: number;
 }
 
-// As 4 Aulas Programadas para Conclusão Hoje
+// As Aulas Programadas para Conclusão Hoje
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
+  {
+    id: 'legislacao_tjam',
+    subjectKey: 'legislacao_tjam',
+    title: 'Legislação do TJAM — Aula 2',
+    subtitle: 'Organização Judiciária do Amazonas: aprofundamento (LC 261/2023, 26 Desembargadores, Órgãos Julgadores e Regimento Interno)',
+    category: 'Legislação Específica',
+    badge: 'Meta 1 de Hoje • LC 261/2023',
+    color: 'purple',
+    icon: Landmark,
+    duration: '50 min',
+    questionsCount: 20,
+    cardsCount: 15,
+    highlight: true,
+    tag: '🏛️ LEGISLAÇÃO TJAM (AULA 2)',
+    orderNumber: 1,
+  },
+  {
+    id: 'geografia_amazonas',
+    subjectKey: 'geografia_amazonas',
+    title: 'Geografia do Amazonas — 2ª Aula de Hoje',
+    subtitle: 'Aspectos Humanos e Econômicos: População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial',
+    category: 'Conhecimentos Gerais',
+    badge: 'Meta 2 de Hoje • Humanos & Econômicos',
+    color: 'emerald',
+    icon: Trees,
+    duration: '40 min',
+    questionsCount: 20,
+    cardsCount: 15,
+    highlight: true,
+    tag: '🌳 GEOGRAFIA AM (2ª AULA)',
+    orderNumber: 2,
+  },
+];
+
+// Demais Disciplinas e Aulas Disponíveis
+const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
   {
     id: 'portugues',
     subjectKey: 'portugues',
     title: 'Língua Portuguesa — Aula 3',
     subtitle: 'Classes de Palavras: Substantivo, Adjetivo e Verbo (Morfologia e Casos Especiais FGV)',
     category: 'Conhecimentos Básicos',
-    badge: 'Meta 1 de Hoje • Morfologia FGV',
+    badge: 'Aula 3 • Morfologia FGV',
     color: 'emerald',
     icon: BookOpen,
     duration: '45 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '🇧🇷 PORTUGUÊS (AULA 3)',
-    orderNumber: 1,
+    tag: '🇧🇷 PORTUGUÊS',
+    orderNumber: 3,
   },
   {
     id: 'direito_admin',
@@ -75,15 +110,14 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
     title: 'Direito Administrativo — Aula 4',
     subtitle: 'Poderes da Administração Pública (Poder de Polícia, Hierárquico, Disciplinar e Regulamentar)',
     category: 'Conhecimentos Específicos',
-    badge: 'Meta 2 de Hoje • Poderes',
+    badge: 'Aula 4 • Poderes',
     color: 'blue',
     icon: Scale,
     duration: '50 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '⚖️ DIR. ADMINISTRATIVO (AULA 4)',
-    orderNumber: 2,
+    tag: '⚖️ DIR. ADMIN',
+    orderNumber: 4,
   },
   {
     id: 'processo_civil',
@@ -91,36 +125,30 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
     title: 'Processo Civil — Aula 2',
     subtitle: 'Partes e Procuradores no CPC/2015 (Capacidade Processual, Litisconsórcio, Representação e Deveres)',
     category: 'Conhecimentos Específicos',
-    badge: 'Meta 3 de Hoje • CPC/2015',
+    badge: 'Aula 2 • CPC/2015',
     color: 'indigo',
     icon: Scale,
     duration: '45 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '📚 PROC. CIVIL (AULA 2)',
-    orderNumber: 3,
+    tag: '📚 PROC. CIVIL',
+    orderNumber: 5,
   },
   {
     id: 'processo_penal',
     subjectKey: 'processo_penal',
-    title: 'Processo Penal — Quarta Aula de Hoje',
+    title: 'Processo Penal — Quarta Aula',
     subtitle: 'Aplicação da Lei Processual Penal no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação e Fontes',
     category: 'Conhecimentos Específicos',
-    badge: 'Meta 4 de Hoje • Eficácia do CPP',
+    badge: 'Aula 4 • Eficácia do CPP',
     color: 'teal',
     icon: BookOpen,
     duration: '45 min',
     questionsCount: 20,
     cardsCount: 10,
-    highlight: true,
-    tag: '⚖️ PROC. PENAL (QUARTA AULA)',
-    orderNumber: 4,
+    tag: '⚖️ PROC. PENAL',
+    orderNumber: 6,
   },
-];
-
-// Demais Disciplinas e Aulas Disponíveis
-const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
   {
     id: 'ingles',
     subjectKey: 'ingles',
@@ -134,36 +162,6 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     questionsCount: 20,
     cardsCount: 15,
     tag: '🇬🇧 INGLÊS',
-    orderNumber: 5,
-  },
-  {
-    id: 'geografia_amazonas',
-    subjectKey: 'geografia_amazonas',
-    title: 'Geografia do Amazonas — Aula 2',
-    subtitle: 'Aspectos Físicos: Relevo, Clima Equatorial, Bacia Amazônica e as 3 Matas',
-    category: 'Conhecimentos Gerais',
-    badge: 'Aula 2 • Aspectos Físicos',
-    color: 'emerald',
-    icon: Trees,
-    duration: '40 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '🌳 GEOGRAFIA AM',
-    orderNumber: 6,
-  },
-  {
-    id: 'legislacao_tjam',
-    subjectKey: 'legislacao_tjam',
-    title: 'Legislação do TJAM — Aula 1',
-    subtitle: 'Estrutura e Órgãos do Poder Judiciário do Amazonas (Lei Complementar nº 261/2023)',
-    category: 'Legislação Específica',
-    badge: 'Aula 1 • LC 261/2023',
-    color: 'purple',
-    icon: Landmark,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '🏛️ LEGISLAÇÃO TJAM',
     orderNumber: 7,
   },
   {
@@ -207,10 +205,10 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     icon: Monitor,
     duration: '40 min',
     questionsCount: 20,
-    cardsCount: 15,
+    cardsCount: 12,
     tag: '💻 INFORMÁTICA',
     orderNumber: 10,
-  }
+  },
 ];
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -314,49 +312,35 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <Target className="w-3.5 h-3.5 text-emerald-300" /> Metas Obrigatórias do Dia
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 4 Aulas de Hoje • 185 min total
+                <Clock className="w-3.5 h-3.5" /> 2 Aulas de Hoje • 90 min total
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 4 Aulas de Hoje: Português, Dir. Admin, Proc. Civil & Proc. Penal</h2>
+            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Legislação do TJAM & Geografia do Amazonas</h2>
             <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed">
-              <strong>1. Português:</strong> Morfologia FGV • <strong>2. Dir. Admin:</strong> Poderes • <strong>3. Proc. Civil:</strong> Partes e Procuradores • <strong>4. Proc. Penal:</strong> Aplicação da Lei Processual.
+              <strong>1. Legislação TJAM (Aula 2):</strong> Organização Judiciária do Amazonas (LC nº 261/2023) • <strong>2. Geografia do AM (2ª Aula):</strong> Aspectos Humanos, População, Manaus e Polo Industrial.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 xl:flex items-center gap-2 w-full xl:w-auto shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
             <button
-              onClick={() => handleOpenLesson('portugues')}
-              className="px-3.5 py-3 rounded-2xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+              onClick={() => handleOpenLesson('legislacao_tjam')}
+              className="px-4 py-3 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>1. Português</span>
+              <span>🏛️ 1. Legislação TJAM (Aula 2)</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
-              onClick={() => handleOpenLesson('direito_admin')}
-              className="px-3.5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+              onClick={() => handleOpenLesson('geografia_amazonas')}
+              className="px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>2. Dir. Admin</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={() => handleOpenLesson('processo_civil')}
-              className="px-3.5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <span>3. Proc. Civil</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={() => handleOpenLesson('processo_penal')}
-              className="px-3.5 py-3 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <span>4. Proc. Penal</span>
+              <span>🌳 2. Geografia AM (2ª Aula)</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 4 AULAS A SEREM CONCLUÍDAS HOJE */}
+      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
       <div className="space-y-5">
         <div
           className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
@@ -371,11 +355,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-500" />
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 4 Aulas Programadas
+                  Metas de Hoje • 2 Aulas Programadas
                 </h2>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 4 disciplinas do dia.
+                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 2 disciplinas do dia.
               </p>
             </div>
 
@@ -487,6 +471,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   className={`w-full py-3.5 rounded-2xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group ${
                     isCompleted
                       ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                      : lesson.subjectKey === 'legislacao_tjam'
+                      ? 'bg-purple-600 hover:bg-purple-500 text-white'
                       : lesson.subjectKey === 'portugues'
                       ? 'bg-amber-400 hover:bg-amber-300 text-slate-950'
                       : lesson.subjectKey === 'direito_admin'
@@ -650,7 +636,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-indigo-600 shadow-indigo-500/30">
-                  9º
+                  6º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -665,7 +651,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     </span>
                   </div>
                   <span className="text-xs font-semibold flex items-center gap-1 mt-0.5 text-indigo-400">
-                    👥 9º Lugar Geral • Subindo no ranking com 13,0% concluído! 🚀
+                    👥 6º Lugar Geral • Subindo no ranking com 25,0% concluído! 🚀
                   </span>
                 </div>
               </div>
@@ -674,11 +660,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-indigo-500"
-                    style={{ width: '62%' }}
+                    style={{ width: '74%' }}
                   ></div>
                 </div>
                 <span className="text-sm font-black min-w-[50px] text-right text-indigo-400">
-                  13,0%
+                  25,0%
                 </span>
               </div>
             </div>
@@ -712,18 +698,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '21,0%', isUser: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '20,2%', isUser: false, barWidth: '96.2%' },
-              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '19,4%', isUser: false, barWidth: '92.4%' },
-              { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '18,5%', isUser: false, barWidth: '88.1%' },
-              { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '17,3%', isUser: false, barWidth: '82.4%' },
-              { pos: 6, name: 'Bruno Carvalho & Larissa Ferreira', pct: '16,1%', isUser: false, barWidth: '76.7%' },
-              { pos: 7, name: 'Thiago Martins & Camila Duarte', pct: '15,0%', isUser: false, barWidth: '71.4%' },
-              { pos: 8, name: 'Felipe Andrade & Letícia Ramos', pct: '14,1%', isUser: false, barWidth: '67.1%' },
-              { pos: 9, name: 'Eduardo Mateus & Pedro Henrique', pct: '13,0%', isUser: true, barWidth: '61.9%' },
-              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '12,2%', isUser: false, barWidth: '58.1%' },
-              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '11,0%', isUser: false, barWidth: '52.4%' },
-              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '9,5%', isUser: false, barWidth: '45.2%' },
+              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '34,2%', isUser: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '31,8%', isUser: false, barWidth: '93.0%' },
+              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '29,5%', isUser: false, barWidth: '86.3%' },
+              { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '27,8%', isUser: false, barWidth: '81.3%' },
+              { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '26,4%', isUser: false, barWidth: '77.2%' },
+              { pos: 6, name: 'Eduardo Mateus & Pedro Henrique', pct: '25,0%', isUser: true, barWidth: '73.1%' },
+              { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '23,6%', isUser: false, barWidth: '69.0%' },
+              { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,2%', isUser: false, barWidth: '62.0%' },
+              { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,8%', isUser: false, barWidth: '57.9%' },
+              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '18,1%', isUser: false, barWidth: '52.9%' },
+              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '16,5%', isUser: false, barWidth: '48.2%' },
+              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '14,0%', isUser: false, barWidth: '40.9%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}

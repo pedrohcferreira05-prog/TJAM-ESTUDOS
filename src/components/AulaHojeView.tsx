@@ -122,7 +122,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'portugues';
+    return 'legislacao_tjam';
   });
 
   const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
@@ -2152,8 +2152,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5" /> Aula de Hoje: {
                   selectedSubject === 'ingles' ? 'Inglês (Aula 3 Prática)'
-                  : selectedSubject === 'geografia_amazonas' ? 'Geografia do Amazonas (Aula 2)'
-                  : selectedSubject === 'legislacao_tjam' ? 'Legislação do TJAM (Aula 1 de 3)'
+                  : selectedSubject === 'geografia_amazonas' ? 'Geografia do AM (2ª Aula de Hoje)'
+                  : selectedSubject === 'legislacao_tjam' ? 'Legislação do TJAM (Aula 2)'
                   : selectedSubject === 'libras' ? 'LIBRAS'
                   : selectedSubject === 'portugues' ? 'Língua Portuguesa'
                   : selectedSubject === 'processo_penal' ? 'Processo Penal (Quarta Aula de Hoje)'
@@ -2169,8 +2169,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200">
                 {
                   selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Aula 3 – Apresentação e Comunicação Básica (100% Prática)'
-                  : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • Aula 2 – Aspectos Físicos (Relevo, Clima, Rios e Vegetação)'
-                  : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 1 de 3 de Hoje – Estrutura do Judiciário do Amazonas'
+                  : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • 2ª Aula de Hoje – Aspectos Humanos e Econômicos'
+                  : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 2 de Hoje – Organização Judiciária do Amazonas: Aprofundamento'
                   : selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
                   : selectedSubject === 'libras' ? '🤟 LIBRAS • Aula 2 – Prática de Comunicação, Cumprimentos e Diálogos'
                   : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Quarta Aula de Hoje – Aplicação da Lei Processual Penal'
@@ -2183,8 +2183,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
                 {
                   selectedSubject === 'ingles' ? 'Aula 3 — Apresentação e Comunicação Básica em Inglês'
-                  : selectedSubject === 'geografia_amazonas' ? 'Aula 2 — Aspectos Físicos do Estado do Amazonas'
-                  : selectedSubject === 'legislacao_tjam' ? 'Aula 1 — Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
+                  : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Aspectos Humanos e Econômicos do Amazonas'
+                  : selectedSubject === 'legislacao_tjam' ? 'Aula 2 — Organização Judiciária do Amazonas: aprofundamento (LC 261/2023)'
                   : selectedSubject === 'portugues' ? 'Aula 1 — Compreensão e Interpretação de Textos'
                   : selectedSubject === 'libras' ? 'Aula 2 — LIBRAS: Prática de Cumprimentos, Apresentação e Diálogos'
                   : selectedSubject === 'processo_penal' ? 'Aula — Aplicação da Lei Processual Penal (Tempo, Espaço, Interpretação e Fontes)'
@@ -2197,8 +2197,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
                 {
                   selectedSubject === 'ingles' ? 'Aula 3 100% Prática • Cumprimentos, Apresentação, Perguntas Básicas, Vocabulário do Cotidiano e Texto • 20 Exercícios TJAM'
-                  : selectedSubject === 'geografia_amazonas' ? 'Aula 2 • 3 Países Fronteiriços, Relevo, Clima Equatorial, Bacia Amazônica e as 3 Matas • Foco FGV TJAM'
-                  : selectedSubject === 'legislacao_tjam' ? 'Aula 1 de 3 de Hoje • 20 Questões Gabaritadas + Vídeo Aula Exclusiva • Foco FGV TJAM'
+                  : selectedSubject === 'geografia_amazonas' ? '2ª Aula de Hoje • População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial • 20 Questões Gabaritadas'
+                  : selectedSubject === 'legislacao_tjam' ? 'Aula 2 de Hoje • 20 Questões Gabaritadas + Vídeo Aula Exclusiva • Foco FGV TJAM'
                   : selectedSubject === 'libras' ? 'Acessibilidade e Atendimento no TJAM • 40 min de Prática Interativa • Sinais, Apresentação e Diálogo'
                   : selectedSubject === 'processo_penal' ? 'Quarta Aula de Hoje • Eficácia no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação (Art. 3º) e Fontes • 20 Questões TJAM'
                   : 'Nível: Intermediário / Foco FGV • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
@@ -2229,18 +2229,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '21,0%', isUser: false },
-                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '20,2%', isUser: false },
-                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '19,4%', isUser: false },
-                { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '18,5%', isUser: false },
-                { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '17,3%', isUser: false },
-                { pos: 6, name: 'Bruno Carvalho & Larissa Ferreira', pct: '16,1%', isUser: false },
-                { pos: 7, name: 'Thiago Martins & Camila Duarte', pct: '15,0%', isUser: false },
-                { pos: 8, name: 'Felipe Andrade & Letícia Ramos', pct: '14,1%', isUser: false },
-                { pos: 9, name: 'Eduardo Mateus & Pedro Henrique', pct: '13,0%', isUser: true },
-                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '12,2%', isUser: false },
-                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '11,0%', isUser: false },
-                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '9,5%', isUser: false },
+                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '34,2%', isUser: false },
+                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '31,8%', isUser: false },
+                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '29,5%', isUser: false },
+                { pos: 4, name: 'Rafael Mendes & Amanda Rocha', pct: '27,8%', isUser: false },
+                { pos: 5, name: 'Carlos Eduardo & Juliana Castro', pct: '26,4%', isUser: false },
+                { pos: 6, name: 'Eduardo Mateus & Pedro Henrique', pct: '25,0%', isUser: true },
+                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '23,6%', isUser: false },
+                { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,2%', isUser: false },
+                { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,8%', isUser: false },
+                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '18,1%', isUser: false },
+                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '16,5%', isUser: false },
+                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '14,0%', isUser: false },
               ].map((d) => (
                 <div
                   key={d.pos}
@@ -2313,18 +2313,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Subject Switcher Bar & Saved Progress Banner */}
       <div className="space-y-4">
         {/* Metas do Dia Banner */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-indigo-950/40 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-emerald-950/40 border border-purple-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-emerald-600 text-white font-bold text-base">🎯</span>
+            <span className="p-2 rounded-xl bg-purple-600 text-white font-bold text-base">🎯</span>
             <div>
-              <p className="font-black text-emerald-300 dark:text-emerald-200 flex items-center gap-2">
-                <span>Metas de Hoje: 4 Aulas Programadas para Conclusão</span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold text-[10px]">
-                  {((savedLessonsStore['portugues']?.completed ? 1 : 0) + (savedLessonsStore['direito_admin']?.completed ? 1 : 0) + (savedLessonsStore['processo_civil']?.completed ? 1 : 0) + (savedLessonsStore['processo_penal']?.completed ? 1 : 0))}/4 Concluídas
+              <p className="font-black text-purple-300 dark:text-purple-200 flex items-center gap-2">
+                <span>Metas de Hoje: 2 Aulas Programadas para Conclusão</span>
+                <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-extrabold text-[10px]">
+                  {((savedLessonsStore['legislacao_tjam']?.completed ? 1 : 0) + (savedLessonsStore['geografia_amazonas']?.completed ? 1 : 0))}/2 Concluídas
                 </span>
               </p>
               <p className="text-slate-400">
-                1. Português (Aula 3) • 2. Dir. Administrativo (Aula 4) • 3. Processo Civil (Aula 2) • 4. Processo Penal (Quarta Aula).
+                1. Legislação TJAM (Aula 2 — Org. Judiciária) • 2. Geografia do Amazonas (2ª Aula de Hoje — Aspectos Humanos e Econômicos).
               </p>
             </div>
           </div>
@@ -2335,130 +2335,72 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           )}
         </div>
 
-        {/* 1. SEÇÃO PRINCIPAL: AS 4 AULAS DE HOJE */}
+        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
-              <span>⭐ As 4 Aulas de Hoje (Metas Obrigatórias)</span>
+              <span>⭐ As 2 Aulas de Hoje (Metas Obrigatórias)</span>
             </span>
             <span className="text-[10px] text-slate-400 font-semibold">
               Prioridade do dia para a dupla
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 p-2 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-slate-900 to-indigo-500/10 border-2 border-emerald-500/40 shadow-md">
-            {/* 1. Português: Aula 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-purple-500/10 via-slate-900 to-emerald-500/10 border-2 border-purple-500/40 shadow-md">
+            {/* 1. Legislação TJAM: Aula 2 */}
             <button
-              onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-3 px-3.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2 cursor-pointer text-left ${
-                selectedSubject === 'portugues'
-                  ? 'bg-amber-400 text-slate-950 shadow-lg ring-2 ring-amber-300 scale-[1.01]'
+              onClick={() => { setSelectedSubject('legislacao_tjam'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
+                selectedSubject === 'legislacao_tjam'
+                  ? 'bg-purple-600 text-white shadow-lg ring-2 ring-purple-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-base">🇧🇷</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">Meta 1 de Hoje</span>
+                <span className="text-lg">🏛️</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-200">Meta 1 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-xs">Português — Aula 3</div>
-                <div className="text-[10px] opacity-80 font-normal truncate">Classes de Palavras (FGV)</div>
+                <div className="font-extrabold text-sm">Legislação TJAM — Aula 2</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Org. Judiciária do Amazonas (LC 261/2023)</div>
               </div>
-              <div className="w-full pt-1 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[10px] font-bold">20 Questões</span>
-                {savedLessonsStore['portugues']?.completed ? (
+              <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
+                <span className="text-[11px] font-bold">20 Questões • 15 Cards • Vídeo Aula</span>
+                {savedLessonsStore['legislacao_tjam']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['portugues']?.selectedAnswers && Object.keys(savedLessonsStore['portugues'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['legislacao_tjam']?.selectedAnswers && Object.keys(savedLessonsStore['legislacao_tjam'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-emerald-500/30 text-emerald-300 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className="text-[10px] bg-purple-500/40 text-purple-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
 
-            {/* 2. Direito Administrativo: Aula 4 */}
+            {/* 2. Geografia do Amazonas: 2ª Aula de Hoje */}
             <button
-              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-3 px-3.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2 cursor-pointer text-left ${
-                selectedSubject === 'direito_admin'
-                  ? 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-400 scale-[1.01]'
+              onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
+                selectedSubject === 'geografia_amazonas'
+                  ? 'bg-emerald-600 text-white shadow-lg ring-2 ring-emerald-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-base">⚖️</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">Meta 2 de Hoje</span>
+                <span className="text-lg">🌳</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200">Meta 2 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-xs">Dir. Administrativo — Aula 4</div>
-                <div className="text-[10px] opacity-80 font-normal truncate">Poderes Administrativos</div>
+                <div className="font-extrabold text-sm">Geografia do Amazonas — 2ª Aula de Hoje</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Aspectos Humanos e Econômicos (ZFM, População & Transporte)</div>
               </div>
-              <div className="w-full pt-1 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[10px] font-bold">20 Questões</span>
-                {savedLessonsStore['direito_admin']?.completed ? (
+              <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
+                <span className="text-[11px] font-bold">20 Questões • 15 Cards • 2 Vídeos</span>
+                {savedLessonsStore['geografia_amazonas']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['geografia_amazonas']?.selectedAnswers && Object.keys(savedLessonsStore['geografia_amazonas'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-blue-500/30 text-blue-200 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
-                )}
-              </div>
-            </button>
-
-            {/* 3. Processo Civil: Aula 2 */}
-            <button
-              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-3 px-3.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2 cursor-pointer text-left ${
-                selectedSubject === 'processo_civil'
-                  ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between w-full">
-                <span className="text-base">📚</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">Meta 3 de Hoje</span>
-              </div>
-              <div className="w-full">
-                <div className="font-extrabold text-xs">Proc. Civil — Aula 2</div>
-                <div className="text-[10px] opacity-80 font-normal truncate">Partes e Procuradores (CPC)</div>
-              </div>
-              <div className="w-full pt-1 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[10px] font-bold">20 Questões</span>
-                {savedLessonsStore['processo_civil']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
-                ) : (
-                  <span className="text-[10px] bg-indigo-500/30 text-indigo-200 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
-                )}
-              </div>
-            </button>
-
-            {/* 4. Processo Penal: Quarta Aula */}
-            <button
-              onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-3 px-3.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2 cursor-pointer text-left ${
-                selectedSubject === 'processo_penal'
-                  ? 'bg-teal-600 text-white shadow-lg ring-2 ring-teal-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between w-full">
-                <span className="text-base">⚖️</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">Meta 4 de Hoje</span>
-              </div>
-              <div className="w-full">
-                <div className="font-extrabold text-xs">Proc. Penal — Quarta Aula</div>
-                <div className="text-[10px] opacity-80 font-normal truncate">Aplicação da Lei (CPP)</div>
-              </div>
-              <div className="w-full pt-1 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[10px] font-bold">20 Questões</span>
-                {savedLessonsStore['processo_penal']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
-                ) : (
-                  <span className="text-[10px] bg-teal-500/30 text-teal-200 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className="text-[10px] bg-emerald-500/40 text-emerald-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2474,10 +2416,86 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </div>
 
           <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            {/* Português: Aula 3 */}
+            <button
+              onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'portugues'
+                  ? 'bg-amber-500 text-slate-950 shadow-md ring-2 ring-amber-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>🇧🇷 Português (Aula 3)</span>
+              </div>
+              {savedLessonsStore['portugues']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 3</span>
+              )}
+            </button>
+
+            {/* Direito Administrativo: Aula 4 */}
+            <button
+              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'direito_admin'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>⚖️ Dir. Admin (Aula 4)</span>
+              </div>
+              {savedLessonsStore['direito_admin']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 4</span>
+              )}
+            </button>
+
+            {/* Processo Civil: Aula 2 */}
+            <button
+              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'processo_civil'
+                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>📚 Proc. Civil (Aula 2)</span>
+              </div>
+              {savedLessonsStore['processo_civil']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+              )}
+            </button>
+
+            {/* Processo Penal: Quarta Aula */}
+            <button
+              onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'processo_penal'
+                  ? 'bg-teal-600 text-white shadow-md ring-2 ring-teal-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>⚖️ Proc. Penal (Aula 4)</span>
+              </div>
+              {savedLessonsStore['processo_penal']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 4</span>
+              )}
+            </button>
+
             {/* Inglês: Aula 3 */}
             <button
               onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'ingles'
                   ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2491,46 +2509,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 3</span>
-              )}
-            </button>
-
-            {/* Geografia do Amazonas: Aula 2 */}
-            <button
-              onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'geografia_amazonas'
-                  ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <Trees className="w-3.5 h-3.5 text-emerald-300" />
-                <span>🌳 Geografia AM (Aula 2)</span>
-              </div>
-              {savedLessonsStore['geografia_amazonas']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
-              )}
-            </button>
-
-            {/* Legislação TJAM: Aula 1 */}
-            <button
-              onClick={() => { setSelectedSubject('legislacao_tjam'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'legislacao_tjam'
-                  ? 'bg-purple-600 text-white shadow-md ring-2 ring-purple-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <Landmark className="w-3.5 h-3.5 text-amber-300" />
-                <span>🏛️ Legislação TJAM (Aula 1)</span>
-              </div>
-              {savedLessonsStore['legislacao_tjam']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
               )}
             </button>
 
@@ -2626,7 +2604,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {selectedSubject === 'ingles'
               ? 'Unidade 1 — Apresentação e Comunicação Básica'
               : selectedSubject === 'geografia_amazonas'
-              ? 'Unidade 1 — Aspectos Físicos e Geográficos'
+              ? 'Unidade 2 — Aspectos Humanos e Econômicos'
               : selectedSubject === 'legislacao_tjam'
               ? 'Unidade 1 — Lei Complementar nº 261/2023'
               : selectedSubject === 'portugues'
@@ -2648,7 +2626,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {selectedSubject === 'ingles'
               ? 'Aula 3 — Apresentação, Cumprimentos e Diálogo Prático'
               : selectedSubject === 'geografia_amazonas'
-              ? 'Aula 2 — Relevo, Clima, Rios e Vegetação'
+              ? '2ª Aula de Hoje — População, Manaus, ZFM (PIM) e Transporte'
               : selectedSubject === 'legislacao_tjam'
               ? 'Aula 1 — Estrutura e Órgãos do Poder Judiciário'
               : selectedSubject === 'portugues'
@@ -2673,7 +2651,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               {selectedSubject === 'ingles'
                 ? '🇬🇧 Língua Inglesa (Aula 3 Prática)'
                 : selectedSubject === 'geografia_amazonas'
-                ? '🌳 Geografia do Amazonas (Aula 2)'
+                ? '🌳 Geografia do Amazonas (2ª Aula de Hoje)'
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM (Aula 1 de 3)'
                 : selectedSubject === 'portugues'
@@ -2694,7 +2672,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               {selectedSubject === 'ingles'
                 ? '🇬🇧 Língua Inglesa — Aula 3: Apresentação e Comunicação Básica (100% Prática)'
                 : selectedSubject === 'geografia_amazonas'
-                ? '🌳 Geografia do Amazonas — Aula 2: Aspectos Físicos (Relevo, Clima, Rios e Vegetação)'
+                ? '🌳 Geografia do Amazonas — 2ª Aula: Aspectos Humanos e Econômicos'
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas'
                 : selectedSubject === 'portugues'
@@ -2825,7 +2803,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   {selectedSubject === 'ingles'
                     ? '🇬🇧 Língua Inglesa — Aula 3: Apresentação e Comunicação Básica (100% Prática)'
                     : selectedSubject === 'geografia_amazonas'
-                    ? '🌳 Geografia do Amazonas — Aula 2: Aspectos Físicos (Localização, Relevo, Clima, Rios e Vegetação)'
+                    ? `🌳 Geografia do Amazonas — 2ª Aula: Aspectos Humanos e Econômicos (${
+                        selectedVideoPart === 'video2' ? 'Vídeo Aula 2' : 'Vídeo Aula 1'
+                      })`
                     : selectedSubject === 'legislacao_tjam'
                     ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                     : selectedSubject === 'portugues'
@@ -2850,7 +2830,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   {selectedSubject === 'ingles'
                     ? 'Aula 3 de Hoje 100% Prática • Cumprimentos, Apresentação Pessoal, Perguntas e Vocabulário Diário'
                     : selectedSubject === 'geografia_amazonas'
-                    ? 'Aula 2 de Hoje • Aspectos Físicos do Amazonas • 3 Países Fronteiriços, Bacia Amazônica e as 3 Matas'
+                    ? '2ª Aula de Hoje • Aspectos Humanos e Econômicos • População, Manaus, Zona Franca (PIM) e Rios'
                     : selectedSubject === 'legislacao_tjam'
                     ? 'Aula 1 de 3 de Hoje • Lei Complementar nº 261/2023 • Órgãos, Sedes e Organização Forense'
                     : selectedSubject === 'libras'
@@ -2867,6 +2847,34 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 </span>
               </div>
             </div>
+
+            {/* Selector de Vídeos para Geografia do Amazonas (2 Vídeos) */}
+            {selectedSubject === 'geografia_amazonas' && (
+              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                <button
+                  onClick={() => setSelectedVideoPart('video1')}
+                  className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video1'
+                      ? 'bg-emerald-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Vídeo Aula 1 (Teoria & População)</span>
+                </button>
+                <button
+                  onClick={() => setSelectedVideoPart('video2')}
+                  className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video2'
+                      ? 'bg-emerald-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Vídeo Aula 2 (Economia & Revisão)</span>
+                </button>
+              </div>
+            )}
 
             {/* Selector de Vídeos para LIBRAS (3 Vídeos) */}
             {selectedSubject === 'libras' && (
@@ -2917,9 +2925,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles'
                     ? 'https://www.youtube.com/embed/vtRZNKPYme0?autoplay=0&rel=0'
                     : selectedSubject === 'geografia_amazonas'
-                    ? 'https://www.youtube.com/embed/CwyHvsDyf_I?autoplay=0&rel=0'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://www.youtube.com/embed/5JQQf2fcuz4?autoplay=0&rel=0'
+                      : 'https://www.youtube.com/embed/AfVC14NN3-s?autoplay=0&rel=0'
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'https://www.youtube.com/embed/BxNATfKjJcc?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/ubZ4FIBOHeg?autoplay=0&rel=0'
                     : selectedSubject === 'portugues'
                     ? 'https://www.youtube.com/embed/OxTNN-IKcEQ?autoplay=0&rel=0'
                     : selectedSubject === 'libras'
@@ -2942,9 +2952,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles'
                     ? 'Vídeo Aula - Língua Inglesa: Apresentação e Comunicação Básica (Aula 3)'
                     : selectedSubject === 'geografia_amazonas'
-                    ? 'Vídeo Aula - Geografia do Amazonas: Aspectos Físicos (Aula 2)'
+                    ? `Vídeo Aula - Geografia do Amazonas: Aspectos Humanos e Econômicos (${
+                        selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'
+                      })`
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'Vídeo Aula - Legislação do TJAM: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
+                    ? 'Vídeo Aula - Legislação do TJAM: Aula 2 — Organização Judiciária do Amazonas: Aprofundamento (LC 261/2023)'
                     : selectedSubject === 'portugues'
                     ? 'Vídeo Aula - Língua Portuguesa: Compreensão e Interpretação de Textos'
                     : selectedSubject === 'libras'
@@ -2973,9 +2985,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles'
                     ? 'https://youtu.be/vtRZNKPYme0?is=JEkWF1Vglcjnuyjq'
                     : selectedSubject === 'geografia_amazonas'
-                    ? 'https://youtu.be/CwyHvsDyf_I?is=sPfN7LnpnXkxfCUp'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://www.youtube.com/live/5JQQf2fcuz4?is=XkxoK8KS9pA_IUS3'
+                      : 'https://youtu.be/AfVC14NN3-s?is=N4xZqcIcQJukY8M9'
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'https://youtu.be/BxNATfKjJcc?is=otzV4zRSu529kI9B'
+                    ? 'https://youtu.be/ubZ4FIBOHeg?is=tnE8FLYhF20arzMu'
                     : selectedSubject === 'portugues'
                     ? 'https://youtu.be/OxTNN-IKcEQ?is=bzHSDcftIpBprD6X'
                     : selectedSubject === 'libras'
@@ -3000,7 +3014,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>
-                  Abrir no YouTube{selectedSubject === 'libras' ? ` (${selectedVideoPart === 'video3' ? 'Vídeo 3' : selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})` : ''}
+                  Abrir no YouTube{
+                    selectedSubject === 'libras'
+                      ? ` (${selectedVideoPart === 'video3' ? 'Vídeo 3' : selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})`
+                      : selectedSubject === 'geografia_amazonas'
+                      ? ` (${selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})`
+                      : ''
+                  }
                 </span>
               </a>
             </div>
@@ -3042,54 +3062,58 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Extensão territorial do Amazonas (o maior estado do Brasil) e localização na Região Norte.</span>
+                      <span>Distribuição demográfica: forte concentração em Manaus e povoamento disperso no interior ao longo dos rios.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Fronteiras com 5 estados brasileiros (RR, PA, MT, RO, AC) e 3 países (Venezuela, Colômbia e Peru).</span>
+                      <span>Manaus como capital, maior centro urbano, polo econômico, industrial e de serviços do Amazonas.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Relevo de baixas altitudes com predomínio de planícies, depressões e baixos planaltos.</span>
+                      <span>Zona Franca de Manaus (ZFM) e Polo Industrial (PIM): incentivos fiscais, polos eletroeletrônico, duas rodas e químico.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Clima Equatorial: temperaturas e umidade elevadas, chuvas abundantes e baixa amplitude térmica.</span>
+                      <span>Estrutura econômica do Estado: indústria predominante, extrativismo mineral/vegetal, agropecuária e pesca.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Bacia Amazônica, Rio Amazonas, Encontro das Águas (Negro e Solimões) e importância da navegação.</span>
+                      <span>Transporte fluvial e rios como principais eixos de circulação, integração territorial e abastecimento.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>As 3 fisionomias vegetais: Mata de Terra Firme (não inunda), Mata de Várzea (periodicamente) e Mata de Igapó (permanentemente).</span>
+                      <span>Impactos urbanos e ambientais do crescimento acelerado de Manaus (saneamento, APPs e igarapés).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Resolução e comentários das 20 questões de concurso com gabarito fundamentado.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'legislacao_tjam' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>O que disciplina a Lei Complementar Estadual nº 261/2023 (Organização Judiciária do Amazonas).</span>
+                      <span>Estrutura do TJAM: 2ª instância, sede na Capital (Manaus), jurisdição em todo o AM e 26 desembargadores.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Os 7 órgãos que integram o Poder Judiciário do Amazonas de acordo com o Art. 3º da LC nº 261/2023.</span>
+                      <span>Órgãos julgadores: Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas (1ª e 2ª Câmaras Cíveis e Câmara Criminal).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Sede em Manaus, jurisdição em todo o Estado do Amazonas e autonomia do TJAM.</span>
+                      <span>Composição dos órgãos fracionários e quóruns de julgamento da LC nº 261/2023.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Estrutura dos órgãos fracionários: Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas (Cíveis e Criminais).</span>
+                      <span>Órgãos de direção: Presidência, Vice-Presidência e Corregedoria-Geral de Justiça (mandato de 2 anos, vedada reeleição).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Atribuições da Presidência, Vice-Presidência e Corregedoria-Geral de Justiça (CGJ).</span>
+                      <span>Primeira Instância: Juízes de Direito, Varas Especializadas, Juizados Especiais e Tribunal do Júri.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Divisão territorial: Comarcas (Entrâncias Inicial e Final), Varas e Juizados Especiais.</span>
+                      <span>Divisão Judiciária: Comarcas de Entrância Inicial e Entrância Final (Capital).</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'portugues' ? (
@@ -5752,7 +5776,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 {selectedSubject === 'ingles'
                   ? 'Resumo — Língua Inglesa: Apresentação e Comunicação Básica (Aula 3)'
                   : selectedSubject === 'geografia_amazonas'
-                  ? 'Resumo — Geografia do Amazonas: Aspectos Físicos (Aula 2)'
+                  ? 'Resumo — Geografia do Amazonas: Aspectos Humanos e Econômicos (2ª Aula de Hoje)'
                   : selectedSubject === 'legislacao_tjam'
                   ? 'Resumo — Legislação do TJAM: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                   : selectedSubject === 'portugues'

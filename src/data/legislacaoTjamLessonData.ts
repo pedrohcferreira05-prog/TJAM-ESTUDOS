@@ -1,4 +1,4 @@
-// Data for Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)
+// Data for Legislação do TJAM — Aula 2: Organização Judiciária do Amazonas: Aprofundamento (LC 261/2023 e Regimento Interno - Res. 62/2023)
 
 export interface FlashcardItem {
   q: string;
@@ -28,335 +28,381 @@ export interface DiscursiveQuestionItem {
 
 export const legislacaoTjamFlashcardsData: FlashcardItem[] = [
   {
-    q: 'Qual é a principal lei que disciplina a Organização Judiciária do Estado do Amazonas?',
-    a: 'A Lei Complementar Estadual nº 261/2023, consolidada com alterações posteriores (2024, 2025 e 2026).'
+    q: 'Quantos Desembargadores compõem o Tribunal de Justiça do Estado do Amazonas (TJAM)?',
+    a: 'O TJAM é composto por 26 Desembargadores (art. 16 da LC nº 261/2023).'
   },
   {
-    q: 'Quais matérias são tratadas pela Lei Complementar nº 261/2023?',
-    a: '1) Divisão e organização judiciária do AM;\n2) Organização da Magistratura;\n3) Serviços auxiliares da Justiça;\n4) Estrutura dos serviços notariais e de registro.'
+    q: 'Qual é o tratamento oficial devido ao Tribunal e qual o devido aos Desembargadores?',
+    a: '• Ao Tribunal (órgão colegiado): "Egrégio"\n• Aos Desembargadores (membros): "Excelência"\n⚠️ Pegadinha clássica de prova da FGV!'
   },
   {
-    q: 'Quais são os órgãos integrantes do Poder Judiciário do Amazonas (Art. 3º da LC 261/2023)?',
-    a: '• Tribunal de Justiça (TJAM)\n• Turmas Recursais dos Juizados Especiais\n• Tribunais do Júri\n• Juízes de Direito\n• Juízes Substitutos de Carreira\n• Auditoria Militar e respectivos Conselhos\n• Juízes de Paz'
+    q: 'Qual é a sede, a instância e a jurisdição do Tribunal de Justiça do Amazonas?',
+    a: '• Instância: 2ª Instância da Justiça Estadual\n• Sede: Capital do Estado (Manaus)\n• Jurisdição: em todo o território do Estado do Amazonas.'
   },
   {
-    q: 'Onde fica a sede do Tribunal de Justiça do Amazonas e qual a sua extensão territorial?',
-    a: 'Sede na capital Manaus e jurisdição sobre todo o território do Estado do Amazonas.'
+    q: 'Quais são os órgãos julgadores do Tribunal de Justiça do Amazonas segundo a LC nº 261/2023?',
+    a: '1) Tribunal Pleno;\n2) Câmaras Isoladas (Cíveis e Criminais);\n3) Câmaras Reunidas.'
   },
   {
-    q: 'Quais são os órgãos que compõem o Tribunal de Justiça do Amazonas (TJAM)?',
-    a: '• Tribunal Pleno\n• Câmaras Reunidas\n• Câmaras Isoladas (Cíveis e Criminais)\n• Presidência\n• Vice-Presidência\n• Corregedoria-Geral de Justiça'
+    q: 'Como se dividem as Câmaras Isoladas do TJAM por matéria?',
+    a: 'Dividem-se em:\n• Câmaras Isoladas Cíveis (matérias de natureza cível);\n• Câmaras Isoladas Criminais (matérias de natureza criminal).\n(Reguladas nos arts. 29 a 40 da LC 261/2023).'
   },
   {
-    q: 'Como são estruturadas as Câmaras Isoladas no TJAM?',
-    a: 'Dividem-se em:\n- Câmaras Cíveis: 1ª, 2ª e 3ª Câmaras Cíveis\n- Câmaras Criminais: 1ª e 2ª Câmaras Criminais'
+    q: 'Câmaras Isoladas e Câmaras Reunidas são o mesmo órgão?',
+    a: 'NÃO! Câmaras Isoladas ≠ Câmaras Reunidas. São estruturas e órgãos julgadores distintos dentro da organização interna do Tribunal.'
   },
   {
-    q: 'Como o Estado do Amazonas é dividido para fins de administração da Justiça?',
-    a: 'O Estado divide-se em Comarcas e Termos Judiciários, conforme critérios de densidade demográfica, extensão territorial e movimento forense previstos em lei.'
+    q: 'O que é o Tribunal Pleno do TJAM?',
+    a: 'É o órgão colegiado máximo formado pela totalidade dos 26 desembargadores do Tribunal, atuando como órgão julgador e deliberativo superior.'
   },
   {
-    q: 'Qual a atribuição essencial da Corregedoria-Geral de Justiça do TJAM?',
-    a: 'Atividade de fiscalização, correição disciplinar, acompanhamento e orientação dos serviços judiciais de 1ª instância e serviços notariais/registrais extrajudiciais.'
+    q: 'A Escola Superior da Magistratura do Amazonas (ESMAM) integra qual estrutura do Tribunal?',
+    a: 'A Escola Superior da Magistratura integra a estrutura administrativa do Tribunal de Justiça.'
   },
   {
-    q: 'Quais são as principais competências originárias do Tribunal Pleno do TJAM?',
-    a: 'Processar e julgar autoridades com prerrogativa de foro (Governador em crimes comuns, Juízes, Promotores, Secretários de Estado), Ações Diretas de Inconstitucionalidade de leis estaduais/municipais em face da Constituição Estadual, e eleição dos órgãos diretivos.'
+    q: 'Quais são os 7 órgãos que integram o Poder Judiciário do Amazonas (Art. 3º da LC 261/2023)?',
+    a: '1. Tribunal de Justiça;\n2. Turmas Recursais dos Juizados Especiais;\n3. Tribunais do Júri;\n4. Juízes de Direito;\n5. Juízes Substitutos de Carreira;\n6. Auditoria Militar e respectivos Conselhos;\n7. Juízes de Paz.'
   },
   {
-    q: 'O Governador do Estado ou membros do Ministério Público integram o Poder Judiciário do AM?',
-    a: 'NÃO. O Governador integra o Poder Executivo e o Ministério Público é instituição autônoma essencial à Justiça, não integrando a estrutura orgânica do Poder Judiciário.'
+    q: 'Os órgãos judiciários do Amazonas podem requisitar o auxílio da força pública?',
+    a: 'SIM. Podem requisitar o auxílio da força pública para assegurar o cumprimento e a execução de seus atos e decisões. Quando requisitada, a autoridade responsável DEVE prestar esse auxílio.'
+  },
+  {
+    q: 'Qual norma disciplina a divisão e organização judiciária e qual substituiu a antiga LC nº 17/1997?',
+    a: 'A Lei Complementar nº 261/2023, que revogou e substituiu integralmente a antiga LC nº 17/1997, sendo a legislação vigente e consolidada do TJAM.'
+  },
+  {
+    q: 'Qual resolução corresponde ao novo Regimento Interno do TJAM?',
+    a: 'A Resolução nº 62/2023 do Tribunal Pleno corresponde ao novo Regimento Interno do TJAM.'
+  },
+  {
+    q: 'Qual é a diferença de objeto entre a LC nº 261/2023 e o Regimento Interno (Res. 62/2023)?',
+    a: '• LC 261/2023: Divisão e organização judiciária, magistratura, serviços auxiliares e cartórios extrajudiciais.\n• Regimento Interno: Composição e funcionamento interno dos órgãos do Tribunal, procedimentos e julgamento de processos de sua competência.'
+  },
+  {
+    q: 'Promotores de Justiça, Defensores Públicos e Policiais integram o Poder Judiciário do Amazonas?',
+    a: 'NÃO. O MP e a DPE são funções essenciais à Justiça e as Polícias integram o Poder Executivo. Nenhum deles figura entre os órgãos do Judiciário estadual.'
+  },
+  {
+    q: 'Qual o mnemônico de resumo da estrutura essencial do TJAM?',
+    a: 'TJAM = 2ª Instância + Sede em Manaus + 26 Desembargadores + Jurisdição Estadual + Órgãos Julgadores (Pleno + Câmaras Isoladas Cíveis/Criminais + Câmaras Reunidas).'
+  },
+  {
+    q: 'Quem preside o Tribunal Pleno, as Câmaras Reunidas e as Câmaras Isoladas?',
+    a: '• Tribunal Pleno: Presidido pelo Presidente do TJAM;\n• Câmaras Reunidas: Presididas pelo Vice-Presidente do TJAM;\n• Câmaras Isoladas: Presididas por um de seus membros eleito conforme o Regimento Interno.'
+  },
+  {
+    q: 'Qual é o quórum de presença dos órgãos julgadores do TJAM e a frequência das sessões ordinárias?',
+    a: '• Quórum: Maioria absoluta dos membros para abertura e julgamento;\n• Frequência: 1 sessão ordinária por semana para Pleno, Reunidas e Isoladas.'
+  },
+  {
+    q: 'A quem compete propor ao Poder Legislativo matérias sobre organização e divisão judiciárias?',
+    a: 'Compete ao Tribunal Pleno, por intermédio do Presidente do Tribunal de Justiça, propor à Assembleia Legislativa a organização e divisão judiciárias.'
   }
 ];
 
 export const legislacaoTjamMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A Lei de Organização Judiciária do Estado do Amazonas é atualmente disciplinada, principalmente, pela:',
+    enunciado: '1. Segundo a LC nº 261/2023, a Justiça do Estado do Amazonas compreende:',
     opcoes: [
-      'A) LC nº 261/2023.',
-      'B) Lei nº 8.112/1990.',
-      'C) Lei nº 9.099/1995.',
-      'D) LC nº 35/1979.'
+      'A) Apenas o Tribunal de Justiça e os Juízes de Direito.',
+      'B) Tribunal de Justiça, Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos, Auditoria Militar e outros órgãos previstos em lei.',
+      'C) Apenas o Tribunal Pleno e as Câmaras.',
+      'D) Tribunal de Justiça, Ministério Público e Defensoria Pública.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. A Lei Complementar nº 261/2023 é a nova Lei de Organização Judiciária do Estado do Amazonas, consolidada com alterações posteriores.'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. Conforme expressamente previsto no art. 3º da LC nº 261/2023, a Justiça do Estado do Amazonas compreende o Tribunal de Justiça, as Turmas Recursais dos Juizados Especiais, os Tribunais do Júri, os Juízes de Direito, os Juízes Substitutos de Carreira, a Auditoria Militar e seus Conselhos, e os Juízes de Paz (e outros órgãos previstos em lei).'
   },
   {
     id: 2,
-    enunciado: '2. A sede do Tribunal de Justiça do Amazonas está localizada em:',
+    enunciado: '2. A Justiça de segundo grau do Estado do Amazonas é exercida pelo:',
     opcoes: [
-      'A) Parintins.',
-      'B) Itacoatiara.',
-      'C) Manaus.',
-      'D) Tefé.'
+      'A) Tribunal Pleno.',
+      'B) Tribunal de Justiça.',
+      'C) Superior Tribunal de Justiça.',
+      'D) Conselho Nacional de Justiça.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito Oficial: C. A sede do Tribunal de Justiça do Amazonas está localizada na capital do Estado, em Manaus.'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. A Justiça de segundo grau (segunda instância) do Estado do Amazonas é exercida pelo Tribunal de Justiça do Estado do Amazonas (TJAM).'
   },
   {
     id: 3,
-    enunciado: '3. A jurisdição do TJAM alcança:',
+    enunciado: '3. O Tribunal de Justiça do Amazonas tem sua sede:',
     opcoes: [
-      'A) Apenas Manaus.',
-      'B) Apenas a região metropolitana.',
-      'C) Todo o Estado do Amazonas.',
-      'D) Apenas as comarcas do interior.'
+      'A) Em Brasília.',
+      'B) Em qualquer comarca do Estado.',
+      'C) Na Capital do Estado.',
+      'D) Exclusivamente em Manaus e no interior.'
     ],
     correta: 2,
-    explicacao: 'Gabarito Oficial: C. O Tribunal de Justiça do Amazonas possui jurisdição em todo o território do Estado do Amazonas.'
+    explicacao: 'Gabarito Oficial: C. Conforme preceitua a legislação de organização judiciária estadual (LC nº 261/2023), o Tribunal de Justiça do Estado do Amazonas tem sua sede na Capital do Estado (Manaus).'
   },
   {
     id: 4,
-    enunciado: '4. Integra o Poder Judiciário do Estado do Amazonas:',
+    enunciado: '4. A jurisdição do TJAM abrange:',
     opcoes: [
-      'A) Tribunal de Justiça.',
-      'B) Congresso Nacional.',
-      'C) Tribunal de Contas da União.',
-      'D) Senado Federal.'
+      'A) Somente Manaus.',
+      'B) Apenas as comarcas da Região Metropolitana.',
+      'C) Todo o território do Estado do Amazonas.',
+      'D) Apenas as comarcas de segunda entrância.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. O Tribunal de Justiça (TJAM) é o órgão de cúpula integrante do Poder Judiciário estadual.'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. O Tribunal de Justiça do Amazonas tem jurisdição em todo o território do Estado do Amazonas.'
   },
   {
     id: 5,
-    enunciado: '5. Entre os órgãos integrantes do Poder Judiciário do Amazonas estão:',
+    enunciado: '5. Atualmente, conforme a LC nº 261/2023, o TJAM é composto por:',
     opcoes: [
-      'A) TJAM, Turmas Recursais, Tribunais do Júri e Juízes de Direito.',
-      'B) Senado, Câmara dos Deputados e TJAM.',
-      'C) Ministério Público, Defensoria Pública e TJAM.',
-      'D) Polícia Civil, Polícia Militar e TJAM.'
+      'A) 20 desembargadores.',
+      'B) 24 desembargadores.',
+      'C) 26 desembargadores.',
+      'D) 30 desembargadores.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. Conforme o art. 3º da LC nº 261/2023, integram o Poder Judiciário estadual o TJAM, as Turmas Recursais, os Tribunais do Júri e os Juízes de Direito (além de Juízes Substitutos, Auditoria Militar e Conselhos, e Juízes de Paz).'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. A LC nº 261/2023 fixa que o Tribunal de Justiça do Estado do Amazonas é constituído por 26 desembargadores.'
   },
   {
     id: 6,
-    enunciado: '6. As Turmas Recursais dos Juizados Especiais:',
+    enunciado: '6. São órgãos julgadores do TJAM:',
     opcoes: [
-      'A) Integram o Poder Executivo.',
-      'B) Integram o Poder Judiciário do Amazonas.',
-      'C) Integram o Poder Legislativo.',
-      'D) Não fazem parte da estrutura judiciária.'
+      'A) Tribunal Pleno, Câmaras Isoladas Cíveis e Criminais e Câmaras Reunidas.',
+      'B) Apenas Tribunal Pleno e Câmaras Criminais.',
+      'C) Apenas Câmaras Cíveis e Criminais.',
+      'D) Tribunal Pleno e Conselho da Magistratura.'
     ],
-    correta: 1,
-    explicacao: 'Gabarito Oficial: B. As Turmas Recursais dos Juizados Especiais integram expressamente o Poder Judiciário do Amazonas (art. 3º, II da LC 261/2023).'
+    correta: 0,
+    explicacao: 'Gabarito Oficial: A. Os órgãos colegiados julgadores do TJAM são o Tribunal Pleno, as Câmaras Isoladas (Cíveis e Criminais) e as Câmaras Reunidas.'
   },
   {
     id: 7,
-    enunciado: '7. Os Tribunais do Júri:',
+    enunciado: '7. O Tribunal Pleno é presidido pelo:',
     opcoes: [
-      'A) Integram o Poder Judiciário do Amazonas.',
-      'B) São órgãos do Poder Legislativo.',
-      'C) São órgãos administrativos do Executivo.',
-      'D) Integram exclusivamente o Poder Judiciário Federal.'
+      'A) Corregedor-Geral de Justiça.',
+      'B) Vice-Presidente.',
+      'C) Presidente do Tribunal de Justiça.',
+      'D) Desembargador mais antigo.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. Os Tribunais do Júri integram a estrutura do Poder Judiciário do Amazonas (art. 3º, III da LC 261/2023).'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. O Tribunal Pleno, órgão judicante e administrativo supremo do TJAM composto pela totalidade dos desembargadores, é presidido pelo Presidente do Tribunal de Justiça.'
   },
   {
     id: 8,
-    enunciado: '8. São órgãos da estrutura do Tribunal de Justiça do Amazonas:',
+    enunciado: '8. As Câmaras Reunidas são presididas pelo:',
     opcoes: [
-      'A) Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas.',
-      'B) Senado, Câmara e Tribunal Pleno.',
-      'C) Ministério Público, Defensoria e Tribunal Pleno.',
-      'D) Polícia Civil, Polícia Militar e Câmaras Isoladas.'
+      'A) Presidente do TJAM.',
+      'B) Vice-Presidente.',
+      'C) Corregedor-Geral.',
+      'D) Desembargador mais novo.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. Na estrutura judicante do TJAM estão o Tribunal Pleno, as Câmaras Reunidas e as Câmaras Isoladas.'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. Conforme a organização do Tribunal de Justiça, as Câmaras Reunidas são presididas pelo Vice-Presidente do TJAM.'
   },
   {
     id: 9,
-    enunciado: '9. Entre os órgãos da administração do TJAM encontram-se:',
+    enunciado: '9. As Câmaras Isoladas são presididas:',
     opcoes: [
-      'A) Presidência, Vice-Presidência e Corregedoria-Geral de Justiça.',
-      'B) Presidência da República, Senado e Câmara.',
-      'C) Ministério Público e Defensoria Pública.',
-      'D) Governo do Estado e Assembleia Legislativa.'
+      'A) Sempre pelo Presidente do TJAM.',
+      'B) Pelo Vice-Presidente.',
+      'C) Por um de seus membros, eleito conforme o Regimento Interno.',
+      'D) Pelo Corregedor-Geral.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. Os órgãos de direção e administração de cúpula do TJAM são a Presidência, a Vice-Presidência e a Corregedoria-Geral de Justiça.'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. As Câmaras Isoladas (Cíveis e Criminais) têm seus presidentes eleitos entre seus respectivos integrantes, na forma disciplinada pelo Regimento Interno do TJAM.'
   },
   {
     id: 10,
-    enunciado: '10. O Tribunal Pleno é:',
+    enunciado: '10. Os órgãos julgadores do TJAM funcionam, em regra, com a presença de:',
     opcoes: [
-      'A) Órgão do Tribunal de Justiça.',
-      'B) Órgão do Poder Executivo.',
-      'C) Órgão do Ministério Público.',
-      'D) Órgão do Poder Legislativo.'
+      'A) Um terço dos membros.',
+      'B) Maioria simples.',
+      'C) Maioria absoluta dos membros.',
+      'D) Todos os membros.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. O Tribunal Pleno é o órgão colegiado máximo do Tribunal de Justiça do Amazonas.'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. Para a realização das sessões de julgamento dos órgãos colegiados do TJAM, exige-se, em regra, o quórum de presença da maioria absoluta de seus membros integrantes.'
   },
   {
     id: 11,
-    enunciado: '11. As Câmaras Isoladas fazem parte:',
+    enunciado: '11. Segundo a LC nº 261/2023, o Tribunal Pleno é um:',
     opcoes: [
-      'A) Do Poder Executivo.',
-      'B) Da estrutura do Tribunal de Justiça.',
-      'C) Da Assembleia Legislativa.',
-      'D) Do Ministério Público.'
+      'A) Órgão administrativo externo ao TJAM.',
+      'B) Órgão julgador do Tribunal de Justiça.',
+      'C) Órgão do Ministério Público.',
+      'D) Órgão auxiliar do Poder Executivo.'
     ],
     correta: 1,
-    explicacao: 'Gabarito Oficial: B. As Câmaras Isoladas (Cíveis e Criminais) compõem a estrutura fracionária julgadora do Tribunal de Justiça.'
+    explicacao: 'Gabarito Oficial: B. O Tribunal Pleno é o órgão julgador colegiado máximo do Tribunal de Justiça, congregando os 26 desembargadores.'
   },
   {
     id: 12,
-    enunciado: '12. Entre as Câmaras Isoladas previstas na estrutura do TJAM encontram-se:',
+    enunciado: '12. As Câmaras Isoladas do TJAM são classificadas em:',
     opcoes: [
-      'A) Câmaras Cíveis e Câmaras Criminais.',
-      'B) Câmaras Tributárias exclusivamente.',
-      'C) Câmaras Eleitorais exclusivamente.',
-      'D) Câmaras Federais exclusivamente.'
+      'A) Eleitorais e Militares.',
+      'B) Cíveis e Criminais.',
+      'C) Administrativas e Eleitorais.',
+      'D) Trabalhistas e Penais.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. No TJAM existem 3 Câmaras Cíveis (1ª, 2ª e 3ª) e 2 Câmaras Criminais (1ª e 2ª).'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. Em razão da matéria, as Câmaras Isoladas do TJAM classificam-se em Câmaras Isoladas Cíveis e Câmaras Isoladas Criminais (arts. 29 a 40 da LC nº 261/2023).'
   },
   {
     id: 13,
-    enunciado: '13. A Corregedoria-Geral de Justiça está relacionada principalmente:',
+    enunciado: '13. Em regra, Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas realizam:',
     opcoes: [
-      'A) À atividade de fiscalização e orientação dos serviços judiciais e extrajudiciais, conforme suas competências legais.',
-      'B) À elaboração das leis estaduais.',
-      'C) À administração do Poder Executivo.',
-      'D) À atividade legislativa federal.'
+      'A) Uma sessão ordinária por mês.',
+      'B) Uma sessão ordinária por semana.',
+      'C) Duas sessões ordinárias por dia.',
+      'D) Sessões somente quando convocadas pelo Presidente.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. A Corregedoria-Geral de Justiça exerce funções de correição, fiscalização, disciplina e orientação administrativa dos serviços da Justiça de 1º grau e dos cartórios extrajudiciais.'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. De acordo com a sistemática organizacional e regimental do TJAM, o Tribunal Pleno, as Câmaras Reunidas e as Câmaras Isoladas realizam, ordinariamente, uma sessão por semana.'
   },
   {
     id: 14,
-    enunciado: '14. A divisão judiciária do Estado do Amazonas envolve:',
+    enunciado: '14. O tratamento destinado ao Tribunal de Justiça é:',
     opcoes: [
-      'A) Comarcas e Termos Judiciários.',
-      'B) Apenas municípios.',
-      'C) Apenas distritos policiais.',
-      'D) Apenas regiões administrativas do Executivo.'
+      'A) Ilustríssimo.',
+      'B) Magnífico.',
+      'C) Egrégio.',
+      'D) Excelentíssimo Senhor Doutor Tribunal.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. Para a administração do Poder Judiciário, o território do Estado do Amazonas divide-se em Comarcas e Termos Judiciários.'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. O tratamento de estilo dispensado ao Tribunal de Justiça (órgão colegiado) é "Egrégio", enquanto a seus magistrados (desembargadores) é "Excelência".'
   },
   {
     id: 15,
-    enunciado: '15. Assinale a alternativa que não corresponde a órgão do Poder Judiciário do Amazonas:',
+    enunciado: '15. Os membros do Tribunal de Justiça recebem o título de:',
     opcoes: [
-      'A) Juízes de Direito.',
-      'B) Juízes Substitutos de Carreira.',
-      'C) Juízes de Paz.',
-      'D) Governador do Estado.'
+      'A) Juízes.',
+      'B) Ministros.',
+      'C) Desembargadores.',
+      'D) Procuradores.'
     ],
-    correta: 3,
-    explicacao: 'Gabarito Oficial: D. O Governador do Estado é a autoridade máxima do Poder Executivo estadual e não integra a estrutura do Poder Judiciário.'
+    correta: 2,
+    explicacao: 'Gabarito Oficial: C. Os magistrados que integram o Tribunal de Justiça de segundo grau recebem o título privativo de Desembargadores.'
   },
   {
     id: 16,
-    enunciado: '16. A Auditoria Militar e seus respectivos Conselhos:',
+    enunciado: '16. Compete ao Tribunal Pleno, por intermédio do Presidente, propor ao Poder Legislativo matérias relacionadas:',
     opcoes: [
-      'A) Integram a estrutura prevista para o Poder Judiciário do Amazonas.',
-      'B) Pertencem ao Poder Legislativo.',
-      'C) São órgãos do Governo Federal.',
-      'D) Não possuem relação com o Poder Judiciário.'
+      'A) À organização e divisão judiciárias.',
+      'B) À criação de impostos estaduais.',
+      'C) À legislação penal federal.',
+      'D) À nomeação de ministros do STF.'
     ],
     correta: 0,
-    explicacao: 'Gabarito Oficial: A. A Auditoria Militar e seus respectivos Conselhos de Justiça integram formalmente a estrutura do Poder Judiciário estadual (art. 3º, VI da LC 261/2023).'
+    explicacao: 'Gabarito Oficial: A. É de competência privativa do Poder Judiciário (Tribunal Pleno), por iniciativa de seu Presidente, propor à Assembleia Legislativa do Estado a alteração da organização e divisão judiciárias e a criação de comarcas, varas e cargos judiciais.'
   },
   {
     id: 17,
-    enunciado: '17. Sobre a organização do TJAM, assinale a alternativa correta:',
+    enunciado: '17. A LC nº 261/2023 trata principalmente:',
     opcoes: [
-      'A) O Tribunal possui órgãos destinados ao exercício da atividade jurisdicional e à sua administração.',
-      'B) O TJAM exerce somente funções administrativas.',
-      'C) O TJAM é subordinado ao Poder Executivo estadual.',
-      'D) O TJAM pertence à União.'
+      'A) Da organização judiciária do Estado do Amazonas.',
+      'B) Do Código Penal brasileiro.',
+      'C) Da organização do Poder Executivo.',
+      'D) Da legislação tributária municipal.'
     ],
     correta: 0,
-    explicacao: 'Gabarito Oficial: A. O TJAM possui órgãos jurisdicionais (Pleno, Câmaras Reunidas, Câmaras Cíveis e Criminais) e órgãos de administração/gestão (Presidência, Vice-Presidência, Corregedoria).'
+    explicacao: 'Gabarito Oficial: A. A Lei Complementar nº 261/2023 é a Lei de Organização Judiciária do Estado do Amazonas, disciplinando a divisão e organização judiciária, a magistratura e os órgãos e serviços da Justiça estadual.'
   },
   {
     id: 18,
-    enunciado: '18. Assinale a alternativa correta:',
+    enunciado: '18. A LC nº 261/2023:',
     opcoes: [
-      'A) O TJAM possui jurisdição restrita à capital.',
-      'B) O TJAM é o Tribunal de Justiça do Estado do Amazonas e possui jurisdição em todo o Estado.',
-      'C) O TJAM é órgão do Poder Legislativo.',
-      'D) O TJAM possui competência apenas administrativa.'
+      'A) Substituiu a antiga LC nº 17/1997.',
+      'B) Foi criada para substituir a Constituição Federal.',
+      'C) Regulamenta exclusivamente servidores municipais.',
+      'D) Trata apenas de concursos públicos.'
     ],
-    correta: 1,
-    explicacao: 'Gabarito Oficial: B. O Tribunal de Justiça do Estado do Amazonas tem sede em Manaus e jurisdição plena em todo o território amazonense.'
+    correta: 0,
+    explicacao: 'Gabarito Oficial: A. A LC nº 261/2023 revogou e substituiu integralmente a antiga Lei Complementar nº 17/1997 (antigo Código de Organização Judiciária do Amazonas).'
   },
   {
     id: 19,
-    enunciado: '19. A organização judiciária do Amazonas disciplina, entre outros aspectos:',
+    enunciado: '19. Entre os integrantes da Justiça do Amazonas estão:',
     opcoes: [
-      'A) A organização da Magistratura e os serviços auxiliares da Justiça.',
-      'B) Somente o funcionamento das polícias.',
-      'C) Somente a organização do Poder Executivo.',
-      'D) Apenas as eleições municipais.'
+      'A) Juízes de Paz.',
+      'B) Deputados Estaduais.',
+      'C) Vereadores.',
+      'D) Secretários de Estado.'
     ],
     correta: 0,
-    explicacao: 'Gabarito Oficial: A. A LC 261/2023 disciplina a divisão e organização judiciária, a carreira da magistratura, os serviços auxiliares da Justiça e a estrutura notarial e de registro.'
+    explicacao: 'Gabarito Oficial: A. Conforme o art. 3º, inciso VII, da LC nº 261/2023, os Juízes de Paz integram expressamente o Poder Judiciário do Estado do Amazonas.'
   },
   {
     id: 20,
-    enunciado: '20. Assinale a alternativa que reúne órgãos ou estruturas relacionadas ao TJAM:',
+    enunciado: '20. Assinale a alternativa CORRETA:',
     opcoes: [
-      'A) Tribunal Pleno, Câmaras, Presidência e Corregedoria-Geral de Justiça.',
-      'B) Senado, Presidência da República e Câmara dos Deputados.',
-      'C) Governo do Estado, Assembleia Legislativa e Prefeitura.',
-      'D) Polícia Federal, Senado e Ministério Público Federal.'
+      'A) O TJAM possui jurisdição apenas sobre Manaus.',
+      'B) O TJAM possui atualmente 26 desembargadores e sede na Capital.',
+      'C) As Câmaras Isoladas são presididas sempre pelo Presidente do TJAM.',
+      'D) O Tribunal Pleno não é órgão julgador.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito Oficial: A. O Tribunal Pleno, as Câmaras Isoladas e Reunidas, a Presidência, a Vice-Presidência e a Corregedoria-Geral de Justiça compõem os órgãos da estrutura do TJAM.'
+    correta: 1,
+    explicacao: 'Gabarito Oficial: B. Conforme a LC nº 261/2023, o TJAM possui exatamente 26 desembargadores e sede na Capital (Manaus), com jurisdição sobre todo o Estado do Amazonas. As Câmaras Isoladas são presididas por um de seus membros (eleito regimentalmente) e o Tribunal Pleno é órgão julgador.'
   }
 ];
 
 export const legislacaoTjamTfQuestionsData: TfQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A Lei Complementar nº 261/2023 é a norma fundamental que estabelece a Divisão e a Organização Judiciária do Estado do Amazonas.',
-    correta: true,
-    explicacao: 'Gabarito Oficial: Verdadeiro. A LC 261/2023 substituiu a legislação anterior e consolida a organização judiciária do Amazonas com atualizações recentes.'
+    enunciado: '1. O Tribunal de Justiça do Amazonas é composto por 26 desembargadores e possui jurisdição restrita à Comarca de Manaus.',
+    correta: false,
+    explicacao: 'Gabarito Oficial: Falso. O TJAM é composto por 26 desembargadores, porém sua jurisdição abrange todo o território do Estado do Amazonas, e não apenas Manaus.'
   },
   {
     id: 2,
-    enunciado: '2. Os Juízes de Paz e a Auditoria Militar não integram o Poder Judiciário do Amazonas, pertencendo ao Poder Executivo estadual.',
-    correta: false,
-    explicacao: 'Gabarito Oficial: Falso. Conforme o art. 3º da LC 261/2023, tanto os Juízes de Paz quanto a Auditoria Militar e seus Conselhos integram expressamente o Poder Judiciário do Estado.'
+    enunciado: '2. Ao Tribunal de Justiça do Amazonas é dispensado o tratamento de "Egrégio", ao passo que aos Desembargadores destina-se o tratamento de "Excelência".',
+    correta: true,
+    explicacao: 'Gabarito Oficial: Verdadeiro. É a distinção oficial de estilo prevista no regramento forense do TJAM.'
   },
   {
     id: 3,
-    enunciado: '3. As Câmaras Isoladas do Tribunal de Justiça do Amazonas são divididas em três Câmaras Cíveis e duas Câmaras Criminais.',
+    enunciado: '3. A Escola Superior da Magistratura do Estado do Amazonas (ESMAM) integra a estrutura administrativa do Tribunal de Justiça.',
     correta: true,
-    explicacao: 'Gabarito Oficial: Verdadeiro. A estrutura interna do TJAM conta com a 1ª, 2ª e 3ª Câmaras Cíveis e com a 1ª e 2ª Câmaras Criminais.'
+    explicacao: 'Gabarito Oficial: Verdadeiro. A ESMAM faz parte da estrutura administrativa do TJAM.'
   },
   {
     id: 4,
-    enunciado: '4. O Tribunal de Justiça do Amazonas possui sede na comarca de Parintins e exerce jurisdição restrita à região metropolitana.',
+    enunciado: '4. Câmaras Isoladas e Câmaras Reunidas constituem exatamente a mesma unidade de julgamento no TJAM.',
     correta: false,
-    explicacao: 'Gabarito Oficial: Falso. A sede do TJAM é na capital Manaus e sua jurisdição abrange todo o território do Estado do Amazonas.'
+    explicacao: 'Gabarito Oficial: Falso. Câmaras Isoladas ≠ Câmaras Reunidas. São estruturas e órgãos fracionários distintos com competências próprias.'
+  },
+  {
+    id: 5,
+    enunciado: '5. A autoridade responsável pela força pública tem o dever de prestar auxílio quando requisitada pelos órgãos judiciários para cumprimento de decisões.',
+    correta: true,
+    explicacao: 'Gabarito Oficial: Verdadeiro. Quando requisitado auxílio para assegurar cumprimento de decisões judiciais, a autoridade deve prestá-lo.'
   }
 ];
 
 export const legislacaoTjamDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Com base no Art. 3º da Lei Complementar Estadual nº 261/2023, enumere os órgãos que integram o Poder Judiciário do Estado do Amazonas e explique a diferença entre órgãos de 2º Grau (Tribunal) e órgãos de 1º Grau.',
-    respostaEsperada: 'Gabarito Oficial: Segundo o art. 3º da LC 261/2023, integram o Judiciário do AM: 1) TJAM; 2) Turmas Recursais; 3) Tribunais do Júri; 4) Juízes de Direito; 5) Juízes Substitutos de Carreira; 6) Auditoria Militar e seus Conselhos; 7) Juízes de Paz. O TJAM atua como órgão de 2º Grau (jurisdição recursal e competências originárias privativas), enquanto os Juízes de Direito, Substitutos, Tribunais do Júri e Juizados Especiais atuam na 1ª Instância (porta de entrada da prestação jurisdicional perante as Comarcas).'
+    enunciado: '1. Explique a estrutura dos órgãos julgadores do Tribunal de Justiça do Amazonas conforme a Lei Complementar nº 261/2023, diferenciando Tribunal Pleno, Câmaras Isoladas e Câmaras Reunidas.',
+    respostaEsperada: 'Gabarito Oficial Padrão FGV: De acordo com a LC nº 261/2023, os órgãos julgadores do TJAM são: 1) Tribunal Pleno: órgão colegiado máximo formado pelos 26 desembargadores, com atribuições deliberativas, administrativas e julgamento de ações constitucionais e prerrogativas de foro; 2) Câmaras Isoladas: órgãos fracionários especializados por matéria, divididos em Câmaras Cíveis (1ª, 2ª e 3ª) e Câmaras Criminais (1ª e 2ª), responsáveis pelo julgamento ordinário de recursos e ações de suas respectivas especialidades; 3) Câmaras Reunidas: órgão colegiado intermediário com competências recursais e originárias privativas fixadas em lei e no Regimento Interno (como mandados de segurança contra certos atos e ações rescisórias).'
   },
   {
     id: 2,
-    enunciado: '2. Explique o papel constitucional e institucional da Corregedoria-Geral de Justiça no âmbito do Poder Judiciário do Amazonas, ressaltando suas funções perante a Justiça de 1º Grau e perante os serviços notariais e de registro.',
-    respostaEsperada: 'Gabarito Oficial: A Corregedoria-Geral de Justiça (CGJ/AM) é órgão de fiscalização, disciplina, correição e orientação administrativa. Ela inspeciona e orienta os trabalhos dos magistrados de primeiro grau, dos servidores dos fóruns e varas das comarcas da capital e do interior, além de exercer a fiscalização direta sobre as serventias extrajudiciais (cartórios de registro civil, notas, imóveis e protestos de todo o Estado).'
+    enunciado: '2. Disserte sobre a distinção entre a Lei Complementar nº 261/2023 e o Regimento Interno do TJAM (Resolução nº 62/2023), destacando as matérias disciplinadas por cada instrumento normativo.',
+    respostaEsperada: 'Gabarito Oficial Padrão FGV: A LC nº 261/2023 é a lei estadual em sentido formal e material que estabelece a Divisão e a Organização Judiciária de todo o Estado do Amazonas, disciplinando a estrutura territorial (comarcas e termos), a carreira da magistratura, os órgãos integrantes do Poder Judiciário, os serviços auxiliares da Justiça e as serventias notariais e de registro. Por sua vez, o Regimento Interno (Resolução nº 62/2023) decorre da autonomia orgânico-administrativa do Tribunal (art. 96, I, "a" da CF/88) e disciplina a composição e funcionamento interno de seus órgãos judicantes e administrativos, as regras procedimentais de julgamento dos feitos de sua competência e a ordem interna de suas sessões.'
   }
 ];
 
 export const legislacaoTjamSummaryPoints: string[] = [
-  'Norma Regente: Lei Complementar Estadual nº 261/2023 (nova Lei de Organização Judiciária do Estado do Amazonas).',
-  'Sede e Jurisdição: Sede localizada na capital Manaus e jurisdição plena sobre todo o território do Estado do Amazonas.',
-  'Órgãos Integrantes do Judiciário do AM (Art. 3º): TJAM, Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos de Carreira, Auditoria Militar e Conselhos, e Juízes de Paz.',
-  'Órgãos do TJAM: Tribunal Pleno, Câmaras Reunidas, Câmaras Isoladas (1ª, 2ª e 3ª Cível; 1ª e 2ª Criminal), Presidência, Vice-Presidência e Corregedoria-Geral de Justiça.',
-  'Divisão Judiciária Territorial: O Estado divide-se em Comarcas e Termos Judiciários.',
-  'Corregedoria-Geral de Justiça: Órgão responsável pela fiscalização, correição, disciplina e orientação da 1ª Instância e dos cartórios extrajudiciais.'
+  'TJAM: 2ª Instância, sede na Capital (Manaus), jurisdição em todo o Estado do Amazonas.',
+  'Composição: Composto por 26 desembargadores (membros do Tribunal com título de Desembargador).',
+  'Tratamento Forense: Tribunal = "Egrégio" | Desembargadores = "Excelência".',
+  'Órgãos Julgadores do TJAM: Tribunal Pleno, Câmaras Isoladas (Cíveis e Criminais) e Câmaras Reunidas.',
+  'Presidência dos Colegiados: Tribunal Pleno = Presidente do TJAM; Câmaras Reunidas = Vice-Presidente; Câmaras Isoladas = um de seus membros eleito conforme o Regimento Interno.',
+  'Quórum de Funcionamento: Maioria absoluta dos membros para abertura e deliberação das sessões.',
+  'Frequência das Sessões: Realização de 1 sessão ordinária por semana para Pleno, Câmaras Reunidas e Isoladas.',
+  'Iniciativa Legislativa: Cabe ao Tribunal Pleno, por meio do Presidente, propor ao Legislativo a organização e divisão judiciárias.',
+  'Câmaras Isoladas: Matéria cível (Câmaras Cíveis) e matéria criminal (Câmaras Criminais) — arts. 29 a 40 LC 261/2023.',
+  'Câmaras Isoladas ≠ Câmaras Reunidas: São órgãos julgadores distintos com competências próprias na lei e regimento.',
+  'Escola Superior da Magistratura (ESMAM): Integra a estrutura administrativa do Tribunal de Justiça.',
+  '7 Órgãos do Poder Judiciário do AM (Art. 3º): TJAM, Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos de Carreira, Auditoria Militar e Conselhos, e Juízes de Paz.',
+  'Auxílio da Força Pública: Órgãos judiciários podem requisitar e a autoridade responsável tem o dever de prestar.',
+  'Norma Revogada x Vigente: A LC nº 261/2023 substituiu a antiga LC nº 17/1997.'
 ];

@@ -10,10 +10,13 @@ import {
   Sparkles,
   HelpCircle,
   Video,
-  FileCheck,
   Building2,
   Users,
-  Compass
+  Compass,
+  AlertTriangle,
+  GraduationCap,
+  Shield,
+  FileText
 } from 'lucide-react';
 
 interface LegislacaoTjamContentProps {
@@ -40,12 +43,15 @@ export const LegislacaoTjamContent: React.FC<LegislacaoTjamContentProps> = ({
       {/* Top Banner / Goal Header */}
       <header className="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="px-3 py-1 rounded-full bg-purple-600/10 text-purple-600 dark:text-purple-400 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 border border-purple-500/20">
-              <Landmark className="w-3.5 h-3.5" /> LEGISLAÇÃO DO TJAM • AULA 1 DE HOJE (1 de 3)
+              <Landmark className="w-3.5 h-3.5" /> LEGISLAÇÃO TJAM • PRIMEIRA AULA DE HOJE
+            </span>
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black text-xs uppercase tracking-wider border border-emerald-500/20">
+              LC Nº 261/2023 (Vigente)
             </span>
             <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-black text-xs uppercase tracking-wider border border-amber-500/20">
-              LC Nº 261/2023
+              Resolução nº 62/2023
             </span>
           </div>
 
@@ -69,70 +75,70 @@ export const LegislacaoTjamContent: React.FC<LegislacaoTjamContentProps> = ({
 
         <div className="space-y-2">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-            <span className="text-purple-600 dark:text-purple-400">🏛️</span> Estrutura do Poder Judiciário do Amazonas
+            <span className="text-purple-600 dark:text-purple-400">🏛️</span> Aula 2 — Organização Judiciária do Amazonas: aprofundamento
           </h1>
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
-            Estudo aprofundado da organização judiciária estadual com base na <strong>Lei Complementar nº 261/2023</strong> (nova Lei de Organização Judiciária do Estado do Amazonas), consolidada com as alterações mais recentes de 2024, 2025 e 2026.
+            Vamos avançar a partir da aula anterior, aprofundando os órgãos, composição e funcionamento do Tribunal de Justiça, usando a legislação atual. A principal norma é a <strong>Lei Complementar nº 261/2023</strong>, que substituiu a antiga LC nº 17/1997 e é mantida pelo próprio TJAM como legislação vigente e consolidada.
           </p>
         </div>
 
         {/* Quick Highlights Info Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div className="p-3.5 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60">
-            <div className="text-[11px] font-black uppercase text-purple-700 dark:text-purple-300">Norma Base</div>
-            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">LC nº 261/2023</div>
+            <div className="text-[11px] font-black uppercase text-purple-700 dark:text-purple-300">Desembargadores</div>
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">26 Magistrados no TJAM</div>
           </div>
           <div className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60">
-            <div className="text-[11px] font-black uppercase text-blue-700 dark:text-blue-300">Sede & Jurisdição</div>
-            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">Manaus / Todo o Estado</div>
+            <div className="text-[11px] font-black uppercase text-blue-700 dark:text-blue-300">Órgãos Julgadores</div>
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">Pleno + Câmaras (Isoladas e Reunidas)</div>
           </div>
           <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60">
-            <div className="text-[11px] font-black uppercase text-emerald-700 dark:text-emerald-300">Órgãos do Art. 3º</div>
-            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">7 Órgãos Integrantes</div>
+            <div className="text-[11px] font-black uppercase text-emerald-700 dark:text-emerald-300">Tratamento Forense</div>
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">Tribunal: Egrégio | Membro: Excelência</div>
           </div>
           <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
-            <div className="text-[11px] font-black uppercase text-amber-700 dark:text-amber-300">Simulado do Dia</div>
-            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">20 Questões Gabaritadas</div>
+            <div className="text-[11px] font-black uppercase text-amber-700 dark:text-amber-300">Regimento Interno</div>
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">Resolução nº 62/2023</div>
           </div>
         </div>
       </header>
 
-      {/* SECTION 1: O QUE É A ORGANIZAÇÃO JUDICIÁRIA */}
+      {/* SECTION 1: TRIBUNAL DE JUSTIÇA DO AMAZONAS */}
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
             1
           </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            O que é a Organização Judiciária?
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>⚖️ Tribunal de Justiça do Amazonas</span>
           </h2>
         </div>
 
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          A <strong>Lei Complementar Estadual nº 261/2023</strong> é a espinha dorsal de toda a estrutura do Tribunal de Justiça do Amazonas. Ela disciplina quatro matérias fundamentais:
+        <p className="text-sm font-normal text-slate-700 dark:text-slate-300 leading-relaxed">
+          A Justiça de <strong>segunda instância</strong> do Amazonas é constituída pelo <strong>Tribunal de Justiça</strong>. O TJAM:
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
           <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start gap-3">
             <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold shrink-0">
-              <Compass className="w-4 h-4" />
+              <Building2 className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Divisão e Organização Judiciária</h4>
+              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Sede na Capital</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Delimitação territorial das Comarcas, Termos Judiciários, Varas especializadas e Juizados em todo o Estado.
+                Sede localizada na Capital do Estado (Manaus).
               </p>
             </div>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start gap-3">
             <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold shrink-0">
-              <Scale className="w-4 h-4" />
+              <Compass className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Organização da Magistratura</h4>
+              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Jurisdição Plena</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Ingresso na carreira, direitos, deveres, garantias, critérios de promoção por antiguidade e merecimento e remoções.
+                Possui jurisdição em <strong>todo o território do Amazonas</strong>.
               </p>
             </div>
           </div>
@@ -142,59 +148,294 @@ export const LegislacaoTjamContent: React.FC<LegislacaoTjamContentProps> = ({
               <Users className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Serviços Auxiliares da Justiça</h4>
+              <h4 className="font-bold text-xs text-slate-900 dark:text-white">26 Desembargadores</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Estrutura das secretarias, gabinetes, cartórios judiciais, oficiais de justiça, assistentes judiciários e analistas.
+                É composto por exatamente <strong>26 desembargadores</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Callout Mnemônico */}
+        <div className="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 flex items-start gap-3 text-xs">
+          <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider block mb-1">
+              🧠 Memorize para a Prova:
+            </span>
+            <p className="font-extrabold text-slate-900 dark:text-white text-xs">
+              TJAM = 2ª instância + sede na Capital + jurisdição em todo o Amazonas + 26 desembargadores.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2: ÓRGÃOS JULGADORES DO TJAM */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
+            2
+          </span>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>🏛️ Órgãos Julgadores do TJAM</span>
+          </h2>
+        </div>
+
+        <p className="text-sm font-normal text-slate-700 dark:text-slate-300 leading-relaxed">
+          A <strong>LC nº 261/2023</strong> estabelece como órgãos julgadores do Tribunal de Justiça do Amazonas:
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-extrabold text-xs uppercase">
+              <Scale className="w-4 h-4" /> 🔹 Tribunal Pleno
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Órgão colegiado máximo formado por <strong>todos os 26 desembargadores</strong> do Tribunal.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-extrabold text-xs uppercase">
+              <Scale className="w-4 h-4" /> 🔹 Câmaras Isoladas
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Dividem-se em <strong>Câmaras Isoladas Cíveis</strong> (matéria cível) e <strong>Câmaras Isoladas Criminais</strong> (matéria criminal).
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-extrabold text-xs uppercase">
+              <Scale className="w-4 h-4" /> 🔹 Câmaras Reunidas
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              São também órgãos julgadores do Tribunal, com organização e competências disciplinadas na lei e no Regimento Interno.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: DESEMBARGADORES & PEGADINHA DE PROVA */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
+            3
+          </span>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>👨‍⚖️ Desembargadores e Tratamento Oficial</span>
+          </h2>
+        </div>
+
+        <p className="text-sm font-normal text-slate-700 dark:text-slate-300 leading-relaxed">
+          Os membros do Tribunal de Justiça recebem o título oficial de <strong>Desembargador</strong>. O tratamento dispensado aos agentes e ao colegiado difere de forma substancial:
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Ao Tribunal (Órgão Colegiado)</span>
+            <div className="text-lg font-black text-purple-700 dark:text-purple-300">
+              "Egrégio"
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Exemplo forense: <em>"Egrégio Tribunal de Justiça do Estado do Amazonas"</em>.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Aos Desembargadores (Membros)</span>
+            <div className="text-lg font-black text-emerald-600 dark:text-emerald-400">
+              "Excelência"
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Exemplo forense: <em>"Vossa Excelência, Desembargador Relator"</em>.
+            </p>
+          </div>
+        </div>
+
+        {/* Pegadinha de Prova */}
+        <div className="p-5 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 text-amber-900 dark:text-amber-200 text-xs space-y-2">
+          <div className="flex items-center gap-2 font-black uppercase tracking-wide text-amber-700 dark:text-amber-300 text-sm">
+            <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
+            <span>⚠️ Pegadinha Clássica de Prova FGV!</span>
+          </div>
+          <p className="leading-relaxed text-xs">
+            A banca tenta inverter os pronomes de tratamento para induzir o candidato ao erro. <strong>NÃO CONFUNDA:</strong>
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 font-mono font-bold text-xs">
+            <div className="p-2.5 rounded-xl bg-white/70 dark:bg-slate-900/70 border border-amber-300/40 text-slate-900 dark:text-white">
+              🏛️ Tribunal ➔ <strong>Egrégio</strong>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/70 dark:bg-slate-900/70 border border-amber-300/40 text-slate-900 dark:text-white">
+              👨‍⚖️ Desembargador ➔ <strong>Excelência</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: ESCOLA SUPERIOR DA MAGISTRATURA */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
+            4
+          </span>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>🏫 Escola Superior da Magistratura (ESMAM)</span>
+          </h2>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+          <div className="p-3 rounded-2xl bg-purple-600 text-white font-bold shrink-0 shadow-md">
+            <GraduationCap className="w-6 h-6" />
+          </div>
+          <div className="space-y-1.5 text-xs">
+            <h4 className="font-black text-sm text-slate-900 dark:text-white">
+              Integração à Estrutura Administrativa
+            </h4>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              A estrutura do Tribunal também inclui a <strong>Escola Superior da Magistratura do Estado do Amazonas (ESMAM)</strong>. Ela integra a <strong>estrutura administrativa</strong> do Tribunal, responsável pelo aperfeiçoamento, pesquisa jurídica e formação continuada de magistrados e servidores judiciais.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5, 6 & 7: PLENO, CÂMARAS ISOLADAS E REUNIDAS */}
+      <section className="space-y-5">
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
+            5, 6 e 7
+          </span>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white">
+            Órgãos Julgadores: Pleno, Câmaras Isoladas e Câmaras Reunidas
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {/* Tribunal Pleno */}
+          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-purple-700 dark:text-purple-300 font-extrabold text-sm">
+                <Scale className="w-4 h-4" />
+                <span>5. ⚖️ Tribunal Pleno</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 text-[10px] font-black">
+                Presidido pelo Presidente do TJAM
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              O Tribunal Pleno é o <strong>órgão colegiado máximo e julgador do TJAM</strong>, composto por todos os 26 desembargadores. É <strong>presidido pelo Presidente do Tribunal de Justiça</strong>.
+            </p>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              📌 <strong>Iniciativa Legislativa:</strong> Compete ao Tribunal Pleno, por intermédio do Presidente do Tribunal de Justiça, propor ao Poder Legislativo matérias relacionadas à <strong>organização e divisão judiciárias</strong>, criação de comarcas, varas e cargos judiciais.
+            </p>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-800 dark:text-purple-200 text-xs font-bold">
+              📌 Para a prova: <strong>Tribunal Pleno ➔ Presidido pelo Presidente do TJAM</strong>.
+            </div>
+          </div>
+
+          {/* Câmaras Isoladas */}
+          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300 font-extrabold text-sm">
+                <Scale className="w-4 h-4" />
+                <span>6. 🏛️ Câmaras Isoladas</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-[10px] font-black">
+                Presididas por membro eleito
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              As Câmaras Isoladas são <strong>presididas por um de seus membros, eleito conforme o Regimento Interno</strong>. Dividem-se em razão da matéria:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="font-extrabold text-blue-600 dark:text-blue-400 block mb-1">Câmaras Cíveis:</span>
+                <span className="text-slate-600 dark:text-slate-300">Questões de natureza cível (recursos em ações ordinárias, contratos, família, fazenda pública, etc.).</span>
+              </div>
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="font-extrabold text-rose-600 dark:text-rose-400 block mb-1">Câmaras Criminais:</span>
+                <span className="text-slate-600 dark:text-slate-300">Questões de natureza criminal (apelações criminais, habeas corpus, recursos em sentido estrito).</span>
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              A <strong>LC nº 261/2023</strong> disciplina as Câmaras Isoladas nos <strong>arts. 29 a 40</strong>.
+            </p>
+          </div>
+
+          {/* Câmaras Reunidas */}
+          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-extrabold text-sm">
+                <Scale className="w-4 h-4" />
+                <span>7. 🔄 Câmaras Reunidas</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-[10px] font-black">
+                Presididas pelo Vice-Presidente do TJAM
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              As Câmaras Reunidas são <strong>presididas pelo Vice-Presidente do TJAM</strong> e também fazem parte dos órgãos julgadores do Tribunal.
+            </p>
+            <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-800 dark:text-indigo-200 text-xs space-y-1">
+              <span className="font-black uppercase tracking-wider block">Atenção Crítica:</span>
+              <p className="font-extrabold">
+                Câmaras Isoladas ≠ Câmaras Reunidas.
+              </p>
+              <p className="text-slate-600 dark:text-slate-400">
+                São estruturas e órgãos julgadores distintos dentro da organização interna do Tribunal.
               </p>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold shrink-0">
-              <FileCheck className="w-4 h-4" />
+          {/* Quórum e Frequência das Sessões */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 via-slate-800/60 to-indigo-500/10 border border-purple-500/30 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="space-y-1">
+              <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-300">👥 Quórum de Funcionamento</span>
+              <p className="text-slate-700 dark:text-slate-200 font-medium">
+                Os órgãos julgadores do TJAM funcionam, em regra, com a presença de <strong>maioria absoluta de seus membros</strong>.
+              </p>
             </div>
-            <div>
-              <h4 className="font-bold text-xs text-slate-900 dark:text-white">Serviços Notariais e de Registro</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Estrutura das serventias extrajudiciais (cartórios de notas, registro civil, imóveis e protesto) e sua fiscalização.
+            <div className="space-y-1">
+              <span className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-300">📅 Frequência das Sessões</span>
+              <p className="text-slate-700 dark:text-slate-200 font-medium">
+                Em regra, Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas realizam <strong>uma sessão ordinária por semana</strong>.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: ÓRGÃOS DO PODER JUDICIÁRIO DO AMAZONAS */}
+      {/* SECTION 8: OS 7 ÓRGÃOS DO PODER JUDICIÁRIO DO AMAZONAS */}
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
-            2
+            8
           </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            Órgãos do Poder Judiciário do Amazonas
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>🏢 Órgãos do Poder Judiciário do Amazonas (LC 261/2023)</span>
           </h2>
         </div>
 
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          De acordo com o <strong>art. 3º da LC nº 261/2023</strong>, integram expressamente o Poder Judiciário do Estado:
+        <p className="text-sm font-normal text-slate-700 dark:text-slate-300 leading-relaxed">
+          A LC nº 261/2023 estabelece em seu <strong>art. 3º</strong> que integram o Poder Judiciário do Estado do Amazonas:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {[
-            { num: 'I', title: 'Tribunal de Justiça (TJAM)', desc: 'Órgão de cúpula estadual com competência recursal e originária' },
-            { num: 'II', title: 'Turmas Recursais dos Juizados Especiais', desc: 'Julgam recursos de decisões dos Juizados Cíveis e Criminais' },
-            { num: 'III', title: 'Tribunais do Júri', desc: 'Competência constitucional para julgar crimes dolosos contra a vida' },
-            { num: 'IV', title: 'Juízes de Direito', desc: 'Magistrados titulares vitalícios que atuam nas Varas das Comarcas' },
-            { num: 'V', title: 'Juízes Substitutos de Carreira', desc: 'Magistrados em início de carreira que atuam em substituição' },
-            { num: 'VI', title: 'Auditoria Militar e Conselhos', desc: 'Julgamento dos crimes militares estaduais cometidos por PM e CBM' },
-            { num: 'VII', title: 'Juízes de Paz', desc: 'Competência para celebração de casamentos e conciliação prévia' },
+            { num: '1', title: 'Tribunal de Justiça', desc: 'Órgão de cúpula estadual e 2ª instância' },
+            { num: '2', title: 'Turmas Recursais dos Juizados Especiais', desc: 'Julgam recursos das decisões dos Juizados Especiais' },
+            { num: '3', title: 'Tribunais do Júri', desc: 'Competência constitucional para crimes dolosos contra a vida' },
+            { num: '4', title: 'Juízes de Direito', desc: 'Magistrados titulares vitalícios nas Comarcas' },
+            { num: '5', title: 'Juízes Substitutos de Carreira', desc: 'Magistrados em início de carreira em substituição' },
+            { num: '6', title: 'Auditoria Militar e respectivos Conselhos', desc: 'Justiça Militar estadual para delitos militares' },
+            { num: '7', title: 'Juízes de Paz', desc: 'Celebração de casamentos e mediação conciliatória' },
           ].map((item, idx) => (
             <div
               key={idx}
-              className="p-3.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between"
+              className="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between"
             >
               <div>
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
-                  Inciso {item.num}
+                  Item {item.num}
                 </span>
                 <h4 className="font-extrabold text-xs text-slate-900 dark:text-white mt-1.5">
                   {item.title}
@@ -207,276 +448,254 @@ export const LegislacaoTjamContent: React.FC<LegislacaoTjamContentProps> = ({
           ))}
         </div>
 
-        {/* Callout: Pegadinha de Prova FGV */}
-        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs space-y-1.5">
-          <div className="flex items-center gap-2 font-black uppercase tracking-wide text-amber-700 dark:text-amber-300">
-            <ShieldAlert className="w-4 h-4 text-amber-500" />
-            <span>📌 Atenção para a Prova da FGV!</span>
-          </div>
-          <p className="leading-relaxed">
-            O <strong>Ministério Público</strong> (Promotores e Procuradores), a <strong>Defensoria Pública</strong>, a <strong>Polícia Civil/Militar</strong> e o <strong>Governador do Estado</strong> <u>NÃO</u> integram o Poder Judiciário. Eles são funções essenciais à Justiça ou compõem o Poder Executivo. Grave os 7 incisos do Art. 3º!
-          </p>
+        {/* Decore essa lista */}
+        <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2.5">
+          <Sparkles className="w-4 h-4 text-emerald-500 shrink-0" />
+          <span className="font-extrabold">
+            🧠 Decore essa lista! Ela pode ser diretamente cobrada em uma questão objetiva da FGV.
+          </span>
         </div>
       </section>
 
-      {/* SECTION 3: TRIBUNAL DE JUSTIÇA DO AMAZONAS */}
+      {/* SECTION 9: AUXÍLIO DA FORÇA PÚBLICA */}
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
-            3
+            9
           </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            Tribunal de Justiça do Amazonas (TJAM)
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>🚨 Auxílio da Força Pública</span>
           </h2>
         </div>
 
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          O <strong>Tribunal de Justiça do Estado do Amazonas</strong> é o órgão máximo do Poder Judiciário estadual:
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-          <div className="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/50 space-y-1.5">
-            <div className="text-xs font-black uppercase text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
-              <Building2 className="w-4 h-4" /> Sede Oficial
-            </div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-              Sede na <strong>Capital do Estado, Manaus</strong> (Edifício Arnoldo Péres, Aleixo).
-            </p>
+        <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+          <div className="p-3 rounded-2xl bg-rose-600 text-white font-bold shrink-0 shadow-md">
+            <Shield className="w-6 h-6" />
           </div>
-
-          <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50 space-y-1.5">
-            <div className="text-xs font-black uppercase text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
-              <Compass className="w-4 h-4" /> Alcance da Jurisdição
-            </div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-              Possui jurisdição plena em <strong>todo o território do Estado do Amazonas</strong>.
+          <div className="space-y-1.5 text-xs">
+            <h4 className="font-black text-sm text-slate-900 dark:text-white">
+              Requisição e Cumprimento Obrigatório
+            </h4>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Os órgãos judiciários <strong>podem requisitar o auxílio da força pública</strong> para assegurar o cumprimento e a execução de seus atos e decisões.
             </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 space-y-1.5">
-            <div className="text-xs font-black uppercase text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4" /> Regimento Interno
-            </div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-              Composição, funcionamento e competências regulamentados pelo <strong>Regimento Interno do TJAM</strong>.
+            <p className="text-rose-600 dark:text-rose-400 font-bold">
+              Quando requisitado, a autoridade responsável <u>deve prestar</u> esse auxílio.
             </p>
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: ÓRGÃOS DO TRIBUNAL */}
+      {/* SECTION 10: LEI DE ORGANIZAÇÃO JUDICIÁRIA X REGIMENTO INTERNO */}
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
-            4
+            10
           </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            Órgãos Internos do Tribunal de Justiça
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>📖 Lei de Organização Judiciária x Regimento Interno</span>
           </h2>
         </div>
 
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          O Tribunal de Justiça possui órgãos colegiados de julgamento e órgãos de cúpula administrativa:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-3">
-            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-              <Scale className="w-4 h-4 text-purple-600" /> Órgãos Jurisdicionais (Colegiados)
-            </h3>
-            <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Tribunal Pleno:</strong> Reunião de todos os Desembargadores do Tribunal para deliberações administrativas máximas e julgamentos originários de relevância constitucional.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Câmaras Reunidas:</strong> Colegiado intermediário competente para determinadas ações rescisórias, mandados de segurança e conflitos de competência.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Câmaras Isoladas:</strong> Fracionadas por matéria:
-                  <ul className="pl-4 pt-1 space-y-1 text-slate-500 dark:text-slate-400">
-                    <li>— <strong>3 Câmaras Cíveis:</strong> 1ª, 2ª e 3ª Câmaras Cíveis.</li>
-                    <li>— <strong>2 Câmaras Criminais:</strong> 1ª e 2ª Câmaras Criminais.</li>
-                  </ul>
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-3">
-            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-purple-600" /> Órgãos Diretivos e Administrativos
-            </h3>
-            <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Presidência:</strong> Representação legal do Poder Judiciário, chefia administrativa superior, execução orçamentária e atos de gestão geral.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Vice-Presidência:</strong> Substituição do Presidente e atribuições regimentais específicas, como admissibilidade de recursos aos Tribunais Superiores (STJ e STF).</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-purple-600 font-black">•</span>
-                <span><strong>Corregedoria-Geral de Justiça (CGJ):</strong> Órgão de correição, fiscalização disciplinar, padronização e orientação dos serviços judiciais de 1º grau e dos cartórios extrajudiciais.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: COMARCAS E TERMOS JUDICIÁRIOS */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-3">
-          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
-            5
-          </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            Comarcas e Termos Judiciários
-          </h2>
-        </div>
-
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          Para fins de administração da Justiça, o território do Amazonas é dividido em <strong>Comarcas</strong> e <strong>Termos Judiciários</strong>:
+        <p className="text-sm font-normal text-slate-700 dark:text-slate-300 leading-relaxed">
+          É de extrema importância diferenciar o campo material da <strong>Lei Complementar nº 261/2023</strong> e do <strong>Regimento Interno do TJAM</strong>:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
-            <h4 className="font-bold text-xs text-purple-700 dark:text-purple-300 uppercase tracking-wider">
-              Divisão Judiciária Territorial
-            </h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              O Estado do Amazonas possui particularidades geográficas únicas (grandes extensões territoriais e transporte hidroviário). Por isso, a criação, alteração ou extinção de comarcas obedece a requisitos técnicos rigorosos fixados na LC nº 261/2023.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
-            <h4 className="font-bold text-xs text-purple-700 dark:text-purple-300 uppercase tracking-wider">
-              Critérios Legais de Classificação
-            </h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              A organização e entrâncias levam em consideração: <strong>número de habitantes</strong>, <strong>número de eleitores</strong>, <strong>receita tributária</strong> e <strong>movimento forense médio</strong> dos últimos anos.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: COMPETÊNCIAS DO TJAM */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-3">
-          <span className="w-8 h-8 rounded-xl bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md">
-            6
-          </span>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">
-            Competências do Tribunal de Justiça do Amazonas
-          </h2>
-        </div>
-
-        <p className="text-sm font-normal text-slate-700 dark:text-slate-300">
-          As competências do TJAM estão definidas em três fontes normativas complementares:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <div className="text-xs font-black uppercase text-purple-600">1. Constituição Estadual</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              Competências originárias privativas, controle de constitucionalidade e prerrogativas de foro.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <div className="text-xs font-black uppercase text-purple-600">2. LC nº 261/2023</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              Estrutura orgânica, distribuição judiciária e organização dos serviços auxiliares.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <div className="text-xs font-black uppercase text-purple-600">3. Regimento Interno</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              Processamento interno, distribuição de processos, prazos de relatoria e regras de sessão.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* RESUMO PARA MEMORIZAR & ESQUEMA VISUAL */}
-      <section className="p-6 rounded-3xl bg-gradient-to-br from-purple-900/20 via-slate-900/10 to-purple-900/20 border border-purple-500/30 space-y-4">
-        <div className="flex items-center gap-2 text-purple-700 dark:text-purple-300 font-black text-sm uppercase tracking-wider">
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span>🧠 Resumo para Memorizar (FGV)</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <h5 className="font-extrabold text-slate-900 dark:text-white">🏢 TJAM</h5>
-            <p className="text-slate-600 dark:text-slate-300">
-              Sede na capital Manaus e jurisdição em todo o Estado do Amazonas.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <h5 className="font-extrabold text-slate-900 dark:text-white">⚖️ Órgãos do Tribunal</h5>
-            <p className="text-slate-600 dark:text-slate-300">
-              Tribunal Pleno, Câmaras Reunidas, Câmaras Isoladas (Cíveis e Criminais), Presidência, Vice e Corregedoria.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <h5 className="font-extrabold text-slate-900 dark:text-white">🏛️ Poder Judiciário do AM</h5>
-            <p className="text-slate-600 dark:text-slate-300">
-              TJAM, Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos, Auditoria Militar e Juízes de Paz.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* O QUE VOCÊ PRECISA DOMINAR HOJE */}
-      <section className="space-y-3">
-        <h3 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-          <span>🎯 O que você precisa dominar hoje:</span>
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-          {[
-            '1. O que disciplina a Lei Complementar nº 261/2023;',
-            '2. Quais são os órgãos que integram o Poder Judiciário do Amazonas;',
-            '3. Onde fica a sede do TJAM e qual a sua jurisdição;',
-            '4. A diferença entre Tribunal Pleno, Câmaras Reunidas e Isoladas;',
-            '5. A função da Presidência, Vice-Presidência e Corregedoria;',
-            '6. Como se divide territorialmente a administração da Justiça (Comarcas e Termos).',
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2 font-medium"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>{item}</span>
+          {/* LC 261/2023 */}
+          <div className="p-5 rounded-2xl bg-white dark:bg-slate-800 border-2 border-purple-500/40 shadow-sm space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black uppercase text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+                <FileText className="w-4 h-4" /> Lei Complementar nº 261/2023
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold">
+                Lei Estadual
+              </span>
             </div>
-          ))}
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Trata formalmente da:
+            </p>
+            <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-purple-600 font-black">•</span>
+                <span>Divisão judiciária estadual (Comarcas e Termos);</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-purple-600 font-black">•</span>
+                <span>Organização judiciária de todo o Estado;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-purple-600 font-black">•</span>
+                <span>Magistratura (ingresso, direitos e garantias);</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-purple-600 font-black">•</span>
+                <span>Serviços auxiliares da Justiça;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-purple-600 font-black">•</span>
+                <span>Estrutura dos serviços notariais e de registro (cartórios).</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Regimento Interno */}
+          <div className="p-5 rounded-2xl bg-white dark:bg-slate-800 border-2 border-amber-500/40 shadow-sm space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black uppercase text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+                <BookOpen className="w-4 h-4" /> Regimento Interno do TJAM
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 font-bold">
+                Resolução nº 62/2023
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Disciplina, entre outros aspectos procedimentais internos:
+            </p>
+            <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-amber-600 font-black">•</span>
+                <span>Composição detalhada dos órgãos fracionários;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-amber-600 font-black">•</span>
+                <span>Funcionamento das sessões e deliberações;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-amber-600 font-black">•</span>
+                <span>Procedimentos processuais e prazos internos;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-amber-600 font-black">•</span>
+                <span>Julgamento dos processos de competência do Tribunal;</span>
+              </li>
+              <li className="flex items-center gap-2 font-medium">
+                <span className="text-amber-600 font-black">•</span>
+                <span>Serviços auxiliares administrativos do Tribunal.</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      {/* Official Link to LC 261/2023 */}
-      <div className="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2.5">
-          <BookOpen className="w-4 h-4 text-purple-600 shrink-0" />
-          <span className="text-slate-700 dark:text-slate-300 font-medium">
-            Consulte o texto integral da <strong>Lei Complementar nº 261/2023</strong> no portal de legislação do TJAM:
-          </span>
+      {/* RESUMO PARA MEMORIZAR & PONTOS PARA DECORAR */}
+      <section className="p-6 rounded-3xl bg-gradient-to-br from-purple-900/20 via-slate-900/10 to-purple-900/20 border border-purple-500/30 space-y-6">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-purple-700 dark:text-purple-300 font-black text-sm uppercase tracking-wider">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span>🧠 Resumo para Memorizar (TJAM 2026)</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Composição</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">26 Desembargadores</div>
+              <p className="text-slate-500 text-[11px]">Justiça de 2ª instância do Estado.</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Órgãos Julgadores</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">Pleno, Câmaras Isoladas e Reunidas</div>
+              <p className="text-slate-500 text-[11px]">Isoladas = Cíveis e Criminais.</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Sede e Jurisdição</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">Capital (Manaus) / Todo o Estado</div>
+              <p className="text-slate-500 text-[11px]">Alcance pleno em todo o Amazonas.</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Tratamento Forense</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">Tribunal: Egrégio | Desembargador: Excelência</div>
+              <p className="text-slate-500 text-[11px]">Cuidado com inversão em prova.</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Lei Principal</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">LC nº 261/2023</div>
+              <p className="text-slate-500 text-[11px]">Substituiu a antiga LC nº 17/1997.</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Regimento Interno</span>
+              <div className="font-extrabold text-slate-900 dark:text-white">Resolução nº 62/2023</div>
+              <p className="text-slate-500 text-[11px]">Norma procedimental do Tribunal.</p>
+            </div>
+          </div>
         </div>
-        <a
-          href="https://consultasaj.tjam.jus.br/cdad/abrirConsultaAtos.do?cdAto=60741"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-3 py-1.5 rounded-xl bg-purple-600 text-white hover:bg-purple-500 font-bold transition-all flex items-center gap-1.5 shrink-0 shadow-sm"
-        >
-          <span>Abrir LC 261/2023</span>
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
+
+        {/* Pontos para Decorar */}
+        <div className="space-y-2 pt-2 border-t border-purple-500/20">
+          <span className="text-xs font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
+            🎯 Pontos para Decorar para o Concurso TJAM:
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold">
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>LC 261/2023 = Organização Judiciária</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>TJAM = 2ª instância</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>26 Desembargadores</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>Sede na Capital e jurisdição em todo o Amazonas</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>Pleno + Câmaras Isoladas + Câmaras Reunidas</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-900 dark:text-purple-200 flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <span>Câmaras Isoladas = Cíveis e Criminais</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Official Link & Video Callout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+        <div className="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5">
+            <BookOpen className="w-4 h-4 text-purple-600 shrink-0" />
+            <span className="text-slate-700 dark:text-slate-300 font-medium">
+              Fonte oficial: <strong>LC nº 261/2023 — TJAM</strong>
+            </span>
+          </div>
+          <a
+            href="https://www.tjam.jus.br/index.php/transparencia/gestao/atos-normativos-e-legislacao-correlata?start=420&utm_source=chatgpt.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-xl bg-purple-600 text-white hover:bg-purple-500 font-bold transition-all flex items-center gap-1.5 shrink-0 shadow-sm"
+          >
+            <span>Ver Portal TJAM</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5">
+            <Video className="w-4 h-4 text-rose-600 shrink-0" />
+            <span className="text-slate-700 dark:text-slate-300 font-medium">
+              Vídeo aula disponível no YouTube
+            </span>
+          </div>
+          <a
+            href="https://youtu.be/ubZ4FIBOHeg?is=tnE8FLYhF20arzMu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-xl bg-rose-600 text-white hover:bg-rose-500 font-bold transition-all flex items-center gap-1.5 shrink-0 shadow-sm"
+          >
+            <span>Assistir no YouTube</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
       </div>
 
       {/* Action Footer */}
@@ -497,7 +716,7 @@ export const LegislacaoTjamContent: React.FC<LegislacaoTjamContentProps> = ({
           onClick={() => onNavigateTab('questoes')}
           className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer group"
         >
-          <span>Resolver as 20 Questões da Aula</span>
+          <span>Resolver as 20 Questões da Aula 2</span>
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </footer>
