@@ -54,36 +54,52 @@ interface ScheduledLesson {
 // As Aulas Programadas para Conclusão Hoje
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
-    id: 'legislacao_tjam',
-    subjectKey: 'legislacao_tjam',
-    title: 'Legislação do TJAM — Aula 2',
-    subtitle: 'Organização Judiciária do Amazonas: aprofundamento (LC 261/2023, 26 Desembargadores, Órgãos Julgadores e Regimento Interno)',
-    category: 'Legislação Específica',
-    badge: 'Meta 1 de Hoje • LC 261/2023',
-    color: 'purple',
+    id: 'direito_const',
+    subjectKey: 'direito_const',
+    title: 'Direito Constitucional — 1ª Aula',
+    subtitle: 'Aplicabilidade das Normas Constitucionais: Eficácia Plena, Contida e Limitada (José Afonso da Silva / STF)',
+    category: 'Conhecimentos Específicos',
+    badge: 'Meta 1 de Hoje • Eficácia das Normas',
+    color: 'amber',
     icon: Landmark,
-    duration: '50 min',
+    duration: '45 min',
     questionsCount: 20,
     cardsCount: 15,
     highlight: true,
-    tag: '🏛️ LEGISLAÇÃO TJAM (AULA 2)',
+    tag: '📚 DIR. CONST (1ª AULA)',
     orderNumber: 1,
+  },
+  {
+    id: 'informatica',
+    subjectKey: 'informatica',
+    title: 'Informática — 2ª Aula de Hoje',
+    subtitle: 'Segurança da Informação: Tríade CID, Senhas, MFA, Malware, Phishing, Firewall e Backup 3-2-1',
+    category: 'Conhecimentos Básicos',
+    badge: 'Meta 2 de Hoje • Segurança da Informação',
+    color: 'cyan',
+    icon: Monitor,
+    duration: '45 min',
+    questionsCount: 20,
+    cardsCount: 15,
+    highlight: true,
+    tag: '💻 INFORMÁTICA (2ª AULA)',
+    orderNumber: 2,
   },
   {
     id: 'geografia_amazonas',
     subjectKey: 'geografia_amazonas',
-    title: 'Geografia do Amazonas — 2ª Aula de Hoje',
+    title: 'Geografia do Amazonas — 2ª Aula (Meta 3)',
     subtitle: 'Aspectos Humanos e Econômicos: População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial',
     category: 'Conhecimentos Gerais',
-    badge: 'Meta 2 de Hoje • Humanos & Econômicos',
+    badge: 'Meta 3 de Hoje • Aspectos Humanos & Econômicos',
     color: 'emerald',
     icon: Trees,
     duration: '40 min',
     questionsCount: 20,
     cardsCount: 15,
     highlight: true,
-    tag: '🌳 GEOGRAFIA AM (2ª AULA)',
-    orderNumber: 2,
+    tag: '🌳 GEOGRAFIA AM (META 3)',
+    orderNumber: 3,
   },
 ];
 
@@ -180,21 +196,6 @@ const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
     orderNumber: 8,
   },
   {
-    id: 'direito_const',
-    subjectKey: 'direito_const',
-    title: 'Direito Constitucional — Aula 2',
-    subtitle: 'Princípios Fundamentais da República Federativa do Brasil (Arts. 1º a 4º da CF/88)',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 2 • Arts. 1º a 4º',
-    color: 'amber',
-    icon: Landmark,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '⚖️ DIR. CONST',
-    orderNumber: 9,
-  },
-  {
     id: 'informatica',
     subjectKey: 'informatica',
     title: 'Noções de Informática — Aula 1',
@@ -288,59 +289,66 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 4 Aulas Programadas para Hoje
+              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 3 Aulas Programadas para Hoje
             </div>
 
-            <div className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 flex items-center gap-1.5">
-              <span>👥 Dupla Oficial: Eduardo Mateus & Pedro Henrique</span>
+            <div className="px-3 py-1 rounded-full text-xs font-black bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center gap-1.5">
+              <span>👤 Aluno: Eduardo Mateus (Sem Dupla)</span>
             </div>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-            Olá, Eduardo Mateus & Pedro Henrique!
+            Olá, Eduardo!
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Vocês estão estudando em <strong className="text-indigo-400">Dupla Oficial</strong> para o TJAM 2026! As <strong className="text-emerald-500 font-bold">4 aulas programadas para conclusão hoje</strong> são: <strong className="text-emerald-400">1. Língua Portuguesa (Aula 3)</strong>, <strong className="text-blue-400">2. Direito Administrativo (Aula 4)</strong>, <strong className="text-indigo-400">3. Processo Civil (Aula 2)</strong> e <strong className="text-teal-400">4. Processo Penal (Quarta Aula)</strong>. Concluam as teorias, questões e flashcards abaixo para bater a meta diária!
+            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-emerald-500 font-bold">3 aulas programadas para conclusão hoje</strong> são: <strong className="text-amber-400">1. Direito Constitucional (1ª Aula)</strong>, <strong className="text-cyan-400">2. Informática (2ª Aula de Hoje)</strong> e <strong className="text-emerald-400">3. Meta 3 do Dia</strong>. Conclua as teorias, questões e flashcards abaixo para bater a sua meta diária!
           </p>
         </div>
 
-        {/* Primary CTA Banner: Quatro Aulas de Hoje */}
-        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-emerald-800 via-teal-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-emerald-950/30 border border-emerald-500/30">
+        {/* Primary CTA Banner: Três Aulas de Hoje */}
+        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-amber-900/90 via-slate-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-amber-950/20 border border-amber-500/30">
           <div className="space-y-2 max-w-xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
-                <Target className="w-3.5 h-3.5 text-emerald-300" /> Metas Obrigatórias do Dia
+                <Target className="w-3.5 h-3.5 text-amber-300" /> Metas Obrigatórias de Hoje
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 2 Aulas de Hoje • 90 min total
+                <Clock className="w-3.5 h-3.5" /> 3 Aulas de Hoje • 135 min total
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Legislação do TJAM & Geografia do Amazonas</h2>
-            <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed">
-              <strong>1. Legislação TJAM (Aula 2):</strong> Organização Judiciária do Amazonas (LC nº 261/2023) • <strong>2. Geografia do AM (2ª Aula):</strong> Aspectos Humanos, População, Manaus e Polo Industrial.
+            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Dir. Constitucional, Informática & Meta 3</h2>
+            <p className="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">
+              <strong>1. Dir. Constitucional (1ª Aula):</strong> Aplicabilidade das Normas (Plena, Contida e Limitada) • <strong>2. Informática (2ª Aula):</strong> Segurança da Informação (CID, Senhas, Malware, Backup) • <strong>3. Meta 3:</strong> Geografia AM.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
             <button
-              onClick={() => handleOpenLesson('legislacao_tjam')}
-              className="px-4 py-3 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+              onClick={() => handleOpenLesson('direito_const')}
+              className="px-4 py-3 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>🏛️ 1. Legislação TJAM (Aula 2)</span>
+              <span>📚 1. Dir. Const (1ª Aula)</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => handleOpenLesson('informatica')}
+              className="px-4 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+            >
+              <span>💻 2. Informática (2ª Aula)</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
               onClick={() => handleOpenLesson('geografia_amazonas')}
               className="px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>🌳 2. Geografia AM (2ª Aula)</span>
+              <span>🌳 3. Meta 3</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
+      {/* METAS DO DIA: AS 3 AULAS A SEREM CONCLUÍDAS HOJE */}
       <div className="space-y-5">
         <div
           className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
@@ -355,11 +363,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-500" />
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 2 Aulas Programadas
+                  Metas de Hoje • 3 Aulas Programadas
                 </h2>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 2 disciplinas do dia.
+                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 3 disciplinas do dia.
               </p>
             </div>
 
@@ -608,50 +616,50 @@ export const Dashboard: React.FC<DashboardProps> = ({
         >
           <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
+              <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Sua Dupla no Ranking Geral
+                  Eduardo no Ranking Geral
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Desempenho sincronizado da dupla no TJAM 2026
+                  Desempenho individual no TJAM 2026 (Sem Dupla)
                 </p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-indigo-500/10 text-indigo-400 border-indigo-500/20">
-              Dupla Ativa
+            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-rose-500/10 text-rose-400 border-rose-500/20">
+              Sem Dupla
             </span>
           </div>
 
           <div className="space-y-3">
-            {/* Perfil da Dupla Oficial */}
+            {/* Perfil de Eduardo no Ranking */}
             <div
               className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                 isDarkMode
-                  ? 'bg-indigo-500/15 border-indigo-500/40 ring-1 ring-indigo-500/30'
-                  : 'bg-indigo-50 border-indigo-300'
+                  ? 'bg-rose-500/10 border-rose-500/30 ring-1 ring-rose-500/20'
+                  : 'bg-rose-50 border-rose-200'
               }`}
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-indigo-600 shadow-indigo-500/30">
-                  4º
+                  9º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                      Eduardo Mateus & Pedro Henrique
+                      Eduardo Mateus
                     </span>
                     <span className="px-2 py-0.5 rounded-md font-extrabold text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-                      Sua Dupla
+                      Sem Dupla
                     </span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-400/20 font-extrabold text-[10px]">
-                      Dupla Oficial
+                    <span className="px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-400 border border-sky-400/20 font-extrabold text-[10px]">
+                      9º Lugar
                     </span>
                   </div>
                   <span className="text-xs font-semibold flex items-center gap-1 mt-0.5 text-indigo-400">
-                    👥 4º Lugar Geral • Subindo no ranking com 30,0% concluído! 🚀
+                    📊 9º Lugar Geral • Sem dupla com 19,5% concluído
                   </span>
                 </div>
               </div>
@@ -660,11 +668,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-indigo-500"
-                    style={{ width: '85.7%' }}
+                    style={{ width: '55.7%' }}
                   ></div>
                 </div>
                 <span className="text-sm font-black min-w-[50px] text-right text-indigo-400">
-                  30,0%
+                  19,5%
                 </span>
               </div>
             </div>
@@ -684,40 +692,41 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
               <div>
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Classificação Geral de Duplas
+                  Classificação Geral de Alunos e Duplas
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Desempenho comparativo entre duplas de estudos do Preparatório TJAM
+                  Desempenho comparativo dos estudantes do Preparatório TJAM 2026
                 </p>
               </div>
             </div>
             <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              Duplas
+              Ranking Geral
             </span>
           </div>
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, barWidth: '95.4%' },
-              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, barWidth: '90.3%' },
-              { pos: 4, name: 'Eduardo Mateus & Pedro Henrique', pct: '30,0%', isUser: true, barWidth: '85.7%' },
-              { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, barWidth: '80.6%' },
-              { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, barWidth: '75.7%' },
-              { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false, barWidth: '68.6%' },
-              { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,8%', isUser: false, barWidth: '62.3%' },
-              { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false, barWidth: '55.7%' },
-              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false, barWidth: '49.1%' },
-              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '15,0%', isUser: false, barWidth: '42.9%' },
-              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '12,8%', isUser: false, barWidth: '36.6%' },
+              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, isSolo: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, isSolo: false, barWidth: '95.4%' },
+              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, isSolo: false, barWidth: '90.3%' },
+              { pos: 4, name: 'Thiago Martins & Camila Duarte', pct: '30,0%', isUser: false, isSolo: false, barWidth: '85.7%' },
+              { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, isSolo: false, barWidth: '80.6%' },
+              { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, isSolo: false, barWidth: '75.7%' },
+              { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false, isSolo: false, barWidth: '68.6%' },
+              { pos: 8, name: 'Pedro Henrique', pct: '21,8%', isUser: false, isSolo: true, barWidth: '62.3%' },
+              { pos: 9, name: 'Eduardo Mateus', pct: '19,5%', isUser: true, isSolo: true, barWidth: '55.7%' },
+              { pos: 10, name: 'Felipe Andrade & Letícia Ramos', pct: '17,2%', isUser: false, isSolo: false, barWidth: '49.1%' },
+              { pos: 11, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '15,0%', isUser: false, isSolo: false, barWidth: '42.9%' },
+              { pos: 12, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false, barWidth: '36.6%' },
+              { pos: 13, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false, barWidth: '30.0%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}
                 className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                   aluno.isUser
                     ? isDarkMode
-                      ? 'bg-indigo-500/15 border-indigo-400/40 ring-1 ring-indigo-400/30'
-                      : 'bg-indigo-50 border-indigo-300'
+                      ? 'bg-indigo-500/10 border-indigo-500/30 ring-1 ring-indigo-500/20'
+                      : 'bg-indigo-50 border-indigo-200'
                     : isDarkMode
                     ? 'bg-slate-800/40 border-slate-800/80'
                     : 'bg-slate-50 border-slate-200'
@@ -727,7 +736,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div
                     className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 shadow-sm ${
                       aluno.isUser
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-indigo-600 text-white shadow-indigo-500/30'
                         : aluno.pos === 1
                         ? 'bg-amber-500 text-slate-950 font-black'
                         : aluno.pos === 2
@@ -741,15 +750,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-indigo-300' : 'text-slate-700 dark:text-slate-300'}`}>
+                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-indigo-400 dark:text-indigo-300 font-black' : 'text-slate-700 dark:text-slate-300'}`}>
                         {aluno.name}
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-extrabold text-[9px] whitespace-nowrap hidden sm:inline-block">
-                        {aluno.isUser ? 'Sua Dupla' : 'Dupla'}
+                      <span className={`px-1.5 py-0.5 rounded font-extrabold text-[9px] whitespace-nowrap hidden sm:inline-block ${
+                        aluno.isSolo
+                          ? 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30'
+                          : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
+                      }`}>
+                        {aluno.isSolo ? 'Sem Dupla' : 'Dupla'}
                       </span>
                       {aluno.isUser && (
                         <span className="px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap bg-indigo-500/20 text-indigo-300 border-indigo-400/30">
-                          <span>Vocês • Subindo ⬆️</span>
+                          <span>Eduardo (Você • 9º)</span>
                         </span>
                       )}
                     </div>

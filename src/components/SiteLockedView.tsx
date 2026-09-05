@@ -134,10 +134,11 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   };
 
   const duplasRanking = [
-    { rank: 1, name: 'Lucas Silveira & Mariana Costa', score: '6,0%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
-    { rank: 2, name: 'Gabriel Souza & Sofia Albuquerque', score: '5,7%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
-    { rank: 3, name: 'Matheus Ribeiro & Beatriz Lima', score: '5,4%', isUser: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
-    { rank: 12, name: 'Eduardo Mateus', score: '3,4%', isUser: true, bgClass: 'bg-sky-950/40 border-sky-500/30 ring-1 ring-sky-500/20', badgeClass: 'bg-sky-600 text-white shadow-md shadow-sky-500/20', barClass: 'bg-sky-400', barWidth: '56.7%' },
+    { rank: 1, name: 'Lucas Silveira & Mariana Costa', score: '35,0%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
+    { rank: 2, name: 'Gabriel Souza & Sofia Albuquerque', score: '33,4%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
+    { rank: 3, name: 'Matheus Ribeiro & Beatriz Lima', score: '31,6%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
+    { rank: 8, name: 'Pedro Henrique', score: '21,8%', isUser: false, isSolo: true, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '62%' },
+    { rank: 9, name: 'Eduardo Mateus', score: '19,5%', isUser: true, isSolo: true, bgClass: 'bg-indigo-950/30 border-indigo-500/30 ring-1 ring-indigo-500/20', badgeClass: 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20', barClass: 'bg-indigo-400', barWidth: '56%' },
   ];
 
   const secondsRemaining = Math.max(0, ((REQUIRED_HOLD_MS - holdTimeElapsed) / 1000)).toFixed(1);
@@ -298,13 +299,13 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               </h2>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Esta conta da dupla <strong className="text-white">Pedro & Eduardo</strong> foi inativada pelo sistema por <strong className="text-rose-300">falta de interesse</strong> e ausência de entrega dos exercícios e simulados programados. A sequência de estudos caiu para <strong className="text-sky-300">0 dias</strong>.
+                Esta conta do estudante <strong className="text-white">Eduardo Mateus</strong> foi inativada pelo sistema por <strong className="text-rose-300">falta de interesse</strong> e ausência de entrega dos exercícios e simulados programados. A sequência de estudos caiu para <strong className="text-sky-300">0 dias</strong>.
               </p>
 
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1">
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/60 border border-slate-800 text-xs text-slate-300">
-                  <Users className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Dupla: <strong>Pedro & Eduardo</strong></span>
+                  <Users className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Estudante: <strong>Eduardo Mateus (Sem Dupla)</strong></span>
                 </div>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/60 border border-slate-800 text-xs text-slate-300">
                   <Flame className="w-3.5 h-3.5 text-slate-500 line-through" />
@@ -312,7 +313,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 </div>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/60 border border-slate-800 text-xs text-slate-300">
                   <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Posição: <strong>12º Lugar (3,4%)</strong></span>
+                  <span>Posição: <strong>9º Lugar (19,5% • Sem Dupla)</strong></span>
                 </div>
               </div>
             </div>
@@ -325,7 +326,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
           <div className="text-center max-w-xl mx-auto space-y-1">
             <h3 className="text-base sm:text-lg font-black text-white flex items-center justify-center gap-2">
               <Lock className="w-4 h-4 text-sky-400" />
-              Painel de Desbloqueio da Dupla
+              Painel de Desbloqueio de Acesso
             </h3>
             <p className="text-xs text-slate-400">
               Para tentar liberar a página, o usuário <strong>Eduardo</strong> deve pressionar e segurar o botão por 5 segundos.
@@ -344,13 +345,13 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     Não foi possível entrar no site!
                   </h4>
                   <p className="text-xs text-rose-300/90 font-medium">
-                    Seu parceiro de estudos <strong>(Pedro)</strong> não está disponível no momento.
+                    A liberação requer autorização pedagógica ou regularização das metas pendentes.
                   </p>
                 </div>
               </div>
 
               <p className="text-xs text-rose-200/80 bg-rose-950/70 p-2.5 rounded-xl border border-rose-500/20 leading-relaxed">
-                A liberação do sistema requer a presença e validação simultânea de ambos os integrantes da dupla. Enquanto Pedro estiver ausente, as aulas e o painel continuam congelados.
+                Como estudante individual sem dupla ativa (9º lugar no ranking com 19,5%), as aulas e o painel continuam congelados até a revisão das pendências.
               </p>
 
               <div className="flex items-center justify-end pt-1">
@@ -431,13 +432,13 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               </p>
             </div>
 
-            {/* BUTTON 2: Darker Partner Status Button ("Esperando seu parceiro de estudos") */}
+            {/* BUTTON 2: Status Button */}
             <div className="flex flex-col space-y-2">
               <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 font-bold">
-                <span>Parceiro de Estudos: <strong className="text-slate-300">Pedro</strong></span>
+                <span>Vínculo de Estudos: <strong className="text-slate-300">Individual (Sem Dupla)</strong></span>
                 <span className="text-rose-400 text-[10px] uppercase font-mono flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                  Offline
+                  Inativo
                 </span>
               </div>
 
@@ -447,14 +448,14 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 className={`w-full py-4 px-5 rounded-2xl font-bold text-xs sm:text-sm text-slate-400 bg-slate-950/90 border border-slate-800/90 hover:border-slate-700 shadow-md transition-all flex items-center justify-center gap-2.5 cursor-pointer ${
                   partnerNoticeShake ? 'animate-bounce border-rose-500/50 text-rose-300' : ''
                 }`}
-                title="Status do Parceiro de Estudos"
+                title="Status da Conta"
               >
                 <Clock className="w-4 h-4 text-slate-500 shrink-0" />
-                <span className="truncate">Esperando seu parceiro de estudos...</span>
+                <span className="truncate">Aguardando autorização da coordenação...</span>
               </button>
 
               <p className="text-[10px] text-slate-400 text-center">
-                Status: Pedro não se conectou hoje para validar o acesso da dupla.
+                Status: Estudante individual sem dupla vinculada no momento.
               </p>
             </div>
 
@@ -487,6 +488,11 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                   {item.isUser && (
                     <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold uppercase">
                       Sem Dupla (Você)
+                    </span>
+                  )}
+                  {item.isSolo && !item.isUser && (
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700 font-bold uppercase">
+                      Sem Dupla
                     </span>
                   )}
                 </div>

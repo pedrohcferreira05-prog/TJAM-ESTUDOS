@@ -37,8 +37,8 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
         {/* Status Indicators */}
         <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-300">
-            <Lock className="w-3.5 h-3.5 text-sky-400" />
-            <span>Eduardo & Pedro: <strong className="text-sky-300 font-bold">4º lugar (30,0%)</strong></span>
+            <Lock className="w-3.5 h-3.5 text-amber-400" />
+            <span>Eduardo Mateus: <strong className="text-amber-300 font-bold">9º lugar (19,5% • Sem Dupla)</strong></span>
           </div>
 
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-400">

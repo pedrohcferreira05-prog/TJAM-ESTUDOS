@@ -94,6 +94,31 @@ import {
   procPenalLessonSummaryPoints as procPenalSummaryPoints
 } from '../data/processoPenalLessonData';
 import { ProcessoPenalContent } from './ProcessoPenalContent';
+import {
+  direitoConstFlashcardsData,
+  direitoConstMcQuestionsData,
+  direitoConstTfQuestionsData,
+  direitoConstDiscursiveQuestionsData,
+  direitoConstSummaryPoints
+} from '../data/direitoConstitucionalLessonData';
+import { DireitoConstitucionalContent } from './DireitoConstitucionalContent';
+import {
+  informaticaFlashcardsData,
+  informaticaMcQuestionsData,
+  informaticaTfQuestionsData,
+  informaticaDiscursiveQuestionsData,
+  informaticaSummaryPoints
+} from '../data/informaticaLessonData';
+import { InformaticaContent } from './InformaticaContent';
+import {
+  librasFlashcardsData,
+  librasMcQuestionsData,
+  librasTfQuestionsData,
+  librasDiscursiveQuestionsData,
+  librasSummaryPoints,
+  librasVideoInfo
+} from '../data/librasLessonData';
+import { LibrasContent } from './LibrasContent';
 
 interface AulaHojeViewProps {
   isDarkMode: boolean;
@@ -122,7 +147,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'legislacao_tjam';
+    return 'direito_const';
   });
 
   const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
@@ -196,45 +221,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
-
-  // LIBRAS Aula 2 Interactive Practice States
-  const [librasSeqStep, setLibrasSeqStep] = useState(0);
-  const [librasCustomName, setLibrasCustomName] = useState('MARIA');
-  const [librasDialogueStep, setLibrasDialogueStep] = useState(0);
-  const [librasTimerBlock, setLibrasTimerBlock] = useState<'cumprimentos' | 'apresentacao' | 'perguntas' | 'dialogo'>('cumprimentos');
-  const [librasTimerSeconds, setLibrasTimerSeconds] = useState(600); // 10 minutes = 600s
-  const [librasTimerRunning, setLibrasTimerRunning] = useState(false);
-  const [librasCompletedBlocks, setLibrasCompletedBlocks] = useState<Record<string, boolean>>({
-    cumprimentos: false,
-    apresentacao: false,
-    perguntas: false,
-    dialogo: false
-  });
-  const [librasDesafioChecklist, setLibrasDesafioChecklist] = useState<Record<string, boolean>>({
-    d1: false,
-    d2: false,
-    d3: false,
-    d4: false,
-    d5: false,
-    d6: false
-  });
-
-  useEffect(() => {
-    let interval: any = null;
-    if (librasTimerRunning && librasTimerSeconds > 0) {
-      interval = setInterval(() => {
-        setLibrasTimerSeconds((prev) => {
-          if (prev <= 1) {
-            setLibrasTimerRunning(false);
-            setLibrasCompletedBlocks((c) => ({ ...c, [librasTimerBlock]: true }));
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [librasTimerRunning, librasTimerSeconds, librasTimerBlock]);
 
   // Saved lessons store for real-time local database sync
   const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>(() => {
@@ -1866,9 +1852,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'processo_civil'
     ? procCivilFlashcardsData
     : selectedSubject === 'informatica'
-    ? infFlashcardsData
+    ? informaticaFlashcardsData
     : selectedSubject === 'direito_const'
-    ? constFlashcardsData
+    ? direitoConstFlashcardsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminFlashcardsData
     : adminFlashcardsData;
@@ -1888,9 +1874,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'processo_civil'
     ? procCivilMcQuestionsData
     : selectedSubject === 'informatica'
-    ? infMcQuestionsData
+    ? informaticaMcQuestionsData
     : selectedSubject === 'direito_const'
-    ? constMcQuestionsData
+    ? direitoConstMcQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminMcQuestionsData
     : questionsData;
@@ -1910,9 +1896,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'processo_civil'
     ? procCivilTfQuestionsData
     : selectedSubject === 'informatica'
-    ? infTfQuestionsData
+    ? informaticaTfQuestionsData
     : selectedSubject === 'direito_const'
-    ? constTfQuestionsData
+    ? direitoConstTfQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminTfQuestionsData
     : tfQuestionsData;
@@ -1932,9 +1918,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     : selectedSubject === 'processo_civil'
     ? procCivilDiscursiveQuestionsData
     : selectedSubject === 'informatica'
-    ? infDiscursiveQuestionsData
+    ? informaticaDiscursiveQuestionsData
     : selectedSubject === 'direito_const'
-    ? constDiscursiveQuestionsData
+    ? direitoConstDiscursiveQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminDiscursiveQuestionsData
     : discursiveQuestionsData;
@@ -2154,12 +2140,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles' ? 'Inglês (Aula 3 Prática)'
                   : selectedSubject === 'geografia_amazonas' ? 'Geografia do AM (2ª Aula de Hoje)'
                   : selectedSubject === 'legislacao_tjam' ? 'Legislação do TJAM (Aula 2)'
-                  : selectedSubject === 'libras' ? 'LIBRAS'
+                  : selectedSubject === 'libras' ? 'LIBRAS (3ª Aula de Hoje)'
                   : selectedSubject === 'portugues' ? 'Língua Portuguesa'
                   : selectedSubject === 'processo_penal' ? 'Processo Penal (Quarta Aula de Hoje)'
                   : selectedSubject === 'processo_civil' ? 'Processo Civil'
-                  : selectedSubject === 'informatica' ? 'Informática'
-                  : selectedSubject === 'direito_const' ? 'Direito Constitucional'
+                  : selectedSubject === 'informatica' ? 'Informática (2ª Aula de Hoje)'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional (1ª Aula de Hoje)'
                   : 'Direito Administrativo'
                 }
               </span>
@@ -2172,11 +2158,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • 2ª Aula de Hoje – Aspectos Humanos e Econômicos'
                   : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 2 de Hoje – Organização Judiciária do Amazonas: Aprofundamento'
                   : selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
-                  : selectedSubject === 'libras' ? '🤟 LIBRAS • Aula 2 – Prática de Comunicação, Cumprimentos e Diálogos'
+                  : selectedSubject === 'libras' ? '🤟 LIBRAS • 3ª Aula de Hoje – Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                   : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Quarta Aula de Hoje – Aplicação da Lei Processual Penal'
                   : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Aula 2 – Partes e Procuradores (CPC/2015)'
-                  : selectedSubject === 'informatica' ? '💻 Informática • Capítulo 1 – Conceitos Básicos'
-                  : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Aula 2 – Princípios Fundamentais'
+                  : selectedSubject === 'informatica' ? '💻 Informática • 2ª Aula de Hoje – Segurança da Informação (CID, Senhas, Malware, Backup)'
+                  : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • 1ª Aula – Aplicabilidade das Normas Constitucionais'
                   : '⚖️ Direito Administrativo • Aula 7 – Poderes da Administração Pública'
                 }
               </span>
@@ -2186,11 +2172,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Aspectos Humanos e Econômicos do Amazonas'
                   : selectedSubject === 'legislacao_tjam' ? 'Aula 2 — Organização Judiciária do Amazonas: aprofundamento (LC 261/2023)'
                   : selectedSubject === 'portugues' ? 'Aula 1 — Compreensão e Interpretação de Textos'
-                  : selectedSubject === 'libras' ? 'Aula 2 — LIBRAS: Prática de Cumprimentos, Apresentação e Diálogos'
+                  : selectedSubject === 'libras' ? '3ª Aula — LIBRAS: Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                   : selectedSubject === 'processo_penal' ? 'Aula — Aplicação da Lei Processual Penal (Tempo, Espaço, Interpretação e Fontes)'
                   : selectedSubject === 'processo_civil' ? 'Aula 2 — Partes e Procuradores no CPC/2015'
-                  : selectedSubject === 'informatica' ? 'Aula 1 — Dado x Informação, Hardware, Software e Periféricos'
-                  : selectedSubject === 'direito_const' ? 'Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
+                  : selectedSubject === 'informatica' ? '2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças & Defesas)'
+                  : selectedSubject === 'direito_const' ? '1ª Aula — Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
                   : 'Aula 7 — Poderes da Administração Pública'
                 }
               </h1>
@@ -2199,8 +2185,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles' ? 'Aula 3 100% Prática • Cumprimentos, Apresentação, Perguntas Básicas, Vocabulário do Cotidiano e Texto • 20 Exercícios TJAM'
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula de Hoje • População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial • 20 Questões Gabaritadas'
                   : selectedSubject === 'legislacao_tjam' ? 'Aula 2 de Hoje • 20 Questões Gabaritadas + Vídeo Aula Exclusiva • Foco FGV TJAM'
-                  : selectedSubject === 'libras' ? 'Acessibilidade e Atendimento no TJAM • 40 min de Prática Interativa • Sinais, Apresentação e Diálogo'
+                  : selectedSubject === 'libras' ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Expressões Faciais • Libras ≠ Português Sinalizado • Exercícios no WhatsApp'
                   : selectedSubject === 'processo_penal' ? 'Quarta Aula de Hoje • Eficácia no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação (Art. 3º) e Fontes • 20 Questões TJAM'
+                  : selectedSubject === 'informatica' ? '2ª Aula de Hoje • Tríade CID, Senhas, MFA, Malwares (Ransomware, Worm, Trojan), Phishing, Firewall e Regra 3-2-1 • 20 Questões Gabaritadas FGV'
+                  : selectedSubject === 'direito_const' ? '1ª Aula de Hoje • Eficácia Plena, Contida e Limitada • STF / Senado / FGV • 20 Questões Gabaritadas'
                   : 'Nível: Intermediário / Foco FGV • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
                 }
               </p>
@@ -2229,18 +2217,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false },
-                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false },
-                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false },
-                { pos: 4, name: 'Eduardo Mateus & Pedro Henrique', pct: '30,0%', isUser: true },
-                { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false },
-                { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false },
-                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false },
-                { pos: 8, name: 'Thiago Martins & Camila Duarte', pct: '21,8%', isUser: false },
-                { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false },
-                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false },
-                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '15,0%', isUser: false },
-                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '12,8%', isUser: false },
+                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, isSolo: false },
+                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, isSolo: false },
+                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, isSolo: false },
+                { pos: 4, name: 'Thiago Martins & Camila Duarte', pct: '30,0%', isUser: false, isSolo: false },
+                { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, isSolo: false },
+                { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, isSolo: false },
+                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false, isSolo: false },
+                { pos: 8, name: 'Pedro Henrique', pct: '21,8%', isUser: false, isSolo: true },
+                { pos: 9, name: 'Eduardo Mateus', pct: '19,5%', isUser: true, isSolo: true },
+                { pos: 10, name: 'Felipe Andrade & Letícia Ramos', pct: '17,2%', isUser: false, isSolo: false },
+                { pos: 11, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '15,0%', isUser: false, isSolo: false },
+                { pos: 12, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false },
+                { pos: 13, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false },
               ].map((d) => (
                 <div
                   key={d.pos}
@@ -2254,7 +2243,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span
                       className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center shrink-0 ${
                         d.isUser
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-indigo-600 text-white shadow-sm'
                           : d.pos === 1
                           ? 'bg-amber-500 text-slate-950'
                           : 'bg-slate-700 text-slate-300'
@@ -2270,9 +2259,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                       >
                         {d.name}
                       </span>
+                      {d.isSolo && !d.isUser && (
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-slate-700/60 text-slate-300 border border-slate-600 font-extrabold uppercase whitespace-nowrap">
+                          Sem Dupla
+                        </span>
+                      )}
                       {d.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
-                          <span>Sua Dupla • Subindo ⬆️</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
+                          <span>Eduardo • Sem Dupla (9º)</span>
                         </span>
                       )}
                     </div>
@@ -2313,18 +2307,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       {/* Subject Switcher Bar & Saved Progress Banner */}
       <div className="space-y-4">
         {/* Metas do Dia Banner */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-emerald-950/40 border border-purple-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-cyan-950/40 to-emerald-950/40 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-purple-600 text-white font-bold text-base">🎯</span>
+            <span className="p-2 rounded-xl bg-amber-600 text-white font-bold text-base">🎯</span>
             <div>
-              <p className="font-black text-purple-300 dark:text-purple-200 flex items-center gap-2">
-                <span>Metas de Hoje: 2 Aulas Programadas para Conclusão</span>
-                <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-extrabold text-[10px]">
-                  {((savedLessonsStore['legislacao_tjam']?.completed ? 1 : 0) + (savedLessonsStore['geografia_amazonas']?.completed ? 1 : 0))}/2 Concluídas
+              <p className="font-black text-amber-300 dark:text-amber-200 flex items-center gap-2">
+                <span>Metas de Hoje: 3 Aulas Programadas para Conclusão</span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-extrabold text-[10px]">
+                  {((savedLessonsStore['direito_const']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0) + (savedLessonsStore['geografia_amazonas']?.completed ? 1 : 0))}/3 Concluídas
                 </span>
               </p>
               <p className="text-slate-400">
-                1. Legislação TJAM (Aula 2 — Org. Judiciária) • 2. Geografia do Amazonas (2ª Aula de Hoje — Aspectos Humanos e Econômicos).
+                1. Direito Constitucional (1ª Aula) • 2. Informática (2ª Aula de Hoje) • 3. Meta 3 do Dia.
               </p>
             </div>
           </div>
@@ -2335,48 +2329,77 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           )}
         </div>
 
-        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
+        {/* 1. SEÇÃO PRINCIPAL: AS 3 AULAS DE HOJE */}
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
-              <span>⭐ As 2 Aulas de Hoje (Metas Obrigatórias)</span>
+              <span>⭐ As 3 Aulas de Hoje (Metas Obrigatórias)</span>
             </span>
             <span className="text-[10px] text-slate-400 font-semibold">
-              Prioridade do dia para a dupla
+              Prioridade máxima do dia para a dupla
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-purple-500/10 via-slate-900 to-emerald-500/10 border-2 border-purple-500/40 shadow-md">
-            {/* 1. Legislação TJAM: Aula 2 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-emerald-500/10 border-2 border-amber-500/40 shadow-md">
+            {/* 1. Direito Constitucional: 1ª Aula */}
             <button
-              onClick={() => { setSelectedSubject('legislacao_tjam'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
-                selectedSubject === 'legislacao_tjam'
-                  ? 'bg-purple-600 text-white shadow-lg ring-2 ring-purple-400 scale-[1.01]'
+                selectedSubject === 'direito_const'
+                  ? 'bg-amber-600 text-white shadow-lg ring-2 ring-amber-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-lg">🏛️</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-200">Meta 1 de Hoje</span>
+                <span className="text-lg">📚</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-200">Meta 1 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm">Legislação TJAM — Aula 2</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Org. Judiciária do Amazonas (LC 261/2023)</div>
+                <div className="font-extrabold text-sm">Direito Constitucional — 1ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Aplicabilidade das Normas (Plena, Contida e Limitada)</div>
               </div>
               <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
                 <span className="text-[11px] font-bold">20 Questões • 15 Cards • Vídeo Aula</span>
-                {savedLessonsStore['legislacao_tjam']?.completed ? (
+                {savedLessonsStore['direito_const']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['legislacao_tjam']?.selectedAnswers && Object.keys(savedLessonsStore['legislacao_tjam'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-purple-500/40 text-purple-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className="text-[10px] bg-amber-500/40 text-amber-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
 
-            {/* 2. Geografia do Amazonas: 2ª Aula de Hoje */}
+            {/* 2. Informática: 2ª Aula de Hoje */}
+            <button
+              onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
+                selectedSubject === 'informatica'
+                  ? 'bg-cyan-600 text-white shadow-lg ring-2 ring-cyan-400 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className="text-lg">💻</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-cyan-500/30 text-cyan-200">Meta 2 de Hoje</span>
+              </div>
+              <div className="w-full">
+                <div className="font-extrabold text-sm">Informática — 2ª Aula de Hoje</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Segurança da Informação (CID, Senhas, Malware, Backup)</div>
+              </div>
+              <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
+                <span className="text-[11px] font-bold">20 Questões • 15 Cards • Vídeo Aula</span>
+                {savedLessonsStore['informatica']?.completed ? (
+                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
+                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                ) : (
+                  <span className="text-[10px] bg-cyan-500/40 text-cyan-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                )}
+              </div>
+            </button>
+
+            {/* 3. Geografia do Amazonas / Meta 3 */}
             <button
               onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
@@ -2387,11 +2410,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-lg">🌳</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200">Meta 2 de Hoje</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200">Meta 3 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm">Geografia do Amazonas — 2ª Aula de Hoje</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Aspectos Humanos e Econômicos (ZFM, População & Transporte)</div>
+                <div className="font-extrabold text-sm">Geografia do Amazonas — 2ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Aspectos Humanos e Econômicos (ZFM, População)</div>
               </div>
               <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
                 <span className="text-[11px] font-bold">20 Questões • 15 Cards • 2 Vídeos</span>
@@ -2512,10 +2535,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               )}
             </button>
 
-            {/* LIBRAS: Aula 2 */}
+            {/* LIBRAS: 3ª Aula */}
             <button
               onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'libras'
                   ? 'bg-sky-600 text-white shadow-md ring-2 ring-sky-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2523,39 +2546,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             >
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>🤟 LIBRAS (Aula 2)</span>
+                <span>🤟 LIBRAS (3ª Aula)</span>
               </div>
               {savedLessonsStore['libras']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">3ª Aula</span>
               )}
             </button>
 
-            {/* Direito Constitucional: Aula 2 */}
-            <button
-              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'direito_const'
-                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <Landmark className="w-3.5 h-3.5 text-amber-300" />
-                <span>⚖️ Dir. Const (Aula 2)</span>
-              </div>
-              {savedLessonsStore['direito_const']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
-              )}
-            </button>
-
-            {/* Informática: Aula 1 */}
+            {/* Informática: 2ª Aula de Hoje */}
             <button
               onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'informatica'
                   ? 'bg-cyan-600 text-white shadow-md ring-2 ring-cyan-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -2563,12 +2566,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             >
               <div className="flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-cyan-300" />
-                <span>💻 Informática (Aula 1)</span>
+                <span>💻 Informática (2ª Aula)</span>
               </div>
               {savedLessonsStore['informatica']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">2ª Aula</span>
               )}
             </button>
           </div>
@@ -2616,9 +2619,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'processo_civil'
               ? 'Unidade 1 — Atos Processuais'
               : selectedSubject === 'informatica'
-              ? 'Unidade 1 — Fundamentos de Informática'
+              ? 'Segurança da Informação'
               : selectedSubject === 'direito_const'
-              ? 'Aula 2 — Princípios Fundamentais'
+              ? 'Teoria da Constituição'
               : 'Unidade 4 — Agentes Públicos'}
           </span>
           <span>•</span>
@@ -2638,9 +2641,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'processo_civil'
               ? 'Aula 5 — Atos Processuais'
               : selectedSubject === 'informatica'
-              ? 'Capítulo 1 — Conceitos Básicos de Informática'
+              ? '2ª Aula de Hoje — Segurança da Informação (CID, Senhas, Malware, Backup)'
               : selectedSubject === 'direito_const'
-              ? 'Arts. 1º a 4º da Constituição Federal'
+              ? '1ª Aula — Aplicabilidade das Normas Constitucionais'
               : 'Aula 4 — Agentes Públicos (Conceito, Classificação e Regimes)'}
           </span>
         </div>
@@ -2663,9 +2666,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'processo_civil'
                 ? '⚖️ Processo Civil (Aula 5)'
                 : selectedSubject === 'informatica'
-                ? 'Informática (Aula 1)'
+                ? '⭐ META 2 DE HOJE • 💻 Informática (Segurança da Informação)'
                 : selectedSubject === 'direito_const'
-                ? '⚖️ Direito Constitucional (Aula 2)'
+                ? '⭐ META 1 DE HOJE • 📚 Direito Constitucional (Aplicabilidade das Normas)'
                 : '⚖️ Direito Administrativo (Aula 4 • Agentes Públicos)'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
@@ -2684,9 +2687,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'processo_civil'
                 ? '⚖️ Processo Civil — Aula 5: Atos Processuais'
                 : selectedSubject === 'informatica'
-                ? 'Aula 1 — Conceitos Básicos de Informática'
+                ? '💻 Informática — 2ª Aula de Hoje: Segurança da Informação'
                 : selectedSubject === 'direito_const'
-                ? 'Aula 2 — Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
+                ? '📚 Direito Constitucional — 1ª Aula: Aplicabilidade das Normas Constitucionais'
                 : '⚖️ Direito Administrativo — Aula 4: Agentes Públicos'}
             </h1>
           </div>
@@ -2811,13 +2814,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'portugues'
                     ? 'Língua Portuguesa — Aula 3: Classes de Palavras (Substantivo, Adjetivo e Verbo)'
                     : selectedSubject === 'libras'
-                    ? `🤟 LIBRAS — Aula 2: Prática de Comunicação & Atendimento (${
-                        selectedVideoPart === 'video3'
-                          ? 'Vídeo Aula 3'
-                          : selectedVideoPart === 'video2'
-                          ? 'Vídeo Aula 2'
-                          : 'Vídeo Aula 1'
-                      })`
+                    ? '🤟 LIBRAS — 3ª Aula de Hoje: Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_civil'
                     ? 'Unidade 1 — Processo Civil: Atos Processuais (Aula 5)'
                     : selectedSubject === 'informatica'
@@ -2834,7 +2831,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? 'Aula 1 de 3 de Hoje • Lei Complementar nº 261/2023 • Órgãos, Sedes e Organização Forense'
                     : selectedSubject === 'libras'
-                    ? '3 Vídeos com orientações práticas • Exercícios via WhatsApp pelo Professor'
+                    ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Exercícios no WhatsApp'
                     : selectedSubject === 'direito_admin'
                     ? 'Aula 4 de Hoje • Agentes Públicos • Conceito, Classificação, Regimes e Responsabilidades'
                     : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
@@ -2876,45 +2873,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </div>
             )}
 
-            {/* Selector de Vídeos para LIBRAS (3 Vídeos) */}
-            {selectedSubject === 'libras' && (
-              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
-                <button
-                  onClick={() => setSelectedVideoPart('video1')}
-                  className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    selectedVideoPart === 'video1'
-                      ? 'bg-rose-600 text-white shadow-md'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  <Video className="w-3.5 h-3.5 text-amber-300" />
-                  <span>🎬 Vídeo Aula 1</span>
-                </button>
-                <button
-                  onClick={() => setSelectedVideoPart('video2')}
-                  className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    selectedVideoPart === 'video2'
-                      ? 'bg-rose-600 text-white shadow-md'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  <Video className="w-3.5 h-3.5 text-amber-300" />
-                  <span>🎬 Vídeo Aula 2</span>
-                </button>
-                <button
-                  onClick={() => setSelectedVideoPart('video3')}
-                  className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    selectedVideoPart === 'video3'
-                      ? 'bg-rose-600 text-white shadow-md'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  <Video className="w-3.5 h-3.5 text-amber-300" />
-                  <span>🎬 Vídeo Aula 3</span>
-                </button>
-              </div>
-            )}
-
             {/* Selector de Partes / Vídeos exclusivamente para LIBRAS */}
 
             {/* Embedded YouTube Video Player */}
@@ -2933,19 +2891,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'portugues'
                     ? 'https://www.youtube.com/embed/OxTNN-IKcEQ?autoplay=0&rel=0'
                     : selectedSubject === 'libras'
-                    ? selectedVideoPart === 'video3'
-                      ? 'https://www.youtube.com/embed/udWSfcwMgH4?autoplay=0&rel=0'
-                      : selectedVideoPart === 'video2'
-                      ? 'https://www.youtube.com/embed/UXugPlMGhMo?autoplay=0&rel=0'
-                      : 'https://www.youtube.com/embed/-ZDkdbPqUZg?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/j6Ugm67dx8s?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
                     ? 'https://www.youtube.com/embed/JDVXcj-AFI8?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
                     ? 'https://www.youtube.com/embed/4bnOvAuk2Is?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
-                    ? 'https://www.youtube.com/embed/TGpVY6q0emY?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/jLYXwMY9lQQ?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
-                    ? 'https://www.youtube.com/embed/Od6WAj4LWbI?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/a1bb14-8UYY?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
                 }
                 title={
@@ -2960,17 +2914,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'portugues'
                     ? 'Vídeo Aula - Língua Portuguesa: Compreensão e Interpretação de Textos'
                     : selectedSubject === 'libras'
-                    ? `Vídeo Aula - LIBRAS: Prática de Comunicação & Atendimento TJAM (${
-                        selectedVideoPart === 'video3' ? 'Vídeo Aula 3' : selectedVideoPart === 'video2' ? 'Vídeo Aula 2' : 'Vídeo Aula 1'
-                      })`
+                    ? 'Vídeo Aula - LIBRAS: 3ª Aula de Hoje — Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_penal'
                     ? 'Vídeo Aula - Processo Penal: Aplicação da Lei Processual Penal (Arts. 1º a 3º do CPP)'
                     : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Partes e Procuradores (Aula 2)'
                     : selectedSubject === 'informatica'
-                    ? 'Vídeo Aula - Conceitos Básicos de Informática'
+                    ? 'Vídeo Aula - Informática: 2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças e Defesas)'
                     : selectedSubject === 'direito_const'
-                    ? 'Vídeo Aula - Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º)'
+                    ? 'Vídeo Aula - Direito Constitucional: Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
                     : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -2993,19 +2945,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'portugues'
                     ? 'https://youtu.be/OxTNN-IKcEQ?is=bzHSDcftIpBprD6X'
                     : selectedSubject === 'libras'
-                    ? selectedVideoPart === 'video3'
-                      ? 'https://youtu.be/udWSfcwMgH4?is=7pGSG9ii1QBlxpUw'
-                      : selectedVideoPart === 'video2'
-                      ? 'https://youtu.be/UXugPlMGhMo?is=IoeKRQBP2j-kxwTB'
-                      : 'https://youtu.be/-ZDkdbPqUZg?is=MearOYTAmeFNYz7J'
+                    ? 'https://youtu.be/j6Ugm67dx8s?is=_LtHw0g9ekgfU7gN'
                     : selectedSubject === 'processo_penal'
                     ? 'https://youtu.be/JDVXcj-AFI8?is=zSq1ea7KpPZw_hYi'
                     : selectedSubject === 'processo_civil'
                     ? 'https://youtu.be/4bnOvAuk2Is?is=gB8GOQ0zRpxxtj9j'
                     : selectedSubject === 'informatica'
-                    ? 'https://youtu.be/TGpVY6q0emY?is=33qqqOBSlvjPqHMD'
+                    ? 'https://www.youtube.com/live/jLYXwMY9lQQ?is=A6ImTDFcX11VYx8v'
                     : selectedSubject === 'direito_const'
-                    ? 'https://youtu.be/Od6WAj4LWbI?is=TKCeFjJh24E1EA1_'
+                    ? 'https://youtu.be/a1bb14-8UYY?is=cBUBPPAoD43UHQcf'
                     : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
                 }
                 target="_blank"
@@ -3015,9 +2963,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>
                   Abrir no YouTube{
-                    selectedSubject === 'libras'
-                      ? ` (${selectedVideoPart === 'video3' ? 'Vídeo 3' : selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})`
-                      : selectedSubject === 'geografia_amazonas'
+                    selectedSubject === 'geografia_amazonas'
                       ? ` (${selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})`
                       : ''
                   }
@@ -3143,23 +3089,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Cumprimentos essenciais: OI, BOM DIA, BOA TARDE, BOA NOITE, TUDO BEM?, PRAZER, ATÉ LOGO e TCHAU.</span>
+                      <span>Os 5 Parâmetros da Libras: Configuração de Mão (CM), Ponto de Articulação (PA), Movimento (M), Orientação (Or) e Expressões Não Manuais (ENM).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Sequência prática e natural de contato: OI → BOM DIA → TUDO BEM? → PRAZER → TCHAU.</span>
+                      <span>Importância dos parâmetros: como a alteração de um único elemento diferencia sinais e palavras semelhantes.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Apresentação pessoal em LIBRAS: MEU → NOME → [SEU NOME SOLETRADO NA DATILOLOGIA] → PRAZER.</span>
+                      <span>Expressões faciais (ENM) como elemento gramatical decisivo (marcação interrogativa, negação e intensidade).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>6 Perguntas e respostas básicas no atendimento: SEU NOME QUAL?, VOCÊ SURDO/OUVINTE?, VOCÊ ESTUDA/TRABALHA?, ONDE MORA?</span>
+                      <span>Autonomia linguística: Libras é uma língua viva com gramática própria (Libras ≠ Português Sinalizado).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Simulador interativo de diálogo em 6 etapas e Desafio da Aula com meta diária de 40 minutos de treino prático.</span>
+                      <span>Pegadinha clássica FGV: diferenciar Configuração de Mão (formato dos dedos) de Orientação (direção da palma).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Orientações da aula: exercícios práticos e de fixação postados pelo professor diretamente no WhatsApp.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'processo_penal' ? (
@@ -3215,47 +3165,51 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 ) : selectedSubject === 'informatica' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Conceito de Informática (Informação + Automática) e o papel do computador.</span>
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Conceito de Segurança da Informação e a Tríade fundamental CID (Confidencialidade, Integridade e Disponibilidade).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Diferença entre Dado (registro bruto) e Informação (dado contextualizado).</span>
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Políticas de senhas fortes, boas práticas corporativas e Autenticação em Dois Fatores (MFA / 2FA).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Divisão entre Hardware (físico) e Software (lógico), com exemplos.</span>
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Diferença crucial entre Vírus (precisa de hospedeiro), Worm (autorreplicável na rede) e Trojan (cavalo de troia disfarçado).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Classificação de periféricos: Entrada, Saída e Entrada/Saída (Mistos).</span>
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Ransomware (sequestro de arquivos por criptografia e extorsão) e Spyware/Keylogger (espionagem).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Sistemas Operacionais e informática aplicada ao Poder Judiciário (PJe).</span>
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Engenharia Social e Phishing (mensagens e páginas falsas para capturar credenciais de servidores).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>Mecanismos de defesa: Firewall (filtro de tráfego de rede) vs. Antivírus e a Regra de Backup 3-2-1.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'direito_const' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Os 5 Fundamentos da República e o mnemônico SO-CI-DI-VA-PLU (Art. 1º).</span>
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>Classificação clássica mais cobrada em concursos (José Afonso da Silva / Tesauro do STF).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Conceito de Estado Democrático de Direito e submissão do poder às leis.</span>
+                      <span>1️⃣ <strong>Norma de Eficácia Plena:</strong> aplicação direta, imediata e integral (Palavra-chave: COMPLETA).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Tripartição dos Poderes (Legislativo, Executivo e Judiciário) e harmonia (Art. 2º).</span>
+                      <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>2️⃣ <strong>Norma de Eficácia Contida:</strong> aplicação direta e imediata, redutível por lei (Palavra-chave: PODE SER REDUZIDA — Art. 5º, XIII).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Objetivos Fundamentais da República (Art. 3º) e a regra dos verbos no infinitivo.</span>
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>3️⃣ <strong>Norma de Eficácia Limitada:</strong> aplicação indireta e mediata; normas de princípio institutivo e programático (Palavra-chave: PRECISA SER COMPLEMENTADA).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Princípios das Relações Internacionais e integração da América Latina (Art. 4º).</span>
+                      <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>⚠️ <strong>Pegadinha FGV:</strong> Contida já nasce ampla e a lei restringe; Limitada nasce dependente de lei para ter eficácia integral.</span>
                     </li>
                   </ul>
                 ) : (
@@ -3357,326 +3311,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'direito_const' ? (
-          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
-            {/* Header Objectives */}
-            <section
-              className={`p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
-              }`}
-            >
-              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Direito Constitucional: Princípios Fundamentais
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                Disciplina: ⚖️ Direito Constitucional | Aula 2 — Princípios Fundamentais (Arts. 1º a 4º da CF/88)
-              </p>
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
-                Ao concluir esta aula, você dominará as bases da organização do Estado brasileiro e os valores constitucionais essenciais cobrados pela banca FGV para o TJAM:
-              </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Mnemônico dos Fundamentos: SOCIVADIPLU (Art. 1º)</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Características do Estado Democrático de Direito</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Separação e Funções Típicas dos Poderes (Art. 2º)</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Objetivos Fundamentais e Mnemônico CONERGAPRO (Art. 3º)</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Princípios das Relações Internacionais (Art. 4º)</li>
-                <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Regra de Ouro da FGV: Diferença entre Fundamentos x Objetivos</li>
-              </ul>
-            </section>
-
-            {/* Seção 1: Constituição Federal */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. Constituição Federal & Princípios Fundamentais
-              </h2>
-              <p className="text-sm">
-                Os <strong>Princípios Fundamentais</strong> estão consagrados principalmente nos <strong>arts. 1º a 4º da Constituição Federal de 1988</strong>.
-              </p>
-              <p className="text-sm">
-                Eles estabelecem as bases estruturais da organização do Estado brasileiro, fixam as diretrizes políticas indispensáveis e traduzem os valores supremos que orientam toda a atuação estatal e a interpretação das demais normas jurídicas.
-              </p>
-            </section>
-
-            {/* Seção 2: Fundamentos da República — Art. 1º */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. Fundamentos da República — Art. 1º
-              </h2>
-              <p className="text-sm">
-                A República Federativa do Brasil, formada pela união indissolúvel dos Estados e Municípios e do Distrito Federal, constitui-se em <strong>Estado Democrático de Direito</strong> e possui <strong>cinco fundamentos</strong> essenciais:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">I — SOBERANIA</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    O Brasil possui autonomia para organizar seu Estado e exercer seu poder sem submissão a outro Estado.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">II — CIDADANIA</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Representa a participação do indivíduo na sociedade e na vida política, por meio do exercício de direitos e deveres.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">III — DIGNIDADE DA PESSOA HUMANA</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Estabelece a valorização e proteção da pessoa humana, sendo um dos principais fundamentos do Estado brasileiro.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">IV — VALORES SOCIAIS DO TRABALHO E DA LIVRE INICIATIVA</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    A Constituição valoriza tanto o trabalho quanto a liberdade de iniciativa econômica.
-                  </p>
-                </div>
-
-                <div className={`p-4 rounded-2xl border md:col-span-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">V — PLURALISMO POLÍTICO</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Garante a convivência de diferentes ideias, opiniões e posições políticas na sociedade.
-                  </p>
-                </div>
-              </div>
-
-              {/* Mnemônico Box */}
-              <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3">
-                <div className="p-2 rounded-xl bg-emerald-600 text-white shrink-0 font-black text-xs">
-                  🧠 MNEMÔNICO
-                </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-emerald-800 dark:text-emerald-300 uppercase">
-                    Para Memorizar os Fundamentos (Art. 1º):
-                  </h4>
-                  <p className="text-sm font-black text-emerald-700 dark:text-emerald-400 tracking-wider mt-1">
-                    SO – CI – DI – VA – PLU
-                  </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    <strong>Soberania</strong> → <strong>Cidadania</strong> → <strong>Dignidade</strong> → <strong>Valores sociais</strong> → <strong>Pluralismo</strong>
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 3: Estado Democrático de Direito */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. Estado Democrático de Direito
-              </h2>
-              <p className="text-sm">
-                O Brasil é um <strong>Estado Democrático de Direito</strong>. Isso significa que:
-              </p>
-              <div className={`p-5 rounded-2xl border space-y-2 text-xs ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>O poder estatal está submetido à Constituição e às leis;</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Os cidadãos possuem direitos e garantias;</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>A democracia participa da organização do poder;</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>As autoridades também devem respeitar a ordem jurídica.</span>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 4: Poderes da União — Art. 2º */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Poderes da União — Art. 2º
-              </h2>
-              <p className="text-sm">
-                São Poderes da União:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                    ⚖️ LEGISLATIVO
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Tem como função típica elaborar leis e fiscalizar.
-                  </p>
-                </div>
-
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                    🏛️ EXECUTIVO
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Tem como função típica administrar o Estado e executar políticas públicas.
-                  </p>
-                </div>
-
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <h3 className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                    ⚖️ JUDICIÁRIO
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Tem como função típica exercer a jurisdição e solucionar conflitos.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-900 text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">
-                Os três Poderes são: <strong>independentes e harmônicos entre si</strong>.
-              </div>
-            </section>
-
-            {/* Seção 5: Objetivos Fundamentais — Art. 3º */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Objetivos Fundamentais — Art. 3º
-              </h2>
-              <p className="text-sm">
-                São objetivos fundamentais da República Federativa do Brasil:
-              </p>
-
-              <div className="space-y-2 text-xs">
-                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <strong>I — Construir</strong> uma sociedade livre, justa e solidária.
-                </div>
-                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <strong>II — Garantir</strong> o desenvolvimento nacional.
-                </div>
-                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <strong>III — Erradicar</strong> a pobreza e a marginalização e <strong>reduzir</strong> as desigualdades sociais e regionais.
-                </div>
-                <div className={`p-3.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                  <strong>IV — Promover</strong> o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.
-                </div>
-              </div>
-
-              {/* Resumindo CONERGAPRO */}
-              <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
-                <div className="p-2 rounded-xl bg-amber-600 text-white shrink-0 font-black text-xs">
-                  🧠 RESUMINDO
-                </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-amber-800 dark:text-amber-300 uppercase">
-                    Sequência de Verbos dos Objetivos (Art. 3º):
-                  </h4>
-                  <p className="text-sm font-black text-amber-700 dark:text-amber-400 tracking-wider mt-1">
-                    Construir → Desenvolver → Erradicar/Reduzir → Promover
-                  </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                    Mnemônico: <strong>CONERGAPRO</strong>
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 6: Princípios das Relações Internacionais — Art. 4º */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Princípios das Relações Internacionais — Art. 4º
-              </h2>
-              <p className="text-sm">
-                O Brasil rege-se, em suas relações internacionais, por princípios como:
-              </p>
-
-              <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Independência nacional;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Prevalência dos direitos humanos;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Autodeterminação dos povos;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Não intervenção;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Igualdade entre os Estados;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Defesa da paz;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Solução pacífica dos conflitos;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Repúdio ao terrorismo e ao racismo;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Cooperação entre os povos para o progresso da humanidade;</li>
-                  <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" /> Concessão de asilo político.</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Seção 7: Diferença Importante para a Prova */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                7. Diferença Importante para a Prova
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-1.5">
-                  <span className="font-black text-emerald-800 dark:text-emerald-300 uppercase block">FUNDAMENTOS (Art. 1º)</span>
-                  <p className="text-slate-700 dark:text-slate-300">Bases da República.</p>
-                  <p className="font-bold text-emerald-700 dark:text-emerald-400">Exemplo: Dignidade da pessoa humana.</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Substantivos (SOCIVADIPLU).</p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5">
-                  <span className="font-black text-amber-800 dark:text-amber-300 uppercase block">OBJETIVOS (Art. 3º)</span>
-                  <p className="text-slate-700 dark:text-slate-300">O que a República busca alcançar.</p>
-                  <p className="font-bold text-amber-700 dark:text-amber-400">Exemplo: Erradicar a pobreza e reduzir as desigualdades.</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Verbos no infinitivo (CONERGAPRO).</p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-xs space-y-1.5">
-                  <span className="font-black text-blue-800 dark:text-blue-300 uppercase block">RELAÇÕES INTERNACIONAIS (Art. 4º)</span>
-                  <p className="text-slate-700 dark:text-slate-300">Princípios que orientam atuação perante outros países.</p>
-                  <p className="font-bold text-blue-700 dark:text-blue-400">Exemplo: Defesa da paz.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 8: O que você precisa memorizar */}
-            <section className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-3 text-xs text-slate-700 dark:text-slate-300">
-              <h3 className="font-black text-amber-800 dark:text-amber-400 uppercase text-xs flex items-center gap-1.5">
-                <AlertTriangle className="w-4 h-4 text-amber-500" /> 🎯 O QUE VOCÊ PRECISA MEMORIZAR
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold">
-                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
-                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 1º:</span>
-                  🇧🇷 SO-CI-DI-VA-PLU
-                </div>
-                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
-                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 2º:</span>
-                  ⚖️ Legislativo + Executivo + Judiciário
-                </div>
-                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
-                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 3º:</span>
-                  🎯 Construir + Desenvolver + Erradicar/Reduzir + Promover
-                </div>
-                <div className="p-3 bg-white/60 dark:bg-slate-900/60 rounded-xl border border-amber-500/20">
-                  <span className="text-amber-700 dark:text-amber-400 font-extrabold block mb-1">Art. 4º:</span>
-                  🌎 Princípios das relações internacionais
-                </div>
-              </div>
-            </section>
-
-            {/* Action Bottom Controls */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
-              <button
-                onClick={() => setActiveTab('flashcards')}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Ver Flashcards</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={handleMarkAsCompleted}
-                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
-                  isLessonCompleted
-                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
-                }`}
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
-              </button>
-            </div>
-          </article>
+          <DireitoConstitucionalContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
         ) : selectedSubject === 'portugues' ? (
           <PortuguesContent
             isDarkMode={isDarkMode}
@@ -3684,785 +3324,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             onToggleCompleted={handleMarkAsCompleted}
           />
         ) : selectedSubject === 'libras' ? (
-          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
-            {/* Header Objectives */}
-            <section
-              className={`p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
-              }`}
-            >
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                <div>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
-                    <Sparkles className="w-3.5 h-3.5" /> Aula 2 • Prática de Comunicação
-                  </span>
-                  <h2 className="text-xl md:text-2xl font-black text-emerald-800 dark:text-emerald-300 mt-2 flex items-center gap-2">
-                    🤟 LIBRAS — AULA 2 | PRÁTICA
-                  </h2>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black">
-                    ⏱️ Meta: 40 min de prática
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
-                "Hoje vamos aprender a se comunicar, e não ficar só na teoria."
-              </p>
-              <p className="text-xs text-slate-600 dark:text-slate-400">
-                Esta aula é 100% prática e orientada para a conversação real. Você desenvolverá a memória muscular das mãos, a clareza na soletração do seu nome (datilologia), a precisão nas saudações e a fluência para realizar atendimentos acolhedores no Poder Judiciário.
-              </p>
-            </section>
-
-            {/* 📌 Cronômetro & Meta de Treino (40 Minutos de Prática) */}
-            <section className={`p-6 rounded-3xl border shadow-sm space-y-4 ${isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'}`}>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
-                <div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-amber-500" /> 📌 Cronômetro Interativo & Meta da Aula
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Divida seu estudo em 4 blocos estruturados de 10 minutos para fixação motora imediata.
-                  </p>
-                </div>
-
-                {/* Temporizador Display e Controles */}
-                <div className="flex items-center gap-3 self-start sm:self-auto bg-slate-100 dark:bg-slate-800 p-2 rounded-2xl border border-slate-200 dark:border-slate-700">
-                  <div className="text-center px-3">
-                    <span className="text-xs uppercase font-bold text-slate-400 block">Tempo do Bloco</span>
-                    <span className="text-xl font-black font-mono text-emerald-600 dark:text-emerald-400">
-                      {Math.floor(librasTimerSeconds / 60).toString().padStart(2, '0')}:
-                      {(librasTimerSeconds % 60).toString().padStart(2, '0')}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setLibrasTimerRunning(!librasTimerRunning)}
-                    className={`p-2.5 rounded-xl font-black text-xs transition-all flex items-center gap-1.5 cursor-pointer ${
-                      librasTimerRunning
-                        ? 'bg-rose-500 text-white hover:bg-rose-600'
-                        : 'bg-emerald-600 text-white hover:bg-emerald-500'
-                    }`}
-                  >
-                    {librasTimerRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                    <span>{librasTimerRunning ? 'Pausar' : 'Iniciar'}</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setLibrasTimerRunning(false);
-                      setLibrasTimerSeconds(600);
-                    }}
-                    title="Reiniciar Bloco (10 min)"
-                    className="p-2.5 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-xs font-bold transition-all cursor-pointer"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Grid dos 4 blocos de 10 minutos */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {[
-                  { id: 'cumprimentos', title: '1. Cumprimentos', time: '10 minutos', icon: '👋', desc: '9 saudações e sequência inicial' },
-                  { id: 'apresentacao', title: '2. Apresentação', time: '10 minutos', icon: '👤', desc: 'Meu nome + Datilologia' },
-                  { id: 'perguntas', title: '3. P & R', time: '10 minutos', icon: '❓', desc: 'Perguntas e respostas essenciais' },
-                  { id: 'dialogo', title: '4. Diálogo', time: '10 minutos', icon: '🎯', desc: 'Conversação fluida e Desafio' },
-                ].map((b) => {
-                  const isActive = librasTimerBlock === b.id;
-                  const isDone = librasCompletedBlocks[b.id];
-                  return (
-                    <div
-                      key={b.id}
-                      onClick={() => {
-                        setLibrasTimerBlock(b.id as any);
-                        setLibrasTimerSeconds(600);
-                        setLibrasTimerRunning(false);
-                      }}
-                      className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-emerald-500/10 border-emerald-500 dark:bg-emerald-950/40 ring-2 ring-emerald-500/30'
-                          : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-emerald-300'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xl">{b.icon}</span>
-                        <span className="text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 shadow-xs">
-                          {b.time}
-                        </span>
-                      </div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white flex items-center justify-between">
-                        <span>{b.title}</span>
-                        {isDone && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
-                      </h4>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-snug">
-                        {b.desc}
-                      </p>
-                      <div className="mt-3 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setLibrasCompletedBlocks((prev) => ({ ...prev, [b.id]: !prev[b.id] }));
-                          }}
-                          className={`text-[10px] font-extrabold px-2 py-1 rounded-lg transition-all cursor-pointer ${
-                            isDone
-                              ? 'bg-emerald-600 text-white'
-                              : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 hover:text-emerald-800'
-                          }`}
-                        >
-                          {isDone ? '✓ Concluído' : 'Marcar Treino'}
-                        </button>
-                        {isActive && (
-                          <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 animate-pulse">
-                            ● Selecionado
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
-                <span>🤟 Total: 40 minutos de prática ativa com as mãos!</span>
-                <span className="text-[11px] bg-white dark:bg-slate-800 px-2.5 py-1 rounded-lg font-black shadow-xs">
-                  {Object.values(librasCompletedBlocks).filter(Boolean).length}/4 Blocos Concluídos
-                </span>
-              </div>
-            </section>
-
-            {/* 👋 1. Cumprimentos */}
-            <section className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-3">
-                <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">
-                  Módulo de Treino 01
-                </span>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  👋 1. Cumprimentos Essenciais
-                </h2>
-              </div>
-
-              <p className="text-sm">
-                Os cumprimentos estabelecem o primeiro contato visual e cordial com a pessoa surda. Treine repetidamente a execução de cada sinal prestando atenção à <strong>expressão facial aberta e acolhedora</strong>:
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {[
-                  {
-                    sinal: 'OI',
-                    desc: 'Mão em configuração de "O" que se abre no final levantando o dedo mínimo (letra "I") ou mão acenando com indicador e mínimo levantados.',
-                    dica: 'Movimento curto e amigável na altura do ombro.'
-                  },
-                  {
-                    sinal: 'BOM DIA',
-                    desc: 'Sinal composto: mão fechada em "O" na boca abrindo para a frente em palma (BOM) + mão em "D" partindo do centro do rosto ou sol nascendo (DIA).',
-                    dica: 'Expressão viva e serena.'
-                  },
-                  {
-                    sinal: 'BOA TARDE',
-                    desc: 'Sinal de BOA (mão na boca abrindo em palma) + TARDE (antebraço horizontal com a mão descendo simulando o sol poente).',
-                    dica: 'Movimento contínuo e suave.'
-                  },
-                  {
-                    sinal: 'BOA NOITE',
-                    desc: 'Sinal de BOA (mão na boca abrindo em palma) + NOITE (mão em concha cobrindo o dorso da outra mão, simbolizando o escurecer).',
-                    dica: 'Movimento de cobrir com suavidade.'
-                  },
-                  {
-                    sinal: 'TUDO BEM?',
-                    desc: 'Sinal de BOM/BEM (ou TUDO + BOM) acompanhado de sobrancelhas levantadas e leve inclinação de cabeça indicando pergunta.',
-                    dica: 'A expressão interrogativa é OBRIGATÓRIA.'
-                  },
-                  {
-                    sinal: 'COMO VOCÊ ESTÁ?',
-                    desc: 'Apontar para o interlocutor (VOCÊ) + sinal de ESTAR/BOM com expressão facial interrogativa de interesse.',
-                    dica: 'Contato visual direto e empático.'
-                  },
-                  {
-                    sinal: 'PRAZER',
-                    desc: 'Palma da mão aberta pousada sobre o peito, realizando um movimento circular suave acompanhado de sorriso cordial.',
-                    dica: 'Expressa cortesia ("Prazer em conhecer").'
-                  },
-                  {
-                    sinal: 'ATÉ LOGO',
-                    desc: 'Sinal de ATÉ (dedo indicador ou mão em "L") + LOGO/DEPOIS (movimento para a frente indicando tempo posterior).',
-                    dica: 'Usado para saídas breves.'
-                  },
-                  {
-                    sinal: 'TCHAU',
-                    desc: 'Mão espalmada aberta acenando suavemente de um lado para o outro na altura do peito/ombro.',
-                    dica: 'Despedida universal e simpática.'
-                  }
-                ].map((item, idx) => (
-                  <div
-                    key={item.sinal}
-                    className="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-xs hover:border-emerald-400 transition-all flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">
-                          #{idx + 1}
-                        </span>
-                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
-                          Sinal
-                        </span>
-                      </div>
-                      <h4 className="text-base font-black text-slate-900 dark:text-white tracking-tight">
-                        {item.sinal}
-                      </h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                    <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
-                      💡 <em>{item.dica}</em>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 🗣️ Pratique uma sequência interativa */}
-              <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 text-white shadow-lg space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <h3 className="text-base font-black text-emerald-300 flex items-center gap-2">
-                      <Sparkles className="w-5 h-5 text-amber-400" /> 🗣️ Sequência Prática de Saudação Completa
-                    </h3>
-                    <p className="text-xs text-slate-300">
-                      Pratique a transição suave e contínua entre os 5 sinais sem interromper o fluxo gestual:
-                    </p>
-                  </div>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-emerald-200 border border-white/20 self-start">
-                    Passo {librasSeqStep + 1} de 5
-                  </span>
-                </div>
-
-                {/* Timeline visual dos passos */}
-                <div className="grid grid-cols-5 gap-2 pt-2">
-                  {[
-                    { step: 0, label: 'OI', sub: 'Saudação' },
-                    { step: 1, label: 'BOM DIA', sub: 'Período' },
-                    { step: 2, label: 'TUDO BEM?', sub: 'Pergunta' },
-                    { step: 3, label: 'PRAZER', sub: 'Cortesia' },
-                    { step: 4, label: 'TCHAU', sub: 'Despedida' },
-                  ].map((s) => {
-                    const isCurrent = librasSeqStep === s.step;
-                    const isPast = librasSeqStep > s.step;
-                    return (
-                      <button
-                        key={s.step}
-                        onClick={() => setLibrasSeqStep(s.step)}
-                        className={`p-3 rounded-2xl text-center transition-all cursor-pointer border ${
-                          isCurrent
-                            ? 'bg-emerald-500 text-slate-950 border-white font-black scale-105 shadow-md'
-                            : isPast
-                            ? 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50'
-                            : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10'
-                        }`}
-                      >
-                        <span className="text-xs sm:text-sm font-black block">{s.label}</span>
-                        <span className="text-[10px] hidden sm:block opacity-80">{s.sub}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Caixa descritiva do passo ativo */}
-                <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-1 text-center sm:text-left">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-300">
-                      Executando Agora:
-                    </span>
-                    <h4 className="text-lg font-black text-white">
-                      {librasSeqStep === 0 && '1. OI — Levante a mão na altura do ombro com sorriso.'}
-                      {librasSeqStep === 1 && '2. BOM DIA — Mão na boca abrindo para a frente + sinal de DIA.'}
-                      {librasSeqStep === 2 && '3. TUDO BEM? — Mão em BOM com sobrancelhas erguidas interrogativas.'}
-                      {librasSeqStep === 3 && '4. PRAZER — Mão espalmada no peito em círculo cordial.'}
-                      {librasSeqStep === 4 && '5. TCHAU — Mão aberta acenando suavemente.'}
-                    </h4>
-                  </div>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={() => setLibrasSeqStep((prev) => (prev > 0 ? prev - 1 : 4))}
-                      className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
-                    >
-                      <ChevronLeft className="w-4 h-4" /> Anterior
-                    </button>
-                    <button
-                      onClick={() => setLibrasSeqStep((prev) => (prev < 4 ? prev + 1 : 0))}
-                      className="px-3.5 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black transition-all cursor-pointer flex items-center gap-1 shadow-md"
-                    >
-                      Próximo <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* 👤 2. Apresentação & Datilologia */}
-            <section className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-3">
-                <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">
-                  Módulo de Treino 02
-                </span>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  👤 2. Apresentação Pessoal
-                </h2>
-              </div>
-
-              <p className="text-sm">
-                Apresentar-se com clareza é o pilar da interação com o cidadão. Aprenda a sequência clássica e utilize o <strong>alfabeto manual (datilologia)</strong> para soletrar seu nome letra por letra:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Sequência Fundamental
-                  </span>
-                  <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/30 text-emerald-900 dark:text-emerald-200 font-mono font-black text-sm text-center">
-                    MEU → NOME → [SEU NOME]
-                  </div>
-                  <ul className="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
-                    <li>• <strong>MEU:</strong> Palma da mão aberta pousada sobre o peito.</li>
-                    <li>• <strong>NOME:</strong> Configuração em "U" deslizando no espaço neutro ou na bochecha.</li>
-                    <li>• <strong>[SEU NOME]:</strong> Soletração firme no alfabeto manual (datilologia).</li>
-                  </ul>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Sequência com Cortesia (Recomendada)
-                  </span>
-                  <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-500/30 text-amber-900 dark:text-amber-200 font-mono font-black text-sm text-center">
-                    MEU → NOME → [SEU NOME] → PRAZER
-                  </div>
-                  <ul className="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
-                    <li>• Adicione o sinal de <strong>PRAZER</strong> logo após soletrar o nome.</li>
-                    <li>• Mantenha o contato visual nos olhos do interlocutor (não olhe para suas próprias mãos).</li>
-                    <li>• Não balance o braço para os lados ao soletrar as letras.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Treinador Interativo de Datilologia para o Nome */}
-              <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
-                      <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      Treinador de Alfabeto Manual (Datilologia do Seu Nome)
-                    </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Digite seu nome abaixo para visualizar e praticar a soletração letra a letra:
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      maxLength={18}
-                      value={librasCustomName}
-                      onChange={(e) => setLibrasCustomName(e.target.value.toUpperCase())}
-                      placeholder="SEU NOME"
-                      className="px-3.5 py-1.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono font-black text-xs uppercase tracking-widest focus:ring-2 focus:ring-emerald-500 outline-hidden w-36 text-center"
-                    />
-                  </div>
-                </div>
-
-                {/* Exibição das letras soletradas */}
-                <div className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
-                  {librasCustomName.split('').map((char, i) => {
-                    if (char === ' ') {
-                      return <span key={i} className="w-4" />;
-                    }
-                    return (
-                      <div
-                        key={i}
-                        className="flex flex-col items-center justify-center w-11 h-13 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 font-mono font-black shadow-xs transition-transform hover:scale-110"
-                      >
-                        <span className="text-base">{char}</span>
-                        <span className="text-[9px] font-bold text-slate-400">Letra</span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-800 dark:text-amber-300">
-                  💡 <strong>Dica de Postura:</strong> Mantenha o cotovelo junto ao tronco e a mão firme no espaço neutro (na altura do ombro/peito). Soletre em ritmo estável e respire com naturalidade.
-                </div>
-              </div>
-            </section>
-
-            {/* ❓ 3. Perguntas Básicas */}
-            <section className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-3">
-                <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">
-                  Módulo de Treino 03
-                </span>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  ❓ 3. Perguntas Básicas para Atendimento
-                </h2>
-              </div>
-
-              <p className="text-sm">
-                No balcão do tribunal ou no atendimento ao jurisdicionado, estas 6 perguntas permitem identificar a pessoa e compreender sua demanda com rapidez:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {[
-                  {
-                    pergunta: 'SEU NOME QUAL?',
-                    portugues: 'Qual é o seu nome?',
-                    detalhe: 'Pronome SEU (palma voltada à pessoa) + NOME + QUAL (mãos com dedos balançando ou expressão franzida no final).',
-                    expressao: 'Sobrancelhas franzidas/inclinadas no interrogativo final.'
-                  },
-                  {
-                    pergunta: 'VOCÊ SURDO?',
-                    portugues: 'Você é surdo?',
-                    detalhe: 'Apontamento VOCÊ + sinal de SURDO (dedo indicador toca a orelha e em seguida a boca).',
-                    expressao: 'Sobrancelhas levantadas com leve inclinação da cabeça.'
-                  },
-                  {
-                    pergunta: 'VOCÊ OUVINTE?',
-                    portugues: 'Você é ouvinte?',
-                    detalhe: 'Apontamento VOCÊ + sinal de OUVINTE (mão aberta junto à orelha ou indicador apontando para o ouvido).',
-                    expressao: 'Sobrancelhas levantadas e olhar atento.'
-                  },
-                  {
-                    pergunta: 'VOCÊ ESTUDA?',
-                    portugues: 'Você estuda?',
-                    detalhe: 'Apontamento VOCÊ + sinal de ESTUDAR (palma de uma mão batendo suave e ritmicamente sobre a palma da outra).',
-                    expressao: 'Sobrancelhas levantadas interrogativas.'
-                  },
-                  {
-                    pergunta: 'VOCÊ TRABALHA?',
-                    portugues: 'Você trabalha?',
-                    detalhe: 'Apontamento VOCÊ + sinal de TRABALHAR (mãos em configuração de "L" batendo suavemente os punhos alternados).',
-                    expressao: 'Sobrancelhas levantadas interrogativas.'
-                  },
-                  {
-                    pergunta: 'ONDE VOCÊ MORA?',
-                    portugues: 'Onde você mora?',
-                    detalhe: 'Sinal de CASA/MORAR (mãos formando telhado) + ONDE (mãos abertas balançando para os lados com dúvida).',
-                    expressao: 'Sobrancelhas franzidas (pergunta de localização).'
-                  }
-                ].map((item, idx) => (
-                  <div
-                    key={item.pergunta}
-                    className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">
-                          Pergunta #{idx + 1}
-                        </span>
-                        <span className="text-[10px] font-bold text-slate-400">
-                          {item.portugues}
-                        </span>
-                      </div>
-                      <h4 className="text-base font-black text-slate-900 dark:text-white font-mono">
-                        {item.pergunta}
-                      </h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
-                        {item.detalhe}
-                      </p>
-                    </div>
-                    <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
-                      👀 <strong>Expressão:</strong> {item.expressao}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 🙋 4. Respostas e Vocabulário de Apoio */}
-            <section className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-3">
-                <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">
-                  Módulo de Treino 04
-                </span>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  🙋 4. Respostas e Vocabulário Essencial
-                </h2>
-              </div>
-
-              <p className="text-sm">
-                Pratique os pares de sinais fundamentais (afirmativos, negativos, pronomes e verbos de compreensão):
-              </p>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                {[
-                  { sinal: 'SIM', tipo: 'Afirmação', desc: 'Mão em "S" balançando para baixo + aceno afirmativo de cabeça.' },
-                  { sinal: 'NÃO', tipo: 'Negação', desc: 'Dedo indicador balançando lateralmente + movimento negativo de cabeça.' },
-                  { sinal: 'EU', tipo: 'Pronome Pessoal', desc: 'Dedo indicador apontando diretamente para o próprio peito.' },
-                  { sinal: 'VOCÊ', tipo: 'Pronome Pessoal', desc: 'Dedo indicador apontando diretamente para o interlocutor.' },
-                  { sinal: 'MEU', tipo: 'Possessivo', desc: 'Palma da mão aberta espalmada pousada sobre o peito.' },
-                  { sinal: 'SEU', tipo: 'Possessivo', desc: 'Palma da mão aberta voltada em direção ao interlocutor.' },
-                  { sinal: 'GOSTAR', tipo: 'Verbo', desc: 'Palma da mão no peito fazendo movimento circular suave com sorriso.' },
-                  { sinal: 'NÃO GOSTAR', tipo: 'Verbo Negativo', desc: 'Mão no peito que se afasta e abre jogando para fora com expressão de desagrado.' },
-                  { sinal: 'ENTENDER', tipo: 'Verbo', desc: 'Mão na fronte/cabeça fechando os dedos ou tocando com aceno de sim.' },
-                  { sinal: 'NÃO ENTENDER', tipo: 'Verbo Negativo', desc: 'Mão na cabeça com movimento contrário e expressão de dúvida.' },
-                  { sinal: 'SABER', tipo: 'Verbo', desc: 'Ponta dos dedos tocando a têmpora (lateral da testa).' },
-                  { sinal: 'NÃO SABER', tipo: 'Verbo Negativo', desc: 'Dedos na têmpora girando a palma para fora com expressão de desconhecimento.' },
-                ].map((item) => (
-                  <div
-                    key={item.sinal}
-                    className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 shadow-xs flex flex-col justify-between"
-                  >
-                    <div>
-                      <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">
-                        {item.tipo}
-                      </span>
-                      <h4 className="text-sm font-black text-slate-900 dark:text-white font-mono mt-0.5">
-                        {item.sinal}
-                      </h4>
-                      <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-snug">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 🎯 5. Diálogo para Treinar */}
-            <section className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-3">
-                <span className="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">
-                  Módulo de Treino 05
-                </span>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  🎯 5. Diálogo Completo para Treinar
-                </h2>
-              </div>
-
-              <p className="text-sm">
-                Simule a interação entre o servidor do tribunal (Pessoa A) e o cidadão (Pessoa B). Avance turno por turno ou pratique individualmente:
-              </p>
-
-              {/* Simulador Interativo de Diálogo */}
-              <div className="p-6 rounded-3xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-700 pb-3">
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                    <h3 className="text-sm font-black text-slate-900 dark:text-white">
-                      Simulador de Conversação (Pessoa A & Pessoa B)
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setLibrasDialogueStep(0)}
-                      className="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all cursor-pointer"
-                    >
-                      Reiniciar Diálogo
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  {[
-                    { speaker: 'Pessoa A (Servidor TJAM)', role: 'A', text: 'OI! TUDO BEM?', tip: 'Saudação cordial inicial com expressão aberta.' },
-                    { speaker: 'Pessoa B (Cidadão)', role: 'B', text: 'OI! TUDO BEM.', tip: 'Resposta afirmativa confirmando bem-estar.' },
-                    { speaker: 'Pessoa A (Servidor TJAM)', role: 'A', text: 'SEU NOME QUAL?', tip: 'Pergunta com sobrancelhas franzidas no QUAL.' },
-                    { speaker: 'Pessoa B (Cidadão)', role: 'B', text: `MEU NOME [${librasCustomName || 'SEU NOME'}].`, tip: 'Palma no peito + sinal NOME + soletração na datilologia.' },
-                    { speaker: 'Pessoa A (Servidor TJAM)', role: 'A', text: 'PRAZER!', tip: 'Mão espalmada no peito em círculo com sorriso.' },
-                    { speaker: 'Pessoa B (Cidadão)', role: 'B', text: 'PRAZER!', tip: 'Retribuição recíproca da gentileza.' },
-                  ].map((turn, idx) => {
-                    const isA = turn.role === 'A';
-                    const isCurrent = librasDialogueStep === idx;
-                    const isVisible = idx <= librasDialogueStep;
-
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => setLibrasDialogueStep(idx)}
-                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
-                          isCurrent
-                            ? isA
-                              ? 'bg-emerald-500/10 border-emerald-500 ring-2 ring-emerald-500/20'
-                              : 'bg-blue-500/10 border-blue-500 ring-2 ring-blue-500/20'
-                            : isVisible
-                            ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 opacity-90'
-                            : 'opacity-40 border-dashed border-slate-300 dark:border-slate-700'
-                        }`}
-                      >
-                        <div
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-black text-xs ${
-                            isA
-                              ? 'bg-emerald-600 text-white'
-                              : 'bg-blue-600 text-white'
-                          }`}
-                        >
-                          {turn.role}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[11px] font-black uppercase text-slate-500 dark:text-slate-400">
-                              {turn.speaker}
-                            </span>
-                            {isCurrent && (
-                              <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-600 text-white animate-pulse">
-                                Turno Ativo
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-base font-black text-slate-900 dark:text-white font-mono mt-0.5">
-                            {turn.text}
-                          </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                            💡 {turn.tip}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-xs text-slate-500 font-bold">
-                    Turno {librasDialogueStep + 1} de 6
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      disabled={librasDialogueStep === 0}
-                      onClick={() => setLibrasDialogueStep((p) => Math.max(0, p - 1))}
-                      className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 disabled:opacity-40 hover:bg-slate-200 text-slate-800 dark:text-slate-200 text-xs font-black transition-all cursor-pointer"
-                    >
-                      Voltar Fala
-                    </button>
-                    <button
-                      onClick={() => setLibrasDialogueStep((p) => (p < 5 ? p + 1 : 0))}
-                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-all cursor-pointer shadow-md flex items-center gap-1"
-                    >
-                      <span>{librasDialogueStep === 5 ? 'Reiniciar Diálogo' : 'Avançar Fala'}</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* 🏋️ DESAFIO DA AULA */}
-            <section className="p-6 rounded-3xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-slate-900/10 dark:from-amber-950/30 dark:to-slate-900 border border-amber-500/30 shadow-md space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex items-center gap-2.5">
-                  <Flame className="w-6 h-6 text-amber-500" />
-                  <div>
-                    <h3 className="text-lg font-black text-amber-700 dark:text-amber-400">
-                      🏋️ DESAFIO DA AULA
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 font-bold">
-                      Tente fazer sem olhar o roteiro:
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-black px-3 py-1 rounded-full bg-amber-500 text-slate-950 self-start">
-                  Desafio de Fluência
-                </span>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-800/90 border border-amber-500/30 text-slate-800 dark:text-slate-100 text-sm font-extrabold leading-relaxed text-center sm:text-left">
-                👋 Cumprimente alguém → diga seu nome → pergunte o nome da pessoa → pergunte se ela está bem → diga “prazer” → despeça-se.
-              </div>
-
-              {/* Checklist interativo de autoavaliação do desafio */}
-              <div className="space-y-2">
-                <p className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Marque cada etapa que você conseguiu sinalizar com sucesso:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {[
-                    { id: 'd1', label: '1. Cumprimentar (OI / BOM DIA)' },
-                    { id: 'd2', label: '2. Dizer seu nome (MEU NOME...)' },
-                    { id: 'd3', label: '3. Perguntar o nome (SEU NOME QUAL?)' },
-                    { id: 'd4', label: '4. Perguntar se está bem (TUDO BEM?)' },
-                    { id: 'd5', label: '5. Dizer cortesia (PRAZER!)' },
-                    { id: 'd6', label: '6. Despedir-se (TCHAU / ATÉ LOGO)' },
-                  ].map((item) => (
-                    <label
-                      key={item.id}
-                      className={`flex items-center gap-2.5 p-3 rounded-xl border transition-all cursor-pointer ${
-                        librasDesafioChecklist[item.id]
-                          ? 'bg-amber-500/10 border-amber-500 text-amber-900 dark:text-amber-200 font-black'
-                          : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium'
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={!!librasDesafioChecklist[item.id]}
-                        onChange={() =>
-                          setLibrasDesafioChecklist((prev) => ({
-                            ...prev,
-                            [item.id]: !prev[item.id],
-                          }))
-                        }
-                        className="rounded-md text-amber-600 focus:ring-amber-500 w-4 h-4"
-                      />
-                      <span className="text-xs">{item.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {Object.values(librasDesafioChecklist).filter(Boolean).length === 6 && (
-                <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-800 dark:text-emerald-300 text-center font-black text-xs animate-in zoom-in-95 duration-200">
-                  🎉 Parabéns! Você completou 100% do Desafio Prático da Aula 2! Excelente coordenação e fluência para o TJAM!
-                </div>
-              )}
-            </section>
-
-            {/* Resumo para Memorizar & Transição */}
-            <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50 border-emerald-200'}`}>
-              <h3 className="text-base font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
-                <Brain className="w-5 h-5 text-emerald-600" /> 🧠 Resumo de Prática para o TJAM
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-emerald-500/20 space-y-1">
-                  <strong className="text-emerald-700 dark:text-emerald-400 block font-black">
-                    📌 Pessoais vs Possessivos
-                  </strong>
-                  <p>EU / VOCÊ → Indicador apontando.<br />MEU / SEU → Palma da mão aberta espalmada.</p>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-emerald-500/20 space-y-1">
-                  <strong className="text-emerald-700 dark:text-emerald-400 block font-black">
-                    📌 Posição Interrogativa
-                  </strong>
-                  <p>Pronto interrogativo no fim ("SEU NOME QUAL?") + sobrancelhas franzidas.</p>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-emerald-500/20 space-y-1">
-                  <strong className="text-emerald-700 dark:text-emerald-400 block font-black">
-                    📌 Negação Incorporada
-                  </strong>
-                  <p>NÃO GOSTAR e NÃO SABER mudam o movimento e a orientação da mão para fora.</p>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-emerald-500/20 space-y-1">
-                  <strong className="text-emerald-700 dark:text-emerald-400 block font-black">
-                    📌 Datilologia Firme
-                  </strong>
-                  <p>Soletração à altura do peito/ombro sem balançar o braço para os lados.</p>
-                </div>
-              </div>
-
-              {/* Botão de transição para flashcards e questões */}
-              <div className="pt-4 flex flex-wrap items-center justify-between gap-3">
-                <button
-                  onClick={() => setActiveTab('flashcards')}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all cursor-pointer flex items-center gap-2 shadow-md"
-                >
-                  <Layers className="w-4 h-4" />
-                  <span>Revisar 10 Flashcards Práticos</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('questoes')}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all cursor-pointer flex items-center gap-2 shadow-md"
-                >
-                  <HelpCircle className="w-4 h-4" />
-                  <span>Ver Orientações de Exercícios (WhatsApp)</span>
-                </button>
-              </div>
-            </section>
-          </article>
+          <LibrasContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
         ) : selectedSubject === 'processo_penal' ? (
           <ProcessoPenalContent
             isDarkMode={isDarkMode}
@@ -4482,291 +3349,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             setActiveTab={setActiveTab}
           />
         ) : selectedSubject === 'informatica' ? (
-          <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
-            {/* Objetivos da Aula de Informática */}
-            <section
-              className={`p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/50 border-emerald-100'
-              }`}
-            >
-              <h2 className="text-base font-black text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-emerald-600" /> Objetivos da Aula — Informática
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                Ao concluir esta aula, você será capaz de:
-              </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Compreender o conceito de informática (Informação + Automática).</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Diferenciar Dado (registro bruto) de Informação (dado processado com contexto).</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Distinguir Hardware (físico) de Software (lógico).</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Classificar os periféricos de Entrada, Saída e Entrada/Saída (Mistos).</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>Entender o papel do Sistema Operacional e das ferramentas de TI no TJAM (PJe).</span>
-                </li>
-              </ul>
-            </section>
-
-            {/* Seção 1: O que é Informática */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                1. O que é Informática?
-              </h2>
-              <p className="text-sm">
-                A <strong>informática</strong> é a ciência responsável pelo tratamento automático das informações por meio de computadores e outros dispositivos eletrônicos. Ela está presente em praticamente todas as atividades do cotidiano, sendo indispensável para a comunicação, o armazenamento de dados, a realização de cálculos, a automação de processos e a prestação de serviços públicos.
-              </p>
-              <p className="text-sm">
-                A palavra <strong>informática</strong> resulta da junção dos termos <strong>informação</strong> e <strong>automática</strong>, representando o conjunto de técnicas utilizadas para coletar, processar, armazenar e transmitir informações utilizando equipamentos computacionais.
-              </p>
-              <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-100'}`}>
-                <p className="text-xs text-emerald-950 dark:text-emerald-300 font-bold">
-                  🎯 Principal Objetivo: Transformar dados em informações úteis para auxiliar pessoas e organizações na tomada de decisões e na execução de tarefas cotidianas.
-                </p>
-              </div>
-              <p className="text-xs text-slate-500 italic pt-1">
-                No âmbito do Poder Judiciário, a informática é uma ferramenta essencial para a tramitação de processos eletrônicos, elaboração de documentos, comunicação institucional e consulta de sistemas judiciais. Por esse motivo, seu estudo é indispensável para candidatos ao cargo de Assistente Judiciário do TJAM.
-              </p>
-            </section>
-
-            {/* Seção 2: Dado e Informação */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                2. Dado e Informação
-              </h2>
-              <p className="text-sm">
-                Embora sejam frequentemente utilizados como sinônimos no cotidiano, <strong>dado</strong> e <strong>informação</strong> possuem significados distintos em informática e em provas de concurso público:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                    Dado (Registro Bruto)
-                  </span>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
-                    Sem Contexto / Sem Significado Próprio
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É um elemento bruto, um número, palavra ou símbolo isolado que, por si só, não transmite um conhecimento claro.
-                  </p>
-                  <div className="mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-700 dark:text-amber-300">
-                    Exemplos: "25", "Manaus", "2026".
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Informação (Dado Processado)
-                  </span>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1 mb-2">
-                    Com Contexto / Com Significado Útil
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    É o resultado do processamento, organização e contextualização dos dados, permitindo a compreensão e tomada de decisão.
-                  </p>
-                  <div className="mt-3 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
-                    Exemplo: "Manaus registrou temperatura de 25°C hoje."
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 3: O que é um Computador? (Hardware e Software) */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                3. O que é um Computador? (Hardware x Software)
-              </h2>
-              <p className="text-sm">
-                O <strong>computador</strong> é uma máquina eletrônica capaz de receber dados, processá-los de acordo com um conjunto de instruções, armazenar informações e produzir resultados de forma rápida e precisa.
-              </p>
-              <p className="text-sm">
-                Todo sistema computacional é dividido em <strong>duas partes fundamentais</strong>:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-blue-50/50 border-blue-200'}`}>
-                  <h3 className="text-sm font-black text-blue-800 dark:text-blue-400">
-                    🖥️ Hardware (Parte Física)
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Compreende todos os componentes mecânicos, elétricos e eletrônicos que compõem o computador — aquilo que é tangível (pode ser tocado).
-                  </p>
-                  <div className="pt-2">
-                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-                      Monitor, Teclado, Mouse, Processador (CPU), Memória RAM, Disco SSD / HD, Impressora e Scanner.
-                    </p>
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-purple-50/50 border-purple-200'}`}>
-                  <h3 className="text-sm font-black text-purple-800 dark:text-purple-400">
-                    ⚙️ Software (Parte Lógica)
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
-                    Compreende o conjunto de programas, instruções, algoritmos e dados que orientam o hardware sobre como executar cada tarefa.
-                  </p>
-                  <div className="pt-2">
-                    <span className="text-[10px] font-bold uppercase text-slate-500">Exemplos:</span>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-                      Windows, Linux, Microsoft Word, Microsoft Excel, Navegadores (Chrome/Edge), Antivírus e Sistema PJe do TJAM.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 4: Componentes Básicos do Computador */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                4. Componentes Básicos do Computador
-              </h2>
-              <p className="text-sm">
-                Os componentes principais que garantem o processamento e funcionamento do computador são:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">CPU (Processador)</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Unidade Central de Processamento</h4>
-                  <p className="text-slate-600 dark:text-slate-300">É o "cérebro" do computador, responsável por executar as instruções dos programas e realizar cálculos aritméticos e lógicos.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-amber-600 dark:text-amber-400 uppercase text-[10px]">Memória RAM</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Memória de Acesso Aleatório (Volátil)</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Armazena temporariamente as informações que estão sendo utilizadas no momento. Se o computador for desligado, os dados da RAM são perdidos.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">Dispositivos de Armazenamento (HD / SSD)</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Armazenamento Permanente (Não-Volátil)</h4>
-                  <p className="text-slate-600 dark:text-slate-300">Guardam arquivos, documentos e programas de forma permanente, preservando-os mesmo quando o computador é desligado.</p>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-                  <span className="font-black text-purple-600 dark:text-purple-400 uppercase text-[10px]">Placa-Mãe & Fonte</span>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white">Integração e Alimentação Elétrica</h4>
-                  <p className="text-slate-600 dark:text-slate-300">A placa-mãe interconecta fisicamente todos os componentes do sistema. A fonte de alimentação converte a energia elétrica para uso dos circuitos.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 5: Dispositivos de Entrada, Saída e Mistos */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                5. Dispositivos de Entrada, Saída e Mistos
-              </h2>
-              <p className="text-sm">
-                Os periféricos de entrada e saída permitem a comunicação entre o usuário e o computador:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black uppercase text-[10px]">
-                    Dispositivos de Entrada
-                  </span>
-                  <p className="text-slate-600 dark:text-slate-300">Permitem a inserção de dados e comandos para o computador.</p>
-                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
-                    <li>• Teclado & Mouse</li>
-                    <li>• Scanner</li>
-                    <li>• Webcam & Microfone</li>
-                  </ul>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-                  <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-black uppercase text-[10px]">
-                    Dispositivos de Saída
-                  </span>
-                  <p className="text-slate-600 dark:text-slate-300">Exibem ou fornecem os resultados do processamento ao usuário.</p>
-                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
-                    <li>• Monitor / Tela</li>
-                    <li>• Impressora simples</li>
-                    <li>• Alto-falantes & Projetor</li>
-                  </ul>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-                  <span className="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-black uppercase text-[10px]">
-                    Entrada e Saída (Mistos)
-                  </span>
-                  <p className="text-slate-600 dark:text-slate-300">Realizam ambas as funções: enviam e recebem dados simultaneamente.</p>
-                  <ul className="space-y-1 font-semibold text-slate-700 dark:text-slate-200">
-                    <li>• Tela Touchscreen</li>
-                    <li>• Pen Drive & HD Externo</li>
-                    <li>• Impressora Multifuncional</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 6: Sistemas Operacionais & Informática no Poder Judiciário */}
-            <section className="space-y-3">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-emerald-500 pl-3">
-                6. Sistemas Operacionais & Informática no Poder Judiciário (TJAM)
-              </h2>
-              <p className="text-sm">
-                O <strong>Sistema Operacional (SO)</strong> é o programa principal responsável por gerenciar o hardware do computador, controlar a memória, administrar arquivos e permitir a execução de outros aplicativos (exemplos: Windows, Linux, macOS, Android, iOS).
-              </p>
-              <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/40 border-emerald-200'}`}>
-                <h3 className="text-sm font-black text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
-                  ⚖️ Aplicação da Informática para o Assistente Judiciário do TJAM
-                </h3>
-                <p className="text-xs text-slate-700 dark:text-slate-300">
-                  No Tribunal de Justiça do Amazonas, o servidor público utiliza ferramentas de informática diariamente para garantir a celeridade dos processos judiciais:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Processo Judicial Eletrônico (PJe)</span>
-                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Elaboração de despachos e minuta de atos</span>
-                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Realização de audiências por videoconferência</span>
-                  <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" /> Consulta a sistemas integrados e diário oficial</span>
-                </div>
-              </div>
-            </section>
-
-            {/* Seção 7: Resumo Rápido & Dica FGV */}
-            <section className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-2 text-xs text-slate-700 dark:text-slate-300">
-              <h3 className="font-black text-amber-800 dark:text-amber-400 uppercase text-[11px] flex items-center gap-1.5">
-                <AlertTriangle className="w-4 h-4 text-amber-500" /> Dicas de Ouro para a Prova da FGV / TJAM:
-              </h3>
-              <ul className="space-y-1 list-disc pl-4 font-medium">
-                <li><strong>Hardware x Software:</strong> Lembre-se que o hardware é palpável (físico) e o software é o programa/instrução (lógico).</li>
-                <li><strong>Dado x Informação:</strong> O dado é neutro e isolado ("25"); a informação é processada e traz significado ("25°C em Manaus").</li>
-                <li><strong>RAM volátil:</strong> A memória RAM perde os dados ao desligar o PC. HD e SSD mantêm os arquivos salvos permanentemente.</li>
-                <li><strong>Periféricos Mistos:</strong> Fique atento às armadilhas com telas Touchscreen, Pen Drives e Impressoras Multifuncionais (são Entrada e Saída).</li>
-              </ul>
-            </section>
-
-            {/* Action Bottom Controls */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
-              <button
-                onClick={() => setActiveTab('flashcards')}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Ver Flashcards</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={handleMarkAsCompleted}
-                className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
-                  isLessonCompleted
-                    ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
-                }`}
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
-              </button>
-            </div>
-          </article>
+          <InformaticaContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
         ) : (
           <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
             {/* Objetivos */}
@@ -5415,33 +4003,33 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   Exercícios pelo WhatsApp
                 </span>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                  Atividades Práticas de LIBRAS
+                  3ª Aula de LIBRAS: Estrutura e Formação dos Sinais
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-lg mx-auto leading-relaxed">
-                  Esta aula não possui exercícios de marcar na plataforma. Os exercícios práticos e tarefas de sinalização serão <strong>colocados e acompanhados pelo professor via WhatsApp</strong>!
+                  Esta aula não possui exercícios de marcar na plataforma. Os exercícios práticos e de fixação desta 3ª aula serão <strong>colocados e acompanhados pelo professor via WhatsApp</strong>!
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 text-xs text-left space-y-3 text-slate-700 dark:text-slate-200">
                 <div className="font-extrabold flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
-                  <Sparkles className="w-4 h-4" /> Roteiro de Estudo e Prática:
+                  <Sparkles className="w-4 h-4" /> Roteiro de Estudo da 3ª Aula:
                 </div>
                 <ul className="space-y-2 text-xs">
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-emerald-600">1.</span>
-                    <span>Assista às <strong>3 Vídeo Aulas</strong> disponíveis na aba de vídeos para fixar a movimentação e expressões faciais.</span>
+                    <span>Assista à <strong>Vídeo Aula</strong> ("Estrutura e Formação dos Sinais - Os 5 Parâmetros") na aba de vídeos.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-emerald-600">2.</span>
-                    <span>Treine os <strong>9 Cumprimentos Essenciais</strong> e o <strong>Treinador de Diálogo</strong> na aba de Conteúdo.</span>
+                    <span>Estude os <strong>5 Parâmetros</strong> (CM, PA, M, Or, ENM), as <strong>Expressões Faciais</strong> e as <strong>Pegadinhas de Concurso</strong> na aba de Conteúdo.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-emerald-600">3.</span>
-                    <span>Revise os <strong>10 Flashcards</strong> interativos para memorizar as configurações de mão.</span>
+                    <span>Revise os <strong>15 Flashcards interativos</strong> para fixar a definição de cada parâmetro e os exemplos de pares mínimos.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-emerald-600">4.</span>
-                    <span>Acompanhe o <strong>grupo da turma no WhatsApp</strong> para receber os temas e tarefas enviados pelo docente.</span>
+                    <span>Acompanhe o <strong>grupo da turma no WhatsApp</strong> para praticar as atividades de sinalização enviadas pelo docente.</span>
                   </li>
                 </ul>
               </div>
@@ -5452,21 +4040,21 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer"
                 >
                   <Video className="w-4 h-4" />
-                  <span>Assistir aos 3 Vídeos</span>
+                  <span>Assistir à Vídeo Aula</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('conteudo')}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <BookOpen className="w-4 h-4" />
-                  <span>Ver Treinador Prático</span>
+                  <span>Ver Conteúdo Completo</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('flashcards')}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Layers className="w-4 h-4" />
-                  <span>Flashcards (10)</span>
+                  <span>Flashcards (15)</span>
                 </button>
               </div>
             </div>
@@ -5782,13 +4370,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'portugues'
                   ? 'Resumo — Língua Portuguesa: Compreensão e Interpretação de Textos'
                   : selectedSubject === 'direito_const'
-                  ? 'Resumo — Direito Constitucional: Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
+                  ? 'Resumo — Direito Constitucional: Aplicabilidade das Normas Constitucionais (1ª Aula de Hoje)'
                   : selectedSubject === 'libras'
                   ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_civil'
                   ? 'Resumo da Aula — Processo Civil: Jurisdição'
                   : selectedSubject === 'informatica'
-                  ? 'Resumo — Conceitos Básicos de Informática'
+                  ? 'Resumo — Informática: Segurança da Informação (2ª Aula de Hoje)'
                   : selectedSubject === 'processo_penal'
                   ? 'Resumo — Processo Penal: Inquérito Policial'
                   : 'Resumo — Direito Administrativo: Agentes Públicos (Aula 4)'}
@@ -5885,49 +4473,31 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </ul>
             ) : selectedSubject === 'direito_const' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Fundamentos da RFB (Art. 1º):</strong> Mnemônico <strong>SO-CI-DI-VA-PLU</strong> (Soberania, Cidadania, Dignidade da Pessoa Humana, Valores Sociais do Trabalho/Livre Iniciativa, Pluralismo Político).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Separação de Poderes (Art. 2º):</strong> Poderes independentes e harmônicos (Legislativo, Executivo e Judiciário) com funções típicas e atípicas.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Objetivos Fundamentais (Art. 3º):</strong> Verbos no infinitivo — Mnemônico <strong>CONERGAPRO</strong> (Construir, Garantir, Erradicar/Reduzir, Promover).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Relações Internacionais (Art. 4º):</strong> 10 princípios orientadores da atuação internacional do Brasil (Prevalência dos DH, Autodeterminação, Asilo Político, etc.).</span>
-                </li>
+                {direitoConstSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : selectedSubject === 'libras' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Conceito de LIBRAS:</strong> Língua Brasileira de Sinais, reconhecida pela Lei nº 10.436/2002. Possui sistema linguístico e gramática autônomos.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Autonomia Linguística:</strong> NÃO é tradução palavra por palavra do Português. Modalidade visual-espacial com regras sintáticas próprias.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>5 Parâmetros dos Sinais:</strong> Configuração de mão, Movimento, Ponto de Articulação, Orientação da palma e Expressões não manuais.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Datilologia:</strong> Uso do alfabeto manual para soletrar nomes e termos pontuais. Recurso auxiliar que NÃO se confunde com a LIBRAS.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Expressões Faciais/Corporais:</strong> Função gramatical essencial para conferir tipo de frase (interrogação, negação) e intensidade.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Legislação do Concurso:</strong> Lei nº 10.436/2002 (reconhecimento legal) e Decreto nº 5.626/2005 (regulamentação e acessibilidade).</span>
-                </li>
+                {librasSummaryPoints.map((point, idx) => {
+                  const parts = point.split(':');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(':');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong>{desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : selectedSubject === 'processo_civil' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
@@ -5958,26 +4528,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </ul>
             ) : selectedSubject === 'informatica' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                  <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Informática:</strong> Ciência que trata o processamento automático da informação por computadores (Informação + Automática).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                  <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Dado vs. Informação:</strong> Dado é o registro bruto e isolado sem significado; Informação é o dado processado com contexto e utilidade.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                  <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Hardware vs. Software:</strong> Hardware é a estrutura física (palpável); Software é a parte lógica (programas e instruções).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                  <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Componentes e Memória:</strong> A CPU processa dados, a RAM é a memória volátil de trabalho e o SSD/HD faz o armazenamento permanente.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
-                  <span className="text-emerald-500 font-bold">•</span>
-                  <span><strong>Aplicação no TJAM:</strong> O Assistente Judiciário utiliza o Sistema Operacional e sistemas especializados como o PJe para a gestão de processos digitais.</span>
-                </li>
+                {informaticaSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">

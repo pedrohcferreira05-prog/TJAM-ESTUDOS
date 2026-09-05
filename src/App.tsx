@@ -105,8 +105,8 @@ export function App() {
   const [selectedDisciplineId, setSelectedDisciplineId] = useState<string | null>(null);
   const [disciplineSubTab, setDisciplineSubTab] = useState<string>('aulas');
 
-  // Duo Mode permanently active: Eduardo Mateus & Pedro Henrique
-  const isDuo = true;
+  // Modo individual: Eduardo Mateus sem dupla
+  const isDuo = false;
 
   // Core App State persisted in localStorage
   const [disciplines] = useState<Discipline[]>(TJAM_DISCIPLINES);

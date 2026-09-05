@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   ShieldCheck,
   Trophy,
+  TrendingDown,
   TrendingUp
 } from 'lucide-react';
 
@@ -31,22 +32,22 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Duo Status Official Banner */}
-      <div className="p-5 rounded-3xl bg-gradient-to-r from-indigo-900/70 via-indigo-800/50 to-sky-900/60 border border-indigo-500/40 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+      <div className="p-5 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-rose-950/40 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
         <div className="flex items-center gap-3.5">
-          <div className="p-3 rounded-2xl bg-indigo-500/20 text-amber-300 border border-indigo-400/30 shrink-0">
+          <div className="p-3 rounded-2xl bg-rose-500/20 text-rose-300 border border-rose-400/30 shrink-0">
             <Users className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-extrabold text-sm text-white">
-                Dupla de Estudos Oficial TJAM 2026: Eduardo Mateus & Pedro Henrique
+                Perfil do Estudante: Eduardo Mateus
               </h3>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                Ativa & Sincronizada
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500/20 text-rose-300 border border-rose-400/30">
+                Sem Dupla
               </span>
             </div>
-            <p className="text-xs text-indigo-200 mt-0.5">
-              Eduardo Mateus tem como dupla oficial <strong>Pedro Henrique</strong>. Ambos estão com metas integradas e subindo no ranking geral (30%).
+            <p className="text-xs text-slate-300 mt-0.5">
+              Eduardo estuda individualmente e está no ranking geral TJAM 2026 em 9º lugar (19,5%). Pedro Henrique está sozinho no 8º lugar (21,8%).
             </p>
           </div>
         </div>
@@ -54,7 +55,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           <span className="px-3 py-1.5 rounded-xl bg-indigo-500/20 text-indigo-200 text-xs font-black border border-indigo-400/30 flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-amber-400" />
-            <span>4º Lugar Geral (30%)</span>
+            <span>9º Lugar Geral (19,5%)</span>
           </span>
         </div>
       </div>
@@ -69,29 +70,29 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-4 border-slate-800">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-                <Users className="w-6 h-6 text-amber-400" />
-                <span>Eduardo Mateus & Pedro Henrique</span>
+                <Users className="w-6 h-6 text-indigo-400" />
+                <span>Eduardo Mateus</span>
               </h2>
               <p className="text-xs text-slate-400 mt-0.5">
-                Dupla Oficial de Estudos • Preparatório TJAM 2026 (Assistente Judiciário)
+                Estudante Individual • Preparatório TJAM 2026 (Assistente Judiciário)
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-                Dupla de Alta Performance
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-500/20 text-rose-300 border border-rose-400/30">
+                Sem Dupla
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
-                <TrendingUp className="w-3.5 h-3.5" />
-                Subindo no Ranking
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 flex items-center gap-1">
+                <Trophy className="w-3.5 h-3.5" />
+                9º Lugar Geral
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Eduardo Mateus */}
-            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center gap-4">
+            <div className="p-4 rounded-2xl bg-slate-950/60 border border-indigo-500/30 flex items-center gap-4">
               <div className="relative">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 p-0.5 shadow-md">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-700 p-0.5 shadow-md">
                   <img
                     src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256"
                     alt="Eduardo Mateus"
@@ -101,7 +102,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                     }}
                   />
                 </div>
-                <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-1 rounded-full text-[10px]">
+                <span className="absolute -bottom-1 -right-1 bg-indigo-500 text-white p-1 rounded-full text-[10px]">
                   <ShieldCheck className="w-3 h-3" />
                 </span>
               </div>
@@ -112,32 +113,32 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">Aluno Titular • Foco TJAM</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
-                  <span className="text-[11px] text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                    Dupla: Pedro Henrique
+                  <span className="text-[11px] text-indigo-300 font-bold bg-indigo-500/20 px-2 py-0.5 rounded border border-indigo-500/30">
+                    Status: Sem Dupla • 9º Lugar (19,5%)
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Pedro Henrique */}
-            <div className="p-4 rounded-2xl bg-slate-950/60 border border-indigo-500/30 flex items-center gap-4">
+            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center gap-4">
               <div className="relative">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-600 flex items-center justify-center font-black text-lg text-white shadow-md">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center font-black text-lg text-slate-300 shadow-md">
                   PH
                 </div>
-                <span className="absolute -bottom-1 -right-1 bg-indigo-500 text-white p-1 rounded-full text-[10px]">
+                <span className="absolute -bottom-1 -right-1 bg-slate-700 text-slate-300 p-1 rounded-full text-[10px]">
                   <CheckCircle2 className="w-3 h-3" />
                 </span>
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <h3 className="font-extrabold text-sm text-white truncate">Pedro Henrique Ferreira</h3>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-indigo-500/20 text-indigo-300 shrink-0">Dupla</span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-slate-800 text-slate-300 shrink-0">Solo</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">Aluno Titular • Foco TJAM</p>
+                <p className="text-xs text-slate-400 mt-0.5">Estudante Independente TJAM</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
-                  <span className="text-[11px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                    Dupla: Eduardo Mateus
+                  <span className="text-[11px] text-slate-300 font-bold bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
+                    8º Lugar Geral (21,8% • Sem Dupla)
                   </span>
                 </div>
               </div>
@@ -158,12 +159,12 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <Award className="w-5 h-5" />
           </div>
           <div className="flex items-baseline gap-2">
-            <p className="text-3xl font-black text-slate-900 dark:text-white">30%</p>
-            <span className="text-xs font-bold text-emerald-400 flex items-center">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 4º Lugar
+            <p className="text-3xl font-black text-slate-900 dark:text-white">19,5%</p>
+            <span className="text-xs font-bold text-sky-400 flex items-center">
+              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 9º Lugar
             </span>
           </div>
-          <p className="text-[11px] text-slate-400">Subiram no ranking geral das duplas</p>
+          <p className="text-[11px] text-slate-400">Eduardo sem dupla • 9º Lugar no ranking</p>
         </div>
 
         <div
