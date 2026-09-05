@@ -2136,13 +2136,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Aula Liberada • TJAM 2026
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
-                <Clock className="w-3.5 h-3.5" /> Aula de Hoje: {
+                <Clock className="w-3.5 h-3.5" /> {
+                  selectedSubject === 'direito_const' || selectedSubject === 'informatica' ? 'Aula de Hoje: ' : 'Disciplina: '
+                }{
                   selectedSubject === 'ingles' ? 'Inglês (Aula 3 Prática)'
-                  : selectedSubject === 'geografia_amazonas' ? 'Geografia do AM (2ª Aula de Hoje)'
+                  : selectedSubject === 'geografia_amazonas' ? 'Geografia do Amazonas (2ª Aula)'
                   : selectedSubject === 'legislacao_tjam' ? 'Legislação do TJAM (Aula 2)'
-                  : selectedSubject === 'libras' ? 'LIBRAS (3ª Aula de Hoje)'
+                  : selectedSubject === 'libras' ? 'LIBRAS (3ª Aula)'
                   : selectedSubject === 'portugues' ? 'Língua Portuguesa'
-                  : selectedSubject === 'processo_penal' ? 'Processo Penal (Quarta Aula de Hoje)'
+                  : selectedSubject === 'processo_penal' ? 'Processo Penal (Aula 4)'
                   : selectedSubject === 'processo_civil' ? 'Processo Civil'
                   : selectedSubject === 'informatica' ? 'Informática (2ª Aula de Hoje)'
                   : selectedSubject === 'direito_const' ? 'Direito Constitucional (1ª Aula de Hoje)'
@@ -2155,11 +2157,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200">
                 {
                   selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Aula 3 – Apresentação e Comunicação Básica (100% Prática)'
-                  : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • 2ª Aula de Hoje – Aspectos Humanos e Econômicos'
-                  : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 2 de Hoje – Organização Judiciária do Amazonas: Aprofundamento'
+                  : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • 2ª Aula – Aspectos Humanos e Econômicos'
+                  : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 2 – Organização Judiciária do Amazonas: Aprofundamento'
                   : selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
-                  : selectedSubject === 'libras' ? '🤟 LIBRAS • 3ª Aula de Hoje – Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
-                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Quarta Aula de Hoje – Aplicação da Lei Processual Penal'
+                  : selectedSubject === 'libras' ? '🤟 LIBRAS • 3ª Aula – Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
+                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Aula 4 – Aplicação da Lei Processual Penal'
                   : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Aula 2 – Partes e Procuradores (CPC/2015)'
                   : selectedSubject === 'informatica' ? '💻 Informática • 2ª Aula de Hoje – Segurança da Informação (CID, Senhas, Malware, Backup)'
                   : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • 1ª Aula – Aplicabilidade das Normas Constitucionais'
@@ -2183,7 +2185,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
                 {
                   selectedSubject === 'ingles' ? 'Aula 3 100% Prática • Cumprimentos, Apresentação, Perguntas Básicas, Vocabulário do Cotidiano e Texto • 20 Exercícios TJAM'
-                  : selectedSubject === 'geografia_amazonas' ? '2ª Aula de Hoje • População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial • 20 Questões Gabaritadas'
+                  : selectedSubject === 'geografia_amazonas' ? '2ª Aula • População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial • 20 Questões Gabaritadas'
                   : selectedSubject === 'legislacao_tjam' ? 'Aula 2 de Hoje • 20 Questões Gabaritadas + Vídeo Aula Exclusiva • Foco FGV TJAM'
                   : selectedSubject === 'libras' ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Expressões Faciais • Libras ≠ Português Sinalizado • Exercícios no WhatsApp'
                   : selectedSubject === 'processo_penal' ? 'Quarta Aula de Hoje • Eficácia no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação (Art. 3º) e Fontes • 20 Questões TJAM'
@@ -2312,13 +2314,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <span className="p-2 rounded-xl bg-amber-600 text-white font-bold text-base">🎯</span>
             <div>
               <p className="font-black text-amber-300 dark:text-amber-200 flex items-center gap-2">
-                <span>Metas de Hoje: 3 Aulas Programadas para Conclusão</span>
+                <span>Metas de Hoje: 2 Aulas Programadas para Conclusão</span>
                 <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-extrabold text-[10px]">
-                  {((savedLessonsStore['direito_const']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0) + (savedLessonsStore['geografia_amazonas']?.completed ? 1 : 0))}/3 Concluídas
+                  {((savedLessonsStore['direito_const']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0))}/2 Concluídas
                 </span>
               </p>
               <p className="text-slate-400">
-                1. Direito Constitucional (1ª Aula) • 2. Informática (2ª Aula de Hoje) • 3. Meta 3 do Dia.
+                1. Direito Constitucional (1ª Aula) • 2. Informática (2ª Aula de Hoje).
               </p>
             </div>
           </div>
@@ -2329,18 +2331,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           )}
         </div>
 
-        {/* 1. SEÇÃO PRINCIPAL: AS 3 AULAS DE HOJE */}
+        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
-              <span>⭐ As 3 Aulas de Hoje (Metas Obrigatórias)</span>
+              <span>⭐ As 2 Aulas de Hoje (Metas Obrigatórias)</span>
             </span>
             <span className="text-[10px] text-slate-400 font-semibold">
-              Prioridade máxima do dia para a dupla
+              Prioridade máxima do dia
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-emerald-500/10 border-2 border-amber-500/40 shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-indigo-500/10 border-2 border-amber-500/40 shadow-md">
             {/* 1. Direito Constitucional: 1ª Aula */}
             <button
               onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
@@ -2395,35 +2397,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-cyan-500/40 text-cyan-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
-                )}
-              </div>
-            </button>
-
-            {/* 3. Geografia do Amazonas / Meta 3 */}
-            <button
-              onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
-                selectedSubject === 'geografia_amazonas'
-                  ? 'bg-emerald-600 text-white shadow-lg ring-2 ring-emerald-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between w-full">
-                <span className="text-lg">🌳</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200">Meta 3 de Hoje</span>
-              </div>
-              <div className="w-full">
-                <div className="font-extrabold text-sm">Geografia do Amazonas — 2ª Aula</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Aspectos Humanos e Econômicos (ZFM, População)</div>
-              </div>
-              <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[11px] font-bold">20 Questões • 15 Cards • 2 Vídeos</span>
-                {savedLessonsStore['geografia_amazonas']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['geografia_amazonas']?.selectedAnswers && Object.keys(savedLessonsStore['geografia_amazonas'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
-                ) : (
-                  <span className="text-[10px] bg-emerald-500/40 text-emerald-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2555,20 +2528,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               )}
             </button>
 
-            {/* Informática: 2ª Aula de Hoje */}
+            {/* Geografia do Amazonas: 2ª Aula */}
             <button
-              onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'informatica'
-                  ? 'bg-cyan-600 text-white shadow-md ring-2 ring-cyan-400/40'
+              onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'geografia_amazonas'
+                  ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-cyan-300" />
-                <span>💻 Informática (2ª Aula)</span>
+                <span>🌳 Geografia AM (2ª Aula)</span>
               </div>
-              {savedLessonsStore['informatica']?.completed ? (
+              {savedLessonsStore['geografia_amazonas']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">2ª Aula</span>
@@ -2654,7 +2626,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               {selectedSubject === 'ingles'
                 ? '🇬🇧 Língua Inglesa (Aula 3 Prática)'
                 : selectedSubject === 'geografia_amazonas'
-                ? '🌳 Geografia do Amazonas (2ª Aula de Hoje)'
+                ? '🌳 Geografia do Amazonas (2ª Aula)'
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM (Aula 1 de 3)'
                 : selectedSubject === 'portugues'

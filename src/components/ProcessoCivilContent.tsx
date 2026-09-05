@@ -54,7 +54,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 uppercase tracking-wider flex items-center gap-1.5">
             <Scale className="w-3.5 h-3.5 text-indigo-400" />
-            Processo Civil • Aula 2 (Meta 3 de Hoje)
+            Processo Civil • Aula 2
           </span>
           <span className="text-xs font-bold text-slate-400">
             Lei nº 13.105/2015 (CPC) • Foco TJAM

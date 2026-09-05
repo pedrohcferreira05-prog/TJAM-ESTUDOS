@@ -85,26 +85,25 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
     tag: '💻 INFORMÁTICA (2ª AULA)',
     orderNumber: 2,
   },
+];
+
+// Demais Disciplinas e Aulas Disponíveis
+const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
   {
     id: 'geografia_amazonas',
     subjectKey: 'geografia_amazonas',
-    title: 'Geografia do Amazonas — 2ª Aula (Meta 3)',
+    title: 'Geografia do Amazonas — 2ª Aula',
     subtitle: 'Aspectos Humanos e Econômicos: População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial',
     category: 'Conhecimentos Gerais',
-    badge: 'Meta 3 de Hoje • Aspectos Humanos & Econômicos',
+    badge: 'Aula 2 • Aspectos Humanos & Econômicos',
     color: 'emerald',
     icon: Trees,
     duration: '40 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '🌳 GEOGRAFIA AM (META 3)',
+    tag: '🌳 GEOGRAFIA AM',
     orderNumber: 3,
   },
-];
-
-// Demais Disciplinas e Aulas Disponíveis
-const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
   {
     id: 'portugues',
     subjectKey: 'portugues',
@@ -289,7 +288,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 3 Aulas Programadas para Hoje
+              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 2 Aulas Programadas para Hoje
             </div>
 
             <div className="px-3 py-1 rounded-full text-xs font-black bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center gap-1.5">
@@ -301,11 +300,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Olá, Eduardo!
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-emerald-500 font-bold">3 aulas programadas para conclusão hoje</strong> são: <strong className="text-amber-400">1. Direito Constitucional (1ª Aula)</strong>, <strong className="text-cyan-400">2. Informática (2ª Aula de Hoje)</strong> e <strong className="text-emerald-400">3. Meta 3 do Dia</strong>. Conclua as teorias, questões e flashcards abaixo para bater a sua meta diária!
+            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-emerald-500 font-bold">2 aulas programadas para conclusão hoje</strong> são: <strong className="text-amber-400">1. Direito Constitucional (1ª Aula)</strong> e <strong className="text-cyan-400">2. Informática (2ª Aula de Hoje)</strong>. Conclua as teorias, questões e flashcards abaixo para bater a sua meta diária!
           </p>
         </div>
 
-        {/* Primary CTA Banner: Três Aulas de Hoje */}
+        {/* Primary CTA Banner: Duas Aulas de Hoje */}
         <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-amber-900/90 via-slate-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-amber-950/20 border border-amber-500/30">
           <div className="space-y-2 max-w-xl">
             <div className="flex flex-wrap items-center gap-2">
@@ -313,16 +312,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <Target className="w-3.5 h-3.5 text-amber-300" /> Metas Obrigatórias de Hoje
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 3 Aulas de Hoje • 135 min total
+                <Clock className="w-3.5 h-3.5" /> 2 Aulas de Hoje • 90 min total
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Dir. Constitucional, Informática & Meta 3</h2>
+            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Dir. Constitucional & Informática</h2>
             <p className="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">
-              <strong>1. Dir. Constitucional (1ª Aula):</strong> Aplicabilidade das Normas (Plena, Contida e Limitada) • <strong>2. Informática (2ª Aula):</strong> Segurança da Informação (CID, Senhas, Malware, Backup) • <strong>3. Meta 3:</strong> Geografia AM.
+              <strong>1. Dir. Constitucional (1ª Aula):</strong> Aplicabilidade das Normas (Plena, Contida e Limitada) • <strong>2. Informática (2ª Aula):</strong> Segurança da Informação (CID, Senhas, Malware, Backup).
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
             <button
               onClick={() => handleOpenLesson('direito_const')}
               className="px-4 py-3 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
@@ -337,18 +336,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span>💻 2. Informática (2ª Aula)</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
-            <button
-              onClick={() => handleOpenLesson('geografia_amazonas')}
-              className="px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <span>🌳 3. Meta 3</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
           </div>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 3 AULAS A SEREM CONCLUÍDAS HOJE */}
+      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
       <div className="space-y-5">
         <div
           className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
@@ -363,11 +355,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-500" />
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 3 Aulas Programadas
+                  Metas de Hoje • 2 Aulas Programadas
                 </h2>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 3 disciplinas do dia.
+                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 2 disciplinas do dia.
               </p>
             </div>
 
