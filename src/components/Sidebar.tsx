@@ -54,8 +54,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <h2 className="text-xs font-extrabold text-white truncate">
             Eduardo Mateus
           </h2>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-indigo-400 bg-indigo-500/10 border-indigo-500/20">
-            Sem Dupla • 9º Lugar
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-rose-400 bg-rose-500/10 border-rose-500/20">
+            Sem Dupla • 10º Lugar
           </span>
         </div>
       </div>

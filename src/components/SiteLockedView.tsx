@@ -137,8 +137,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
     { rank: 1, name: 'Lucas Silveira & Mariana Costa', score: '35,0%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
     { rank: 2, name: 'Gabriel Souza & Sofia Albuquerque', score: '33,4%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
     { rank: 3, name: 'Matheus Ribeiro & Beatriz Lima', score: '31,6%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
-    { rank: 8, name: 'Pedro Henrique', score: '21,8%', isUser: false, isSolo: true, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '62%' },
-    { rank: 9, name: 'Eduardo Mateus', score: '19,5%', isUser: true, isSolo: true, bgClass: 'bg-indigo-950/30 border-indigo-500/30 ring-1 ring-indigo-500/20', badgeClass: 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20', barClass: 'bg-indigo-400', barWidth: '56%' },
+    { rank: 7, name: 'Pedro Henrique', score: '24,0%', isUser: false, isSolo: true, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-emerald-600 text-white font-black', barClass: 'bg-emerald-500', barWidth: '69%' },
+    { rank: 10, name: 'Eduardo Mateus', score: '17,2%', isUser: true, isSolo: true, bgClass: 'bg-rose-950/30 border-rose-500/30 ring-1 ring-rose-500/20', badgeClass: 'bg-rose-600 text-white shadow-md shadow-rose-500/20', barClass: 'bg-rose-400', barWidth: '49%' },
   ];
 
   const secondsRemaining = Math.max(0, ((REQUIRED_HOLD_MS - holdTimeElapsed) / 1000)).toFixed(1);
@@ -313,7 +313,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 </div>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/60 border border-slate-800 text-xs text-slate-300">
                   <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Posição: <strong>9º Lugar (19,5% • Sem Dupla)</strong></span>
+                  <span>Posição: <strong className="text-rose-400">10º Lugar (17,2% • Sem Dupla • Queda Geografia)</strong></span>
                 </div>
               </div>
             </div>
@@ -350,8 +350,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 </div>
               </div>
 
-              <p className="text-xs text-rose-200/80 bg-rose-950/70 p-2.5 rounded-xl border border-rose-500/20 leading-relaxed">
-                Como estudante individual sem dupla ativa (9º lugar no ranking com 19,5%), as aulas e o painel continuam congelados até a revisão das pendências.
+              <p className="text-xs text-rose-200/90 bg-rose-950/70 p-2.5 rounded-xl border border-rose-500/20 leading-relaxed font-semibold">
+                O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
               </p>
 
               <div className="flex items-center justify-end pt-1">

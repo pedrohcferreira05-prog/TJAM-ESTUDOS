@@ -110,8 +110,8 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden sm:inline truncate max-w-[170px] font-bold">
               Eduardo Mateus
             </span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-extrabold hidden md:inline">
-              9º Lugar
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-extrabold hidden md:inline">
+              10º Lugar
             </span>
           </button>
         </div>

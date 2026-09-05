@@ -2212,9 +2212,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/10">
           {/* Progresso e Ranking Card */}
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
-            <div className="flex items-center gap-2 text-amber-400 font-black text-xs uppercase tracking-wider">
-              <Trophy className="w-4 h-4" />
-              <span>Ranking Geral de Duplas</span>
+            <div className="flex items-center justify-between text-amber-400 font-black text-xs uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
+                <span>Ranking Geral de Alunos</span>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30">
+                Penalidade Aplicada
+              </span>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-100 font-semibold leading-normal">
+              📢 <strong>Comunicado:</strong> O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
             </div>
 
             <div className="space-y-2">
@@ -2225,10 +2234,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 { pos: 4, name: 'Thiago Martins & Camila Duarte', pct: '30,0%', isUser: false, isSolo: false },
                 { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, isSolo: false },
                 { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, isSolo: false },
-                { pos: 7, name: 'Bruno Carvalho & Larissa Ferreira', pct: '24,0%', isUser: false, isSolo: false },
-                { pos: 8, name: 'Pedro Henrique', pct: '21,8%', isUser: false, isSolo: true },
-                { pos: 9, name: 'Eduardo Mateus', pct: '19,5%', isUser: true, isSolo: true },
-                { pos: 10, name: 'Felipe Andrade & Letícia Ramos', pct: '17,2%', isUser: false, isSolo: false },
+                { pos: 7, name: 'Pedro Henrique', pct: '24,0%', isUser: false, isSolo: true },
+                { pos: 8, name: 'Bruno Carvalho & Larissa Ferreira', pct: '21,8%', isUser: false, isSolo: false },
+                { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false, isSolo: false },
+                { pos: 10, name: 'Eduardo Mateus', pct: '17,2%', isUser: true, isSolo: true },
                 { pos: 11, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '15,0%', isUser: false, isSolo: false },
                 { pos: 12, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false },
                 { pos: 13, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false },
@@ -2237,7 +2246,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   key={d.pos}
                   className={`flex items-center justify-between p-2.5 rounded-xl border ${
                     d.isUser
-                      ? 'bg-indigo-500/15 border-indigo-400/40 shadow-sm ring-1 ring-indigo-400/30'
+                      ? 'bg-rose-500/15 border-rose-400/40 shadow-sm ring-1 ring-rose-400/30'
                       : 'bg-slate-800/60 border-slate-700/80'
                   }`}
                 >
@@ -2245,9 +2254,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span
                       className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center shrink-0 ${
                         d.isUser
-                          ? 'bg-indigo-600 text-white shadow-sm'
+                          ? 'bg-rose-600 text-white shadow-sm'
                           : d.pos === 1
                           ? 'bg-amber-500 text-slate-950'
+                          : d.pos === 7 && d.name === 'Pedro Henrique'
+                          ? 'bg-emerald-600 text-white'
                           : 'bg-slate-700 text-slate-300'
                       }`}
                     >
@@ -2256,7 +2267,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                       <span
                         className={`text-xs font-extrabold truncate ${
-                          d.isUser ? 'text-indigo-300' : 'text-slate-300'
+                          d.isUser ? 'text-rose-300' : 'text-slate-300'
                         }`}
                       >
                         {d.name}
@@ -2267,15 +2278,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                         </span>
                       )}
                       {d.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
-                          <span>Eduardo • Sem Dupla (9º)</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
+                          <span>Eduardo • Sem Dupla (10º • Queda Geografia)</span>
                         </span>
                       )}
                     </div>
                   </div>
                   <span
                     className={`text-xs font-black shrink-0 ${
-                      d.isUser ? 'text-indigo-400' : 'text-slate-400'
+                      d.isUser ? 'text-rose-400' : d.pos === 7 && d.name === 'Pedro Henrique' ? 'text-emerald-400 font-extrabold' : 'text-slate-400'
                     }`}
                   >
                     {d.pct}

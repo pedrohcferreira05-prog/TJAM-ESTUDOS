@@ -21,24 +21,24 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
 
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                Aulas Congeladas
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30">
+                COMUNICADO
               </span>
               <span className="font-bold text-slate-200">
-                Liberação de aulas pausada
+                Status no Ranking Atualizado
               </span>
             </div>
-            <p className="text-slate-400 text-xs mt-0.5 leading-normal">
-              As novas aulas não foram liberadas porque você não entregou os exercícios e a sequência diária foi perdida.
+            <p className="text-slate-200 text-xs sm:text-sm mt-0.5 leading-normal font-medium">
+              O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
             </p>
           </div>
         </div>
 
         {/* Status Indicators */}
         <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-300">
-            <Lock className="w-3.5 h-3.5 text-amber-400" />
-            <span>Eduardo Mateus: <strong className="text-amber-300 font-bold">9º lugar (19,5% • Sem Dupla)</strong></span>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-rose-500/30 text-xs font-semibold text-slate-300">
+            <Lock className="w-3.5 h-3.5 text-rose-400" />
+            <span>Eduardo Mateus: <strong className="text-rose-300 font-bold">10º lugar (17,2% • Sem Dupla)</strong></span>
           </div>
 
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-400">
