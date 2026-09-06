@@ -28,6 +28,7 @@ import {
   Download,
   FileCheck
 } from 'lucide-react';
+import { OfficialSimuladoFlow } from './OfficialSimuladoFlow';
 
 interface SimuladosViewProps {
   simulados: Simulado[];
@@ -334,6 +335,17 @@ export const SimuladosView: React.FC<SimuladosViewProps> = ({
             </div>
           )}
         </div>
+      ) : activeSimulado && (activeSimulado.id === 'simulado-oficial-80q' || activeSimulado.totalQuestions === 80) ? (
+        <OfficialSimuladoFlow
+          simulado={activeSimulado}
+          onSaveAttempt={(att) => {
+            onSaveSimuladoAttempt(att);
+          }}
+          onExit={() => {
+            setTestMode(false);
+            setActiveSimulado(null);
+          }}
+        />
       ) : (
         /* Active Simulado Test Runner, Pre-Start Instructions or Results */
         <div className="space-y-6" id="print-section">

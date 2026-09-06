@@ -161,6 +161,9 @@ export interface SimuladoAttempt {
   percentage: number;
   userAnswers: Record<string, string>; // questionId -> selectedOptionId
   timeSpentSeconds: number;
+  participantName?: string;
+  partnerName?: string;
+  deviceUsed?: 'Celular' | 'Tablet' | 'Notebook';
 }
 
 export interface NewsItem {

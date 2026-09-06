@@ -59,11 +59,11 @@ export function App() {
   useEffect(() => {
     document.documentElement.classList.add('dark');
     localStorage.setItem('tjam_theme', 'dark');
-    localStorage.removeItem('tjam_site_locked');
+    localStorage.setItem('tjam_site_locked', 'true');
   }, []);
 
-  // Site lock state (unlocked by default)
-  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
+  // Site lock state (Hidden and locked for Simulado preparation)
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(true);
 
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');

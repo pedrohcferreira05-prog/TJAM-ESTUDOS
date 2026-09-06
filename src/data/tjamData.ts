@@ -15,6 +15,7 @@ import { ALL_TJAM_QUESTIONS } from './tjamQuestionsData';
 import { ALL_TJAM_FLASHCARDS } from './tjamFlashcardsData';
 import { ALL_TJAM_MINDMAPS } from './tjamMindMapsData';
 import { OFFICIAL_SIMULADO_GERAL_TJAM } from './simuladoGeralTjam';
+import { SIMULADO_80_OBJETO } from './simulado80QuestoesData';
 
 export const SAMPLE_QUESTIONS: Question[] = ALL_TJAM_QUESTIONS;
 export const INITIAL_FLASHCARDS: Flashcard[] = ALL_TJAM_FLASHCARDS;
@@ -287,6 +288,7 @@ export const TJAM_DISCIPLINES: Discipline[] = [
 ];
 
 export const INITIAL_SIMULADOS: Simulado[] = [
+  SIMULADO_80_OBJETO,
   OFFICIAL_SIMULADO_GERAL_TJAM,
   {
     id: 'sim-tjam-01',
