@@ -57,11 +57,13 @@ export type AllowedDevice = 'Celular' | 'Tablet' | 'Notebook';
 
 // Steps:
 // 'identification' = Etapa 1: Identificação do Aluno & Seleção e Salvamento do Dispositivo (Celular, Tablet, Notebook)
+// 'welcome'        = Boas-vindas simples antes das etapas e do simulado
+// 'identification' = Etapa 1: Identificação do Aluno & Seleção e Salvamento do Dispositivo (Celular, Tablet, Notebook)
 // 'instructions'   = Etapa 2: Instruções Oficiais & Regras Rigorosas (Sem distrações, avisar família, outros desligados, sem anotações, etc.)
 // 'exam'           = Etapa 3: Realização da Prova Oficial (80 questões com obrigatoriedade de 100% de preenchimento)
 // 'confirm'        = Etapa 4: Página de Confirmação com botão de pressão para encerrar em definitivo
 // 'closed'         = Etapa 5: Página de Encerramento com bloqueio permanente, orientação para envio ao professor e download do PDF profissional
-type SimuladoFlowStep = 'identification' | 'instructions' | 'exam' | 'confirm' | 'closed';
+type SimuladoFlowStep = 'welcome' | 'identification' | 'instructions' | 'exam' | 'confirm' | 'closed';
 
 export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   simulado = SIMULADO_80_OBJETO,
@@ -90,7 +92,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
     if (isLocked && saved) {
       return 'closed';
     }
-    return 'identification';
+    return 'welcome';
   });
 
   // Candidate Identification State
@@ -822,9 +824,11 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[11px] font-mono text-sky-400 font-bold hidden sm:inline">
-              Dispositivo: {selectedDevice}
-            </span>
+            {currentStep !== 'welcome' && (
+              <span className="text-[11px] font-mono text-sky-400 font-bold hidden sm:inline">
+                Dispositivo: {selectedDevice}
+              </span>
+            )}
             {currentStep === 'exam' && (
               <button
                 type="button"
@@ -841,6 +845,113 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
 
       {/* Main Container */}
       <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col">
+
+        {/* =================================================================== */}
+        {/* ETAPA 0: PÁGINA DE BOAS-VINDAS SIMPLES                             */}
+        {/* =================================================================== */}
+        {currentStep === 'welcome' && (
+          <div className="max-w-3xl mx-auto w-full space-y-6 animate-in fade-in duration-300 py-4 sm:py-8">
+            <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl space-y-8">
+              {/* Header / Apresentação */}
+              <div className="text-center space-y-3 border-b border-slate-800/80 pb-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-black tracking-wide">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Tribunal de Justiça do Amazonas • Simulado 2026</span>
+                </div>
+
+                <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                  Bem-vindo(a) ao Simulado Oficial
+                </h1>
+
+                <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+                  Avaliação preparatória com <strong>80 questões</strong> estruturadas no padrão oficial da banca para mensurar sua prontidão, tempo de resposta e fixação dos conteúdos do TJAM.
+                </p>
+              </div>
+
+              {/* Destaques Rápidos */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-xs font-black text-white uppercase tracking-wider">
+                    80 Questões
+                  </h2>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Processo Civil, Penal, Constitucional, Administrativo, Legislação, Português e RLM.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-xs font-black text-white uppercase tracking-wider">
+                    Foco & Ritmo Real
+                  </h2>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Cronômetro regulamentar e registro de dispositivo para simulação autêntica de prova.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-xs font-black text-white uppercase tracking-wider">
+                    Laudo e Gabarito
+                  </h2>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Auditoria completa com aproveitamento por disciplina e PDF oficial para envio ao professor.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fluxo de Etapas Simplificado */}
+              <div className="p-4 rounded-2xl bg-slate-950/50 border border-slate-800/60 space-y-2.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">
+                  Como funciona a avaliação (3 etapas simples):
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                    <span className="w-5 h-5 rounded-full bg-sky-500/20 text-sky-300 text-[10px] font-black flex items-center justify-center shrink-0">1</span>
+                    <span className="text-slate-300 text-[11px] font-semibold">Identificação e Aparelho</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                    <span className="w-5 h-5 rounded-full bg-sky-500/20 text-sky-300 text-[10px] font-black flex items-center justify-center shrink-0">2</span>
+                    <span className="text-slate-300 text-[11px] font-semibold">Instruções e Regras</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                    <span className="w-5 h-5 rounded-full bg-sky-500/20 text-sky-300 text-[10px] font-black flex items-center justify-center shrink-0">3</span>
+                    <span className="text-slate-300 text-[11px] font-semibold">Prova Oficial (80Q)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ações / Iniciar */}
+              <div className="pt-2 space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep('identification')}
+                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-black text-sm uppercase tracking-wider shadow-xl shadow-sky-600/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99]"
+                >
+                  <span>Iniciar Etapas do Simulado</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                {onExit && (
+                  <button
+                    type="button"
+                    onClick={onExit}
+                    className="w-full py-2.5 text-xs text-slate-400 hover:text-slate-200 font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <span>Voltar ao painel principal</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* =================================================================== */}
         {/* ETAPA 1: IDENTIFICAÇÃO DO PARTICIPANTE & SELEÇÃO DO DISPOSITIVO     */}
@@ -1005,7 +1116,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
               </div>
 
               {/* Botão Avançar para Etapa 2 */}
-              <div className="pt-2">
+              <div className="pt-2 space-y-2.5">
                 <button
                   type="button"
                   onClick={handleProceedToInstructions}
@@ -1013,6 +1124,15 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                 >
                   <span>Avançar para Etapa 2: Instruções e Regras</span>
                   <ArrowRight className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep('welcome')}
+                  className="w-full py-2.5 text-xs text-slate-400 hover:text-slate-200 font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Voltar para tela de boas-vindas</span>
                 </button>
               </div>
             </div>
