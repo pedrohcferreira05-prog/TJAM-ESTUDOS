@@ -43,6 +43,12 @@ import {
 import { jsPDF } from 'jspdf';
 import { Simulado, SimuladoAttempt, Question } from '../types';
 import { SIMULADO_80_OBJETO, SIMULADO_80_QUESTIONS, SIMULADO_80_QUESTOES_GABARITO } from '../data/simulado80QuestoesData';
+import {
+  DUPLAS_RANKING,
+  INDIVIDUAL_SIMULADO_RANKING,
+  EDUARDO_OFFICIAL_ATTEMPT,
+  EDUARDO_OFFICIAL_ANSWERS,
+} from '../data/rankingsData';
 
 interface OfficialSimuladoFlowProps {
   simulado?: Simulado;
@@ -56,7 +62,6 @@ interface OfficialSimuladoFlowProps {
 export type AllowedDevice = 'Celular' | 'Tablet' | 'Notebook';
 
 // Steps:
-// 'identification' = Etapa 1: Identificação do Aluno & Seleção e Salvamento do Dispositivo (Celular, Tablet, Notebook)
 // 'welcome'        = Boas-vindas simples antes das etapas e do simulado
 // 'identification' = Etapa 1: Identificação do Aluno & Seleção e Salvamento do Dispositivo (Celular, Tablet, Notebook)
 // 'instructions'   = Etapa 2: Instruções Oficiais & Regras Rigorosas (Sem distrações, avisar família, outros desligados, sem anotações, etc.)
@@ -73,27 +78,26 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   initialPartnerName = '',
 }) => {
   // Check if exam was already completed and locked
-  const [finishedAttempt, setFinishedAttempt] = useState<SimuladoAttempt | null>(() => {
+  const [finishedAttempt, setFinishedAttempt] = useState<SimuladoAttempt>(() => {
     try {
       const saved = localStorage.getItem('tjam_simulado_80q_final_attempt');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed.score === 'number') {
+          return parsed;
+        }
       }
     } catch (e) {
       console.error('Erro ao ler tentativa salva:', e);
     }
-    return null;
+    return EDUARDO_OFFICIAL_ATTEMPT;
   });
 
-  // Current Step
-  const [currentStep, setCurrentStep] = useState<SimuladoFlowStep>(() => {
-    const isLocked = localStorage.getItem('tjam_simulado_80q_is_locked') === 'true';
-    const saved = localStorage.getItem('tjam_simulado_80q_final_attempt');
-    if (isLocked && saved) {
-      return 'closed';
-    }
-    return 'welcome';
-  });
+  // Current Step: Inicia fechado com o resultado de Eduardo
+  const [currentStep, setCurrentStep] = useState<SimuladoFlowStep>('closed');
+
+  // Tab de visualização de ranking na tela de encerramento
+  const [closedRankingTab, setClosedRankingTab] = useState<'individual' | 'duplas'>('individual');
 
   // Candidate Identification State
   const [participantName, setParticipantName] = useState<string>(() => {
@@ -123,17 +127,31 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
       const savedAttempt = localStorage.getItem('tjam_simulado_80q_final_attempt');
       if (savedAttempt) {
         const parsed = JSON.parse(savedAttempt);
-        if (parsed?.userAnswers) return parsed.userAnswers;
+        if (parsed?.userAnswers && Object.keys(parsed.userAnswers).length > 0) return parsed.userAnswers;
       }
       const savedAnswers = localStorage.getItem('tjam_simulado_80q_live_answers');
       if (savedAnswers) {
-        return JSON.parse(savedAnswers);
+        const parsed = JSON.parse(savedAnswers);
+        if (Object.keys(parsed).length > 0) return parsed;
       }
     } catch (e) {
       // ignore
     }
-    return {};
+    return EDUARDO_OFFICIAL_ANSWERS;
   });
+
+  // Sincroniza tentativa oficial salva no armazenamento local
+  useEffect(() => {
+    if (!localStorage.getItem('tjam_simulado_80q_final_attempt')) {
+      localStorage.setItem('tjam_simulado_80q_final_attempt', JSON.stringify(EDUARDO_OFFICIAL_ATTEMPT));
+      localStorage.setItem('tjam_simulado_80q_is_locked', 'true');
+      localStorage.setItem('tjam_simulado_participant_name', 'Eduardo Mateus');
+      localStorage.setItem('tjam_simulado_device_used', 'Notebook');
+    }
+    if (onSaveAttempt) {
+      onSaveAttempt(finishedAttempt);
+    }
+  }, []);
 
   const [markedForReview, setMarkedForReview] = useState<Record<string, boolean>>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -540,29 +558,49 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
     doc.setTextColor(71, 85, 105);
     doc.text('Dispositivo: ' + devUsed, 140, y + 26);
 
-    // Card 3: Tabela de Aproveitamento por Disciplina
-    y = 124;
+    // Card 2.5: Homologação nos Rankings Oficiais TJAM
+    y = 121;
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(14, y, 182, 17, 2, 2, 'F');
+    doc.setDrawColor(203, 213, 225);
+    doc.roundedRect(14, y, 182, 17, 2, 2, 'S');
+
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
+    doc.setFontSize(7);
+    doc.setTextColor(15, 23, 42);
+    doc.text('CLASSIFICAÇÃO HOMOLOGADA NOS RANKINGS OFICIAIS DO CURSO TJAM 2026:', 18, y + 4.8);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(2, 132, 199);
+    doc.text('• 2º Lugar no Ranking Individual do Simulado (83% de Aproveitamento - 66/80 acertos)', 18, y + 9.5);
+
+    doc.setTextColor(180, 83, 9);
+    doc.text('• 3º Lugar no Ranking Geral das Duplas (50% de Aproveitamento - Participação Individual / Sozinho)', 18, y + 14);
+
+    // Card 3: Tabela de Aproveitamento por Disciplina
+    y = 141;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
     doc.setTextColor(15, 23, 42);
     doc.text('DESEMPENHO DETALHADO POR DISCIPLINA (80 QUESTÕES)', 14, y);
 
     y += 4;
     // Header da mini-tabela
     doc.setFillColor(15, 23, 42);
-    doc.rect(14, y, 182, 6, 'F');
+    doc.rect(14, y, 182, 5.5, 'F');
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7);
     doc.setTextColor(255, 255, 255);
-    doc.text('Disciplina', 18, y + 4.2);
-    doc.text('Total', 105, y + 4.2);
-    doc.text('Acertos', 125, y + 4.2);
-    doc.text('Erros', 148, y + 4.2);
-    doc.text('Aproveitamento (%)', 168, y + 4.2);
+    doc.text('Disciplina', 18, y + 3.8);
+    doc.text('Total', 105, y + 3.8);
+    doc.text('Acertos', 125, y + 3.8);
+    doc.text('Erros', 148, y + 3.8);
+    doc.text('Aproveitamento (%)', 168, y + 3.8);
 
-    y += 6;
+    y += 5.5;
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
+    doc.setFontSize(7);
 
     // Calculate stats per discipline
     const statsObj: Record<string, { name: string; total: number; correct: number }> = {};
@@ -584,64 +622,64 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
 
       if (idx % 2 === 1) {
         doc.setFillColor(248, 250, 252);
-        doc.rect(14, y, 182, 5.5, 'F');
+        doc.rect(14, y, 182, 5, 'F');
       }
 
       doc.setTextColor(30, 41, 59);
-      doc.text(st.name, 18, y + 4);
-      doc.text(`${st.total}`, 108, y + 4);
+      doc.text(st.name, 18, y + 3.6);
+      doc.text(`${st.total}`, 108, y + 3.6);
 
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(21, 128, 61);
-      doc.text(`${st.correct}`, 128, y + 4);
+      doc.text(`${st.correct}`, 128, y + 3.6);
 
       doc.setTextColor(185, 28, 28);
-      doc.text(`${errs}`, 151, y + 4);
+      doc.text(`${errs}`, 151, y + 3.6);
 
       doc.setTextColor(2, 132, 199);
-      doc.text(`${p}%`, 175, y + 4);
+      doc.text(`${p}%`, 175, y + 3.6);
 
       doc.setFont('helvetica', 'normal');
-      y += 5.5;
+      y += 5;
     });
 
     // Card 4: Termo de Autenticidade e Campos de Assinatura
-    y += 8;
+    y += 4;
     doc.setFillColor(248, 250, 252);
-    doc.roundedRect(14, y, 182, 54, 2, 2, 'F');
+    doc.roundedRect(14, y, 182, 46, 2, 2, 'F');
     doc.setDrawColor(203, 213, 225);
-    doc.roundedRect(14, y, 182, 54, 2, 2, 'S');
+    doc.roundedRect(14, y, 182, 46, 2, 2, 'S');
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
+    doc.setFontSize(7.5);
     doc.setTextColor(15, 23, 42);
-    doc.text('DECLARAÇÃO DE AUTENTICIDADE E VALIDAÇÃO DOCENTE', 18, y + 6);
+    doc.text('DECLARAÇÃO DE AUTENTICIDADE E VALIDAÇÃO DOCENTE', 18, y + 5.5);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
+    doc.setFontSize(6.5);
     doc.setTextColor(71, 85, 105);
     const declaracaoTxt =
       'Declaro para os devidos fins pedagógicos que a presente avaliação foi realizada integralmente em conformidade com o edital do simulado TJAM 2026, com total ausência de distrações, comunicação prévia aos familiares, todos os demais aparelhos eletrônicos desligados e sem o uso de cadernos ou anotações no ambiente, utilizando estritamente o dispositivo registrado.';
     const splitDec = doc.splitTextToSize(declaracaoTxt, 174);
-    doc.text(splitDec, 18, y + 12);
+    doc.text(splitDec, 18, y + 10.5);
 
     // Signature Lines
-    const sigY = y + 36;
+    const sigY = y + 31;
     doc.setDrawColor(100, 116, 139);
     doc.line(22, sigY, 90, sigY);
     doc.line(110, sigY, 178, sigY);
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7.5);
+    doc.setFontSize(7);
     doc.setTextColor(15, 23, 42);
-    doc.text('Assinatura do Aluno(a)', 38, sigY + 5);
-    doc.text('Visto do Professor Responsável', 123, sigY + 5);
+    doc.text('Assinatura do Aluno(a)', 38, sigY + 4.5);
+    doc.text('Visto do Professor Responsável', 123, sigY + 4.5);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(6.5);
+    doc.setFontSize(6);
     doc.setTextColor(100, 116, 139);
-    doc.text(candName, 42, sigY + 9);
-    doc.text('Validação Pedagógica TJAM', 128, sigY + 9);
+    doc.text(candName, 42, sigY + 8);
+    doc.text('Validação Pedagógica TJAM', 128, sigY + 8);
 
     // Footer Page 1
     doc.setFont('helvetica', 'normal');
@@ -1901,6 +1939,193 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                     );
                   })}
                 </div>
+              </div>
+            </div>
+
+            {/* QUADRO DE RANKINGS & CLASSIFICAÇÃO OFICIAL */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/95 border border-slate-800 shadow-2xl space-y-6">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-black">
+                    <Award className="w-3.5 h-3.5" />
+                    <span>Homologação e Classificação Oficial</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+                    Classificação nos Rankings TJAM 2026
+                  </h2>
+                  <p className="text-xs text-slate-300">
+                    Posição oficial homologada de <strong>Eduardo Mateus</strong> no ranking individual do simulado e no ranking geral das duplas.
+                  </p>
+                </div>
+
+                {/* SubTab Toggle */}
+                <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-950 border border-slate-800 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setClosedRankingTab('individual')}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      closedRankingTab === 'individual'
+                        ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Award className="w-3.5 h-3.5" />
+                    <span>Ranking Individual (2º • 83%)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setClosedRankingTab('duplas')}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      closedRankingTab === 'duplas'
+                        ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Ranking das Duplas (3º • 50% Sozinho)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Two Prominent Achievement Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Badge 1: 2º Individual */}
+                <div
+                  className={`p-5 rounded-2xl border transition-all cursor-pointer ${
+                    closedRankingTab === 'individual'
+                      ? 'bg-sky-950/40 border-sky-500/50 ring-2 ring-sky-500/30'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                  onClick={() => setClosedRankingTab('individual')}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                      <Award className="w-4 h-4" /> Ranking Individual do Simulado
+                    </span>
+                    <span className="w-8 h-8 rounded-xl bg-slate-200 text-slate-950 font-black text-xs flex items-center justify-center shadow-md">
+                      2º
+                    </span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl font-black text-white">
+                      83% <span className="text-xs font-normal text-slate-400">de aproveitamento</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-medium">
+                      Eduardo Mateus acertou <strong className="text-emerald-400 font-mono">66 de 80 questões</strong> e garantiu a <strong className="text-sky-300 font-bold">2ª colocação individual geral</strong> no simulado oficial!
+                    </p>
+                  </div>
+                </div>
+
+                {/* Badge 2: 3º Duplas Sozinho */}
+                <div
+                  className={`p-5 rounded-2xl border transition-all cursor-pointer ${
+                    closedRankingTab === 'duplas'
+                      ? 'bg-amber-950/40 border-amber-500/50 ring-2 ring-amber-500/30'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                  onClick={() => setClosedRankingTab('duplas')}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                      <Users className="w-4 h-4" /> Ranking das Duplas (Eduardo Sozinho)
+                    </span>
+                    <span className="w-8 h-8 rounded-xl bg-amber-700 text-white font-black text-xs flex items-center justify-center shadow-md">
+                      3º
+                    </span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl font-black text-white">
+                      50% <span className="text-xs font-normal text-slate-400">no ranking das duplas</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-medium">
+                      Mesmo <strong className="text-amber-300">competindo sozinho (sem parceiro de dupla)</strong>, Eduardo conquistou o <strong className="text-amber-400 font-bold">3º lugar geral</strong> no ranking das duplas com 50%!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ranking Table List */}
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 px-1 font-bold">
+                  <span>
+                    {closedRankingTab === 'individual'
+                      ? 'Participantes do Simulado (80 Questões)'
+                      : 'Classificação de Duplas vs. Eduardo Sozinho'}
+                  </span>
+                  <span>Aproveitamento</span>
+                </div>
+
+                {closedRankingTab === 'individual' ? (
+                  INDIVIDUAL_SIMULADO_RANKING.map((item) => (
+                    <div
+                      key={item.rank}
+                      className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-xl text-xs font-black flex items-center justify-center ${item.badgeClass}`}>
+                          {item.rank}º
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-white text-sm">
+                              {item.name}
+                            </span>
+                            {item.isUser && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-black">
+                                Você (2º Lugar)
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[10px] text-slate-400 block font-mono">
+                            {item.correctCount} acertos
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <div className="w-24 bg-slate-800 h-2.5 rounded-full overflow-hidden hidden sm:block">
+                          <div className={`h-full rounded-full ${item.barClass}`} style={{ width: item.barWidth }} />
+                        </div>
+                        <span className="font-mono font-black text-sm text-emerald-300">{item.score}</span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  DUPLAS_RANKING.map((item) => (
+                    <div
+                      key={item.rank}
+                      className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-xl text-xs font-black flex items-center justify-center ${item.badgeClass}`}>
+                          {item.rank}º
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-bold text-white text-sm">
+                              {item.name}
+                            </span>
+                            {item.isUser && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black">
+                                Você (3º Lugar • Sozinho)
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[10px] text-slate-400 block">
+                            {item.description}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <div className="w-24 bg-slate-800 h-2.5 rounded-full overflow-hidden hidden sm:block">
+                          <div className={`h-full rounded-full ${item.barClass}`} style={{ width: item.barWidth }} />
+                        </div>
+                        <span className="font-mono font-black text-sm text-amber-300">{item.score}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 

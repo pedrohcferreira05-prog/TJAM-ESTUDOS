@@ -49,6 +49,7 @@ import { AIAssistantModal } from './components/AIAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
 import { SiteLockedView } from './components/SiteLockedView';
+import { RankingsOnlyView } from './components/RankingsOnlyView';
 import { Week1View } from './components/Week1View';
 import { saveWeek1ContentToFirestore } from './lib/firestoreService';
 
@@ -555,25 +556,8 @@ export function App() {
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
 
-  if (isSiteLocked) {
-    return (
-      <SiteLockedView
-        isDarkMode={isDarkMode}
-        simulados={simulados}
-        progress={userProgress}
-        onSaveSimuladoAttempt={handleSaveSimuladoAttempt}
-        onToggleDarkMode={() => {
-          const newMode = !isDarkMode;
-          setIsDarkMode(newMode);
-          localStorage.setItem('tjam_theme', newMode ? 'dark' : 'light');
-        }}
-        onUnlockSite={() => {
-          setIsSiteLocked(false);
-          localStorage.setItem('tjam_site_locked', 'false');
-        }}
-      />
-    );
-  }
+  // Diretiva estrita: "Somente mostre os rankings, nada mais, coloque um PDF profissional com os dados dos rankings para baixar"
+  return <RankingsOnlyView />;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative selection:bg-sky-500/30">

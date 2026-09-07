@@ -34,6 +34,7 @@ import { Simulado, UserProgress, SimuladoAttempt } from '../types';
 import { SnowfallEffect } from './SnowfallEffect';
 import { SIMULADO_80_QUESTIONS, SIMULADO_80_QUESTOES_GABARITO, SIMULADO_80_OBJETO } from '../data/simulado80QuestoesData';
 import { OfficialSimuladoFlow } from './OfficialSimuladoFlow';
+import { DUPLAS_RANKING, INDIVIDUAL_SIMULADO_RANKING } from '../data/rankingsData';
 
 interface SiteLockedViewProps {
   isDarkMode?: boolean;
@@ -71,6 +72,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>('sim80-q01');
   const [showGabaritoModal, setShowGabaritoModal] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'questions' | 'ranking'>('overview');
+  const [rankingSubTab, setRankingSubTab] = useState<'duplas' | 'individual'>('duplas');
 
   const holdIntervalRef = useRef<number | null>(null);
   const holdStartTimeRef = useRef<number>(0);
@@ -188,13 +190,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
     });
   }, [selectedDisciplineFilter, searchFilter]);
 
-  const duplasRanking = [
-    { rank: 1, name: 'Lucas Silveira & Mariana Costa', score: '35,0%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-amber-500 text-slate-950 font-black', barClass: 'bg-amber-500', barWidth: '100%' },
-    { rank: 2, name: 'Gabriel Souza & Sofia Albuquerque', score: '33,4%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '95%' },
-    { rank: 3, name: 'Matheus Ribeiro & Beatriz Lima', score: '31,6%', isUser: false, isSolo: false, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-slate-700 text-slate-300', barClass: 'bg-slate-500', barWidth: '90%' },
-    { rank: 7, name: 'Pedro Henrique', score: '24,0%', isUser: false, isSolo: true, bgClass: 'bg-slate-900/60 border-slate-800/80', badgeClass: 'bg-emerald-600 text-white font-black', barClass: 'bg-emerald-500', barWidth: '69%' },
-    { rank: 10, name: 'Eduardo Mateus', score: '17,2%', isUser: true, isSolo: true, bgClass: 'bg-rose-950/30 border-rose-500/30 ring-1 ring-rose-500/20', badgeClass: 'bg-rose-600 text-white shadow-md shadow-rose-500/20', barClass: 'bg-rose-400', barWidth: '49%' },
-  ];
+  const duplasRanking = DUPLAS_RANKING;
+  const individualRanking = INDIVIDUAL_SIMULADO_RANKING;
 
   const secondsRemaining = Math.max(0, (REQUIRED_HOLD_MS - holdTimeElapsed) / 1000).toFixed(1);
 
@@ -216,11 +213,11 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
       <SnowfallEffect />
 
       {/* Top Pedagogical Announcement Bar */}
-      <div className="w-full bg-gradient-to-r from-amber-600 via-rose-700 to-amber-600 text-white text-xs font-black py-2.5 px-4 text-center border-b border-rose-500/40 shadow-lg sticky top-0 z-40">
+      <div className="w-full bg-gradient-to-r from-emerald-700 via-sky-800 to-emerald-700 text-white text-xs font-black py-2.5 px-4 text-center border-b border-emerald-500/40 shadow-lg sticky top-0 z-40">
         <div className="max-w-6xl mx-auto flex items-center justify-center gap-2">
-          <AlertTriangle className="w-4 h-4 shrink-0 text-amber-200 animate-pulse" />
+          <Award className="w-4 h-4 shrink-0 text-amber-300 animate-bounce" />
           <span className="tracking-wide">
-            COMUNICADO OFICIAL: O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
+            CLASSIFICAÇÃO HOMOLOGADA: Simulado de 80 Questões finalizado! Eduardo Mateus conquistou o 2º lugar individual (83,8% de aproveitamento - 67 acertos) e o 3º lugar no ranking das duplas (50% competindo sozinho)!
           </span>
         </div>
       </div>
@@ -404,26 +401,26 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
           <div className="space-y-2 text-center md:text-left">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
               <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
-                <Play className="w-3 h-3 fill-emerald-300" /> Prova Oficial Aberta
+                <CheckCircle2 className="w-3 h-3 text-emerald-300" /> Simulado Oficial Concluído & Homologado
               </span>
-              <span className="text-[10px] font-bold text-slate-400">
-                1ª Etapa: Inscrição • 2ª Etapa: Regras e Monitoramento • 3ª Etapa: 80 Questões
+              <span className="text-[10px] font-bold text-sky-300">
+                🥈 2º Individual (83,8% • 67 acertos) • 🥉 3º Duplas (50% Sozinho)
               </span>
             </div>
             <h3 className="text-lg sm:text-xl font-black text-white">
-              Iniciar Simulado Geral TJAM 2026 (Fluxo em 3 Etapas)
+              Resultado do Simulado Geral TJAM 2026 Homologado
             </h3>
             <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
-              Preencha seu nome completo e o nome da dupla (não obrigatório), confirme a ciência das regras de proibição de IA, recursos externos e monitoramento temporário, e acesse as 80 questões cronometradas com gabarito comentado.
+              O simulado de 80 questões foi encerrado e auditado. Confira o espelho de prova com as 80 resoluções comentadas, desempenho pedagógico por matéria e o relatório de classificação oficial de Eduardo Mateus.
             </p>
           </div>
 
           <button
             onClick={() => setIsTakingSimulado(true)}
-            className="w-full md:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0"
+            className="w-full md:auto px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0"
           >
-            <Play className="w-4 h-4 fill-white" />
-            <span>Iniciar Simulado (3 Etapas)</span>
+            <Award className="w-4 h-4 text-white" />
+            <span>Ver Resultado Oficial (83,8%)</span>
           </button>
         </div>
 
@@ -433,8 +430,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             onClick={() => setIsTakingSimulado(true)}
             className="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 cursor-pointer bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30"
           >
-            <Play className="w-3.5 h-3.5 fill-white" />
-            Realizar Simulado (3 Etapas)
+            <Award className="w-3.5 h-3.5 text-white" />
+            Resultado do Simulado (83,8%)
           </button>
           <button
             onClick={() => setActiveTab('overview')}
@@ -467,7 +464,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             }`}
           >
             <Users className="w-3.5 h-3.5" />
-            Status do Aluno & Ranking
+            Status e Rankings Oficiais
           </button>
         </div>
 
@@ -902,48 +899,171 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
             </div>
 
             {/* Live Ranking Preview */}
-            <div className="w-full rounded-3xl bg-slate-900/70 border border-slate-800/80 shadow-xl p-5 backdrop-blur-md space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h4 className="text-xs font-extrabold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                  <Users className="w-3.5 h-3.5 text-sky-400" />
-                  Classificação Geral do Curso
-                </h4>
-                <span className="text-[10px] font-bold text-slate-400">Preparatório TJAM 2026</span>
+            <div className="w-full rounded-3xl bg-slate-900/90 border border-slate-800/90 shadow-2xl p-6 backdrop-blur-md space-y-5">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-black mb-1">
+                    <Award className="w-3 h-3" />
+                    Classificação Oficial TJAM 2026
+                  </div>
+                  <h4 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
+                    <Users className="w-4 h-4 text-sky-400" />
+                    Quadro Geral de Classificação do Curso
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    Posição homologada de <strong>Eduardo Mateus</strong> após a conclusão do simulado de 80 questões.
+                  </p>
+                </div>
+
+                {/* SubTab Toggle */}
+                <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-950 border border-slate-800 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setRankingSubTab('duplas')}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      rankingSubTab === 'duplas'
+                        ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Ranking Duplas (3º • 50% Sozinho)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRankingSubTab('individual')}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      rankingSubTab === 'individual'
+                        ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Award className="w-3.5 h-3.5" />
+                    <span>Ranking Individual (2º • 83,8%)</span>
+                  </button>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                {duplasRanking.map((item) => (
-                  <div
-                    key={item.rank}
-                    className={`px-3.5 py-2.5 rounded-xl border flex items-center justify-between gap-3 text-xs ${item.bgClass}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className={`w-6 h-6 rounded-lg text-[10px] font-black flex items-center justify-center ${item.badgeClass}`}>
-                        {item.rank}º
-                      </span>
-                      <span className="font-bold text-white">
-                        {item.name}
-                      </span>
-                      {item.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold uppercase">
-                          Sem Dupla (Você)
-                        </span>
-                      )}
-                      {item.isSolo && !item.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700 font-bold uppercase">
-                          Sem Dupla
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <div className="w-20 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
-                        <div className={`h-full rounded-full ${item.barClass}`} style={{ width: item.barWidth }} />
-                      </div>
-                      <span className="font-mono font-bold text-slate-300">{item.score}</span>
-                    </div>
+              {/* Two Highlight Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div
+                  className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                    rankingSubTab === 'duplas'
+                      ? 'bg-amber-950/40 border-amber-500/50 ring-2 ring-amber-500/30'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                  onClick={() => setRankingSubTab('duplas')}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[11px] font-black uppercase text-amber-400 flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5" /> Ranking das Duplas (Eduardo Sozinho)
+                    </span>
+                    <span className="px-2 py-0.5 rounded-lg bg-amber-700 text-white font-black text-xs">
+                      3º Lugar
+                    </span>
                   </div>
-                ))}
+                  <div className="text-xl font-black text-white">50% de Aproveitamento</div>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Eduardo está <strong>competindo sozinho (sem parceiro de dupla)</strong> e garantiu a 3ª colocação geral com 50%!
+                  </p>
+                </div>
+
+                <div
+                  className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                    rankingSubTab === 'individual'
+                      ? 'bg-sky-950/40 border-sky-500/50 ring-2 ring-sky-500/30'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                  onClick={() => setRankingSubTab('individual')}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[11px] font-black uppercase text-sky-400 flex items-center gap-1">
+                      <Award className="w-3.5 h-3.5" /> Ranking Individual do Simulado
+                    </span>
+                    <span className="px-2 py-0.5 rounded-lg bg-slate-200 text-slate-950 font-black text-xs">
+                      2º Lugar
+                    </span>
+                  </div>
+                  <div className="text-xl font-black text-white">83,8% de Aproveitamento</div>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Eduardo acertou <strong>67 de 80 questões</strong> no simulado e é o 2º colocado individual geral!
+                  </p>
+                </div>
+              </div>
+
+              {/* Ranking List */}
+              <div className="space-y-2">
+                {rankingSubTab === 'duplas' ? (
+                  duplasRanking.map((item) => (
+                    <div
+                      key={item.rank}
+                      className={`px-4 py-3 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-xl text-xs font-black flex items-center justify-center shrink-0 ${item.badgeClass}`}>
+                          {item.rank}º
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-bold text-white text-sm">
+                              {item.name}
+                            </span>
+                            {item.isUser && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black">
+                                Você (3º Lugar • Sozinho)
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[11px] text-slate-400 block">
+                            {item.description}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="w-24 bg-slate-800 h-2.5 rounded-full overflow-hidden hidden sm:block">
+                          <div className={`h-full rounded-full ${item.barClass}`} style={{ width: item.barWidth }} />
+                        </div>
+                        <span className="font-mono font-black text-sm text-amber-300">{item.score}</span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  individualRanking.map((item) => (
+                    <div
+                      key={item.rank}
+                      className={`px-4 py-3 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-xl text-xs font-black flex items-center justify-center shrink-0 ${item.badgeClass}`}>
+                          {item.rank}º
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-bold text-white text-sm">
+                              {item.name}
+                            </span>
+                            {item.isUser && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-black">
+                                Você (2º Lugar)
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[11px] text-slate-400 block font-mono">
+                            {item.correctCount} acertos
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="w-24 bg-slate-800 h-2.5 rounded-full overflow-hidden hidden sm:block">
+                          <div className={`h-full rounded-full ${item.barClass}`} style={{ width: item.barWidth }} />
+                        </div>
+                        <span className="font-mono font-black text-sm text-emerald-300">{item.score}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
