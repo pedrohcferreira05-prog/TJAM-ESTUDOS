@@ -285,6 +285,21 @@ export const TJAM_DISCIPLINES: Discipline[] = [
       { id: 'ing-5', name: 'Vocabulário Jurídico e Institucional em Inglês' },
     ],
   },
+  {
+    id: 'escrita-leitura',
+    name: 'Escrita e Leitura',
+    code: 'ESC-LEIT',
+    order: 12,
+    icon: 'PenTool',
+    color: 'emerald',
+    description: 'Comunicação: falar, ler e escrever melhor, dicção, pontuação e redação de frases corretas.',
+    topics: [
+      { id: 'el-1', name: 'Aula 1: Leitura em voz alta, dicção e pontuação' },
+      { id: 'el-2', name: 'Aula 1: Como falar melhor, clareza e organização' },
+      { id: 'el-3', name: 'Aula 1: Como escrever melhor, erros comuns (Mas x Mais, Porquês)' },
+      { id: 'el-4', name: 'Aula 1: Exercícios práticos e gravação de vídeo' },
+    ],
+  },
 ];
 
 export const INITIAL_SIMULADOS: Simulado[] = [
@@ -376,8 +391,12 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-seg',
     dayOfWeek: 'Segunda',
-    disciplineIds: ['lingua-portuguesa', 'direito-constitucional'],
-    tasks: ['Leitura de Teoria/Resumo', '20 Questões Comentadas', 'Revisão Flashcards'],
+    disciplineIds: ['direito-constitucional', 'informatica', 'escrita-leitura'],
+    tasks: [
+      '1ª Aula: Dir. Constitucional (Aplicabilidade das Normas • 20 Questões)',
+      '2ª Aula: Informática (Segurança da Informação, CID e Backup • 20 Questões)',
+      '3ª Aula: Escrita e Leitura (Comunicação, Dicção, Ortografia e Vídeo Tarefa • 20 Questões)',
+    ],
     completed: false,
   },
   {

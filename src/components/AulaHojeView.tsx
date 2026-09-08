@@ -155,7 +155,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'direito_admin';
+    return 'direito_const';
   });
 
   const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura') => {
@@ -2153,7 +2153,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5" /> {
-                  selectedSubject === 'direito_admin' ? '1ª Aula de Hoje: '
+                  selectedSubject === 'direito_const' ? '1ª Aula de Hoje: '
                   : selectedSubject === 'informatica' ? '2ª Aula de Hoje: '
                   : selectedSubject === 'escrita_leitura' ? '3ª Aula de Hoje: '
                   : 'Disciplina: '
@@ -2166,9 +2166,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_penal' ? 'Processo Penal (Aula 4)'
                   : selectedSubject === 'processo_civil' ? 'Processo Civil'
                   : selectedSubject === 'informatica' ? 'Informática (2ª Aula de Hoje)'
-                  : selectedSubject === 'direito_const' ? 'Direito Constitucional'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional (1ª Aula de Hoje)'
                   : selectedSubject === 'escrita_leitura' ? 'Escrita e Leitura (3ª Aula de Hoje)'
-                  : 'Direito Administrativo (1ª Aula de Hoje)'
+                  : 'Direito Administrativo'
                 }
               </span>
             </div>
@@ -2184,9 +2184,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Aula 4 – Aplicação da Lei Processual Penal'
                   : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Aula 2 – Partes e Procuradores (CPC/2015)'
                   : selectedSubject === 'informatica' ? '💻 Informática • 2ª Aula de Hoje – Segurança da Informação (CID, Senhas, Malware, Backup)'
-                  : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • Aula 1 – Aplicabilidade das Normas Constitucionais'
-                  : selectedSubject === 'escrita_leitura' ? '✍️ Escrita e Leitura • Terceira Aula – Comunicação: falar, ler e escrever melhor'
-                  : '⚖️ Direito Administrativo • 1ª Aula de Hoje – Responsabilidade Civil do Estado'
+                  : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • 1ª Aula de Hoje – Aplicabilidade das Normas Constitucionais'
+                  : selectedSubject === 'escrita_leitura' ? '✍️ Escrita e Leitura • 3ª Aula de Hoje – Comunicação: falar, ler e escrever melhor'
+                  : '⚖️ Direito Administrativo • Responsabilidade Civil do Estado'
                 }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
@@ -2199,9 +2199,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_penal' ? 'Aula — Aplicação da Lei Processual Penal (Tempo, Espaço, Interpretação e Fontes)'
                   : selectedSubject === 'processo_civil' ? 'Aula 2 — Partes e Procuradores no CPC/2015'
                   : selectedSubject === 'informatica' ? '2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças & Defesas)'
-                  : selectedSubject === 'direito_const' ? '1ª Aula — Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
-                  : selectedSubject === 'escrita_leitura' ? 'Terceira Aula — Comunicação: Falar, Ler e Escrever Melhor (Aula 1)'
-                  : '1ª Aula — Responsabilidade Civil do Estado (Art. 37, § 6º CF/88)'
+                  : selectedSubject === 'direito_const' ? '1ª Aula de Hoje — Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
+                  : selectedSubject === 'escrita_leitura' ? '3ª Aula de Hoje — Comunicação: Falar, Ler e Escrever Melhor (Aula 1)'
+                  : 'Aula — Responsabilidade Civil do Estado (Art. 37, § 6º CF/88)'
                 }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
@@ -2214,8 +2214,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_penal' ? 'Quarta Aula de Hoje • Eficácia no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação (Art. 3º) e Fontes • 20 Questões TJAM'
                   : selectedSubject === 'informatica' ? '2ª Aula de Hoje • Tríade CID, Senhas, MFA, Malwares (Ransomware, Worm, Trojan), Phishing, Firewall e Regra 3-2-1 • 20 Questões Gabaritadas FGV'
                   : selectedSubject === 'direito_const' ? '1ª Aula de Hoje • Eficácia Plena, Contida e Limitada • STF / Senado / FGV • 20 Questões Gabaritadas'
-                  : selectedSubject === 'escrita_leitura' ? 'Terceira Aula de Hoje • Dicção, Leitura Clara, Comunicação Objetiva, Regras Práticas (Mas x Mais, Porquês), Gravação de Vídeo e 20 Exercícios TJAM'
-                  : '1ª Aula de Hoje • Dever de Indenizar do Estado • Art. 37, § 6º CF/88 • Responsabilidade Objetiva (C + D + N) • Direito de Regresso (Subjetiva) • Excludentes de Nexo • 20 Questões Gabaritadas'
+                  : selectedSubject === 'escrita_leitura' ? '3ª Aula de Hoje • Dicção, Leitura Clara, Comunicação Objetiva, Regras Práticas (Mas x Mais, Porquês), Gravação de Vídeo e 20 Exercícios TJAM'
+                  : 'Aula • Dever de Indenizar do Estado • Art. 37, § 6º CF/88 • Responsabilidade Objetiva (C + D + N) • Direito de Regresso (Subjetiva) • Excludentes de Nexo • 20 Questões Gabaritadas'
                 }
               </p>
             </div>
@@ -2348,11 +2348,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <p className="font-black text-amber-300 dark:text-amber-200 flex items-center gap-2">
                 <span>Metas de Hoje: 3 Aulas Programadas para Conclusão</span>
                 <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-extrabold text-[10px]">
-                  {((savedLessonsStore['direito_admin']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0) + (savedLessonsStore['escrita_leitura']?.completed ? 1 : 0))}/3 Concluídas
+                  {((savedLessonsStore['direito_const']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0) + (savedLessonsStore['escrita_leitura']?.completed ? 1 : 0))}/3 Concluídas
                 </span>
               </p>
               <p className="text-slate-400">
-                1. Direito Administrativo (1ª Aula) • 2. Informática (2ª Aula) • 3. Escrita e Leitura (3ª Aula).
+                1. Direito Constitucional (1ª Aula) • 2. Informática (2ª Aula) • 3. Escrita e Leitura (3ª Aula).
               </p>
             </div>
           </div>
@@ -2375,28 +2375,28 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-emerald-500/10 border-2 border-amber-500/40 shadow-md">
-            {/* 1. Direito Administrativo: 1ª Aula de Hoje */}
+            {/* 1. Direito Constitucional: 1ª Aula de Hoje */}
             <button
-              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
-                selectedSubject === 'direito_admin'
+                selectedSubject === 'direito_const'
                   ? 'bg-amber-600 text-white shadow-lg ring-2 ring-amber-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-lg">⚖️</span>
+                <span className="text-lg">🏛️</span>
                 <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-200">Meta 1 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm">Direito Admin — 1ª Aula</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Resp. Civil do Estado (Art. 37, § 6º)</div>
+                <div className="font-extrabold text-sm">Dir. Constitucional — 1ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Aplicabilidade das Normas (Plena, Contida e Limitada)</div>
               </div>
               <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[11px] font-bold">20 Qs • 9 Cards • Vídeo</span>
-                {savedLessonsStore['direito_admin']?.completed ? (
+                <span className="text-[11px] font-bold">20 Qs • 15 Cards • STF</span>
+                {savedLessonsStore['direito_const']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-amber-500/40 text-amber-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
@@ -2473,22 +2473,22 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </div>
 
           <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            {/* Direito Constitucional */}
+            {/* Direito Administrativo */}
             <button
-              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'direito_const'
-                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/40'
+                selectedSubject === 'direito_admin'
+                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <span>📚 Dir. Const (Aula 1)</span>
+                <span>⚖️ Dir. Admin (Resp. Civil)</span>
               </div>
-              {savedLessonsStore['direito_const']?.completed ? (
+              {savedLessonsStore['direito_admin']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula</span>
               )}
             </button>
 
