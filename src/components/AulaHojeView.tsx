@@ -119,6 +119,14 @@ import {
   librasVideoInfo
 } from '../data/librasLessonData';
 import { LibrasContent } from './LibrasContent';
+import {
+  escritaLeituraFlashcardsData,
+  escritaLeituraMcQuestionsData,
+  escritaLeituraTfQuestionsData,
+  escritaLeituraDiscursiveQuestionsData,
+  escritaLeituraSummaryPoints,
+} from '../data/escritaLeituraLessonData';
+import { EscritaLeituraContent } from './EscritaLeituraContent';
 
 interface AulaHojeViewProps {
   isDarkMode: boolean;
@@ -139,18 +147,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     return 0;
   });
 
-  // Selected Subject State: 'ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', or 'direito_const'
-  const [selectedSubject, setSelectedSubjectState] = useState<'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const'>(() => {
+  // Selected Subject State: 'ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', or 'escrita_leitura'
+  const [selectedSubject, setSelectedSubjectState] = useState<'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura'>(() => {
     try {
       const saved = localStorage.getItem('tjam_selected_subject');
-      if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const'].includes(saved)) {
+      if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura'].includes(saved)) {
         return saved as any;
       }
     } catch (e) {}
-    return 'direito_const';
+    return 'direito_admin';
   });
 
-  const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const') => {
+  const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura') => {
     try {
       localStorage.setItem('tjam_selected_subject', subject);
     } catch (e) {}
@@ -161,7 +169,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     const handleSubjectChange = () => {
       try {
         const saved = localStorage.getItem('tjam_selected_subject');
-        if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const'].includes(saved)) {
+        if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura'].includes(saved)) {
           setSelectedSubjectState(saved as any);
         }
       } catch (e) {}
@@ -1855,6 +1863,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? informaticaFlashcardsData
     : selectedSubject === 'direito_const'
     ? direitoConstFlashcardsData
+    : selectedSubject === 'escrita_leitura'
+    ? escritaLeituraFlashcardsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminFlashcardsData
     : adminFlashcardsData;
@@ -1877,6 +1887,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? informaticaMcQuestionsData
     : selectedSubject === 'direito_const'
     ? direitoConstMcQuestionsData
+    : selectedSubject === 'escrita_leitura'
+    ? escritaLeituraMcQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminMcQuestionsData
     : questionsData;
@@ -1899,6 +1911,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? informaticaTfQuestionsData
     : selectedSubject === 'direito_const'
     ? direitoConstTfQuestionsData
+    : selectedSubject === 'escrita_leitura'
+    ? escritaLeituraTfQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminTfQuestionsData
     : tfQuestionsData;
@@ -1921,6 +1935,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     ? informaticaDiscursiveQuestionsData
     : selectedSubject === 'direito_const'
     ? direitoConstDiscursiveQuestionsData
+    : selectedSubject === 'escrita_leitura'
+    ? escritaLeituraDiscursiveQuestionsData
     : selectedSubject === 'direito_admin'
     ? direitoAdminDiscursiveQuestionsData
     : discursiveQuestionsData;
@@ -2137,7 +2153,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5" /> {
-                  selectedSubject === 'direito_const' || selectedSubject === 'informatica' ? 'Aula de Hoje: ' : 'Disciplina: '
+                  selectedSubject === 'direito_admin' ? '1ª Aula de Hoje: '
+                  : selectedSubject === 'informatica' ? '2ª Aula de Hoje: '
+                  : selectedSubject === 'escrita_leitura' ? '3ª Aula de Hoje: '
+                  : 'Disciplina: '
                 }{
                   selectedSubject === 'ingles' ? 'Inglês (Aula 3 Prática)'
                   : selectedSubject === 'geografia_amazonas' ? 'Geografia do Amazonas (2ª Aula)'
@@ -2147,8 +2166,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'processo_penal' ? 'Processo Penal (Aula 4)'
                   : selectedSubject === 'processo_civil' ? 'Processo Civil'
                   : selectedSubject === 'informatica' ? 'Informática (2ª Aula de Hoje)'
-                  : selectedSubject === 'direito_const' ? 'Direito Constitucional (1ª Aula de Hoje)'
-                  : 'Direito Administrativo'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional'
+                  : selectedSubject === 'escrita_leitura' ? 'Escrita e Leitura (3ª Aula de Hoje)'
+                  : 'Direito Administrativo (1ª Aula de Hoje)'
                 }
               </span>
             </div>
@@ -2159,13 +2179,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Aula 3 – Apresentação e Comunicação Básica (100% Prática)'
                   : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia do Amazonas • 2ª Aula – Aspectos Humanos e Econômicos'
                   : selectedSubject === 'legislacao_tjam' ? '🏛️ Legislação do TJAM • Aula 2 – Organização Judiciária do Amazonas: Aprofundamento'
-                  : selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Aula 1 – Compreensão e Interpretação'
+                  : selectedSubject === 'portugues' ? '🇧🇷 Língua Portuguesa • Conjunções e Conectivos'
                   : selectedSubject === 'libras' ? '🤟 LIBRAS • 3ª Aula – Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                   : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Aula 4 – Aplicação da Lei Processual Penal'
                   : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Aula 2 – Partes e Procuradores (CPC/2015)'
                   : selectedSubject === 'informatica' ? '💻 Informática • 2ª Aula de Hoje – Segurança da Informação (CID, Senhas, Malware, Backup)'
-                  : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • 1ª Aula – Aplicabilidade das Normas Constitucionais'
-                  : '⚖️ Direito Administrativo • Aula 7 – Poderes da Administração Pública'
+                  : selectedSubject === 'direito_const' ? '📚 Direito Constitucional • Aula 1 – Aplicabilidade das Normas Constitucionais'
+                  : selectedSubject === 'escrita_leitura' ? '✍️ Escrita e Leitura • Terceira Aula – Comunicação: falar, ler e escrever melhor'
+                  : '⚖️ Direito Administrativo • 1ª Aula de Hoje – Responsabilidade Civil do Estado'
                 }
               </span>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">
@@ -2173,13 +2194,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles' ? 'Aula 3 — Apresentação e Comunicação Básica em Inglês'
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Aspectos Humanos e Econômicos do Amazonas'
                   : selectedSubject === 'legislacao_tjam' ? 'Aula 2 — Organização Judiciária do Amazonas: aprofundamento (LC 261/2023)'
-                  : selectedSubject === 'portugues' ? 'Aula 1 — Compreensão e Interpretação de Textos'
+                  : selectedSubject === 'portugues' ? 'Aula — Conjunções e Conectivos (Coordenadas & Subordinadas)'
                   : selectedSubject === 'libras' ? '3ª Aula — LIBRAS: Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                   : selectedSubject === 'processo_penal' ? 'Aula — Aplicação da Lei Processual Penal (Tempo, Espaço, Interpretação e Fontes)'
                   : selectedSubject === 'processo_civil' ? 'Aula 2 — Partes e Procuradores no CPC/2015'
                   : selectedSubject === 'informatica' ? '2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças & Defesas)'
                   : selectedSubject === 'direito_const' ? '1ª Aula — Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
-                  : 'Aula 7 — Poderes da Administração Pública'
+                  : selectedSubject === 'escrita_leitura' ? 'Terceira Aula — Comunicação: Falar, Ler e Escrever Melhor (Aula 1)'
+                  : '1ª Aula — Responsabilidade Civil do Estado (Art. 37, § 6º CF/88)'
                 }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl">
@@ -2187,11 +2209,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   selectedSubject === 'ingles' ? 'Aula 3 100% Prática • Cumprimentos, Apresentação, Perguntas Básicas, Vocabulário do Cotidiano e Texto • 20 Exercícios TJAM'
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula • População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial • 20 Questões Gabaritadas'
                   : selectedSubject === 'legislacao_tjam' ? 'Aula 2 de Hoje • 20 Questões Gabaritadas + Vídeo Aula Exclusiva • Foco FGV TJAM'
+                  : selectedSubject === 'portugues' ? 'Aula Completa • Conjunções Coordenativas e Subordinativas • Relações Semânticas • Pegadinhas FGV • 20 Questões Gabaritadas'
                   : selectedSubject === 'libras' ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Expressões Faciais • Libras ≠ Português Sinalizado • Exercícios no WhatsApp'
                   : selectedSubject === 'processo_penal' ? 'Quarta Aula de Hoje • Eficácia no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação (Art. 3º) e Fontes • 20 Questões TJAM'
                   : selectedSubject === 'informatica' ? '2ª Aula de Hoje • Tríade CID, Senhas, MFA, Malwares (Ransomware, Worm, Trojan), Phishing, Firewall e Regra 3-2-1 • 20 Questões Gabaritadas FGV'
                   : selectedSubject === 'direito_const' ? '1ª Aula de Hoje • Eficácia Plena, Contida e Limitada • STF / Senado / FGV • 20 Questões Gabaritadas'
-                  : 'Nível: Intermediário / Foco FGV • Tempo estimado: 45–60 minutos • Preparatório Assistente Judiciário TJAM'
+                  : selectedSubject === 'escrita_leitura' ? 'Terceira Aula de Hoje • Dicção, Leitura Clara, Comunicação Objetiva, Regras Práticas (Mas x Mais, Porquês), Gravação de Vídeo e 20 Exercícios TJAM'
+                  : '1ª Aula de Hoje • Dever de Indenizar do Estado • Art. 37, § 6º CF/88 • Responsabilidade Objetiva (C + D + N) • Direito de Regresso (Subjetiva) • Excludentes de Nexo • 20 Questões Gabaritadas'
                 }
               </p>
             </div>
@@ -2215,38 +2239,33 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="flex items-center justify-between text-amber-400 font-black text-xs uppercase tracking-wider">
               <div className="flex items-center gap-2">
                 <Trophy className="w-4 h-4" />
-                <span>Ranking Geral de Alunos</span>
+                <span>Ranking Geral de Alunos & Duplas</span>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30">
-                Penalidade Aplicada
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                3º Lugar • Dupla Oficial
               </span>
-            </div>
-
-            <div className="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-100 font-semibold leading-normal">
-              📢 <strong>Comunicado:</strong> O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
             </div>
 
             <div className="space-y-2">
               {[
                 { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, isSolo: false },
                 { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, isSolo: false },
-                { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, isSolo: false },
-                { pos: 4, name: 'Thiago Martins & Camila Duarte', pct: '30,0%', isUser: false, isSolo: false },
-                { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, isSolo: false },
-                { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, isSolo: false },
-                { pos: 7, name: 'Pedro Henrique', pct: '24,0%', isUser: false, isSolo: true },
+                { pos: 3, name: 'Pedro Henrique & Eduardo Mateus', pct: '31,6%', isUser: true, isSolo: false },
+                { pos: 4, name: 'Matheus Ribeiro & Beatriz Lima', pct: '30,0%', isUser: false, isSolo: false },
+                { pos: 5, name: 'Thiago Martins & Camila Duarte', pct: '28,2%', isUser: false, isSolo: false },
+                { pos: 6, name: 'Rafael Mendes & Amanda Rocha', pct: '26,5%', isUser: false, isSolo: false },
+                { pos: 7, name: 'Carlos Eduardo & Juliana Castro', pct: '24,0%', isUser: false, isSolo: false },
                 { pos: 8, name: 'Bruno Carvalho & Larissa Ferreira', pct: '21,8%', isUser: false, isSolo: false },
                 { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false, isSolo: false },
-                { pos: 10, name: 'Eduardo Mateus', pct: '17,2%', isUser: true, isSolo: true },
-                { pos: 11, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '15,0%', isUser: false, isSolo: false },
-                { pos: 12, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false },
-                { pos: 13, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false },
+                { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false, isSolo: false },
+                { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false },
+                { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false },
               ].map((d) => (
                 <div
                   key={d.pos}
                   className={`flex items-center justify-between p-2.5 rounded-xl border ${
                     d.isUser
-                      ? 'bg-rose-500/15 border-rose-400/40 shadow-sm ring-1 ring-rose-400/30'
+                      ? 'bg-emerald-500/15 border-emerald-400/40 shadow-sm ring-1 ring-emerald-400/30'
                       : 'bg-slate-800/60 border-slate-700/80'
                   }`}
                 >
@@ -2254,11 +2273,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <span
                       className={`w-5 h-5 rounded font-black text-[10px] flex items-center justify-center shrink-0 ${
                         d.isUser
-                          ? 'bg-rose-600 text-white shadow-sm'
+                          ? 'bg-amber-600 text-white shadow-sm'
                           : d.pos === 1
                           ? 'bg-amber-500 text-slate-950'
-                          : d.pos === 7 && d.name === 'Pedro Henrique'
-                          ? 'bg-emerald-600 text-white'
+                          : d.pos === 2
+                          ? 'bg-slate-300 text-slate-950 font-black'
+                          : d.pos === 3
+                          ? 'bg-amber-700 text-white'
                           : 'bg-slate-700 text-slate-300'
                       }`}
                     >
@@ -2267,7 +2288,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                       <span
                         className={`text-xs font-extrabold truncate ${
-                          d.isUser ? 'text-rose-300' : 'text-slate-300'
+                          d.isUser ? 'text-emerald-300 font-black' : 'text-slate-300'
                         }`}
                       >
                         {d.name}
@@ -2278,15 +2299,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                         </span>
                       )}
                       {d.isUser && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
-                          <span>Eduardo • Sem Dupla (10º • Queda Geografia)</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-extrabold uppercase flex items-center gap-0.5 whitespace-nowrap">
+                          <span>Sua Dupla (3º • 100% em dia)</span>
                         </span>
                       )}
                     </div>
                   </div>
                   <span
                     className={`text-xs font-black shrink-0 ${
-                      d.isUser ? 'text-rose-400' : d.pos === 7 && d.name === 'Pedro Henrique' ? 'text-emerald-400 font-extrabold' : 'text-slate-400'
+                      d.isUser ? 'text-emerald-400 font-extrabold' : 'text-slate-400'
                     }`}
                   >
                     {d.pct}
@@ -2325,13 +2346,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <span className="p-2 rounded-xl bg-amber-600 text-white font-bold text-base">🎯</span>
             <div>
               <p className="font-black text-amber-300 dark:text-amber-200 flex items-center gap-2">
-                <span>Metas de Hoje: 2 Aulas Programadas para Conclusão</span>
+                <span>Metas de Hoje: 3 Aulas Programadas para Conclusão</span>
                 <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-extrabold text-[10px]">
-                  {((savedLessonsStore['direito_const']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0))}/2 Concluídas
+                  {((savedLessonsStore['direito_admin']?.completed ? 1 : 0) + (savedLessonsStore['informatica']?.completed ? 1 : 0) + (savedLessonsStore['escrita_leitura']?.completed ? 1 : 0))}/3 Concluídas
                 </span>
               </p>
               <p className="text-slate-400">
-                1. Direito Constitucional (1ª Aula) • 2. Informática (2ª Aula de Hoje).
+                1. Direito Administrativo (1ª Aula) • 2. Informática (2ª Aula) • 3. Escrita e Leitura (3ª Aula).
               </p>
             </div>
           </div>
@@ -2342,40 +2363,40 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           )}
         </div>
 
-        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
+        {/* 1. SEÇÃO PRINCIPAL: AS 3 AULAS DE HOJE */}
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
-              <span>⭐ As 2 Aulas de Hoje (Metas Obrigatórias)</span>
+              <span>⭐ As 3 Aulas de Hoje (Metas Obrigatórias)</span>
             </span>
             <span className="text-[10px] text-slate-400 font-semibold">
               Prioridade máxima do dia
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-indigo-500/10 border-2 border-amber-500/40 shadow-md">
-            {/* 1. Direito Constitucional: 1ª Aula */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-emerald-500/10 border-2 border-amber-500/40 shadow-md">
+            {/* 1. Direito Administrativo: 1ª Aula de Hoje */}
             <button
-              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
-                selectedSubject === 'direito_const'
+                selectedSubject === 'direito_admin'
                   ? 'bg-amber-600 text-white shadow-lg ring-2 ring-amber-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-lg">📚</span>
+                <span className="text-lg">⚖️</span>
                 <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-200">Meta 1 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm">Direito Constitucional — 1ª Aula</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Aplicabilidade das Normas (Plena, Contida e Limitada)</div>
+                <div className="font-extrabold text-sm">Direito Admin — 1ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Resp. Civil do Estado (Art. 37, § 6º)</div>
               </div>
               <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[11px] font-bold">20 Questões • 15 Cards • Vídeo Aula</span>
-                {savedLessonsStore['direito_const']?.completed ? (
+                <span className="text-[11px] font-bold">20 Qs • 9 Cards • Vídeo</span>
+                {savedLessonsStore['direito_admin']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-amber-500/40 text-amber-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
@@ -2397,17 +2418,46 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-cyan-500/30 text-cyan-200">Meta 2 de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm">Informática — 2ª Aula de Hoje</div>
-                <div className="text-[11px] opacity-80 font-normal truncate">Segurança da Informação (CID, Senhas, Malware, Backup)</div>
+                <div className="font-extrabold text-sm">Informática — 2ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Segurança da Informação (CID)</div>
               </div>
               <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
-                <span className="text-[11px] font-bold">20 Questões • 15 Cards • Vídeo Aula</span>
+                <span className="text-[11px] font-bold">20 Qs • 15 Cards • Vídeo</span>
                 {savedLessonsStore['informatica']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
                 ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-cyan-500/40 text-cyan-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                )}
+              </div>
+            </button>
+
+            {/* 3. Escrita e Leitura: 3ª Aula de Hoje */}
+            <button
+              onClick={() => { setSelectedSubject('escrita_leitura'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-3.5 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 cursor-pointer text-left ${
+                selectedSubject === 'escrita_leitura'
+                  ? 'bg-emerald-600 text-white shadow-lg ring-2 ring-emerald-400 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className="text-lg">✍️</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200">Meta 3 de Hoje</span>
+              </div>
+              <div className="w-full">
+                <div className="font-extrabold text-sm">Escrita & Leitura — 3ª Aula</div>
+                <div className="text-[11px] opacity-80 font-normal truncate">Comunicação: Falar, Ler e Escrever</div>
+              </div>
+              <div className="w-full pt-2 border-t border-current/20 flex items-center justify-between">
+                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Tarefa</span>
+                {savedLessonsStore['escrita_leitura']?.completed ? (
+                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                ) : savedLessonsStore['escrita_leitura']?.selectedAnswers && Object.keys(savedLessonsStore['escrita_leitura'].selectedAnswers).length > 0 ? (
+                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                ) : (
+                  <span className="text-[10px] bg-emerald-500/40 text-emerald-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2423,7 +2473,26 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </div>
 
           <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            {/* Português: Aula 3 */}
+            {/* Direito Constitucional */}
+            <button
+              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'direito_const'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>📚 Dir. Const (Aula 1)</span>
+              </div>
+              {savedLessonsStore['direito_const']?.completed ? (
+                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+              ) : (
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+              )}
+            </button>
+
+            {/* Português: Conjunções e Conectivos */}
             <button
               onClick={() => { setSelectedSubject('portugues'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
@@ -2433,31 +2502,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <span>🇧🇷 Português (Aula 3)</span>
+                <span>🇧🇷 Português (Conjunções)</span>
               </div>
               {savedLessonsStore['portugues']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 3</span>
-              )}
-            </button>
-
-            {/* Direito Administrativo: Aula 4 */}
-            <button
-              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'direito_admin'
-                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <span>⚖️ Dir. Admin (Aula 4)</span>
-              </div>
-              {savedLessonsStore['direito_admin']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 4</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula</span>
               )}
             </button>
 
@@ -2594,7 +2644,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'legislacao_tjam'
               ? 'Unidade 1 — Lei Complementar nº 261/2023'
               : selectedSubject === 'portugues'
-              ? 'Unidade 2 — Morfologia & Classes de Palavras'
+              ? 'Sintaxe & Coesão Textual'
               : selectedSubject === 'libras'
               ? 'Unidade 1 — Fundamentos & Comunicação em LIBRAS'
               : selectedSubject === 'processo_penal'
@@ -2616,7 +2666,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'legislacao_tjam'
               ? 'Aula 1 — Estrutura e Órgãos do Poder Judiciário'
               : selectedSubject === 'portugues'
-              ? 'Aula 3 — Classes de Palavras: Substantivo, Adjetivo e Verbo'
+              ? 'Conjunções e Conectivos (Coordenadas & Subordinadas)'
               : selectedSubject === 'libras'
               ? 'Aula 2 — Prática de Comunicação, Cumprimentos e Atendimento'
               : selectedSubject === 'processo_penal'
@@ -2641,7 +2691,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM (Aula 1 de 3)'
                 : selectedSubject === 'portugues'
-                ? '🇧🇷 Língua Portuguesa (Aula 3)'
+                ? '🇧🇷 Língua Portuguesa (Conjunções & Conectivos)'
                 : selectedSubject === 'libras'
                 ? '🔥 AULA DE HOJE • 🤟 LIBRAS (Aula 2 • Comunicação & Atendimento)'
                 : selectedSubject === 'processo_penal'
@@ -2662,7 +2712,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas'
                 : selectedSubject === 'portugues'
-                ? '🇧🇷 Língua Portuguesa — Aula 3: Classes de Palavras (Substantivo, Adjetivo e Verbo)'
+                ? '🇧🇷 Língua Portuguesa — Conjunções e Conectivos (Coordenadas & Subordinadas)'
                 : selectedSubject === 'libras'
                 ? '🤟 LIBRAS — Aula 2: Prática de Comunicação, Cumprimentos e Atendimento Judiciário'
                 : selectedSubject === 'processo_penal'
@@ -2795,7 +2845,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                     : selectedSubject === 'portugues'
-                    ? 'Língua Portuguesa — Aula 3: Classes de Palavras (Substantivo, Adjetivo e Verbo)'
+                    ? 'Língua Portuguesa — Conjunções e Conectivos (Coordenadas & Subordinadas)'
                     : selectedSubject === 'libras'
                     ? '🤟 LIBRAS — 3ª Aula de Hoje: Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_civil'
@@ -2804,6 +2854,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Unidade 1 — Conceitos Básicos de Informática'
                     : selectedSubject === 'processo_penal'
                     ? 'Capítulo 1 — Processo Penal: Princípios e Aplicação da Lei (Aula 6)'
+                    : selectedSubject === 'direito_admin'
+                    ? '📚 Aula 1 — Direito Administrativo: Responsabilidade Civil do Estado'
                     : 'Aula 7 — Direito Administrativo: Poderes da Administração Pública'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -2816,7 +2868,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Exercícios no WhatsApp'
                     : selectedSubject === 'direito_admin'
-                    ? 'Aula 4 de Hoje • Agentes Públicos • Conceito, Classificação, Regimes e Responsabilidades'
+                    ? '1ª Aula de Hoje • Dever de Indenizar do Estado (Art. 37, § 6º CF/88) • Responsabilidade Objetiva (C + D + N) • Direito de Regresso'
                     : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
                 </p>
               </div>
@@ -2872,7 +2924,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? 'https://www.youtube.com/embed/ubZ4FIBOHeg?autoplay=0&rel=0'
                     : selectedSubject === 'portugues'
-                    ? 'https://www.youtube.com/embed/OxTNN-IKcEQ?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/tKJkDQSMdh0?autoplay=0&rel=0'
                     : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/j6Ugm67dx8s?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
@@ -2883,6 +2935,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://www.youtube.com/embed/jLYXwMY9lQQ?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
                     ? 'https://www.youtube.com/embed/a1bb14-8UYY?autoplay=0&rel=0'
+                    : selectedSubject === 'direito_admin'
+                    ? 'https://www.youtube.com/embed/fS0LrjO5Wfs?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
                 }
                 title={
@@ -2895,7 +2949,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? 'Vídeo Aula - Legislação do TJAM: Aula 2 — Organização Judiciária do Amazonas: Aprofundamento (LC 261/2023)'
                     : selectedSubject === 'portugues'
-                    ? 'Vídeo Aula - Língua Portuguesa: Compreensão e Interpretação de Textos'
+                    ? 'Vídeo Aula - Língua Portuguesa: Conjunções e Conectivos (Aula Completa TJAM)'
                     : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: 3ª Aula de Hoje — Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_penal'
@@ -2906,6 +2960,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'Vídeo Aula - Informática: 2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças e Defesas)'
                     : selectedSubject === 'direito_const'
                     ? 'Vídeo Aula - Direito Constitucional: Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
+                    : selectedSubject === 'direito_admin'
+                    ? 'Vídeo Aula - Direito Administrativo: Aula 1 — Responsabilidade Civil do Estado'
                     : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -2926,7 +2982,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'legislacao_tjam'
                     ? 'https://youtu.be/ubZ4FIBOHeg?is=tnE8FLYhF20arzMu'
                     : selectedSubject === 'portugues'
-                    ? 'https://youtu.be/OxTNN-IKcEQ?is=bzHSDcftIpBprD6X'
+                    ? 'https://youtu.be/tKJkDQSMdh0?is=gM9g7QpGdermwN6G'
                     : selectedSubject === 'libras'
                     ? 'https://youtu.be/j6Ugm67dx8s?is=_LtHw0g9ekgfU7gN'
                     : selectedSubject === 'processo_penal'
@@ -2937,6 +2993,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     ? 'https://www.youtube.com/live/jLYXwMY9lQQ?is=A6ImTDFcX11VYx8v'
                     : selectedSubject === 'direito_const'
                     ? 'https://youtu.be/a1bb14-8UYY?is=cBUBPPAoD43UHQcf'
+                    : selectedSubject === 'direito_admin'
+                    ? 'https://youtu.be/fS0LrjO5Wfs?is=UjSegw0VZ6ZiLDjq'
                     : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
                 }
                 target="_blank"
@@ -3049,23 +3107,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Diferença entre Compreensão (informações explícitas) e Interpretação (inferências/deduções lógicas).</span>
+                      <span>Conceito fundamental: Palavras invariáveis que ligam orações e estabelecem sentidos.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Como identificar a Ideia Principal e a Tese desenvolvida pelo autor do texto.</span>
+                      <span>Conjunções Coordenativas: Aditivas, Adversativas, Alternativas, Conclusivas e Explicativas.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Identificação de marcadores de coesão e conectivos (adversativos, conclusivos, explicativos).</span>
+                      <span>Conjunções Subordinativas: Causais, Concessivas, Condicionais, Finais, Temporais, etc.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Prevenção contra erros clássicos de bancas de concurso: Extrapolação, Redução e Contradição.</span>
+                      <span>Pegadinha de Prova FGV: Sentido contextual (Causa vs Explicação / Tempo vs Condição).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Resolução e análise crítica de exercícios no padrão Assistente Judiciário TJAM.</span>
+                      <span>Resolução e gabarito comentado de 20 questões de fixação com foco TJAM.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'libras' ? (
@@ -3193,6 +3251,33 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                       <span>⚠️ <strong>Pegadinha FGV:</strong> Contida já nasce ampla e a lei restringe; Limitada nasce dependente de lei para ter eficácia integral.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'direito_admin' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🎯 <strong>Responsabilidade Civil do Estado:</strong> Dever de indenizar prejuízos causados a terceiros por ação ou omissão administrativa (Art. 37, § 6º da CF/88).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🔑 <strong>Responsabilidade Objetiva (Regra):</strong> O Estado responde independente de culpa. Basta provar a Conduta + Dano + Nexo de Causalidade (Macete: C + D + N).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🔄 <strong>Direito de Regresso (Subjetivo):</strong> O Estado pode cobrar do agente público que causou o dano, mas apenas se comprovado dolo ou culpa (Agente = Subjetiva).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>👤 <strong>Conceito Amplo de Agente Público:</strong> Qualquer um exercendo função pública, mesmo transitória ou sem remuneração (ex: mesário na eleição, jurado).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🚫 <strong>Excludentes de Nexo:</strong> Culpa exclusiva da vítima (rompe o nexo), caso fortuito / força maior e fato exclusivo de terceiro.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>⚠️ <strong>Atenção TJAM / FGV:</strong> O particular lesado não pode ajuizar ação diretamente contra o servidor (Tema 940 STF - Dupla Garantia). Processa o Estado, e este regressa contra o agente.</span>
                     </li>
                   </ul>
                 ) : (
@@ -3336,6 +3421,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             isDarkMode={isDarkMode}
             isLessonCompleted={isLessonCompleted}
             onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
+        ) : selectedSubject === 'escrita_leitura' ? (
+          <EscritaLeituraContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
+        ) : selectedSubject === 'direito_admin' ? (
+          <DireitoAdminContent
+            isDarkMode={isDarkMode}
+            checklist={checklist}
+            toggleChecklist={toggleChecklist}
+            isLessonCompleted={isLessonCompleted}
+            handleMarkAsCompleted={handleMarkAsCompleted}
+            setActiveTab={setActiveTab}
             onNavigateTab={setActiveTab}
           />
         ) : (
@@ -3730,7 +3832,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
                 {selectedSubject === 'portugues'
-                  ? 'Mapa Mental — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                  ? 'Mapa Mental — Língua Portuguesa: Conjunções e Conectivos'
                   : selectedSubject === 'libras'
                   ? 'Mapa Mental — Aula 1: Conceitos Básicos de LIBRAS e Legislação'
                   : selectedSubject === 'informatica'
@@ -3745,7 +3847,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 {selectedSubject === 'portugues'
-                  ? 'Esquema visual sobre Compreensão x Interpretação, Tipologia Textual, Coesão e Dicas FGV'
+                  ? 'Esquema visual sobre Conjunções Coordenativas, Subordinativas, Relações de Sentido e Dicas FGV'
                   : selectedSubject === 'libras'
                   ? 'Esquema visual sobre LIBRAS, Parâmetros dos Sinais, Datilologia, Lei 10.436/2002 e Decreto 5.626/2005'
                   : selectedSubject === 'informatica'
@@ -3766,7 +3868,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 src={mindMapImg}
                 alt={
                   selectedSubject === 'portugues'
-                    ? 'Mapa Mental - Língua Portuguesa'
+                    ? 'Mapa Mental - Conjunções e Conectivos'
                     : selectedSubject === 'libras'
                     ? 'Mapa Mental - LIBRAS: Conceitos e Legislação'
                     : selectedSubject === 'informatica'
@@ -3797,7 +3899,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap justify-center gap-2">
                 {(selectedSubject === 'portugues'
-                  ? ['Língua Portuguesa', 'FGV', 'Compreensão', 'Interpretação', 'Coesão', 'Inferências', 'TJAM']
+                  ? ['Língua Portuguesa', 'Conjunções', 'Coordenativas', 'Subordinativas', 'Adversativas', 'Concessivas', 'FGV TJAM']
                   : selectedSubject === 'libras'
                   ? ['LIBRAS', 'Lei 10.436/2002', 'Decreto 5.626/2005', 'Datilologia', 'Parâmetros dos Sinais', 'Acessibilidade', 'TJAM']
                   : selectedSubject === 'informatica'
@@ -4351,7 +4453,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'legislacao_tjam'
                   ? 'Resumo — Legislação do TJAM: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                   : selectedSubject === 'portugues'
-                  ? 'Resumo — Língua Portuguesa: Compreensão e Interpretação de Textos'
+                  ? 'Resumo — Língua Portuguesa: Conjunções e Conectivos'
                   : selectedSubject === 'direito_const'
                   ? 'Resumo — Direito Constitucional: Aplicabilidade das Normas Constitucionais (1ª Aula de Hoje)'
                   : selectedSubject === 'libras'
@@ -4437,22 +4539,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </ul>
             ) : selectedSubject === 'portugues' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Substantivo:</strong> Nomeia pessoas, lugares, objetos, seres e sentimentos. Pode ser núcleo do sujeito ou complemento.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Adjetivo:</strong> Caracteriza e qualifica o substantivo ("servidor <em>público</em>", "decisão <em>judicial</em>"). Concorda em gênero e número.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Verbo:</strong> Expressa ação (estudar, trabalhar), estado (ser, estar) ou fenômeno da natureza (chover, trovejar). Núcleo do predicado.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Pegadinha FGV (Mudança de Classe):</strong> Palavras podem mudar de classe pelo contexto (Ex: "O <em>jovem</em> estudou" = substantivo vs. "O candidato <em>jovem</em>" = adjetivo; "O <em>andar</em> do processo" = substantivação).</span>
-                </li>
+                {portuguesAula3SummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-amber-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : selectedSubject === 'direito_const' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
@@ -4512,6 +4609,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             ) : selectedSubject === 'informatica' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 {informaticaSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : selectedSubject === 'direito_admin' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {direitoAdminSummaryPoints.map((pt, idx) => {
                   const parts = pt.split(': ');
                   const title = parts[0];
                   const desc = parts.slice(1).join(': ');

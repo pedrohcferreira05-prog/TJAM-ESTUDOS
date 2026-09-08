@@ -76,17 +76,17 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Student Badge linking to Perfil */}
           <button
             onClick={() => setStudentTab('perfil')}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25 text-xs font-bold transition-all cursor-pointer"
-            title="Ver Perfil de Eduardo"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25 text-xs font-bold transition-all cursor-pointer"
+            title="Ver Perfil da Dupla Oficial: Eduardo & Pedro"
           >
-            <Users className="w-3.5 h-3.5 text-rose-400" />
-            <span>Aluno: Eduardo Mateus</span>
+            <Users className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Dupla: Eduardo & Pedro (3º)</span>
           </button>
 
-          {/* Streak Counter - Frozen Status */}
+          {/* Status Counter - Em Dia / Sem Pendências */}
           <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 text-slate-300 border border-slate-700/80 text-xs font-semibold">
-            <Snowflake className="w-3.5 h-3.5 text-sky-400" />
-            <span>Sequência: <strong className="text-slate-200">0 dias</strong></span>
+            <Flame className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Tarefas: <strong className="text-emerald-300">100% em dia</strong></span>
           </div>
 
           {/* AI Assistant Button */}
@@ -104,14 +104,14 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setStudentTab('perfil')}
             className="px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer bg-slate-900 border-slate-800 text-slate-200 hover:border-slate-700"
           >
-            <div className="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-black text-[10px]">
-              EM
+            <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-[10px]">
+              EP
             </div>
             <span className="hidden sm:inline truncate max-w-[170px] font-bold">
-              Eduardo Mateus
+              Eduardo & Pedro
             </span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-extrabold hidden md:inline">
-              10º Lugar
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-extrabold hidden md:inline">
+              3º Lugar
             </span>
           </button>
         </div>

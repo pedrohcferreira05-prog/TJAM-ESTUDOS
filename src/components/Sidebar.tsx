@@ -11,6 +11,7 @@ import {
   TrendingUp,
   User,
   Users,
+  Trophy,
   X
 } from 'lucide-react';
 
@@ -38,6 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'aula-hoje', label: 'Aula de Hoje', icon: FileText },
     { id: 'flashcards', label: 'Flashcards', icon: Layers },
     { id: 'questoes', label: 'Questões', icon: HelpCircle },
+    { id: 'simulados', label: 'Rankings & Simulado', icon: Trophy },
     { id: 'progresso', label: 'Meu Progresso', icon: TrendingUp },
     { id: 'perfil', label: 'Perfil', icon: User },
   ];
@@ -46,16 +48,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <div className="flex flex-col h-full py-4 px-3 space-y-6">
       {/* User Info Header in Sidebar */}
       <div className="px-3 py-3 rounded-2xl border flex items-center gap-3 bg-slate-900 border-slate-800">
-        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-600 text-white flex items-center justify-center font-black text-sm shadow-md shrink-0">
-          EM
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-sky-600 text-white flex items-center justify-center font-black text-sm shadow-md shrink-0">
+          EP
         </div>
 
         <div className="min-w-0 flex-1">
           <h2 className="text-xs font-extrabold text-white truncate">
-            Eduardo Mateus
+            Eduardo & Pedro
           </h2>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-rose-400 bg-rose-500/10 border-rose-500/20">
-            Sem Dupla • 10º Lugar
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-emerald-400 bg-emerald-500/10 border-emerald-500/20">
+            Dupla Oficial • 3º Lugar
           </span>
         </div>
       </div>

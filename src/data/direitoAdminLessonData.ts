@@ -1,4 +1,4 @@
-// Data for Direito Administrativo — Aula 4: Agentes Públicos
+// Data for Direito Administrativo — Aula 1: Responsabilidade Civil do Estado
 
 export interface FlashcardItem {
   q: string;
@@ -28,328 +28,332 @@ export interface DiscursiveQuestionItem {
 
 export const direitoAdminFlashcardsData: FlashcardItem[] = [
   {
-    q: 'O que é Agente Público no Direito Administrativo?',
-    a: 'É toda pessoa física que exerce, ainda que temporariamente ou sem remuneração, uma função pública (por eleição, nomeação, designação, contratação ou qualquer outra forma de investidura).'
+    q: 'O que é Responsabilidade Civil do Estado?',
+    a: 'É o dever que o Estado possui de reparar danos causados a terceiros por uma atuação ou omissão relacionada à atividade administrativa quando seus agentes atuam nessa qualidade.'
   },
   {
-    q: 'Como se classificam os Agentes Públicos para o concurso do TJAM?',
-    a: '1) Agentes Políticos (direção superior do Estado);\n2) Servidores Públicos Estatutários (cargos públicos efetivos ou em comissão);\n3) Empregados Públicos (celetistas - CLT);\n4) Servidores Temporários (Art. 37, IX da CF/88);\n5) Particulares em colaboração com o poder público.'
+    q: 'Qual é a principal previsão constitucional sobre a responsabilidade civil do Estado?',
+    a: 'Artigo 37, § 6º, da Constituição Federal de 1988: as pessoas jurídicas de direito público e as de direito privado prestadoras de serviços públicos responderão pelos danos que seus agentes, nessa qualidade, causarem a terceiros, assegurado o direito de regresso contra o responsável nos casos de dolo ou culpa.'
   },
   {
-    q: 'Qual a diferença essencial entre Cargo, Emprego e Função Pública?',
-    a: '• Cargo Público: Lugar criado por lei, com denominação própria e atribuições específicas, ocupado por servidor público estatutário.\n• Emprego Público: Vínculo contratual trabalhista regido pela CLT, ocupado por empregado público.\n• Função Pública: Conjunto de atribuições exercidas por agente público (pode existir função de confiança sem cargo efetivo).'
+    q: 'Qual a regra de responsabilidade civil para o Estado perante a vítima?',
+    a: 'Responsabilidade OBJETIVA: independe da demonstração de culpa ou dolo do agente público para surgir o dever de indenizar.'
   },
   {
-    q: 'Qual a regra constitucional para investidura em cargo ou emprego público?',
-    a: 'Aprovação prévia em concurso público de provas ou de provas e títulos, de acordo com a natureza e a complexidade do cargo ou emprego (Art. 37, II da CF/88).'
+    q: 'Quais são os 3 elementos essenciais da responsabilidade objetiva do Estado? (Macete)',
+    a: 'Macete: Estado = C + D + N\n• C: Conduta estatal\n• D: Dano efetivo\n• N: Nexo causal entre a conduta e o dano.'
   },
   {
-    q: 'Quais as principais exceções à exigência de concurso público?',
-    a: '1) Nomeações para cargos em comissão declarados em lei de livre nomeação e exoneração;\n2) Contratação temporária por tempo determinado para atender a necessidade temporária de excepcional interesse público (Art. 37, IX).'
+    q: 'A vítima de um dano estatal precisa comprovar a culpa do servidor público?',
+    a: 'NÃO. Na relação Vítima → Estado a responsabilidade é objetiva. A culpa do servidor não precisa ser provada pela vítima.'
   },
   {
-    q: 'Qual a destinação exclusiva dos cargos em comissão?',
-    a: 'Destinam-se apenas e exclusivamente às atribuições de DIREÇÃO, CHEFIA e ASSESSORAMENTO (Art. 37, V da CF/88), sendo de livre nomeação e exoneração.'
+    q: 'O que é o Direito de Regresso do Estado contra o agente público?',
+    a: 'É a faculdade que o Estado possui de cobrar do agente causador do dano o valor que pagou à vítima na indenização, desde que fique comprovado que o agente agiu com DOLO ou CULPA.'
   },
   {
-    q: 'Quais esferas de responsabilidade podem recair sobre o agente público?',
-    a: 'O agente público pode responder nas esferas CIVIL (reparação do dano ao erário/terceiros), ADMINISTRATIVA (processo disciplinar/PAD) e PENAL (crimes e contravenções). As esferas são em regra independentes e cumuláveis.'
+    q: 'Qual a diferença de responsabilidade entre Vítima → Estado e Estado → Agente?',
+    a: '• Vítima → Estado: Responsabilidade OBJETIVA (não depende de culpa do agente).\n• Estado → Agente (ação regressiva): Responsabilidade SUBJETIVA (exige comprovação de dolo ou culpa).'
   },
   {
-    q: 'Qual a regra geral sobre acumulação remunerada de cargos públicos?',
-    a: 'A regra constitucional é a PROIBIÇÃO de acumulação remunerada de cargos, empregos e funções públicas, admitindo-se apenas as exceções expressas da CF/88 quando houver compatibilidade de horários (dois de professor; um de professor com outro técnico/científico; dois privativos de profissionais de saúde).'
+    q: 'Quais situações podem afastar ou romper o nexo causal na responsabilidade do Estado?',
+    a: '1) Culpa exclusiva da vítima;\n2) Fato exclusivo de terceiro;\n3) Caso fortuito ou força maior (conforme a hipótese e ausência de causalidade com o Estado).'
+  },
+  {
+    q: 'Quem é considerado Agente Público para fins de responsabilidade civil do Estado?',
+    a: 'O conceito é amplo: servidores públicos efetivos, comissionados, empregados públicos celetistas, agentes políticos, temporários e colaboradores. O essencial é que estejam atuando no exercício da função pública ou a pretexto dela.'
   }
 ];
 
 export const direitoAdminMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Agente público é:',
+    enunciado: '1. A responsabilidade civil do Estado, como regra, é:',
     opcoes: [
-      'A) Apenas o servidor efetivo',
-      'B) Toda pessoa que exerce, ainda que temporariamente ou sem remuneração, função pública',
-      'C) Apenas ocupante de cargo político',
-      'D) Somente empregado público'
+      'A) Subjetiva',
+      'B) Objetiva',
+      'C) Penal',
+      'D) Contratual'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O conceito de agente público é amplo e compreende toda pessoa que exerce, mesmo que de forma transitória ou sem remuneração, uma função pública.'
+    explicacao: 'Gabarito Oficial: B. Conforme o Art. 37, § 6º da Constituição Federal, a regra geral adotada pelo ordenamento jurídico brasileiro para o Estado perante a vítima é a responsabilidade civil objetiva.'
   },
   {
     id: 2,
-    enunciado: '2. O servidor público ocupante de cargo efetivo, em regra, ingressa por:',
+    enunciado: '2. Segundo o art. 37, §6º, da Constituição Federal, o Estado responde pelos danos causados por seus agentes:',
     opcoes: [
-      'A) Nomeação direta',
-      'B) Concurso público',
-      'C) Contrato verbal',
-      'D) Eleição'
+      'A) Somente quando houver dolo',
+      'B) Somente quando houver culpa',
+      'C) Nessa qualidade, a terceiros',
+      'D) Apenas quando houver ordem judicial'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Conforme o Art. 37, II da CF/88, a investidura em cargo público efetivo depende de aprovação prévia em concurso público de provas ou de provas e títulos.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. O texto constitucional prevê expressamente que as pessoas jurídicas respondem pelos danos que seus agentes, "nessa qualidade, causarem a terceiros".'
   },
   {
     id: 3,
-    enunciado: '3. Cargo público é:',
+    enunciado: '3. Para caracterizar a responsabilidade objetiva do Estado, a vítima deve demonstrar:',
     opcoes: [
-      'A) Um vínculo exclusivamente privado',
-      'B) Um conjunto de atribuições e responsabilidades previsto na estrutura administrativa',
-      'C) Uma atividade sem responsabilidade',
-      'D) Um contrato empresarial'
+      'A) Culpa do servidor, exclusivamente',
+      'B) Dolo do agente público',
+      'C) Conduta, dano e nexo causal',
+      'D) Apenas a existência do agente público'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Cargo público é o conjunto de atribuições e responsabilidades previsto na estrutura organizacional da Administração, a ser cometido a um servidor estatutário.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. Para configurar o dever de indenizar do Estado, a vítima deve comprovar a conduta administrativa, o dano suportado e o nexo de causalidade entre ambos (Macete: C + D + N).'
   },
   {
     id: 4,
-    enunciado: '4. O emprego público é normalmente regido:',
+    enunciado: '4. Na responsabilidade objetiva do Estado, a vítima:',
     opcoes: [
-      'A) Pelo regime trabalhista (CLT)',
-      'B) Pelo Código Penal',
-      'C) Pelo direito eleitoral',
-      'D) Exclusivamente pelo direito internacional'
+      'A) Deve necessariamente provar a culpa do agente',
+      'B) Não precisa provar a culpa do agente',
+      'C) Deve provar o dolo do Estado',
+      'D) Deve provar a intenção do servidor'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. Os empregados públicos possuem vínculo contratual de trabalho sob o regime da Consolidação das Leis do Trabalho (CLT), comum em empresas públicas e sociedades de economia mista.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Sendo objetiva a responsabilidade estatal perante o terceiro prejudicado, a vítima fica dispensada de provar dolo ou culpa do servidor público.'
   },
   {
     id: 5,
-    enunciado: '5. A contratação temporária pela Administração Pública ocorre para:',
+    enunciado: '5. O nexo causal representa:',
     opcoes: [
-      'A) Qualquer atividade permanente, sem justificativa',
-      'B) Atender necessidade temporária de excepcional interesse público',
-      'C) Substituir obrigatoriamente todos os servidores efetivos',
-      'D) Evitar a realização de concursos em qualquer situação'
+      'A) A existência de um contrato',
+      'B) A relação entre a conduta e o dano',
+      'C) A culpa do servidor',
+      'D) A punição administrativa'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O Art. 37, IX da Constituição Federal estabelece que a lei disporá sobre a contratação por tempo determinado para atender a necessidade temporária de excepcional interesse público.'
+    explicacao: 'Gabarito Oficial: B. O nexo de causalidade é o vínculo lógico-jurídico que demonstra que determinado dano foi causado direta ou indiretamente pela conduta do agente estatal.'
   },
   {
     id: 6,
-    enunciado: '6. O cargo em comissão caracteriza-se, em regra, por:',
+    enunciado: '6. Um servidor público, durante o exercício de sua função, causa dano a um cidadão. Nesse caso, em regra:',
     opcoes: [
-      'A) Exigir sempre estabilidade',
-      'B) Destinar-se a funções de direção, chefia e assessoramento',
-      'C) Ser preenchido exclusivamente por concurso',
-      'D) Ser necessariamente vitalício'
+      'A) O Estado poderá responder objetivamente',
+      'B) O Estado nunca responde',
+      'C) Apenas o servidor pode responder',
+      'D) Não existe possibilidade de indenização'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Conforme o Art. 37, V da CF/88, os cargos em comissão destinam-se exclusivamente às atribuições de direção, chefia e assessoramento, sendo de livre nomeação e exoneração.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. Quando o servidor atua no exercício da função pública e causa prejuízo a particular, o Estado responde de forma objetiva perante a vítima.'
   },
   {
     id: 7,
-    enunciado: '7. Sobre o concurso público, é correto afirmar:',
+    enunciado: '7. O direito de regresso permite que:',
     opcoes: [
-      'A) É dispensável para todo cargo efetivo',
-      'B) É regra para investidura em cargo ou emprego público',
-      'C) Só pode ocorrer para cargos municipais',
-      'D) É proibido para empregos públicos'
+      'A) O cidadão cobre diretamente qualquer servidor',
+      'B) O Estado cobre do agente o que pagou, havendo dolo ou culpa',
+      'C) O agente cobre do cidadão',
+      'D) O Estado deixe de indenizar a vítima'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O concurso público é o postulado constitucional obrigatório como regra geral para o acesso aos cargos efetivos e aos empregos públicos na Administração Direta e Indireta.'
+    explicacao: 'Gabarito Oficial: B. O direito de regresso faculta ao Poder Público reaver do agente causador do prejuízo o valor despendido a título de indenização, desde que comprovado dolo ou culpa deste.'
   },
   {
     id: 8,
-    enunciado: '8. A estabilidade é relacionada, em regra:',
+    enunciado: '8. Para o direito de regresso contra o agente público, é necessário demonstrar:',
     opcoes: [
-      'A) Ao empregado de empresa privada',
-      'B) Ao servidor ocupante de cargo efetivo que cumpra os requisitos constitucionais',
-      'C) Ao contratado temporário',
-      'D) Ao ocupante de cargo em comissão'
+      'A) Dolo ou culpa',
+      'B) Apenas dano',
+      'C) Apenas nexo causal',
+      'D) Responsabilidade penal'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. A estabilidade constitucional (Art. 41 da CF) é direito exclusivo do servidor nomeado para cargo de provimento efetivo em virtude de concurso público, após 3 anos de efetivo exercício e avaliação de desempenho.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. Na ação regressiva (Estado → agente público), a responsabilidade é subjetiva, exigindo a prova inequívoca de dolo ou culpa do servidor (CF, art. 37, § 6º in fine).'
   },
   {
     id: 9,
-    enunciado: '9. Um servidor pode responder:',
+    enunciado: '9. A responsabilidade da vítima perante o Estado, para fins de indenização, é normalmente analisada mediante:',
     opcoes: [
-      'A) Somente administrativamente',
-      'B) Somente criminalmente',
-      'C) Nas esferas civil, penal e administrativa, conforme o caso',
-      'D) Apenas perante o chefe imediato'
+      'A) Conduta, dano e nexo causal',
+      'B) Apenas culpa',
+      'C) Apenas dolo',
+      'D) Apenas existência de prejuízo financeiro'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. As sanções civis, penais e administrativas poderão cumular-se, sendo independentes entre si, podendo o servidor responder simultaneamente nas três esferas por um mesmo fato.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. A pretensão indenizatória da vítima é averiguada sob o prisma dos três pilares clássicos da responsabilidade objetiva: conduta da Administração, dano verificado e nexo causal.'
   },
   {
     id: 10,
-    enunciado: '10. A responsabilidade administrativa decorre, principalmente:',
+    enunciado: '10. A culpa exclusiva da vítima pode:',
     opcoes: [
-      'A) Da prática de infração funcional',
-      'B) Da prática de qualquer crime comum por qualquer pessoa',
-      'C) De uma dívida particular',
-      'D) De uma atividade exclusivamente privada'
+      'A) Aumentar automaticamente a indenização',
+      'B) Afastar o nexo causal e a responsabilidade estatal',
+      'C) Gerar responsabilidade penal do Estado',
+      'D) Tornar a responsabilidade sempre subjetiva'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A responsabilidade administrativa resulta da infração aos deveres e proibições funcionais previstos no Estatuto dos Servidores Públicos no exercício de suas atribuições.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. A culpa exclusiva da vítima rompe totalmente o nexo causal entre a atividade estatal e o evento danoso, eximindo o Estado do dever de indenizar.'
   },
   {
     id: 11,
-    enunciado: '11. O empregado público:',
+    enunciado: '11. O dispositivo constitucional mais importante sobre responsabilidade civil do Estado é:',
     opcoes: [
-      'A) É necessariamente estatutário',
-      'B) Possui vínculo de emprego e, em regra, está sujeito à CLT',
-      'C) Não exerce função pública',
-      'D) Não precisa observar princípios administrativos'
+      'A) Art. 5º, I',
+      'B) Art. 37, §6º',
+      'C) Art. 84, I',
+      'D) Art. 92'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O empregado público ocupa emprego público, tem contrato de trabalho regido pela CLT e se submete aos princípios da Administração Pública.'
+    explicacao: 'Gabarito Oficial: B. O Art. 37, § 6º da Constituição da República Federativa do Brasil é o marco normativo fundamental da responsabilidade civil extracontratual do Estado.'
   },
   {
     id: 12,
-    enunciado: '12. A função pública pode ser entendida como:',
+    enunciado: '12. Na relação entre vítima e Estado, a responsabilidade objetiva significa que:',
     opcoes: [
-      'A) O conjunto de atribuições exercidas por um agente público',
-      'B) Apenas um cargo efetivo',
-      'C) Uma empresa estatal',
-      'D) Uma atividade sem vínculo com o Estado'
+      'A) A culpa do agente é indispensável',
+      'B) A vítima deve provar dolo',
+      'C) A culpa do agente não precisa ser comprovada',
+      'D) O dano nunca precisa ser comprovado'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A função pública representa o feixe de atribuições, competências e responsabilidades conferidas ao agente público para a realização dos fins estatais.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. A responsabilidade objetiva caracteriza-se essencialmente pela desnecessidade de se verificar a existência de elemento subjetivo (culpa ou dolo) por parte do agente público.'
   },
   {
     id: 13,
-    enunciado: '13. É exemplo de agente público:',
+    enunciado: '13. Se o Estado indeniza uma vítima e fica comprovado que o agente público agiu com culpa, o Estado:',
     opcoes: [
-      'A) Apenas o servidor concursado',
-      'B) Apenas o presidente da República',
-      'C) Um servidor, empregado público ou contratado temporário, conforme a situação',
-      'D) Somente o empregado de empresa privada'
+      'A) Não pode fazer nada',
+      'B) Pode exercer direito de regresso',
+      'C) Deve punir a vítima',
+      'D) Deve cancelar a indenização'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. Todos os que exercem função pública (servidores estatutários, celetistas, temporários, políticos ou colaboradores) são qualificados como agentes públicos.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Havendo culpa ou dolo do agente, o Estado tem o dever-poder de propor ação regressiva para obter o ressarcimento dos cofres públicos.'
   },
   {
     id: 14,
-    enunciado: '14. A investidura em cargo ou emprego público depende, como regra:',
+    enunciado: '14. Um agente público causa dano a terceiro enquanto atua fora de qualquer relação com sua função pública. Nesse caso, a responsabilidade estatal:',
     opcoes: [
-      'A) De concurso público',
-      'B) De indicação de qualquer cidadão',
-      'C) De contrato particular',
-      'D) De autorização judicial'
+      'A) É automaticamente reconhecida',
+      'B) Deve ser analisada conforme a existência de vínculo entre a atuação e a função pública',
+      'C) É sempre objetiva',
+      'D) É sempre inexistente'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A aprovação prévia em concurso público de provas ou de provas e títulos é a regra constitucional indispensável para a investidura originária.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Para haver imputação da responsabilidade ao Estado, é indispensável examinar se havia vínculo, aparente ou efetivo, entre o ato do agente e o exercício de suas atribuições públicas ("nessa qualidade").'
   },
   {
     id: 15,
-    enunciado: '15. Os cargos em comissão:',
+    enunciado: '15. São elementos básicos da responsabilidade objetiva estatal:',
     opcoes: [
-      'A) São sempre vitalícios',
-      'B) São destinados às funções de direção, chefia e assessoramento',
-      'C) Garantem estabilidade automática',
-      'D) Não podem ser exonerados'
+      'A) Dolo, culpa e punição',
+      'B) Conduta, dano e nexo causal',
+      'C) Contrato, dolo e culpa',
+      'D) Pena, dano e sentença'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Art. 37, V da CF/88: os cargos em comissão destinam-se exclusivamente às atribuições de direção, chefia e assessoramento, sendo de livre nomeação e exoneração (ad nutum).'
+    explicacao: 'Gabarito Oficial: B. Conduta, dano e nexo causal são os três elementos constitutivos da teoria do risco administrativo adotada no Brasil.'
   },
   {
     id: 16,
-    enunciado: '16. Sobre agentes temporários, é correto afirmar:',
+    enunciado: '16. Caso fortuito ou força maior pode, conforme o caso concreto:',
     opcoes: [
-      'A) São contratados para atender necessidade temporária de excepcional interesse público',
-      'B) Sempre possuem estabilidade',
-      'C) São necessariamente servidores efetivos',
-      'D) Devem permanecer no serviço público por toda a vida'
+      'A) Afastar o nexo causal',
+      'B) Criar automaticamente responsabilidade estatal',
+      'C) Substituir o dano',
+      'D) Tornar todo agente culpado'
     ],
     correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. Os servidores temporários desempenham funções com base no Art. 37, IX da CF/88 para suprir demandas passageiras e de interesse público urgente reguladas por lei específica.'
+    explicacao: 'Gabarito Oficial: A. O caso fortuito ou força maior que seja imprevisível e inevitável afasta o liame causal entre a conduta do Estado e o evento lesivo, excluindo o dever de indenizar.'
   },
   {
     id: 17,
-    enunciado: '17. A responsabilidade civil do agente público pode ocorrer quando:',
+    enunciado: '17. A responsabilidade objetiva do Estado significa que:',
     opcoes: [
-      'A) Há dano causado no exercício da função, observados os requisitos legais',
-      'B) O agente simplesmente não gosta de seu trabalho',
-      'C) O servidor muda de setor',
-      'D) O agente tira férias'
+      'A) O Estado responde em qualquer situação, mesmo sem dano',
+      'B) O Estado responde independentemente da culpa, desde que presentes os requisitos da responsabilidade',
+      'C) O agente nunca poderá responder',
+      'D) A vítima não precisa provar nada'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A responsabilidade civil surge quando o agente causa prejuízo material ou moral ao erário ou a terceiros (em ação regressiva comprovado dolo ou culpa).'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. O Estado responde sem que se perquira a culpa funcional, desde que demonstrados os requisitos objetivos da lesão (conduta, dano e nexo causal).'
   },
   {
     id: 18,
-    enunciado: '18. A acumulação remunerada de cargos públicos:',
+    enunciado: '18. Sobre o agente público, é correto afirmar:',
     opcoes: [
-      'A) É sempre livre',
-      'B) É sempre proibida, sem exceção',
-      'C) Pode ser admitida em hipóteses previstas constitucionalmente e observadas as condições legais',
-      'D) Depende apenas da autorização do chefe'
+      'A) Nunca pode responder perante o Estado',
+      'B) Pode responder regressivamente quando agir com dolo ou culpa',
+      'C) Sempre responde objetivamente',
+      'D) Responde somente criminalmente'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. A vedação de acumular admite exceções taxativas expressas no Art. 37, XVI da CF/88 (como 2 cargos de professor ou 1 de professor com outro técnico/científico, havendo compatibilidade de horários).'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. O agente público pode ser responsabilizado internamente pelo Estado em sede de ação de regresso, se e somente se comprovada a existência de dolo ou culpa.'
   },
   {
     id: 19,
-    enunciado: '19. O princípio do concurso público busca principalmente:',
+    enunciado: '19. Se não houver relação de causalidade entre a atuação estatal e o dano:',
     opcoes: [
-      'A) Garantir acesso baseado em critérios objetivos e isonômicos',
-      'B) Permitir contratações exclusivamente por indicação',
-      'C) Impedir qualquer contratação pública',
-      'D) Garantir estabilidade a qualquer trabalhador'
+      'A) A responsabilidade objetiva será automaticamente configurada',
+      'B) Pode não existir responsabilidade estatal pelo dano',
+      'C) O Estado sempre deverá indenizar',
+      'D) O agente será automaticamente culpado'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. O concurso público materializa a isonomia, a impessoalidade e a busca pela eficiência e mérito para selecionar os candidatos mais capacitados.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. O nexo de causalidade é pressuposto indeclinável. Sem relação de causa e efeito entre a conduta da Administração e a lesão, não há responsabilidade do Estado.'
   },
   {
     id: 20,
-    enunciado: '20. Assinale a alternativa INCORRETA:',
+    enunciado: '20. Assinale a alternativa correta:',
     opcoes: [
-      'A) Agentes públicos podem exercer funções públicas de diferentes formas.',
-      'B) Empregados públicos possuem vínculo trabalhista.',
-      'C) Contratados temporários são necessariamente servidores efetivos.',
-      'D) Servidores podem estar sujeitos à responsabilização administrativa.'
+      'A) Estado e agente público possuem sempre a mesma forma de responsabilidade',
+      'B) O Estado responde objetivamente perante a vítima, enquanto o regresso contra o agente depende de dolo ou culpa',
+      'C) O Estado só responde se houver dolo',
+      'D) O agente público nunca pode ser responsabilizado'
     ],
-    correta: 2, // C (Incorreta)
-    explicacao: 'Gabarito Oficial: C. Contratados temporários NÃO são servidores efetivos. O servidor efetivo ocupa cargo de provimento efetivo via concurso público, enquanto o temporário exerce função transitória por regime especial.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Esta é a regra de ouro das bancas e da FGV: perante a vítima, a responsabilidade do Estado é objetiva; já na ação regressiva movida pelo Estado contra o servidor causador do dano, a responsabilidade é subjetiva (dolo ou culpa).'
   }
 ];
 
 export const direitoAdminTfQuestionsData: TfQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Agente público é apenas aquele que possui aprovação em concurso público e cargo estatutário efetivo com remuneração mensal.',
+    enunciado: '1. A responsabilidade civil do Estado perante o cidadão depende da prova de dolo ou culpa do servidor público envolvido.',
     correta: false,
-    explicacao: 'Falso: Agente público é toda pessoa que exerce função pública, inclusive temporários, mesários (sem remuneração) e agentes políticos.'
+    explicacao: 'Falso: A responsabilidade do Estado perante a vítima é OBJETIVA, dispensando a prova de dolo ou culpa.'
   },
   {
     id: 2,
-    enunciado: '2. Os cargos em comissão destinam-se exclusivamente às atribuições de direção, chefia e assessoramento.',
+    enunciado: '2. Para que surja o dever estatal de indenizar, a vítima precisa demonstrar conduta estatal, dano e nexo causal.',
     correta: true,
-    explicacao: 'Verdadeiro: Exatamente o texto do Art. 37, V da Constituição Federal.'
+    explicacao: 'Verdadeiro: Macete C + D + N (Conduta, Dano e Nexo causal).'
   },
   {
     id: 3,
-    enunciado: '3. A responsabilidade do servidor público nas esferas civil, penal e administrativa é independente e pode cumular-se.',
+    enunciado: '3. O Estado pode ajuizar ação regressiva contra o agente público, exigindo a demonstração de dolo ou culpa.',
     correta: true,
-    explicacao: 'Verdadeiro: O mesmo ato ilícito pode ensejar sanção disciplinar (demissão), civil (ressarcimento) e penal (prisão).'
+    explicacao: 'Verdadeiro: Conforme art. 37, § 6º da CF/88, o direito de regresso depende de dolo ou culpa do servidor.'
   },
   {
     id: 4,
-    enunciado: '4. O empregado público de uma empresa estatal ocupa cargo público estatutário.',
+    enunciado: '4. A culpa exclusiva da vítima não tem o condão de afastar o nexo causal na responsabilidade objetiva do Estado.',
     correta: false,
-    explicacao: 'Falso: Empregado público ocupa EMPREGO PÚBLICO regido pela CLT (regime celetista).'
+    explicacao: 'Falso: A culpa exclusiva da vítima rompe o nexo causal e afasta a responsabilidade estatal.'
   }
 ];
 
 export const direitoAdminDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Explique a distinção técnica entre Cargo Público, Emprego Público e Função Pública para o concurso do TJAM.',
-    respostaEsperada: 'Gabarito oficial: Cargo Público é o conjunto de atribuições e responsabilidades previsto na estrutura administrativa, criado por lei, ocupado por servidor público estatutário. Emprego Público é a unidade de atribuições ocupada por empregado público sob o regime celetista (CLT). Função Pública é o feixe de atribuições exercido pelo agente público, podendo existir função sem cargo (como funções temporárias ou funções de confiança).'
+    enunciado: '1. Explique a distinção entre a responsabilidade do Estado perante a vítima e a responsabilidade do agente público perante o Estado no direito de regresso.',
+    respostaEsperada: 'Gabarito oficial: Perante a vítima, o Estado responde de forma OBJETIVA (CF/88, art. 37, § 6º), bastando a comprovação da conduta administrativa, do dano suportado e do nexo de causalidade (C + D + N), sem necessidade de perquirir culpa ou dolo. Por outro lado, na relação interna entre o Estado e o agente causador do dano (ação de regresso), a responsabilidade é SUBJETIVA, sendo indispensável a demonstração de que o servidor agiu com dolo ou culpa.'
   },
   {
     id: 2,
-    enunciado: '2. Descreva as hipóteses de responsabilização do agente público e a possibilidade de coexistência das esferas civil, administrativa e penal.',
-    respostaEsperada: 'Gabarito oficial: O agente público pode responder civilmente (quando causar dano patrimonial ao Estado ou a terceiros, mediante dolo ou culpa), administrativamente (por violação de deveres funcionais apurada em PAD) e penalmente (pela prática de crimes e contravenções funcionais). Como regra geral, as três esferas são independentes entre si e podem cumular-se concomitantemente.'
+    enunciado: '2. Quais circunstâncias são admitidas pela doutrina e jurisprudência para afastar ou atenuar o nexo causal na responsabilidade civil do Estado?',
+    respostaEsperada: 'Gabarito oficial: As hipóteses excludentes de responsabilidade estatal que rompem o nexo causal são: 1) Culpa exclusiva da vítima (quando o dano é causado inteiramente pela própria conduta do particular lesado); 2) Fato exclusivo de terceiro; e 3) Caso fortuito ou força maior (eventos naturais imprevisíveis e inevitáveis não relacionados à atuação estatal). Ressalte-se que a culpa concorrente da vítima não afasta a responsabilidade, mas apenas atenua/reduz proporcionalmente o valor da indenização.'
   }
 ];
 
 export const direitoAdminSummaryPoints: string[] = [
-  'Conceito de Agente Público: Toda pessoa física que exerce função pública, ainda que temporariamente ou sem remuneração.',
-  'Classificação: Agentes Políticos (direção estatal), Servidores Estatutários (cargos), Empregados Celetistas (empregos), Temporários (excepcional interesse público) e Colaboradores.',
-  'Cargo × Emprego × Função: Cargo = Servidor Estatutário; Emprego = Regime CLT; Função = Atribuições exercidas pelo agente.',
-  'Regra do Concurso Público: Obrigatório para investidura em cargo ou emprego público (Art. 37, II CF/88).',
-  'Cargos em Comissão: Exclusivos para Direção, Chefia e Assessoramento, de livre nomeação e exoneração (ad nutum).',
-  'Responsabilidades: Civil (dano), Administrativa (falta funcional) e Penal (crime/contravenção) — esferas independentes e cumuláveis.',
-  'Foco TJAM: Atenção à diferença entre cargo efetivo e em comissão, contratação temporária e acumulação constitucional de cargos.'
+  'Responsabilidade Civil do Estado = dever de reparar danos causados por agentes públicos nessa qualidade.',
+  '⭐ Estado: responsabilidade objetiva (Art. 37, §6º da CF/88).',
+  '⭐ Vítima: prova dano + conduta + nexo causal (Macete: C + D + N). Não precisa provar dolo ou culpa.',
+  '⭐ Agente Público: responde perante o Estado em ação regressiva apenas se comprovado dolo ou culpa.',
+  '⭐ Excludentes de responsabilidade: culpa exclusiva da vítima, fato exclusivo de terceiro, fortuito e força maior.',
+  '⭐ Conceito de Agente: amplo (servidores, empregados, políticos e temporários) atuando na qualidade funcional.',
+  '⭐ Artigo-chave obrigatório para o TJAM: CF/88, art. 37, §6º.'
 ];

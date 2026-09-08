@@ -25,8 +25,7 @@ import {
   Calendar,
   CheckCircle,
   Target,
-  Megaphone,
-  AlertTriangle
+  Users
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -86,6 +85,22 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
     highlight: true,
     tag: '💻 INFORMÁTICA (2ª AULA)',
     orderNumber: 2,
+  },
+  {
+    id: 'escrita_leitura',
+    subjectKey: 'escrita_leitura',
+    title: 'Escrita e Leitura — 3ª Aula de Hoje (Aula 1)',
+    subtitle: 'Comunicação: falar, ler e escrever melhor • Dicção, ortografia, pontuação, fala estruturada e tarefa em vídeo',
+    category: 'Comunicação & Redação',
+    badge: 'Meta 3 de Hoje • Escrita e Leitura',
+    color: 'emerald',
+    icon: BookOpen,
+    duration: '40 min',
+    questionsCount: 20,
+    cardsCount: 15,
+    highlight: true,
+    tag: '📚 ESCRITA & LEITURA (3ª AULA)',
+    orderNumber: 3,
   },
 ];
 
@@ -290,11 +305,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 2 Aulas Programadas para Hoje
+              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 3 Aulas Programadas para Hoje
             </div>
 
-            <div className="px-3 py-1 rounded-full text-xs font-black bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center gap-1.5">
-              <span>👤 Aluno: Eduardo Mateus (Sem Dupla)</span>
+            <div className="px-3 py-1 rounded-full text-xs font-black bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Dupla Oficial: Eduardo Mateus & Pedro Henrique (3º Lugar)</span>
             </div>
           </div>
 
@@ -302,40 +318,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Olá, Eduardo!
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-emerald-500 font-bold">2 aulas programadas para conclusão hoje</strong> são: <strong className="text-amber-400">1. Direito Constitucional (1ª Aula)</strong> e <strong className="text-cyan-400">2. Informática (2ª Aula de Hoje)</strong>. Conclua as teorias, questões e flashcards abaixo para bater a sua meta diária!
+            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-emerald-500 font-bold">3 aulas programadas para conclusão hoje</strong> são: <strong className="text-amber-400">1. Direito Constitucional (1ª Aula)</strong>, <strong className="text-cyan-400">2. Informática (2ª Aula)</strong> e <strong className="text-emerald-400">3. Escrita e Leitura (3ª Aula - Aula 1: Comunicação)</strong>. Conclua as teorias, questões e flashcards abaixo para bater a sua meta diária!
           </p>
         </div>
 
-        {/* COMUNICADO OFICIAL DA COORDENAÇÃO PEDAGÓGICA */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-rose-950/90 via-slate-900 to-amber-950/80 border-2 border-rose-500/50 shadow-xl text-white space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-rose-300 shrink-0">
-                <Megaphone className="w-5 h-5 text-rose-300" />
-              </div>
-              <div>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30">
-                  COMUNICADO OFICIAL DA COORDENAÇÃO • TJAM 2026
-                </span>
-                <h3 className="text-base sm:text-lg font-black text-rose-100 mt-0.5">
-                  Queda no Ranking: Não Entrega da Atividade de Geografia
-                </h3>
-              </div>
-            </div>
-            <span className="px-3 py-1 rounded-full text-xs font-black bg-slate-900/80 border border-rose-500/30 text-rose-300 flex items-center gap-1.5">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-              Penalidade no Ranking
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-950/70 border border-rose-500/20 text-xs sm:text-sm text-slate-200 leading-relaxed">
-            <p className="text-rose-100 font-semibold text-sm">
-              O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
-            </p>
-          </div>
-        </div>
-
-        {/* Primary CTA Banner: Duas Aulas de Hoje */}
+        {/* Primary CTA Banner: Três Aulas de Hoje */}
         <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-amber-900/90 via-slate-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-amber-950/20 border border-amber-500/30">
           <div className="space-y-2 max-w-xl">
             <div className="flex flex-wrap items-center gap-2">
@@ -343,35 +330,42 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <Target className="w-3.5 h-3.5 text-amber-300" /> Metas Obrigatórias de Hoje
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 2 Aulas de Hoje • 90 min total
+                <Clock className="w-3.5 h-3.5" /> 3 Aulas de Hoje • 130 min total
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Dir. Constitucional & Informática</h2>
+            <h2 className="text-xl sm:text-2xl font-black">🎯 Aulas de Hoje: Dir. Const, Informática & Escrita/Leitura</h2>
             <p className="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">
-              <strong>1. Dir. Constitucional (1ª Aula):</strong> Aplicabilidade das Normas (Plena, Contida e Limitada) • <strong>2. Informática (2ª Aula):</strong> Segurança da Informação (CID, Senhas, Malware, Backup).
+              <strong>1. Dir. Const:</strong> Aplicabilidade das Normas • <strong>2. Informática:</strong> Segurança da Informação • <strong>3. Escrita e Leitura (3ª Aula):</strong> Comunicação: falar, ler e escrever melhor.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
             <button
               onClick={() => handleOpenLesson('direito_const')}
-              className="px-4 py-3 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+              className="px-3.5 py-3 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>📚 1. Dir. Const (1ª Aula)</span>
+              <span>📚 1. Dir. Const</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
               onClick={() => handleOpenLesson('informatica')}
-              className="px-4 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+              className="px-3.5 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
             >
-              <span>💻 2. Informática (2ª Aula)</span>
+              <span>💻 2. Informática</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => handleOpenLesson('escrita_leitura')}
+              className="px-3.5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
+            >
+              <span>✍️ 3. Escrita & Leitura</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
+      {/* METAS DO DIA: AS 3 AULAS A SEREM CONCLUÍDAS HOJE */}
       <div className="space-y-5">
         <div
           className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
@@ -386,11 +380,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-500" />
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 2 Aulas Programadas
+                  Metas de Hoje • 3 Aulas Programadas
                 </h2>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 2 disciplinas do dia.
+                Conclua os textos teóricos, responda as questões comentadas e revise os flashcards das 3 disciplinas do dia.
               </p>
             </div>
 
@@ -423,8 +417,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
 
-        {/* 2 Primary Today's Lessons Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* 3 Primary Today's Lessons Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {TODAY_PRIMARY_LESSONS.map((lesson) => {
             const isCompleted = !!savedLessonsStore[lesson.subjectKey]?.completed;
             const answersCount = savedLessonsStore[lesson.subjectKey]?.selectedAnswers
@@ -639,54 +633,54 @@ export const Dashboard: React.FC<DashboardProps> = ({
         >
           <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
+              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Eduardo no Ranking Geral
+                  Sua Dupla no Ranking Geral
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Desempenho individual no TJAM 2026 (Sem Dupla)
+                  Desempenho da Dupla: Pedro Henrique & Eduardo Mateus
                 </p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-rose-500/10 text-rose-400 border-rose-500/20">
-              Sem Dupla
+            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+              Dupla Oficial • 3º Lugar
             </span>
           </div>
 
           <div className="space-y-3">
-            {/* Perfil de Eduardo no Ranking */}
+            {/* Perfil da Dupla Pedro Henrique & Eduardo Mateus no Ranking */}
             <div
               className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                 isDarkMode
-                  ? 'bg-rose-500/10 border-rose-500/30 ring-1 ring-rose-500/20'
-                  : 'bg-rose-50 border-rose-200'
+                  ? 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20'
+                  : 'bg-emerald-50 border-emerald-200'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-rose-600 shadow-rose-500/30">
-                  10º
+                <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-amber-600 shadow-amber-500/30">
+                  3º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                      Eduardo Mateus
+                      Pedro Henrique & Eduardo Mateus
                     </span>
-                    <span className="px-2 py-0.5 rounded-md font-extrabold text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-                      Sem Dupla
+                    <span className="px-2 py-0.5 rounded-md font-extrabold text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                      Dupla Oficial
                     </span>
-                    <span className="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30 font-extrabold text-[10px]">
-                      10º Lugar
+                    <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-400/30 font-extrabold text-[10px]">
+                      3º Lugar
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-0.5">
-                    <span className="text-xs font-semibold text-rose-400">
-                      📊 10º Lugar Geral • Sem dupla com 17,2% concluído
+                    <span className="text-xs font-semibold text-emerald-400">
+                      📊 3º Lugar Geral • Dupla com 31,6% concluído
                     </span>
-                    <span className="text-[11px] font-bold text-amber-400 dark:text-amber-300">
-                      • ⚠️ Queda no ranking (atividade de Geografia não entregue)
+                    <span className="text-[11px] font-bold text-emerald-300">
+                      • ✅ 100% em dia (sem atividades pendentes e sem queda)
                     </span>
                   </div>
                 </div>
@@ -695,12 +689,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-4 sm:justify-end">
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-500 bg-rose-500"
-                    style={{ width: '49.1%' }}
+                    className="h-full rounded-full transition-all duration-500 bg-emerald-500"
+                    style={{ width: '90.3%' }}
                   ></div>
                 </div>
-                <span className="text-sm font-black min-w-[50px] text-right text-rose-400">
-                  17,2%
+                <span className="text-sm font-black min-w-[50px] text-right text-emerald-400">
+                  31,6%
                 </span>
               </div>
             </div>
@@ -736,25 +730,24 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {[
               { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '35,0%', isUser: false, isSolo: false, barWidth: '100%' },
               { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '33,4%', isUser: false, isSolo: false, barWidth: '95.4%' },
-              { pos: 3, name: 'Matheus Ribeiro & Beatriz Lima', pct: '31,6%', isUser: false, isSolo: false, barWidth: '90.3%' },
-              { pos: 4, name: 'Thiago Martins & Camila Duarte', pct: '30,0%', isUser: false, isSolo: false, barWidth: '85.7%' },
-              { pos: 5, name: 'Rafael Mendes & Amanda Rocha', pct: '28,2%', isUser: false, isSolo: false, barWidth: '80.6%' },
-              { pos: 6, name: 'Carlos Eduardo & Juliana Castro', pct: '26,5%', isUser: false, isSolo: false, barWidth: '75.7%' },
-              { pos: 7, name: 'Pedro Henrique', pct: '24,0%', isUser: false, isSolo: true, barWidth: '68.6%' },
+              { pos: 3, name: 'Pedro Henrique & Eduardo Mateus', pct: '31,6%', isUser: true, isSolo: false, barWidth: '90.3%' },
+              { pos: 4, name: 'Matheus Ribeiro & Beatriz Lima', pct: '30,0%', isUser: false, isSolo: false, barWidth: '85.7%' },
+              { pos: 5, name: 'Thiago Martins & Camila Duarte', pct: '28,2%', isUser: false, isSolo: false, barWidth: '80.6%' },
+              { pos: 6, name: 'Rafael Mendes & Amanda Rocha', pct: '26,5%', isUser: false, isSolo: false, barWidth: '75.7%' },
+              { pos: 7, name: 'Carlos Eduardo & Juliana Castro', pct: '24,0%', isUser: false, isSolo: false, barWidth: '68.6%' },
               { pos: 8, name: 'Bruno Carvalho & Larissa Ferreira', pct: '21,8%', isUser: false, isSolo: false, barWidth: '62.3%' },
               { pos: 9, name: 'Felipe Andrade & Letícia Ramos', pct: '19,5%', isUser: false, isSolo: false, barWidth: '55.7%' },
-              { pos: 10, name: 'Eduardo Mateus', pct: '17,2%', isUser: true, isSolo: true, barWidth: '49.1%' },
-              { pos: 11, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '15,0%', isUser: false, isSolo: false, barWidth: '42.9%' },
-              { pos: 12, name: 'Vinícius Dias & Patrícia Santos', pct: '12,8%', isUser: false, isSolo: false, barWidth: '36.6%' },
-              { pos: 13, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '10,5%', isUser: false, isSolo: false, barWidth: '30.0%' },
+              { pos: 10, name: 'Rodrigo Alves & Fernanda Peixoto', pct: '17,2%', isUser: false, isSolo: false, barWidth: '49.1%' },
+              { pos: 11, name: 'Vinícius Dias & Patrícia Santos', pct: '15,0%', isUser: false, isSolo: false, barWidth: '42.9%' },
+              { pos: 12, name: 'Gustavo Nogueira & Bruna Vasconcelos', pct: '12,8%', isUser: false, isSolo: false, barWidth: '36.6%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}
                 className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
                   aluno.isUser
                     ? isDarkMode
-                      ? 'bg-rose-500/10 border-rose-500/30 ring-1 ring-rose-500/20'
-                      : 'bg-rose-50 border-rose-200'
+                      ? 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20'
+                      : 'bg-emerald-50 border-emerald-200'
                     : isDarkMode
                     ? 'bg-slate-800/40 border-slate-800/80'
                     : 'bg-slate-50 border-slate-200'
@@ -764,15 +757,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div
                     className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 shadow-sm ${
                       aluno.isUser
-                        ? 'bg-rose-600 text-white shadow-rose-500/30'
+                        ? 'bg-amber-600 text-white shadow-amber-500/30'
                         : aluno.pos === 1
                         ? 'bg-amber-500 text-slate-950 font-black'
                         : aluno.pos === 2
                         ? 'bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
                         : aluno.pos === 3
                         ? 'bg-amber-700/60 text-white'
-                        : aluno.pos === 7 && aluno.name === 'Pedro Henrique'
-                        ? 'bg-emerald-600 text-white shadow-sm'
                         : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                     }`}
                   >
@@ -780,7 +771,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-rose-400 dark:text-rose-300 font-black' : 'text-slate-700 dark:text-slate-300'}`}>
+                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-emerald-400 dark:text-emerald-300 font-black' : 'text-slate-700 dark:text-slate-300'}`}>
                         {aluno.name}
                       </span>
                       <span className={`px-1.5 py-0.5 rounded font-extrabold text-[9px] whitespace-nowrap hidden sm:inline-block ${
@@ -790,20 +781,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       }`}>
                         {aluno.isSolo ? 'Sem Dupla' : 'Dupla'}
                       </span>
-                      {aluno.name === 'Pedro Henrique' && (
-                        <span className="px-1.5 py-0.5 rounded font-extrabold text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
-                          7º Lugar
-                        </span>
-                      )}
                       {aluno.isUser && (
-                        <>
-                          <span className="px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap bg-rose-500/20 text-rose-300 border-rose-400/30">
-                            <span>Eduardo (Você • 10º)</span>
-                          </span>
-                          <span className="px-1.5 py-0.5 rounded font-extrabold text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/30 whitespace-nowrap hidden md:inline-block">
-                            Atividade Geografia Pendente
-                          </span>
-                        </>
+                        <span className="px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
+                          <span>Sua Dupla (3º Lugar • 100% em dia)</span>
+                        </span>
                       )}
                     </div>
                   </div>
@@ -811,11 +792,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="w-16 sm:w-24 bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
                     <div
-                      className={`${aluno.isUser ? 'bg-rose-500' : aluno.pos === 7 && aluno.name === 'Pedro Henrique' ? 'bg-emerald-500' : 'bg-slate-400 dark:bg-slate-600'} h-full rounded-full`}
+                      className={`${aluno.isUser ? 'bg-emerald-500' : 'bg-slate-400 dark:bg-slate-600'} h-full rounded-full`}
                       style={{ width: aluno.barWidth }}
                     ></div>
                   </div>
-                  <span className={`text-sm font-black ${aluno.isUser ? 'text-indigo-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                  <span className={`text-sm font-black ${aluno.isUser ? 'text-emerald-400 font-extrabold' : 'text-slate-500 dark:text-slate-400'}`}>
                     {aluno.pct}
                   </span>
                 </div>

@@ -60,11 +60,11 @@ export function App() {
   useEffect(() => {
     document.documentElement.classList.add('dark');
     localStorage.setItem('tjam_theme', 'dark');
-    localStorage.setItem('tjam_site_locked', 'true');
+    localStorage.setItem('tjam_site_locked', 'false');
   }, []);
 
-  // Site lock state (Hidden and locked for Simulado preparation)
-  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(true);
+  // Site lock state
+  const [isSiteLocked, setIsSiteLocked] = useState<boolean>(false);
 
   // Auth & View Mode state (MVP Mode: Default student interface)
   const [viewMode, setViewMode] = useState<ViewMode>('student');
@@ -106,8 +106,8 @@ export function App() {
   const [selectedDisciplineId, setSelectedDisciplineId] = useState<string | null>(null);
   const [disciplineSubTab, setDisciplineSubTab] = useState<string>('aulas');
 
-  // Modo individual: Eduardo Mateus sem dupla
-  const isDuo = false;
+  // Modo dupla oficial: Eduardo Mateus e Pedro Henrique
+  const isDuo = true;
 
   // Core App State persisted in localStorage
   const [disciplines] = useState<Discipline[]>(TJAM_DISCIPLINES);
@@ -556,9 +556,6 @@ export function App() {
 
   const selectedDisciplineObj = disciplines.find((d) => d.id === selectedDisciplineId);
 
-  // Diretiva estrita: "Somente mostre os rankings, nada mais, coloque um PDF profissional com os dados dos rankings para baixar"
-  return <RankingsOnlyView />;
-
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative selection:bg-sky-500/30">
       {/* Navigation Header */}
@@ -757,12 +754,7 @@ export function App() {
               )}
 
               {studentTab === 'simulados' && (
-                <SimuladosView
-                  simulados={simulados}
-                  progress={userProgress}
-                  onSaveSimuladoAttempt={handleSaveSimuladoAttempt}
-                  isDarkMode={isDarkMode}
-                />
+                <RankingsOnlyView />
               )}
 
               {studentTab === 'caderno-erros' && (

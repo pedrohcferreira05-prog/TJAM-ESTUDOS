@@ -788,8 +788,8 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     </div>
                   </div>
 
-                  <p className="text-xs text-rose-200/90 bg-rose-950/70 p-2.5 rounded-xl border border-rose-500/20 leading-relaxed font-semibold">
-                    O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
+                  <p className="text-xs text-emerald-200/90 bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-500/20 leading-relaxed font-semibold">
+                    Todas as atividades pedagógicas estão entregues e a dupla está em 3º lugar no ranking geral.
                   </p>
 
                   <div className="flex items-center justify-end pt-1">

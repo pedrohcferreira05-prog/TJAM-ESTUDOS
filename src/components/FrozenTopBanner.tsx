@@ -21,24 +21,24 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
 
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30">
-                COMUNICADO
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                STATUS OFICIAL
               </span>
               <span className="font-bold text-slate-200">
-                Status no Ranking Atualizado
+                Dupla no Ranking Geral: 3º Lugar
               </span>
             </div>
             <p className="text-slate-200 text-xs sm:text-sm mt-0.5 leading-normal font-medium">
-              O aluno não entregou a atividade de geografia, seu status no ranking caiu por conta disso.
+              Eduardo Mateus & Pedro Henrique • 100% das atividades em dia, sem pendências e sem penalidades.
             </p>
           </div>
         </div>
 
         {/* Status Indicators */}
         <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-rose-500/30 text-xs font-semibold text-slate-300">
-            <Lock className="w-3.5 h-3.5 text-rose-400" />
-            <span>Eduardo Mateus: <strong className="text-rose-300 font-bold">10º lugar (17,2% • Sem Dupla)</strong></span>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-emerald-500/30 text-xs font-semibold text-slate-300">
+            <Lock className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Dupla Oficial: <strong className="text-emerald-300 font-bold">3º lugar (31,6%)</strong></span>
           </div>
 
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-400">

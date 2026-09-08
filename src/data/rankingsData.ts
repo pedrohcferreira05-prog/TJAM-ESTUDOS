@@ -34,8 +34,7 @@ export interface RankingIndividualItem {
 }
 
 // 1. RANKING DAS DUPLAS:
-// Eduardo está em 3º lugar com 50%, participando sozinho (sem dupla)
-// Inclui todas as duplas do curso + 2 duplas desclassificadas com nota zero
+// Eduardo Mateus & Pedro Henrique são duplas oficiais e estão em 3º lugar, 100% em dia e sem pendências
 export const DUPLAS_RANKING: RankingDuplaItem[] = [
   {
     rank: 1,
@@ -65,12 +64,12 @@ export const DUPLAS_RANKING: RankingDuplaItem[] = [
   },
   {
     rank: 3,
-    name: 'Eduardo Mateus',
+    name: 'Eduardo Mateus & Pedro Henrique',
     score: '50,0%',
     percentageNum: 50,
     isUser: true,
-    isSolo: true,
-    description: 'Individual (Competindo Sozinho Sem Dupla) • 3º Lugar',
+    isSolo: false,
+    description: 'Dupla Oficial (Eduardo & Pedro) • 3º Lugar Geral (100% em dia, sem pendências)',
     bgClass: 'bg-emerald-950/40 border-emerald-500/50 ring-1 ring-emerald-500/30 shadow-lg shadow-emerald-950/50',
     badgeClass: 'bg-amber-700 text-white font-black shadow-md shadow-amber-700/30',
     barClass: 'bg-emerald-400',
@@ -542,6 +541,6 @@ export const EDUARDO_OFFICIAL_ATTEMPT: SimuladoAttempt = {
   userAnswers: EDUARDO_OFFICIAL_ANSWERS,
   timeSpentSeconds: 11520, // 3h 12m
   participantName: 'Eduardo Mateus',
-  partnerName: 'Individual (Sem dupla)',
+  partnerName: 'Pedro Henrique (Dupla Oficial)',
   deviceUsed: 'Notebook',
 };
