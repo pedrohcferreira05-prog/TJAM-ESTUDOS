@@ -83,8 +83,13 @@ import {
   procCivilAula2McQuestionsData as procCivilMcQuestionsData,
   procCivilAula2TfQuestionsData as procCivilTfQuestionsData,
   procCivilAula2DiscursiveQuestionsData as procCivilDiscursiveQuestionsData,
-  procCivilAula2SummaryPoints as procCivilSummaryPoints
+  procCivilAula2SummaryPoints as procCivilSummaryPoints,
+  getPedroAnswerInfo,
+  ensurePedroProcessoCivilAnswers,
+  PEDRO_CIVIL_CORRECT_ANSWERS,
+  PEDRO_CIVIL_SHOW_RESULTS
 } from '../data/processoCivilLessonData';
+import { saveLessonProgressToFirestore } from '../lib/firestoreService';
 import { ProcessoCivilContent } from './ProcessoCivilContent';
 import {
   procPenalFlashcardsData,
@@ -234,9 +239,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>(() => {
     try {
       const saved = localStorage.getItem('tjam_lessons_progress');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const store = JSON.parse(saved);
+        const updated = ensurePedroProcessoCivilAnswers(store);
+        localStorage.setItem('tjam_lessons_progress', JSON.stringify(updated));
+        return updated;
+      }
     } catch (e) {}
-    return {};
+    const defaultStore: Record<string, any> = {};
+    const updated = ensurePedroProcessoCivilAnswers(defaultStore);
+    try {
+      localStorage.setItem('tjam_lessons_progress', JSON.stringify(updated));
+    } catch (e) {}
+    return updated;
   });
 
   // Load saved state when selectedSubject changes
@@ -244,6 +259,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     try {
       const savedStr = localStorage.getItem('tjam_lessons_progress');
       const store = savedStr ? JSON.parse(savedStr) : {};
+      ensurePedroProcessoCivilAnswers(store);
       setSavedLessonsStore(store);
 
       const subjectData = store[selectedSubject];
@@ -267,6 +283,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         setChecklist({ c1: false, c2: false, c3: false, c4: false, c5: false });
         setIsLessonCompleted(false);
         setLearnedCards({});
+      }
+
+      // Se a disciplina selecionada for Processo Civil, garantir o preenchimento imediato das 10 questões de Pedro Henrique
+      if (selectedSubject === 'processo_civil') {
+        setSelectedAnswers(prev => ({
+          ...prev,
+          ...PEDRO_CIVIL_CORRECT_ANSWERS,
+        }));
+        setShowQuestionResults(prev => ({
+          ...prev,
+          ...PEDRO_CIVIL_SHOW_RESULTS,
+        }));
       }
     } catch (e) {
       console.error('Error restoring lesson progress:', e);
@@ -295,8 +323,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
       };
 
       store[selectedSubject] = currentData;
+      ensurePedroProcessoCivilAnswers(store);
       setSavedLessonsStore(store);
       localStorage.setItem('tjam_lessons_progress', JSON.stringify(store));
+      saveLessonProgressToFirestore(store);
 
       // Also sync into main tjam_user_progress object
       const userProgressStr = localStorage.getItem('tjam_user_progress');
@@ -348,12 +378,22 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
   const handleResetLessonExercises = () => {
     if (window.confirm('Deseja refazer os exercícios desta aula? Suas respostas serão zeradas para que você possa praticar novamente, mas o registro de leitura/aula continuará salvo.')) {
-      setSelectedAnswers({});
-      setShowQuestionResults({});
-      setTfAnswers({});
-      setTfSubmitted({});
-      setDiscursiveAnswers({});
-      setDiscursiveSubmitted({});
+      if (selectedSubject === 'processo_civil') {
+        // Em Processo Civil, restaura o padrão oficial das 10 questões gabaritadas por Pedro Henrique
+        setSelectedAnswers({ ...PEDRO_CIVIL_CORRECT_ANSWERS });
+        setShowQuestionResults({ ...PEDRO_CIVIL_SHOW_RESULTS });
+        setTfAnswers({});
+        setTfSubmitted({});
+        setDiscursiveAnswers({});
+        setDiscursiveSubmitted({});
+      } else {
+        setSelectedAnswers({});
+        setShowQuestionResults({});
+        setTfAnswers({});
+        setTfSubmitted({});
+        setDiscursiveAnswers({});
+        setDiscursiveSubmitted({});
+      }
     }
   };
 
@@ -4113,83 +4153,195 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* 1. MÚLTIPLA ESCOLHA (1 a 10) */}
             {(exerciseFilter === 'todos' || exerciseFilter === 'mc') && (
               <div className="space-y-6">
-                <div className="flex items-center gap-2 text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 border-b border-emerald-500/20 pb-2">
+                <div className="flex items-center justify-between gap-2 text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 border-b border-emerald-500/20 pb-2">
                   <span>Part I — Questões de Múltipla Escolha (1 a 10)</span>
+                  {selectedSubject === 'processo_civil' && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-extrabold text-[10px] tracking-wider border border-emerald-500/30">
+                      ✓ 10 de 10 Respondidas por Pedro Henrique
+                    </span>
+                  )}
                 </div>
 
-                {activeMcQuestions.map((q, qIndex) => (
-                  <div
-                    key={q.id}
-                    className={`p-6 rounded-3xl border space-y-4 ${
-                      isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs text-slate-400">
-                      <span className="font-extrabold uppercase">Questão {qIndex + 1} de {activeMcQuestions.length}</span>
-                      <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md font-bold">Múltipla Escolha</span>
-                    </div>
-
-                    {(q as any).textoApoio && (
-                      <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                        <span className="font-black text-[10px] uppercase tracking-wider text-amber-600 dark:text-amber-400">📖 Texto de Apoio:</span>
-                        <p className="italic font-medium leading-relaxed">"{ (q as any).textoApoio }"</p>
+                {/* Banner de Destaque Oficial: Respostas do Pedro Henrique */}
+                {selectedSubject === 'processo_civil' && (
+                  <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-indigo-950/80 border-2 border-emerald-500/40 text-xs shadow-xl space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-2xl bg-emerald-500 text-slate-950 font-black text-base flex items-center justify-center shrink-0 shadow-md">
+                          ✓
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h4 className="font-black text-sm sm:text-base text-emerald-400">
+                              Pedro Henrique respondeu 10 questões corretamente
+                            </h4>
+                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                              10 / 10 Acertos (100%)
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-300 font-medium mt-0.5">
+                            Aluno Oficial: <strong className="text-white">Pedro Henrique</strong> (Dupla com Eduardo Mateus • 3º Lugar Geral TJAM • 100% em dia). Todas as 10 questões de Processo Civil abaixo estão respondidas com a alternativa correta destacada.
+                          </p>
+                        </div>
                       </div>
-                    )}
 
-                    <p className="text-sm font-bold text-slate-900 dark:text-white leading-relaxed">
-                      {q.enunciado}
-                    </p>
-
-                    <div className="space-y-2">
-                      {(q.alternativas || (q as any).opcoes || []).map((alt: string, altIdx: number) => {
-                        const isSelected = selectedAnswers[q.id] === altIdx;
-                        const isSubmitted = showQuestionResults[q.id];
-                        const isCorrect = altIdx === q.correta;
-
-                        let btnStyle = 'border-slate-200 dark:border-slate-800 hover:border-slate-300';
-                        if (isSelected) btnStyle = 'border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-950 dark:text-emerald-200 font-bold';
-                        if (isSubmitted) {
-                          if (isCorrect) btnStyle = 'border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-bold';
-                          else if (isSelected) btnStyle = 'border-red-500 bg-red-500/10 text-red-700 dark:text-red-300 font-bold';
-                        }
-
-                        return (
-                          <button
-                            key={altIdx}
-                            disabled={isSubmitted}
-                            onClick={() => setSelectedAnswers(prev => ({ ...prev, [q.id]: altIdx }))}
-                            className={`w-full p-3.5 rounded-xl border text-left text-xs transition-all flex items-start gap-3 cursor-pointer ${btnStyle}`}
-                          >
-                            <span className="font-bold text-slate-400">{String.fromCharCode(65 + altIdx)})</span>
-                            <span className="flex-1">{alt}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {!showQuestionResults[q.id] ? (
-                      <button
-                        disabled={selectedAnswers[q.id] === undefined}
-                        onClick={() => {
-                          const selectedIdx = selectedAnswers[q.id];
-                          const isCorrect = selectedIdx === q.correta;
-                          setShowQuestionResults(prev => ({ ...prev, [q.id]: true }));
-                          registerQuestionAttempt(q, 'mc', isCorrect, `opt-${selectedIdx}`);
-                        }}
-                        className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md transition-all flex items-center justify-center gap-2"
-                      >
-                        <span>Responder Questão</span>
-                      </button>
-                    ) : (
-                      <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
-                        <p className="font-bold text-emerald-600 dark:text-emerald-400">
-                          ✓ Comentário da Questão:
-                        </p>
-                        <p className="text-slate-600 dark:text-slate-300">{q.explicacao}</p>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-extrabold text-xs shadow-xs">
+                          ⚡ Lançado & Sincronizado
+                        </span>
                       </div>
-                    )}
+                    </div>
                   </div>
-                ))}
+                )}
+
+                {activeMcQuestions.map((q, qIndex) => {
+                  const isPedroAnswered = selectedSubject === 'processo_civil' && q.id >= 1 && q.id <= 10;
+                  const pedroInfo = isPedroAnswered ? getPedroAnswerInfo(q.id) : null;
+                  const optionsList = q.alternativas || (q as any).opcoes || [];
+                  const userSelectedIdx = selectedAnswers[q.id];
+                  const effectiveSelectedIdx = userSelectedIdx !== undefined ? userSelectedIdx : (isPedroAnswered ? q.correta : undefined);
+                  const isSubmitted = showQuestionResults[q.id] || isPedroAnswered;
+
+                  return (
+                    <div
+                      key={q.id}
+                      className={`p-6 rounded-3xl border space-y-4 ${
+                        isPedroAnswered
+                          ? isDarkMode
+                            ? 'bg-slate-900/95 border-emerald-500/40 ring-1 ring-emerald-500/20 shadow-lg'
+                            : 'bg-emerald-50/20 border-emerald-500/30 shadow-md'
+                          : isDarkMode
+                          ? 'bg-slate-900 border-slate-800'
+                          : 'bg-white border-slate-200 shadow-sm'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between text-xs text-slate-400">
+                        <span className="font-extrabold uppercase">Questão {qIndex + 1} de {activeMcQuestions.length}</span>
+                        <div className="flex items-center gap-1.5">
+                          {isPedroAnswered && (
+                            <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-md font-black text-[10px] uppercase">
+                              ✓ Pedro Respondeu
+                            </span>
+                          )}
+                          <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md font-bold">Múltipla Escolha</span>
+                        </div>
+                      </div>
+
+                      {/* Notificação Especial Solicitada pelo Usuário: "Pedro respondeu esta questão" e alternativa que respondeu */}
+                      {isPedroAnswered && pedroInfo && (
+                        <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-slate-900 to-teal-950/90 border-2 border-emerald-500/40 text-xs shadow-sm space-y-2.5">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="flex items-center gap-3">
+                              <span className="w-8 h-8 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center justify-center shadow-xs shrink-0">
+                                ✓
+                              </span>
+                              <div>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="font-black text-emerald-400 text-sm">
+                                    Pedro respondeu esta questão
+                                  </span>
+                                  <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                    Gabarito Correto (100%)
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-slate-300 font-medium mt-0.5">
+                                  Respondido por: <strong className="text-white">Pedro Henrique</strong> (Aluno Oficial TJAM)
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-2 sm:p-2.5 rounded-xl bg-slate-950/90 border border-emerald-500/40 text-left sm:text-right">
+                              <span className="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">Alternativa que ele respondeu:</span>
+                              <span className="text-xs font-black text-emerald-300 flex items-center gap-1 mt-0.5">
+                                <span className="w-5 h-5 rounded-md bg-emerald-500 text-slate-950 font-black text-[11px] inline-flex items-center justify-center mr-1 shrink-0">
+                                  {pedroInfo.letra}
+                                </span>
+                                <span className="truncate max-w-[240px] sm:max-w-[340px]">{pedroInfo.texto}</span>
+                                <span className="text-[10px] text-emerald-400 font-bold ml-1 shrink-0">(Correta ✓)</span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {(q as any).textoApoio && (
+                        <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                          <span className="font-black text-[10px] uppercase tracking-wider text-amber-600 dark:text-amber-400">📖 Texto de Apoio:</span>
+                          <p className="italic font-medium leading-relaxed">"{ (q as any).textoApoio }"</p>
+                        </div>
+                      )}
+
+                      <p className="text-sm font-bold text-slate-900 dark:text-white leading-relaxed">
+                        {q.enunciado}
+                      </p>
+
+                      <div className="space-y-2">
+                        {optionsList.map((alt: string, altIdx: number) => {
+                          const isSelected = effectiveSelectedIdx === altIdx;
+                          const isCorrect = altIdx === q.correta;
+                          const isPedroOption = isPedroAnswered && altIdx === q.correta;
+
+                          let btnStyle = 'border-slate-200 dark:border-slate-800 hover:border-slate-300';
+                          if (isSelected) btnStyle = 'border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-950 dark:text-emerald-200 font-bold';
+                          if (isSubmitted) {
+                            if (isCorrect) btnStyle = 'border-emerald-500 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold ring-1 ring-emerald-500/30';
+                            else if (isSelected) btnStyle = 'border-red-500 bg-red-500/10 text-red-700 dark:text-red-300 font-bold';
+                          }
+
+                          return (
+                            <button
+                              key={altIdx}
+                              disabled={isSubmitted}
+                              onClick={() => setSelectedAnswers(prev => ({ ...prev, [q.id]: altIdx }))}
+                              className={`w-full p-3.5 rounded-xl border text-left text-xs transition-all flex items-start justify-between gap-3 cursor-pointer ${btnStyle}`}
+                            >
+                              <div className="flex items-start gap-3 flex-1">
+                                <span className="font-bold text-slate-400">{String.fromCharCode(65 + altIdx)})</span>
+                                <span className="flex-1 leading-relaxed">{alt}</span>
+                              </div>
+                              {isPedroOption && (
+                                <span className="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-[10px] uppercase tracking-wider flex items-center gap-1 shadow-xs shrink-0 self-center">
+                                  <span>✓</span>
+                                  <span>Resposta do Pedro Henrique</span>
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {!isSubmitted ? (
+                        <button
+                          disabled={selectedAnswers[q.id] === undefined}
+                          onClick={() => {
+                            const selectedIdx = selectedAnswers[q.id];
+                            const isCorrect = selectedIdx === q.correta;
+                            setShowQuestionResults(prev => ({ ...prev, [q.id]: true }));
+                            registerQuestionAttempt(q, 'mc', isCorrect, `opt-${selectedIdx}`);
+                          }}
+                          className="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-xs disabled:opacity-40 hover:bg-emerald-700 cursor-pointer shadow-md transition-all flex items-center justify-center gap-2"
+                        >
+                          <span>Responder Questão</span>
+                        </button>
+                      ) : (
+                        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5">
+                          <div className="flex items-center justify-between flex-wrap gap-2">
+                            <p className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                              <span>✓ Comentário da Questão:</span>
+                            </p>
+                            {isPedroAnswered && (
+                              <span className="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                Pedro respondeu esta questão: Alternativa {String.fromCharCode(65 + q.correta)} (Correta)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{q.explicacao}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
 

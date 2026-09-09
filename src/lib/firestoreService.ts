@@ -7,6 +7,7 @@ import { WEEK1_LESSONS, Week1Lesson } from '../data/tjamWeek1Data';
 const COLLECTION_NAME = 'tjam_applet_data';
 const PROGRESS_DOC_ID = 'student_user_progress';
 const WEEK1_CONTENT_DOC_ID = 'week1_course_content';
+const LESSON_PROGRESS_DOC_ID = 'lesson_progress_store';
 
 /**
  * Save student progress to Firestore
@@ -69,3 +70,35 @@ export async function loadWeek1ContentFromFirestore(): Promise<Week1Lesson[] | n
   }
   return null;
 }
+
+/**
+ * Save full lesson progress store to Firestore (syncs across students & production releases)
+ */
+export async function saveLessonProgressToFirestore(store: Record<string, any>): Promise<void> {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+    await setDoc(docRef, {
+      store,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    console.warn('Firestore lesson progress write warning:', err);
+  }
+}
+
+/**
+ * Load full lesson progress store from Firestore
+ */
+export async function loadLessonProgressFromFirestore(): Promise<Record<string, any> | null> {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+    const snap = await getDoc(docRef);
+    if (snap.exists() && snap.data()?.store) {
+      return snap.data().store as Record<string, any>;
+    }
+  } catch (err) {
+    console.warn('Firestore lesson progress read warning:', err);
+  }
+  return null;
+}
+

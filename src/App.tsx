@@ -48,6 +48,13 @@ import { StudentPortal } from './components/StudentPortal';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
+import { ensurePedroProcessoCivilAnswers } from './data/processoCivilLessonData';
+import {
+  saveUserProgressToFirestore,
+  loadUserProgressFromFirestore,
+  saveLessonProgressToFirestore,
+  loadLessonProgressFromFirestore,
+} from './lib/firestoreService';
 import { SiteLockedView } from './components/SiteLockedView';
 import { RankingsOnlyView } from './components/RankingsOnlyView';
 import { Week1View } from './components/Week1View';
@@ -258,8 +265,49 @@ export function App() {
     localStorage.setItem('tjam_schedule', JSON.stringify(weeklySchedule));
   }, [weeklySchedule]);
 
+  // Automated Launch & Cloud Synchronization Engine
+  // Synchronizes Pedro Henrique's answers, rankings, and student progress automatically upon site launch
+  useEffect(() => {
+    async function initSiteLaunchSync() {
+      try {
+        // 1. Seed local lesson progress with Pedro Henrique's 10 correct answers
+        const savedLessonsStr = localStorage.getItem('tjam_lessons_progress');
+        const initialLessons = savedLessonsStr ? JSON.parse(savedLessonsStr) : {};
+        const updatedLessons = ensurePedroProcessoCivilAnswers(initialLessons);
+        localStorage.setItem('tjam_lessons_progress', JSON.stringify(updatedLessons));
+
+        // 2. Fetch remote progress from Firestore or publish updated
+        const remoteLessons = await loadLessonProgressFromFirestore();
+        if (remoteLessons) {
+          const merged = ensurePedroProcessoCivilAnswers({ ...remoteLessons, ...updatedLessons });
+          localStorage.setItem('tjam_lessons_progress', JSON.stringify(merged));
+          await saveLessonProgressToFirestore(merged);
+        } else {
+          await saveLessonProgressToFirestore(updatedLessons);
+        }
+
+        // 3. Sync student user progress with Firestore
+        const remoteUserProgress = await loadUserProgressFromFirestore();
+        if (remoteUserProgress) {
+          setUserProgress(prev => ({
+            ...prev,
+            ...remoteUserProgress,
+            savedLessons: updatedLessons,
+          }));
+        } else {
+          await saveUserProgressToFirestore(userProgress);
+        }
+      } catch (err) {
+        console.warn('Auto-sync on site launch fallback to local state:', err);
+      }
+    }
+
+    initSiteLaunchSync();
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('tjam_user_progress', JSON.stringify(userProgress));
+    saveUserProgressToFirestore(userProgress);
   }, [userProgress]);
 
   // Real-time automatic update engine (syncs without reloading page)

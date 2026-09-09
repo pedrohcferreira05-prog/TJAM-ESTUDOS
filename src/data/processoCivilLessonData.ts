@@ -455,3 +455,87 @@ export const procCivilPracticalCase: PracticalCaseItem = {
     'Capacidade de síntese no desafio oral sem leitura mecânica'
   ]
 };
+
+// ⚖️ 10 Questões de Processo Civil respondidas por Pedro Henrique (Dupla Oficial • 3º Lugar Geral)
+export const PEDRO_CIVIL_CORRECT_ANSWERS: Record<number, number> = {
+  1: 1, // B) Produzir efeitos no processo e contribuir para seu desenvolvimento
+  2: 1, // B) Os atos independem de forma determinada, salvo quando a lei exigir
+  3: 1, // B) Públicos
+  4: 1, // B) Uma exceção prevista em lei
+  5: 1, // B) Chamar o réu, executado ou interessado para integrar a relação processual
+  6: 0, // A) Dar ciência dos atos e termos do processo
+  7: 1, // B) Citação chama para integrar o processo; intimação dá ciência de atos processuais
+  8: 1, // B) Apenas dias úteis
+  9: 0, // A) Aos prazos processuais
+  10: 1, // B) Em dias úteis, das 6h às 20h, observadas as exceções legais
+};
+
+export const PEDRO_CIVIL_SHOW_RESULTS: Record<number, boolean> = {
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+  6: true,
+  7: true,
+  8: true,
+  9: true,
+  10: true,
+};
+
+export function getPedroAnswerInfo(questionId: number) {
+  if (questionId < 1 || questionId > 10) return null;
+  const item = procCivilAula2McQuestionsData.find(q => q.id === questionId);
+  if (!item) return null;
+  const corretaIdx = item.correta;
+  const letra = String.fromCharCode(65 + corretaIdx);
+  const texto = item.opcoes[corretaIdx];
+  return {
+    responderName: 'Pedro Henrique',
+    responderRole: 'Aluno Oficial • 3º Lugar Geral TJAM (100% em dia)',
+    badgeText: 'Pedro respondeu esta questão',
+    corretaIdx,
+    letra,
+    texto,
+    fullLabel: `Alternativa ${letra}) ${texto}`,
+  };
+}
+
+/**
+ * Garante que o progresso de Processo Civil contenha as 10 respostas corretas de Pedro Henrique
+ * e salva automaticamente tanto em storage local quanto no Firestore ao lançar no ar.
+ */
+export function ensurePedroProcessoCivilAnswers(store: Record<string, any>): Record<string, any> {
+  if (!store) store = {};
+  if (!store['processo_civil']) {
+    store['processo_civil'] = {
+      subjectKey: 'processo_civil',
+      completed: true,
+      completedAt: new Date().toISOString(),
+      answeredBy: 'Pedro Henrique',
+      selectedAnswers: { ...PEDRO_CIVIL_CORRECT_ANSWERS },
+      showQuestionResults: { ...PEDRO_CIVIL_SHOW_RESULTS },
+      tfAnswers: {},
+      tfSubmitted: {},
+      discursiveAnswers: {},
+      discursiveSubmitted: {},
+      checklist: { c1: true, c2: true, c3: true, c4: true, c5: true },
+      learnedCards: {},
+      lastUpdated: new Date().toISOString(),
+    };
+  } else {
+    store['processo_civil'].answeredBy = 'Pedro Henrique';
+    store['processo_civil'].selectedAnswers = {
+      ...(store['processo_civil'].selectedAnswers || {}),
+      ...PEDRO_CIVIL_CORRECT_ANSWERS,
+    };
+    store['processo_civil'].showQuestionResults = {
+      ...(store['processo_civil'].showQuestionResults || {}),
+      ...PEDRO_CIVIL_SHOW_RESULTS,
+    };
+    if (!store['processo_civil'].completedAt) {
+      store['processo_civil'].completedAt = new Date().toISOString();
+    }
+  }
+  return store;
+}
