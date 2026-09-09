@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BookOpen,
   CheckCircle2,
@@ -13,9 +13,19 @@ import {
   FileCheck2,
   Trophy,
   ExternalLink,
-  Video
+  Video,
+  Clock,
+  Mic,
+  MessageCircle,
+  Copy,
+  Calendar,
+  Sparkles,
+  FileText
 } from 'lucide-react';
-import { procCivilAula2SummaryPoints } from '../data/processoCivilLessonData';
+import {
+  procCivilAula2SummaryPoints,
+  procCivilPracticalCase
+} from '../data/processoCivilLessonData';
 
 interface ProcessoCivilContentProps {
   isDarkMode: boolean;
@@ -38,7 +48,9 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
   setActiveTab: propSetActiveTab,
   onNavigateTab,
 }) => {
-  const [internalChecklist, setInternalChecklist] = React.useState<Record<string, boolean>>({});
+  const [internalChecklist, setInternalChecklist] = useState<Record<string, boolean>>({});
+  const [videoAnswers, setVideoAnswers] = useState<Record<number, string>>({});
+  const [copiedCase, setCopiedCase] = useState(false);
 
   const checklist = propChecklist || internalChecklist;
   const toggleChecklist = propToggleChecklist || ((id: string) => {
@@ -47,568 +59,606 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
   const handleMarkAsCompleted = propHandleMarkAsCompleted || onToggleComplete || (() => {});
   const setActiveTab = propSetActiveTab || onNavigateTab || (() => {});
 
+  const handleCopyPracticalScript = () => {
+    const text = `EXERCÍCIO PRÁTICO — DIREITO PROCESSUAL CIVIL (Aula 2 - Atos Processuais)\n\n📌 Caso Prático:\n${procCivilPracticalCase.caso}\n\n🎤 Perguntas para Responder no Vídeo:\n${procCivilPracticalCase.perguntas.map((p, i) => `${p}\nRascunho: ${videoAnswers[i] || '(A responder)'}`).join('\n\n')}\n\n🗣️ Desafio Final:\n${procCivilPracticalCase.desafioOral}\n\nTempo Sugerido: ${procCivilPracticalCase.tempoSugerido}`;
+    navigator.clipboard.writeText(text);
+    setCopiedCase(true);
+    setTimeout(() => setCopiedCase(false), 2500);
+  };
+
   return (
     <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-indigo-900/60 via-slate-900 to-blue-950/60 border border-indigo-500/30 text-white space-y-3 shadow-lg">
+      <div className="p-6 rounded-3xl bg-gradient-to-r from-indigo-950 via-slate-900 to-blue-950 border border-indigo-500/40 text-white space-y-3 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 uppercase tracking-wider flex items-center gap-1.5">
-            <Scale className="w-3.5 h-3.5 text-indigo-400" />
-            Processo Civil • Aula 2
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 uppercase tracking-wider flex items-center gap-1.5">
+              <Scale className="w-3.5 h-3.5 text-indigo-400" />
+              ⭐ 2ª Aula de Hoje • Processo Civil
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+              TJAM 2026
+            </span>
+          </div>
           <span className="text-xs font-bold text-slate-400">
-            Lei nº 13.105/2015 (CPC) • Foco TJAM
+            Lei nº 13.105/2015 (CPC) • Atos Processuais
           </span>
         </div>
+
         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Partes e Procuradores no CPC/2015
+          ⚖️ Direito Processual Civil — Aula 2: Atos Processuais
         </h1>
-        <p className="text-sm text-slate-300 max-w-3xl">
-          Avançando além de conceito, jurisdição e competência: domine a capacidade processual, curatela especial, representação legal, mandato judicial e o litisconsórcio conforme as exigências da banca examinadora.
+
+        <p className="text-sm text-indigo-200/90 max-w-3xl leading-relaxed">
+          Os atos processuais são as manifestações praticadas no processo para produzir efeitos jurídicos e permitir o desenvolvimento da atividade processual rumo à prestação jurisdicional justa e efetiva.
         </p>
+
         <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
           <button
             onClick={() => setActiveTab('video')}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black transition-all cursor-pointer shadow-sm"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black transition-all cursor-pointer shadow-md shadow-indigo-600/30"
           >
-            <Video className="w-3.5 h-3.5" />
+            <Video className="w-4 h-4" />
             <span>Assistir Vídeo Aula (Prof. Especialista)</span>
           </button>
           <a
-            href="https://youtu.be/4bnOvAuk2Is?is=gB8GOQ0zRpxxtj9j"
+            href="https://youtu.be/N5oBz1cC2xY?is=kLX-4lDE-WmOVM8c"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 font-bold border border-slate-700 transition-all"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-800 text-slate-300 font-bold border border-slate-700 transition-all"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span>Abrir no YouTube</span>
+            <ExternalLink className="w-3.5 h-3.5 text-rose-400" />
+            <span>Abrir Vídeo no YouTube</span>
           </a>
+          <button
+            onClick={() => setActiveTab('questoes')}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-300 font-bold border border-amber-500/30 transition-all cursor-pointer"
+          >
+            <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+            <span>Resolver as 20 Questões Gabaritadas</span>
+          </button>
         </div>
       </div>
 
-      {/* Objetivos da Aula */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-indigo-50/40 border-indigo-100'}`}>
-        <h2 className="text-base font-black text-indigo-700 dark:text-indigo-400 mb-3 flex items-center gap-2">
-          <Lightbulb className="w-5 h-5 text-indigo-600" /> Objetivos de Aprendizagem — Aula 2 (Partes e Procuradores)
-        </h2>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-          Pontos fundamentais cobrados com frequência em concursos para os cargos judiciários do TJAM:
-        </p>
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Identificar quem são as partes (autor e réu) na relação processual.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Compreender a capacidade processual e a distinção entre representação e assistência.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Dominar as hipóteses de nomeação de curador especial (incapazes e réus reveles).</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Reconhecer as regras de representação em juízo da União, Estados, Municípios e massa falida.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Diferenciar a procuração geral para o foro dos atos que exigem cláusula de poderes especiais.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-            <span>Compreender os deveres das partes, vedação a ofensas e a formação do litisconsórcio.</span>
-          </li>
-        </ul>
-      </section>
-
-      {/* 1. Quem são as partes? */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>1. 👥 Quem são as partes?</span>
-        </h2>
-        <p className="text-sm">
-          As <strong>partes</strong> são, em regra, os sujeitos que ocupam os polos da relação processual estabelecida perante o Poder Judiciário:
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
-          <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-emerald-50/60 border-emerald-200'}`}>
-            <span className="font-black text-emerald-700 dark:text-emerald-400 uppercase text-[10px]">Polo Ativo</span>
-            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1">Autor</h3>
-            <p className="text-slate-600 dark:text-slate-300 mt-1">
-              É quem apresenta a demanda, aciona a jurisdição e formula o pedido de tutela jurisdicional.
-            </p>
-          </div>
-          <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/60 border-rose-200'}`}>
-            <span className="font-black text-rose-700 dark:text-rose-400 uppercase text-[10px]">Polo Passivo</span>
-            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1">Réu</h3>
-            <p className="text-slate-600 dark:text-slate-300 mt-1">
-              É o sujeito em face de quem a demanda é proposta, convocado a responder em juízo.
-            </p>
-          </div>
+      {/* 1. Conceito de Atos Processuais */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">1. 📌</span>
+          <h2>Conceito de Atos Processuais</h2>
         </div>
-        <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} text-xs`}>
-          <strong className="text-indigo-600 dark:text-indigo-400 font-extrabold">📌 Exemplo Prático:</strong>
-          <p className="mt-1 italic text-slate-700 dark:text-slate-300">
-            "João cobra judicialmente uma dívida de Pedro perante o Tribunal de Justiça do Amazonas."
-          </p>
-          <p className="mt-1 text-slate-600 dark:text-slate-400">
-            ➔ <strong>João</strong> = Autor (polo ativo) &nbsp;|&nbsp; <strong>Pedro</strong> = Réu (polo passivo).
-          </p>
-        </div>
-      </section>
-
-      {/* 2. Capacidade processual */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>2. ⚖️ Capacidade Processual</span>
-        </h2>
-        <p className="text-sm">
-          O Código de Processo Civil estabelece no seu <strong>art. 70</strong>:
+        <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          São atos praticados pelas <strong>partes</strong>, pelo <strong>juiz</strong>, pelos <strong>auxiliares da Justiça</strong> e por <strong>outros participantes</strong> do processo com a finalidade de constituir, conservar, modificar ou extinguir direitos e relações processuais.
         </p>
-        <blockquote className="p-3.5 rounded-2xl bg-indigo-500/10 border-l-4 border-indigo-500 text-xs italic font-medium text-slate-800 dark:text-slate-200">
-          "Toda pessoa que se encontre no exercício de seus direitos tem capacidade para estar em juízo."
-        </blockquote>
-        <p className="text-sm">
-          Essa é a chamada <strong>capacidade processual</strong> (ou capacidade para estar em juízo).
-        </p>
-
-        <div className="space-y-2 pt-1">
-          <h3 className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
-            E quem não possui capacidade civil plena?
-          </h3>
-          <p className="text-xs text-slate-700 dark:text-slate-300">
-            O incapaz não atua sozinho. Ele deverá ser <strong>representado</strong> ou <strong>assistido</strong>, conforme o caso, por:
-          </p>
-          <div className="flex flex-wrap gap-2 text-xs font-bold text-slate-700 dark:text-slate-200">
-            <span className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">👨‍👩‍👦 Pais</span>
-            <span className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">🛡️ Tutor</span>
-            <span className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">⚖️ Curador</span>
-          </div>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-2">
-          <div className="flex items-center gap-2 font-black text-amber-800 dark:text-amber-300 uppercase text-[11px]">
-            <AlertTriangle className="w-4 h-4 text-amber-500" />
-            <span>📌 Atenção Máxima para a Prova: Representação ≠ Assistência</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-700 dark:text-slate-200 font-medium">
-            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-amber-500/20">
-              <strong className="text-amber-700 dark:text-amber-300 block mb-1">Representação:</strong>
-              O representante pratica o ato <strong>em nome do incapaz</strong> (para os absolutamente incapazes — ex: menores de 16 anos).
-            </div>
-            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 border border-amber-500/20">
-              <strong className="text-amber-700 dark:text-amber-300 block mb-1">Assistência:</strong>
-              O incapaz pratica o ato <strong>juntamente com seu assistente</strong> (para os relativamente incapazes — ex: jovens de 16 a 18 anos).
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Curador especial */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>3. 👨‍⚖️ Curador Especial (Art. 72 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          O juiz nomeará <strong>curador especial</strong> em situações taxativas previstas no Código de Processo Civil para resguardar a paridade de armas e o direito de defesa:
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-          <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} space-y-2`}>
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">Hipótese 1</span>
-            <h4 className="font-extrabold text-slate-900 dark:text-white">Incapaz</h4>
-            <ul className="space-y-1 text-slate-600 dark:text-slate-300 list-disc pl-4">
-              <li>Quando o incapaz <strong>não tiver representante legal</strong>; ou</li>
-              <li>Quando houver <strong>conflito de interesses</strong> entre o incapaz e seu representante legal.</li>
-            </ul>
-          </div>
-
-          <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} space-y-2`}>
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">Hipótese 2</span>
-            <h4 className="font-extrabold text-slate-900 dark:text-white">Réu Revel</h4>
-            <p className="text-slate-600 dark:text-slate-300">
-              Também há nomeação de curador especial para:
-            </p>
-            <ul className="space-y-1 text-slate-600 dark:text-slate-300 list-disc pl-4">
-              <li>Réu preso revel;</li>
-              <li>Réu revel citado por edital;</li>
-              <li>Réu revel citado com hora certa (citação ficta),</li>
-            </ul>
-            <p className="text-[11px] text-slate-500 italic">
-              *Enquanto não constituído advogado nos autos.
-            </p>
-          </div>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-xs text-indigo-900 dark:text-indigo-300 font-bold flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0" />
-          <span>
-            📌 Regra de Ouro: A curatela especial é exercida privativamente pela <strong>Defensoria Pública</strong>, nos termos da lei (CPC, art. 72, parágrafo único).
+        
+        <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-200/50 dark:border-indigo-800/40 space-y-2">
+          <span className="text-xs font-black uppercase text-indigo-700 dark:text-indigo-300 tracking-wider">
+            Exemplos Clássicos de Atos Processuais:
           </span>
-        </div>
-      </section>
-
-      {/* 4. Representação em juízo */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>4. 🏛️ Representação em Juízo (Art. 75 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          Algumas pessoas jurídicas e entidades despersonalizadas não atuam pessoalmente no processo; são representadas em juízo ativa e passivamente por quem a lei determina:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">União</span>
-            <p className="font-bold text-slate-900 dark:text-white">Advocacia-Geral da União (AGU)</p>
-            <p className="text-[11px] text-slate-500">Diretamente ou mediante órgão vinculado.</p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">Estados e DF</span>
-            <p className="font-bold text-slate-900 dark:text-white">Procuradores dos Estados / DF</p>
-            <p className="text-[11px] text-slate-500">Ex: Procuradoria Geral do Estado do Amazonas (PGE/AM).</p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">Municípios</span>
-            <p className="font-bold text-slate-900 dark:text-white">Prefeito ou Procurador Municipal</p>
-            <p className="text-[11px] text-slate-500">Ou associação de representação nas hipóteses legais.</p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px]">Massa Falida</span>
-            <p className="font-bold text-slate-900 dark:text-white">Administrador Judicial</p>
-            <p className="text-[11px] text-slate-500">Nomeado pelo juiz do processo falimentar.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Procuradores */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>5. 👔 Procuradores (Capacidade Postulatória)</span>
-        </h2>
-        <p className="text-sm">
-          Em regra, a parte é representada em juízo por <strong>advogado regularmente inscrito na OAB</strong> (art. 103 do CPC). Trata-se do <em>jus postulandi</em> (capacidade postulatória).
-        </p>
-        <p className="text-sm">
-          O CPC também autoriza a parte a <strong>postular em causa própria</strong> quando possuir habilitação legal para tanto.
-        </p>
-
-        <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} text-xs space-y-2`}>
-          <strong className="text-indigo-600 dark:text-indigo-400 font-extrabold">📌 Exemplo Prático:</strong>
-          <p className="text-slate-700 dark:text-slate-300">
-            Maria deseja ajuizar uma ação perante uma das Varas Cíveis de Manaus. Ela possui duas alternativas legais:
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2 pt-1 font-semibold">
-            <span className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5">
-              ➡️ <strong>Opção 1:</strong> Constituir um advogado particular ou Defensoria Pública.
-            </span>
-            <span className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5">
-              ➡️ <strong>Opção 2:</strong> Postular em causa própria, se possuir habilitação legal (inscrição na OAB).
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Procuração */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>6. 📜 Procuração (Art. 104 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          Em regra, o advogado não será admitido a postular em juízo sem procuração (instrumento de mandato).
-        </p>
-        <p className="text-sm">
-          No entanto, existem <strong>situações excepcionais</strong> em que o advogado pode atuar inicialmente sem procuração para evitar perecimento de direitos:
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-center">
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300">
-            Evitar Preclusão
-          </div>
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300">
-            Evitar Decadência
-          </div>
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300">
-            Evitar Prescrição
-          </div>
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300">
-            Praticar Ato Urgente
-          </div>
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-400">
-          Nessas situações emergenciais, o advogado obriga-se a apresentar o instrumento de mandato no prazo de <strong>15 dias</strong>, prorrogável por igual período por despacho do juiz.
-        </p>
-      </section>
-
-      {/* 7. Procuração geral para o foro vs poderes especiais */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>7. 📑 Procuração Geral para o Foro & Poderes Especiais (Art. 105)</span>
-        </h2>
-        <p className="text-sm">
-          A <strong>procuração geral para o foro</strong> habilita o advogado a praticar todos os atos processuais ordinários (propor petições, participar de audiências, recorrer, manifestar-se sobre provas).
-        </p>
-        <p className="text-sm font-semibold text-slate-900 dark:text-white">
-          Porém, os atos de disposição de direitos e de maior relevância <strong>exigem poderes específicos expressos</strong> na procuração:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs font-semibold">
-          {[
-            'Receber citação',
-            'Confessar',
-            'Reconhecer a procedência do pedido',
-            'Transigir (fazer acordo)',
-            'Desistir da ação',
-            'Renunciar ao direito sobre o qual se funda a ação',
-            'Receber valores e dar quitação',
-            'Firmar compromisso arbitral',
-            'Assinar declaração de hipossuficiência econômica'
-          ].map((item, idx) => (
-            <div
-              key={item}
-              className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 shadow-xs"
-            >
-              <Check className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
-              <span>{item}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300 pt-1">
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">📄</span> Apresentação de petição inicial ou contestação
             </div>
-          ))}
-        </div>
-
-        {/* Macete Box */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 to-orange-500/10 border border-amber-500/40 text-xs space-y-1">
-          <div className="flex items-center gap-2 font-black text-amber-800 dark:text-amber-300 uppercase text-[11px]">
-            <span>🧠 Macete de Prova TJAM:</span>
-          </div>
-          <p className="font-extrabold text-slate-900 dark:text-white">
-            Procuração geral NÃO significa poder para tudo!
-          </p>
-          <p className="text-slate-700 dark:text-slate-300">
-            Se a questão da prova afirmar que o advogado pode <em>transigir</em> ou <em>desistir</em> munido apenas da procuração geral para o foro, o item está <strong>ERRADO</strong>. É imperativa cláusula de poderes específicos!
-          </p>
-        </div>
-      </section>
-
-      {/* 8. Deveres das partes e procuradores */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>8. 📋 Deveres das Partes e Procuradores (Art. 77 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          Todos os que participam do processo devem agir de acordo com a boa-fé e lealdade processual. O CPC enumera expressamente os seguintes deveres:
-        </p>
-
-        <div className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Expor os fatos em juízo conforme a verdade (dever de veracidade);</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Não formular pretensão ou defesa ciente de que destituída de fundamento;</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Não produzir provas nem praticar atos inúteis ou desnecessários à defesa do direito;</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Cumprir com exatidão as decisões jurisdicionais (provisórias ou finais) e não criar embaraços à sua efetivação;</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Informar e manter permanentemente atualizados seus endereços para recebimento de intimações;</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Não praticar inovação ilegal no estado de fato de bem ou direito litigioso.</span>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">⚖️</span> Decisão interlocutória ou sentença do juiz
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">📬</span> Citação do réu para integrar o processo
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">📢</span> Intimação dos atos e despachos às partes
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">🔍</span> Apresentação de documentos e produção de provas
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span className="text-base">✍️</span> Certidões e termos lavrados pelo escrivão
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 9. Expressões ofensivas */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>9. 🚫 Vedação a Expressões Ofensivas (Art. 78 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          É expressamente <strong>vedado</strong> às partes, a seus procuradores, aos juízes, aos membros do Ministério Público e da Defensoria Pública e a qualquer pessoa que intervenha no processo empregar <strong>expressões ofensivas</strong> nos escritos apresentados.
-        </p>
-        <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/50 border-rose-200'} text-xs text-slate-700 dark:text-slate-300 space-y-1`}>
-          <p className="font-bold text-rose-800 dark:text-rose-400">
-            ⚖️ Medidas Judiciais Cabíveis:
-          </p>
-          <p>
-            Constatado o uso de linguagem injuriosa ou desrespeitosa, o juiz mandará, de ofício ou a requerimento da parte ofendida, <strong>riscar as expressões injuriosas</strong> dos autos, além de poder advertir os litigantes.
-          </p>
+      {/* 2. Quem pode praticar atos processuais? */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">2. 👥</span>
+          <h2>Quem pode praticar atos processuais?</h2>
         </div>
-      </section>
-
-      {/* 10. Litisconsórcio */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-l-4 border-indigo-500 pl-3 flex items-center gap-2">
-          <span>10. 👥 Litisconsórcio (Arts. 113 a 118 do CPC)</span>
-        </h2>
-        <p className="text-sm">
-          O <strong>litisconsórcio</strong> ocorre quando duas ou mais pessoas litigam no mesmo processo, em conjunto, no polo ativo, no polo passivo ou em ambos.
+        <p className="text-sm text-slate-700 dark:text-slate-300">
+          O processo civil é uma relação jurídica dinâmica e cooperativa (CPC, art. 6º). Cada sujeito tem atribuições específicas:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-emerald-600 dark:text-emerald-400 uppercase text-[10px]">Exemplo 1: Litisconsórcio Ativo</span>
-            <p className="font-extrabold text-slate-900 dark:text-white">"João e Maria ajuízam juntos uma ação contra Pedro."</p>
-            <p className="text-slate-600 dark:text-slate-300">
-              João + Maria = <strong>Litisconsortes Ativos</strong> (pluralidade de autores).
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1.5">
+              <span>👨‍⚖️ Juiz</span>
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">
+              Pratica atos judiciais decisórios e de impulso: <strong>decisões interlocutórias</strong>, <strong>sentenças</strong>, <strong>despachos</strong> e audiências.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <span className="font-black text-blue-600 dark:text-blue-400 uppercase text-[10px]">Exemplo 2: Litisconsórcio Passivo</span>
-            <p className="font-extrabold text-slate-900 dark:text-white">"João ajuíza uma ação contra Pedro e Carlos."</p>
-            <p className="text-slate-600 dark:text-slate-300">
-              Pedro + Carlos = <strong>Litisconsortes Passivos</strong> (pluralidade de réus).
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1.5">
+              <span>👤 Partes (Autor e Réu)</span>
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">
+              Praticam atos postulatórios, dispositivos e probatórios: <strong>petições</strong>, <strong>manifestações</strong>, acordos e <strong>recursos</strong>.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1.5">
+              <span>💼 Advogados & Defensores</span>
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">
+              Exercem a <strong>capacidade postulatória</strong>: representação técnica, redação de peças, sustentação oral e defesa dos direitos em juízo.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1.5">
+              <span>🏛️ Servidores e Auxiliares da Justiça</span>
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">
+              Exercem atos de documentação e cumprimento: <strong>citações</strong>, <strong>intimações</strong>, <strong>certidões</strong>, juntadas e penhoras.
             </p>
           </div>
         </div>
+      </section>
 
-        <div className="space-y-2 pt-1">
-          <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
-            Hipóteses de Cabimento do Litisconsórcio (Art. 113 do CPC):
+      {/* 3. Forma dos atos processuais */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">3. 📝</span>
+          <h2>Forma dos Atos Processuais (CPC, art. 188)</h2>
+        </div>
+        <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          O CPC consagra o <strong>princípio da instrumentalidade das formas</strong> (ou princípio da liberdade das formas):
+        </p>
+        <blockquote className="text-sm font-semibold italic text-indigo-900 dark:text-indigo-200 bg-indigo-50/60 dark:bg-indigo-950/40 p-4 rounded-2xl border-l-4 border-indigo-600">
+          &ldquo;Os atos e os termos processuais independem de forma determinada, salvo quando a lei expressamente a exigir, considerando-se válidos os que, realizados de outro modo, preencham a sua finalidade essencial.&rdquo; (Art. 188 do CPC)
+        </blockquote>
+        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-2.5">
+          <Lightbulb className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+          <p className="text-xs text-slate-700 dark:text-slate-300">
+            <strong>📌 Foco na Prova:</strong> O objetivo é evitar o <em>excesso de formalismo</em> quando a finalidade do ato puder ser plenamente alcançada de outra maneira sem prejudicar o contraditório nem a defesa. Não há nulidade sem prejuízo (<em>pas de nullité sans grief</em>).
+          </p>
+        </div>
+      </section>
+
+      {/* 4. Tempo dos atos processuais */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">4. ⏰</span>
+          <h2>Tempo dos Atos Processuais (CPC, art. 212)</h2>
+        </div>
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <div className="flex items-center gap-3">
+            <span className="px-3 py-1 rounded-xl text-xs font-black bg-indigo-600 text-white">
+              Regra Geral
+            </span>
+            <span className="text-sm font-extrabold text-slate-900 dark:text-white">
+              Dias úteis, das 6h às 20h
+            </span>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Em regra, os atos processuais são realizados em dias úteis, das <strong>6h às 20h</strong>, conforme expressamente previsto no art. 212 do CPC.
+          </p>
+          <div className="p-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-200/50 dark:border-indigo-800/40 text-xs text-slate-600 dark:text-slate-300">
+            ⚠️ <strong>Exceções Legais:</strong> Atos de tutela de urgência, citações e penhoras podem ser praticados fora desse horário ou em feriados quando houver expressa autorização judicial ou risco de perecimento do direito (CPC, art. 212, § 2º).
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Atos eletrônicos */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">5. 💻</span>
+          <h2>Atos Eletrônicos (CPC, arts. 193 a 199)</h2>
+        </div>
+        <p className="text-sm text-slate-700 dark:text-slate-300">
+          O processo judicial pode utilizar meios eletrônicos para a prática, comunicação e tramitação dos atos processuais (como no PJe e PROJUDI do TJAM). Isso permite:
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Apresentação eletrônica de documentos
+          </div>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Peticionamento 100% eletrônico
+          </div>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Comunicações processuais digitais
+          </div>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Consulta aos autos a qualquer momento
+          </div>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Prática de audiências à distância
+          </div>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <Check className="w-4 h-4 text-indigo-500 shrink-0" /> Intimação eletrônica pelo Diário de Justiça
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Publicidade e Segredo de Justiça */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">6. 📢</span>
+          <h2>Publicidade dos Atos Processuais (CPC, art. 189)</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+            <span className="px-2.5 py-1 rounded-full text-xs font-black bg-emerald-600 text-white uppercase">
+              Regra Geral → Publicidade
+            </span>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              Em regra, os atos processuais são <strong>públicos</strong>. Qualquer pessoa do povo pode ter acesso, assistir a audiências e consultar os autos, garantindo a transparência democrática (art. 93, IX, CF/88).
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+            <span className="px-2.5 py-1 rounded-full text-xs font-black bg-rose-600 text-white uppercase">
+              Exceção → Segredo de Justiça
+            </span>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              Existem situações em que o processo tramita em segredo de justiça, restrito às hipóteses previstas em lei (art. 189 do CPC: interesse público/social, casamento, alimentos, família, arbitragem com sigilo).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Citação e Intimação */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">7. 📬</span>
+          <h2>Citação e Intimação (Não Confunda!)</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Citação */}
+          <div className="p-5 rounded-2xl bg-blue-500/10 border-2 border-blue-500/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-black text-base text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
+                <span>📬 Citação (Art. 238 CPC)</span>
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                1ª Convocação
+              </span>
+            </div>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              Chama o <strong>réu</strong>, <strong>executado</strong> ou <strong>interessado</strong> para <strong>integrar a relação processual</strong>. É indispensável para a validade do processo.
+            </p>
+            <div className="p-2.5 rounded-xl bg-blue-600 text-white text-xs font-black flex items-center gap-2">
+              <span>🧠 Citação = CHAMA para o processo!</span>
+            </div>
+          </div>
+
+          {/* Intimação */}
+          <div className="p-5 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-black text-base text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+                <span>📢 Intimação (Art. 269 CPC)</span>
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                Comunicação Interna
+              </span>
+            </div>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              Dá <strong>ciência</strong> a alguém dos atos e termos do processo para que faça ou deixe de fazer alguma coisa no decorrer da marcha processual.
+            </p>
+            <div className="p-2.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-black flex items-center gap-2">
+              <span>🧠 Intimação = COMUNICA o que aconteceu no processo!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Prazos processuais */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">8. ⚠️</span>
+          <h2>Prazos Processuais (CPC, art. 219)</h2>
+        </div>
+        <div className="p-5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 space-y-3">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            <h3 className="font-extrabold text-sm text-indigo-950 dark:text-indigo-100">
+              Regra de Ouro: Contagem Exclusiva em Dias Úteis
+            </h3>
+          </div>
+          <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+            Nos prazos processuais previstos no CPC, <strong>contam-se apenas os dias úteis</strong>. Sábados, domingos e feriados não são contados.
+          </p>
+          <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800/60 text-xs font-semibold text-slate-700 dark:text-slate-300">
+            📌 <strong>Atenção para Pegadinhas de Prova:</strong> Essa contagem em dias úteis aplica-se <em>exclusivamente</em> aos prazos processuais! Prazos de direito civil/material (como prescrição e decadência) e prazos do Processo Penal são contados de forma contínua (dias corridos).
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Preclusão */}
+      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+        <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
+          <span className="text-xl">9. 🔄</span>
+          <h2>Preclusão</h2>
+        </div>
+        <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          A preclusão ocorre quando a parte <strong>perde a possibilidade de praticar determinado ato processual</strong>, garantindo que o processo marche sempre para frente sem retrocessos.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-rose-600 dark:text-rose-400 text-sm">
+              ⏳ 1. Preclusão Temporal
+            </span>
+            <p className="text-slate-600 dark:text-slate-300">
+              Ocorre porque a parte <strong>deixou passar o prazo legal</strong> sem praticar o ato (decurso in albis).
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-indigo-600 dark:text-indigo-400 text-sm">
+              ✅ 2. Preclusão Consumativa
+            </span>
+            <p className="text-slate-600 dark:text-slate-300">
+              Ocorre porque a parte <strong>já praticou o ato</strong>, não podendo renová-lo ou complementá-lo depois.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+            <span className="font-black text-amber-600 dark:text-amber-400 text-sm">
+              ⚡ 3. Preclusão Lógica
+            </span>
+            <p className="text-slate-600 dark:text-slate-300">
+              Ocorre porque a parte praticou <strong>ato incompatível</strong> com outro que pretendia realizar (ex.: aceitou a decisão expressamente e depois quis recorrer).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧠 RESUMÃO PARA A PROVA */}
+      <section className="p-6 rounded-3xl bg-gradient-to-br from-indigo-900/30 via-slate-900 to-purple-950/30 border-2 border-indigo-500/40 space-y-4 shadow-md">
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-amber-400" />
+          <h3 className="font-black text-base sm:text-lg text-white">
+            🧠 Resumão para a Prova (Memorização Imediata)
+          </h3>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-indigo-500/30 text-indigo-300 uppercase tracking-wider font-black">
+                <th className="py-2.5 px-3">Tema</th>
+                <th className="py-2.5 px-3">O que você DEVE lembrar</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800 text-slate-200 font-medium">
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Atos Processuais</td>
+                <td className="py-2.5 px-3">Movimentam e desenvolvem o processo para produzir efeitos jurídicos</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Forma dos Atos</td>
+                <td className="py-2.5 px-3">Livre como regra (Art. 188), salvo exigência legal específica</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Publicidade</td>
+                <td className="py-2.5 px-3">Regra geral para todos os atos (Art. 189)</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Segredo de Justiça</td>
+                <td className="py-2.5 px-3">Exceção restrita às hipóteses previstas em lei</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Citação (Art. 238)</td>
+                <td className="py-2.5 px-3">Chama o réu/interessado para INTEGRAR o processo</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Intimação (Art. 269)</td>
+                <td className="py-2.5 px-3">Dá CIÊNCIA dos atos e decisões do processo</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Prazo Processual</td>
+                <td className="py-2.5 px-3">Em regra, contam-se APENAS os dias úteis (Art. 219)</td>
+              </tr>
+              <tr className="hover:bg-indigo-500/10">
+                <td className="py-2.5 px-3 font-bold text-amber-300">Preclusão</td>
+                <td className="py-2.5 px-3">Perda da faculdade de praticar determinado ato processual</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Artigos Importantes */}
+        <div className="pt-3 border-t border-indigo-500/30 text-xs text-indigo-200">
+          <p className="font-black text-amber-300 uppercase tracking-wider mb-1">
+            📌 Artigos Mais Cobrados do CPC sobre Atos Processuais:
+          </p>
+          <p>
+            Arts. 188 a 211 do CPC. Dê atenção especial aos <strong>arts. 188, 212, 219, 220 e 238</strong>!
+          </p>
+        </div>
+      </section>
+
+      {/* 🏠 EXERCÍCIO PRÁTICO — ATIVIDADE EM VÍDEO */}
+      <section className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-indigo-950/80 via-slate-900 to-indigo-950/90 border-2 border-indigo-500/50 shadow-2xl space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/30 pb-4">
+          <div className="space-y-1">
+            <span className="px-3 py-1 rounded-full text-[10px] font-black bg-indigo-500/30 text-indigo-200 uppercase tracking-wider border border-indigo-400/30 flex items-center gap-1.5 inline-flex">
+              <Video className="w-3.5 h-3.5 text-indigo-400" />
+              Atividade Prática • Gravação de Vídeo
+            </span>
+            <h3 className="text-xl sm:text-2xl font-black text-white">
+              🏠 Exercício Prático: O Caso de Maria contra João
+            </h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 text-xs font-black border border-amber-500/30 flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5" /> 3 a 5 min
+            </span>
+          </div>
+        </div>
+
+        {/* Caso Prático */}
+        <div className="p-5 rounded-2xl bg-indigo-900/30 border border-indigo-500/30 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase text-indigo-300 tracking-wider">
+              📌 Enunciado do Caso Prático:
+            </span>
+            <button
+              onClick={handleCopyPracticalScript}
+              className="text-xs font-bold text-indigo-300 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <Copy className="w-3.5 h-3.5" />
+              <span>{copiedCase ? 'Copiado!' : 'Copiar Roteiro'}</span>
+            </button>
+          </div>
+          <blockquote className="text-sm sm:text-base font-semibold text-slate-200 italic border-l-4 border-indigo-400 pl-4 py-1 leading-relaxed">
+            &ldquo;{procCivilPracticalCase.caso}&rdquo;
+          </blockquote>
+          <p className="text-xs text-indigo-200">
+            🎥 <strong>Orientação:</strong> O aluno deverá gravar um vídeo, responder ao caso prático e enviar ao professor.
+          </p>
+        </div>
+
+        {/* As 7 Perguntas para Responder no Vídeo */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <Mic className="w-4 h-4 text-indigo-400" /> 🎤 No Vídeo, Responda às 7 Perguntas:
           </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">1. Comunhão</span>
-              <p className="text-slate-600 dark:text-slate-300">Comunhão de direitos ou de obrigações relativamente à lide.</p>
-            </div>
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">2. Conexão</span>
-              <p className="text-slate-600 dark:text-slate-300">Conexão entre as causas pelo pedido ou pela causa de pedir.</p>
-            </div>
-            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">3. Afinidade</span>
-              <p className="text-slate-600 dark:text-slate-300">Afinidade de questões por um ponto comum de fato ou de direito.</p>
-            </div>
+
+          <div className="space-y-2.5 text-xs">
+            {procCivilPracticalCase.perguntas.map((p, idx) => (
+              <div key={idx} className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                <p className="font-bold text-slate-100">{p}</p>
+                <input
+                  type="text"
+                  placeholder="Escreva aqui seu rascunho de resposta para treinar antes do vídeo..."
+                  value={videoAnswers[idx] || ''}
+                  onChange={(e) => setVideoAnswers({ ...videoAnswers, [idx]: e.target.value })}
+                  className="w-full text-xs px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desafio Final */}
+        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+          <span className="text-xs font-black uppercase text-amber-400 flex items-center gap-1.5">
+            🗣️ Desafio Final (Sem Olhar as Respostas!)
+          </span>
+          <p className="text-xs text-slate-200 leading-relaxed font-semibold">
+            {procCivilPracticalCase.desafioOral}
+          </p>
+        </div>
+
+        {/* Critérios e Objetivos */}
+        <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+          <h5 className="text-xs font-black uppercase text-indigo-300 flex items-center gap-1.5">
+            🎯 Critérios Avaliados pelo Professor:
+          </h5>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
+            {procCivilPracticalCase.criteriosAvaliacao.map((c, i) => (
+              <div key={i} className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Entrega e Ações */}
+        <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-indigo-500/30">
+          <div className="text-xs text-slate-300">
+            📤 <strong>Entrega:</strong> Enviar um único vídeo ao professor (3 a 5 min), contendo as 7 respostas e o desafio final com fala clara e organizada.
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopyPracticalScript}
+              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 text-xs font-bold border border-indigo-500/40 cursor-pointer transition-colors"
+            >
+              {copiedCase ? '✓ Roteiro Copiado' : 'Copiar Roteiro'}
+            </button>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(
+                `Olá Professor! Segue minha atividade prática de Direito Processual Civil — Aula 2 (Atos Processuais: Caso Maria x João):\n\nAcabei de gravar o vídeo respondendo às 7 perguntas e ao desafio final oral.\n\nAluno(s): Eduardo Mateus e Pedro Henrique.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md flex items-center gap-1.5 transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>Enviar ao Professor via WhatsApp</span>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* 🧠 RESUMÃO PARA O TJAM */}
-      <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-gradient-to-br from-indigo-50/80 to-blue-50/60 border-indigo-200'}`}>
-        <h2 className="text-base font-black text-indigo-900 dark:text-indigo-300 flex items-center gap-2">
-          <Trophy className="w-5 h-5 text-amber-500" /> 🧠 RESUMÃO ESTRUTURADO PARA O TJAM
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Partes</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Autor + Réu</p>
-            <p className="text-[11px] text-slate-500">Polos ativo e passivo da demanda.</p>
+      {/* Checklist de Conclusão */}
+      <section className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+              Checklist de Conclusão da Aula 2 (Processo Civil)
+            </h3>
           </div>
-
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Capacidade Processual</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Estar em Juízo</p>
-            <p className="text-[11px] text-slate-500">Toda pessoa no exercício dos direitos civis.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Incapazes</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Representação ou Assistência</p>
-            <p className="text-[11px] text-slate-500">Conforme o grau de incapacidade civil.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Curador Especial</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Defensoria Pública</p>
-            <p className="text-[11px] text-slate-500">Para incapazes sem representante ou réus reveles citados fictamente.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Procurador</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Advogado da OAB</p>
-            <p className="text-[11px] text-slate-500">Capacidade postulatória em juízo.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200/60 dark:border-slate-700">
-            <span className="font-black text-indigo-600 dark:text-indigo-400 uppercase text-[10px] block">Poderes Especiais</span>
-            <p className="font-bold text-slate-800 dark:text-slate-200">Cláusula Específica</p>
-            <p className="text-[11px] text-slate-500">Para receber citação, transigir, desistir e confessar.</p>
-          </div>
+          <span className="text-xs font-bold text-slate-500">
+            {Object.values(checklist).filter(Boolean).length}/4 Etapas
+          </span>
         </div>
-      </section>
 
-      {/* 🎯 O que mais pode cair na prova */}
-      <section className={`p-6 rounded-3xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/70 border-amber-200'}`}>
-        <h3 className="font-black text-amber-900 dark:text-amber-300 text-sm uppercase flex items-center gap-2">
-          <Trophy className="w-4 h-4 text-amber-600" />
-          <span>🎯 Os 7 Pontos de Ouro para Memorizar Antes das Questões</span>
-        </h3>
-        <ol className="space-y-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 list-decimal pl-4">
-          <li><strong>Capacidade processual:</strong> toda pessoa no exercício de seus direitos tem capacidade para estar em juízo.</li>
-          <li><strong>Representação ≠ assistência:</strong> representação é em nome do incapaz; assistência é praticado conjuntamente.</li>
-          <li><strong>Curador especial:</strong> réu preso revel, réu revel citado por edital/hora certa e incapaz sem representante.</li>
-          <li><strong>Atuação do advogado:</strong> é a regra geral, salvo postulação em causa própria por quem tem habilitação.</li>
-          <li><strong>Procuração e poderes especiais:</strong> atos como transigir, confessar, renunciar e receber citação exigem cláusula expressa.</li>
-          <li><strong>Deveres das partes:</strong> expor fatos conforme a verdade, lealdade e cumprimento das ordens judiciais.</li>
-          <li><strong>Litisconsórcio:</strong> pluralidade de partes nos polos ativo, passivo ou misto.</li>
-        </ol>
-      </section>
-
-      {/* Checklist da Aula */}
-      <section className={`p-6 rounded-3xl border space-y-4 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-        <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Checklist de Fixação — Processo Civil (Aula 2)
-        </h3>
         <div className="space-y-2 text-xs font-semibold">
           {[
-            { id: 'c1', text: 'Entendi o conceito de partes (autor e réu) e a capacidade processual de estar em juízo.' },
-            { id: 'c2', text: 'Sei diferenciar a representação (em nome do incapaz) da assistência (juntamente com o incapaz).' },
-            { id: 'c3', text: 'Memorizei as hipóteses de Curador Especial (réu preso revel, citação por edital/hora certa e incapaz sem representante) exercida pela DPE.' },
-            { id: 'c4', text: 'Compreendi a diferença entre procuração geral para o foro e a cláusula de poderes especiais (transigir, receber citação, desistir).' },
-            { id: 'c5', text: 'Dominei o conceito de Litisconsórcio (ativo, passivo e misto) e as hipóteses do art. 113 do CPC.' },
-          ].map(item => (
-            <div
+            { id: 'pc2_teoria', label: 'Li todo o texto teórico sobre conceito, forma, tempo, prazos e preclusão dos Atos Processuais' },
+            { id: 'pc2_video', label: 'Assisti à Vídeo Aula completa no YouTube (Prof. Especialista)' },
+            { id: 'pc2_questoes', label: 'Resolvi os 20 exercícios gabaritados de fixação' },
+            { id: 'pc2_pratico', label: 'Preparei e gravei o vídeo do Caso Prático Maria x João para o professor' },
+          ].map((item) => (
+            <label
               key={item.id}
               onClick={() => toggleChecklist(item.id)}
               className={`p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
                 checklist[item.id]
-                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
-                  : 'border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
+                  : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
               }`}
             >
-              <div className={`w-5 h-5 rounded-md border flex items-center justify-center ${
-                checklist[item.id] ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 dark:border-slate-600'
-              }`}>
-                {checklist[item.id] && <Check className="w-3.5 h-3.5" />}
-              </div>
-              <span>{item.text}</span>
-            </div>
+              <input
+                type="checkbox"
+                checked={!!checklist[item.id]}
+                onChange={() => {}}
+                className="w-4 h-4 text-emerald-600 rounded cursor-pointer"
+              />
+              <span>{item.label}</span>
+            </label>
           ))}
         </div>
+
+        <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+          <button
+            onClick={() => setActiveTab('questoes')}
+            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+          >
+            <CheckCircle2 className="w-4 h-4" />
+            <span>Ir para as 20 Questões Gabaritadas</span>
+          </button>
+
+          <button
+            onClick={handleMarkAsCompleted}
+            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer shadow-md flex items-center gap-2 ${
+              isLessonCompleted
+                ? 'bg-emerald-600 text-white shadow-emerald-600/20'
+                : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+            }`}
+          >
+            <Trophy className="w-4 h-4 text-amber-400" />
+            <span>{isLessonCompleted ? '✓ Aula 2 Marcada como Concluída' : 'Marcar Aula 2 como Concluída'}</span>
+          </button>
+        </div>
       </section>
-
-      {/* Action Bottom Controls */}
-      <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
-        <button
-          onClick={() => setActiveTab('questoes')}
-          className="w-full sm:w-auto px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
-        >
-          <span>Responder os 20 Exercícios da Aula 2</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
-
-        <button
-          onClick={handleMarkAsCompleted}
-          className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
-            isLessonCompleted
-              ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
-              : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
-          }`}
-        >
-          <CheckCircle2 className="w-4 h-4" />
-          <span>{isLessonCompleted ? '✓ Aula Concluída (Clique para alternar)' : 'Marcar Aula como Concluída'}</span>
-        </button>
-      </div>
     </article>
   );
 };

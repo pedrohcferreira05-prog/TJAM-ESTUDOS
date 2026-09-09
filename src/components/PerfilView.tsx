@@ -46,7 +46,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-0.5">
-              Eduardo e Pedro formam dupla oficial de estudos e estão no ranking geral TJAM 2026 em 3º lugar (31,6%). Todas as atividades concluídas sem pendências.
+              Eduardo e Pedro formam dupla oficial de estudos e estão no ranking geral TJAM 2026 em 3º lugar (33,8%). Todas as atividades concluídas sem pendências.
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           <span className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-200 text-xs font-black border border-emerald-400/30 flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-amber-400" />
-            <span>3º Lugar Geral (31,6%)</span>
+            <span>3º Lugar Geral (33,8%)</span>
           </span>
         </div>
       </div>
@@ -113,7 +113,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 <p className="text-xs text-slate-400 mt-0.5">Aluno Titular • Foco TJAM</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <span className="text-[11px] text-emerald-300 font-bold bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
-                    Dupla Oficial • 3º Lugar (31,6% • 100% em dia)
+                    Dupla Oficial • 3º Lugar (33,8% • 100% em dia)
                   </span>
                 </div>
               </div>
@@ -137,7 +137,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 <p className="text-xs text-slate-400 mt-0.5">Parceiro de Dupla Oficial</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <span className="text-[11px] text-emerald-300 font-bold bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
-                    Dupla Oficial • 3º Lugar (31,6% • 100% em dia)
+                    Dupla Oficial • 3º Lugar (33,8% • 100% em dia)
                   </span>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <Award className="w-5 h-5" />
           </div>
           <div className="flex items-baseline gap-2">
-            <p className="text-3xl font-black text-slate-900 dark:text-white">31,6%</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white">33,8%</p>
             <span className="text-xs font-bold text-emerald-400 flex items-center">
               <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 3º Lugar
             </span>

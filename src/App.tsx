@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw, Timer, Sparkles } from 'lucide-react';
+import { Clock, CheckCircle2, Lock, XCircle, Trophy, Medal, Award, Flame, RefreshCw, Timer, Sparkles, AlertTriangle } from 'lucide-react';
 import {
   Discipline,
   MindMap,
@@ -581,6 +581,14 @@ export function App() {
         isDuo={isDuo}
       />
 
+      {/* Aviso Pequeno: Site em Atualização */}
+      <div className="bg-amber-500/15 border-b border-amber-500/30 text-amber-200 px-3 py-2 text-xs font-semibold flex items-center justify-center gap-2">
+        <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+        <span className="text-center text-[11px] sm:text-xs">
+          <strong>Aviso:</strong> O site está em processo de atualização. Foco nas <strong>Metas de Hoje</strong>, <strong>Aulas de Hoje</strong> e <strong>Ranking</strong>.
+        </span>
+      </div>
+
       {/* Main Workspace Body with Sidebar */}
       <div className="flex-1 max-w-7xl w-full mx-auto flex items-start">
         {viewMode === 'student' && (
@@ -597,7 +605,7 @@ export function App() {
           />
         )}
 
-        <main className="flex-1 min-w-0 p-4 sm:p-6 space-y-6">
+        <main className="flex-1 min-w-0 p-3 sm:p-6 space-y-6 overflow-x-hidden max-w-full">
           {viewMode !== 'student' && !isStaffAuthenticated ? (
             <RestrictedAccessView
               onBackToStudent={() => setViewMode('student')}

@@ -1,5 +1,6 @@
-// Data for Processo Penal — Quarta Aula de Hoje: Aplicação da Lei Processual Penal (CPP)
+// Data for Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)
 // Preparatório TJAM — Assistente Judiciário
+// Conteúdo oficial da Aula 1 de Processo Penal
 
 export interface FlashcardItem {
   q: string;
@@ -29,343 +30,399 @@ export interface DiscursiveQuestionItem {
 }
 
 export const procPenalLessonSummaryPoints: string[] = [
-  'Lei processual penal nova → aplicação imediata (tempus regit actum - Art. 2º do CPP).',
-  'Preservação dos atos anteriores: a lei nova rege os processos em curso sem invalidar os atos já praticados.',
-  'Diferença entre Lei Processual Penal e Lei Penal: a lei penal rege o direito de punir (retroatividade benéfica); a lei puramente processual aplica-se imediatamente sem retroagir.',
-  'Normas Mistas / Híbridas (materiais-processuais): se afetarem a liberdade ou a pretensão punitiva (ex: prescrição, decadência, queixa-crime), submetem-se ao princípio da anterioridade/irretroatividade in pejus.',
-  'Lei processual penal no espaço: vigora o Princípio da Territorialidade (Art. 1º do CPP) no território brasileiro.',
-  'Exceções à territorialidade: imunidades diplomáticas, tratados e convenções internacionais, jurisdição militar e foro por prerrogativa de função previsto na CF/88.',
-  'Atos no exterior: cumprimento por meio de cartas rogatórias e mecanismos de cooperação jurídica internacional.',
-  'Interpretação literal/gramatical: ponto de partida semântico do texto da norma.',
-  'Interpretação sistemática: análise da norma em harmonia com todo o ordenamento jurídico e a CF/88.',
-  'Interpretação extensiva (Art. 3º do CPP): o legislador disse menos do que pretendia (minus dixit quam voluit); amplia-se o alcance textual.',
-  'Analogia (Art. 3º do CPP): integração de lacuna jurídica; aplica-se norma prevista para caso semelhante na ausência de lei expressa.',
-  'Distinção crucial: a interpretação extensiva extrai o sentido de norma existente; a analogia supre a falta/omissão da lei.',
-  'Fontes do Processo Penal: Constituição Federal (ápice axiológico), Leis formais, Tratados e Convenções internacionais (Pacto de San José), Princípios e Jurisprudência.'
+  'Inquérito Policial (IP): procedimento de investigação utilizado para apurar uma infração penal e sua autoria, servindo de base para atuação do Ministério Público ou do ofendido.',
+  'Finalidade do IP: investigar o fato criminoso (o que aconteceu, como aconteceu, quem praticou, circunstâncias e provas). Inquérito = investigação.',
+  'Quem conduz: realizado pela polícia judiciária, sob condução da autoridade policial (delegado), conforme a competência legal.',
+  'Característica 1 — Administrativo: é um procedimento investigativo pré-processual, NÃO um processo judicial.',
+  'Característica 2 — Investigativo: busca reunir elementos informativos sobre a infração e sua autoria.',
+  'Característica 3 — Escrito: as peças do inquérito são reduzidas a escrito ou datilografadas (Art. 9º do CPP).',
+  'Característica 4 — Dispensável: a ação penal pode ser proposta sem inquérito se já existirem elementos suficientes (justa causa).',
+  'Característica 5 — Sigiloso: sigilo necessário à eficácia da investigação, ressalvado o direito de acesso do defensor às provas já documentadas (Súmula Vinculante 14 do STF).',
+  'Característica 6 — Não é sentença: o inquérito não condena nem absolve ninguém.',
+  'Início em crimes de Ação Pública: de ofício pela autoridade policial; por requisição judicial ou do MP; por requerimento da vítima; ou notitia criminis por qualquer pessoa.',
+  'Ação Pública Condicionada: NÃO pode ser iniciado sem a prévia representação do ofendido.',
+  'Ação Privada: somente pode ser instaurado mediante requerimento de quem tenha legitimidade para propor a queixa-crime.',
+  'Providências do Art. 6º do CPP: preservar local, apreender objetos, colher provas, ouvir vítima e indiciado, reconhecimento, acareações, perícias/corpo de delito e identificar o indiciado.',
+  'Prazos gerais do CPP (Art. 10): Preso = 10 dias (a partir da execução da prisão preventiva); Solto = 30 dias (mediante fiança ou sem ela).',
+  'Artigos fundamentais para a prova do TJAM: Arts. 4º, 5º, 6º, 9º e 10 do CPP.'
 ];
 
 export const procPenalFlashcardsData: FlashcardItem[] = [
   {
-    q: 'Qual é a regra geral de aplicação da lei processual penal no tempo?',
-    a: 'A lei processual penal aplica-se desde logo (imediatamente), sem prejuízo da validade dos atos realizados sob a vigência da lei anterior (princípio "tempus regit actum", Art. 2º do CPP).'
+    q: 'O que é o Inquérito Policial (IP) e qual sua base jurídica?',
+    a: 'O inquérito policial é um procedimento administrativo preparatório e investigativo conduzido pela polícia judiciária, cuja finalidade é apurar a infração penal e sua autoria para subsidiar a ação penal do MP ou da vítima (Art. 4º do CPP).'
   },
   {
-    q: 'Uma nova lei processual penal anula os atos já praticados sob a lei antiga?',
-    a: 'NÃO! Os atos já praticados continuam plenamente válidos e eficazes. A nova lei incide apenas sobre os atos processuais futuros que serão praticados a partir de sua vigência.'
+    q: 'Qual é a principal finalidade do Inquérito Policial?',
+    a: 'Investigar o fato criminoso, reunindo elementos essenciais: o que aconteceu, como aconteceu, quem praticou (autoria) e a materialidade delitiva (provas). Inquérito = investigação.'
   },
   {
-    q: 'Qual é a diferença essencial entre a eficácia temporal da lei penal e da lei processual penal?',
-    a: 'A Lei Penal regula crimes e penas, aplicando-se o princípio da irretroatividade da lei mais gravosa e a retroatividade da mais benéfica (Art. 5º, XL, CF). Já a Lei Processual Penal pura rege-se pelo princípio da aplicação imediata (tempus regit actum), independentemente de ser mais ou menos benéfica.'
+    q: 'Quem conduz o inquérito policial e qual é a sua natureza?',
+    a: 'É conduzido pela autoridade policial (delegado de carreira da polícia judiciária). Trata-se de um procedimento ADMINISTRATIVO preliminar, e não de um processo judicial.'
   },
   {
-    q: 'O que são normas processuais penais mistas (ou heterogêneas/híbridas)?',
-    a: 'São normas com conteúdo tanto processual quanto penal material (ex.: regras sobre decadência, perempção, renúncia, queixa-crime, transação penal). Por atingirem o direito de liberdade e a pretensão punitiva, seguem a regra penal: retroagem se benéficas, mas não retroagem se prejudiciais ao réu.'
+    q: 'Por que o inquérito policial é considerado dispensável?',
+    a: 'Porque a ação penal pode ser proposta diretamente pelo titular (MP ou querelante) caso já existam elementos e provas suficientes de autoria e materialidade (justa causa), sem necessidade prévia do inquérito.'
   },
   {
-    q: 'Qual é o princípio que rege a aplicação da lei processual penal no espaço?',
-    a: 'É o Princípio da Territorialidade (Art. 1º do CPP): a lei processual brasileira aplica-se em todo o território nacional, sem prejuízo de tratados, convenções e regras de direito internacional.'
+    q: 'O inquérito policial pode condenar ou absolver o investigado?',
+    a: 'NÃO! O inquérito policial não é sentença, não julga, não condena e não absolve ninguém. É mero procedimento investigativo para colheita de elementos.'
   },
   {
-    q: 'Como são realizados os atos processuais penais que dependem de execução no exterior?',
-    a: 'Por meio de cooperação jurídica internacional e expedição de cartas rogatórias às autoridades estrangeiras, observados os tratados bilaterais/multilaterais de assistência mútua.'
+    q: 'O inquérito policial é oral ou escrito?',
+    a: 'É estritamente ESCRITO. Todas as peças e atos do inquérito policial serão reduzidos a escrito ou datilografados e rubricados pela autoridade (Art. 9º do CPP).'
   },
   {
-    q: 'O Código de Processo Penal admite interpretação extensiva e aplicação analógica?',
-    a: 'SIM! O Artigo 3º do CPP dispõe expressamente que a lei processual penal admitirá interpretação extensiva e aplicação analógica, bem como o suplemento dos princípios gerais de direito.'
+    q: 'Como funciona o sigilo no inquérito policial?',
+    a: 'A autoridade assegurará o sigilo necessário à elucidação do fato ou exigido pelo interesse da sociedade (Art. 20, CPP), garantindo-se ao defensor amplo acesso aos elementos de prova já documentados (Súmula Vinculante 14).'
   },
   {
-    q: 'Qual a diferença técnica entre Interpretação Extensiva e Analogia no Processo Penal?',
-    a: 'Na INTERPRETAÇÃO EXTENSIVA, existe norma, mas seu texto é acanhado; o intérprete apenas amplia o alcance do texto para coincidir com a real vontade da lei (a lei disse menos do que queria). Na ANALOGIA, NÃO existe norma; há uma lacuna legal, que o aplicador preenche aplicando a norma de um caso semelhante.'
+    q: 'Como pode ser instaurado o inquérito nos crimes de ação penal pública incondicionada?',
+    a: 'De ofício pela autoridade policial; mediante requisição do juiz ou do Ministério Público; ou a requerimento do ofendido / representante legal (Art. 5º, I e II, CPP).'
   },
   {
-    q: 'O que é a interpretação sistemática no Processo Penal?',
-    a: 'É o método interpretativo que analisa o dispositivo legal em conjunto e harmonia com as demais normas do ordenamento jurídico e, primordialmente, com a Constituição Federal de 1988.'
+    q: 'O inquérito pode ser instaurado sem representação nos crimes de ação pública condicionada?',
+    a: 'NÃO! Nos crimes de ação pública condicionada, o inquérito NÃO PODE ser iniciado sem a prévia representação da vítima ou de seu representante legal (Art. 5º, § 4º, CPP).'
   },
   {
-    q: 'Quais são as principais fontes do Direito Processual Penal?',
-    a: '1) Constituição Federal (fonte primária e ápice); 2) Leis formais (CPP e leis especiais); 3) Tratados e Convenções Internacionais de Direitos Humanos (ex: Pacto de San José); 4) Princípios Gerais de Direito; 5) Jurisprudência dos Tribunais Superiores (STF/STJ) e Doutrina.'
+    q: 'Como se inicia o inquérito policial nos crimes de ação penal privada?',
+    a: 'Apenas mediante requerimento formal de quem tenha legitimidade para propor a ação penal privada / queixa-crime (Art. 5º, § 5º, CPP).'
+  },
+  {
+    q: 'Quais providências a autoridade policial deve adotar segundo o Art. 6º do CPP?',
+    a: 'Preservar o local do crime, apreender objetos (após perícia), colher provas, ouvir vítima e indiciado, proceder a reconhecimentos e acareações, e determinar exame de corpo de delito.'
+  },
+  {
+    q: 'Qual o prazo geral do CPP para conclusão do inquérito com o indiciado PRESO?',
+    a: '10 dias, improrrogáveis, contados a partir do dia em que se executar a ordem de prisão (Art. 10 do CPP).'
+  },
+  {
+    q: 'Qual o prazo geral do CPP para conclusão do inquérito com o indiciado SOLTO?',
+    a: '30 dias, podendo ser prorrogado pelo juiz a requerimento da autoridade policial quando o fato for de difícil elucidação (Art. 10 do CPP).'
+  },
+  {
+    q: 'Qualquer pessoa do povo pode comunicar uma infração à autoridade policial?',
+    a: 'SIM! Qualquer pessoa que tiver conhecimento da existência de infração em que caiba ação pública poderá comunicá-la à autoridade policial (notitia criminis, Art. 5º, § 3º, CPP).'
+  },
+  {
+    q: 'Quais os artigos mais cobrados no concurso do TJAM sobre inquérito policial?',
+    a: 'Artigos 4º (competência da polícia judiciária), 5º (formas de instauração), 6º (diligências policiais), 9º (forma escrita) e 10 (prazos de 10 e 30 dias).'
   }
 ];
 
 export const procPenalMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. De acordo com o CPP, a lei processual penal aplica-se:',
+    enunciado: '1. A principal finalidade do inquérito policial é:',
     opcoes: [
-      'A) Somente aos processos iniciados após sua vigência',
-      'B) Desde logo, sem prejuízo da validade dos atos realizados sob a vigência da lei anterior',
-      'C) Somente após decisão judicial',
-      'D) Apenas aos processos criminais federais'
+      'A) Aplicar pena ao investigado',
+      'B) Apurar a infração penal e sua autoria',
+      'C) Julgar o acusado',
+      'D) Determinar a sentença'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Conforme o Artigo 2º do Código de Processo Penal: "A lei processual penal aplicar-se-á desde logo, sem prejuízo da validade dos atos realizados sob a vigência da lei anterior". Trata-se do princípio da aplicação imediata (tempus regit actum).'
+    explicacao: 'Gabarito B: Conforme o Art. 4º do CPP e a doutrina processual penal, o inquérito policial tem como precípua finalidade a apuração da infração penal e de sua respectiva autoria, fornecendo elementos para a ação penal.'
   },
   {
     id: 2,
-    enunciado: '2. Uma nova lei processual penal entrou em vigor durante um processo que já estava em andamento. Em regra:',
+    enunciado: '2. O inquérito policial é considerado, em regra:',
     opcoes: [
-      'A) O processo inteiro deve ser reiniciado',
-      'B) A lei anterior continua sendo aplicada até o fim do processo',
-      'C) A nova lei aplica-se imediatamente, preservando-se os atos já realizados',
-      'D) A nova lei somente será aplicada se beneficiar o réu'
+      'A) Processo judicial',
+      'B) Procedimento administrativo investigativo',
+      'C) Ação penal',
+      'D) Sentença criminal'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: Pela regra do tempus regit actum (Art. 2º do CPP), a nova lei tem aplicação imediata nos processos em andamento, não retroagindo para desconstituir atos válidos praticados sob a vigência da lei anterior nem exigindo reinício do processo.'
+    correta: 1, // B
+    explicacao: 'Gabarito B: O inquérito policial não é processo nem ação judicial; é um procedimento puramente administrativo de caráter investigatório e informativo preliminar.'
   },
   {
     id: 3,
-    enunciado: '3. A regra da aplicação imediata da lei processual penal significa que:',
+    enunciado: '3. A condução do inquérito policial cabe, em regra:',
     opcoes: [
-      'A) A lei nova invalida todos os atos anteriores',
-      'B) A lei nova passa a reger os atos processuais praticados após sua entrada em vigor',
-      'C) A lei nova só vale para crimes futuros',
-      'D) A lei nova nunca pode alcançar processos em andamento'
+      'A) Ao juiz',
+      'B) Ao Ministério Público',
+      'C) À autoridade policial',
+      'D) Ao defensor público'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: A aplicação imediata impõe que a lei nova governe todos os atos processuais praticados a partir de sua vigência, mesmo que em processos já pendentes e relativos a fatos criminosos ocorridos no passado.'
+    correta: 2, // C
+    explicacao: 'Gabarito C: Nos termos do Art. 4º do CPP, a polícia judiciária será exercida pelas autoridades policiais no território de suas respectivas circunscrições e terá por fim a apuração das infrações penais.'
   },
   {
     id: 4,
-    enunciado: '4. Quanto à validade dos atos processuais praticados sob a lei anterior:',
+    enunciado: '4. Sobre o inquérito policial, é correto afirmar que:',
     opcoes: [
-      'A) São automaticamente anulados',
-      'B) Permanecem válidos, em regra',
-      'C) Devem ser repetidos obrigatoriamente',
-      'D) Dependem de autorização do Ministério Público'
+      'A) Sempre é indispensável para iniciar a ação penal',
+      'B) Pode ser dispensável quando já existirem elementos suficientes para a ação penal',
+      'C) É obrigatório em qualquer situação',
+      'D) Produz automaticamente uma condenação'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Os atos regularmente praticados sob a vigência da lei processual anterior são atos jurídicos perfeitos e permanecem plenamente válidos e eficazes no processo.'
+    explicacao: 'Gabarito B: O inquérito policial é dispensável: se o titular da ação penal (Ministério Público ou querelante) já dispuser de elementos suficientes sobre a autoria e materialidade, poderá ajuizar a denúncia ou queixa de pronto.'
   },
   {
     id: 5,
-    enunciado: '5. A aplicação da lei processual penal no tempo é disciplinada, principalmente, pelo princípio:',
+    enunciado: '5. Uma característica tradicional do inquérito policial é ser:',
     opcoes: [
-      'A) Da retroatividade ilimitada',
-      'B) Da aplicação imediata',
-      'C) Da anterioridade penal',
-      'D) Da irretroatividade absoluta'
+      'A) Público em qualquer circunstância',
+      'B) Sigiloso quando o sigilo for necessário à investigação',
+      'C) Oral',
+      'D) Judicial'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: O princípio central e fundamental da eficácia temporal da lei processual penal é o princípio da aplicação imediata (tempus regit actum).'
+    explicacao: 'Gabarito B: Nos termos do Art. 20 do CPP, a autoridade assegurará no inquérito o sigilo necessário à elucidação do fato ou exigido pelo interesse da sociedade.'
   },
   {
     id: 6,
-    enunciado: '6. A lei processual penal brasileira aplica-se, como regra:',
+    enunciado: '6. As peças do inquérito policial devem ser:',
     opcoes: [
-      'A) Em todo o mundo',
-      'B) No território brasileiro, observadas as hipóteses legais de extraterritorialidade ou cooperação',
-      'C) Somente nos Estados da Federação',
-      'D) Apenas dentro dos tribunais'
+      'A) Sempre exclusivamente orais',
+      'B) Reduzidas a escrito',
+      'C) Produzidas somente pelo juiz',
+      'D) Elaboradas apenas pelo Ministério Público'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: O Art. 1º do CPP prevê que o processo penal reger-se-á, em todo o território brasileiro, por este Código, ressalvadas as hipóteses previstas em tratados, convenções e regras de cooperação internacional.'
+    explicacao: 'Gabarito B: Art. 9º do CPP: "Todas as peças do inquérito policial serão, num só processado, reduzidas a escrito ou datilografadas e, neste caso, rubricadas pela autoridade".'
   },
   {
     id: 7,
-    enunciado: '7. Sobre a lei processual penal e a lei penal, é correto afirmar:',
+    enunciado: '7. Nos crimes de ação pública, o inquérito pode ser iniciado:',
     opcoes: [
-      'A) Ambas possuem exatamente as mesmas regras de aplicação no tempo',
-      'B) A lei processual penal possui regra própria de aplicação imediata',
-      'C) A lei penal sempre possui aplicação imediata aos fatos anteriores',
-      'D) A lei processual penal nunca se aplica a processos em andamento'
+      'A) Somente por decisão judicial',
+      'B) De ofício pela autoridade policial, nas hipóteses legais',
+      'C) Somente pelo defensor',
+      'D) Somente pela vítima'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: A lei processual penal possui disciplina temporal própria (Art. 2º do CPP, tempus regit actum, incidência imediata), distinguindo-se da lei penal material, cuja eficácia é regida pela anterioridade e pela retroatividade restrita à benesse do réu (Art. 5º, XL, CF).'
+    explicacao: 'Gabarito B: Conforme o Art. 5º, I do CPP, nos crimes de ação pública o inquérito policial será iniciado de ofício pela própria autoridade policial.'
   },
   {
     id: 8,
-    enunciado: '8. A lei penal mais benéfica:',
+    enunciado: '8. Nos crimes de ação pública condicionada à representação, o inquérito policial:',
     opcoes: [
-      'A) Pode retroagir, conforme a Constituição e a legislação penal',
-      'B) Nunca retroage',
-      'C) Só retroage mediante autorização judicial',
-      'D) É sempre aplicada apenas aos crimes futuros'
+      'A) Pode ser instaurado sem representação',
+      'B) Depende da representação quando esta for exigida por lei',
+      'C) Nunca pode ser instaurado',
+      'D) Depende exclusivamente do juiz'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: Nos termos do Artigo 5º, XL da Constituição Federal de 1988 e do Artigo 2º do Código Penal, "a lei penal não retroagirá, salvo para beneficiar o réu".'
+    correta: 1, // B
+    explicacao: 'Gabarito B: Art. 5º, § 4º do CPP: "O inquérito, nos crimes em que a ação pública depender de representação, não poderá sem ela ser iniciado".'
   },
   {
     id: 9,
-    enunciado: '9. A aplicação imediata da lei processual penal:',
+    enunciado: '9. Nos crimes de ação privada, a autoridade policial poderá proceder ao inquérito:',
     opcoes: [
-      'A) Confunde-se com retroatividade da lei penal mais benéfica',
-      'B) É regra própria da legislação processual penal',
-      'C) Só existe quando favorecer o acusado',
-      'D) Não existe no ordenamento brasileiro'
+      'A) De ofício, sempre',
+      'B) Mediante requerimento de quem tenha legitimidade',
+      'C) Somente por determinação do juiz',
+      'D) Somente por determinação do Ministério Público'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: A aplicação imediata é regra específica do processo penal (Art. 2º do CPP). Não se confunde com a retroatividade da lex mitior penal, aplicando-se desde logo aos atos processuais vindouros.'
+    explicacao: 'Gabarito B: Art. 5º, § 5º do CPP: "Nos crimes de ação privada, a autoridade policial somente poderá proceder a inquérito a requerimento de quem tenha qualidade para intentá-la".'
   },
   {
     id: 10,
-    enunciado: '10. A interpretação extensiva ocorre quando:',
+    enunciado: '10. Durante o inquérito, a autoridade policial pode:',
     opcoes: [
-      'A) O intérprete amplia o alcance da norma para alcançar situações compreendidas em seu sentido',
-      'B) O juiz cria livremente uma nova lei',
-      'C) A norma é sempre aplicada contra o acusado',
-      'D) O processo é encerrado sem julgamento'
+      'A) Aplicar pena criminal',
+      'B) Colher provas e ouvir o ofendido e o indiciado',
+      'C) Proferir sentença',
+      'D) Absolver o investigado'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: A interpretação extensiva ocorre quando a fórmula literal da lei disse menos do que pretendia dizer (minus dixit quam voluit); o intérprete alarga o significado das palavras para harmonizá-lo com o real espírito e alcance da norma.'
+    correta: 1, // B
+    explicacao: 'Gabarito B: Entre as atribuições expressas no Art. 6º do CPP estão ouvir a vítima (ofendido), interrogar o indiciado, proceder a acareações e colher provas pertinentes.'
   },
   {
     id: 11,
-    enunciado: '11. Analogia significa:',
+    enunciado: '11. Entre as providências previstas no art. 6º do CPP está:',
     opcoes: [
-      'A) Aplicar uma norma existente a uma situação semelhante não expressamente prevista, quando juridicamente cabível',
-      'B) Revogar uma lei',
-      'C) Criar uma pena sem previsão legal',
-      'D) Ignorar a legislação vigente'
+      'A) Preservar o local do crime',
+      'B) Condenar o investigado',
+      'C) Fixar a pena',
+      'D) Proferir sentença'
     ],
     correta: 0, // A
-    explicacao: 'Gabarito A: A analogia é um método de integração jurídica (preenchimento de lacunas). Diante da ausência de norma específica para o caso concreto, aplica-se norma reguladora de hipótese similar onde haja a mesma razão de direito (ubi eadem ratio, ibi eadem legis dispositio).'
+    explicacao: 'Gabarito A: Art. 6º, I do CPP: Logo que tiver conhecimento da prática da infração penal, a autoridade policial deverá dirigir-se ao local, providenciando para que não se alterem o estado e conservação das coisas.'
   },
   {
     id: 12,
-    enunciado: '12. A analogia no processo penal:',
+    enunciado: '12. O inquérito policial:',
     opcoes: [
-      'A) É absolutamente proibida em qualquer situação',
-      'B) Pode ser utilizada para suprir lacunas, desde que respeitados os limites legais e constitucionais',
-      'C) Sempre pode criar crimes e penas',
-      'D) Pode afastar qualquer garantia constitucional'
+      'A) É uma ação penal',
+      'B) É um processo judicial',
+      'C) É um procedimento destinado à investigação',
+      'D) É uma sentença'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: O Artigo 3º do CPP autoriza expressamente a aplicação analógica para colmatar lacunas da legislação processual, respeitando-se as garantias fundamentais e vedações constitucionais.'
+    correta: 2, // C
+    explicacao: 'Gabarito C: Trata-se de procedimento administrativo de investigação preliminar destinado à apuração da infração penal e de sua autoria.'
   },
   {
     id: 13,
-    enunciado: '13. Assinale a alternativa correta:',
+    enunciado: '13. No prazo geral previsto no CPP, quando o indiciado estiver preso, o inquérito deverá terminar, em regra, em:',
     opcoes: [
-      'A) Interpretação extensiva e analogia são exatamente a mesma coisa',
-      'B) A interpretação extensiva amplia o sentido de uma norma existente; a analogia utiliza norma semelhante para suprir uma lacuna',
-      'C) A analogia cria qualquer regra desejada pelo juiz',
-      'D) A interpretação extensiva somente existe no Direito Civil'
+      'A) 5 dias',
+      'B) 10 dias',
+      'C) 15 dias',
+      'D) 30 dias'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Excelente distinção cobrada no TJAM! Na interpretação extensiva há norma aplicável (embora expressa de forma restrita); na analogia não há norma para o caso, usando-se norma reguladora de situação análoga.'
+    explicacao: 'Gabarito B: Art. 10 do CPP: O inquérito deverá terminar no prazo de 10 dias, se o indiciado tiver sido preso preventivamente, contado esse prazo a partir do dia em que se executar a ordem de prisão.'
   },
   {
     id: 14,
-    enunciado: '14. O CPP estabelece, quanto à interpretação:',
+    enunciado: '14. Quando o indiciado estiver solto, o prazo geral previsto no CPP é de:',
     opcoes: [
-      'A) Proibição absoluta de interpretação',
-      'B) Possibilidade de interpretação extensiva, aplicação analógica e suplemento dos princípios gerais de direito',
-      'C) Somente interpretação literal',
-      'D) Somente interpretação favorável à acusação'
+      'A) 10 dias',
+      'B) 15 dias',
+      'C) 30 dias',
+      'D) 60 dias'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: Literalidade do Art. 3º do CPP: "A lei processual penal admitirá interpretação extensiva e aplicação analógica, bem como o suplemento dos princípios gerais de direito".'
+    correta: 2, // C
+    explicacao: 'Gabarito C: Art. 10 do CPP: No caso de indiciado solto (mediante fiança ou sem ela), o prazo geral do inquérito é de 30 dias.'
   },
   {
     id: 15,
-    enunciado: '15. Os tratados e convenções internacionais:',
+    enunciado: '15. O inquérito policial não tem como finalidade:',
     opcoes: [
-      'A) Nunca possuem relevância para o processo penal brasileiro',
-      'B) Podem integrar o ordenamento jurídico e influenciar a aplicação das normas processuais, conforme sua incorporação e posição normativa',
-      'C) Substituem automaticamente toda a legislação brasileira',
-      'D) Só podem tratar de matéria civil'
+      'A) Investigar a autoria',
+      'B) Apurar circunstâncias do crime',
+      'C) Condenar o investigado',
+      'D) Reunir elementos informativos'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: Os tratados e convenções internacionais devidamente incorporados ao direito brasileiro integram as fontes normativas (ex: Pacto de San José da Costa Rica com status supralegal, art. 5º, § 2º/§ 3º da CF).'
+    correta: 2, // C
+    explicacao: 'Gabarito C: O inquérito policial JAMAIS condena nem absolve. A condenação penal é competência exclusiva do Poder Judiciário por meio de sentença proferida em processo judicial regular.'
   },
   {
     id: 16,
-    enunciado: '16. Um ato processual foi praticado corretamente antes da entrada em vigor de uma nova lei processual. Em regra, esse ato:',
+    enunciado: '16. O sigilo do inquérito policial existe principalmente para:',
     opcoes: [
-      'A) É automaticamente inválido',
-      'B) Continua válido',
-      'C) Deve ser obrigatoriamente repetido',
-      'D) Depende de concordância do réu'
+      'A) Impedir qualquer investigação',
+      'B) Proteger a eficiência e as necessidades da investigação',
+      'C) Impedir o trabalho da defesa',
+      'D) Substituir o processo judicial'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: A lei processual nova respeita a higidez dos atos processuais já consumados sob a vigência da legislação anterior (tempus regit actum).'
+    explicacao: 'Gabarito B: O sigilo previsto no Art. 20 do CPP visa resguardar a eficácia e o sucesso das diligências investigatórias e proteger a intimidade/interesse social.'
   },
   {
     id: 17,
-    enunciado: '17. Assinale a alternativa INCORRETA:',
+    enunciado: '17. Se já existirem elementos suficientes para o oferecimento da ação penal, o inquérito policial:',
     opcoes: [
-      'A) A lei processual penal tem aplicação imediata.',
-      'B) A aplicação imediata preserva a validade dos atos realizados sob a lei anterior.',
-      'C) Toda lei processual penal mais gravosa deve retroagir para atingir atos já praticados.',
-      'D) A aplicação da lei processual penal no tempo possui disciplina própria.'
+      'A) Pode ser dispensado',
+      'B) Deve obrigatoriamente ser realizado novamente',
+      'C) Deve ser convertido em sentença',
+      'D) Deve resultar em condenação'
     ],
-    correta: 2, // C (INCORRETA)
-    explicacao: 'Gabarito C: A alternativa C é manifestamente incorreta e absurda! A lei processual penal NÃO retroage para atingir atos já praticados e consolidados, independentemente de ser mais benéfica ou mais gravosa.'
+    correta: 0, // A
+    explicacao: 'Gabarito A: O inquérito policial é peça dispensável e prescindível; dispondo de justa causa, o titular da ação penal pode oferecê-la diretamente (Art. 39, § 5º e 46, § 1º, CPP).'
   },
   {
     id: 18,
-    enunciado: '18. Um processo começou sob determinada lei processual. Durante seu andamento, outra lei entrou em vigor. Em regra, os atos posteriores:',
+    enunciado: '18. O reconhecimento de pessoas e coisas durante a investigação é:',
     opcoes: [
-      'A) Seguem a lei nova',
-      'B) Seguem obrigatoriamente a lei antiga',
-      'C) São todos anulados',
-      'D) Não podem ser praticados'
+      'A) Vedado',
+      'B) Uma das diligências que podem ser realizadas',
+      'C) Exclusivo do juiz',
+      'D) Exclusivo da defesa'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: Conforme o princípio do isolamento dos atos processuais, a lei nova incide a partir de sua vigência; logo, todos os atos futuros a serem praticados no processo observarão a nova lei.'
+    correta: 1, // B
+    explicacao: 'Gabarito B: Art. 6º, VI do CPP: A autoridade policial pode proceder a reconhecimento de pessoas e coisas e a acareações durante o inquérito policial.'
   },
   {
     id: 19,
-    enunciado: '19. A interpretação sistemática considera:',
+    enunciado: '19. O exame de corpo de delito, quando cabível, é uma providência relacionada:',
     opcoes: [
-      'A) Apenas uma palavra isolada do texto legal',
-      'B) A norma dentro do conjunto do ordenamento jurídico',
-      'C) Somente a vontade pessoal do juiz',
-      'D) Apenas decisões administrativas'
+      'A) À investigação da infração penal',
+      'B) À aplicação da pena',
+      'C) À sentença civil',
+      'D) À execução da pena'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: A hermenêutica sistemática compreende o preceito normativo como elemento integrante de um sistema orgânico e coerente, articulando a norma com os demais princípios e preceitos constitucionais e legais.'
+    correta: 0, // A
+    explicacao: 'Gabarito A: Conforme o Art. 6º, VII e Art. 158 do CPP, o exame de corpo de delito é providência investigatória fundamental para constatação da materialidade nas infrações que deixam vestígios.'
   },
   {
     id: 20,
-    enunciado: '20. QUESTÃO DESAFIO: Sobre a aplicação da lei processual penal, assinale a correta:',
+    enunciado: '20. Assinale a alternativa correta:',
     opcoes: [
-      'A) A lei processual nova sempre retroage para invalidar atos anteriores.',
-      'B) A lei processual nova somente pode ser aplicada se beneficiar o acusado.',
-      'C) A lei processual penal aplica-se imediatamente, preservando-se a validade dos atos praticados sob a lei anterior.',
-      'D) A lei processual penal somente se aplica aos crimes cometidos após sua publicação.'
+      'A) O inquérito policial condena o investigado.',
+      'B) O inquérito policial é conduzido pelo juiz.',
+      'C) O inquérito policial busca reunir elementos sobre a infração penal e sua autoria.',
+      'D) O inquérito policial sempre é indispensável para a ação penal.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito C: Síntese perfeita do Art. 2º do CPP e da jurisprudência consolidada: a norma puramente processual incide de pronto nos processos pendentes (aplicação imediata), resguardando integralmente os atos processuais pretéritos praticados sob a égide da lei revogada.'
+    explicacao: 'Gabarito C: Perfeita definição do IP: procedimento que visa colher elementos de materialidade da infração penal e indícios suficientes de sua autoria.'
   }
 ];
 
 export const procPenalTfQuestionsData: TfQuestionItem[] = [
   {
     id: 101,
-    enunciado: '1. A lei processual penal nova possui aplicação imediata aos processos em andamento, preservando-se os atos processuais validamente praticados sob a vigência da lei anterior.',
+    enunciado: '1. O inquérito policial é um procedimento administrativo investigativo conduzido pela polícia judiciária e não um processo judicial.',
     correta: true,
-    explicacao: 'Verdadeiro: É a regra expressa do Art. 2º do CPP (tempus regit actum e teoria do isolamento dos atos processuais).'
+    explicacao: 'Verdadeiro: O IP é pré-processual, administrativo e conduzido pelo delegado de polícia (Art. 4º do CPP).'
   },
   {
     id: 102,
-    enunciado: '2. Uma norma de natureza mista (material-processual) mais gravosa ao réu pode ser aplicada imediatamente a fatos criminosos ocorridos antes de sua entrada em vigor.',
+    enunciado: '2. Nos crimes de ação penal pública condicionada, a autoridade policial pode instaurar o inquérito de ofício mesmo sem a representação da vítima.',
     correta: false,
-    explicacao: 'Falso: Normas mistas ou heterogêneas têm reflexo substancial na liberdade ou no direito de punir (ex: prescrição, decadência, queixa-crime) e submetem-se ao princípio da irretroatividade in pejus (Art. 5º, XL da CF).'
+    explicacao: 'Falso: O Art. 5º, § 4º do CPP veda expressamente a instauração de inquérito em crimes de ação pública condicionada sem prévia representação.'
   },
   {
     id: 103,
-    enunciado: '3. A regra geral do Código de Processo Penal brasileiro quanto ao espaço é o Princípio da Territorialidade, aplicando-se em todo o território nacional, ressalvadas as exceções de tratados e direito internacional.',
+    enunciado: '3. O inquérito policial é dispensável para a propositura da ação penal se o Ministério Público ou o ofendido já dispuser de elementos suficientes de autoria e materialidade.',
     correta: true,
-    explicacao: 'Verdadeiro: Conforme o Artigo 1º do CPP, ressalvando prerrogativas de tratados diplomáticos, prerrogativa de foro e justiça militar.'
+    explicacao: 'Verdadeiro: O IP possui natureza de procedimento informativo dispensável (prescindível).'
   },
   {
     id: 104,
-    enunciado: '4. No processo penal é proibida qualquer forma de analogia ou interpretação extensiva, admitindo-se apenas a interpretação estritamente literal da lei.',
+    enunciado: '4. O prazo geral do CPP para conclusão do inquérito policial é de 30 dias para o indiciado preso e de 10 dias para o indiciado solto.',
     correta: false,
-    explicacao: 'Falso: O Artigo 3º do CPP autoriza expressamente a interpretação extensiva, a aplicação analógica e o recurso aos princípios gerais de direito.'
+    explicacao: 'Falso: É o oposto! O prazo é de 10 dias para o indiciado PRESO e de 30 dias para o indiciado SOLTO (Art. 10 do CPP).'
   }
 ];
 
 export const procPenalDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 201,
-    enunciado: '1. Discorra sobre a eficácia da lei processual penal no tempo (Art. 2º do CPP), explicando o princípio regente, a validade dos atos processuais anteriores e o tratamento dispensado às normas processuais mistas (heterogêneas).',
-    respostaEsperada: 'Gabarito oficial: A aplicação da lei processual penal no tempo é regida pelo princípio do tempus regit actum (Art. 2º do CPP), segundo o qual a nova lei tem aplicação imediata aos processos em andamento. Adota-se a teoria do isolamento dos atos processuais: os atos praticados sob a lei anterior permanecem perfeitamente válidos e eficazes, e a lei nova rege os atos subsequentes. Excepcionam-se as normas de natureza mista ou híbrida (com reflexo penal material, como decadência e queixa-crime), que seguem o princípio penal da irretroatividade da lei mais gravosa (Art. 5º, XL da CF), retroagindo apenas se benéficas ao réu.'
+    enunciado: '1. Explique a finalidade do inquérito policial e aponte três de suas principais características à luz do Código de Processo Penal.',
+    respostaEsperada: 'Gabarito esperado: A finalidade do inquérito policial é apurar a infração penal e identificar sua autoria (materialidade + indícios de autoria), fornecendo subsídios probatórios para que o titular da ação penal (MP ou ofendido) promova a ação judicial. Suas características incluem: 1) Administrativo (conduzido pela autoridade policial, não é processo judicial); 2) Escrito (todas as peças reduzidas a escrito, art. 9º); 3) Dispensável (ação penal pode ser proposta sem inquérito se houver provas suficientes); 4) Sigiloso (art. 20, ressalvada a Súmula Vinculante 14 do STF).'
   },
   {
     id: 202,
-    enunciado: '2. Diferencie Interpretação Extensiva de Aplicação Analógica no Processo Penal brasileiro à luz do Artigo 3º do CPP, indicando a hipótese de cabimento de cada instituto.',
-    respostaEsperada: 'Gabarito oficial: No Art. 3º do CPP, a Interpretação Extensiva e a Analogia cumprem funções distintas. A Interpretação Extensiva é um método de hermenêutica no qual existe norma prevendo o caso concreto, porém formulada com vocabulário mais acanhado do que a vontade do legislador (minus dixit quam voluit); amplia-se o alcance do texto para alcançar seu real sentido. Já a Analogia é uma forma de integração/preenchimento de lacuna jurídica: NÃO existe norma expressa regulando a hipótese; logo, o magistrado estende a regra de um caso semelhante para suprir a omissão legal, desde que respeitadas as garantias constitucionais.'
+    enunciado: '2. Quais são os prazos gerais da regra do CPP para a conclusão do inquérito policial quando o indiciado estiver preso e quando estiver solto? A partir de quando se inicia a contagem do prazo do preso?',
+    respostaEsperada: 'Gabarito esperado: Conforme o Artigo 10 do CPP: se o indiciado estiver PRESO preventivamente, o prazo para conclusão do inquérito é de 10 dias improrrogáveis, contados a partir do dia em que se executar a ordem de prisão. Se o indiciado estiver SOLTO (com ou sem fiança), o prazo é de 30 dias, podendo ser prorrogado pelo juiz a pedido da autoridade policial quando o fato for de difícil elucidação.'
   }
 ];
+
+// Exercício Prático Oficial: "Você é o Investigador" (Desafio de Vídeo)
+export interface PracticalVideoCase {
+  titulo: string;
+  caso: string;
+  perguntas: string[];
+  desafioOral: string;
+  tempoSugerido: string;
+  criteriosAvaliacao: string[];
+}
+
+export const procPenalPracticalCase: PracticalVideoCase = {
+  titulo: 'Atividade Prática: "Você é o Investigador"',
+  caso: 'João estava saindo do trabalho quando teve seu celular roubado. Ele procurou a polícia e informou que o autor do crime era um homem que usava camisa preta e fugiu em uma motocicleta. Uma câmera de segurança próxima ao local registrou parte do ocorrido.',
+  perguntas: [
+    '1. Qual é a finalidade do inquérito policial nesse caso?',
+    '2. Quem será responsável pela condução da investigação?',
+    '3. Quais elementos podem ser buscados durante a investigação?',
+    '4. A câmera de segurança pode ser utilizada como elemento de investigação? Explique.',
+    '5. A autoridade policial pode ouvir a vítima?',
+    '6. Pode procurar identificar e ouvir possíveis testemunhas?',
+    '7. O inquérito policial já significa que João terá seu celular recuperado ou que o suspeito será condenado? Explique.'
+  ],
+  desafioOral: 'Depois de responder às perguntas, explique com suas próprias palavras, sem ler: "O que é um inquérito policial e para que ele serve?"',
+  tempoSugerido: '3 a 5 minutos',
+  criteriosAvaliacao: [
+    'Clareza ao falar',
+    'Pronúncia e dicção',
+    'Organização das ideias',
+    'Conhecimento do conteúdo jurídico',
+    'Capacidade de explicar sem decorar',
+    'Segurança e postura na resposta'
+  ]
+};

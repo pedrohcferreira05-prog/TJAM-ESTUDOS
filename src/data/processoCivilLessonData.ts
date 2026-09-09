@@ -1,4 +1,4 @@
-// Data for Processo Civil — Aula 2: Partes e Procuradores (CPC/2015)
+// Data for Direito Processual Civil — Aula 2: Atos Processuais (CPC/2015)
 // Preparatório TJAM — Assistente Judiciário
 
 export interface FlashcardItem {
@@ -27,363 +27,431 @@ export interface DiscursiveQuestionItem {
   respostaEsperada: string;
 }
 
+export interface PracticalCaseItem {
+  titulo: string;
+  caso: string;
+  perguntas: string[];
+  desafioOral: string;
+  tempoSugerido: string;
+  criteriosAvaliacao: string[];
+}
+
 export const procCivilAula2SummaryPoints: string[] = [
-  'Conceito de Partes: Autor (apresenta a demanda) e Réu (contra quem a demanda é proposta).',
-  'Capacidade Processual: toda pessoa no exercício de seus direitos tem capacidade para estar em juízo.',
-  'Incapazes no Processo: o incapaz deve ser representado (absolutamente incapaz) ou assistido (relativamente incapaz).',
-  'Curador Especial: nomeado pelo juiz para incapaz sem representante legal ou em conflito com ele, e réu preso revel ou revel citado por edital/hora certa.',
-  'Defensoria Pública: a curatela especial é exercida prioritariamente pela Defensoria Pública (CPC, art. 72, parágrafo único).',
-  'Representação dos Entes: União pela AGU; Estados e DF por procuradores; Municípios por prefeito/procurador; massa falida pelo administrador.',
-  'Procuradores e Postulação: regra geral da representação por advogado na OAB, ressalvada a postulação em causa própria com habilitação legal.',
-  'Atuação Sem Procuração: excepcional e urgente para evitar prescrição, decadência, preclusão ou praticar ato urgente.',
-  'Procuração Geral para o Foro: habilita o advogado a praticar atos processuais em geral, mas NÃO abrange poderes especiais.',
-  'Cláusula de Poderes Especiais: necessária para receber citação, confessar, transigir, desistir, renunciar, dar quitação e assinar declaração de hipossuficiência.',
-  'Deveres das Partes: expor os fatos conforme a verdade, lealdade, boa-fé e cumprimento das decisões judiciais.',
-  'Litisconsórcio: pluralidade de partes no mesmo processo (polo ativo, passivo ou misto).'
+  'Atos Processuais: manifestações praticadas no processo para produzir efeitos jurídicos e permitir o desenvolvimento da atividade processual.',
+  'Quem pode praticar: Juiz (decisões, sentenças), Partes (petições, manifestações, recursos), Advogados (representação) e Servidores/Auxiliares da Justiça (citações, intimações, certidões).',
+  'Forma dos Atos: vigora o princípio da liberdade das formas (art. 188 CPC). Os atos independem de forma determinada, salvo quando a lei expressamente exigir, visando evitar formalismo excessivo.',
+  'Tempo dos Atos: em regra realizados em dias úteis, das 6h às 20h (art. 212 CPC), observadas as exceções e autorizações legais.',
+  'Atos Eletrônicos: admitida e incentivada a prática por meios eletrônicos (peticionamento, consulta aos autos, comunicações e atos à distância).',
+  'Publicidade (Regra Geral): os atos processuais são públicos. O segredo de justiça é exceção restrita às hipóteses previstas em lei.',
+  'Citação (art. 238 CPC): chama o réu, executado ou interessado para INTEGRAR a relação processual ("chama para o processo").',
+  'Intimação (art. 269 CPC): dá ciência a alguém dos atos e termos do processo ("comunica o que aconteceu no processo").',
+  'Prazos Processuais (art. 219 CPC): na contagem de prazo processual em dias estabelecido por lei ou pelo juiz, computar-se-ão somente os dias úteis.',
+  'Preclusão: perda da possibilidade de praticar determinado ato processual (temporal pelo decurso de prazo, consumativa pela prática do ato, ou lógica por ato incompatível).',
+  'Artigos fundamentais para a prova do TJAM: arts. 188, 212, 219, 220 e 238 do CPC/2015.'
 ];
 
 export const procCivilFlashcardsData: FlashcardItem[] = [
   {
-    q: 'Quem são as partes no Processo Civil?',
-    a: 'As partes são os sujeitos que ocupam os polos da relação processual: Autor (quem formula a demanda e pede a tutela jurisdicional) e Réu (contra quem a demanda é formulada).'
+    q: 'O que são atos processuais no Direito Processual Civil?',
+    a: 'São as manifestações de vontade praticadas no processo para produzir efeitos jurídicos e permitir o desenvolvimento regular da atividade processual até a decisão final.'
   },
   {
-    q: 'O que é a capacidade processual (capacidade para estar em juízo)?',
-    a: 'É a aptidão para participar de uma relação jurídica processual em nome próprio. Toda pessoa que se encontre no exercício pleno de seus direitos possui capacidade processual (CPC, art. 70).'
+    q: 'Quem pode praticar atos processuais segundo o CPC?',
+    a: 'Juiz (decisões e sentenças), partes (petições e recursos), advogados (representação processual) e servidores/auxiliares da Justiça (citações, intimações, certidões etc.).'
   },
   {
-    q: 'Qual a diferença essencial entre representação e assistência do incapaz?',
-    a: 'Na REPRESENTAÇÃO, o representante legal pratica o ato EM NOME do incapaz (absolutamente incapaz). Na ASSISTÊNCIA, o incapaz pratica o ato JUNTAMENTE com o assistente (relativamente incapaz).'
+    q: 'Qual é a regra geral sobre a forma dos atos processuais (CPC, art. 188)?',
+    a: 'Os atos processuais independem de forma determinada, salvo quando a lei expressamente a exigir, considerando-se válidos os que, realizados de outro modo, preencham a sua finalidade essencial.'
   },
   {
-    q: 'Em quais hipóteses o juiz nomeia Curador Especial?',
-    a: '1) Ao incapaz que não tiver representante legal ou cujos interesses colidirem com os do representante;\n2) Ao réu preso revel;\n3) Ao réu revel citado por edital ou com hora certa, enquanto não constituído advogado (CPC, art. 72).'
+    q: 'Qual é o objetivo de não se exigir forma rígida determinada para os atos processuais?',
+    a: 'Evitar o excesso de formalismo (princípio da instrumentalidade das formas), garantindo a validade do ato desde que alcance seu objetivo sem prejuízo à defesa.'
   },
   {
-    q: 'Quem exerce preferencialmente a função de Curador Especial?',
-    a: 'A curatela especial é exercida privativamente pela DEFENSORIA PÚBLICA, nos termos da lei (CPC, art. 72, parágrafo único).'
+    q: 'Em quais dias e horários os atos processuais são realizados como regra (art. 212 CPC)?',
+    a: 'Em regra, são realizados em dias úteis, das 6h às 20h, ressalvadas as situações excepcionais e autorizações legais para atos fora desse horário.'
   },
   {
-    q: 'Como são representados em juízo a União, os Estados, os Municípios e a massa falida?',
-    a: '• União: pela Advocacia-Geral da União (AGU);\n• Estados e DF: por seus procuradores de Estado;\n• Municípios: pelo prefeito ou procurador municipal;\n• Massa Falida: pelo administrador judicial.'
+    q: 'A prática de atos processuais por meio eletrônico é permitida?',
+    a: 'Sim! É plenamente admitida pelo CPC e regulada por legislação própria, abrangendo peticionamento, juntada de documentos, comunicações, consulta e atos à distância.'
   },
   {
-    q: 'O que a procuração geral para o foro autoriza o advogado a fazer?',
-    a: 'A procuração geral para o foro habilita o advogado a praticar TODOS os atos do processo em geral (propor ações, recorrer, manifestar-se, participar de audiências), SALVO aqueles que exigem poderes especiais.'
+    q: 'Os atos processuais são públicos ou secretos como regra geral?',
+    a: 'Regra geral: são PÚBLICOS. Qualquer cidadão pode consultar e acompanhar. A exceção é o SEGREDO DE JUSTIÇA, restrito às hipóteses previstas em lei (ex.: família, intimidade).'
   },
   {
-    q: 'Quais atos exigem poderes expressos e específicos na procuração?',
-    a: 'Receber citação, confessar, reconhecer a procedência do pedido, transigir, desistir, renunciar ao direito sobre o qual se funda a ação, receber e dar quitação, firmar compromisso e assinar declaração de hipossuficiência econômica (CPC, art. 105).'
+    q: 'O que é a citação e qual sua finalidade fundamental (CPC, art. 238)?',
+    a: 'Citação é o ato pelo qual são convocados o réu, o executado ou o interessado para INTEGRAR a relação processual. 🧠 Mnemônico: Citação = CHAMA para o processo!'
   },
   {
-    q: 'O advogado pode atuar em juízo sem procuração? Em que circunstâncias?',
-    a: 'Sim, excepcionalmente, para evitar PRECLUSÃO, DECADÊNCIA ou PRESCRIÇÃO, ou para praticar ato considerado URGENTE. O advogado assume o compromisso de juntar a procuração em 15 dias, prorrogável por mais 15 dias (CPC, art. 104).'
+    q: 'O que é a intimação e qual sua função no processo (CPC, art. 269)?',
+    a: 'Intimação é o ato pelo qual se dá ciência a alguém dos atos e termos do processo para que faça ou deixe de fazer alguma coisa. 🧠 Mnemônico: Intimação = COMUNICA o que aconteceu!'
   },
   {
-    q: 'O que ocorre se forem usadas expressões ofensivas nos autos processuais?',
-    a: 'É vedado a qualquer participante do processo usar expressões ofensivas. O juiz determinará, de ofício ou a requerimento, que sejam riscadas/eliminadas dos autos (CPC, art. 78).'
+    q: 'Qual é a regra de contagem dos prazos processuais no CPC/2015 (art. 219)?',
+    a: 'Na contagem de prazos processuais em dias, contam-se APENAS OS DIAS ÚTEIS. Sábados, domingos e feriados não são computados na contagem do prazo.'
   },
   {
-    q: 'O que é litisconsórcio e como ele se divide quanto aos polos?',
-    a: 'Litisconsórcio é a pluralidade de pessoas no mesmo processo. Pode ser:\n• Ativo: dois ou mais autores;\n• Passivo: dois ou mais réus;\n• Misto: pluralidade tanto no polo ativo quanto no passivo.'
+    q: 'A contagem em dias úteis aplica-se a todos os prazos do direito?',
+    a: 'NÃO! Aplica-se exclusivamente aos prazos processuais previstos no CPC ou fixados pelo juiz. Não se aplica, por exemplo, aos prazos de direito material (prescrição/decadência) nem ao Processo Penal.'
   },
   {
-    q: 'Quais as hipóteses de cabimento do litisconsórcio previstas no art. 113 do CPC?',
-    a: '1) Comunhão de direitos ou de obrigações relativamente à lide;\n2) Conexão pelo pedido ou pela causa de pedir;\n3) Afinidade de questões por ponto comum de fato ou de direito.'
+    q: 'O que é preclusão no Processo Civil?',
+    a: 'É a perda, extinção ou consumação da faculdade ou direito processual de praticar determinado ato no processo.'
   },
   {
-    q: 'O que diferencia a capacidade processual da capacidade postulatória?',
-    a: 'A capacidade processual é a aptidão para estar em juízo (exercício de direitos). Já a capacidade postulatória é a aptidão técnica privativa para postular perante o Judiciário, conferida aos advogados inscritos na OAB e defensores públicos.'
+    q: 'Quais são as três principais espécies de preclusão?',
+    a: '1) Temporal: perda pelo decurso do prazo sem praticar o ato;\n2) Consumativa: perda porque o ato já foi integralmente praticado;\n3) Lógica: perda pela prática de ato anterior incompatível com o que se pretendia realizar.'
   },
   {
-    q: 'A parte pode postular em causa própria sem constituir advogado?',
-    a: 'Sim, desde que a parte possua HABILITAÇÃO LEGAL (ou seja, seja advogada regularmente inscrita na OAB) ou nos casos especiais autorizados em lei (como nos Juizados Especiais Cíveis até 20 salários mínimos).'
+    q: 'O que acontece quando o advogado deixa esgotar o prazo legal sem se manifestar?',
+    a: 'Ocorre a PRECLUSÃO TEMPORAL, perdendo a parte o direito de praticar o ato extemporaneamente, seguindo o processo para a próxima fase.'
   },
   {
-    q: 'Quais são os deveres fundamentais das partes e procuradores segundo o art. 77 do CPC?',
-    a: 'Expor os fatos conforme a verdade; não formular pretensões infundadas; não produzir provas inúteis; cumprir com exatidão as decisões judiciais; manter endereço atualizado; e agir com lealdade processual e boa-fé.'
+    q: 'Quais os artigos mais importantes do CPC sobre atos processuais para o TJAM?',
+    a: 'Art. 188 (liberdade das formas), Art. 212 (tempo e horário dos atos: dias úteis 6h-20h), Art. 219 (contagem em dias úteis), Art. 220 (suspensão no recesso) e Art. 238 (conceito de citação).'
   }
 ];
 
 export const procCivilAula2McQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. De acordo com o CPC, toda pessoa que se encontre no exercício de seus direitos tem capacidade para:',
+    enunciado: '1. Os atos processuais são praticados para:',
     opcoes: [
-      'A) Ser juiz',
-      'B) Estar em juízo',
-      'C) Ser perito',
-      'D) Exercer função pública'
+      'A) Apenas movimentar documentos físicos',
+      'B) Produzir efeitos no processo e contribuir para seu desenvolvimento',
+      'C) Aplicar penas criminais',
+      'D) Substituir a sentença'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. O art. 70 do CPC prevê expressamente: "Toda pessoa que se encontre no exercício de seus direitos tem capacidade para estar em juízo" (capacidade processual de exercício).'
+    explicacao: '✅ Gabarito: B. Os atos processuais são manifestações de vontade juridicamente relevantes que produzem efeitos jurídicos no processo e impulsionam o seu regular desenvolvimento rumo à decisão de mérito.'
   },
   {
     id: 2,
-    enunciado: '2. O incapaz, para participar validamente do processo, deverá:',
+    enunciado: '2. Sobre a forma dos atos processuais, o CPC estabelece, como regra, que:',
     opcoes: [
-      'A) Sempre atuar sozinho',
-      'B) Ser representado ou assistido, conforme o caso',
-      'C) Ser obrigatoriamente representado pelo Ministério Público',
-      'D) Ser representado pelo juiz'
+      'A) Todo ato exige forma específica',
+      'B) Os atos independem de forma determinada, salvo quando a lei exigir',
+      'C) Os atos devem ser exclusivamente escritos à mão',
+      'D) Somente o juiz pode definir a forma'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. Conforme o art. 71 do CPC, o incapaz será representado ou assistido por seus pais, tutores ou curadores, na forma da lei.'
+    explicacao: '✅ Gabarito: B. Conforme o art. 188 do CPC: "Os atos e os termos processuais independem de forma determinada, salvo quando a lei expressamente a exigir, considerando-se válidos os que, realizados de outro modo, preencham a finalidade essencial".'
   },
   {
     id: 3,
-    enunciado: '3. A representação processual ocorre quando:',
+    enunciado: '3. Em regra, os atos processuais são:',
     opcoes: [
-      'A) O representante pratica atos em nome do representado',
-      'B) O juiz pratica atos em nome da parte',
-      'C) O advogado substitui definitivamente a parte',
-      'D) O Ministério Público assume qualquer processo'
+      'A) Secretos',
+      'B) Públicos',
+      'C) Exclusivos das partes',
+      'D) Exclusivos do juiz'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. Na representação, o representante legal atua em nome do representado (incapaz absoluto), praticando os atos processuais por ele.'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. Conforme art. 189 do CPC e art. 93, IX da CF/88, vigora o princípio da publicidade dos atos processuais como regra geral no ordenamento jurídico brasileiro.'
   },
   {
     id: 4,
-    enunciado: '4. Em regra, a parte é representada em juízo por:',
+    enunciado: '4. O segredo de justiça constitui:',
     opcoes: [
-      'A) Qualquer cidadão',
-      'B) Servidor público',
-      'C) Advogado regularmente inscrito na OAB',
-      'D) Testemunha'
+      'A) A regra geral',
+      'B) Uma exceção prevista em lei',
+      'C) Uma decisão obrigatória em todo processo',
+      'D) Uma faculdade exclusiva do advogado'
     ],
-    correta: 2,
-    explicacao: '✅ Gabarito: C. Segundo o art. 103 do CPC, a parte será representada em juízo por advogado regularmente inscrito na Ordem dos Advogados do Brasil (capacidade postulatória).'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. O segredo de justiça é exceção à regra geral da publicidade, somente admitido nas hipóteses taxativamente ou expressamente autorizadas por lei (ex.: direito de família, arbitragem com sigilo, dados protegidos).'
   },
   {
     id: 5,
-    enunciado: '5. A procuração é utilizada, em regra, para:',
+    enunciado: '5. A citação tem como principal finalidade:',
     opcoes: [
-      'A) Dar poderes ao advogado para representar a parte',
-      'B) Substituir a sentença',
-      'C) Determinar a competência do juiz',
-      'D) Produzir prova automaticamente'
+      'A) Dar ciência de uma sentença já definitiva',
+      'B) Chamar o réu, executado ou interessado para integrar a relação processual',
+      'C) Aplicar uma penalidade',
+      'D) Encerrar o processo'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. O instrumento de mandato (procuração) outorga poderes de representação judicial ao advogado para que possa atuar em nome do constituinte.'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. Conforme art. 238 do CPC: "Citação é o ato pelo qual são convocados o réu, o executado ou o interessado para integrar a relação processual".'
   },
   {
     id: 6,
-    enunciado: '6. A procuração geral para o foro:',
+    enunciado: '6. A intimação serve, em regra, para:',
     opcoes: [
-      'A) Permite absolutamente todos os atos sem exceção',
-      'B) Não permite nenhum ato processual',
-      'C) Autoriza os atos processuais em geral, mas alguns exigem poderes específicos',
-      'D) Só pode ser utilizada por servidores públicos'
+      'A) Dar ciência dos atos e termos do processo',
+      'B) Criar uma nova ação',
+      'C) Condenar o réu',
+      'D) Substituir a citação em qualquer situação'
     ],
-    correta: 2,
-    explicacao: '✅ Gabarito: C. Conforme o art. 105 do CPC, a procuração geral para o foro habilita o advogado a praticar todos os atos do processo, salvo aqueles que exigem poderes especiais.'
+    correta: 0,
+    explicacao: '✅ Gabarito: A. Conforme o art. 269 do CPC: "Intimação é o ato pelo qual se dá ciência a alguém dos atos e dos termos do processo".'
   },
   {
     id: 7,
-    enunciado: '7. Qual ato exige poder específico na procuração?',
+    enunciado: '7. Assinale a alternativa correta:',
     opcoes: [
-      'A) Receber citação',
-      'B) Consultar os autos',
-      'C) Acompanhar o processo',
-      'D) Apresentar manifestação ordinária'
+      'A) Citação e intimação são exatamente a mesma coisa',
+      'B) Citação chama para integrar o processo; intimação dá ciência de atos processuais',
+      'C) Intimação sempre ocorre antes da citação',
+      'D) Citação somente pode ser feita ao autor'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. O art. 105 do CPC elenca expressamente que "receber citação" exige cláusula com poder especial e inequívoco na procuração.'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. A citação convoca o sujeito para integrar a relação jurídica processual pela primeira vez; a intimação comunica acontecimentos, despachos, decisões e prazos no processo já instaurado.'
   },
   {
     id: 8,
-    enunciado: '8. Também exige poder específico:',
+    enunciado: '8. Nos prazos processuais previstos no CPC, contam-se, em regra:',
     opcoes: [
-      'A) Transigir',
-      'B) Comparecer à audiência',
-      'C) Consultar o processo',
-      'D) Receber intimação comum'
+      'A) Dias corridos',
+      'B) Apenas dias úteis',
+      'C) Apenas domingos e feriados',
+      'D) Apenas dias úteis para o juiz'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. O ato de transigir (fazer acordo/concessões recíprocas) dispõe sobre o direito material e exige poder específico na procuração outorgada ao patrono.'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. Conforme art. 219 do CPC: "Na contagem de prazo em dias, estabelecido por lei ou pelo juiz, computar-se-ão somente os dias úteis".'
   },
   {
     id: 9,
-    enunciado: '9. O advogado pode atuar sem procuração inicialmente:',
+    enunciado: '9. A contagem em dias úteis aplica-se:',
     opcoes: [
-      'A) Nunca',
-      'B) Em determinadas situações urgentes previstas no CPC',
-      'C) Sempre que quiser',
-      'D) Somente se o juiz autorizar verbalmente'
+      'A) Aos prazos processuais',
+      'B) A todos os prazos existentes no ordenamento jurídico',
+      'C) Somente aos prazos administrativos',
+      'D) Somente aos processos criminais'
     ],
-    correta: 1,
-    explicacao: '✅ Gabarito: B. O art. 104 do CPC autoriza o advogado a postular em juízo sem procuração para evitar preclusão, decadência ou prescrição, ou para praticar ato considerado urgente.'
+    correta: 0,
+    explicacao: '✅ Gabarito: A. Conforme o parágrafo único do art. 219 do CPC, a contagem em dias úteis aplica-se tão somente aos prazos processuais (não se aplicando a prazos de direito material como prescrição e decadência).'
   },
   {
     id: 10,
-    enunciado: '10. Entre os deveres das partes está:',
+    enunciado: '10. Segundo o CPC, os atos processuais são praticados, em regra:',
     opcoes: [
-      'A) Alterar os fatos para favorecer sua defesa',
-      'B) Expor os fatos conforme a verdade',
-      'C) Impedir a produção de provas',
-      'D) Descumprir decisões desfavoráveis'
+      'A) Em qualquer horário, sem restrição',
+      'B) Em dias úteis, das 6h às 20h, observadas as exceções legais',
+      'C) Somente das 8h às 18h',
+      'D) Somente durante o horário de expediente do fórum'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. O art. 77, I, do CPC impõe às partes e procuradores o dever indeclinável de expor os fatos em juízo conforme a verdade (dever de veracidade e boa-fé).'
+    explicacao: '✅ Gabarito: B. Conforme o art. 212 do CPC: "Os atos processuais serão realizados em dias úteis, das 6 (seis) às 20 (vinte) horas", com exceções expressas autorizadas na legislação.'
   },
   {
     id: 11,
-    enunciado: '11. É dever das partes:',
+    enunciado: '11. Os atos processuais podem ser praticados por:',
     opcoes: [
-      'A) Cumprir as decisões judiciais',
-      'B) Ocultar informações relevantes',
-      'C) Criar obstáculos ao processo',
-      'D) Utilizar provas desnecessárias'
+      'A) Somente pelo juiz',
+      'B) Somente pelas partes',
+      'C) Juiz, partes, advogados e auxiliares da Justiça, conforme suas atribuições',
+      'D) Somente pelo Ministério Público'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. Conforme o art. 77, IV, do CPC, é dever cumprir com exatidão as decisões jurisdicionais, de natureza provisória ou final, e não criar embaraços à sua efetivação.'
+    correta: 2,
+    explicacao: '✅ Gabarito: C. O processo é uma relação complexa e cooperativa onde magistrados, partes, procuradores e servidores/auxiliares da Justiça praticam atos conforme suas atribuições legais.'
   },
   {
     id: 12,
-    enunciado: '12. A prática de atos inúteis ou desnecessários no processo:',
+    enunciado: '12. São exemplos de atos processuais praticados pelo juiz:',
     opcoes: [
-      'A) É sempre obrigatória',
-      'B) É um dever processual',
-      'C) Deve ser evitada',
-      'D) É exigida pelo CPC'
+      'A) Sentença e decisões',
+      'B) Contestação e recurso',
+      'C) Citação e procuração particular',
+      'D) Depoimento da testemunha'
     ],
-    correta: 2,
-    explicacao: '✅ Gabarito: C. O art. 77, III, do CPC prevê o dever de "não produzir provas e não praticar atos inúteis ou desnecessários à declaração ou à defesa do direito".'
+    correta: 0,
+    explicacao: '✅ Gabarito: A. Os pronunciamentos do juiz consistirão em sentenças, decisões interlocutórias e despachos (CPC, art. 203).'
   },
   {
     id: 13,
-    enunciado: '13. O curador especial pode ser nomeado, entre outras hipóteses, para:',
+    enunciado: '13. A prática de atos processuais por meio eletrônico:',
     opcoes: [
-      'A) Todo autor maior e capaz',
-      'B) Incapaz sem representante legal',
-      'C) Todo advogado',
-      'D) Todo servidor público'
+      'A) É proibida pelo CPC',
+      'B) É admitida conforme a legislação aplicável',
+      'C) Só pode ocorrer em processos criminais',
+      'D) Depende sempre de autorização da parte contrária'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. O art. 72, I, do CPC determina a nomeação de curador especial ao incapaz que não tiver representante legal ou cujos interesses colidirem com os deste.'
+    explicacao: '✅ Gabarito: B. Conforme arts. 193 e seguintes do CPC e Lei 11.419/2006, os atos processuais podem ser total ou parcialmente digitais por meio de sistemas eletrônicos (como o PJe do TJAM).'
   },
   {
     id: 14,
-    enunciado: '14. O curador especial também pode atuar em favor de:',
+    enunciado: '14. A preclusão pode ser entendida como:',
     opcoes: [
-      'A) Réu revel citado por edital, nas condições previstas no CPC',
-      'B) Qualquer testemunha',
-      'C) Todo juiz',
-      'D) Todo autor'
+      'A) Perda da possibilidade de praticar determinado ato processual',
+      'B) Criação de uma nova ação',
+      'C) Anulação automática do processo',
+      'D) Absolvição do réu'
     ],
     correta: 0,
-    explicacao: '✅ Gabarito: A. O art. 72, II, do CPC prescreve que o juiz nomeará curador especial ao réu preso revel, bem como ao réu revel citado por edital ou com hora certa, enquanto não constituir advogado.'
+    explicacao: '✅ Gabarito: A. A preclusão é a perda do direito de manifestação ou de prática de um ato no processo, garantindo a marcha para a frente (sem retrocessos).'
   },
   {
     id: 15,
-    enunciado: '15. O litisconsórcio ocorre quando:',
+    enunciado: '15. Quando uma parte deixa passar o prazo para praticar determinado ato, pode ocorrer:',
     opcoes: [
-      'A) Há apenas um sujeito no processo',
-      'B) Duas ou mais pessoas litigam conjuntamente no mesmo processo',
-      'C) O juiz possui dois processos',
-      'D) O advogado possui dois clientes'
+      'A) Citação',
+      'B) Preclusão',
+      'C) Sentença automática',
+      'D) Revelia em qualquer situação'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. Conforme o art. 113 do CPC, o litisconsórcio é a hipótese em que duas ou mais pessoas podem litigar, no mesmo processo, em conjunto, ativa ou passivamente.'
+    explicacao: '✅ Gabarito: B. Ocorre a preclusão temporal pelo decurso in albis do prazo legal ou judicial, ficando extinta a faculdade de praticar o ato (CPC, art. 223).'
   },
   {
     id: 16,
-    enunciado: '16. João e Maria ajuízam juntos uma ação contra Pedro. João e Maria são:',
+    enunciado: '16. O princípio da publicidade dos atos processuais significa que:',
     opcoes: [
-      'A) Litisconsortes passivos',
-      'B) Litisconsortes ativos',
-      'C) Assistentes do juiz',
-      'D) Réus'
+      'A) Todo processo deve obrigatoriamente ser secreto',
+      'B) Em regra, os atos processuais são públicos',
+      'C) Somente o juiz pode conhecer o processo',
+      'D) O advogado não pode consultar os autos'
     ],
     correta: 1,
-    explicacao: '✅ Gabarito: B. Como João e Maria estão figurando conjuntamente no polo autor (ativo) da demanda, qualificam-se como litisconsortes ativos.'
+    explicacao: '✅ Gabarito: B. A publicidade é garantia constitucional republicana e democrática (art. 93, IX, CF/88 e art. 189, CPC), assegurando transparência e fiscalização das decisões judiciais.'
   },
   {
     id: 17,
-    enunciado: '17. João ajuíza uma ação contra Pedro e Carlos. Pedro e Carlos são:',
+    enunciado: '17. O segredo de justiça pode ser determinado:',
     opcoes: [
-      'A) Litisconsortes ativos',
-      'B) Litisconsortes passivos',
-      'C) Autores',
-      'D) Procuradores'
+      'A) Nas hipóteses previstas em lei',
+      'B) Em todos os processos',
+      'C) Apenas quando o réu solicitar',
+      'D) Apenas quando o advogado solicitar'
     ],
-    correta: 1,
-    explicacao: '✅ Gabarito: B. Como Pedro e Carlos figuram no polo passivo da relação processual (réus), trata-se de litisconsórcio passivo.'
+    correta: 0,
+    explicacao: '✅ Gabarito: A. O art. 189 do CPC delimita taxativamente as hipóteses legais (interesse público/social, família, intimidade, arbitragem sigilosa).'
   },
   {
     id: 18,
-    enunciado: '18. O litisconsórcio pode ocorrer quando houver:',
+    enunciado: '18. Sobre os atos processuais, assinale a correta:',
     opcoes: [
-      'A) Comunhão de direitos ou obrigações relativamente à lide',
-      'B) Apenas amizade entre as partes',
-      'C) Apenas autorização do advogado',
-      'D) Somente decisão administrativa'
+      'A) A ausência de forma específica sempre gera nulidade',
+      'B) A forma pode ser livre quando a lei não exigir forma determinada',
+      'C) Todo ato deve ser praticado presencialmente',
+      'D) Atos eletrônicos não possuem validade'
     ],
-    correta: 0,
-    explicacao: '✅ Gabarito: A. O art. 113, I, do CPC autoriza expressamente a formação de litisconsórcio quando houver entre os litigantes comunhão de direitos ou de obrigações relativamente à lide.'
+    correta: 1,
+    explicacao: '✅ Gabarito: B. Pelo princípio da liberdade das formas (art. 188 do CPC), a forma é livre quando a lei não exigir modelo ou solenidade específica.'
   },
   {
     id: 19,
-    enunciado: '19. Assinale a alternativa INCORRETA:',
+    enunciado: '19. Se uma parte pratica determinado ato e posteriormente perde a possibilidade de realizar outro ato incompatível com aquele, pode ocorrer:',
     opcoes: [
-      'A) A parte possui deveres processuais.',
-      'B) O advogado pode precisar de poderes específicos para determinados atos.',
-      'C) O incapaz pode sempre atuar sozinho em juízo.',
-      'D) Pode existir litisconsórcio no polo ativo ou passivo.'
+      'A) Preclusão',
+      'B) Citação',
+      'C) Intimação',
+      'D) Competência'
     ],
-    correta: 2,
-    explicacao: '✅ Gabarito: C (Incorreta). O incapaz NÃO pode atuar sozinho em juízo; deve obrigatoriamente ser representado ou assistido por seus representantes legais, sob pena de nulidade processual.'
+    correta: 0,
+    explicacao: '✅ Gabarito: A. Trata-se da chamada preclusão lógica (ex.: a parte paga voluntariamente o valor da condenação e, em seguida, tenta interpor apelação questionando esse valor).'
   },
   {
     id: 20,
     enunciado: '20. Assinale a alternativa correta:',
     opcoes: [
-      'A) Procuração geral permite automaticamente todos os atos especiais.',
-      'B) Litisconsórcio significa necessariamente que todos os litigantes são autores.',
-      'C) A capacidade processual é diferente da capacidade postulatória.',
-      'D) O curador especial é obrigatório em todos os processos.'
+      'A) A citação serve apenas para comunicar uma sentença',
+      'B) A intimação serve para integrar necessariamente o réu ao processo',
+      'C) Citação e intimação possuem finalidades diferentes',
+      'D) Prazos processuais são sempre contados em dias corridos'
     ],
     correta: 2,
-    explicacao: '✅ Gabarito: C. Correta! A capacidade processual é a aptidão de estar em juízo (titular de direitos), enquanto a capacidade postulatória é a prerrogativa técnica privativa de postular em juízo (própria dos advogados habilitados e defensores públicos).'
+    explicacao: '✅ Gabarito: C. A citação integra o réu/interessado à lide (art. 238), ao passo que a intimação dá ciência de atos e termos para quem já faz parte ou tem interesse no processo (art. 269).'
   }
 ];
 
 export const procCivilAula2TfQuestionsData: TfQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A procuração geral para o foro autoriza o advogado a receber citação e transigir, sem necessidade de poderes expressos adicionais.',
-    correta: false,
-    explicacao: '✅ Gabarito: Falso. Conforme o art. 105 do CPC, receber citação e transigir são atos que exigem poderes expressos e específicos na procuração.'
+    enunciado: '1. Como regra geral no CPC, os atos processuais não dependem de forma determinada, salvo quando a lei expressamente exigir.',
+    correta: true,
+    explicacao: '✅ Gabarito: Verdadeiro. É o princípio da instrumentalidade das formas previsto no art. 188 do CPC.'
   },
   {
     id: 2,
-    enunciado: '2. O réu revel citado por edital ou com hora certa tem direito à nomeação de curador especial, função exercida preferencialmente pela Defensoria Pública.',
+    enunciado: '2. Em regra, os atos processuais são praticados em dias úteis das 6h às 20h, conforme o art. 212 do CPC.',
     correta: true,
-    explicacao: '✅ Gabarito: Verdadeiro. Nos termos do art. 72, II e parágrafo único do CPC, o juiz nomeará curador especial ao réu revel citado por edital ou com hora certa, exercida pela Defensoria Pública.'
+    explicacao: '✅ Gabarito: Verdadeiro. O art. 212 do CPC fixa o horário padrão entre 6h e 20h em dias úteis.'
   },
   {
     id: 3,
-    enunciado: '3. Em casos urgentes ou para evitar preclusão, prescrição ou decadência, o advogado pode atuar sem procuração, comprometendo-se a juntá-la no prazo legal.',
-    correta: true,
-    explicacao: '✅ Gabarito: Verdadeiro. É o que expressamente estabelece o art. 104 do CPC, conferindo prazo improrrogável de 15 dias, prorrogável por mais 15 mediante despacho judicial.'
+    enunciado: '3. A citação e a intimação têm a mesma finalidade, podendo ser usadas indiferentemente para qualquer ato processual.',
+    correta: false,
+    explicacao: '✅ Gabarito: Falso. A citação chama para integrar a relação processual (art. 238), enquanto a intimação dá ciência de atos e termos (art. 269).'
   },
   {
     id: 4,
-    enunciado: '4. O litisconsórcio só é juridicamente admitido no polo passivo da relação processual, sendo vedada a reunião de mais de um autor no polo ativo.',
+    enunciado: '4. Na contagem de prazos processuais em dias fixados pelo CPC, contam-se apenas os dias úteis.',
+    correta: true,
+    explicacao: '✅ Gabarito: Verdadeiro. Conforme o art. 219 do CPC, contam-se somente os dias úteis.'
+  },
+  {
+    id: 5,
+    enunciado: '5. A preclusão ocorre apenas quando o juiz expressamente proíbe a parte de falar nos autos.',
     correta: false,
-    explicacao: '✅ Gabarito: Falso. O litisconsórcio pode ser ativo (vários autores), passivo (vários réus) ou misto (vários autores e vários réus).'
+    explicacao: '✅ Gabarito: Falso. A preclusão decorre da perda do prazo (temporal), da consumação do ato já praticado (consumativa) ou da prática de ato incompatível (lógica).'
+  },
+  {
+    id: 6,
+    enunciado: '6. O segredo de justiça é a regra em processos cíveis, e a publicidade é exceção concedida pelo juiz.',
+    correta: false,
+    explicacao: '✅ Gabarito: Falso. A regra é a PUBLICIDADE (art. 189 CPC e art. 93, IX CF). O segredo de justiça é exceção estrita.'
   }
 ];
 
 export const procCivilAula2DiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Diferencie detalhadamente a Capacidade Processual (para estar em juízo) da Capacidade Postulatória, indicando quem possui cada uma e as consequências da incapacidade.',
-    respostaEsperada: 'Gabarito oficial FGV: A capacidade processual (legitimatio ad processum) é a aptidão de participar por si mesmo da relação processual, detida por toda pessoa plenamente capaz no exercício de seus direitos civis (art. 70, CPC). Os incapazes a possuem apenas mediante representação ou assistência. Já a capacidade postulatória (jus postulandi) é a aptidão técnica exigida pela lei para realizar atos processuais e formular pedidos perante o Poder Judiciário, sendo privativa dos advogados regularmente inscritos na OAB e membros da Defensoria Pública (art. 103, CPC). Em regra, o ato praticado por quem não possui capacidade postulatória é ineficaz se não sanado no prazo assinalado pelo magistrado.'
+    enunciado: '1. Qual ato deve ser utilizado para chamar João a integrar o processo movido por Maria?',
+    respostaEsperada: 'Gabarito Oficial: O ato a ser utilizado é a CITAÇÃO (CPC, art. 238), que é o ato solene pelo qual são convocados o réu, o executado ou o interessado para integrar a relação processual.'
   },
   {
     id: 2,
-    enunciado: '2. Explique a finalidade do instituto do Curador Especial no CPC/2015, indicando as suas principais hipóteses de nomeação e quem detém atribuição legal prioritária para desempenhar essa função.',
-    respostaEsperada: 'Gabarito oficial FGV: O Curador Especial visa garantir o contraditório, a ampla defesa e a paridade de armas em situações em que a parte se encontra em flagrante vulnerabilidade jurídica ou processual. Conforme o art. 72 do CPC, o juiz nomeará curador especial: 1) ao incapaz, se não tiver representante legal ou se os interesses deste colidirem com os daquele; e 2) ao réu preso revel, bem como ao réu revel citado por edital ou com hora certa, enquanto não constituído advogado. Por força do parágrafo único do art. 72 do CPC, a curatela especial é exercida prioritariamente pela Defensoria Pública.'
+    enunciado: '2. Qual ato deve ser utilizado para comunicar as partes sobre a decisão proferida pelo juiz?',
+    respostaEsperada: 'Gabarito Oficial: O ato a ser utilizado é a INTIMAÇÃO (CPC, art. 269), que tem como finalidade primordial dar ciência a alguém dos atos e termos do processo.'
+  },
+  {
+    id: 3,
+    enunciado: '3. Qual é a diferença fundamental entre citação e intimação?',
+    respostaEsperada: 'Gabarito Oficial: A citação chama e integra o sujeito ao processo pela primeira vez, completando a relação jurídica processual (autor, juiz e réu). A intimação dá ciência de atos posteriores do processo a quem já integra ou participa dele.'
+  },
+  {
+    id: 4,
+    enunciado: '4. Os prazos processuais do CPC são contados, em regra, em dias úteis ou corridos?',
+    respostaEsperada: 'Gabarito Oficial: São contados em DIAS ÚTEIS, nos termos do art. 219 do CPC/2015, excluindo-se da contagem os sábados, domingos e feriados.'
+  },
+  {
+    id: 5,
+    enunciado: '5. O que acontece quando o advogado perde o prazo legal para praticar determinado ato no processo?',
+    respostaEsperada: 'Gabarito Oficial: Ocorre a PRECLUSÃO TEMPORAL (art. 223 do CPC). A parte perde a faculdade de praticar o ato, extinguindo-se o direito de se manifestar extemporaneamente e seguindo o processo rumo à fase seguinte.'
+  },
+  {
+    id: 6,
+    enunciado: '6. Os atos processuais são públicos ou secretos como regra?',
+    respostaEsperada: 'Gabarito Oficial: Como regra geral, são PÚBLICOS (art. 189 do CPC e art. 93, IX da CF/88). O segredo de justiça constitui exceção legal expressa.'
+  },
+  {
+    id: 7,
+    enunciado: '7. Explique o que é preclusão e qual sua importância para a marcha processual.',
+    respostaEsperada: 'Gabarito Oficial: Preclusão é a perda da faculdade de praticar determinado ato processual. Sua importância fundamental reside em evitar retrocessos processuais, garantindo segurança jurídica e o andamento progressivo até a solução definitiva.'
   }
 ];
+
+export const procCivilPracticalCase: PracticalCaseItem = {
+  titulo: 'Atos Processuais: O Caso de Maria contra João',
+  caso: 'Maria entrou com uma ação judicial contra João. Durante o processo: João precisa ser chamado oficialmente para integrar o processo; depois, as partes precisam ser comunicadas sobre uma decisão do juiz; o advogado de Maria precisa apresentar uma manifestação dentro do prazo; e o advogado perde o prazo para praticar determinado ato.',
+  perguntas: [
+    '1. Qual ato deve ser utilizado para chamar João a integrar o processo?',
+    '2. Qual ato deve ser utilizado para comunicar as partes sobre a decisão do juiz?',
+    '3. Qual é a diferença entre citação e intimação?',
+    '4. Os prazos processuais são contados, em regra, em dias úteis ou corridos?',
+    '5. O que pode acontecer quando o advogado perde o prazo para praticar determinado ato?',
+    '6. Os atos processuais são públicos ou secretos como regra?',
+    '7. Explique, com suas próprias palavras, o que é preclusão.'
+  ],
+  desafioOral: 'Sem olhar as respostas, explique durante o vídeo: "O que são atos processuais e qual a importância deles para o andamento de um processo?"',
+  tempoSugerido: '3 a 5 minutos',
+  criteriosAvaliacao: [
+    'Respostas claras e fundamentadas às 7 perguntas propostas',
+    'Domínio da distinção prática e jurídica entre citação e intimação',
+    'Conhecimento sobre contagem de prazos em dias úteis (art. 219 CPC)',
+    'Explicação clara da preclusão e do princípio da publicidade',
+    'Capacidade de síntese no desafio oral sem leitura mecânica'
+  ]
+};

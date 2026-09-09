@@ -38,7 +38,7 @@ export const FrozenTopBanner: React.FC<FrozenTopBannerProps> = () => {
         <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-emerald-500/30 text-xs font-semibold text-slate-300">
             <Lock className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Dupla Oficial: <strong className="text-emerald-300 font-bold">3º lugar (31,6%)</strong></span>
+            <span>Dupla Oficial: <strong className="text-emerald-300 font-bold">3º lugar (33,8%)</strong></span>
           </div>
 
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-400">
