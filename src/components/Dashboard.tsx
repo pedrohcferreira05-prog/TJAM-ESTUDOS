@@ -294,7 +294,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
             <div className="px-3 py-1 rounded-full text-xs font-black bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
               <Users className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Dupla Oficial: Eduardo Mateus & Pedro Henrique (3º Lugar)</span>
+              <span>Dupla Oficial: Eduardo Mateus & Pedro Henrique (5º Lugar)</span>
             </div>
           </div>
 
@@ -631,7 +631,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
             </div>
             <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-              Dupla Oficial • 3º Lugar
+              Dupla Oficial • 5º Lugar
             </span>
           </div>
 
@@ -646,7 +646,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-amber-600 shadow-amber-500/30">
-                  3º
+                  5º
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -657,12 +657,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       Dupla Oficial
                     </span>
                     <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-400/30 font-extrabold text-[10px]">
-                      3º Lugar
+                      5º Lugar
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-0.5">
                     <span className="text-xs font-semibold text-emerald-400">
-                      📊 3º Lugar Geral • Dupla com 33,8% concluído
+                      📊 5º Lugar Geral • Dupla Oficial com 30,0% concluído
                     </span>
                     <span className="text-[11px] font-bold text-emerald-300">
                       • ✅ 100% em dia (sem atividades pendentes e sem queda)
@@ -675,11 +675,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-emerald-500"
-                    style={{ width: '91.4%' }}
+                    style={{ width: '76.9%' }}
                   ></div>
                 </div>
                 <span className="text-sm font-black min-w-[50px] text-right text-emerald-400">
-                  33,8%
+                  30,0%
                 </span>
               </div>
             </div>
@@ -713,18 +713,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
           <div className="space-y-2.5">
             {[
-              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '37,0%', isUser: false, isSolo: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '35,4%', isUser: false, isSolo: false, barWidth: '95.7%' },
-              { pos: 3, name: 'Pedro Henrique & Eduardo Mateus', pct: '33,8%', isUser: true, isSolo: false, barWidth: '91.4%' },
-              { pos: 4, name: 'Letícia Vasconcelos & Guilherme Prado', pct: '30,5%', isUser: false, isSolo: false, barWidth: '82.4%' },
-              { pos: 5, name: 'Arthur Medeiros & Bianca Farias', pct: '28,2%', isUser: false, isSolo: false, barWidth: '76.2%' },
-              { pos: 6, name: 'Renan Guimarães & Camila Sampaio', pct: '26,4%', isUser: false, isSolo: false, barWidth: '71.4%' },
-              { pos: 7, name: 'Vinícius Pacheco & Débora Antunes', pct: '23,8%', isUser: false, isSolo: false, barWidth: '64.3%' },
-              { pos: 8, name: 'Marcelo Fontana & Jéssica Azevedo', pct: '21,2%', isUser: false, isSolo: false, barWidth: '57.3%' },
-              { pos: 9, name: 'Caio Meireles & Natália Barcellos', pct: '18,6%', isUser: false, isSolo: false, barWidth: '50.3%' },
-              { pos: 10, name: 'Daniel Castilho & Priscila Nogueira', pct: '16,0%', isUser: false, isSolo: false, barWidth: '43.2%' },
-              { pos: 11, name: 'Felipe Albuquerque & Vanessa Toledo', pct: '13,5%', isUser: false, isSolo: false, barWidth: '36.5%' },
-              { pos: 12, name: 'Igor Dornelles & Renata Silvestre', pct: '11,0%', isUser: false, isSolo: false, barWidth: '29.7%' },
+              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '39,0%', isUser: false, isSolo: false, barWidth: '100%' },
+              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '36,8%', isUser: false, isSolo: false, barWidth: '94.4%' },
+              { pos: 3, name: 'Letícia Vasconcelos & Guilherme Prado', pct: '34,5%', isUser: false, isSolo: false, barWidth: '88.5%' },
+              { pos: 4, name: 'Arthur Medeiros & Bianca Farias', pct: '32,2%', isUser: false, isSolo: false, barWidth: '82.6%' },
+              { pos: 5, name: 'Pedro Henrique & Eduardo Mateus', pct: '30,0%', isUser: true, isSolo: false, barWidth: '76.9%' },
+              { pos: 6, name: 'Renan Guimarães & Camila Sampaio', pct: '27,5%', isUser: false, isSolo: false, barWidth: '70.5%' },
+              { pos: 7, name: 'Vinícius Pacheco & Débora Antunes', pct: '23,8%', isUser: false, isSolo: false, barWidth: '61.0%' },
+              { pos: 8, name: 'Marcelo Fontana & Jéssica Azevedo', pct: '21,2%', isUser: false, isSolo: false, barWidth: '54.4%' },
+              { pos: 9, name: 'Caio Meireles & Natália Barcellos', pct: '18,6%', isUser: false, isSolo: false, barWidth: '47.7%' },
+              { pos: 10, name: 'Daniel Castilho & Priscila Nogueira', pct: '16,0%', isUser: false, isSolo: false, barWidth: '41.0%' },
+              { pos: 11, name: 'Felipe Albuquerque & Vanessa Toledo', pct: '13,5%', isUser: false, isSolo: false, barWidth: '34.6%' },
+              { pos: 12, name: 'Igor Dornelles & Renata Silvestre', pct: '11,0%', isUser: false, isSolo: false, barWidth: '28.2%' },
             ].map((aluno) => (
               <div
                 key={aluno.pos}
@@ -768,7 +768,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </span>
                       {aluno.isUser && (
                         <span className="px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
-                          <span>Sua Dupla (3º Lugar • 100% em dia)</span>
+                          <span>Sua Dupla (5º Lugar • 100% em dia)</span>
                         </span>
                       )}
                     </div>

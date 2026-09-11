@@ -456,7 +456,7 @@ export const procCivilPracticalCase: PracticalCaseItem = {
   ]
 };
 
-// ⚖️ 10 Questões de Processo Civil respondidas por Pedro Henrique (Dupla Oficial • 3º Lugar Geral)
+// ⚖️ 10 Questões de Processo Civil respondidas por Pedro Henrique (Dupla Oficial • 5º Lugar Geral)
 export const PEDRO_CIVIL_CORRECT_ANSWERS: Record<number, number> = {
   1: 1, // B) Produzir efeitos no processo e contribuir para seu desenvolvimento
   2: 1, // B) Os atos independem de forma determinada, salvo quando a lei exigir
@@ -492,7 +492,7 @@ export function getPedroAnswerInfo(questionId: number) {
   const texto = item.opcoes[corretaIdx];
   return {
     responderName: 'Pedro Henrique',
-    responderRole: 'Aluno Oficial • 3º Lugar Geral TJAM (100% em dia)',
+    responderRole: 'Aluno Oficial • 5º Lugar Geral TJAM (100% em dia)',
     badgeText: 'Pedro respondeu esta questão',
     corretaIdx,
     letra,

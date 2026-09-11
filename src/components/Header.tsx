@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
             title="Ver Ranking Oficial"
           >
             <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="hidden sm:inline">Ranking (3º Lugar)</span>
+            <span className="hidden sm:inline">Ranking (5º Lugar)</span>
             <span className="sm:hidden">Ranking</span>
           </button>
 

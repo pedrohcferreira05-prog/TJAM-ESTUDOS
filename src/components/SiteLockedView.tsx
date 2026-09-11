@@ -217,7 +217,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
         <div className="max-w-6xl mx-auto flex items-center justify-center gap-2">
           <Award className="w-4 h-4 shrink-0 text-amber-300 animate-bounce" />
           <span className="tracking-wide">
-            CLASSIFICAÇÃO HOMOLOGADA: Simulado de 80 Questões finalizado! Eduardo Mateus conquistou o 2º lugar individual (83,8% de aproveitamento - 67 acertos) e o 3º lugar no ranking das duplas (50% competindo sozinho)!
+            CLASSIFICAÇÃO HOMOLOGADA: Simulado de 80 Questões finalizado! Eduardo Mateus conquistou o 2º lugar individual (83,8% de aproveitamento - 67 acertos) e o 5º lugar no ranking das duplas com Pedro Henrique (30,0% de aproveitamento)!
           </span>
         </div>
       </div>
@@ -404,7 +404,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 <CheckCircle2 className="w-3 h-3 text-emerald-300" /> Simulado Oficial Concluído & Homologado
               </span>
               <span className="text-[10px] font-bold text-sky-300">
-                🥈 2º Individual (83,8% • 67 acertos) • 🥉 3º Duplas (50% Sozinho)
+                🥈 2º Individual (83,8% • 67 acertos) • 🏅 5º Duplas (30,0% Dupla Oficial)
               </span>
             </div>
             <h3 className="text-lg sm:text-xl font-black text-white">
@@ -789,7 +789,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                   </div>
 
                   <p className="text-xs text-emerald-200/90 bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-500/20 leading-relaxed font-semibold">
-                    Todas as atividades pedagógicas estão entregues e a dupla está em 3º lugar no ranking geral.
+                    Todas as atividades pedagógicas estão entregues e a dupla está em 5º lugar no ranking geral.
                   </p>
 
                   <div className="flex items-center justify-end pt-1">
@@ -927,7 +927,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     }`}
                   >
                     <Users className="w-3.5 h-3.5" />
-                    <span>Ranking Duplas (3º • 50% Sozinho)</span>
+                    <span>Ranking Duplas (5º • 30,0% Dupla Oficial)</span>
                   </button>
                   <button
                     type="button"
@@ -956,15 +956,15 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[11px] font-black uppercase text-amber-400 flex items-center gap-1">
-                      <Users className="w-3.5 h-3.5" /> Ranking das Duplas (Eduardo Sozinho)
+                      <Users className="w-3.5 h-3.5" /> Ranking das Duplas (Eduardo & Pedro)
                     </span>
-                    <span className="px-2 py-0.5 rounded-lg bg-amber-700 text-white font-black text-xs">
-                      3º Lugar
+                    <span className="px-2 py-0.5 rounded-lg bg-amber-600 text-white font-black text-xs">
+                      5º Lugar
                     </span>
                   </div>
-                  <div className="text-xl font-black text-white">50% de Aproveitamento</div>
+                  <div className="text-xl font-black text-white">30,0% de Aproveitamento</div>
                   <p className="text-xs text-slate-300 mt-0.5">
-                    Eduardo está <strong>competindo sozinho (sem parceiro de dupla)</strong> e garantiu a 3ª colocação geral com 50%!
+                    A dupla oficial <strong>Eduardo Mateus & Pedro Henrique</strong> garantiu a 5ª colocação geral com 30,0%!
                   </p>
                 </div>
 
@@ -1010,7 +1010,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                             </span>
                             {item.isUser && (
                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black">
-                                Você (3º Lugar • Sozinho)
+                                Sua Dupla Oficial (5º Lugar)
                               </span>
                             )}
                           </div>

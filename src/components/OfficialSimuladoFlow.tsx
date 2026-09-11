@@ -573,10 +573,10 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7.5);
     doc.setTextColor(2, 132, 199);
-    doc.text('• 2º Lugar no Ranking Individual do Simulado (83% de Aproveitamento - 66/80 acertos)', 18, y + 9.5);
+    doc.text('• 2º Lugar no Ranking Individual do Simulado (83,8% de Aproveitamento - 67/80 acertos)', 18, y + 9.5);
 
     doc.setTextColor(180, 83, 9);
-    doc.text('• 3º Lugar no Ranking Geral das Duplas (50% de Aproveitamento - Participação Individual / Sozinho)', 18, y + 14);
+    doc.text('• 5º Lugar no Ranking Geral das Duplas (30,0% de Aproveitamento - Dupla Oficial: Eduardo & Pedro)', 18, y + 14);
 
     // Card 3: Tabela de Aproveitamento por Disciplina
     y = 141;
@@ -1970,7 +1970,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                     }`}
                   >
                     <Award className="w-3.5 h-3.5" />
-                    <span>Ranking Individual (2º • 83%)</span>
+                    <span>Ranking Individual (2º • 83,8%)</span>
                   </button>
                   <button
                     type="button"
@@ -1982,7 +1982,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                     }`}
                   >
                     <Users className="w-3.5 h-3.5" />
-                    <span>Ranking das Duplas (3º • 50% Sozinho)</span>
+                    <span>Ranking das Duplas (5º • 30,0% Dupla)</span>
                   </button>
                 </div>
               </div>
@@ -2008,15 +2008,15 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                   </div>
                   <div className="space-y-1">
                     <div className="text-2xl font-black text-white">
-                      83% <span className="text-xs font-normal text-slate-400">de aproveitamento</span>
+                      83,8% <span className="text-xs font-normal text-slate-400">de aproveitamento</span>
                     </div>
                     <p className="text-xs text-slate-300 font-medium">
-                      Eduardo Mateus acertou <strong className="text-emerald-400 font-mono">66 de 80 questões</strong> e garantiu a <strong className="text-sky-300 font-bold">2ª colocação individual geral</strong> no simulado oficial!
+                      Eduardo Mateus acertou <strong className="text-emerald-400 font-mono">67 de 80 questões</strong> e garantiu a <strong className="text-sky-300 font-bold">2ª colocação individual geral</strong> no simulado oficial!
                     </p>
                   </div>
                 </div>
 
-                {/* Badge 2: 3º Duplas Sozinho */}
+                {/* Badge 2: 5º Duplas Oficial */}
                 <div
                   className={`p-5 rounded-2xl border transition-all cursor-pointer ${
                     closedRankingTab === 'duplas'
@@ -2027,18 +2027,18 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                      <Users className="w-4 h-4" /> Ranking das Duplas (Eduardo Sozinho)
+                      <Users className="w-4 h-4" /> Ranking das Duplas (Eduardo & Pedro)
                     </span>
-                    <span className="w-8 h-8 rounded-xl bg-amber-700 text-white font-black text-xs flex items-center justify-center shadow-md">
-                      3º
+                    <span className="w-8 h-8 rounded-xl bg-amber-600 text-white font-black text-xs flex items-center justify-center shadow-md">
+                      5º
                     </span>
                   </div>
                   <div className="space-y-1">
                     <div className="text-2xl font-black text-white">
-                      50% <span className="text-xs font-normal text-slate-400">no ranking das duplas</span>
+                      30,0% <span className="text-xs font-normal text-slate-400">no ranking das duplas</span>
                     </div>
                     <p className="text-xs text-slate-300 font-medium">
-                      Mesmo <strong className="text-amber-300">competindo sozinho (sem parceiro de dupla)</strong>, Eduardo conquistou o <strong className="text-amber-400 font-bold">3º lugar geral</strong> no ranking das duplas com 50%!
+                      A dupla oficial <strong className="text-amber-300">Eduardo Mateus & Pedro Henrique</strong> conquistou o <strong className="text-amber-400 font-bold">5º lugar geral</strong> no ranking das duplas com 30,0%!
                     </p>
                   </div>
                 </div>
@@ -2050,7 +2050,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                   <span>
                     {closedRankingTab === 'individual'
                       ? 'Participantes do Simulado (80 Questões)'
-                      : 'Classificação de Duplas vs. Eduardo Sozinho'}
+                      : 'Classificação de Duplas TJAM (5º Lugar: Eduardo & Pedro)'}
                   </span>
                   <span>Aproveitamento</span>
                 </div>
@@ -2107,7 +2107,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                             </span>
                             {item.isUser && (
                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black">
-                                Você (3º Lugar • Sozinho)
+                                Sua Dupla Oficial (5º Lugar)
                               </span>
                             )}
                           </div>

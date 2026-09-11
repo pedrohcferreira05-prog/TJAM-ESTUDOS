@@ -189,7 +189,7 @@ export const RankingsOnlyView: React.FC = () => {
         doc.text(`${item.rank}º`, 17, y + 3.8);
 
         doc.setTextColor(15, 23, 42);
-        doc.text(item.name + (isEduardo ? '  ★ (VOCÊ - 3º LUGAR)' : ''), 32, y + 3.8);
+        doc.text(item.name + (isEduardo ? '  ★ (DUPLA OFICIAL - 5º LUGAR)' : ''), 32, y + 3.8);
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(6.5);
@@ -401,7 +401,7 @@ export const RankingsOnlyView: React.FC = () => {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(5.5);
       doc.setTextColor(100, 116, 139);
-      doc.text('Candidato Homologado (2º e 3º Lugar)', 36, sigY + 6.8);
+      doc.text('Candidato Homologado (2º e 5º Lugar)', 36, sigY + 6.8);
       doc.text('Validação Pedagógica e Registro Oficial', 121, sigY + 6.8);
 
       // Rodapé da Página 2
@@ -518,26 +518,26 @@ export const RankingsOnlyView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Card 2: 3º Lugar Duplas (Competindo Sozinho) */}
+              {/* Card 2: 5º Lugar Duplas (Eduardo Mateus & Pedro Henrique) */}
               <div className="p-6 rounded-2xl bg-amber-950/30 border border-amber-500/40 ring-1 ring-amber-500/20 shadow-xl space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
                     <Users className="w-4 h-4" /> Ranking das Duplas (Turma Geral)
                   </span>
-                  <span className="w-9 h-9 rounded-xl bg-amber-700 text-white font-black text-sm flex items-center justify-center shadow-lg">
-                    3º
+                  <span className="w-9 h-9 rounded-xl bg-amber-600 text-white font-black text-sm flex items-center justify-center shadow-lg">
+                    5º
                   </span>
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl sm:text-4xl font-black text-white">50,0%</span>
-                    <span className="text-xs font-bold text-amber-300 font-mono">Competindo Sozinho</span>
+                    <span className="text-3xl sm:text-4xl font-black text-white">30,0%</span>
+                    <span className="text-xs font-bold text-amber-300 font-mono">Dupla Oficial</span>
                   </div>
                   <h3 className="text-base font-bold text-amber-200">
-                    3º Lugar Geral das Duplas (Participação Solo)
+                    5º Lugar Geral das Duplas (Eduardo Mateus & Pedro Henrique)
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Mesmo <strong>sem parceiro de dupla</strong> (competindo individualmente contra pares formados), Eduardo Mateus consolidou a 3ª posição geral com 50% de rendimento.
+                    A dupla oficial <strong>Eduardo Mateus & Pedro Henrique</strong> consolidou a 5ª posição geral no ranking das duplas (100% em dia e sem pendências).
                   </p>
                 </div>
               </div>
@@ -635,7 +635,7 @@ export const RankingsOnlyView: React.FC = () => {
                       Ranking das Duplas (Turma Geral)
                     </h3>
                     <p className="text-[11px] text-slate-400">
-                      Eduardo Mateus: 3º lugar com 50% (Competindo Sozinho)
+                      Eduardo Mateus & Pedro Henrique: 5º lugar geral com 30,0%
                     </p>
                   </div>
                 </div>
@@ -667,7 +667,7 @@ export const RankingsOnlyView: React.FC = () => {
                             <span className="font-bold text-white text-sm">{item.name}</span>
                             {item.isUser && (
                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black">
-                                Você (3º Lugar • Sozinho)
+                                Sua Dupla Oficial (5º Lugar)
                               </span>
                             )}
                           </div>

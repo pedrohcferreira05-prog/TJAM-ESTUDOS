@@ -36,7 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const allMenuItems: { id: StudentTab; label: string; icon: React.FC<{ className?: string }>; badge?: string }[] = [
     { id: 'dashboard', label: 'Metas de Hoje', icon: Home, badge: 'Hoje' },
     { id: 'aula-hoje', label: 'Aulas de Hoje', icon: FileText, badge: '2 Aulas' },
-    { id: 'simulados', label: 'Ranking', icon: Trophy, badge: '3º Lugar' },
+    { id: 'simulados', label: 'Ranking', icon: Trophy, badge: '5º Lugar' },
     // As demais abas permanecem no código, mas ocultas conforme solicitado:
     { id: 'turma', label: 'Meu Curso', icon: GraduationCap },
     { id: 'disciplina-hoje', label: 'Disciplina de Hoje', icon: BookOpen },
@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             Eduardo & Pedro
           </h2>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mt-0.5 border text-amber-400 bg-amber-500/10 border-amber-500/20">
-            Dupla Oficial • 3º Lugar
+            Dupla Oficial • 5º Lugar
           </span>
         </div>
       </div>

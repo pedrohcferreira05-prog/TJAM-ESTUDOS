@@ -1,4 +1,4 @@
-// Data for Direito Administrativo — Aula 1: Responsabilidade Civil do Estado
+// Data for Direito Administrativo — 2ª Aula de Hoje: Controle da Administração Pública
 
 export interface FlashcardItem {
   q: string;
@@ -26,334 +26,370 @@ export interface DiscursiveQuestionItem {
   respostaEsperada: string;
 }
 
+export interface PracticalTaskItem {
+  titulo: string;
+  situacaoProblema: string;
+  tarefa: string;
+  perguntasChave: string[];
+  desafioCotidiano: string;
+  criteriosAvaliacao: string[];
+}
+
+export const direitoAdminVideoPracticalTask: PracticalTaskItem = {
+  titulo: 'Exercício Prático em Vídeo — Controle da Administração Pública',
+  situacaoProblema:
+    'Você trabalha em um órgão público. O setor responsável pela fiscalização percebeu que um servidor praticou um ato administrativo sem observar uma exigência prevista em lei. Ao mesmo tempo, existe outro ato administrativo que foi praticado corretamente, mas a Administração percebeu que ele não é mais conveniente para o interesse público.',
+  tarefa:
+    'Grave um vídeo de 2 a 3 minutos explicando a situação para o seu chefe no órgão público, estruturando a resposta técnica de forma clara e acessível.',
+  perguntasChave: [
+    '1. O que deve acontecer com o primeiro ato, que possui ilegalidade? (Anulação por vício de legalidade, efeito retroativo ex tunc).',
+    '2. O que pode acontecer com o segundo ato, que é válido, mas deixou de ser conveniente? (Revogação por mérito administrativo, efeito prospectivo ex nunc).',
+    '3. Qual a diferença essencial entre anulação e revogação? (Motivo, competência, efeitos temporais e respeito a direitos adquiridos).',
+    '4. Qual tipo de controle está sendo realizado quando a própria Administração fiscaliza seus próprios atos? (Controle interno / administrativo / princípio da autotutela — Súmulas 346 e 473 do STF).'
+  ],
+  desafioCotidiano:
+    'Crie um terceiro exemplo do seu próprio cotidiano de: (a) um ato que deveria ser anulado (com defeito de legalidade); e (b) um ato que poderia ser revogado (que era válido mas deixou de ser útil/conveniente). Explique o motivo de cada um de forma simples.',
+  criteriosAvaliacao: [
+    'Domínio técnico dos conceitos de anulação, revogação e autotutela',
+    'Diferenciação clara entre controle de legalidade e juízo de mérito administrativo',
+    'Clareza na exposição oral simulada para a chefia imediata',
+    'Pertinência e criatividade nos exemplos práticos do cotidiano'
+  ]
+};
+
 export const direitoAdminFlashcardsData: FlashcardItem[] = [
   {
-    q: 'O que é Responsabilidade Civil do Estado?',
-    a: 'É o dever que o Estado possui de reparar danos causados a terceiros por uma atuação ou omissão relacionada à atividade administrativa quando seus agentes atuam nessa qualidade.'
+    q: 'O que é Controle da Administração Pública?',
+    a: 'É o conjunto de mecanismos jurídicos e administrativos utilizados para fiscalizar, acompanhar e verificar se a atuação do Estado está de acordo com a lei e com o interesse público, prevenindo ilegalidades, desvios e desperdício.'
   },
   {
-    q: 'Qual é a principal previsão constitucional sobre a responsabilidade civil do Estado?',
-    a: 'Artigo 37, § 6º, da Constituição Federal de 1988: as pessoas jurídicas de direito público e as de direito privado prestadoras de serviços públicos responderão pelos danos que seus agentes, nessa qualidade, causarem a terceiros, assegurado o direito de regresso contra o responsável nos casos de dolo ou culpa.'
+    q: 'O que é Controle Interno e qual o seu macete?',
+    a: 'É aquele realizado dentro da própria estrutura do Poder ou órgão que praticou o ato. Exemplo: setor de auditoria ou corregedoria fiscalizando suas secretarias.\n📌 Macete: Interno = dentro da própria Administração.'
   },
   {
-    q: 'Qual a regra de responsabilidade civil para o Estado perante a vítima?',
-    a: 'Responsabilidade OBJETIVA: independe da demonstração de culpa ou dolo do agente público para surgir o dever de indenizar.'
+    q: 'O que é Controle Externo? Dê o principal exemplo federal.',
+    a: 'É realizado por um órgão ou Poder diferente daquele que praticou o ato. Principal exemplo: Poder Legislativo com o auxílio dos Tribunais de Contas (Congresso Nacional auxiliado pelo TCU no âmbito federal, ou ALEAM com o TCE-AM).'
   },
   {
-    q: 'Quais são os 3 elementos essenciais da responsabilidade objetiva do Estado? (Macete)',
-    a: 'Macete: Estado = C + D + N\n• C: Conduta estatal\n• D: Dano efetivo\n• N: Nexo causal entre a conduta e o dano.'
+    q: 'Qual o papel do Poder Judiciário no Controle Judicial e qual o limite?',
+    a: 'O Judiciário controla a LEGALIDADE dos atos administrativos quando provocado. ⚠️ Limite: o juiz NÃO pode invadir o mérito administrativo (conveniência e oportunidade), nem substituir a escolha discricionária do administrador.'
   },
   {
-    q: 'A vítima de um dano estatal precisa comprovar a culpa do servidor público?',
-    a: 'NÃO. Na relação Vítima → Estado a responsabilidade é objetiva. A culpa do servidor não precisa ser provada pela vítima.'
+    q: 'O que é Controle Administrativo e Princípio da Autotutela?',
+    a: 'É o controle exercido pela própria Administração sobre seus próprios atos. Permite anular atos ilegais e revogar atos válidos que se tornaram inoportunos ou inconvenientes (Súmulas 346 e 473 do STF).'
   },
   {
-    q: 'O que é o Direito de Regresso do Estado contra o agente público?',
-    a: 'É a faculdade que o Estado possui de cobrar do agente causador do dano o valor que pagou à vítima na indenização, desde que fique comprovado que o agente agiu com DOLO ou CULPA.'
+    q: 'Qual a diferença essencial entre Anulação e Revogação?',
+    a: '• Anulação → incide sobre atos ILEGAIS (efeito retroativo / ex tunc).\n• Revogação → incide sobre atos VÁLIDOS por razões de conveniência e oportunidade (efeito prospectivo / ex nunc).'
   },
   {
-    q: 'Qual a diferença de responsabilidade entre Vítima → Estado e Estado → Agente?',
-    a: '• Vítima → Estado: Responsabilidade OBJETIVA (não depende de culpa do agente).\n• Estado → Agente (ação regressiva): Responsabilidade SUBJETIVA (exige comprovação de dolo ou culpa).'
+    q: 'O que é Controle de Legalidade e quem pode exercê-lo?',
+    a: 'Verifica se o ato respeita a Constituição, leis e regulamentos. Havendo ilegalidade, o ato deve ser anulado. Pode ser exercido tanto pela própria Administração (autotutela) quanto pelo Poder Judiciário (quando provocado).'
   },
   {
-    q: 'Quais situações podem afastar ou romper o nexo causal na responsabilidade do Estado?',
-    a: '1) Culpa exclusiva da vítima;\n2) Fato exclusivo de terceiro;\n3) Caso fortuito ou força maior (conforme a hipótese e ausência de causalidade com o Estado).'
+    q: 'O que é Controle de Mérito e o Judiciário pode exercê-lo?',
+    a: 'Relaciona-se à conveniência e oportunidade do ato discricionário. É privativo da própria Administração Pública. O Poder Judiciário NUNCA pode revogar ato do Executivo por mérito, apenas anular por ilegalidade.'
   },
   {
-    q: 'Quem é considerado Agente Público para fins de responsabilidade civil do Estado?',
-    a: 'O conceito é amplo: servidores públicos efetivos, comissionados, empregados públicos celetistas, agentes políticos, temporários e colaboradores. O essencial é que estejam atuando no exercício da função pública ou a pretexto dela.'
+    q: 'Como se classifica o controle quanto ao momento de realização?',
+    a: '• Prévio (preventivo): antes da realização do ato (ex: autorização prévia).\n• Concomitante: durante a realização/execução (ex: fiscalização de obra).\n• Posterior (corretivo): após a prática do ato (ex: homologação ou anulação).'
+  },
+  {
+    q: 'Quais os temas mais cobrados para o TJAM em Controle?',
+    a: '1) Controle interno × externo × judicial;\n2) Legalidade × mérito;\n3) Anulação (ex tunc) × revogação (ex nunc);\n4) Controle prévio × concomitante × posterior.'
   }
 ];
 
 export const direitoAdminMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A responsabilidade civil do Estado, como regra, é:',
+    enunciado: '1. O controle da Administração Pública tem como principal finalidade:',
     opcoes: [
-      'A) Subjetiva',
-      'B) Objetiva',
-      'C) Penal',
-      'D) Contratual'
+      'A) Aumentar a quantidade de servidores.',
+      'B) Fiscalizar e verificar a regularidade da atuação administrativa.',
+      'C) Substituir todos os atos administrativos por decisões judiciais.',
+      'D) Eliminar a autonomia dos órgãos públicos.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Conforme o Art. 37, § 6º da Constituição Federal, a regra geral adotada pelo ordenamento jurídico brasileiro para o Estado perante a vítima é a responsabilidade civil objetiva.'
+    explicacao: 'Gabarito Oficial: B. O controle é o conjunto de mecanismos utilizados para fiscalizar, acompanhar e verificar se a atuação da Administração Pública está em conformidade com a lei e com o interesse público.'
   },
   {
     id: 2,
-    enunciado: '2. Segundo o art. 37, §6º, da Constituição Federal, o Estado responde pelos danos causados por seus agentes:',
+    enunciado: '2. O controle realizado pela própria Administração sobre seus atos é chamado de:',
     opcoes: [
-      'A) Somente quando houver dolo',
-      'B) Somente quando houver culpa',
-      'C) Nessa qualidade, a terceiros',
-      'D) Apenas quando houver ordem judicial'
+      'A) Controle judicial.',
+      'B) Controle externo.',
+      'C) Controle administrativo.',
+      'D) Controle legislativo.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. O texto constitucional prevê expressamente que as pessoas jurídicas respondem pelos danos que seus agentes, "nessa qualidade, causarem a terceiros".'
+    explicacao: 'Gabarito Oficial: C. O controle administrativo decorre do poder de autotutela, pelo qual a própria Administração fiscaliza e revê seus próprios atos.'
   },
   {
     id: 3,
-    enunciado: '3. Para caracterizar a responsabilidade objetiva do Estado, a vítima deve demonstrar:',
+    enunciado: '3. O controle interno é aquele realizado:',
     opcoes: [
-      'A) Culpa do servidor, exclusivamente',
-      'B) Dolo do agente público',
-      'C) Conduta, dano e nexo causal',
-      'D) Apenas a existência do agente público'
+      'A) Exclusivamente pelo Poder Judiciário.',
+      'B) Dentro da própria estrutura administrativa.',
+      'C) Somente pelo Congresso Nacional.',
+      'D) Apenas pelos Tribunais de Contas.'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. Para configurar o dever de indenizar do Estado, a vítima deve comprovar a conduta administrativa, o dano suportado e o nexo de causalidade entre ambos (Macete: C + D + N).'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Controle interno é aquele efetuado pelo mesmo Poder ou órgão que praticou o ato, dentro da sua própria estrutura hierárquica.'
   },
   {
     id: 4,
-    enunciado: '4. Na responsabilidade objetiva do Estado, a vítima:',
+    enunciado: '4. O controle externo, no âmbito federal, é exercido pelo:',
     opcoes: [
-      'A) Deve necessariamente provar a culpa do agente',
-      'B) Não precisa provar a culpa do agente',
-      'C) Deve provar o dolo do Estado',
-      'D) Deve provar a intenção do servidor'
+      'A) Poder Executivo, exclusivamente.',
+      'B) Congresso Nacional, com auxílio do Tribunal de Contas da União.',
+      'C) Poder Judiciário, exclusivamente.',
+      'D) Ministério Público, exclusivamente.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Sendo objetiva a responsabilidade estatal perante o terceiro prejudicado, a vítima fica dispensada de provar dolo ou culpa do servidor público.'
+    explicacao: 'Gabarito Oficial: B. De acordo com o art. 70 e 71 da CF/88, o controle externo federal compete ao Congresso Nacional com auxílio técnico-pericial do TCU.'
   },
   {
     id: 5,
-    enunciado: '5. O nexo causal representa:',
+    enunciado: '5. O controle judicial dos atos administrativos é realizado pelo:',
     opcoes: [
-      'A) A existência de um contrato',
-      'B) A relação entre a conduta e o dano',
-      'C) A culpa do servidor',
-      'D) A punição administrativa'
+      'A) Poder Executivo.',
+      'B) Poder Legislativo.',
+      'C) Poder Judiciário.',
+      'D) Tribunal de Contas.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O nexo de causalidade é o vínculo lógico-jurídico que demonstra que determinado dano foi causado direta ou indiretamente pela conduta do agente estatal.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. O controle judicial é privativo do Poder Judiciário, em obediência ao princípio da inafastabilidade da jurisdição (art. 5º, XXXV, CF/88).'
   },
   {
     id: 6,
-    enunciado: '6. Um servidor público, durante o exercício de sua função, causa dano a um cidadão. Nesse caso, em regra:',
+    enunciado: '6. Em regra, o Poder Judiciário, ao controlar um ato administrativo, verifica principalmente:',
     opcoes: [
-      'A) O Estado poderá responder objetivamente',
-      'B) O Estado nunca responde',
-      'C) Apenas o servidor pode responder',
-      'D) Não existe possibilidade de indenização'
+      'A) A conveniência política do ato.',
+      'B) A legalidade do ato.',
+      'C) A preferência pessoal do administrador.',
+      'D) A quantidade de servidores do órgão.'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. Quando o servidor atua no exercício da função pública e causa prejuízo a particular, o Estado responde de forma objetiva perante a vítima.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. O juiz atua sob o prisma da estrita legalidade e legitimidade, não podendo substituir a Administração nas suas opções de mérito (conveniência e oportunidade).'
   },
   {
     id: 7,
-    enunciado: '7. O direito de regresso permite que:',
+    enunciado: '7. A Administração Pública pode anular seus próprios atos quando:',
     opcoes: [
-      'A) O cidadão cobre diretamente qualquer servidor',
-      'B) O Estado cobre do agente o que pagou, havendo dolo ou culpa',
-      'C) O agente cobre do cidadão',
-      'D) O Estado deixe de indenizar a vítima'
+      'A) Forem ilegais.',
+      'B) Forem sempre inconvenientes.',
+      'C) O administrador simplesmente mudar de opinião.',
+      'D) O Poder Judiciário determinar em todos os casos.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O direito de regresso faculta ao Poder Público reaver do agente causador do prejuízo o valor despendido a título de indenização, desde que comprovado dolo ou culpa deste.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. A anulação é o instrumento cabível para retirar do ordenamento jurídico atos que contenham vícios de legalidade (Súmula 473 do STF).'
   },
   {
     id: 8,
-    enunciado: '8. Para o direito de regresso contra o agente público, é necessário demonstrar:',
+    enunciado: '8. A revogação de um ato administrativo está relacionada, em regra:',
     opcoes: [
-      'A) Dolo ou culpa',
-      'B) Apenas dano',
-      'C) Apenas nexo causal',
-      'D) Responsabilidade penal'
+      'A) À ilegalidade.',
+      'B) À conveniência e oportunidade.',
+      'C) À inexistência do ato.',
+      'D) À responsabilidade criminal.'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. Na ação regressiva (Estado → agente público), a responsabilidade é subjetiva, exigindo a prova inequívoca de dolo ou culpa do servidor (CF, art. 37, § 6º in fine).'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. A revogação é o juízo discricionário privativo da Administração sobre atos válidos que deixaram de ser convenientes ou oportunos.'
   },
   {
     id: 9,
-    enunciado: '9. A responsabilidade da vítima perante o Estado, para fins de indenização, é normalmente analisada mediante:',
+    enunciado: '9. Assinale a alternativa correta:',
     opcoes: [
-      'A) Conduta, dano e nexo causal',
-      'B) Apenas culpa',
-      'C) Apenas dolo',
-      'D) Apenas existência de prejuízo financeiro'
+      'A) Anulação ocorre por conveniência; revogação ocorre por ilegalidade.',
+      'B) Anulação e revogação são exatamente a mesma coisa.',
+      'C) Anulação está relacionada à ilegalidade; revogação, à conveniência e oportunidade.',
+      'D) Apenas o Poder Judiciário pode anular atos administrativos.'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A pretensão indenizatória da vítima é averiguada sob o prisma dos três pilares clássicos da responsabilidade objetiva: conduta da Administração, dano verificado e nexo causal.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. Regra indispensável de concurso: Anulação = Ilegalidade; Revogação = Mérito (conveniência e oportunidade).'
   },
   {
     id: 10,
-    enunciado: '10. A culpa exclusiva da vítima pode:',
+    enunciado: '10. Um controle realizado antes da prática de determinado ato administrativo é chamado de:',
     opcoes: [
-      'A) Aumentar automaticamente a indenização',
-      'B) Afastar o nexo causal e a responsabilidade estatal',
-      'C) Gerar responsabilidade penal do Estado',
-      'D) Tornar a responsabilidade sempre subjetiva'
+      'A) Posterior.',
+      'B) Concomitante.',
+      'C) Prévio.',
+      'D) Judicial.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. A culpa exclusiva da vítima rompe totalmente o nexo causal entre a atividade estatal e o evento danoso, eximindo o Estado do dever de indenizar.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. Classificação temporal: controle prévio (a priori ou preventivo) é aquele exercido antes da formação ou consumação do ato.'
   },
   {
     id: 11,
-    enunciado: '11. O dispositivo constitucional mais importante sobre responsabilidade civil do Estado é:',
+    enunciado: '11. O controle concomitante ocorre:',
     opcoes: [
-      'A) Art. 5º, I',
-      'B) Art. 37, §6º',
-      'C) Art. 84, I',
-      'D) Art. 92'
+      'A) Antes do ato.',
+      'B) Durante a realização do ato ou atividade.',
+      'C) Somente anos depois do ato.',
+      'D) Exclusivamente após decisão judicial.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O Art. 37, § 6º da Constituição da República Federativa do Brasil é o marco normativo fundamental da responsabilidade civil extracontratual do Estado.'
+    explicacao: 'Gabarito Oficial: B. O controle concomitante ocorre simultaneamente, acompanhando o desenrolar da atividade administrativa.'
   },
   {
     id: 12,
-    enunciado: '12. Na relação entre vítima e Estado, a responsabilidade objetiva significa que:',
+    enunciado: '12. O controle posterior ocorre:',
     opcoes: [
-      'A) A culpa do agente é indispensável',
-      'B) A vítima deve provar dolo',
-      'C) A culpa do agente não precisa ser comprovada',
-      'D) O dano nunca precisa ser comprovado'
+      'A) Antes da prática do ato.',
+      'B) Durante a prática do ato.',
+      'C) Depois da realização do ato.',
+      'D) Somente durante uma eleição.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. A responsabilidade objetiva caracteriza-se essencialmente pela desnecessidade de se verificar a existência de elemento subjetivo (culpa ou dolo) por parte do agente público.'
+    explicacao: 'Gabarito Oficial: C. O controle posterior (ou a posteriori) verifica os atos já consumados e executados.'
   },
   {
     id: 13,
-    enunciado: '13. Se o Estado indeniza uma vítima e fica comprovado que o agente público agiu com culpa, o Estado:',
+    enunciado: '13. Quando um órgão público fiscaliza seus próprios procedimentos, temos:',
     opcoes: [
-      'A) Não pode fazer nada',
-      'B) Pode exercer direito de regresso',
-      'C) Deve punir a vítima',
-      'D) Deve cancelar a indenização'
+      'A) Controle interno.',
+      'B) Controle judicial.',
+      'C) Controle externo.',
+      'D) Controle político exclusivamente.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Havendo culpa ou dolo do agente, o Estado tem o dever-poder de propor ação regressiva para obter o ressarcimento dos cofres públicos.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. Quando a fiscalização é realizada no âmbito interno do próprio órgão ou Poder, temos controle interno.'
   },
   {
     id: 14,
-    enunciado: '14. Um agente público causa dano a terceiro enquanto atua fora de qualquer relação com sua função pública. Nesse caso, a responsabilidade estatal:',
+    enunciado: '14. O controle de legalidade busca verificar se:',
     opcoes: [
-      'A) É automaticamente reconhecida',
-      'B) Deve ser analisada conforme a existência de vínculo entre a atuação e a função pública',
-      'C) É sempre objetiva',
-      'D) É sempre inexistente'
+      'A) O ato é popular.',
+      'B) O ato é conveniente para o servidor.',
+      'C) O ato está de acordo com as normas jurídicas.',
+      'D) O ato possui aprovação da população.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Para haver imputação da responsabilidade ao Estado, é indispensável examinar se havia vínculo, aparente ou efetivo, entre o ato do agente e o exercício de suas atribuições públicas ("nessa qualidade").'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. O controle de legalidade afere a estrita conformidade do ato com a Constituição, leis em sentido estrito e regulamentos infralegais.'
   },
   {
     id: 15,
-    enunciado: '15. São elementos básicos da responsabilidade objetiva estatal:',
+    enunciado: '15. O mérito administrativo está relacionado principalmente:',
     opcoes: [
-      'A) Dolo, culpa e punição',
-      'B) Conduta, dano e nexo causal',
-      'C) Contrato, dolo e culpa',
-      'D) Pena, dano e sentença'
+      'A) À conveniência e oportunidade.',
+      'B) À existência física do órgão.',
+      'C) À nacionalidade do servidor.',
+      'D) À competência criminal.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Conduta, dano e nexo causal são os três elementos constitutivos da teoria do risco administrativo adotada no Brasil.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. O mérito administrativo consiste na valoração que a lei outorga ao gestor sobre a conveniência e oportunidade de praticar ou manter determinado ato discricionário.'
   },
   {
     id: 16,
-    enunciado: '16. Caso fortuito ou força maior pode, conforme o caso concreto:',
+    enunciado: '16. Um ato administrativo válido deixa de ser conveniente para a Administração. Em regra, o instrumento adequado para retirá-lo é:',
     opcoes: [
-      'A) Afastar o nexo causal',
-      'B) Criar automaticamente responsabilidade estatal',
-      'C) Substituir o dano',
-      'D) Tornar todo agente culpado'
+      'A) Anulação.',
+      'B) Revogação.',
+      'C) Cassação judicial obrigatória.',
+      'D) Convalidação.'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. O caso fortuito ou força maior que seja imprevisível e inevitável afasta o liame causal entre a conduta do Estado e o evento lesivo, excluindo o dever de indenizar.'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. Sendo o ato válido, mas tornando-se inconveniente ou inoportuno para o interesse público, a Administração deve proceder à sua revogação.'
   },
   {
     id: 17,
-    enunciado: '17. A responsabilidade objetiva do Estado significa que:',
+    enunciado: '17. Um ato administrativo apresenta vício de legalidade. Em regra, poderá ocorrer:',
     opcoes: [
-      'A) O Estado responde em qualquer situação, mesmo sem dano',
-      'B) O Estado responde independentemente da culpa, desde que presentes os requisitos da responsabilidade',
-      'C) O agente nunca poderá responder',
-      'D) A vítima não precisa provar nada'
+      'A) Revogação por mérito.',
+      'B) Anulação.',
+      'C) Promoção do servidor.',
+      'D) Concessão automática de benefício.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O Estado responde sem que se perquira a culpa funcional, desde que demonstrados os requisitos objetivos da lesão (conduta, dano e nexo causal).'
+    explicacao: 'Gabarito Oficial: B. Havendo defeito jurídico ou contrariedade à lei, a medida cogente é a anulação do ato ilegal.'
   },
   {
     id: 18,
-    enunciado: '18. Sobre o agente público, é correto afirmar:',
+    enunciado: '18. Assinale a alternativa que apresenta somente formas/classificações de controle quanto ao momento:',
     opcoes: [
-      'A) Nunca pode responder perante o Estado',
-      'B) Pode responder regressivamente quando agir com dolo ou culpa',
-      'C) Sempre responde objetivamente',
-      'D) Responde somente criminalmente'
+      'A) Prévio, concomitante e posterior.',
+      'B) Civil, penal e tributário.',
+      'C) Federal, estadual e municipal.',
+      'D) Público, privado e misto.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O agente público pode ser responsabilizado internamente pelo Estado em sede de ação de regresso, se e somente se comprovada a existência de dolo ou culpa.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. A classificação quanto ao momento compreende exclusivamente as modalidades prévia, concomitante e posterior.'
   },
   {
     id: 19,
-    enunciado: '19. Se não houver relação de causalidade entre a atuação estatal e o dano:',
+    enunciado: '19. Sobre controle administrativo, assinale a correta:',
     opcoes: [
-      'A) A responsabilidade objetiva será automaticamente configurada',
-      'B) Pode não existir responsabilidade estatal pelo dano',
-      'C) O Estado sempre deverá indenizar',
-      'D) O agente será automaticamente culpado'
+      'A) É realizado pela própria Administração.',
+      'B) É sempre realizado pelo Poder Judiciário.',
+      'C) É realizado somente pelo Congresso Nacional.',
+      'D) Não permite revisão dos atos administrativos.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O nexo de causalidade é pressuposto indeclinável. Sem relação de causa e efeito entre a conduta da Administração e a lesão, não há responsabilidade do Estado.'
+    correta: 0, // A
+    explicacao: 'Gabarito Oficial: A. O controle administrativo é aquele exercido pelos órgãos do Poder Executivo ou pelos outros poderes em sua função administrativa típica sobre seus próprios atos.'
   },
   {
     id: 20,
-    enunciado: '20. Assinale a alternativa correta:',
+    enunciado: '20. João praticou um ato administrativo ilegal. O órgão competente identificou a ilegalidade durante uma fiscalização. Nesse caso, o instituto relacionado à retirada do ato por ilegalidade é:',
     opcoes: [
-      'A) Estado e agente público possuem sempre a mesma forma de responsabilidade',
-      'B) O Estado responde objetivamente perante a vítima, enquanto o regresso contra o agente depende de dolo ou culpa',
-      'C) O Estado só responde se houver dolo',
-      'D) O agente público nunca pode ser responsabilizado'
+      'A) Revogação.',
+      'B) Anulação.',
+      'C) Mérito administrativo.',
+      'D) Controle concomitante.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Esta é a regra de ouro das bancas e da FGV: perante a vítima, a responsabilidade do Estado é objetiva; já na ação regressiva movida pelo Estado contra o servidor causador do dano, a responsabilidade é subjetiva (dolo ou culpa).'
+    explicacao: 'Gabarito Oficial: B. Tratando-se de ato praticado com ilegalidade manifesta, o instituto de direito administrativo adequado para desfazê-lo é a anulação.'
   }
 ];
 
 export const direitoAdminTfQuestionsData: TfQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A responsabilidade civil do Estado perante o cidadão depende da prova de dolo ou culpa do servidor público envolvido.',
+    enunciado: '1. O Poder Judiciário pode revogar atos administrativos do Poder Executivo se entender que eles são inoportunos para a população.',
     correta: false,
-    explicacao: 'Falso: A responsabilidade do Estado perante a vítima é OBJETIVA, dispensando a prova de dolo ou culpa.'
+    explicacao: 'Falso: O Poder Judiciário controla apenas a LEGALIDADE dos atos administrativos. O juiz nunca pode revogar atos do Executivo por mérito (conveniência/oportunidade).'
   },
   {
     id: 2,
-    enunciado: '2. Para que surja o dever estatal de indenizar, a vítima precisa demonstrar conduta estatal, dano e nexo causal.',
+    enunciado: '2. A anulação de um ato administrativo opera, em regra, efeitos retroativos (ex tunc), desfazendo as consequências desde a sua origem por se tratar de ato ilegal.',
     correta: true,
-    explicacao: 'Verdadeiro: Macete C + D + N (Conduta, Dano e Nexo causal).'
+    explicacao: 'Verdadeiro: Como o ato ilegal já nasce com defeito congênito, sua anulação retroage à data em que foi editado (efeitos ex tunc).'
   },
   {
     id: 3,
-    enunciado: '3. O Estado pode ajuizar ação regressiva contra o agente público, exigindo a demonstração de dolo ou culpa.',
+    enunciado: '3. O controle externo no âmbito federal é exercido pelo Congresso Nacional com auxílio do Tribunal de Contas da União (TCU).',
     correta: true,
-    explicacao: 'Verdadeiro: Conforme art. 37, § 6º da CF/88, o direito de regresso depende de dolo ou culpa do servidor.'
+    explicacao: 'Verdadeiro: Esta é a exata disposição dos arts. 70 e 71 da CF/88 para o controle externo financeiro e orçamentário federal.'
   },
   {
     id: 4,
-    enunciado: '4. A culpa exclusiva da vítima não tem o condão de afastar o nexo causal na responsabilidade objetiva do Estado.',
+    enunciado: '4. O controle prévio é aquele exercido durante a execução da atividade administrativa.',
     correta: false,
-    explicacao: 'Falso: A culpa exclusiva da vítima rompe o nexo causal e afasta a responsabilidade estatal.'
+    explicacao: 'Falso: O controle prévio ocorre ANTES do ato. O controle exercido DURANTE a execução é chamado de concomitante.'
   }
 ];
 
 export const direitoAdminDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Explique a distinção entre a responsabilidade do Estado perante a vítima e a responsabilidade do agente público perante o Estado no direito de regresso.',
-    respostaEsperada: 'Gabarito oficial: Perante a vítima, o Estado responde de forma OBJETIVA (CF/88, art. 37, § 6º), bastando a comprovação da conduta administrativa, do dano suportado e do nexo de causalidade (C + D + N), sem necessidade de perquirir culpa ou dolo. Por outro lado, na relação interna entre o Estado e o agente causador do dano (ação de regresso), a responsabilidade é SUBJETIVA, sendo indispensável a demonstração de que o servidor agiu com dolo ou culpa.'
+    enunciado: '1. Explique detalhadamente as diferenças essenciais entre a anulação e a revogação de um ato administrativo, abordando motivo, competência e efeitos temporais.',
+    respostaEsperada: 'Gabarito oficial: A anulação incide sobre atos ILEGAIS (com vício em seus elementos constitutivos), pode ser realizada tanto pela própria Administração (autotutela) quanto pelo Poder Judiciário (quando provocado), gerando efeitos retroativos (ex tunc). Já a revogação recai sobre atos VÁLIDOS, decorre exclusivamente de juízo de conveniência e oportunidade da própria Administração (privativo), não podendo ser realizada pelo Judiciário sobre atos alheios, e produz efeitos prospectivos, não retroativos (ex nunc), respeitando-se os direitos adquiridos.'
   },
   {
     id: 2,
-    enunciado: '2. Quais circunstâncias são admitidas pela doutrina e jurisprudência para afastar ou atenuar o nexo causal na responsabilidade civil do Estado?',
-    respostaEsperada: 'Gabarito oficial: As hipóteses excludentes de responsabilidade estatal que rompem o nexo causal são: 1) Culpa exclusiva da vítima (quando o dano é causado inteiramente pela própria conduta do particular lesado); 2) Fato exclusivo de terceiro; e 3) Caso fortuito ou força maior (eventos naturais imprevisíveis e inevitáveis não relacionados à atuação estatal). Ressalte-se que a culpa concorrente da vítima não afasta a responsabilidade, mas apenas atenua/reduz proporcionalmente o valor da indenização.'
+    enunciado: '2. Em que consiste o princípio da autotutela administrativa e quais os limites da atuação do Poder Judiciário ao exercer o controle sobre os atos administrativos?',
+    respostaEsperada: 'Gabarito oficial: O princípio da autotutela (consagrado nas Súmulas 346 e 473 do STF e no art. 53 da Lei 9.784/99) confere à Administração o poder-dever de rever seus próprios atos, anulando os eivados de vício de legalidade e revogando os inconvenientes ou inoportunos. Por sua vez, o Poder Judiciário atua sob o império da inafastabilidade da jurisdição (art. 5º, XXXV, CF/88), controlando estritamente a conformidade do ato com a Constituição e as leis (legalidade e legitimidade), sendo-lhe categoricamente vedado ingressar no mérito administrativo para substituir o administrador na escolha discricionária.'
   }
 ];
 
 export const direitoAdminSummaryPoints: string[] = [
-  'Responsabilidade Civil do Estado = dever de reparar danos causados por agentes públicos nessa qualidade.',
-  '⭐ Estado: responsabilidade objetiva (Art. 37, §6º da CF/88).',
-  '⭐ Vítima: prova dano + conduta + nexo causal (Macete: C + D + N). Não precisa provar dolo ou culpa.',
-  '⭐ Agente Público: responde perante o Estado em ação regressiva apenas se comprovado dolo ou culpa.',
-  '⭐ Excludentes de responsabilidade: culpa exclusiva da vítima, fato exclusivo de terceiro, fortuito e força maior.',
-  '⭐ Conceito de Agente: amplo (servidores, empregados, políticos e temporários) atuando na qualidade funcional.',
-  '⭐ Artigo-chave obrigatório para o TJAM: CF/88, art. 37, §6º.'
+  'Controle da Administração Pública: Mecanismo para fiscalizar, acompanhar e verificar se a atuação atende à lei e ao interesse público.',
+  '⭐ Controle Interno: Exercido pelo próprio Poder ou órgão sobre suas próprias unidades.',
+  '⭐ Controle Externo: Realizado por órgão/Poder diverso (Poder Legislativo com auxílio do Tribunal de Contas).',
+  '⭐ Controle Judicial: Focado exclusivamente na legalidade e legitimidade; depende de provocação; não invade o mérito.',
+  '⭐ Autotutela: A Administração anula atos ilegais e revoga atos inoportunos.',
+  '⭐ Anulação × Revogação: Anulação decorre de ILEGALIDADE (ex tunc); Revogação decorre de CONVENIÊNCIA e OPORTUNIDADE (ex nunc).',
+  '⭐ Classificação Temporal: Prévio (antes do ato), Concomitante (durante a execução) e Posterior (depois de praticado).',
+  '⭐ Prioridade TJAM: Interno × Externo × Judicial; Legalidade × Mérito; Anulação × Revogação; Prévio × Concomitante × Posterior.'
 ];

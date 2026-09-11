@@ -1,5 +1,6 @@
 // src/data/informaticaLessonData.ts
-// Dados completos da 2ª Aula de Hoje — Informática: Segurança da Informação (CID, Senhas, MFA, Malware, Phishing, Firewall, Backup 3-2-1)
+// Dados completos da 4ª Aula de Hoje — 💻 Informática: Redes de Computadores e Internet | TJAM
+// Foco TJAM: LAN × MAN × WAN → Internet → Navegador → URL → Servidor → Cliente → Wi-Fi → Roteador → IP (IPv4 × IPv6) → HTTP × HTTPS
 
 export interface InformaticaQuestion {
   id: number;
@@ -31,375 +32,281 @@ export interface InformaticaFlashcard {
   tag: string;
 }
 
-// 20 Questões de Múltipla Escolha Oficiais
+// 20 Questões de Múltipla Escolha Oficiais — TJAM 2026
 export const informaticaMcQuestionsData: InformaticaQuestion[] = [
   {
     id: 1,
-    enunciado: '1. O princípio da segurança da informação que garante que apenas pessoas autorizadas tenham acesso aos dados é:',
+    enunciado: '1. Uma rede que normalmente abrange uma pequena área, como uma residência, escritório ou laboratório, é chamada de:',
     alternativas: [
-      'A) Integridade',
-      'B) Disponibilidade',
-      'C) Confidencialidade',
-      'D) Autenticidade'
+      'A) WAN',
+      'B) MAN',
+      'C) LAN',
+      'D) Internet'
     ],
     correta: 2, // C
-    explicacao: '✅ Gabarito: C (Confidencialidade). A confidencialidade garante que a informação seja acessada somente por pessoas ou sistemas devidamente autorizados. Exemplo: somente servidores autorizados podem acessar determinado processo sigiloso.'
+    explicacao: '✅ Gabarito: C (LAN). LAN (Local Area Network ou Rede Local) abrange áreas geograficamente limitadas, como residências, escritórios, varas judiciais, escolas ou laboratórios.'
   },
   {
     id: 2,
-    enunciado: '2. A integridade tem como objetivo:',
+    enunciado: '2. A sigla WAN refere-se a:',
     alternativas: [
-      'A) Garantir que os dados estejam disponíveis.',
-      'B) Impedir alterações indevidas nas informações.',
-      'C) Permitir acesso irrestrito aos dados.',
-      'D) Criar cópias de segurança.'
+      'A) Rede de longa distância',
+      'B) Rede local',
+      'C) Rede metropolitana',
+      'D) Rede sem fio pessoal'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B (Impedir alterações indevidas nas informações). A integridade assegura que a informação não seja modificada, corrompida ou destruída de forma não autorizada ou acidental.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (Rede de longa distância). WAN (Wide Area Network) cobre grandes extensões geográficas, interligando cidades, países ou continentes. A Internet é o principal exemplo.'
   },
   {
     id: 3,
-    enunciado: '3. A disponibilidade significa que:',
+    enunciado: '3. A Internet pode ser definida como:',
     alternativas: [
-      'A) Os dados só podem ser acessados pelo administrador.',
-      'B) Os dados devem estar disponíveis quando necessários aos usuários autorizados.',
-      'C) Os dados nunca podem ser alterados.',
-      'D) As informações devem permanecer secretas.'
+      'A) Uma única rede privada',
+      'B) Uma rede mundial que interliga diversas redes',
+      'C) Um programa de computador',
+      'D) Um navegador'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B. A disponibilidade assegura que os sistemas e os dados estejam acessíveis e operacionais sempre que os usuários autorizados precisarem utilizá-los.'
+    explicacao: '✅ Gabarito: B (Uma rede mundial que interliga diversas redes). A Internet é um conglomerado global descentralizado de redes interconectadas que utilizam a família de protocolos TCP/IP.'
   },
   {
     id: 4,
-    enunciado: '4. O conjunto formado por Confidencialidade, Integridade e Disponibilidade é conhecido como:',
+    enunciado: '4. Qual equipamento é responsável por encaminhar pacotes entre redes diferentes?',
     alternativas: [
-      'A) CIA/CID',
-      'B) TCP',
-      'C) DNS',
-      'D) HTTP'
+      'A) Monitor',
+      'B) Teclado',
+      'C) Roteador',
+      'D) Scanner'
     ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A (CIA/CID). Trata-se da tríade básica da segurança da informação: em português CID (Confidencialidade, Integridade, Disponibilidade) e em inglês CIA (Confidentiality, Integrity, Availability).'
+    correta: 2, // C
+    explicacao: '✅ Gabarito: C (Roteador). O roteador (router) opera na camada de rede (camada 3 do modelo OSI), roteando e encaminhando pacotes de dados entre redes distintas (ex.: da LAN para a WAN/Internet).'
   },
   {
     id: 5,
-    enunciado: '5. Um malware que pode se espalhar automaticamente por uma rede é:',
+    enunciado: '5. Wi-Fi é uma tecnologia utilizada principalmente para:',
     alternativas: [
-      'A) Trojan',
-      'B) Worm',
-      'C) Firewall',
-      'D) Phishing'
+      'A) Impressão em papel',
+      'B) Comunicação de rede sem fio',
+      'C) Criação de documentos',
+      'D) Armazenamento de arquivos'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B (Worm). O worm (verme) diferencia-se por propagar-se de forma autônoma e automática pelas redes, explorando vulnerabilidades sem necessitar da execução explícita por parte do usuário.'
+    explicacao: '✅ Gabarito: B (Comunicação de rede sem fio). Wi-Fi é uma tecnologia de rede local sem fio (WLAN, padrão IEEE 802.11) para transmissão de dados por radiofrequência sem uso de cabos.'
   },
   {
     id: 6,
-    enunciado: '6. O Cavalo de Troia (Trojan) caracteriza-se por:',
+    enunciado: '6. O endereço IP é utilizado para:',
     alternativas: [
-      'A) Ser necessariamente um hardware.',
-      'B) Disfarçar-se como programa legítimo para enganar o usuário.',
-      'C) Ser exclusivamente uma mensagem de e-mail.',
-      'D) Ser um sistema de backup.'
+      'A) Identificar um dispositivo em uma rede',
+      'B) Criar senhas',
+      'C) Abrir documentos PDF',
+      'D) Aumentar a velocidade do computador'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O Trojan apresenta-se como um utilitário, jogo ou aplicativo aparentemente útil e inofensivo, mas contém código malicioso oculto que executa ações danosas nos bastidores.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (Identificar um dispositivo em uma rede). O endereço IP (Internet Protocol) é o identificador numérico lógico e exclusivo de cada interface/dispositivo conectado a uma rede TCP/IP.'
   },
   {
     id: 7,
-    enunciado: '7. O ransomware normalmente:',
+    enunciado: '7. Qual alternativa apresenta um exemplo de endereço IPv4?',
     alternativas: [
-      'A) Melhora o desempenho do computador.',
-      'B) Criptografa ou bloqueia dados e exige pagamento/extorsão.',
-      'C) Apenas exibe publicidade.',
-      'D) Funciona como firewall.'
+      'A) 192.168.1.10',
+      'B) www.tjam.jus.br',
+      'C) https://google.com',
+      'D) usuario@email.com'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. Ransomware é o malware de extorsão que bloqueia o acesso ao dispositivo ou criptografa os arquivos da vítima, exigindo resgate financeiro (geralmente em criptomoedas) para fornecer a chave de descriptografia.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (192.168.1.10). O IPv4 é formado por 32 bits divididos em 4 octetos decimais separados por pontos (cada octeto varia de 0 a 255). As alternativas B e C são URLs/domínios e D é um e-mail.'
   },
   {
     id: 8,
-    enunciado: '8. Phishing é uma técnica utilizada principalmente para:',
+    enunciado: '8. O IPv6 foi desenvolvido, entre outros motivos, para:',
     alternativas: [
-      'A) Aumentar a velocidade da internet.',
-      'B) Enganar usuários para obter informações ou induzi-los a ações maliciosas.',
-      'C) Fazer backup automático.',
-      'D) Criptografar arquivos legitimamente.'
+      'A) Substituir os navegadores',
+      'B) Ampliar a quantidade de endereços IP disponíveis',
+      'C) Eliminar a Internet',
+      'D) Substituir o Wi-Fi'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B. Phishing é uma técnica de pescaria fraudulenta por meios eletrônicos (e-mail, SMS, links falsos) que engana a vítima para que forneça dados confidenciais como senhas e dados bancários.'
+    explicacao: '✅ Gabarito: B (Ampliar a quantidade de endereços IP disponíveis). Com o esgotamento dos cerca de 4,3 bilhões de endereços IPv4 (32 bits), o IPv6 foi criado com 128 bits, fornecendo 3,4 × 10³⁸ endereços.'
   },
   {
     id: 9,
-    enunciado: '9. Uma mensagem dizendo “Sua conta será bloqueada, clique imediatamente neste link e informe sua senha” pode ser um exemplo de:',
+    enunciado: '9. O programa utilizado para acessar páginas da Internet é chamado de:',
     alternativas: [
-      'A) Backup',
-      'B) Phishing',
-      'C) Firewall',
-      'D) Autenticação multifator'
+      'A) Firewall',
+      'B) Navegador',
+      'C) Roteador',
+      'D) Servidor'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B (Phishing). Mensagens com tom de urgência ou ameaça de bloqueio, solicitando cliques imediatos e digitação de senhas em formulários falsos, constituem o exemplo clássico de phishing.'
+    explicacao: '✅ Gabarito: B (Navegador). O navegador (browser) é o software cliente que interpreta documentos HTML/CSS/JS e exibe as páginas da Web (exemplos: Chrome, Edge, Firefox, Safari).'
   },
   {
     id: 10,
-    enunciado: '10. Engenharia social está relacionada:',
+    enunciado: '10. Qual dos seguintes é um navegador?',
     alternativas: [
-      'A) À manipulação de pessoas para obter informações ou provocar determinadas ações.',
-      'B) À instalação física de computadores.',
-      'C) À manutenção de cabos de rede.',
-      'D) Exclusivamente à criptografia.'
+      'A) Google Chrome',
+      'B) Windows',
+      'C) Android',
+      'D) Linux'
     ],
     correta: 0, // A
-    explicacao: '✅ Gabarito: A. A engenharia social baseia-se na exploração da confiança, curiosidade, medo ou ingenuidade humana por meio de manipulação psicológica para obter dados ou acessos indevidos.'
+    explicacao: '✅ Gabarito: A (Google Chrome). Google Chrome é um navegador Web (browser). Windows, Android e Linux são sistemas operacionais.'
   },
   {
     id: 11,
-    enunciado: '11. O firewall tem como uma de suas funções:',
+    enunciado: '11. URL é:',
     alternativas: [
-      'A) Controlar o tráfego de rede de acordo com regras de segurança.',
-      'B) Criar documentos de texto.',
-      'C) Substituir obrigatoriamente o antivírus.',
-      'D) Recuperar arquivos apagados.'
+      'A) Um tipo de vírus',
+      'B) O endereço de um recurso na Internet',
+      'C) Um equipamento de rede',
+      'D) Uma memória do computador'
     ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. O firewall é uma barreira de proteção de rede que analisa, permite ou bloqueia pacotes de dados e portas de comunicação com base em um conjunto de regras de segurança predefinidas.'
+    correta: 1, // B
+    explicacao: '✅ Gabarito: B (O endereço de um recurso na Internet). URL (Uniform Resource Locator) é o localizador padronizado que indica onde um recurso (página, imagem, arquivo) está hospedado na Internet.'
   },
   {
     id: 12,
-    enunciado: '12. Sobre firewall e antivírus, é correto afirmar:',
+    enunciado: '12. Em uma comunicação cliente-servidor, o servidor:',
     alternativas: [
-      'A) São exatamente a mesma ferramenta.',
-      'B) Firewall controla tráfego de rede, enquanto antivírus atua na detecção/bloqueio de malware.',
-      'C) Antivírus controla exclusivamente conexões de rede.',
-      'D) Firewall é utilizado apenas para criar backups.'
+      'A) Fornece serviços ou recursos aos clientes',
+      'B) Apenas recebe energia elétrica',
+      'C) Funciona exclusivamente como teclado',
+      'D) Não pode estar conectado à Internet'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. São ferramentas complementares: o firewall atua filtrando conexões e tráfego de rede, enquanto o antivírus inspeciona arquivos, memória e processos em busca de malwares e vírus.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (Fornece serviços ou recursos aos clientes). Na arquitetura cliente-servidor, o cliente faz requisições e o servidor processa e fornece as respostas, serviços ou dados requisitados.'
   },
   {
     id: 13,
-    enunciado: '13. Uma senha mais segura deve:',
+    enunciado: '13. O protocolo HTTP está relacionado principalmente:',
     alternativas: [
-      'A) Ser “123456”.',
-      'B) Utilizar apenas o nome do usuário.',
-      'C) Ser longa e difícil de adivinhar.',
-      'D) Ser igual em todos os serviços.'
+      'A) À transferência de páginas e recursos da Web',
+      'B) À edição de imagens',
+      'C) À compactação de arquivos',
+      'D) Ao funcionamento do teclado'
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Senhas seguras devem ser longas (preferencialmente com mais de 12 a 16 caracteres), combinando letras maiúsculas, minúsculas, números e caracteres especiais, evitando dados pessoais óbvios.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (À transferência de páginas e recursos da Web). HTTP (HyperText Transfer Protocol) é o protocolo padrão da camada de aplicação utilizado para transferir páginas e conteúdos na World Wide Web.'
   },
   {
     id: 14,
-    enunciado: '14. Autenticação multifator (MFA) significa:',
+    enunciado: '14. HTTPS é preferível ao HTTP para operações que envolvem dados sensíveis porque:',
     alternativas: [
-      'A) Utilizar apenas uma senha.',
-      'B) Utilizar dois ou mais fatores para verificar a identidade.',
-      'C) Utilizar vários antivírus simultaneamente.',
-      'D) Ter várias contas de usuário.'
+      'A) É sempre mais rápido',
+      'B) Utiliza proteção criptográfica na comunicação',
+      'C) Não precisa de Internet',
+      'D) Elimina a necessidade de senha'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B. O MFA (Multi-Factor Authentication) requer a combinação de dois ou mais fatores independentes de categorias diferentes: algo que você sabe (senha), algo que você tem (token/celular) ou algo que você é (biometria).'
+    explicacao: '✅ Gabarito: B (Utiliza proteção criptográfica na comunicação). O HTTPS (HTTP Secure) utiliza criptografia SSL/TLS, impedindo que dados sensíveis (senhas, dados bancários, processos) sejam interceptados por terceiros.'
   },
   {
     id: 15,
-    enunciado: '15. Qual alternativa apresenta um exemplo de autenticação multifator?',
+    enunciado: '15. Uma rede que normalmente cobre uma área metropolitana, como uma cidade, é denominada:',
     alternativas: [
-      'A) Apenas senha.',
-      'B) Apenas impressão digital.',
-      'C) Senha + código de verificação no celular.',
-      'D) Apenas nome de usuário.'
+      'A) LAN',
+      'B) MAN',
+      'C) WAN',
+      'D) PAN'
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. A combinação de uma senha (fator de conhecimento) com um código gerado ou recebido no celular (fator de posse) configura a autenticação em dois fatores (2FA/MFA).'
+    correta: 1, // B
+    explicacao: '✅ Gabarito: B (MAN). MAN (Metropolitan Area Network) é a rede de abrangência metropolitana, cobrindo bairros de uma cidade, cidades vizinhas ou campi universitários/judiciários municipais.'
   },
   {
     id: 16,
-    enunciado: '16. Backup é:',
+    enunciado: '16. Intranet é:',
     alternativas: [
-      'A) Uma cópia de segurança dos dados.',
-      'B) Um tipo de vírus.',
-      'C) Uma técnica de phishing.',
-      'D) Um mecanismo de autenticação.'
+      'A) Uma rede privada que utiliza tecnologias semelhantes às da Internet',
+      'B) Uma rede exclusivamente mundial',
+      'C) Um tipo de navegador',
+      'D) Um antivírus'
     ],
     correta: 0, // A
-    explicacao: '✅ Gabarito: A. Backup é o procedimento de cópia e salvaguarda de arquivos e sistemas para armazenamento secundário, permitindo sua recuperação em caso de perda, corrupção ou incidente.'
+    explicacao: '✅ Gabarito: A (Uma rede privada que utiliza tecnologias semelhantes às da Internet). Intranet é uma rede interna corporativa restrita a funcionários/servidores de uma instituição (como o TJAM), que utiliza protocolos e tecnologias idênticas às da Internet.'
   },
   {
     id: 17,
-    enunciado: '17. O backup é especialmente importante porque:',
+    enunciado: '17. Ao acessar um site por meio de um navegador, o computador do usuário normalmente atua como:',
     alternativas: [
-      'A) Impede qualquer ataque cibernético.',
-      'B) Permite recuperar dados após determinados incidentes, como falhas ou ataques.',
-      'C) Substitui todas as medidas de segurança.',
-      'D) Impede fisicamente a exclusão dos arquivos.'
+      'A) Cliente',
+      'B) Servidor DNS obrigatório',
+      'C) Roteador principal da Internet',
+      'D) Firewall da rede mundial'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O backup garante a resiliência e a continuidade do negócio, permitindo restaurar sistemas e arquivos íntegros após ataques de ransomware, desastres físicos, falhas mecânicas ou erros operacionais.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A (Cliente). Ao abrir uma página no navegador, a máquina do usuário assume o papel de cliente (client), enviando requisições HTTP/HTTPS para o computador remoto (servidor/server).'
   },
   {
     id: 18,
-    enunciado: '18. Na conhecida regra 3-2-1 de backup, recomenda-se manter:',
+    enunciado: '18. Qual situação representa uma conexão sem fio?',
     alternativas: [
-      'A) 3 senhas, 2 usuários e 1 computador.',
-      'B) 3 cópias, 2 tipos de mídia e 1 cópia fora do ambiente principal.',
-      'C) 3 antivírus, 2 firewalls e 1 backup.',
-      'D) 3 computadores, 2 redes e 1 senha.'
+      'A) Computador conectado ao roteador por cabo Ethernet',
+      'B) Notebook conectado à rede por Wi-Fi',
+      'C) Impressora desligada',
+      'D) Computador sem placa de rede'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B. A regra 3-2-1 estabelece: 3 cópias dos dados (a original + 2 backups), em pelo menos 2 mídias de tecnologias distintas (ex: disco local e fita/servidor), com 1 cópia mantida em local externo ou em nuvem (off-site).'
+    explicacao: '✅ Gabarito: B (Notebook conectado à rede por Wi-Fi). A tecnologia Wi-Fi permite a transmissão de pacotes de dados por ondas de rádio (wireless), dispensando o uso de cabos físicos de rede.'
   },
   {
     id: 19,
-    enunciado: '19. Um funcionário recebe uma ligação de alguém que se passa pelo suporte de TI e pede sua senha. O caso representa principalmente:',
+    enunciado: '19. Qual alternativa apresenta corretamente a relação?',
     alternativas: [
-      'A) Engenharia social.',
-      'B) Backup.',
-      'C) Disponibilidade.',
-      'D) Firewall.'
+      'A) LAN — rede local',
+      'B) WAN — rede exclusivamente residencial',
+      'C) MAN — rede mundial',
+      'D) IP — navegador'
     ],
     correta: 0, // A
-    explicacao: '✅ Gabarito: A (Engenharia social). Fingir ser do suporte técnico telefônico (conhecido como vishing ou personificação) para convencer o colaborador a entregar sua credencial é uma tática típica de engenharia social.'
+    explicacao: '✅ Gabarito: A (LAN — rede local). LAN é Local Area Network (rede local). WAN é rede geograficamente ampla (longa distância), MAN é metropolitana e IP é endereço de protocolo de rede, não navegador.'
   },
   {
     id: 20,
-    enunciado: '20. Assinale a alternativa CORRETA:',
+    enunciado: '20. Um usuário acessa https://www.exemplo.com.br pelo Chrome. Nesse caso, respectivamente, HTTPS, Chrome e www.exemplo.com.br representam:',
     alternativas: [
-      'A) Confidencialidade protege contra acesso não autorizado; integridade protege contra alterações indevidas; disponibilidade garante acesso quando necessário.',
-      'B) Integridade significa manter os dados sempre disponíveis.',
-      'C) Disponibilidade significa impedir qualquer acesso aos dados.',
-      'D) Confidencialidade significa permitir acesso irrestrito.'
+      'A) Navegador, protocolo e IP',
+      'B) Protocolo seguro, navegador e endereço/domínio',
+      'C) Servidor, navegador e protocolo',
+      'D) Firewall, servidor e endereço IP'
     ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. Esta assertiva sintetiza com perfeita exatidão as definições da tríade CID: Confidencialidade = sigilo contra acessos indevidos; Integridade = preservação e exatidão da informação; Disponibilidade = prontidão do acesso quando demandado.'
+    correta: 1, // B
+    explicacao: '✅ Gabarito: B (Protocolo seguro, navegador e endereço/domínio). HTTPS é o protocolo de transferência seguro (com SSL/TLS); Chrome é o navegador Web (software cliente); e www.exemplo.com.br é a URL/nome de domínio.'
   }
 ];
 
-// Flashcards Interativos de Informática — Segurança da Informação
-export const informaticaFlashcardsData: InformaticaFlashcard[] = [
-  {
-    id: 1,
-    q: 'O que representa a tríade CID na Segurança da Informação?',
-    a: 'C = Confidencialidade (acesso apenas a autorizados)\nI = Integridade (informação não alterada indevidamente)\nD = Disponibilidade (sistema e dados acessíveis quando demandados).',
-    tag: 'Tríade CID'
-  },
-  {
-    id: 2,
-    q: 'Qual a diferença entre Confidencialidade e Integridade?',
-    a: 'Confidencialidade visa impedir o ACESSO de quem não tem autorização (sigilo). Integridade visa impedir a ALTERAÇÃO, exclusão ou adulteração da informação sem autorização.',
-    tag: 'Conceitos Básicos'
-  },
-  {
-    id: 3,
-    q: 'Qual o princípio ferido quando um servidor do TJAM não consegue acessar o sistema processual porque os servidores caíram?',
-    a: 'Princípio da DISPONIBILIDADE. O sistema ou dado não está ao alcance do usuário legítimo no momento em que ele necessita utilizá-lo.',
-    tag: 'Disponibilidade'
-  },
-  {
-    id: 4,
-    q: 'O que caracteriza um WORM e como ele se difere de um vírus clássico?',
-    a: 'O WORM se propaga AUTOMATICAMENTE pelas redes, sem necessitar da ação direta do usuário nem de se anexar a um arquivo hospedeiro, explorando falhas de segurança.',
-    tag: 'Malware'
-  },
-  {
-    id: 5,
-    q: 'O que é um CAVALO DE TROIA (Trojan)?',
-    a: 'É um programa que se apresenta como algo útil, legítimo ou divertido (ex: jogo, protetor de tela, utilitário), mas que oculta funcionalidades nocivas em segundo plano.',
-    tag: 'Malware'
-  },
-  {
-    id: 6,
-    q: 'O que é RANSOMWARE e qual a sua pegadinha clássica em provas?',
-    a: 'É um malware de extorsão que bloqueia ou CRIPTOGRAFA os dados da vítima e exige resgate financeiro. Pegadinha: não é "qualquer vírus", sua marca é a extorsão por criptografia.',
-    tag: 'Ransomware'
-  },
-  {
-    id: 7,
-    q: 'O que é PHISHING?',
-    a: 'Técnica de fraude eletrônica que usa mensagens e links enganosos (e-mail, SMS, WhatsApp) para levar a vítima a revelar dados confidenciais (senhas, cartões, tokens).',
-    tag: 'Ameaças'
-  },
-  {
-    id: 8,
-    q: 'Qual a relação e distinção entre PHISHING e ENGENHARIA SOCIAL?',
-    a: 'A Engenharia Social é o conceito AMPLO de manipulação psicológica de pessoas. O Phishing é uma das TÉCNICAS de engenharia social aplicadas em meios digitais.',
-    tag: 'Engenharia Social'
-  },
-  {
-    id: 9,
-    q: 'Qual a função primordial de um FIREWALL?',
-    a: 'Atuar como uma barreira de proteção que filtra e controla o tráfego de entrada e saída de uma rede de computadores, segundo políticas de segurança estabelecidas.',
-    tag: 'Firewall'
-  },
-  {
-    id: 10,
-    q: 'O Firewall é capaz de substituir o Antivírus?',
-    a: 'NÃO! O firewall controla o tráfego e portas de rede; o antivírus analisa o conteúdo dos arquivos, discos e memória à procura de código malicioso. São ferramentas complementares.',
-    tag: 'Proteção'
-  },
-  {
-    id: 11,
-    q: 'O que é Autenticação Multifator (MFA)? Dê um exemplo prático.',
-    a: 'Método de validação de identidade que exige dois ou mais fatores de categorias distintas. Exemplo: digitar a senha (conhecimento) + código enviado via SMS/App (posse).',
-    tag: 'Autenticação'
-  },
-  {
-    id: 12,
-    q: 'Quais são as 3 categorias clássicas de fatores de autenticação?',
-    a: '1. Algo que você SABE (senha, PIN, pergunta secreta);\n2. Algo que você TEM (token, celular, smartcard);\n3. Algo que você É (biometria, impressão digital, face).',
-    tag: 'Autenticação'
-  },
-  {
-    id: 13,
-    q: 'Explique a famosa REGRA 3-2-1 de Backup.',
-    a: '• 3 cópias no total (1 primária + 2 cópias de backup);\n• 2 mídias de armazenamento com tecnologias distintas;\n• 1 cópia armazenada fora do local (off-site ou nuvem).',
-    tag: 'Backup'
-  },
-  {
-    id: 14,
-    q: 'Quais são as principais práticas recomendadas para uma SENHA SEGURA?',
-    a: 'Longa (mínimo 12-16 caracteres), mesclando maiúsculas, minúsculas, números e símbolos, exclusiva para cada serviço e sem dados óbvios (nomes, datas).',
-    tag: 'Senhas'
-  },
-  {
-    id: 15,
-    q: 'Como funcionam os mecanismos de detecção por Assinatura e por Comportamento em antivírus?',
-    a: '• Assinatura: compara o código com uma base de vírus conhecidos;\n• Comportamental (heurística): monitora ações suspeitas que um programa tenta executar no sistema.',
-    tag: 'Antivírus'
-  }
-];
-
-// Questões no formato Certo / Errado (V/F)
+// Questões no formato Certo / Errado (V/F) — Foco Redes & Internet TJAM
 export const informaticaTfQuestionsData: InformaticaTfQuestion[] = [
   {
     id: 1,
-    enunciado: '1. A instalação de um firewall moderno e bem configurado na rede corporativa dispensa totalmente a utilização de software antivírus nas estações de trabalho dos servidores.',
+    enunciado: '1. Wi-Fi e Internet são conceitos sinônimos e equivalentes, de modo que possuir conexão Wi-Fi ativa no smartphone garante automaticamente acesso à rede mundial de computadores.',
     correta: false,
-    explicacao: '✅ Gabarito: FALSO. O firewall e o antivírus operam em camadas distintas de proteção. O firewall controla o tráfego de rede e portas de conexão, enquanto o antivírus inspeciona arquivos, downloads e processos internos à procura de pragas virtuais.'
+    explicacao: '✅ Gabarito: FALSO. Wi-Fi é apenas uma tecnologia de rede local sem fio (WLAN). Um dispositivo pode estar conectado perfeitamente ao roteador Wi-Fi local sem que haja acesso à Internet (ex.: cabo de link externo desconectado ou fatura sem pagamento).'
   },
   {
     id: 2,
-    enunciado: '2. O ransomware caracteriza-se por restringir o acesso a arquivos do sistema mediante criptografia, cobrando da vítima uma contraprestação financeira (geralmente em criptomoedas) para restaurar o acesso aos dados.',
+    enunciado: '2. Em uma URL que inicia com "https://", a letra "S" indica que a comunicação entre o navegador cliente e o servidor web é protegida por criptografia (como SSL/TLS), conferindo maior segurança contra interceptação indevida de dados.',
     correta: true,
-    explicacao: '✅ Gabarito: VERDADEIRO. Essa é a definição conceitual exata do ransomware: sequestro digital de dados operado via cifra criptográfica robusta com finalidade de extorsão.'
+    explicacao: '✅ Gabarito: VERDADEIRO. HTTPS (HyperText Transfer Protocol Secure) utiliza cifra criptográfica para proteger a integridade e a confidencialidade dos dados trafegados entre cliente e servidor.'
   },
   {
     id: 3,
-    enunciado: '3. A regra de backup 3-2-1 preconiza a manutenção de 3 cópias dos dados, gravadas em 2 tipos diferentes de mídia, com pelo menos 1 das cópias mantida em ambiente externo ou em nuvem.',
+    enunciado: '3. A classificação das redes em LAN, MAN e WAN baseia-se fundamentalmente na sua abrangência geográfica, sendo a LAN restrita a um ambiente local e a WAN capaz de cobrir países e continentes inteiros.',
     correta: true,
-    explicacao: '✅ Gabarito: VERDADEIRO. A consagrada regra 3-2-1 de segurança da informação estabelece 3 cópias, 2 mídias diferentes e 1 cópia offsite/nuvem para resguardar o sistema contra sinistros locais.'
+    explicacao: '✅ Gabarito: VERDADEIRO. LAN (Local), MAN (Metropolitana) e WAN (Wide/Ampla) são categorizadas conforme a escala espacial e alcance territorial da infraestrutura.'
   },
   {
     id: 4,
-    enunciado: '4. Um ataque de phishing baseia-se necessariamente na invasão direta do sistema operacional através da exploração de falhas no código do kernel sem interação da vítima.',
+    enunciado: '4. O endereço IPv4 é composto por 128 bits e utiliza representação hexadecimal com dois-pontos, enquanto o IPv6 utiliza 32 bits separados por quatro pontos decimais.',
     correta: false,
-    explicacao: '✅ Gabarito: FALSO. O phishing é uma técnica de engenharia social cujo cerne é enganar o usuário humano por meio de comunicações fraudulentas (e-mails, mensagens, sites clonados), dependendo da ação ou erro da vítima.'
+    explicacao: '✅ Gabarito: FALSO. A assertiva inverteu as características: o IPv4 possui 32 bits (4 octetos decimais, ex.: 192.168.1.1), enquanto o IPv6 possui 128 bits representados em grupos hexadecimais separados por dois-pontos (ex.: 2001:0db8:85a3::8a2e:0370:7334).'
   },
   {
     id: 5,
-    enunciado: '5. A autenticação multifator (MFA) aumenta significativamente a segurança dos sistemas judiciários porque requer que o invasor comprometa simultaneamente múltiplos fatores de identificação independentes.',
+    enunciado: '5. O roteador é um equipamento de conectividade cuja atribuição essencial consiste em interligar redes distintas e selecionar o melhor caminho para o tráfego dos pacotes de dados.',
     correta: true,
-    explicacao: '✅ Gabarito: VERDADEIRO. Mesmo que a senha alfanumérica seja vazada, o acesso indevido permanece bloqueado sem o segundo fator (token, chave física ou biometria).'
+    explicacao: '✅ Gabarito: VERDADEIRO. O roteador encaminha pacotes entre redes diferentes (como da LAN residencial ou da comarca do TJAM para a Internet) analisando o endereço IP de destino.'
   }
 ];
 
@@ -407,37 +314,101 @@ export const informaticaTfQuestionsData: InformaticaTfQuestion[] = [
 export const informaticaDiscursiveQuestionsData: InformaticaDiscursiveQuestion[] = [
   {
     id: 1,
-    titulo: 'Questão Discursiva 1 — A Tríade CID no Âmbito do Poder Judiciário',
-    enunciado: 'A segurança da informação apoia-se em três pilares clássicos conhecidos pela sigla CID (Confidencialidade, Integridade e Disponibilidade). Explique detalhadamente cada um desses princípios, correlacionando-os com exemplos práticos aplicados à rotina de um Tribunal de Justiça (como o TJAM) e à tramitação do Processo Judicial Eletrônico (PJe).',
-    respostaPadrao: 'Padrão de Resposta Esperado:\n\n1. Confidencialidade: Garante que os dados sejam acessados unicamente por pessoas legalmente autorizadas. No TJAM, manifesta-se no sigilo obrigatório conferido a processos judiciais que correm em segredo de justiça (ex.: direito de família, infância e juventude), cujos autos só podem ser visualizados pelas partes, seus advogados constituídos e servidores com perfil de acesso adequado.\n\n2. Integridade: Assegura que a informação não seja adulterada, corrompida ou fraudada por agentes não autorizados ou por falhas de transmissão. No PJe, isso é garantido pelo uso de assinaturas digitais com certificado ICP-Brasil e funções de hash criptográfico, assegurando que o teor de sentenças e certidões emitidas permaneça inalterado.\n\n3. Disponibilidade: Garante que o sistema e seus acervos estejam operacionais e acessíveis aos magistrados, servidores, advogados e cidadãos sempre que demandados dentro dos prazos legais. Quedas prolongadas de servidores ou ataques de negação de serviço (DDoS) violam a disponibilidade e podem acarretar a prorrogação forçada de prazos processuais.',
+    titulo: 'Questão Discursiva 1 — Arquitetura de Redes: LAN, MAN e WAN no Tribunal de Justiça do Amazonas',
+    enunciado: 'Diferencie tecnicamente as redes do tipo LAN, MAN e WAN quanto à sua abrangência geográfica, infraestrutura e finalidade. Em seguida, exemplifique como essas três tipologias de redes se interligam na estrutura funcional de um tribunal como o TJAM para permitir que servidores na comarca da capital e do interior acessem os sistemas judiciais eletrônicos.',
+    respostaPadrao: 'Padrão de Resposta Esperado:\n\n1. Diferenciação Conceitual:\n   • LAN (Local Area Network): Rede local restrita a uma área geográfica limitada (uma sala, fórum, andar ou prédio do TJAM). Opera com altas taxas de transmissão e infraestrutura própria (cabos Ethernet e pontos Wi-Fi).\n   • MAN (Metropolitan Area Network): Rede metropolitana que conecta múltiplos prédios, polos ou fóruns distribuídos dentro de uma mesma cidade ou região metropolitana (ex.: Manaus), frequentemente interligada por anéis ópticos metropolitanos.\n   • WAN (Wide Area Network): Rede de longa distância que ultrapassa limites municipais, estaduais e nacionais. A própria Internet é a principal WAN global.\n\n2. Aplicação Prática no TJAM:\n   No TJAM, cada fórum (seja em Manaus ou em comarcas do interior como Parintins ou Tefé) opera internamente em sua LAN. Os prédios da capital interligam-se via MAN metropolitana e todos conectam-se através de links de longa distância (WAN/Internet e links dedicados por satélite/fibra) aos data centers centrais, permitindo o tráfego unificado de processos judiciais pelo PJe e Projudi de qualquer comarca.',
     criterios: [
-      'Definição precisa de Confidencialidade e correlação com segredo de justiça',
-      'Definição de Integridade e citação da assinatura digital/hash no PJe',
-      'Definição de Disponibilidade e impacto de indisponibilidade nos prazos processuais',
-      'Coesão e clareza na linguagem técnica'
+      'Definição precisa e distinção entre LAN, MAN e WAN com base na escala geográfica',
+      'Exemplificação correta de LAN (fórum local), MAN (interligação municipal) e WAN (interior e Internet)',
+      'Menção aos sistemas judiciais e tráfego de dados na rotina forense',
+      'Clareza expositiva e vocabulário técnico apropriado'
     ]
   },
   {
     id: 2,
-    titulo: 'Questão Discursiva 2 — Vetores de Ataque Cibernético e Práticas Preventivas (Regra 3-2-1 e MFA)',
-    enunciado: 'O avanço dos ataques cibernéticos a órgãos públicos envolve frequentemente o uso de Phishing, Engenharia Social e Ransomware. Descreva a mecânica de um ataque típico de Ransomware iniciado por Phishing e apresente duas contramedidas técnicas indispensáveis (abordando obrigatoriamente a Regra 3-2-1 de backup e a Autenticação Multifator) para mitigar o impacto desse incidente.',
-    respostaPadrao: 'Padrão de Resposta Esperado:\n\n1. Mecânica do Ataque: O ataque normalmente se inicia com a disseminação de um e-mail de phishing simulando uma comunicação urgente de autoridade ou fornecedor. O servidor do órgão é induzido a clicar em link falso ou abrir anexo malicioso contendo um dropper/trojan. Uma vez executado na estação, o ransomware explora a rede corporativa, dissemina-se e inicia o processo de criptografia de arquivos essenciais e bancos de dados, deixando na tela um aviso de extorsão exigindo resgate.\n\n2. Contramedidas Técnicas Indispensáveis:\n   a) Regra 3-2-1 de Backup: Estratégia que preconiza a manutenção de pelo menos 3 cópias integrais dos dados (1 produção + 2 backups), em 2 tecnologias de mídia distintas, com 1 cópia mantida fora da rede corporativa ou em nuvem imutável (off-site/air-gapped). Isso neutraliza a chantagem do ransomware, pois permite a restauração completa dos dados sem necessidade de pagamento.\n   b) Autenticação Multifator (MFA): Impede que credenciais eventualmente capturadas por phishing ou vazamentos sejam usadas diretamente pelo invasor para transitar lateralmente ou obter privilégios administrativos no ambiente institucional, exigindo um segundo fator independente (token ou biometria).',
+    titulo: 'Questão Discursiva 2 — Segurança na Web: O Papel do Protocolo HTTPS e do Modelo Cliente-Servidor',
+    enunciado: 'Ao consultar um processo judicial ou emitir uma certidão no portal do TJAM, o cidadão utiliza um navegador web que estabelece uma conexão via protocolo HTTPS. Explique o funcionamento do modelo Cliente-Servidor nessa transação e justifique por que o uso do protocolo HTTPS (com criptografia SSL/TLS) é indispensável para proteger dados no âmbito do Poder Judiciário.',
+    respostaPadrao: 'Padrão de Resposta Esperado:\n\n1. Modelo Cliente-Servidor:\n   O computador ou smartphone do cidadão atua como "Cliente", executando um software navegador (Chrome, Firefox, etc.) que envia uma requisição formal para um recurso específico (URL). O servidor do TJAM (computador de alta capacidade nos data centers) atua como "Servidor", recebendo a requisição, consultando as bases de dados e retornando a resposta (código HTML, certidão PDF ou tela de consulta processual).\n\n2. Importância do Protocolo HTTPS no Judiciário:\n   Diferente do HTTP convencional, que trafega dados em texto plano vulnerável a ataques de interceptação (sniffing e man-in-the-middle), o HTTPS incorpora uma camada de criptografia mediante certificados digitais (SSL/TLS). No Poder Judiciário, isso assegura:\n   a) Confidencialidade: impede que terceiros na rede leiam senhas, dados de partes processuais ou documentos sigilosos;\n   b) Integridade: garante que a certidão ou certidão de intimação não foi adulterada durante a transmissão;\n   c) Autenticidade: confirma para o usuário que ele está conectado ao portal legítimo do TJAM, e não a uma página clonada para golpes.',
     criterios: [
-      'Descrição da cadeia do ataque: Phishing inicial -> execução -> criptografia e extorsão',
-      'Explicação estruturada da Regra 3-2-1 (3 cópias, 2 mídias, 1 externa/isolada)',
-      'Explicação do papel da Autenticação Multifator (MFA) contra acesso indevido',
-      'Conclusão sobre resiliência e neutralização de chantagem financeira'
+      'Explicação dos papéis de Cliente (navegador que requisita) e Servidor (hospeda e responde)',
+      'Diferença fundamental entre HTTP (texto plano) e HTTPS (cifrado por SSL/TLS)',
+      'Impacto nos princípios de confidencialidade, integridade e autenticidade de dados judiciais',
+      'Linguagem formal e estrutura dissertativa coerente'
     ]
   }
 ];
 
-// Pontos de Resumo da Aula de Segurança da Informação
+// 10 Flashcards Didáticos — Foco Redes de Computadores e Internet | TJAM
+export const informaticaFlashcardsData: InformaticaFlashcard[] = [
+  {
+    id: 1,
+    q: 'O que é uma REDE DE COMPUTADORES?',
+    a: 'É um conjunto de dispositivos interconectados (computadores, celulares, impressoras, servidores, roteadores) para compartilhar dados, recursos e serviços.',
+    tag: 'Conceito Básico'
+  },
+  {
+    id: 2,
+    q: 'Qual a diferença entre LAN, MAN e WAN?',
+    a: '• LAN (Local): pequena área (casa, escritório, fórum).\n• MAN (Metropolitana): abrange uma cidade ou região.\n• WAN (Wide/Longa distância): países e continentes. Exemplo máximo: a Internet.',
+    tag: 'Tipos de Rede'
+  },
+  {
+    id: 3,
+    q: 'Wi-Fi é sinônimo de Internet?',
+    a: 'NÃO! Wi-Fi é apenas uma tecnologia de conexão sem fio (wireless) a uma rede local. Ter sinal de Wi-Fi não garante que haja link ativo de Internet.',
+    tag: 'Wi-Fi'
+  },
+  {
+    id: 4,
+    q: 'Qual a função primordial do ROTEADOR?',
+    a: 'Equipamento responsável por encaminhar e direcionar pacotes de dados entre redes distintas (ex.: conecta a rede local LAN à Internet WAN).',
+    tag: 'Equipamentos'
+  },
+  {
+    id: 5,
+    q: 'O que é um Endereço IP e quais seus dois tipos principais?',
+    a: 'Identificador lógico único de cada dispositivo na rede.\n• IPv4: 32 bits (4 octetos decimais, ex: 192.168.1.10).\n• IPv6: 128 bits (grupos hexadecimais, criado pelo esgotamento do IPv4).',
+    tag: 'Endereçamento IP'
+  },
+  {
+    id: 6,
+    q: 'Qual a diferença entre HTTP e HTTPS?',
+    a: '• HTTP: protocolo para envio de páginas web em texto simples.\n• HTTPS: versão segura protegida por CRIPTOGRAFIA (SSL/TLS). Macete: "S" de Seguro.',
+    tag: 'Protocolos Web'
+  },
+  {
+    id: 7,
+    q: 'O que é URL e quais suas partes fundamentais?',
+    a: 'URL (Uniform Resource Locator) é o endereço de um recurso na Web. Ex.: https://www.tjam.jus.br/processos\n(Protocolo + Domínio/Servidor + Caminho).',
+    tag: 'Web & Navegação'
+  },
+  {
+    id: 8,
+    q: 'Como funciona a relação CLIENTE × SERVIDOR?',
+    a: '• Cliente: programa/dispositivo que solicita o serviço (ex: navegador Chrome);\n• Servidor: máquina que armazena dados e responde com o serviço solicitado.',
+    tag: 'Arquitetura'
+  },
+  {
+    id: 9,
+    q: 'O que é uma INTRANET?',
+    a: 'Rede corporativa privada que usa as mesmas tecnologias da Internet (TCP/IP, navegadores, páginas web), de acesso restrito aos colaboradores de uma organização.',
+    tag: 'Intranet'
+  },
+  {
+    id: 10,
+    q: 'Qual o papel do servidor DNS na navegação na Internet?',
+    a: 'O DNS (Domain Name System) atua como a "lista telefônica" da Internet: traduz nomes amigáveis de sites (ex: tjam.jus.br) nos endereços IP numéricos dos servidores.',
+    tag: 'DNS & Internet'
+  }
+];
+
+// Pontos de Resumo da Aula de Redes de Computadores e Internet | TJAM
 export const informaticaSummaryPoints: string[] = [
-  'Tríade CID: Pilares fundamentais da segurança da informação — Confidencialidade (acesso restrito aos autorizados), Integridade (exatidão sem alteração indevida) e Disponibilidade (sistemas acessíveis quando necessários).',
-  'Políticas de Senhas Fortes: Senhas com no mínimo 12 a 16 caracteres misturando maiúsculas, minúsculas, números e símbolos, jamais repetidas entre sistemas e sem dados pessoais óbvios.',
-  'Autenticação Multifator (MFA): Camada de segurança obrigatória que combina dois ou mais fatores distintos: Algo que você sabe (senha), Algo que você tem (token/celular) e Algo que você é (biometria).',
-  'Tipos de Malware: Vírus (precisa de hospedeiro e execução da vítima), Worm (autorreplicável que se propaga pela rede), Trojan (Cavalo de Troia disfarçado de arquivo legítimo), Ransomware (sequestra arquivos com criptografia exigindo resgate) e Spyware/Keylogger (espiona e grava digitação).',
-  'Engenharia Social e Phishing: Técnicas de manipulação psicológica com mensagens, links e e-mails falsos para induzir servidores a entregar senhas ou abrir anexos maliciosos.',
-  'Defesas Complementares: O Firewall controla o tráfego e portas de rede (filtro de perímetro); o Antivírus inspeciona arquivos e processos locais. Um não substitui o outro.',
-  'Regra de Backup 3-2-1: 3 cópias dos dados importantes, gravadas em 2 mídias distintas, com 1 cópia isolada fora do local (off-site ou nuvem protegida).'
+  'Rede de Computadores: Conjunto de nós e dispositivos (PCs, servidores, impressoras, roteadores) interconectados para trocar informações e compartilhar periféricos.',
+  'Classificação Territorial: LAN (local: prédio, vara judicial, residência) × MAN (metropolitana: cidade inteira) × WAN (ampla escala geográfica, como a Internet mundial).',
+  'Internet & Navegação: Rede global descentralizada. O Navegador (Chrome, Firefox, Edge) é o cliente que requisita e renderiza páginas acessadas por sua URL.',
+  'Arquitetura Cliente-Servidor: O cliente envia a requisição (request) e o servidor hospeda os dados e devolve a resposta (response).',
+  'Wi-Fi vs. Internet: Wi-Fi é o meio de transmissão sem fio local (ondas de rádio IEEE 802.11). Não é sinônimo de Internet e pode funcionar isolado da grande rede.',
+  'Endereçamento IP: IPv4 (32 bits, 4 octetos decimais como 192.168.1.10) e IPv6 (128 bits, criado para suprir o esgotamento mundial de endereços IPv4).',
+  'Segurança Web: HTTP trafega dados sem proteção; HTTPS aplica criptografia SSL/TLS para garantir sigilo e autenticidade ("S" de Seguro).'
 ];

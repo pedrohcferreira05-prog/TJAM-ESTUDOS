@@ -160,7 +160,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         return saved as any;
       }
     } catch (e) {}
-    return 'processo_penal';
+    return 'direito_const';
   });
 
   const setSelectedSubject = (subject: 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura') => {
@@ -343,8 +343,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           processo_penal: 'pp-3',
           processo_civil: 'pc-1',
           informatica: 'inf-1',
-          direito_admin: 'adm-3',
-          direito_const: 'const-3',
+          direito_admin: 'adm-13',
+          direito_const: 'const-7',
         };
         const tid = topicIdMap[selectedSubject];
         if (tid) {
@@ -2021,8 +2021,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           processo_penal: 'pp-3',
           processo_civil: 'pc-1',
           informatica: 'inf-1',
-          direito_admin: 'adm-3',
-          direito_const: 'const-3',
+          direito_admin: 'adm-13',
+          direito_const: 'const-7',
         };
         const tid = topicIdMap[selectedSubject];
         if (tid) {
@@ -2250,18 +2250,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <span>Ranking Geral de Alunos & Duplas</span>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-                3º Lugar • Dupla Oficial
+                5º Lugar • Dupla Oficial
               </span>
             </div>
 
             <div className="space-y-2">
               {[
-                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '37,0%', isUser: false, isSolo: false },
-                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '35,4%', isUser: false, isSolo: false },
-                { pos: 3, name: 'Pedro Henrique & Eduardo Mateus', pct: '33,8%', isUser: true, isSolo: false },
-                { pos: 4, name: 'Letícia Vasconcelos & Guilherme Prado', pct: '30,5%', isUser: false, isSolo: false },
-                { pos: 5, name: 'Arthur Medeiros & Bianca Farias', pct: '28,2%', isUser: false, isSolo: false },
-                { pos: 6, name: 'Renan Guimarães & Camila Sampaio', pct: '26,4%', isUser: false, isSolo: false },
+                { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '39,0%', isUser: false, isSolo: false },
+                { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '36,8%', isUser: false, isSolo: false },
+                { pos: 3, name: 'Letícia Vasconcelos & Guilherme Prado', pct: '34,5%', isUser: false, isSolo: false },
+                { pos: 4, name: 'Arthur Medeiros & Bianca Farias', pct: '32,2%', isUser: false, isSolo: false },
+                { pos: 5, name: 'Pedro Henrique & Eduardo Mateus', pct: '30,0%', isUser: true, isSolo: false },
+                { pos: 6, name: 'Renan Guimarães & Camila Sampaio', pct: '27,5%', isUser: false, isSolo: false },
                 { pos: 7, name: 'Vinícius Pacheco & Débora Antunes', pct: '23,8%', isUser: false, isSolo: false },
                 { pos: 8, name: 'Marcelo Fontana & Jéssica Azevedo', pct: '21,2%', isUser: false, isSolo: false },
                 { pos: 9, name: 'Caio Meireles & Natália Barcellos', pct: '18,6%', isUser: false, isSolo: false },
@@ -2348,40 +2348,40 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* Subject Switcher Bar & Saved Progress Banner */}
       <div className="space-y-4">
-        {/* 1. SEÇÃO PRINCIPAL: AS 2 AULAS DE HOJE */}
+        {/* 1. SEÇÃO PRINCIPAL: AS 3 AULAS DE HOJE */}
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-amber-500 tracking-wider flex items-center gap-1.5">
-              <span>⭐ As 2 Aulas de Hoje (Metas Programadas)</span>
+              <span>⭐ As 4 Aulas de Hoje (Metas Programadas do Dia)</span>
             </span>
             <span className="text-[10px] text-slate-400 font-semibold">
               Prioridade máxima do dia
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 p-3 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/40 to-indigo-500/10 border-2 border-amber-500/40 shadow-md">
-            {/* 1. Processo Penal: 1ª Aula de Hoje */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 p-3 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/40 to-cyan-500/10 border-2 border-amber-500/40 shadow-md">
+            {/* 1. Direito Constitucional: 1ª Aula de Hoje */}
             <button
-              onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
-                selectedSubject === 'processo_penal'
+              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+                selectedSubject === 'direito_const'
                   ? 'bg-amber-600 text-white shadow-lg ring-2 ring-amber-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-xl">⚖️</span>
+                <span className="text-xl">🇧🇷</span>
                 <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950">1ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Processo Penal — Aula 1</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Inquérito Policial: conceito, finalidade e características</div>
+                <div className="font-extrabold text-sm sm:text-base">Direito Constitucional — Aula 1</div>
+                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Nacionalidade: Nato, Naturalizado, Cargos Privativos e EC 131/2023</div>
               </div>
               <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 15 Cards • Vídeo YouTube • Caso Prático</span>
-                {savedLessonsStore['processo_penal']?.completed ? (
+                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Vídeo • Caso Prático</span>
+                {savedLessonsStore['direito_const']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['processo_penal']?.selectedAnswers && Object.keys(savedLessonsStore['processo_penal'].selectedAnswers).length > 0 ? (
+                ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
                   <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-amber-500/40 text-amber-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
@@ -2389,39 +2389,96 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </div>
             </button>
 
-            {/* 2. Segunda Aula de Hoje (Processo Civil — Aula 2: Atos Processuais) */}
+            {/* 2. Direito Administrativo: 2ª Aula de Hoje */}
             <button
-              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4.5 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
-                selectedSubject === 'processo_civil'
-                  ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-400 scale-[1.01]'
+              onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+                selectedSubject === 'direito_admin'
+                  ? 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-400 scale-[1.01]'
                   : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xl">⚖️</span>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-400 text-slate-950">2ª Aula de Hoje</span>
+                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-blue-400 text-slate-950">2ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Processo Civil — Aula 2</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Atos Processuais: conceito, forma, tempo, prazos e preclusão</div>
+                <div className="font-extrabold text-sm sm:text-base">Direito Administrativo — Aula 2</div>
+                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Controle da Administração Pública: Interno, Externo, Judicial e Autotutela</div>
               </div>
               <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 15 Cards • Vídeo YouTube • Caso Prático</span>
-                {savedLessonsStore['processo_civil']?.completed ? (
+                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Vídeo • Caso Prático</span>
+                {savedLessonsStore['direito_admin']?.completed ? (
                   <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
-                ) : savedLessonsStore['processo_civil']?.selectedAnswers && Object.keys(savedLessonsStore['processo_civil'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-indigo-500 text-white font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
+                  <span className="text-[10px] bg-blue-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                ) : (
+                  <span className="text-[10px] bg-blue-500/40 text-blue-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                )}
+              </div>
+            </button>
+
+            {/* 3. Língua Inglesa: 3ª Aula de Hoje */}
+            <button
+              onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+                selectedSubject === 'ingles'
+                  ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-400 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className="text-xl">🇺🇸</span>
+                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-400 text-slate-950">3ª Aula de Hoje</span>
+              </div>
+              <div className="w-full">
+                <div className="font-extrabold text-sm sm:text-base">Língua Inglesa — 3ª Aula</div>
+                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Numbers (1–100), Time & Days (Desafio Oral WhatsApp)</div>
+              </div>
+              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
+                <span className="text-[11px] font-bold">20 Qs • 10 Cards • 3 Vídeos • Gravação Prática</span>
+                {savedLessonsStore['ingles']?.completed ? (
+                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                ) : savedLessonsStore['ingles']?.selectedAnswers && Object.keys(savedLessonsStore['ingles'].selectedAnswers).length > 0 ? (
+                  <span className="text-[10px] bg-indigo-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
                   <span className="text-[10px] bg-indigo-500/40 text-indigo-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                )}
+              </div>
+            </button>
+
+            {/* 4. Informática: 4ª Aula de Hoje */}
+            <button
+              onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+                selectedSubject === 'informatica'
+                  ? 'bg-cyan-600 text-white shadow-lg ring-2 ring-cyan-400 scale-[1.01]'
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className="text-xl">💻</span>
+                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-400 text-slate-950">4ª Aula de Hoje</span>
+              </div>
+              <div className="w-full">
+                <div className="font-extrabold text-sm sm:text-base">Informática — 4ª Aula</div>
+                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Redes de Computadores e Internet (LAN/MAN/WAN, URL, Wi-Fi, IP)</div>
+              </div>
+              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
+                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Protocolos & Equipamentos</span>
+                {savedLessonsStore['informatica']?.completed ? (
+                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
+                  <span className="text-[10px] bg-cyan-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                ) : (
+                  <span className="text-[10px] bg-cyan-500/40 text-cyan-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
                 )}
               </div>
             </button>
           </div>
         </div>
 
-        {/* 2. SEÇÃO SECUNDÁRIA: DEMAIS DISCIPLINAS LIBERADAS (Ocultado temporariamente para atualização) */}
-        {false && (
+        {/* 2. SEÇÃO SECUNDÁRIA: DEMAIS DISCIPLINAS LIBERADAS */}
         <div className="space-y-2 pt-1">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-1.5">
@@ -2430,64 +2487,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           </div>
 
           <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            {/* Direito Constitucional */}
-            <button
-              onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'direito_const'
-                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <span>📚 Dir. Const (Normas)</span>
-              </div>
-              {savedLessonsStore['direito_const']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
-              )}
-            </button>
-
-            {/* Informática */}
-            <button
-              onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'informatica'
-                  ? 'bg-cyan-600 text-white shadow-md ring-2 ring-cyan-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <span>💻 Informática (Segurança)</span>
-              </div>
-              {savedLessonsStore['informatica']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula</span>
-              )}
-            </button>
-
-            {/* Processo Civil: Aula 2 */}
-            <button
-              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'processo_civil'
-                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <span>📚 Proc. Civil (Aula 2)</span>
-              </div>
-              {savedLessonsStore['processo_civil']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
-              ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
-              )}
-            </button>
-
-            {/* Processo Penal: Quarta Aula */}
+            {/* Processo Penal */}
             <button
               onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
               className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
@@ -2497,32 +2497,31 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <span>⚖️ Proc. Penal (Aula 4)</span>
+                <span>⚖️ Proc. Penal (Inquérito)</span>
               </div>
               {savedLessonsStore['processo_penal']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 4</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
               )}
             </button>
 
-            {/* Inglês: Aula 3 */}
+            {/* Processo Civil */}
             <button
-              onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                selectedSubject === 'ingles'
+              onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
+              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                selectedSubject === 'processo_civil'
                   ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <Languages className="w-3.5 h-3.5 text-indigo-300" />
-                <span>🇬🇧 Inglês (Aula 3)</span>
+                <span>📚 Proc. Civil (Atos Proc.)</span>
               </div>
-              {savedLessonsStore['ingles']?.completed ? (
+              {savedLessonsStore['processo_civil']?.completed ? (
                 <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 3</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
               )}
             </button>
 
@@ -2566,7 +2565,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </button>
           </div>
         </div>
-        )}
       </div>
 
       {/* Top Breadcrumb & Metadata Header */}
@@ -2596,7 +2594,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
           <span>•</span>
           <span>
             {selectedSubject === 'ingles'
-              ? 'Unidade 1 — Apresentação e Comunicação Básica'
+              ? 'Unidade 1 — Numbers, Time & Days of the Week'
               : selectedSubject === 'geografia_amazonas'
               ? 'Unidade 2 — Aspectos Humanos e Econômicos'
               : selectedSubject === 'legislacao_tjam'
@@ -2612,15 +2610,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'processo_civil'
               ? 'Unidade 1 — Atos Processuais'
               : selectedSubject === 'informatica'
-              ? 'Segurança da Informação'
+              ? 'Unidade 2 — Redes de Computadores e Internet'
               : selectedSubject === 'direito_const'
-              ? 'Teoria da Constituição'
+              ? 'Nacionalidade (Art. 12 da CF/88)'
               : 'Unidade 4 — Agentes Públicos'}
           </span>
           <span>•</span>
           <span>
             {selectedSubject === 'ingles'
-              ? 'Aula 3 — Apresentação, Cumprimentos e Diálogo Prático'
+              ? '3ª Aula de Hoje — Numbers (1-100), Horas (What time is it?) e Dias da Semana'
               : selectedSubject === 'geografia_amazonas'
               ? '2ª Aula de Hoje — População, Manaus, ZFM (PIM) e Transporte'
               : selectedSubject === 'legislacao_tjam'
@@ -2634,9 +2632,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               : selectedSubject === 'processo_civil'
               ? 'Aula 5 — Atos Processuais'
               : selectedSubject === 'informatica'
-              ? '2ª Aula de Hoje — Segurança da Informação (CID, Senhas, Malware, Backup)'
+              ? '4ª Aula de Hoje — Redes (LAN/MAN/WAN), Internet, Cliente-Servidor, IP e HTTP/HTTPS'
               : selectedSubject === 'direito_const'
-              ? '1ª Aula — Aplicabilidade das Normas Constitucionais'
+              ? '1ª Aula de Hoje — Nacionalidade (Brasileiro Nato, Naturalizado e Perda)'
               : 'Aula 4 — Agentes Públicos (Conceito, Classificação e Regimes)'}
           </span>
         </div>
@@ -2644,14 +2642,30 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 mb-2">
-              {selectedSubject === 'processo_penal'
-                ? '⭐ 1ª AULA DE HOJE • ⚖️ Processo Penal (Inquérito Policial)'
+              {selectedSubject === 'direito_const'
+                ? '⭐ 1ª AULA DE HOJE • 🇧🇷 Direito Constitucional (Nacionalidade)'
+                : selectedSubject === 'direito_admin'
+                ? '⭐ 2ª AULA DE HOJE • ⚖️ Direito Administrativo (Controle da Administração)'
+                : selectedSubject === 'ingles'
+                ? '⭐ 3ª AULA DE HOJE • 🇺🇸 Língua Inglesa (Numbers, Time & Days)'
+                : selectedSubject === 'informatica'
+                ? '⭐ 4ª AULA DE HOJE • 💻 Informática (Redes de Computadores e Internet)'
+                : selectedSubject === 'processo_penal'
+                ? '⚖️ Processo Penal (Inquérito Policial)'
                 : selectedSubject === 'portugues'
                 ? '⏳ 2ª AULA DE HOJE • Em Breve'
                 : '📚 TJAM 2026'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {selectedSubject === 'processo_penal'
+              {selectedSubject === 'direito_const'
+                ? '🇧🇷 Direito Constitucional — 1ª Aula de Hoje: Nacionalidade (Art. 12 da CF/88)'
+                : selectedSubject === 'direito_admin'
+                ? '⚖️ Direito Administrativo — 2ª Aula de Hoje: Controle da Administração Pública'
+                : selectedSubject === 'ingles'
+                ? '🇺🇸 Língua Inglesa — 3ª Aula de Hoje: Números, Horas e Dias da Semana'
+                : selectedSubject === 'informatica'
+                ? '💻 Informática — 4ª Aula de Hoje: Redes de Computadores e Internet'
+                : selectedSubject === 'processo_penal'
                 ? '⚖️ Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)'
                 : selectedSubject === 'portugues'
                 ? '📚 2ª Aula de Hoje — Em Atualização'
@@ -2769,7 +2783,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
                   {selectedSubject === 'ingles'
-                    ? '🇬🇧 Língua Inglesa — Aula 3: Apresentação e Comunicação Básica (100% Prática)'
+                    ? '🇺🇸 Língua Inglesa — 3ª Aula de Hoje: Números, Horas e Dias da Semana'
                     : selectedSubject === 'geografia_amazonas'
                     ? `🌳 Geografia do Amazonas — 2ª Aula: Aspectos Humanos e Econômicos (${
                         selectedVideoPart === 'video2' ? 'Vídeo Aula 2' : 'Vídeo Aula 1'
@@ -2783,11 +2797,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'processo_civil'
                     ? '⚖️ Processo Civil — Aula 2: Atos Processuais (CPC/2015)'
                     : selectedSubject === 'informatica'
-                    ? 'Unidade 1 — Conceitos Básicos de Informática'
+                    ? '💻 Informática — 4ª Aula de Hoje: Redes de Computadores e Internet'
                     : selectedSubject === 'processo_penal'
                     ? '⚖️ Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)'
+                    : selectedSubject === 'direito_const'
+                    ? '🇧🇷 Direito Constitucional — Aula 1: Nacionalidade (Art. 12 da CF/88)'
                     : selectedSubject === 'direito_admin'
-                    ? '📚 Aula 1 — Direito Administrativo: Responsabilidade Civil do Estado'
+                    ? '⚖️ Direito Administrativo — Aula 2: Controle da Administração Pública'
                     : 'Aula 7 — Direito Administrativo: Poderes da Administração Pública'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -2796,15 +2812,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'processo_penal'
                     ? '1ª Aula de Hoje • Inquérito Policial (Conceito, Finalidade, Características e Atividade Prática)'
                     : selectedSubject === 'ingles'
-                    ? 'Aula 3 de Hoje 100% Prática • Cumprimentos, Apresentação Pessoal, Perguntas e Vocabulário Diário'
+                    ? '3ª Aula de Hoje • Numbers (1–100) • What time is it? (o\'clock, minutos, a.m./p.m.) • Days of the Week & Desafio em Vídeo'
+                    : selectedSubject === 'informatica'
+                    ? '4ª Aula de Hoje • Redes de Computadores e Internet • LAN, MAN, WAN, Cliente-Servidor, Roteador, Switch, IP e HTTPS'
                     : selectedSubject === 'geografia_amazonas'
                     ? '2ª Aula de Hoje • Aspectos Humanos e Econômicos • População, Manaus, Zona Franca (PIM) e Rios'
                     : selectedSubject === 'legislacao_tjam'
                     ? 'Aula 1 de 3 de Hoje • Lei Complementar nº 261/2023 • Órgãos, Sedes e Organização Forense'
                     : selectedSubject === 'libras'
                     ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Exercícios no WhatsApp'
+                    : selectedSubject === 'direito_const'
+                    ? '1ª Aula de Hoje • Nacionalidade Brasileira (Nato, Naturalizado, Cargos Privativos P-V-C-S-M-D-O-D e EC 131/2023)'
                     : selectedSubject === 'direito_admin'
-                    ? '1ª Aula de Hoje • Dever de Indenizar do Estado (Art. 37, § 6º CF/88) • Responsabilidade Objetiva (C + D + N) • Direito de Regresso'
+                    ? '2ª Aula de Hoje • Controle Interno, Externo, Judicial e Administrativo (Anulação x Revogação e Autotutela)'
                     : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
                 </p>
               </div>
@@ -2815,6 +2835,45 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 </span>
               </div>
             </div>
+
+            {/* Selector de Vídeos para Língua Inglesa (3 Vídeos) */}
+            {selectedSubject === 'ingles' && (
+              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                <button
+                  onClick={() => setSelectedVideoPart('video1')}
+                  className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video1'
+                      ? 'bg-indigo-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Vídeo 1 (Numbers: 1–20 & Dezenas)</span>
+                </button>
+                <button
+                  onClick={() => setSelectedVideoPart('video2')}
+                  className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video2'
+                      ? 'bg-indigo-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Vídeo 2 (Time: What time is it?)</span>
+                </button>
+                <button
+                  onClick={() => setSelectedVideoPart('video3')}
+                  className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    selectedVideoPart === 'video3'
+                      ? 'bg-indigo-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5 text-amber-300" />
+                  <span>🎬 Vídeo 3 (Days of the Week)</span>
+                </button>
+              </div>
+            )}
 
             {/* Selector de Vídeos para Geografia do Amazonas (2 Vídeos) */}
             {selectedSubject === 'geografia_amazonas' && (
@@ -2844,15 +2903,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </div>
             )}
 
-            {/* Selector de Partes / Vídeos exclusivamente para LIBRAS */}
-
             {/* Embedded YouTube Video Player */}
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
               <iframe
                 className="w-full h-full"
                 src={
                   selectedSubject === 'ingles'
-                    ? 'https://www.youtube.com/embed/vtRZNKPYme0?autoplay=0&rel=0'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://www.youtube.com/embed/TuNUCGYFohw?autoplay=0&rel=0'
+                      : selectedVideoPart === 'video3'
+                      ? 'https://www.youtube.com/embed/EUNBiseiCm8?autoplay=0&rel=0'
+                      : 'https://www.youtube.com/embed/TpJVd9ZZVcg?autoplay=0&rel=0'
                     : selectedSubject === 'geografia_amazonas'
                     ? selectedVideoPart === 'video2'
                       ? 'https://www.youtube.com/embed/5JQQf2fcuz4?autoplay=0&rel=0'
@@ -2870,14 +2931,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/jLYXwMY9lQQ?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
-                    ? 'https://www.youtube.com/embed/a1bb14-8UYY?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/IXnYHAicgf0?autoplay=0&rel=0'
                     : selectedSubject === 'direito_admin'
-                    ? 'https://www.youtube.com/embed/fS0LrjO5Wfs?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/06f_EvjEW6k?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
                 }
                 title={
                   selectedSubject === 'ingles'
-                    ? 'Vídeo Aula - Língua Inglesa: Apresentação e Comunicação Básica (Aula 3)'
+                    ? `Vídeo Aula - Língua Inglesa: 3ª Aula de Hoje — ${
+                        selectedVideoPart === 'video2'
+                          ? 'Time (Horas, What time is it?, o\'clock e Minutos)'
+                          : selectedVideoPart === 'video3'
+                          ? 'Days of the Week (Dias da Semana e Expressões Temporais)'
+                          : 'Numbers (Números 1–20, Dezenas, 100 e Pronúncia)'
+                      }`
                     : selectedSubject === 'geografia_amazonas'
                     ? `Vídeo Aula - Geografia do Amazonas: Aspectos Humanos e Econômicos (${
                         selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'
@@ -2893,11 +2960,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Aula 2 — Atos Processuais (CPC/2015)'
                     : selectedSubject === 'informatica'
-                    ? 'Vídeo Aula - Informática: 2ª Aula de Hoje — Segurança da Informação (Tríade CID, Ameaças e Defesas)'
+                    ? 'Vídeo Aula - Informática: 4ª Aula de Hoje — Redes de Computadores e Internet (LAN/MAN/WAN, Equipamentos e Protocolos)'
                     : selectedSubject === 'direito_const'
-                    ? 'Vídeo Aula - Direito Constitucional: Aplicabilidade das Normas Constitucionais (Eficácia Plena, Contida e Limitada)'
+                    ? 'Vídeo Aula - Direito Constitucional: Nacionalidade (Art. 12 da CF/88 — Brasileiro Nato, Naturalizado e Perda)'
                     : selectedSubject === 'direito_admin'
-                    ? 'Vídeo Aula - Direito Administrativo: Aula 1 — Responsabilidade Civil do Estado'
+                    ? 'Vídeo Aula - Direito Administrativo: 2ª Aula de Hoje — Controle da Administração Pública'
                     : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -2910,7 +2977,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               <a
                 href={
                   selectedSubject === 'ingles'
-                    ? 'https://youtu.be/vtRZNKPYme0?is=JEkWF1Vglcjnuyjq'
+                    ? selectedVideoPart === 'video2'
+                      ? 'https://youtu.be/TuNUCGYFohw?is=WdF37p7Zd0F-s74S'
+                      : selectedVideoPart === 'video3'
+                      ? 'https://youtu.be/EUNBiseiCm8?is=H-J0slBgGfELVfvJ'
+                      : 'https://youtu.be/TpJVd9ZZVcg?is=nsMMPKxCLfvfK4wo'
                     : selectedSubject === 'geografia_amazonas'
                     ? selectedVideoPart === 'video2'
                       ? 'https://www.youtube.com/live/5JQQf2fcuz4?is=XkxoK8KS9pA_IUS3'
@@ -2928,9 +2999,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/live/jLYXwMY9lQQ?is=A6ImTDFcX11VYx8v'
                     : selectedSubject === 'direito_const'
-                    ? 'https://youtu.be/a1bb14-8UYY?is=cBUBPPAoD43UHQcf'
+                    ? 'https://youtu.be/IXnYHAicgf0?is=t0SiElPvNG_eI2fW'
                     : selectedSubject === 'direito_admin'
-                    ? 'https://youtu.be/fS0LrjO5Wfs?is=UjSegw0VZ6ZiLDjq'
+                    ? 'https://youtu.be/06f_EvjEW6k?is=kGenVS9-jH57s7_h'
                     : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
                 }
                 target="_blank"
@@ -2940,7 +3011,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>
                   Abrir no YouTube{
-                    selectedSubject === 'geografia_amazonas'
+                    selectedSubject === 'ingles'
+                      ? ` (${selectedVideoPart === 'video2' ? 'Vídeo 2 — Horas' : selectedVideoPart === 'video3' ? 'Vídeo 3 — Dias' : 'Vídeo 1 — Números'})`
+                      : selectedSubject === 'geografia_amazonas'
                       ? ` (${selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'})`
                       : ''
                   }
@@ -2958,27 +3031,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Cumprimentos formais e informais (Hello, Hi, Good morning, How are you).</span>
+                      <span>🔢 <strong>Números 1 a 100:</strong> Contagem de 1 a 20, dezenas (30 a 90) e formação de compostos com hífen (25, 48, 99).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Apresentação pessoal clara (My name is..., I am a student, I live in Manaus).</span>
+                      <span>🕐 <strong>Horas e Horários:</strong> Estrutura de pergunta "What time is it?" e resposta "It's...", regra exclusiva do "o'clock" para horas cheias.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Perguntas básicas do cotidiano (What is your name?, Where do you live?, What do you do?).</span>
+                      <span>☀️ <strong>a.m. e p.m.:</strong> Distinção precisa entre horários antes do meio-dia (a.m.) e após o meio-dia (p.m.).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Vocabulário essencial: Lugares (library, court, school), Cores, Números e Dias da semana.</span>
+                      <span>📅 <strong>7 Dias da Semana:</strong> Monday a Sunday em ordem com grafia obrigatória em letra maiúscula e pronúncia correta.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Leitura e compreensão de textos curtos e contextualizados ("A day in the life of Pedro").</span>
+                      <span>⏳ <strong>Marcadores Temporais:</strong> Today (hoje), Tomorrow (amanhã) e Yesterday (ontem).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Resolução dos 20 exercícios práticos com foco total em provas de concurso TJAM.</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span>🎥 <strong>Exercício Prático Oral:</strong> Gravação de vídeo pelo aluno no celular e envio ao professor via WhatsApp.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'geografia_amazonas' ? (
@@ -3143,77 +3216,81 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Conceito de Segurança da Informação e a Tríade fundamental CID (Confidencialidade, Integridade e Disponibilidade).</span>
+                      <span><strong>Conceito de Redes:</strong> Conjunto de dispositivos (nós) conectados para compartilhar informações, recursos e serviços.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Políticas de senhas fortes, boas práticas corporativas e Autenticação em Dois Fatores (MFA / 2FA).</span>
+                      <span><strong>Classificação Geográfica:</strong> LAN (rede local), MAN (metropolitana) e WAN (longa extensão geográfica / Internet global).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Diferença crucial entre Vírus (precisa de hospedeiro), Worm (autorreplicável na rede) e Trojan (cavalo de troia disfarçado).</span>
+                      <span><strong>Modelo Cliente-Servidor:</strong> O cliente solicita informações e o servidor fornece/processa os dados na rede.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Ransomware (sequestro de arquivos por criptografia e extorsão) e Spyware/Keylogger (espionagem).</span>
+                      <span><strong>Equipamentos de Conexão:</strong> Roteador (encaminha pacotes entre redes diferentes), Switch (conecta na mesma rede) e Modem (conversão de sinal).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Engenharia Social e Phishing (mensagens e páginas falsas para capturar credenciais de servidores).</span>
+                      <span><strong>Wi-Fi vs. Internet:</strong> Wi-Fi é apenas o meio de transmissão sem fio local (WLAN); não é a Internet em si.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                      <span>Mecanismos de defesa: Firewall (filtro de tráfego de rede) vs. Antivírus e a Regra de Backup 3-2-1.</span>
+                      <span><strong>Protocolos e Endereçamento:</strong> IP (endereço numérico único do dispositivo) e navegação segura HTTPS com criptografia SSL/TLS.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'direito_const' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Classificação clássica mais cobrada em concursos (José Afonso da Silva / Tesauro do STF).</span>
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🇧🇷 <strong>Artigo 12 da CF/88:</strong> Vínculo jurídico-político que define quem são os brasileiros natos e naturalizados.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>1️⃣ <strong>Norma de Eficácia Plena:</strong> aplicação direta, imediata e integral (Palavra-chave: COMPLETA).</span>
+                      <span>👶 <strong>Brasileiro Nato:</strong> Nascidos no Brasil (jus soli temperado), no exterior a serviço da RFB ou registro consular / opção após 18 anos.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
-                      <span>2️⃣ <strong>Norma de Eficácia Contida:</strong> aplicação direta e imediata, redutível por lei (Palavra-chave: PODE SER REDUZIDA — Art. 5º, XIII).</span>
+                      <Check className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
+                      <span>🌎 <strong>Naturalização:</strong> Países de língua portuguesa (1 ano + idoneidade); Demais estrangeiros (15+ anos + sem condenação penal + requerimento).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                      <span>3️⃣ <strong>Norma de Eficácia Limitada:</strong> aplicação indireta e mediata; normas de princípio institutivo e programático (Palavra-chave: PRECISA SER COMPLEMENTADA).</span>
+                      <span>🎖️ <strong>Mnemônico P-V-C-S-M-D-O-D:</strong> 8 cargos privativos de nato (Pres., Vice, Pres. Câmara, Pres. Senado, Min. STF, Diplomata, Oficial Forças Armadas, Min. Defesa).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                      <span>⚠️ <strong>Pegadinha FGV:</strong> Contida já nasce ampla e a lei restringe; Limitada nasce dependente de lei para ter eficácia integral.</span>
+                      <span>⚡ <strong>Regra Atual (EC 131/2023):</strong> Adquirir outra nacionalidade NÃO acarreta mais a perda automática da nacionalidade brasileira!</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'direito_admin' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🎯 <strong>Responsabilidade Civil do Estado:</strong> Dever de indenizar prejuízos causados a terceiros por ação ou omissão administrativa (Art. 37, § 6º da CF/88).</span>
+                      <span>🏛️ <strong>Finalidade do Controle:</strong> Fiscalizar, acompanhar e verificar a regularidade da atuação administrativa para evitar ilegalidades e desperdício.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🔑 <strong>Responsabilidade Objetiva (Regra):</strong> O Estado responde independente de culpa. Basta provar a Conduta + Dano + Nexo de Causalidade (Macete: C + D + N).</span>
+                      <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                      <span>🏢 <strong>Controle Interno:</strong> Realizado dentro do próprio Poder ou órgão que praticou o ato (Interno = dentro da Administração).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🔄 <strong>Direito de Regresso (Subjetivo):</strong> O Estado pode cobrar do agente público que causou o dano, mas apenas se comprovado dolo ou culpa (Agente = Subjetiva).</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span>🏛️ <strong>Controle Externo:</strong> Exercido por outro Poder. No âmbito federal, compete ao Congresso Nacional com auxílio técnico do TCU (arts. 70 e 71 da CF/88).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>👤 <strong>Conceito Amplo de Agente Público:</strong> Qualquer um exercendo função pública, mesmo transitória ou sem remuneração (ex: mesário na eleição, jurado).</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🚫 <strong>Excludentes de Nexo:</strong> Culpa exclusiva da vítima (rompe o nexo), caso fortuito / força maior e fato exclusivo de terceiro.</span>
+                      <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>⚖️ <strong>Controle Judicial:</strong> Privativo do Poder Judiciário, restringe-se à LEGALIDADE dos atos administrativos quando provocado; não invade o mérito.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                      <span>⚠️ <strong>Atenção TJAM / FGV:</strong> O particular lesado não pode ajuizar ação diretamente contra o servidor (Tema 940 STF - Dupla Garantia). Processa o Estado, e este regressa contra o agente.</span>
+                      <span>❌ <strong>Anulação:</strong> Ato ILEGAL, decorre de vício de legalidade, efeito retroativo (ex tunc). Feita pela Administração ou pelo Judiciário.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>✅ <strong>Revogação:</strong> Ato VÁLIDO, juízo discricionário de conveniência e oportunidade (mérito), efeito prospectivo (ex nunc). Privativa da Administração!</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>⏱️ <strong>Momento do Controle:</strong> Prévio (antes do ato), Concomitante (durante a execução) e Posterior (depois de praticado).</span>
                     </li>
                   </ul>
                 ) : (
@@ -3772,9 +3849,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'libras'
                   ? 'Mapa Mental — Aula 1: Conceitos Básicos de LIBRAS e Legislação'
                   : selectedSubject === 'informatica'
-                  ? 'Mapa Mental — Capítulo 1: Conceitos Básicos de Informática'
+                  ? 'Mapa Mental — Informática: Redes de Computadores e Internet'
                   : selectedSubject === 'direito_const'
-                  ? 'Mapa Mental — Aula 2: Princípios Fundamentais (Arts. 1º ao 4º CF/88)'
+                  ? 'Mapa Mental — Direito Constitucional: Nacionalidade (Art. 12 da CF/88)'
                   : selectedSubject === 'processo_penal'
                   ? 'Mapa Mental — Aula 1: Inquérito Policial'
                   : selectedSubject === 'processo_civil'
@@ -3787,9 +3864,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'libras'
                   ? 'Esquema visual sobre LIBRAS, Parâmetros dos Sinais, Datilologia, Lei 10.436/2002 e Decreto 5.626/2005'
                   : selectedSubject === 'informatica'
-                  ? 'Esquema visual sobre Informática, Dado x Informação, Hardware, Software e Periféricos'
+                  ? 'Esquema visual sobre Redes de Computadores, LAN x MAN x WAN, Cliente-Servidor, Roteador, Switch, Modem, IP e HTTPS'
                   : selectedSubject === 'direito_const'
-                  ? 'Esquema visual sobre os 5 Fundamentos (SOCIVADIPLU), Tripartição dos Poderes e Objetivos (CONERGAPRO)'
+                  ? 'Esquema visual sobre Brasileiro Nato (Jus Soli e Sanguinis), Naturalizado, Cargos Privativos (P-V-C-S-M-D-O-D) e EC 131/2023'
                   : selectedSubject === 'processo_penal'
                   ? 'Esquema visual sobre Inquérito Policial, características e instauração'
                   : selectedSubject === 'processo_civil'
@@ -3808,9 +3885,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'Mapa Mental - LIBRAS: Conceitos e Legislação'
                     : selectedSubject === 'informatica'
-                    ? 'Mapa Mental - Conceitos Básicos de Informática'
+                    ? 'Mapa Mental - Redes de Computadores e Internet'
                     : selectedSubject === 'direito_const'
-                    ? 'Mapa Mental - Direito Constitucional: Princípios Fundamentais'
+                    ? 'Mapa Mental - Direito Constitucional: Nacionalidade (Art. 12)'
                     : selectedSubject === 'processo_penal'
                     ? 'Mapa Mental - Processo Penal'
                     : selectedSubject === 'processo_civil'
@@ -3839,9 +3916,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'libras'
                   ? ['LIBRAS', 'Lei 10.436/2002', 'Decreto 5.626/2005', 'Datilologia', 'Parâmetros dos Sinais', 'Acessibilidade', 'TJAM']
                   : selectedSubject === 'informatica'
-                  ? ['Informática', 'Hardware', 'Software', 'Dado x Informação', 'CPU e RAM', 'Periféricos', 'PJe TJAM']
+                  ? ['Informática', 'Redes de Computadores', 'LAN x MAN x WAN', 'Internet', 'Cliente-Servidor', 'Roteador', 'Wi-Fi', 'IP', 'HTTPS', 'TJAM']
                   : selectedSubject === 'direito_const'
-                  ? ['Constituição', 'SOCIVADIPLU', 'Tripartição dos Poderes', 'CONERGAPRO', 'Art. 1º ao 4º', 'CF/88', 'TJAM']
+                  ? ['Nacionalidade', 'Art. 12 da CF', 'Brasileiro Nato', 'Naturalizado', 'P-V-C-S-M-D-O-D', 'EC 131/2023', 'TJAM']
                   : selectedSubject === 'processo_penal'
                   ? ['Processo Penal', 'Inquérito Policial', 'Polícia Judiciária', 'CPP', 'TJAM']
                   : selectedSubject === 'processo_civil'
@@ -4180,7 +4257,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-300 font-medium mt-0.5">
-                            Aluno Oficial: <strong className="text-white">Pedro Henrique</strong> (Dupla com Eduardo Mateus • 3º Lugar Geral TJAM • 100% em dia). Todas as 10 questões de Processo Civil abaixo estão respondidas com a alternativa correta destacada.
+                            Aluno Oficial: <strong className="text-white">Pedro Henrique</strong> (Dupla com Eduardo Mateus • 5º Lugar Geral TJAM • 100% em dia). Todas as 10 questões de Processo Civil abaixo estão respondidas com a alternativa correta destacada.
                           </p>
                         </div>
                       </div>
@@ -4503,7 +4580,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'portugues'
                   ? 'Resumo — Língua Portuguesa: Conjunções e Conectivos'
                   : selectedSubject === 'direito_const'
-                  ? 'Resumo — Direito Constitucional: Aplicabilidade das Normas Constitucionais (1ª Aula de Hoje)'
+                  ? 'Resumo — Direito Constitucional: Nacionalidade (1ª Aula de Hoje)'
                   : selectedSubject === 'libras'
                   ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_civil'

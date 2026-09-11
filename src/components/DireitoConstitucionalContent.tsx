@@ -15,8 +15,16 @@ import {
   ShieldCheck,
   Bookmark,
   Building,
-  Target
+  Target,
+  Video,
+  Globe,
+  Award,
+  Send,
+  ExternalLink,
+  Info,
+  CheckSquare
 } from 'lucide-react';
+import { direitoConstVideoPracticalTask } from '../data/direitoConstitucionalLessonData';
 
 interface DireitoConstitucionalContentProps {
   isDarkMode: boolean;
@@ -33,27 +41,41 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
 }) => {
   const [checklist, setChecklist] = useState<Record<string, boolean>>(() => {
     try {
-      const saved = localStorage.getItem('tjam_checklist_direito_const');
+      const saved = localStorage.getItem('tjam_checklist_direito_const_nacionalidade');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     return {
-      plena: false,
-      contida: false,
-      limitada: false,
-      institutivo: false,
-      programatico: false,
-      pegadinha: false
+      conceito: false,
+      nato: false,
+      naturalizado: false,
+      diferencas: false,
+      cargos_privativos: false,
+      portugueses: false,
+      perda_ec131: false
     };
   });
+
+  const [videoLink, setVideoLink] = useState('');
+  const [videoStatus, setVideoStatus] = useState<'idle' | 'enviado'>('idle');
+  const [activeTabSub, setActiveTabSub] = useState<'teoria' | 'mapa' | 'pratica'>('teoria');
 
   const toggleCheck = (key: string) => {
     setChecklist(prev => {
       const updated = { ...prev, [key]: !prev[key] };
       try {
-        localStorage.setItem('tjam_checklist_direito_const', JSON.stringify(updated));
+        localStorage.setItem('tjam_checklist_direito_const_nacionalidade', JSON.stringify(updated));
       } catch (e) {}
       return updated;
     });
+  };
+
+  const handleSendVideo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!videoLink.trim()) return;
+    setVideoStatus('enviado');
+    try {
+      localStorage.setItem('tjam_video_desafio_const_nacionalidade', videoLink);
+    } catch (e) {}
   };
 
   return (
@@ -68,26 +90,26 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
       <section
         className={`p-6 sm:p-8 rounded-3xl border ${
           isDarkMode
-            ? 'bg-amber-500/10 border-amber-500/30'
-            : 'bg-gradient-to-r from-amber-50 to-amber-100/60 border-amber-200'
+            ? 'bg-emerald-500/10 border-emerald-500/30'
+            : 'bg-gradient-to-r from-emerald-50 via-teal-50/60 to-emerald-100/40 border-emerald-200'
         }`}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30">
-                <Sparkles className="w-3.5 h-3.5" /> 📚 Direito Constitucional — 1ª Aula de Hoje
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30">
+                <Sparkles className="w-3.5 h-3.5" /> 🇧🇷 Direito Constitucional — 1ª Aula de Hoje
               </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30">
-                ⭐ Eficácia das Normas (José Afonso da Silva / STF)
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                ⭐ Artigo 12 da CF/88 — Nacionalidade
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-amber-900 dark:text-amber-300 mt-2 flex items-center gap-2">
-              <Landmark className="w-8 h-8 text-amber-600 dark:text-amber-400 shrink-0" />
-              <span>Aplicabilidade das Normas Constitucionais</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-emerald-950 dark:text-emerald-200 mt-2 flex items-center gap-2">
+              <Landmark className="w-8 h-8 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span>Nacionalidade: Nato, Naturalizado e Perda</span>
             </h2>
-            <p className="text-xs text-amber-700 dark:text-amber-400 font-semibold mt-1">
-              Este é o conteúdo oficial do concurso, sem repetir Direitos e Garantias Fundamentais.
+            <p className="text-xs text-emerald-800 dark:text-emerald-300 font-semibold mt-1">
+              Esta é a próxima aula da sequência de Direito Constitucional para o TJAM, após Direitos e Garantias Fundamentais.
             </p>
           </div>
 
@@ -95,368 +117,645 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
             {onNavigateTab && (
               <button
                 onClick={() => onNavigateTab('questoes')}
-                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
               >
                 <HelpCircle className="w-4 h-4" />
-                <span>Ver 20 Questões</span>
+                <span>20 Questões (TJAM)</span>
+              </button>
+            )}
+            {onToggleCompleted && (
+              <button
+                onClick={onToggleCompleted}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  isLessonCompleted
+                    ? 'bg-emerald-500 text-white shadow-emerald-500/20 shadow-md'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300'
+                }`}
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{isLessonCompleted ? 'Concluída' : 'Marcar Concluída'}</span>
               </button>
             )}
           </div>
         </div>
 
-        <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
-          A classificação mais cobrada divide as normas constitucionais em <strong>eficácia plena, contida e limitada</strong>. O próprio <strong>STF utiliza essas categorias em seu Tesauro</strong>, e material do Senado também apresenta essa classificação (doutrina clássica de José Afonso da Silva).
-        </p>
-      </section>
-
-      {/* 2. 1️⃣ Norma de Eficácia Plena */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 font-black text-sm flex items-center justify-center border border-emerald-500/20">
-              1️⃣
-            </div>
-            <div>
-              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                Norma de Eficácia Plena
-              </h3>
-              <p className="text-xs text-slate-500">Autoaplicável desde a promulgação da CF/88</p>
-            </div>
-          </div>
-          <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-            📌 Palavra-chave: COMPLETA
-          </span>
-        </div>
-
-        <p className="text-sm">
-          É aquela que <strong>já possui todos os elementos necessários</strong> para produzir seus efeitos desde a entrada em vigor da Constituição. Ela nasce pronta e acabada.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-emerald-50/50 border-emerald-200'}`}>
-            <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">Característica 1</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Direta</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Não depende de nenhum intermediário ou veículo normativo legal.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-emerald-50/50 border-emerald-200'}`}>
-            <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">Característica 2</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Imediata</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Gera efeitos jurídicos e sociais a partir do primeiro instante de vigência.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-emerald-50/50 border-emerald-200'}`}>
-            <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">Característica 3</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Integral</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Não pode ter seu alcance reduzido, restringido ou apequenado por lei.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-emerald-50/50 border-emerald-200'}`}>
-            <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">Característica 4</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Independe de Lei</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Não depende de regulamentação para produzir seus efeitos essenciais.</p>
-          </div>
-        </div>
-
-        <div className={`p-4 rounded-2xl border space-y-2 text-xs ${isDarkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-          <div className="flex items-center gap-2 font-bold text-emerald-600 dark:text-emerald-400">
-            <ShieldCheck className="w-4 h-4" />
-            <span>Exemplos em Concurso:</span>
-          </div>
-          <p className="text-slate-600 dark:text-slate-300">
-            Normas que estabelecem determinadas competências e vedações diretamente na Constituição (ex: Art. 5º, XLVII — vedação de penas de morte, de caráter perpétuo ou de trabalhos forçados; competências expressas dos órgãos do Poder Judiciário).
-          </p>
-        </div>
-      </section>
-
-      {/* 3. 2️⃣ Norma de Eficácia Contida */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-500 font-black text-sm flex items-center justify-center border border-purple-500/20">
-              2️⃣
-            </div>
-            <div>
-              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                Norma de Eficácia Contida
-              </h3>
-              <p className="text-xs text-slate-500">Redutível ou restringível por lei infraconstitucional</p>
-            </div>
-          </div>
-          <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30">
-            📌 Palavra-chave: PODE SER REDUZIDA
-          </span>
-        </div>
-
-        <p className="text-sm">
-          Também possui <strong>aplicabilidade imediata e direta</strong>, mas seu alcance <strong>pode ser restringido</strong> (contido) por lei posterior ou outras normas constitucionais. Enquanto não houver lei que limite, <strong>produz efeitos amplos e plenos</strong>.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-purple-50/50 border-purple-200'}`}>
-            <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400">Atributo 1</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Direta</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Opera sem intermediação para deflagrar os efeitos.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-purple-50/50 border-purple-200'}`}>
-            <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400">Atributo 2</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Imediata</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">O cidadão já pode fruir do direito desde a promulgação.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-purple-50/50 border-purple-200'}`}>
-            <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400">Atributo 3</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação NÃO Integral</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Está sujeita a limites, condições ou restrições de lei futura.</p>
-          </div>
-        </div>
-
-        <div className={`p-5 rounded-2xl border space-y-2 text-xs ${isDarkMode ? 'bg-purple-950/20 border-purple-800/40' : 'bg-purple-50/80 border-purple-200'}`}>
-          <div className="flex items-center gap-2 font-bold text-purple-700 dark:text-purple-300">
-            <Lightbulb className="w-4 h-4" />
-            <span>Exemplo Clássico de Concurso (Campeão em Provas da FGV):</span>
-          </div>
-          <blockquote className="italic font-bold text-sm text-slate-800 dark:text-slate-200 pl-3 border-l-2 border-purple-500">
-            Art. 5º, XIII, da CF/88: "é livre o exercício de qualquer trabalho, ofício ou profissão, atendidas as qualificações profissionais que a lei estabelecer".
-          </blockquote>
-          <p className="text-slate-600 dark:text-slate-300 pt-1">
-            <strong>Como cai na prova:</strong> Se não existe lei exigindo qualificações (ex: exame, registro, curso superior), qualquer cidadão pode exercer aquela atividade. Se vier lei impondo requisitos (como para advogados ou médicos), o alcance da liberdade é legitimamente <em>contido</em>.
-          </p>
-        </div>
-      </section>
-
-      {/* 4. 3️⃣ Norma de Eficácia Limitada */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-500 font-black text-sm flex items-center justify-center border border-amber-500/20">
-              3️⃣
-            </div>
-            <div>
-              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                Norma de Eficácia Limitada
-              </h3>
-              <p className="text-xs text-slate-500">Depende de integração normativa para produzir plenitude de efeitos</p>
-            </div>
-          </div>
-          <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
-            📌 Palavra-chave: PRECISA SER COMPLEMENTADA
-          </span>
-        </div>
-
-        <p className="text-sm">
-          <strong>Não possui aplicabilidade plena imediata.</strong> Depende de uma <strong>lei infraconstitucional futura</strong> (lei ordinária ou complementar) para produzir todos os seus efeitos essenciais.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-amber-50/50 border-amber-200'}`}>
-            <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400">Atributo 1</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Indireta</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Depende de intermediação legislativa para operar concretamente.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-amber-50/50 border-amber-200'}`}>
-            <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400">Atributo 2</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Mediata</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Não é instantânea; depende do decurso do processo legislativo.</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-1 ${isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-amber-50/50 border-amber-200'}`}>
-            <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400">Atributo 3</span>
-            <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Aplicação Reduzida</h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300">Suas principais faculdades ficam represadas até a edição da lei.</p>
-          </div>
-        </div>
-
-        {/* Subdivisões do STF / Doutrina */}
-        <div className="space-y-3 pt-2">
-          <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>⚖️ Subdivisões Consagradas pelo STF:</span>
-          </h4>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-slate-200 shadow-sm'}`}>
-              <div className="flex items-center gap-2">
-                <Building className="w-5 h-5 text-amber-500" />
-                <h5 className="font-black text-sm text-slate-900 dark:text-white">
-                  A) Normas de Princípio Institutivo (Organizativo)
-                </h5>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
-                Criam e estruturam órgãos, entidades ou instituições públicas, prevendo que a lei infraconstitucional organize o seu funcionamento, competências e procedimentos.
-              </p>
-              <div className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
-                Ex: Criação de novos Tribunais, ministérios ou conselhos "na forma da lei".
-              </div>
-            </div>
-
-            <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-slate-200 shadow-sm'}`}>
-              <div className="flex items-center gap-2">
-                <Target className="w-5 h-5 text-blue-500" />
-                <h5 className="font-black text-sm text-slate-900 dark:text-white">
-                  B) Normas de Princípio Programático
-                </h5>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
-                Traçam metas, fins sociais, princípios de justiça econômica e programas estatais a serem gradualmente realizados pelos Poderes Públicos em prol da coletividade.
-              </p>
-              <div className="text-[11px] font-semibold text-blue-600 dark:text-blue-400">
-                Ex: Saúde universal (Art. 196), pleno emprego (Art. 170) e erradicação da pobreza (Art. 3º).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. ⚠️ Pegadinha de Prova (FGV) */}
-      <section
-        className={`p-6 rounded-3xl border ${
-          isDarkMode
-            ? 'bg-rose-500/10 border-rose-500/30'
-            : 'bg-rose-50 border-rose-200'
-        }`}
-      >
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="w-6 h-6 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
-          <div className="space-y-2">
-            <h4 className="text-base font-black text-rose-900 dark:text-rose-300">
-              ⚠️ Pegadinha Clássica de Concurso: Contida vs. Limitada
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
-              <strong>Como memorizar para acertar na hora da prova:</strong>
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-              <div className="p-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900/40">
-                <span className="font-extrabold text-rose-600 dark:text-rose-400 block mb-1">NORMA CONTIDA:</span>
-                Nasce com eficácia <strong>PLENA E AMPLA</strong>. A lei posterior vem para <strong>RESTRINGIR</strong>. Se nunca vier lei, continua 100% livre.
-              </div>
-              <div className="p-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900/40">
-                <span className="font-extrabold text-amber-600 dark:text-amber-400 block mb-1">NORMA LIMITADA:</span>
-                Nasce <strong>DEPENDENTE DE LEI</strong> para ter eficácia integral. A lei posterior vem para <strong>AMPLIAR/INTEGRAR</strong>. Se não houver lei, o direito fica obstado na prática.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Tabela Resumo Visual Comparativa */}
-      <section className="space-y-4">
-        <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
-          <span>📊 Tabela Resumo Definitiva — Eficácia das Normas Constitucionais</span>
-        </h3>
-
-        <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
-          <table className="w-full text-xs text-left">
-            <thead className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-extrabold border-b border-slate-200 dark:border-slate-700">
-              <tr>
-                <th className="p-3.5">Classificação</th>
-                <th className="p-3.5">Aplicação</th>
-                <th className="p-3.5">Papel da Lei Futura</th>
-                <th className="p-3.5">Palavra-chave</th>
-                <th className="p-3.5">Exemplo Clássico</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
-                <td className="p-3.5 font-black text-emerald-600 dark:text-emerald-400">Eficácia Plena</td>
-                <td className="p-3.5">Direta, imediata e integral</td>
-                <td className="p-3.5">Desnecessária para os efeitos essenciais</td>
-                <td className="p-3.5"><span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold">COMPLETA</span></td>
-                <td className="p-3.5">Vedações constitucionais expressas e competências</td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
-                <td className="p-3.5 font-black text-purple-600 dark:text-purple-400">Eficácia Contida</td>
-                <td className="p-3.5">Direta, imediata e não integral</td>
-                <td className="p-3.5">Restringir ou conter o alcance original</td>
-                <td className="p-3.5"><span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold">PODE SER REDUZIDA</span></td>
-                <td className="p-3.5">Art. 5º, XIII (Livre exercício profissional)</td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
-                <td className="p-3.5 font-black text-amber-600 dark:text-amber-400">Eficácia Limitada</td>
-                <td className="p-3.5">Indireta, mediata e reduzida</td>
-                <td className="p-3.5">Integrar ou complementar o preceito</td>
-                <td className="p-3.5"><span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">PRECISA COMPLEMENTAR</span></td>
-                <td className="p-3.5">Art. 37, VII (Greve no serviço público)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* 7. Checklist Interativo de Fixação */}
-      <section className="space-y-3 pt-2">
-        <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-          <span>✅ Checklist de Domínio do Conteúdo:</span>
-        </h4>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-          {[
-            { id: 'plena', label: '1. Sei os 3 atributos da Plena (Direta, Imediata e Integral).' },
-            { id: 'contida', label: '2. Sei que a Contida nasce plena e a lei serve para restringir.' },
-            { id: 'limitada', label: '3. Sei que a Limitada tem aplicação indireta e mediata.' },
-            { id: 'institutivo', label: '4. Diferencio princípio institutivo de princípio programático.' },
-            { id: 'programatico', label: '5. Sei que norma programática tem eficácia jurídica mínima.' },
-            { id: 'pegadinha', label: '6. Dominei a pegadinha FGV: Contida ≠ Limitada.' }
-          ].map(item => (
-            <button
-              key={item.id}
-              onClick={() => toggleCheck(item.id)}
-              className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
-                checklist[item.id]
-                  ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold'
-                  : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
-              }`}
-            >
-              <div className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 ${
-                checklist[item.id] ? 'bg-emerald-600 text-white' : 'border border-slate-400'
-              }`}>
-                {checklist[item.id] && <Check className="w-3 h-3" />}
-              </div>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* 8. Botões de Ação Final */}
-      <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800">
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          {onNavigateTab && (
-            <>
-              <button
-                onClick={() => onNavigateTab('flashcards')}
-                className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Layers className="w-4 h-4 text-purple-500" />
-                <span>15 Flashcards</span>
-              </button>
-
-              <button
-                onClick={() => onNavigateTab('questoes')}
-                className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
-              >
-                <HelpCircle className="w-4 h-4" />
-                <span>Resolver 20 Questões</span>
-              </button>
-            </>
-          )}
-        </div>
-
-        {onToggleCompleted && (
+        {/* Mini tabs internas */}
+        <div className="flex gap-2 border-t border-emerald-200/50 dark:border-emerald-800/40 pt-4 flex-wrap">
           <button
-            onClick={onToggleCompleted}
-            className={`w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
-              isLessonCompleted
-                ? 'bg-emerald-700 text-white border border-emerald-400/40 shadow-emerald-700/20'
-                : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+            onClick={() => setActiveTabSub('teoria')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTabSub === 'teoria'
+                ? 'bg-emerald-600 text-white'
+                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
             }`}
           >
-            <CheckCircle2 className="w-4 h-4" />
-            <span>{isLessonCompleted ? '✓ Aula 1 Concluída (Clique para alternar)' : 'Concluir 1ª Aula de Constitucional'}</span>
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Teoria Completa (Art. 12)</span>
+          </button>
+          <button
+            onClick={() => setActiveTabSub('mapa')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTabSub === 'mapa'
+                ? 'bg-emerald-600 text-white'
+                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span>Mapa Mental & Mnemônico</span>
+          </button>
+          <button
+            onClick={() => setActiveTabSub('pratica')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTabSub === 'pratica'
+                ? 'bg-rose-600 text-white'
+                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
+            }`}
+          >
+            <Video className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
+            <span>Exercício Prático em Vídeo</span>
+          </button>
+        </div>
+
+        {/* Checklist da Aula */}
+        <div className="mt-4 pt-4 border-t border-emerald-200/40 dark:border-emerald-800/40">
+          <p className="text-[11px] font-black uppercase tracking-wider text-emerald-900 dark:text-emerald-300 mb-2 flex items-center gap-1.5">
+            <CheckSquare className="w-3.5 h-3.5" /> Checklist de Fixação da Aula (7 Metas de Domínio)
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+            {[
+              { id: 'conceito', label: '1. Conceito e Vínculo Político' },
+              { id: 'nato', label: '2. Hipóteses de Nato (Art. 12, I)' },
+              { id: 'naturalizado', label: '3. Hipóteses de Naturalizado' },
+              { id: 'diferencas', label: '4. Nato x Naturalizado na CF' },
+              { id: 'cargos_privativos', label: '5. Cargos: P-V-C-S-M-D-O-D' },
+              { id: 'portugueses', label: '6. Estatuto dos Portugueses' },
+              { id: 'perda_ec131', label: '7. Perda e EC 131/2023' }
+            ].map(item => (
+              <button
+                key={item.id}
+                onClick={() => toggleCheck(item.id)}
+                className={`p-2 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all border ${
+                  checklist[item.id]
+                    ? 'bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-emerald-200 font-bold'
+                    : 'bg-white/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                <div
+                  className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                    checklist[item.id]
+                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                      : 'border-slate-400'
+                  }`}
+                >
+                  {checklist[item.id] && <Check className="w-3 h-3" />}
+                </div>
+                <span className="truncate">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Conteúdo Dinâmico conforme sub-tab */}
+      {activeTabSub === 'teoria' && (
+        <div className="space-y-10">
+          {/* TÓPICO 1: O QUE É NACIONALIDADE */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                1
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">O que é nacionalidade?</h3>
+            </div>
+            <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+              <strong>Nacionalidade</strong> é o <strong>vínculo jurídico-político</strong> que liga uma pessoa a determinado Estado soberano, tornando-a integrante do seu povo e outorgando-lhe direitos (políticos, civis e diplomáticos) e deveres recíprocos (como a fidelidade à pátria e a obrigação militar).
+            </p>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+              No Brasil, a <strong>Constituição Federal de 1988 estabelece expressamente quem são os brasileiros natos e os brasileiros naturalizados no art. 12</strong>. Não cabe ao legislador infraconstitucional criar novas formas de nacionalidade originária.
+            </div>
+          </section>
+
+          {/* TÓPICO 2: BRASILEIRO NATO */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                2
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Brasileiro Nato (Nacionalidade Originária / Primária)</h3>
+            </div>
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              A nacionalidade nata é atribuída no momento do nascimento. São brasileiros natos (Art. 12, I da CF):
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Alínea A */}
+              <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🇧🇷</span>
+                  <h4 className="text-sm font-black text-emerald-900 dark:text-emerald-300">A) Nascidos no Brasil (Jus Soli)</h4>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  É brasileiro nato quem nasce no território brasileiro, mesmo que os pais sejam estrangeiros, <strong>desde que eles não estejam a serviço de seu país</strong> de origem.
+                </p>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-emerald-100 dark:border-emerald-900 text-[11px] text-slate-600 dark:text-slate-400">
+                  <strong className="text-emerald-600 dark:text-emerald-400">Exemplo Prático:</strong> Um casal argentino está no Brasil a passeio e tem um filho em <strong>Manaus/AM</strong>. Se os pais não estiverem a serviço da Argentina, o filho será <strong>brasileiro nato</strong>.
+                </div>
+              </div>
+
+              {/* Alínea B */}
+              <div className="p-5 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200 dark:border-sky-800/60 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🌎</span>
+                  <h4 className="text-sm font-black text-sky-900 dark:text-sky-300">B) No Exterior a Serviço do Brasil</h4>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  É brasileiro nato quem nasce no estrangeiro, sendo filho de pai brasileiro ou mãe brasileira, <strong>quando qualquer deles estiver a serviço da República Federativa do Brasil</strong>.
+                </p>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-sky-100 dark:border-sky-900 text-[11px] text-slate-600 dark:text-slate-400">
+                  <strong className="text-sky-600 dark:text-sky-400">Exemplo Prático:</strong> Um diplomata ou militar brasileiro trabalha na embaixada do Brasil na França e tem um filho em Paris. Esse filho será <strong>brasileiro nato</strong>.
+                </div>
+              </div>
+
+              {/* Alínea C */}
+              <div className="p-5 rounded-2xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/60 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">✈️</span>
+                  <h4 className="text-sm font-black text-purple-900 dark:text-purple-300">C) No Exterior: Registro ou Opção</h4>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Nascido no exterior, de pai ou mãe brasileira:
+                  <br />• Registrado em <strong>repartição brasileira competente</strong> (consulado); OU
+                  <br />• Venha a <strong>residir no Brasil e opte</strong>, a qualquer tempo, depois de atingida a maioridade (18 anos), pela nacionalidade brasileira.
+                </p>
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-purple-100 dark:border-purple-900 text-[11px] text-slate-600 dark:text-slate-400">
+                  <strong className="text-purple-600 dark:text-purple-400">Dica:</strong> A opção é potestativa e pode ser feita a qualquer momento após os 18 anos na Justiça Federal.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* TÓPICO 3: BRASILEIRO NATURALIZADO */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                3
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Brasileiro Naturalizado (Nacionalidade Derivada / Secundária)</h3>
+            </div>
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              O brasileiro naturalizado adquire a nacionalidade por ato posterior ao nascimento, preenchendo os requisitos estabelecidos na Constituição (Art. 12, II):
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/60 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-amber-500 text-white font-black text-xs">Alínea A</span>
+                  <h4 className="text-sm font-bold text-amber-950 dark:text-amber-300">Originários de Países de Língua Portuguesa</h4>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Requisitos constitucionais facilitados (ex: portugueses, angolanos, cabo-verdianos, moçambicanos):
+                </p>
+                <ul className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Residência por <strong>1 (um) ano ininterrupto</strong> no Brasil;</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><strong>Idoneidade moral</strong> comprovada.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/60 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-indigo-500 text-white font-black text-xs">Alínea B</span>
+                  <h4 className="text-sm font-bold text-indigo-950 dark:text-indigo-300">Estrangeiros de Qualquer Nacionalidade (Extraordinária)</h4>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  Requisitos constitucionais da naturalização extraordinária:
+                </p>
+                <ul className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Residência há <strong>mais de 15 anos ininterruptos</strong> no Brasil;</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><strong>Sem condenação penal</strong>;</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><strong>Requeiram</strong> formalmente a nacionalidade brasileira.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* TÓPICO 4: NATO X NATURALIZADO */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                4
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Nato × Naturalizado (Regra de Ouro da CF)</h3>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-xs sm:text-sm text-rose-900 dark:text-rose-300">
+              <strong>Art. 12, § 2º da CF:</strong> <em>"A lei não poderá estabelecer distinção entre brasileiros natos e naturalizados, salvo nos casos previstos nesta Constituição."</em>
+              <br />
+              Ou seja: <strong>O legislador ordinário NÃO PODE criar privilégios ou restrições</strong>. Qualquer diferença deve constar EXPRESSAMENTE do próprio texto constitucional!
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700">
+                <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-black">
+                  <tr>
+                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Critério / Tema</th>
+                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Brasileiro Nato</th>
+                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Brasileiro Naturalizado</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                    <td className="p-3.5 font-bold">Extradição (Art. 5º, LI)</td>
+                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">NUNCA é extraditado pelo Brasil.</td>
+                    <td className="p-3.5 text-rose-600 dark:text-rose-400">Pode ser extraditado em: 1) Crime comum ANTES da naturalização; OU 2) Tráfico de drogas a qualquer tempo.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                    <td className="p-3.5 font-bold">Cargos Públicos</td>
+                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">Pode ocupar qualquer cargo, inclusive os 8 privativos.</td>
+                    <td className="p-3.5">Pode ocupar a imensa maioria dos cargos, EXCETO os 8 privativos de nato (Art. 12, § 3º).</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                    <td className="p-3.5 font-bold">Conselho da República (Art. 89, VII)</td>
+                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">Tem 6 vagas reservadas a cidadãos brasileiros natos.</td>
+                    <td className="p-3.5 text-slate-500">Não pode ocupar essas 6 vagas destinadas a cidadãos.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                    <td className="p-3.5 font-bold">Perda por sentença judicial</td>
+                    <td className="p-3.5 text-slate-500">Não perde por cancelamento de naturalização.</td>
+                    <td className="p-3.5 text-amber-600 dark:text-amber-400">Pode ter a naturalização cancelada por fraude ou atentado ao Estado Democrático.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* TÓPICO 5: CARGOS PRIVATIVOS DE BRASILEIRO NATO */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                5
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Cargos Privativos de Brasileiro Nato (Art. 12, § 3º)</h3>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 text-xs sm:text-sm">
+              <p className="font-black text-amber-900 dark:text-amber-300 mb-1">
+                🧠 MACETE INFALÍVEL PARA CONCURSO: P - V - C - S - M - D - O - D
+              </p>
+              <p className="text-slate-700 dark:text-slate-300">
+                Os 4 primeiros formam a linha sucessória da Presidência da República (Art. 80 da CF). Os 4 seguintes cuidam da Soberania, Justiça Suprema e Defesa Nacional.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              {[
+                { letra: 'P', cargo: 'Presidente da República', motivo: 'Chefe de Estado e de Governo (Linha Sucessória)' },
+                { letra: 'V', cargo: 'Vice-Presidente da República', motivo: 'Substituto imediato do Presidente' },
+                { letra: 'C', cargo: 'Presidente da Câmara dos Deputados', motivo: '2º na linha de substituição presidencial' },
+                { letra: 'S', cargo: 'Presidente do Senado Federal', motivo: '3º na linha de substituição presidencial' },
+                { letra: 'M', cargo: 'Ministro do STF (11 Ministros)', motivo: '4º na linha de substituição e cúpula do Judiciário' },
+                { letra: 'D', cargo: 'Carreira Diplomática', motivo: 'Representação soberana do Brasil perante o mundo' },
+                { letra: 'O', cargo: 'Oficial das Forças Armadas', motivo: 'Comando armado (Exército, Marinha e Aeronáutica)' },
+                { letra: 'D', cargo: 'Ministro de Estado da Defesa', motivo: 'Comando civil sobre as Forças Armadas' }
+              ].map((c, i) => (
+                <div key={i} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                  <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
+                    {c.letra}
+                  </span>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{c.cargo}</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">{c.motivo}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Pegadinhas de Concurso */}
+            <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-rose-700 dark:text-rose-400">
+                <AlertTriangle className="w-4 h-4" />
+                <span>⚠️ PEGADINHAS CLÁSSICAS DA FGV E BANCAS DE TRIBUNAIS:</span>
+              </div>
+              <ul className="text-xs space-y-1 text-slate-700 dark:text-slate-300">
+                <li>• <strong>Deputado Federal e Senador podem ser naturalizados?</strong> SIM! Apenas o <em>Presidente</em> da Câmara e o <em>Presidente</em> do Senado precisam ser natos.</li>
+                <li>• <strong>Ministro do STJ, TST ou Governador de Estado precisam ser natos?</strong> NÃO! Podem ser normalmente naturalizados. O único tribunal com exigência de nato é o STF!</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* TÓPICO 6: PORTUGUESES NO BRASIL */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                6
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Portugueses no Brasil — Estatuto da Igualdade (Art. 12, § 1º)</h3>
+            </div>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              Aos portugueses com <strong>residência permanente no Brasil</strong>, se houver <strong>reciprocidade em favor de brasileiros</strong> em Portugal, serão atribuídos os direitos inerentes ao brasileiro, ressalvadas as hipóteses privativas de brasileiro nato.
+            </p>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+              Trata-se do fenômeno da <strong>quase-nacionalidade</strong>: o português não se torna brasileiro formalmente (não perde a nacionalidade portuguesa nem vira cidadão naturalizado), mas usufrui do gozo de direitos como votar e ser votado, respeitada a reciprocidade.
+            </div>
+          </section>
+
+          {/* TÓPICO 7: PERDA DA NACIONALIDADE E EC 131/2023 */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+                7
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold">Perda da Nacionalidade (Art. 12, § 4º — Com a EC nº 131/2023)</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <span className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase">1. Cancelamento da Naturalização</span>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  Apenas para <strong>brasileiro naturalizado</strong>, por meio de <strong>sentença judicial transitada em julgado</strong>, em duas situações:
+                </p>
+                <ul className="text-xs space-y-1 font-semibold text-slate-600 dark:text-slate-400">
+                  <li>• Em virtude de <strong>fraude</strong> relacionada ao processo de naturalização; OU</li>
+                  <li>• Em razão de <strong>atentado contra a ordem constitucional e o Estado Democrático</strong>.</li>
+                </ul>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase">2. Pedido Expresso (Renúncia)</span>
+                <p className="text-xs text-slate-700 dark:text-slate-300">
+                  O cidadão (nato ou naturalizado) pode requerer a perda da nacionalidade brasileira perante autoridade competente:
+                </p>
+                <ul className="text-xs space-y-1 font-semibold text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Ressalva da Apatridia:</strong> O pedido NÃO será aceito se resultar em situação de apatridia!</li>
+                  <li>• <strong>Readquisição:</strong> A pessoa pode readquirir a nacionalidade brasileira originária nos termos da lei.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500/40 space-y-2">
+              <div className="flex items-center gap-2 text-sm font-black text-emerald-900 dark:text-emerald-300">
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>MUDANÇA CRUCIAL DA EMENDA CONSTITUCIONAL Nº 131/2023:</span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                Antes da EC 131/2023, o brasileiro que adquirisse outra nacionalidade por vontade própria perdia a brasileira (regra antiga). 
+                <strong> HOJE, A REGRA MUDOU TOTALMENTE:</strong> adquirir outra nacionalidade <strong>NÃO provoca automaticamente a perda da nacionalidade brasileira!</strong> O brasileiro pode ter dupla ou múltipla cidadania sem medo de perder a brasileira.
+              </p>
+            </div>
+          </section>
+
+          {/* O QUE VOCÊ PRECISA SABER PARA A PROVA */}
+          <section className="p-6 rounded-3xl bg-slate-900 text-slate-100 space-y-4">
+            <h4 className="text-lg font-black text-amber-400 flex items-center gap-2">
+              <Target className="w-5 h-5 text-amber-400" />
+              <span>🎯 O que você precisa saber para a prova (Gabarito Garantido no TJAM)</span>
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span className="font-bold text-amber-300">1. Art. 12 da CF:</span>
+                <p className="text-slate-300 mt-1">Conheça as 3 hipóteses de nato (solo temperado, a serviço do Brasil, registro/opção após os 18 anos) e as 2 de naturalizado.</p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span className="font-bold text-emerald-300">2. Princípio da Não-Distinção:</span>
+                <p className="text-slate-300 mt-1">A lei ordinária não pode criar distinções entre natos e naturalizados. Apenas a própria CF tem autoridade para isso.</p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span className="font-bold text-sky-300">3. 8 Cargos Privativos de Nato:</span>
+                <p className="text-slate-300 mt-1">Decore o P-V-C-S-M-D-O-D. Lembre-se: STF (todos os 11). Pres. da Câmara e do Senado (não os membros comuns).</p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span className="font-bold text-rose-300">4. Perda e EC 131/2023:</span>
+                <p className="text-slate-300 mt-1">Perda só por sentença judicial transitada em julgado (naturalizado) ou pedido expresso sem gerar apatridia. Adquirir outra não cancela a do Brasil.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* SUBTAB 2: MAPA MENTAL */}
+      {activeTabSub === 'mapa' && (
+        <section className="space-y-6">
+          <div className="flex items-center gap-2">
+            <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
+              🧠
+            </span>
+            <h3 className="text-xl sm:text-2xl font-bold">Mapa Mental — Nacionalidade 🇧🇷</h3>
+          </div>
+
+          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-6">
+            {/* Núcleo Central */}
+            <div className="text-center max-w-md mx-auto p-4 rounded-2xl bg-emerald-600 text-white font-black text-base shadow-lg">
+              NACIONALIDADE (Art. 12 da CF/88)
+              <span className="block text-xs font-normal opacity-90 mt-1">Vínculo Político-Jurídico com o Estado Brasileiro</span>
+            </div>
+
+            {/* Ramificações Principais */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Ramo 1: Brasileiro Nato */}
+              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-1 rounded-md bg-emerald-500 text-white font-black text-xs">ORIGINÁRIA</span>
+                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Brasileiro Nato</h4>
+                </div>
+                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>1. Jus Soli:</strong> Nascido no Brasil, salvo se ambos os pais estrangeiros estiverem a serviço de seu país.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>2. Jus Sanguinis Funcional:</strong> Nascido no exterior com pai ou mãe a serviço da República Federativa do Brasil.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>3. Registro ou Residência + Opção:</strong> Registro no consulado OU residência no Brasil + opção confirmativa após a maioridade.
+                  </div>
+                </div>
+              </div>
+
+              {/* Ramo 2: Brasileiro Naturalizado */}
+              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-sky-300 dark:border-sky-800 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-1 rounded-md bg-sky-500 text-white font-black text-xs">DERIVADA</span>
+                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Brasileiro Naturalizado</h4>
+                </div>
+                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>Países de Língua Portuguesa:</strong> 1 ano ininterrupto de residência + idoneidade moral.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>Extraordinária (Qualquer País):</strong> Mais de 15 anos ininterruptos + sem condenação penal + requerimento formal.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>Extradição:</strong> Permitida para crime comum antes da naturalização ou tráfico ilícito a qualquer tempo.
+                  </div>
+                </div>
+              </div>
+
+              {/* Ramo 3: Cargos Privativos */}
+              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-1 rounded-md bg-amber-500 text-white font-black text-xs">P-V-C-S-M-D-O-D</span>
+                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Cargos Privativos de Nato</h4>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">👑 Pres. República</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🏛️ Vice-Pres. República</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">📜 Pres. Câmara Deputados</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">⚖️ Pres. Senado Federal</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">⚖️ Min. STF (11 vagas)</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🌐 Carreira Diplomática</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🎖️ Oficial Forças Armadas</div>
+                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🛡️ Ministro da Defesa</div>
+                </div>
+              </div>
+
+              {/* Ramo 4: Perda da Nacionalidade */}
+              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-800 space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-1 rounded-md bg-rose-500 text-white font-black text-xs">EC 131/2023</span>
+                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Perda da Nacionalidade</h4>
+                </div>
+                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>1. Cancelamento Judicial:</strong> Sentença transitada em julgado por fraude na naturalização ou atentado à ordem democrática.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <strong>2. Pedido Expresso:</strong> Apenas se NÃO gerar apatridia (vedada a perda que torne a pessoa apátrida).
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 font-bold">
+                    ⚠️ Adquirir outra cidadania NÃO cancela a brasileira automaticamente!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* SUBTAB 3: EXERCÍCIO PRÁTICO EM VÍDEO */}
+      {activeTabSub === 'pratica' && (
+        <section className="space-y-6">
+          <div className="p-6 rounded-3xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-emerald-500/10 border border-rose-500/20 space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="p-2 rounded-xl bg-rose-500 text-white">
+                <Video className="w-5 h-5" />
+              </span>
+              <div>
+                <span className="text-[11px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                  Desafio de Comunicação e Domínio Jurídico
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100">
+                  Exercício Prático — Gravação de Vídeo para o Professor
+                </h3>
+              </div>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              O concurseiro de alta performance não apenas lê e memoriza: ele <strong>ensina e articula o direito oralmente com segurança</strong>. Esta prática desenvolve a retenção permanente para as provas discursivas e orais.
+            </p>
+          </div>
+
+          {/* Situação Prática */}
+          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+            <h4 className="text-sm font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              <span>Situação Prática para Resolução Oral:</span>
+            </h4>
+            <p className="text-sm italic p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+              "{direitoConstVideoPracticalTask.situacaoPratica}"
+            </p>
+          </div>
+
+          {/* As 6 Perguntas para Responder no Vídeo */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <HelpCircle className="w-4 h-4 text-emerald-500" />
+              <span>Roteiro de 6 Perguntas Obrigatórias para Abordar:</span>
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {direitoConstVideoPracticalTask.perguntas.map((p, idx) => (
+                <div key={idx} className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                    {idx + 1}
+                  </span>
+                  <span>{p.replace(/^[0-9]+\.\s*/, '')}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desafio Final */}
+          <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+            <h4 className="text-xs font-black uppercase text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4" /> Desafio Final Oral (1 a 2 minutos sem consulta)
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-semibold">
+              "{direitoConstVideoPracticalTask.desafioFinal}"
+            </p>
+          </div>
+
+          {/* Formulário de Registro / Envio do Aluno */}
+          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-4">
+            <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Send className="w-4 h-4 text-rose-500" />
+              <span>Entrega do Vídeo da Prática ao Professor</span>
+            </h4>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Cole o link do seu vídeo (YouTube, Google Drive, Loom ou gravação celular) para registrar o cumprimento desta meta de comunicação:
+            </p>
+
+            <form onSubmit={handleSendVideo} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="url"
+                value={videoLink}
+                onChange={e => setVideoLink(e.target.value)}
+                placeholder="https://youtu.be/... ou https://drive.google.com/..."
+                className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
+              />
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+              >
+                <Send className="w-4 h-4" />
+                <span>Registrar Envio</span>
+              </button>
+            </form>
+
+            {videoStatus === 'enviado' && (
+              <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Vídeo registrado com sucesso! O professor verificará a desenvoltura oral, a clareza técnica e a precisão do enquadramento constitucional.</span>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Rodapé da Lição */}
+      <footer className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-2">
+          <BookOpen className="w-4 h-4 text-emerald-500" />
+          <span>Direito Constitucional • 1ª Aula de Hoje • TJAM 2026</span>
+        </div>
+        {onNavigateTab && (
+          <button
+            onClick={() => onNavigateTab('questoes')}
+            className="inline-flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+          >
+            <span>Ir para as 20 Questões de Prova</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         )}
-      </div>
+      </footer>
     </article>
   );
 };
