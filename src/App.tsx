@@ -48,7 +48,6 @@ import { StudentPortal } from './components/StudentPortal';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { RestrictedAccessView } from './components/RestrictedAccessView';
-import { ensurePedroProcessoCivilAnswers } from './data/processoCivilLessonData';
 import {
   saveUserProgressToFirestore,
   loadUserProgressFromFirestore,
@@ -266,33 +265,29 @@ export function App() {
   }, [weeklySchedule]);
 
   // Automated Launch & Cloud Synchronization Engine
-  // Synchronizes Pedro Henrique's answers, rankings, and student progress automatically upon site launch
+  // Synchronizes student progress, lesson state and rankings with Firestore
   useEffect(() => {
     async function initSiteLaunchSync() {
       try {
-        // 1. Seed local lesson progress with Pedro Henrique's 10 correct answers
-        const savedLessonsStr = localStorage.getItem('tjam_lessons_progress');
-        const initialLessons = savedLessonsStr ? JSON.parse(savedLessonsStr) : {};
-        const updatedLessons = ensurePedroProcessoCivilAnswers(initialLessons);
-        localStorage.setItem('tjam_lessons_progress', JSON.stringify(updatedLessons));
-
-        // 2. Fetch remote progress from Firestore or publish updated
+        // 1. Fetch remote progress from Firestore or fallback to local
         const remoteLessons = await loadLessonProgressFromFirestore();
         if (remoteLessons) {
-          const merged = ensurePedroProcessoCivilAnswers({ ...remoteLessons, ...updatedLessons });
-          localStorage.setItem('tjam_lessons_progress', JSON.stringify(merged));
-          await saveLessonProgressToFirestore(merged);
-        } else {
-          await saveLessonProgressToFirestore(updatedLessons);
+          // Se continha o preenchimento automático anterior de Pedro Henrique, limpa para os alunos
+          if (remoteLessons['processo_civil']?.answeredBy === 'Pedro Henrique') {
+            delete remoteLessons['processo_civil'].selectedAnswers;
+            delete remoteLessons['processo_civil'].showQuestionResults;
+            delete remoteLessons['processo_civil'].answeredBy;
+            await saveLessonProgressToFirestore(remoteLessons);
+          }
+          localStorage.setItem('tjam_lessons_progress', JSON.stringify(remoteLessons));
         }
 
-        // 3. Sync student user progress with Firestore
+        // 2. Sync student user progress with Firestore
         const remoteUserProgress = await loadUserProgressFromFirestore();
         if (remoteUserProgress) {
           setUserProgress(prev => ({
             ...prev,
             ...remoteUserProgress,
-            savedLessons: updatedLessons,
           }));
         } else {
           await saveUserProgressToFirestore(userProgress);
