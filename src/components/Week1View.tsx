@@ -163,13 +163,14 @@ export const Week1View: React.FC<Week1ViewProps> = ({
     setSimuladoSubmitted(true);
 
     let correctCount = 0;
-    WEEK1_SATURDAY_SIMULADO.questions.forEach((q) => {
+    (WEEK1_SATURDAY_SIMULADO?.questions || []).forEach((q) => {
       if (simuladoAnswers[q.id] === q.correctOptionId) {
         correctCount++;
       }
     });
 
-    const scorePercent = Math.round((correctCount / WEEK1_SATURDAY_SIMULADO.questions.length) * 100);
+    const totalQuestions = WEEK1_SATURDAY_SIMULADO?.questions?.length || 1;
+    const scorePercent = Math.round((correctCount / totalQuestions) * 100);
 
     // Save attempt to user progress
     const newAttempt = {
@@ -187,7 +188,10 @@ export const Week1View: React.FC<Week1ViewProps> = ({
 
     onUpdateProgress({
       ...progress,
-      simuladoAttempts: [...progress.simuladoAttempts, newAttempt]
+      simuladoAttempts: [
+        newAttempt,
+        ...(progress.simuladoAttempts || []).filter((a) => a.id !== newAttempt.id)
+      ]
     });
   };
 

@@ -30,6 +30,7 @@ import {
   HelpCircle,
   Play
 } from 'lucide-react';
+import { TEACHER_CONFIG } from '../lib/studentAccountService';
 import { Simulado, UserProgress, SimuladoAttempt } from '../types';
 import { SnowfallEffect } from './SnowfallEffect';
 import { SIMULADO_80_QUESTIONS, SIMULADO_80_QUESTOES_GABARITO, SIMULADO_80_OBJETO } from '../data/simulado80QuestoesData';
@@ -43,12 +44,14 @@ interface SiteLockedViewProps {
   onSaveSimuladoAttempt?: (attempt: SimuladoAttempt) => void;
   onToggleDarkMode?: () => void;
   onUnlockSite?: () => void;
+  lockMessage?: string;
 }
 
 export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
   isDarkMode = true,
   onUnlockSite,
   onSaveSimuladoAttempt,
+  lockMessage = 'PORTAL TEMPORARIAMENTE BLOQUEADO: O acesso à plataforma foi temporariamente suspenso pelo professor. Aguarde novas orientações.',
 }) => {
   // Simulado in 3 stages runner state (configured already in Stage 1)
   const [isTakingSimulado, setIsTakingSimulado] = useState<boolean>(true);
@@ -150,20 +153,18 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
 
   const handleUnlockSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const clean = passcode.trim().toLowerCase();
+    const clean = passcode.trim();
     if (
+      clean === TEACHER_CONFIG.password ||
       clean === 'admin2026' ||
-      clean === 'tjam2026' ||
-      clean === 'admin' ||
-      clean === 'prof2026' ||
-      clean === 'desbloquear'
+      clean === 'tjam2026'
     ) {
       setShowPasscodeModal(false);
       setPasscode('');
       setPasscodeError('');
       if (onUnlockSite) onUnlockSite();
     } else {
-      setPasscodeError('Senha incorreta! Apenas administradores ou professores podem desbloquear.');
+      setPasscodeError('Senha incorreta! Acesso restrito a administradores e professores autorizados.');
     }
   };
 
@@ -363,10 +364,21 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                   <Sparkles className="w-3.5 h-3.5 text-sky-400" />
                   Modo Preparação: 80 Questões Carregadas
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold">
-                  <Clock className="w-3 h-3 text-amber-400" />
-                  Aguardando Novas Questões
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold">
+                  <Lock className="w-3 h-3 text-rose-400" />
+                  Acesso Suspenso pelo Docente
                 </span>
+              </div>
+
+              {/* Official Alert Box */}
+              <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/40 text-rose-200 text-xs space-y-1">
+                <div className="font-black text-rose-400 flex items-center gap-2 text-sm uppercase">
+                  <AlertTriangle className="w-4 h-4 shrink-0" />
+                  Aviso Oficial da Coordenação Pedagógica
+                </div>
+                <p className="font-semibold text-rose-100 text-xs leading-relaxed">
+                  {lockMessage}
+                </p>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
@@ -994,9 +1006,9 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
               {/* Ranking List */}
               <div className="space-y-2">
                 {rankingSubTab === 'duplas' ? (
-                  duplasRanking.map((item) => (
+                  duplasRanking.map((item, idx) => (
                     <div
-                      key={item.rank}
+                      key={`dupla-${item.rank}-${item.name}-${idx}`}
                       className={`px-4 py-3 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
                     >
                       <div className="flex items-center gap-3">
@@ -1029,9 +1041,9 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                     </div>
                   ))
                 ) : (
-                  individualRanking.map((item) => (
+                  individualRanking.map((item, idx) => (
                     <div
-                      key={item.rank}
+                      key={`indiv-${item.rank}-${item.name}-${idx}`}
                       className={`px-4 py-3 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
                     >
                       <div className="flex items-center gap-3">
@@ -1166,7 +1178,7 @@ export const SiteLockedView: React.FC<SiteLockedViewProps> = ({
                   type="password"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="Digite 'admin', 'prof2026' ou 'admin2026'..."
+                  placeholder="••••••••"
                   autoFocus
                   className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-500"
                 />

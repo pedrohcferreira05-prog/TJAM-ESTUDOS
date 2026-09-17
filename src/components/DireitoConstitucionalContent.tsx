@@ -27,14 +27,13 @@ import {
 import { direitoConstVideoPracticalTask } from '../data/direitoConstitucionalLessonData';
 
 interface DireitoConstitucionalContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   isLessonCompleted: boolean;
   onToggleCompleted?: () => void;
   onNavigateTab?: (tab: any) => void;
 }
 
 export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContentProps> = ({
-  isDarkMode,
   isLessonCompleted,
   onToggleCompleted,
   onNavigateTab,
@@ -80,19 +79,11 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
 
   return (
     <article
-      className={`p-6 sm:p-10 rounded-3xl border space-y-10 leading-relaxed transition-all ${
-        isDarkMode
-          ? 'bg-slate-900 border-slate-800 text-slate-200'
-          : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-      }`}
+      className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white text-slate-800 shadow-sm space-y-10 leading-relaxed transition-all"
     >
       {/* 1. Header do Conteúdo Oficial */}
       <section
-        className={`p-6 sm:p-8 rounded-3xl border ${
-          isDarkMode
-            ? 'bg-emerald-500/10 border-emerald-500/30'
-            : 'bg-gradient-to-r from-emerald-50 via-teal-50/60 to-emerald-100/40 border-emerald-200'
-        }`}
+        className="p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-emerald-50 via-teal-50/60 to-emerald-100/40 border-emerald-200"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
           <div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Question } from '../types';
+import { Question, VideoLesson, PublishedMaterial, Discipline } from '../types';
 import {
   BookOpen,
   CheckCircle2,
@@ -132,11 +132,20 @@ import { EscritaLeituraContent } from './EscritaLeituraContent';
 interface AulaHojeViewProps {
   isDarkMode: boolean;
   onNavigateTab: (tab: any) => void;
+  videoLessons?: VideoLesson[];
+  publishedMaterials?: PublishedMaterial[];
+  disciplines?: Discipline[];
 }
 
 const mindMapImg = '/mapa_mental_constituicao.jpg';
 
-export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNavigateTab }) => {
+export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
+  isDarkMode,
+  onNavigateTab,
+  videoLessons = [],
+  publishedMaterials = [],
+  disciplines = [],
+}) => {
   const [realProgressPct] = useState(() => {
     try {
       const p = localStorage.getItem('tjam_user_progress');
@@ -180,8 +189,36 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
   }, []);
 
   // Navigation inside lesson steps - default to 'conteudo' (Texto da Aula)
-  const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo'>('conteudo');
+  const [activeTab, setActiveTab] = useState<'video' | 'conteudo' | 'mapa' | 'flashcards' | 'questoes' | 'resumo' | 'materiais'>('conteudo');
   const [selectedVideoPart, setSelectedVideoPart] = useState<'video1' | 'video2' | 'video3' | 'video_extra'>('video1');
+  const [customSelectedVideoId, setCustomSelectedVideoId] = useState<string | null>(null);
+
+  // Discipline mapping for teacher-managed materials and video lessons
+  const subjectToDisciplineId: Record<string, string> = {
+    direito_const: 'direito-constitucional',
+    direito_admin: 'direito-administrativo',
+    ingles: 'lingua-inglesa',
+    informatica: 'informatica',
+    processo_penal: 'processo-penal',
+    processo_civil: 'processo-civil',
+    legislacao_tjam: 'legislacao-tjam',
+    portugues: 'lingua-portuguesa',
+    libras: 'libras',
+    geografia_amazonas: 'geografia-historia-am',
+    escrita_leitura: 'lingua-portuguesa',
+  };
+
+  const currentDisciplineId = subjectToDisciplineId[selectedSubject] || 'direito-constitucional';
+
+  // Files & Materials released by the teacher for this specific discipline (or all released materials)
+  const releasedDisciplineMaterials = publishedMaterials.filter(
+    (m) => m.isReleased && (m.disciplineId === currentDisciplineId || m.disciplineId === 'geral' || !m.disciplineId)
+  );
+
+  // Video Lessons configured by the teacher for this discipline
+  const disciplineVideoLessons = videoLessons.filter(
+    (v) => v.isPublished && (v.disciplineId === currentDisciplineId || !v.disciplineId)
+  );
   
   // Flashcard State
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
@@ -2132,6 +2169,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
     }
   };
 
+  const formatEmbedUrl = (url: string) => {
+    if (!url) return '';
+    if (url.includes('youtube.com/watch?v=')) {
+      return url.replace('youtube.com/watch?v=', 'youtube.com/embed/');
+    }
+    if (url.includes('youtu.be/')) {
+      return url.replace('youtu.be/', 'youtube.com/embed/');
+    }
+    return url;
+  };
+
+  const activeCustomVideo = customSelectedVideoId
+    ? disciplineVideoLessons.find((v) => v.id === customSelectedVideoId)
+    : disciplineVideoLessons.length > 0
+    ? disciplineVideoLessons[0]
+    : null;
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-16 relative">
       {/* Toast Notification Banner */}
@@ -2167,12 +2221,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5 shrink-0" /> {
-                  selectedSubject === 'processo_penal' ? '1ª Aula de Hoje: '
-                  : selectedSubject === 'portugues' ? '2ª Aula de Hoje: '
-                  : 'Disciplina: '
-                }{
-                  selectedSubject === 'processo_penal' ? 'Processo Penal (Aula 1 — Inquérito Policial)'
-                  : selectedSubject === 'portugues' ? '2ª Aula de Hoje (Em Atualização)'
+                  selectedSubject === 'direito_const' ? '1ª Aula de Hoje: Direito Constitucional'
+                  : selectedSubject === 'direito_admin' ? '2ª Aula de Hoje: Direito Administrativo'
+                  : selectedSubject === 'ingles' ? '3ª Aula de Hoje: Língua Inglesa'
+                  : selectedSubject === 'informatica' ? '4ª Aula de Hoje: Informática'
+                  : selectedSubject === 'processo_penal' ? 'Proc. Penal: Aula 1'
+                  : selectedSubject === 'processo_civil' ? 'Proc. Civil: Aula 2'
+                  : selectedSubject === 'libras' ? 'LIBRAS: 3ª Aula'
+                  : selectedSubject === 'geografia_amazonas' ? 'Geografia AM: 2ª Aula'
                   : 'Disciplina TJAM'
                 }
               </span>
@@ -2181,24 +2237,32 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200 block">
                 {
-                  selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • 1ª Aula de Hoje – Inquérito Policial: Conceito, Finalidade e Características'
-                  : selectedSubject === 'portugues' ? '📚 2ª Aula de Hoje – Conteúdo em Atualização'
+                  selectedSubject === 'direito_const' ? '🇧🇷 Direito Constitucional • Nacionalidade (Nato, Naturalizado, Cargos Privativos e EC 131/2023)'
+                  : selectedSubject === 'direito_admin' ? '⚖️ Direito Administrativo • Controle da Administração Pública (Interno, Externo, Judicial e Autotutela)'
+                  : selectedSubject === 'ingles' ? '🇺🇸 Língua Inglesa • Numbers (1–100), Time & Days (Desafio Oral)'
+                  : selectedSubject === 'informatica' ? '💻 Informática • Redes de Computadores e Internet (LAN/MAN/WAN, URL, Wi-Fi, IP)'
+                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Princípios Fundamentais do Processo Penal'
+                  : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Atos Processuais e Prazos'
+                  : selectedSubject === 'libras' ? '🤟 LIBRAS • Prática de Comunicação e Atendimento'
+                  : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia AM • População, Manaus e ZFM'
                   : '📚 Conteúdo TJAM 2026'
                 }
               </span>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white">
                 {
-                  selectedSubject === 'processo_penal' ? 'Aula 1 — Inquérito Policial: Conceito, Finalidade e Características'
-                  : selectedSubject === 'portugues' ? '2ª Aula de Hoje — Em Atualização'
+                  selectedSubject === 'direito_const' ? 'Direito Constitucional — Nacionalidade (Art. 12 da CF/88)'
+                  : selectedSubject === 'direito_admin' ? 'Direito Administrativo — Controle da Administração'
+                  : selectedSubject === 'ingles' ? 'Língua Inglesa — Numbers, Time & Days'
+                  : selectedSubject === 'informatica' ? 'Informática — Redes e Internet'
+                  : selectedSubject === 'processo_penal' ? 'Aula 1 — Princípios Fundamentais do Processo Penal'
+                  : selectedSubject === 'processo_civil' ? 'Aula 2 — Atos Processuais'
+                  : selectedSubject === 'libras' ? '3ª Aula — Fundamentos de LIBRAS'
+                  : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Geografia do Amazonas'
                   : 'Aula Preparatória TJAM 2026'
                 }
               </h1>
               <p className="text-xs text-emerald-100 font-medium max-w-xl leading-relaxed">
-                {
-                  selectedSubject === 'processo_penal' ? '1ª Aula de Hoje • Finalidade (Fato criminoso e autoria), Características (Administrativo, Escrito, Dispensável, Sigiloso), Prazos (10d Preso, 30d Solto) • Vídeo Aula no YouTube • Atividade Prática em Vídeo • 20 Questões Gabaritadas'
-                  : selectedSubject === 'portugues' ? 'Segunda aula do dia • Conteúdo teórico, vídeo aula e exercícios estão sendo preparados e liberados em breve.'
-                  : 'Conteúdo oficial para o concurso de Assistente Judiciário do TJAM 2026.'
-                }
+                Teoria completa, mapas conceituais, 20 questões gabaritadas com comentários ponto a ponto e flashcards de repetição espaçada.
               </p>
             </div>
           </div>
@@ -2228,7 +2292,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </span>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
               {[
                 { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '39,0%', isUser: false, isSolo: false },
                 { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '36,8%', isUser: false, isSolo: false },
@@ -2333,32 +2397,40 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 p-3 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/40 to-cyan-500/10 border-2 border-amber-500/40 shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-sky-50/80 border-2 border-amber-300/80 shadow-xs">
             {/* 1. Direito Constitucional: 1ª Aula de Hoje */}
             <button
               onClick={() => { setSelectedSubject('direito_const'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+              className={`py-3.5 px-3.5 sm:py-4 sm:px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 sm:gap-3 cursor-pointer text-left ${
                 selectedSubject === 'direito_const'
-                  ? 'bg-amber-600 text-white shadow-lg ring-2 ring-amber-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                  ? 'bg-amber-500 text-slate-950 shadow-md ring-2 ring-amber-400 scale-[1.01]'
+                  : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 shadow-xs'
               }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xl">🇧🇷</span>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950">1ª Aula de Hoje</span>
+                <span className={`text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full ${
+                  selectedSubject === 'direito_const' ? 'bg-slate-950 text-amber-400' : 'bg-amber-100 text-amber-900 border border-amber-200'
+                }`}>1ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Direito Constitucional — Aula 1</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Nacionalidade: Nato, Naturalizado, Cargos Privativos e EC 131/2023</div>
+                <div className="font-extrabold text-sm sm:text-base text-slate-950">Direito Constitucional</div>
+                <div className={`text-xs truncate mt-0.5 ${selectedSubject === 'direito_const' ? 'text-slate-900 font-bold' : 'text-slate-600 font-medium'}`}>
+                  Nacionalidade: Nato, Naturalizado e Cargos
+                </div>
               </div>
-              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Vídeo • Caso Prático</span>
+              <div className={`w-full pt-2 border-t flex flex-wrap items-center justify-between gap-1.5 ${
+                selectedSubject === 'direito_const' ? 'border-slate-950/20' : 'border-slate-100'
+              }`}>
+                <span className={`text-[11px] font-bold ${selectedSubject === 'direito_const' ? 'text-slate-900' : 'text-slate-500'}`}>20 Qs • 10 Cards • Vídeo</span>
                 {savedLessonsStore['direito_const']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-xs">✓ Concluída</span>
                 ) : savedLessonsStore['direito_const']?.selectedAnswers && Object.keys(savedLessonsStore['direito_const'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                  <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-amber-500/40 text-amber-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    selectedSubject === 'direito_const' ? 'bg-slate-950 text-amber-300' : 'bg-slate-100 text-slate-600'
+                  }`}>Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2366,28 +2438,36 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* 2. Direito Administrativo: 2ª Aula de Hoje */}
             <button
               onClick={() => { setSelectedSubject('direito_admin'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+              className={`py-3.5 px-3.5 sm:py-4 sm:px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 sm:gap-3 cursor-pointer text-left ${
                 selectedSubject === 'direito_admin'
-                  ? 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400 scale-[1.01]'
+                  : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 shadow-xs'
               }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xl">⚖️</span>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-blue-400 text-slate-950">2ª Aula de Hoje</span>
+                <span className={`text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full ${
+                  selectedSubject === 'direito_admin' ? 'bg-white text-blue-900 font-extrabold' : 'bg-blue-100 text-blue-900 border border-blue-200'
+                }`}>2ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Direito Administrativo — Aula 2</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Controle da Administração Pública: Interno, Externo, Judicial e Autotutela</div>
+                <div className={`font-extrabold text-sm sm:text-base ${selectedSubject === 'direito_admin' ? 'text-white' : 'text-slate-950'}`}>Direito Administrativo</div>
+                <div className={`text-xs truncate mt-0.5 ${selectedSubject === 'direito_admin' ? 'text-blue-100 font-medium' : 'text-slate-600 font-medium'}`}>
+                  Controle da Administração Pública
+                </div>
               </div>
-              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Vídeo • Caso Prático</span>
+              <div className={`w-full pt-2 border-t flex flex-wrap items-center justify-between gap-1.5 ${
+                selectedSubject === 'direito_admin' ? 'border-white/20' : 'border-slate-100'
+              }`}>
+                <span className={`text-[11px] font-bold ${selectedSubject === 'direito_admin' ? 'text-blue-100' : 'text-slate-500'}`}>20 Qs • 10 Cards • Prático</span>
                 {savedLessonsStore['direito_admin']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                  <span className="text-[10px] bg-emerald-500 text-white font-black px-2 py-0.5 rounded-full shadow-xs">✓ Concluída</span>
                 ) : savedLessonsStore['direito_admin']?.selectedAnswers && Object.keys(savedLessonsStore['direito_admin'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-blue-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                  <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-blue-500/40 text-blue-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    selectedSubject === 'direito_admin' ? 'bg-blue-800 text-blue-100' : 'bg-slate-100 text-slate-600'
+                  }`}>Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2395,28 +2475,36 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* 3. Língua Inglesa: 3ª Aula de Hoje */}
             <button
               onClick={() => { setSelectedSubject('ingles'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+              className={`py-3.5 px-3.5 sm:py-4 sm:px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 sm:gap-3 cursor-pointer text-left ${
                 selectedSubject === 'ingles'
-                  ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400 scale-[1.01]'
+                  : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 shadow-xs'
               }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xl">🇺🇸</span>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-400 text-slate-950">3ª Aula de Hoje</span>
+                <span className={`text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full ${
+                  selectedSubject === 'ingles' ? 'bg-white text-indigo-900 font-extrabold' : 'bg-indigo-100 text-indigo-900 border border-indigo-200'
+                }`}>3ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Língua Inglesa — 3ª Aula</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Numbers (1–100), Time & Days (Desafio Oral WhatsApp)</div>
+                <div className={`font-extrabold text-sm sm:text-base ${selectedSubject === 'ingles' ? 'text-white' : 'text-slate-950'}`}>Língua Inglesa</div>
+                <div className={`text-xs truncate mt-0.5 ${selectedSubject === 'ingles' ? 'text-indigo-100 font-medium' : 'text-slate-600 font-medium'}`}>
+                  Numbers (1–100), Time & Days
+                </div>
               </div>
-              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 10 Cards • 3 Vídeos • Gravação Prática</span>
+              <div className={`w-full pt-2 border-t flex flex-wrap items-center justify-between gap-1.5 ${
+                selectedSubject === 'ingles' ? 'border-white/20' : 'border-slate-100'
+              }`}>
+                <span className={`text-[11px] font-bold ${selectedSubject === 'ingles' ? 'text-indigo-100' : 'text-slate-500'}`}>20 Qs • 10 Cards • 3 Vídeos</span>
                 {savedLessonsStore['ingles']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                  <span className="text-[10px] bg-emerald-500 text-white font-black px-2 py-0.5 rounded-full shadow-xs">✓ Concluída</span>
                 ) : savedLessonsStore['ingles']?.selectedAnswers && Object.keys(savedLessonsStore['ingles'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-indigo-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                  <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-indigo-500/40 text-indigo-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    selectedSubject === 'ingles' ? 'bg-indigo-800 text-indigo-100' : 'bg-slate-100 text-slate-600'
+                  }`}>Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2424,28 +2512,36 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
             {/* 4. Informática: 4ª Aula de Hoje */}
             <button
               onClick={() => { setSelectedSubject('informatica'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`py-4 px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-3 cursor-pointer text-left ${
+              className={`py-3.5 px-3.5 sm:py-4 sm:px-4 rounded-xl text-xs font-black transition-all flex flex-col justify-between gap-2.5 sm:gap-3 cursor-pointer text-left ${
                 selectedSubject === 'informatica'
-                  ? 'bg-cyan-600 text-white shadow-lg ring-2 ring-cyan-400 scale-[1.01]'
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                  ? 'bg-cyan-700 text-white shadow-md ring-2 ring-cyan-400 scale-[1.01]'
+                  : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 shadow-xs'
               }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xl">💻</span>
-                <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-400 text-slate-950">4ª Aula de Hoje</span>
+                <span className={`text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full ${
+                  selectedSubject === 'informatica' ? 'bg-white text-cyan-900 font-extrabold' : 'bg-cyan-100 text-cyan-900 border border-cyan-200'
+                }`}>4ª Aula de Hoje</span>
               </div>
               <div className="w-full">
-                <div className="font-extrabold text-sm sm:text-base">Informática — 4ª Aula</div>
-                <div className="text-xs opacity-90 font-medium truncate mt-0.5">Redes de Computadores e Internet (LAN/MAN/WAN, URL, Wi-Fi, IP)</div>
+                <div className={`font-extrabold text-sm sm:text-base ${selectedSubject === 'informatica' ? 'text-white' : 'text-slate-950'}`}>Informática</div>
+                <div className={`text-xs truncate mt-0.5 ${selectedSubject === 'informatica' ? 'text-cyan-100 font-medium' : 'text-slate-600 font-medium'}`}>
+                  Redes de Computadores e Internet
+                </div>
               </div>
-              <div className="w-full pt-2.5 border-t border-current/20 flex flex-wrap items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold">20 Qs • 10 Cards • Protocolos & Equipamentos</span>
+              <div className={`w-full pt-2 border-t flex flex-wrap items-center justify-between gap-1.5 ${
+                selectedSubject === 'informatica' ? 'border-white/20' : 'border-slate-100'
+              }`}>
+                <span className={`text-[11px] font-bold ${selectedSubject === 'informatica' ? 'text-cyan-100' : 'text-slate-500'}`}>20 Qs • 10 Cards • Redes</span>
                 {savedLessonsStore['informatica']?.completed ? (
-                  <span className="text-[10px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full shadow-sm">✓ Concluída</span>
+                  <span className="text-[10px] bg-emerald-500 text-white font-black px-2 py-0.5 rounded-full shadow-xs">✓ Concluída</span>
                 ) : savedLessonsStore['informatica']?.selectedAnswers && Object.keys(savedLessonsStore['informatica'].selectedAnswers).length > 0 ? (
-                  <span className="text-[10px] bg-cyan-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
+                  <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full">Em andamento</span>
                 ) : (
-                  <span className="text-[10px] bg-cyan-500/40 text-cyan-100 font-black px-2 py-0.5 rounded-full">Aula de Hoje</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    selectedSubject === 'informatica' ? 'bg-cyan-900 text-cyan-100' : 'bg-slate-100 text-slate-600'
+                  }`}>Aula de Hoje</span>
                 )}
               </div>
             </button>
@@ -2455,86 +2551,86 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         {/* 2. SEÇÃO SECUNDÁRIA: DEMAIS DISCIPLINAS LIBERADAS */}
         <div className="space-y-2 pt-1">
           <div className="flex items-center justify-between px-1">
-            <span className="text-[11px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-1.5">
+            <span className="text-[11px] font-black uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
               <span>📚 Demais Aulas & Disciplinas do Preparatório</span>
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 p-2 rounded-2xl bg-white border border-slate-200 shadow-xs">
             {/* Processo Penal */}
             <button
               onClick={() => { setSelectedSubject('processo_penal'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'processo_penal'
-                  ? 'bg-teal-600 text-white shadow-md ring-2 ring-teal-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-teal-600 text-white shadow-sm ring-2 ring-teal-400/40'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
-              <div className="flex items-center gap-1.5">
-                <span>⚖️ Proc. Penal (Inquérito)</span>
+              <div className="flex items-center gap-1.5 truncate">
+                <span>⚖️ Proc. Penal</span>
               </div>
               {savedLessonsStore['processo_penal']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+                <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 1</span>
+                <span className={`text-[10px] font-semibold ${selectedSubject === 'processo_penal' ? 'text-teal-100' : 'text-slate-500'}`}>Aula 1</span>
               )}
             </button>
 
             {/* Processo Civil */}
             <button
               onClick={() => { setSelectedSubject('processo_civil'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'processo_civil'
-                  ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-400/40'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
-              <div className="flex items-center gap-1.5">
-                <span>📚 Proc. Civil (Atos Proc.)</span>
+              <div className="flex items-center gap-1.5 truncate">
+                <span>📚 Proc. Civil</span>
               </div>
               {savedLessonsStore['processo_civil']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+                <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">Aula 2</span>
+                <span className={`text-[10px] font-semibold ${selectedSubject === 'processo_civil' ? 'text-indigo-100' : 'text-slate-500'}`}>Aula 2</span>
               )}
             </button>
 
             {/* LIBRAS: 3ª Aula */}
             <button
               onClick={() => { setSelectedSubject('libras'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[150px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'libras'
-                  ? 'bg-sky-600 text-white shadow-md ring-2 ring-sky-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-sky-600 text-white shadow-sm ring-2 ring-sky-400/40'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>🤟 LIBRAS (3ª Aula)</span>
+              <div className="flex items-center gap-1.5 truncate">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>🤟 LIBRAS</span>
               </div>
               {savedLessonsStore['libras']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+                <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">3ª Aula</span>
+                <span className={`text-[10px] font-semibold ${selectedSubject === 'libras' ? 'text-sky-100' : 'text-slate-500'}`}>3ª Aula</span>
               )}
             </button>
 
             {/* Geografia do Amazonas: 2ª Aula */}
             <button
               onClick={() => { setSelectedSubject('geografia_amazonas'); setCurrentFlashcardIndex(0); setIsFlipped(false); }}
-              className={`flex-1 min-w-[170px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
+              className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-between gap-2 cursor-pointer ${
                 selectedSubject === 'geografia_amazonas'
-                  ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-400/40'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
-              <div className="flex items-center gap-1.5">
-                <span>🌳 Geografia AM (2ª Aula)</span>
+              <div className="flex items-center gap-1.5 truncate">
+                <span>🌳 Geografia AM</span>
               </div>
               {savedLessonsStore['geografia_amazonas']?.completed ? (
-                <span className="text-[10px] bg-emerald-400/30 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
+                <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.5 rounded">✓ Salvo</span>
               ) : (
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">2ª Aula</span>
+                <span className={`text-[10px] font-semibold ${selectedSubject === 'geografia_amazonas' ? 'text-emerald-100' : 'text-slate-500'}`}>2ª Aula</span>
               )}
             </button>
           </div>
@@ -2543,7 +2639,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* Top Breadcrumb & Metadata Header */}
       <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-sky-600 dark:text-sky-400">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-semibold text-sky-800 leading-normal">
           <span>
             {selectedSubject === 'ingles'
               ? 'Língua Inglesa'
@@ -2565,7 +2661,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Direito Constitucional'
               : 'Direito Administrativo'}
           </span>
-          <span>•</span>
+          <span className="text-slate-400">•</span>
           <span>
             {selectedSubject === 'ingles'
               ? 'Unidade 1 — Numbers, Time & Days of the Week'
@@ -2589,48 +2685,48 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               ? 'Nacionalidade (Art. 12 da CF/88)'
               : 'Unidade 4 — Agentes Públicos'}
           </span>
-          <span>•</span>
-          <span>
+          <span className="text-slate-400">•</span>
+          <span className="text-slate-600">
             {selectedSubject === 'ingles'
-              ? '3ª Aula de Hoje — Numbers (1-100), Horas (What time is it?) e Dias da Semana'
+              ? '3ª Aula de Hoje — Numbers (1-100), Horas e Dias'
               : selectedSubject === 'geografia_amazonas'
-              ? '2ª Aula de Hoje — População, Manaus, ZFM (PIM) e Transporte'
+              ? '2ª Aula de Hoje — População, Manaus e ZFM'
               : selectedSubject === 'legislacao_tjam'
-              ? 'Aula 1 — Estrutura e Órgãos do Poder Judiciário'
+              ? 'Aula 1 — Estrutura e Órgãos do Judiciário'
               : selectedSubject === 'libras'
-              ? 'Aula 2 — Prática de Comunicação, Cumprimentos e Atendimento'
+              ? 'Aula 2 — Prática de Comunicação e Cumprimentos'
               : selectedSubject === 'processo_penal'
-              ? 'Aula 1 — Inquérito Policial: Conceito, Finalidade e Características'
+              ? 'Aula 1 — Inquérito Policial: Conceito e Finalidade'
               : selectedSubject === 'portugues'
               ? '2ª Aula de Hoje — Conteúdo em Atualização'
               : selectedSubject === 'processo_civil'
               ? 'Aula 5 — Atos Processuais'
               : selectedSubject === 'informatica'
-              ? '4ª Aula de Hoje — Redes (LAN/MAN/WAN), Internet, Cliente-Servidor, IP e HTTP/HTTPS'
+              ? '4ª Aula de Hoje — Redes e Internet (LAN/MAN/WAN)'
               : selectedSubject === 'direito_const'
-              ? '1ª Aula de Hoje — Nacionalidade (Brasileiro Nato, Naturalizado e Perda)'
-              : 'Aula 4 — Agentes Públicos (Conceito, Classificação e Regimes)'}
+              ? '1ª Aula de Hoje — Nacionalidade (Nato e Naturalizado)'
+              : 'Aula 4 — Agentes Públicos (Conceito e Regimes)'}
           </span>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-slate-200">
           <div>
-            <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 mb-2">
+            <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300 mb-2">
               {selectedSubject === 'direito_const'
-                ? '⭐ 1ª AULA DE HOJE • 🇧🇷 Direito Constitucional (Nacionalidade)'
+                ? '⭐ 1ª AULA DE HOJE • 🇧🇷 Direito Constitucional'
                 : selectedSubject === 'direito_admin'
-                ? '⭐ 2ª AULA DE HOJE • ⚖️ Direito Administrativo (Controle da Administração)'
+                ? '⭐ 2ª AULA DE HOJE • ⚖️ Direito Administrativo'
                 : selectedSubject === 'ingles'
-                ? '⭐ 3ª AULA DE HOJE • 🇺🇸 Língua Inglesa (Numbers, Time & Days)'
+                ? '⭐ 3ª AULA DE HOJE • 🇺🇸 Língua Inglesa'
                 : selectedSubject === 'informatica'
-                ? '⭐ 4ª AULA DE HOJE • 💻 Informática (Redes de Computadores e Internet)'
+                ? '⭐ 4ª AULA DE HOJE • 💻 Informática'
                 : selectedSubject === 'processo_penal'
-                ? '⚖️ Processo Penal (Inquérito Policial)'
+                ? '⚖️ Processo Penal (Princípios Fundamentais)'
                 : selectedSubject === 'portugues'
                 ? '⏳ 2ª AULA DE HOJE • Em Breve'
                 : '📚 TJAM 2026'}
             </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-950 leading-tight">
               {selectedSubject === 'direito_const'
                 ? '🇧🇷 Direito Constitucional — 1ª Aula de Hoje: Nacionalidade (Art. 12 da CF/88)'
                 : selectedSubject === 'direito_admin'
@@ -2640,20 +2736,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                 : selectedSubject === 'informatica'
                 ? '💻 Informática — 4ª Aula de Hoje: Redes de Computadores e Internet'
                 : selectedSubject === 'processo_penal'
-                ? '⚖️ Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)'
+                ? '⚖️ Processo Penal — Aula 1: Princípios Fundamentais do Processo Penal'
                 : selectedSubject === 'portugues'
                 ? '📚 2ª Aula de Hoje — Em Atualização'
                 : 'Aula TJAM 2026'}
             </h1>
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500">
-            <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
-              <Clock className="w-3.5 h-3.5 text-emerald-500" />
+          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl font-semibold border border-slate-200">
+              <Clock className="w-3.5 h-3.5 text-emerald-600" />
               Tempo estimado: 45–60 min
             </span>
-            <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl font-semibold border border-slate-200">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               Nível: Iniciante
             </span>
           </div>
@@ -2662,29 +2758,29 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
 
       {/* Completion Banner if completed */}
       {isLessonCompleted && (
-        <div className="p-8 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-4 animate-in fade-in duration-300">
-          <div className="w-16 h-16 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-600/30">
-            <Award className="w-8 h-8" />
+        <div className="p-6 sm:p-8 rounded-3xl bg-emerald-50 border border-emerald-300 text-center space-y-4 animate-in fade-in duration-300 shadow-xs">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto shadow-md shadow-emerald-600/30">
+            <Award className="w-7 h-7 sm:w-8 sm:h-8" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Pausa de Estudos — Aula Concluída!</h2>
-            <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+            <h2 className="text-lg sm:text-xl font-black text-slate-950">Pausa de Estudos — Aula Concluída!</h2>
+            <p className="text-sm font-bold text-emerald-800">
               O conteúdo foi concluído com sucesso.
             </p>
-            <p className="text-xs text-amber-600 dark:text-amber-400 font-extrabold flex items-center justify-center gap-1.5 pt-1">
-              <Clock className="w-4 h-4" /> Próxima aula: Sábado às 13h
+            <p className="text-xs text-amber-800 font-extrabold flex items-center justify-center gap-1.5 pt-1">
+              <Clock className="w-4 h-4 text-amber-600" /> Próxima aula: Sábado às 13h
             </p>
           </div>
           <div className="pt-2 flex justify-center gap-3">
             <button
               onClick={() => onNavigateTab('dashboard')}
-              className="px-6 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 shadow-md cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 shadow-xs cursor-pointer"
             >
               Voltar ao Início
             </button>
             <button
               onClick={() => setIsLessonCompleted(false)}
-              className="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Rever Conteúdo
             </button>
@@ -2692,57 +2788,67 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
         </div>
       )}
 
-      {/* Navigation Sub-Tabs */}
-      <div className="flex overflow-x-auto gap-2 p-1.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+      {/* Navigation Sub-Tabs: Responsive & Clean in Light Mode */}
+      <div className="flex overflow-x-auto no-scrollbar scroll-smooth gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 w-full">
         <button
           onClick={() => setActiveTab('video')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'video'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
           }`}
         >
-          <Video className="w-4 h-4 text-rose-500" /> Vídeo Aula
+          <Video className="w-4 h-4 text-rose-600 shrink-0" /> Vídeo Aula
         </button>
         <button
           onClick={() => setActiveTab('conteudo')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'conteudo'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
           }`}
         >
-          <BookOpen className="w-4 h-4" /> Texto da Aula
+          <BookOpen className="w-4 h-4 text-emerald-600 shrink-0" /> Texto da Aula
         </button>
         <button
           onClick={() => setActiveTab('flashcards')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'flashcards'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
           }`}
         >
-          <Layers className="w-4 h-4" /> Flashcards ({flashcardsData.length})
+          <Layers className="w-4 h-4 text-indigo-600 shrink-0" /> Flashcards ({flashcardsData.length})
         </button>
         <button
           onClick={() => setActiveTab('questoes')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'questoes'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
           }`}
         >
-          <HelpCircle className="w-4 h-4" /> {selectedSubject === 'libras' ? 'Exercícios (WhatsApp)' : `Questões (${activeMcQuestions.length})`}
+          <HelpCircle className="w-4 h-4 text-amber-600 shrink-0" /> {selectedSubject === 'libras' ? 'Exercícios' : `Questões (${activeMcQuestions.length})`}
         </button>
         <button
           onClick={() => setActiveTab('resumo')}
-          className={`flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'resumo'
-              ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
           }`}
         >
-          <FileText className="w-4 h-4" /> Resumo
+          <FileText className="w-4 h-4 text-teal-600 shrink-0" /> Resumo
+        </button>
+        <button
+          onClick={() => setActiveTab('materiais')}
+          className={`shrink-0 sm:flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
+            activeTab === 'materiais'
+              ? 'bg-white text-emerald-950 shadow-xs border border-slate-200 font-extrabold'
+              : 'text-slate-600 hover:text-slate-950 hover:bg-white/60'
+          }`}
+        >
+          <Download className="w-4 h-4 text-sky-600 shrink-0" /> Arquivos ({releasedDisciplineMaterials.length})
         </button>
       </div>
 
@@ -2773,7 +2879,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'informatica'
                     ? '💻 Informática — 4ª Aula de Hoje: Redes de Computadores e Internet'
                     : selectedSubject === 'processo_penal'
-                    ? '⚖️ Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)'
+                    ? '⚖️ Processo Penal — Aula 1: Princípios Fundamentais do Processo Penal'
                     : selectedSubject === 'direito_const'
                     ? '🇧🇷 Direito Constitucional — Aula 1: Nacionalidade (Art. 12 da CF/88)'
                     : selectedSubject === 'direito_admin'
@@ -2784,7 +2890,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   {selectedSubject === 'processo_civil'
                     ? '2ª Aula de Hoje • Atos Processuais (Conceito, Forma, Tempo, Citação x Intimação, Prazos e Preclusão)'
                     : selectedSubject === 'processo_penal'
-                    ? '1ª Aula de Hoje • Inquérito Policial (Conceito, Finalidade, Características e Atividade Prática)'
+                    ? '1ª Aula de Hoje • Princípios Fundamentais do Processo Penal (Devido Processo, Ampla Defesa, Contraditório, Juiz Natural e Sistema Acusatório)'
                     : selectedSubject === 'ingles'
                     ? '3ª Aula de Hoje • Numbers (1–100) • What time is it? (o\'clock, minutos, a.m./p.m.) • Days of the Week & Desafio em Vídeo'
                     : selectedSubject === 'informatica'
@@ -2877,12 +2983,42 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </div>
             )}
 
+            {/* Selector de Vídeo Aulas Publicadas e Controladas pelo Professor */}
+            {disciplineVideoLessons.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 p-2 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
+                <span className="text-[10px] font-black uppercase text-amber-800 dark:text-amber-400 px-2 flex items-center gap-1.5 shrink-0">
+                  <Sparkles className="w-3.5 h-3.5" /> Aulas da Profª Jéssica ({disciplineVideoLessons.length}):
+                </span>
+                {disciplineVideoLessons.map((v) => {
+                  const isSelected = customSelectedVideoId
+                    ? customSelectedVideoId === v.id
+                    : disciplineVideoLessons[0].id === v.id;
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => setCustomSelectedVideoId(v.id)}
+                      className={`py-1.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer ${
+                        isSelected
+                          ? 'bg-amber-600 text-white shadow-xs'
+                          : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-900/50 border border-slate-200 dark:border-slate-700'
+                      }`}
+                    >
+                      <Video className="w-3 h-3 text-amber-300 shrink-0" />
+                      <span className="max-w-[220px] truncate">{v.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
             {/* Embedded YouTube Video Player */}
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
               <iframe
                 className="w-full h-full"
                 src={
-                  selectedSubject === 'ingles'
+                  activeCustomVideo
+                    ? formatEmbedUrl(activeCustomVideo.videoUrl)
+                    : selectedSubject === 'ingles'
                     ? selectedVideoPart === 'video2'
                       ? 'https://www.youtube.com/embed/TuNUCGYFohw?autoplay=0&rel=0'
                       : selectedVideoPart === 'video3'
@@ -2899,7 +3035,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/j6Ugm67dx8s?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://www.youtube.com/embed/LKC-WndRbEU?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/N2PakWeTuic?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
                     ? 'https://www.youtube.com/embed/N5oBz1cC2xY?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
@@ -2930,7 +3066,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: 3ª Aula de Hoje — Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_penal'
-                    ? 'Vídeo Aula - Processo Penal: Aula 1 — Inquérito Policial (Conceito, Finalidade e Características)'
+                    ? 'Vídeo Aula - Processo Penal: Aula 1 — Princípios Fundamentais do Processo Penal'
                     : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Aula 2 — Atos Processuais (CPC/2015)'
                     : selectedSubject === 'informatica'
@@ -2967,7 +3103,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                     : selectedSubject === 'libras'
                     ? 'https://youtu.be/j6Ugm67dx8s?is=_LtHw0g9ekgfU7gN'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://www.youtube.com/live/LKC-WndRbEU?is=ywfl4QJ6usmqhyyv'
+                    ? 'https://youtu.be/N2PakWeTuic?is=bL6rvfVynaQvQrVl'
                     : selectedSubject === 'processo_civil'
                     ? 'https://youtu.be/N5oBz1cC2xY?is=kLX-4lDE-WmOVM8c'
                     : selectedSubject === 'informatica'
@@ -3140,27 +3276,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Lei processual penal no tempo: princípio tempus regit actum (Art. 2º do CPP) e aplicação imediata.</span>
+                      <span>Devido Processo Legal (Art. 5º, LIV, CF): cláusula de garantia de que ninguém será privado de sua liberdade ou bens sem o devido processo legal.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Respeito absoluto aos atos processuais já realizados sob a vigência da lei anterior.</span>
+                      <span>Contraditório e Ampla Defesa (Art. 5º, LV, CF): ciência e oportunidade de manifestação das partes; desdobra-se em defesa técnica (indispensável) e autodefesa.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Diferença crucial entre lei processual penal (aplicação imediata) e lei penal (retroatividade da lei mais benéfica).</span>
+                      <span>Presunção de Inocência (Art. 5º, LVII, CF): ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Lei processual penal no espaço: princípio da territorialidade (Art. 1º do CPP) e atos no exterior.</span>
+                      <span>Juiz Natural (Art. 5º, LIII e XXXVII, CF): julgamento por autoridade competente prévia e proibição constitucional de juízo ou tribunal de exceção.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Interpretação da lei processual penal (literal, sistemática, extensiva) e analogia para suprir lacunas (Art. 3º do CPP).</span>
+                      <span>Inadmissibilidade das Provas Ilícitas (Art. 5º, LVI, CF): são inadmissíveis no processo as provas obtidas por meios ilícitos.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Fontes do Processo Penal: Constituição Federal, leis, tratados e convenções, princípios e jurisprudência.</span>
+                      <span>Sistema Acusatório & Direito ao Silêncio: separação rígida entre acusar, defender e julgar; e garantia de não produzir prova contra si mesmo.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'processo_civil' ? (
@@ -3827,7 +3963,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'direito_const'
                   ? 'Mapa Mental — Direito Constitucional: Nacionalidade (Art. 12 da CF/88)'
                   : selectedSubject === 'processo_penal'
-                  ? 'Mapa Mental — Aula 1: Inquérito Policial'
+                  ? 'Mapa Mental — Aula 1: Princípios Fundamentais do Processo Penal'
                   : selectedSubject === 'processo_civil'
                   ? 'Mapa Mental — Aula 2: Atos Processuais (CPC/2015)'
                   : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Administração Pública'}
@@ -3842,7 +3978,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'direito_const'
                   ? 'Esquema visual sobre Brasileiro Nato (Jus Soli e Sanguinis), Naturalizado, Cargos Privativos (P-V-C-S-M-D-O-D) e EC 131/2023'
                   : selectedSubject === 'processo_penal'
-                  ? 'Esquema visual sobre Inquérito Policial, características e instauração'
+                  ? 'Esquema visual sobre Princípios Fundamentais do Processo Penal, devido processo legal, ampla defesa, juiz natural e sistema acusatório'
                   : selectedSubject === 'processo_civil'
                   ? 'Esquema visual sobre Atos Processuais, Forma (Art. 188), Tempo (Art. 212), Citação, Intimação, Prazos e Preclusão'
                   : 'Resumo visual sobre conceitos, princípios e organização da Administração Pública'}
@@ -4462,7 +4598,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
                   : selectedSubject === 'informatica'
                   ? 'Resumo — Informática: Segurança da Informação (2ª Aula de Hoje)'
                   : selectedSubject === 'processo_penal'
-                  ? 'Resumo — Processo Penal: Inquérito Policial'
+                  ? 'Resumo — Processo Penal: Princípios Fundamentais do Processo Penal'
                   : 'Resumo — Direito Administrativo: Agentes Públicos (Aula 4)'}
               </h2>
             </div>
@@ -4680,6 +4816,80 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({ isDarkMode, onNaviga
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* TAB 5: ARQUIVOS E MATERIAIS DIDÁTICOS LIBERADOS PELO PROFESSOR */}
+      {activeTab === 'materiais' && (
+        <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+            <div>
+              <span className="text-[10px] uppercase font-black tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+                <Download className="w-3.5 h-3.5" /> Arquivos Oficiais da Disciplina
+              </span>
+              <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
+                Materiais, PDFs & Apostilas Liberadas pelo Professor
+              </h2>
+              <p className="text-xs text-slate-500">
+                Acesse e baixe os materiais didáticos disponibilizados e autorizados pela Profª Jéssica Alves para esta matéria.
+              </p>
+            </div>
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 w-fit">
+              {releasedDisciplineMaterials.length} {releasedDisciplineMaterials.length === 1 ? 'material liberado' : 'materiais liberados'}
+            </span>
+          </div>
+
+          {releasedDisciplineMaterials.length === 0 ? (
+            <div className="p-8 text-center rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-2">
+              <BookOpen className="w-8 h-8 text-slate-400 mx-auto" />
+              <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                Nenhum arquivo complementar liberado pelo professor para esta matéria no momento.
+              </p>
+              <p className="text-[11px] text-slate-400">
+                Assim que a coordenação pedagógica ou a Profª Jéssica publicar novos PDFs ou apostilas no Portal do Docente, eles aparecerão aqui instantaneamente.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {releasedDisciplineMaterials.map((mat) => (
+                <div
+                  key={mat.id}
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3 flex flex-col justify-between"
+                >
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-300">
+                        {mat.type.toUpperCase()} {mat.fileSize ? `• ${mat.fileSize}` : ''}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-bold">
+                        {mat.publishedAt}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-snug">
+                      {mat.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2">
+                      {mat.description}
+                    </p>
+                    <div className="text-[10px] font-bold text-slate-400 pt-1">
+                      Por: {mat.authorName}
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200/80 dark:border-slate-700/80 flex gap-2">
+                    <a
+                      href={mat.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-2 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                    >
+                      <Download className="w-3.5 h-3.5" /> Baixar Arquivo
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

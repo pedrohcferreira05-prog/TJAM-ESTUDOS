@@ -15,9 +15,24 @@ import { ALL_TJAM_QUESTIONS } from './tjamQuestionsData';
 import { ALL_TJAM_FLASHCARDS } from './tjamFlashcardsData';
 import { ALL_TJAM_MINDMAPS } from './tjamMindMapsData';
 import { OFFICIAL_SIMULADO_GERAL_TJAM } from './simuladoGeralTjam';
-import { SIMULADO_80_OBJETO } from './simulado80QuestoesData';
+import { SIMULADO_80_OBJETO, SIMULADO_80_QUESTIONS } from './simulado80QuestoesData';
 
-export const SAMPLE_QUESTIONS: Question[] = ALL_TJAM_QUESTIONS;
+// Combine all available official questions across datasets (deduplicated by id)
+export const ALL_COMBINED_QUESTIONS: Question[] = (() => {
+  const map = new Map<string, Question>();
+  (ALL_TJAM_QUESTIONS || []).forEach((q) => map.set(q.id, q));
+  (SIMULADO_80_QUESTIONS || []).forEach((q) => {
+    if (!map.has(q.id)) map.set(q.id, q);
+  });
+  if (OFFICIAL_SIMULADO_GERAL_TJAM?.questions) {
+    OFFICIAL_SIMULADO_GERAL_TJAM.questions.forEach((q) => {
+      if (!map.has(q.id)) map.set(q.id, q);
+    });
+  }
+  return Array.from(map.values());
+})();
+
+export const SAMPLE_QUESTIONS: Question[] = ALL_COMBINED_QUESTIONS;
 export const INITIAL_FLASHCARDS: Flashcard[] = ALL_TJAM_FLASHCARDS;
 export const INITIAL_MINDMAPS_TJAM: MindMap[] = ALL_TJAM_MINDMAPS;
 

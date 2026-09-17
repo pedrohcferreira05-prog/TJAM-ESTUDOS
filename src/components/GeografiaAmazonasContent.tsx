@@ -20,25 +20,20 @@ import {
 } from 'lucide-react';
 
 interface GeografiaAmazonasContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   isLessonCompleted: boolean;
   onToggleComplete: () => void;
   onNavigateTab: (tab: 'video' | 'questoes' | 'flashcards' | 'mapa' | 'resumo') => void;
 }
 
 export const GeografiaAmazonasContent: React.FC<GeografiaAmazonasContentProps> = ({
-  isDarkMode,
   isLessonCompleted,
   onToggleComplete,
   onNavigateTab,
 }) => {
   return (
     <article
-      className={`p-6 sm:p-10 rounded-3xl border space-y-10 leading-relaxed transition-all ${
-        isDarkMode
-          ? 'bg-slate-900 border-slate-800 text-slate-200'
-          : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-      }`}
+      className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white text-slate-800 shadow-sm space-y-10 leading-relaxed transition-all"
     >
       {/* Top Banner / Goal Header */}
       <header className="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-6">

@@ -182,8 +182,9 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
 
   // Flatten nodes for rendering
   const flattenNodes = (layout: LayoutNode): LayoutNode[] => {
+    if (!layout) return [];
     const list: LayoutNode[] = [layout];
-    if (layout.children) {
+    if (Array.isArray(layout.children)) {
       layout.children.forEach((c) => {
         list.push(...flattenNodes(c));
       });
@@ -229,8 +230,9 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
 
   // Count total nodes & studied nodes
   const countNodes = (node: MindMapNode): number => {
+    if (!node) return 0;
     let count = 1;
-    if (node.children) {
+    if (Array.isArray(node.children)) {
       node.children.forEach((c) => {
         count += countNodes(c);
       });

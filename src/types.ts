@@ -36,6 +36,8 @@ export interface DisciplineTopic {
   completed?: boolean;
 }
 
+export type Topic = DisciplineTopic;
+
 export interface Discipline {
   id: string;
   name: string;
@@ -98,6 +100,8 @@ export interface VideoLesson {
   durationMinutes: number;
   videoUrl: string;
   summary: string;
+  instructor?: string;
+  isPublished?: boolean;
 }
 
 export interface PDFResource {
@@ -147,7 +151,8 @@ export interface Simulado {
   disciplineBreakdown: Record<string, number>; // disciplineId -> question count
   questions: Question[];
   createdAt: string;
-  status: 'active' | 'draft' | 'archived';
+  status: 'active' | 'draft' | 'archived' | 'agendado' | 'ativo' | 'encerrado';
+  passingScore?: number;
 }
 
 export interface SimuladoAttempt {
@@ -329,9 +334,10 @@ export interface UserProgress {
   savedLessons?: Record<string, LessonProgressData>;
 }
 
-export type ViewMode = 'student' | 'teacher' | 'admin' | 'superadmin';
+export type ViewMode = 'student' | 'teacher' | 'simulado' | 'admin' | 'superadmin';
 export type StudentTab = 
   | 'dashboard' 
+  | 'materias'
   | 'turma' 
   | 'disciplina-hoje' 
   | 'aula-hoje' 
@@ -348,6 +354,46 @@ export type StudentTab =
   | 'caderno-erros' 
   | 'news' 
   | 'certificados';
-export type TeacherTab = 'turmas' | 'cronogramas' | 'materiais' | 'questoes-simulados' | 'correcoes' | 'desempenho' | 'avisos-lives' | 'biblioteca';
+export type TeacherTab =
+  | 'alunos'
+  | 'turmas'
+  | 'disciplinas-aluno'
+  | 'materias-edital'
+  | 'aulas-videos'
+  | 'cronogramas'
+  | 'questoes-simulados'
+  | 'flashcards'
+  | 'mapas-mentais'
+  | 'caderno-erros'
+  | 'materiais'
+  | 'respostas'
+  | 'correcoes'
+  | 'desempenho'
+  | 'avisos-lives'
+  | 'biblioteca';
 export type LayoutStyle = 'tree-horizontal' | 'tree-vertical' | 'radial';
+
+export interface StudentAccount {
+  id: string;
+  username?: string; // ID de Usuário para login (ex: id00120087)
+  name: string;
+  email: string;
+  password: string; // Senha definida pelo professor
+  turmaId: string;
+  turmaName: string;
+  createdAt: string;
+  status: 'ativo' | 'bloqueado';
+  phone?: string;
+  notes?: string;
+}
+
+export interface AuthSession {
+  id: string;
+  username?: string;
+  name: string;
+  email: string;
+  role: 'teacher' | 'student';
+  turmaId?: string;
+  turmaName?: string;
+}
 

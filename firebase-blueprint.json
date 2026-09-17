@@ -1,0 +1,243 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile containing authentication, role, and study credentials",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID matching auth UID" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "name": { "type": "string", "maxLength": 100, "description": "Full name of student or teacher" },
+        "role": { "type": "string", "enum": ["student", "teacher", "admin"], "description": "Portal access role" },
+        "turmaId": { "type": "string", "description": "Turma identifier if student" },
+        "isOnline": { "type": "boolean", "description": "Real-time presence tracking status" },
+        "lastActive": { "type": "string", "format": "date-time", "description": "Last active timestamp" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" }
+      },
+      "required": ["uid", "email", "name", "role", "createdAt"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Student persistent study stats, hours, streaks, and completed lesson topics",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User UID reference" },
+        "dailyGoalHours": { "type": "number", "description": "Daily study goal in hours" },
+        "hoursStudiedToday": { "type": "number", "description": "Hours studied today" },
+        "totalHoursStudied": { "type": "number", "description": "Accumulated hours studied" },
+        "streakDays": { "type": "number", "description": "Consecutive study streak in days" },
+        "lastStudiedDate": { "type": "string", "format": "date-time", "description": "Last study session date" },
+        "completedTopicIds": { "type": "array", "description": "List of finished topic IDs" },
+        "errorQuestionIds": { "type": "array", "description": "Questions sent to Caderno de Erros" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last sync timestamp" }
+      },
+      "required": ["userId", "updatedAt"]
+    },
+    "Turma": {
+      "title": "Turma",
+      "description": "Official study class managed in Portal do Professor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique turma code/ID" },
+        "name": { "type": "string", "maxLength": 150, "description": "Turma descriptive title" },
+        "code": { "type": "string", "maxLength": 30, "description": "Turma invitation code" },
+        "teacherId": { "type": "string", "description": "UID or ID of the assigned professor" },
+        "teacherName": { "type": "string", "maxLength": 100, "description": "Display name of teacher" },
+        "targetExam": { "type": "string", "maxLength": 150, "description": "Target exam description" },
+        "description": { "type": "string", "maxLength": 1000, "description": "Turma syllabus overview" },
+        "currentStage": { "type": "string", "description": "Current active syllabus phase" },
+        "startDate": { "type": "string", "description": "Class start date" },
+        "endDate": { "type": "string", "description": "Class end date" },
+        "studentCount": { "type": "number", "description": "Number of enrolled students" },
+        "disciplineIds": { "type": "array", "description": "Included discipline identifiers" }
+      },
+      "required": ["id", "name", "teacherId", "teacherName"]
+    },
+    "PublishedMaterial": {
+      "title": "PublishedMaterial",
+      "description": "Educational resource (PDF, video, mindmap, summary) published by teachers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Material unique ID" },
+        "turmaId": { "type": "string", "description": "Associated turma ID" },
+        "disciplineId": { "type": "string", "description": "Associated discipline ID" },
+        "topicId": { "type": "string", "description": "Associated topic ID" },
+        "title": { "type": "string", "maxLength": 200, "description": "Title of the material" },
+        "type": { "type": "string", "enum": ["aula", "pdf", "resumo", "mapa", "flashcard", "simulado", "questao", "video"], "description": "Resource type" },
+        "content": { "type": "string", "description": "Textual content, guide or body" },
+        "attachmentUrl": { "type": "string", "description": "URL to PDF, video or external resource" },
+        "releaseStage": { "type": "string", "description": "Stage in which material is unlocked" },
+        "isReleased": { "type": "boolean", "description": "Whether material is available to students" },
+        "authorName": { "type": "string", "description": "Author or professor name" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "title", "type", "isReleased", "createdAt"]
+    },
+    "SimuladoAttempt": {
+      "title": "SimuladoAttempt",
+      "description": "Official mock exam attempt with full grading and answer sheet",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Attempt unique record ID" },
+        "simuladoId": { "type": "string", "description": "Simulado ID reference" },
+        "simuladoTitle": { "type": "string", "description": "Exam name" },
+        "userId": { "type": "string", "description": "Student user ID" },
+        "participantName": { "type": "string", "maxLength": 100, "description": "Student full name" },
+        "partnerName": { "type": "string", "maxLength": 100, "description": "Official duo partner name if applicable" },
+        "startedAt": { "type": "string", "format": "date-time", "description": "Exam start time" },
+        "finishedAt": { "type": "string", "format": "date-time", "description": "Exam finish time" },
+        "score": { "type": "number", "description": "Correct answers score count" },
+        "maxScore": { "type": "number", "description": "Total exam questions count" },
+        "percentage": { "type": "number", "description": "Calculated percentage score" },
+        "userAnswers": { "type": "object", "description": "Map of questionId to option chosen" },
+        "timeSpentSeconds": { "type": "number", "description": "Elapsed duration in seconds" },
+        "deviceUsed": { "type": "string", "description": "Device used during exam" }
+      },
+      "required": ["id", "simuladoId", "participantName", "score", "maxScore", "percentage", "finishedAt"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Turma broadcast notification from professors",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Announcement unique ID" },
+        "turmaId": { "type": "string", "description": "Target turma ID" },
+        "title": { "type": "string", "maxLength": 200, "description": "Headline" },
+        "content": { "type": "string", "description": "Announcement text" },
+        "authorName": { "type": "string", "maxLength": 100, "description": "Teacher display name" },
+        "priority": { "type": "string", "enum": ["normal", "alta", "urgente"], "description": "Urgency level" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Publication timestamp" }
+      },
+      "required": ["id", "title", "content", "authorName", "createdAt"]
+    },
+    "LiveClass": {
+      "title": "LiveClass",
+      "description": "Scheduled live lecture or recording link",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Live class unique ID" },
+        "turmaId": { "type": "string", "description": "Turma ID" },
+        "title": { "type": "string", "maxLength": 200, "description": "Live session title" },
+        "description": { "type": "string", "description": "Session agenda" },
+        "disciplineId": { "type": "string", "description": "Discipline ID" },
+        "disciplineName": { "type": "string", "description": "Discipline name" },
+        "date": { "type": "string", "description": "Date string" },
+        "time": { "type": "string", "description": "Time range string" },
+        "meetingUrl": { "type": "string", "description": "Google Meet or video conference link" },
+        "status": { "type": "string", "enum": ["agendada", "ao-vivo", "concluida", "gravada"], "description": "Class status" },
+        "recordingUrl": { "type": "string", "description": "Recording video link" }
+      },
+      "required": ["id", "title", "meetingUrl", "status"]
+    },
+    "StudentSubmission": {
+      "title": "StudentSubmission",
+      "description": "Student activity, essay, or case study submitted for grading",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Submission unique ID" },
+        "studentId": { "type": "string", "description": "Student UID or ID" },
+        "studentName": { "type": "string", "maxLength": 100, "description": "Student name" },
+        "turmaId": { "type": "string", "description": "Turma ID" },
+        "activityTitle": { "type": "string", "maxLength": 200, "description": "Activity title" },
+        "disciplineName": { "type": "string", "description": "Discipline" },
+        "submittedAt": { "type": "string", "description": "Submission timestamp" },
+        "content": { "type": "string", "description": "Student response text" },
+        "attachmentUrl": { "type": "string", "description": "Optional file URL" },
+        "grade": { "type": "number", "description": "Grade from 0 to 10" },
+        "feedback": { "type": "string", "description": "Pedagogical commentary from professor" },
+        "status": { "type": "string", "enum": ["pendente", "corrigido"], "description": "Evaluation status" }
+      },
+      "required": ["id", "studentName", "activityTitle", "status", "submittedAt"]
+    },
+    "SystemControl": {
+      "title": "SystemControl",
+      "description": "Platform global controls, site lock, and active stage configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Control document ID (e.g. platform_settings)" },
+        "isSiteLocked": { "type": "boolean", "description": "Whether access is temporarily locked by teachers" },
+        "lockMessage": { "type": "string", "maxLength": 300, "description": "Message displayed when locked" },
+        "activeStage": { "type": "string", "description": "Currently active study stage" },
+        "simuladosOpen": { "type": "boolean", "description": "Whether simulados portal is open for attempts" },
+        "updatedBy": { "type": "string", "description": "UID or name of the professor who updated" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "isSiteLocked"]
+    },
+    "LegacyAppletData": {
+      "title": "LegacyAppletData",
+      "description": "Preserved documents in tjam_applet_data ensuring zero data loss",
+      "type": "object",
+      "properties": {
+        "updatedAt": { "type": "string", "description": "Timestamp of save" },
+        "store": { "type": "object", "description": "Lesson progress store map" },
+        "lessons": { "type": "array", "description": "Week 1 course content lessons" }
+      }
+    },
+    "StudentAccount": {
+      "title": "StudentAccount",
+      "description": "Student credentials created and managed by the teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique student identifier or ID" },
+        "username": { "type": "string", "description": "Student login ID or matricula code (e.g. id00120087)" },
+        "name": { "type": "string", "maxLength": 100, "description": "Full name of student" },
+        "email": { "type": "string", "description": "Email address" },
+        "password": { "type": "string", "description": "Access password set by teacher" },
+        "turmaId": { "type": "string", "description": "Enrolled turma ID" },
+        "turmaName": { "type": "string", "description": "Enrolled turma display name" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "status": { "type": "string", "enum": ["ativo", "bloqueado"], "description": "Account status" },
+        "phone": { "type": "string", "description": "Phone or WhatsApp" },
+        "notes": { "type": "string", "description": "Pedagogical notes" }
+      },
+      "required": ["id", "name", "email", "password", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile with role authentication"
+    },
+    "/student_accounts/{accountId}": {
+      "schema": "StudentAccount",
+      "description": "Student accounts created and managed by the teacher"
+    },
+    "/user_progress/{userId}": {
+      "schema": "UserProgress",
+      "description": "Persistent individual student progress and study metrics"
+    },
+    "/turmas/{turmaId}": {
+      "schema": "Turma",
+      "description": "Official student classes"
+    },
+    "/materials/{materialId}": {
+      "schema": "PublishedMaterial",
+      "description": "Published study materials, PDFs, videos, and summaries"
+    },
+    "/simulado_attempts/{attemptId}": {
+      "schema": "SimuladoAttempt",
+      "description": "Submissions and results of official simulados"
+    },
+    "/announcements/{announcementId}": {
+      "schema": "Announcement",
+      "description": "Official turma notices published by professors"
+    },
+    "/live_classes/{liveId}": {
+      "schema": "LiveClass",
+      "description": "Scheduled live classes and meeting links"
+    },
+    "/submissions/{submissionId}": {
+      "schema": "StudentSubmission",
+      "description": "Discursive activities and exercises submitted by students"
+    },
+    "/system_controls/{controlId}": {
+      "schema": "SystemControl",
+      "description": "Platform global switches (site locking, stage releases)"
+    },
+    "/tjam_applet_data/{documentId}": {
+      "schema": "LegacyAppletData",
+      "description": "Preserved existing database documents ensuring no data loss"
+    }
+  }
+}

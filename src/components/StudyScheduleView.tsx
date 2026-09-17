@@ -4,7 +4,6 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
-  Sparkles,
   BookOpen,
   ChevronRight,
   Flame,
@@ -17,7 +16,6 @@ interface StudyScheduleViewProps {
   disciplines: Discipline[];
   onToggleScheduleTask: (scheduleId: string) => void;
   onSelectDiscipline: (disciplineId: string) => void;
-  onOpenAIAssistant: (prompt?: string) => void;
   isDarkMode: boolean;
 }
 
@@ -26,7 +24,6 @@ export const StudyScheduleView: React.FC<StudyScheduleViewProps> = ({
   disciplines,
   onToggleScheduleTask,
   onSelectDiscipline,
-  onOpenAIAssistant,
   isDarkMode,
 }) => {
   const [selectedDay, setSelectedDay] = useState<string>('Segunda');
@@ -38,22 +35,19 @@ export const StudyScheduleView: React.FC<StudyScheduleViewProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold tracking-tight">Cronograma de Estudos Semanal</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+            <Calendar className="w-6 h-6 text-amber-500" />
+            Cronograma de Estudos Semanal
+          </h2>
           <p className="text-xs text-slate-500 mt-1">
             Planejamento estruturado por dia da semana otimizado para o edital do TJAM
           </p>
         </div>
 
-        <button
-          onClick={() =>
-            onOpenAIAssistant(
-              'Analise meu cronograma semanal e sugira melhorias com base nas minhas disciplinas de maior peso no TJAM.'
-            )
-          }
-          className="px-4 py-2.5 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md shadow-purple-500/20 flex items-center gap-2"
-        >
-          <Sparkles className="w-4 h-4" /> Otimizar Cronograma com IA
-        </button>
+        <div className="px-3.5 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold flex items-center gap-2">
+          <Clock className="w-4 h-4 text-slate-500" />
+          <span>Meta planejada por disciplina</span>
+        </div>
       </div>
 
       {/* Days of Week Selector Tabs */}

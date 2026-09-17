@@ -5,27 +5,14 @@ import {
   Clock,
   BookOpen,
   Award,
-  Play,
   ArrowRight,
-  Sparkles,
   Trophy,
-  Medal,
-  CheckCircle2,
-  FileText,
   HelpCircle,
-  Layers,
   Brain,
-  Video,
-  Languages,
-  Trees,
-  Landmark,
-  Check,
   Scale,
-  Monitor,
   Calendar,
   CheckCircle,
-  Target,
-  Users
+  Target
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -42,197 +29,51 @@ interface ScheduledLesson {
   subtitle: string;
   category: string;
   badge: string;
-  color: 'emerald' | 'indigo' | 'purple' | 'sky' | 'blue' | 'teal' | 'amber' | 'cyan';
-  icon: any;
   duration: string;
   questionsCount: number;
   cardsCount: number;
-  highlight?: boolean;
-  tag: string;
-  orderNumber: number;
 }
 
-// As Aulas Programadas para Conclusão Hoje
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
     id: 'processo_penal',
     subjectKey: 'processo_penal',
     title: 'Processo Penal — Aula 1',
-    subtitle: 'Inquérito Policial: conceito, finalidade e características • Vídeo aula no YouTube, caso prático "Você é o Investigador" e 20 questões',
+    subtitle: 'Inquérito Policial: conceito, características, instauração e valor probatório • Teoria, caso prático e 20 questões',
     category: 'Conhecimentos Específicos',
-    badge: '1ª Aula de Hoje • Inquérito Policial',
-    color: 'amber',
-    icon: Scale,
-    duration: '45 min',
+    badge: 'Aula 1',
+    duration: '40 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '⚖️ PROCESSO PENAL (1ª AULA)',
-    orderNumber: 1,
   },
   {
     id: 'processo_civil',
     subjectKey: 'processo_civil',
     title: 'Processo Civil — Aula 2',
-    subtitle: 'Atos Processuais: Conceito, forma (art. 188), tempo (art. 212), citação x intimação, prazos (dias úteis) e preclusão • Vídeo aula no YouTube, caso prático Maria x João e 20 questões',
+    subtitle: 'Atos Processuais: forma, tempo, prazos em dias úteis, citação e intimação • Teoria, caso prático e 20 questões',
     category: 'Conhecimentos Específicos',
-    badge: '2ª Aula de Hoje • Atos Processuais',
-    color: 'indigo',
-    icon: Scale,
+    badge: 'Aula 2',
     duration: '45 min',
     questionsCount: 20,
     cardsCount: 15,
-    highlight: true,
-    tag: '⚖️ PROCESSO CIVIL (2ª AULA)',
-    orderNumber: 2,
-  },
-];
-
-// Demais Disciplinas e Aulas Disponíveis
-const OTHER_AVAILABLE_LESSONS: ScheduledLesson[] = [
-  {
-    id: 'geografia_amazonas',
-    subjectKey: 'geografia_amazonas',
-    title: 'Geografia do Amazonas — 2ª Aula',
-    subtitle: 'Aspectos Humanos e Econômicos: População, Manaus, Zona Franca (PIM), Economia e Transporte Fluvial',
-    category: 'Conhecimentos Gerais',
-    badge: 'Aula 2 • Aspectos Humanos & Econômicos',
-    color: 'emerald',
-    icon: Trees,
-    duration: '40 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '🌳 GEOGRAFIA AM',
-    orderNumber: 3,
-  },
-  {
-    id: 'portugues',
-    subjectKey: 'portugues',
-    title: 'Língua Portuguesa — Aula 3',
-    subtitle: 'Classes de Palavras: Substantivo, Adjetivo e Verbo (Morfologia e Casos Especiais FGV)',
-    category: 'Conhecimentos Básicos',
-    badge: 'Aula 3 • Morfologia FGV',
-    color: 'emerald',
-    icon: BookOpen,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '🇧🇷 PORTUGUÊS',
-    orderNumber: 3,
-  },
-  {
-    id: 'direito_admin',
-    subjectKey: 'direito_admin',
-    title: 'Direito Administrativo — Aula 4',
-    subtitle: 'Poderes da Administração Pública (Poder de Polícia, Hierárquico, Disciplinar e Regulamentar)',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 4 • Poderes',
-    color: 'blue',
-    icon: Scale,
-    duration: '50 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '⚖️ DIR. ADMIN',
-    orderNumber: 4,
-  },
-  {
-    id: 'processo_civil',
-    subjectKey: 'processo_civil',
-    title: 'Processo Civil — Aula 2',
-    subtitle: 'Partes e Procuradores no CPC/2015 (Capacidade Processual, Litisconsórcio, Representação e Deveres)',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 2 • CPC/2015',
-    color: 'indigo',
-    icon: Scale,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '📚 PROC. CIVIL',
-    orderNumber: 5,
-  },
-  {
-    id: 'processo_penal',
-    subjectKey: 'processo_penal',
-    title: 'Processo Penal — Quarta Aula',
-    subtitle: 'Aplicação da Lei Processual Penal no Tempo (Tempus Regit Actum), Espaço (Territorialidade), Interpretação e Fontes',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 4 • Eficácia do CPP',
-    color: 'teal',
-    icon: BookOpen,
-    duration: '45 min',
-    questionsCount: 20,
-    cardsCount: 10,
-    tag: '⚖️ PROC. PENAL',
-    orderNumber: 6,
-  },
-  {
-    id: 'ingles',
-    subjectKey: 'ingles',
-    title: 'Língua Inglesa — Aula 3',
-    subtitle: 'Apresentação e Comunicação Básica (Greetings, Pronomes e Vocabulário de Rotina)',
-    category: 'Conhecimentos Básicos',
-    badge: 'Aula 3 • Prática',
-    color: 'indigo',
-    icon: Languages,
-    duration: '40 min',
-    questionsCount: 20,
-    cardsCount: 15,
-    tag: '🇬🇧 INGLÊS',
-    orderNumber: 7,
-  },
-  {
-    id: 'libras',
-    subjectKey: 'libras',
-    title: 'Acessibilidade & LIBRAS — Aula 2',
-    subtitle: 'Prática de Comunicação, Cumprimentos, Datilologia e Atendimento ao Cidadão',
-    category: 'Conhecimentos Gerais',
-    badge: 'Aula 2 • Comunicação',
-    color: 'sky',
-    icon: Sparkles,
-    duration: '35 min',
-    questionsCount: 15,
-    cardsCount: 12,
-    tag: '🤟 LIBRAS',
-    orderNumber: 8,
-  },
-  {
-    id: 'informatica',
-    subjectKey: 'informatica',
-    title: 'Noções de Informática — Aula 1',
-    subtitle: 'Conceitos Fundamentais de Hardware, Software, Redes e Segurança da Informação',
-    category: 'Conhecimentos Básicos',
-    badge: 'Aula 1 • TI & Segurança',
-    color: 'cyan',
-    icon: Monitor,
-    duration: '40 min',
-    questionsCount: 20,
-    cardsCount: 12,
-    tag: '💻 INFORMÁTICA',
-    orderNumber: 10,
   },
 ];
 
 export const Dashboard: React.FC<DashboardProps> = ({
   progress,
   onNavigateTab,
-  isDarkMode,
-  isDuo = true,
 }) => {
-  const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>(() => {
-    try {
-      const saved = localStorage.getItem('tjam_lessons_progress');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {}
-    return {};
-  });
-
-  const [filterState, setFilterState] = useState<'todas' | 'pendentes' | 'concluidas'>('todas');
+  const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>({});
 
   const reloadSavedStore = () => {
     try {
-      const saved = localStorage.getItem('tjam_lessons_progress');
-      if (saved) setSavedLessonsStore(JSON.parse(saved));
-    } catch (e) {}
+      const stored = localStorage.getItem('tjam_all_lessons_progress');
+      if (stored) {
+        setSavedLessonsStore(JSON.parse(stored));
+      }
+    } catch (e) {
+      console.warn('Erro ao ler progresso local', e);
+    }
   };
 
   useEffect(() => {
@@ -250,19 +91,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
     (l) => savedLessonsStore[l.subjectKey]?.completed
   ).length;
 
-  const inProgressDailyCount = TODAY_PRIMARY_LESSONS.filter(
-    (l) =>
-      !savedLessonsStore[l.subjectKey]?.completed &&
-      savedLessonsStore[l.subjectKey]?.selectedAnswers &&
-      Object.keys(savedLessonsStore[l.subjectKey].selectedAnswers).length > 0
-  ).length;
-
   const dailyPercentage = Math.round((completedDailyCount / TODAY_PRIMARY_LESSONS.length) * 100);
-
   const completedTopicsCount = progress.completedTopicIds?.length || 0;
   const questionAttemptsCount = progress.questionAttempts?.length || 0;
-  const totalCompletedActivities = completedTopicsCount + questionAttemptsCount;
   const realProgressPct = Math.min(100, Math.round((completedTopicsCount / 30) * 100));
+
   const timeTodayHours = progress.hoursStudiedToday || 0;
   const h = Math.floor(timeTodayHours);
   const m = Math.round((timeTodayHours % 1) * 60);
@@ -277,583 +110,280 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 py-2">
-      {/* Clean Welcome Header */}
-      <div
-        className={`p-8 rounded-3xl border shadow-sm transition-all space-y-5 ${
-          isDarkMode
-            ? 'bg-slate-900 border-slate-800'
-            : 'bg-white border-slate-200'
-        }`}
-      >
-        <div className="space-y-2">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 dark:text-amber-400 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5" /> Preparatório TJAM 2026 • 2 Aulas Programadas para Hoje
-            </div>
-
-            <div className="px-3 py-1 rounded-full text-xs font-black bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Dupla Oficial: Eduardo Mateus & Pedro Henrique (5º Lugar)</span>
-            </div>
+    <div className="max-w-5xl mx-auto space-y-6 py-2 px-2 sm:px-4">
+      {/* 1. Header do Aluno - Clean Light Mode & Direto */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-xs">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
+              Olá, Eduardo!
+            </h1>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">
+              TJAM 2026
+            </span>
           </div>
-
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-            Olá, Eduardo!
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Bem-vindo ao seu plano de estudos para o TJAM 2026! As <strong className="text-amber-400 font-bold">2 aulas programadas para hoje</strong> são: <strong className="text-amber-400">1. Processo Penal (Aula 1 — Inquérito Policial)</strong> e <strong className="text-indigo-400">2. Processo Civil (Aula 2 — Atos Processuais)</strong>, ambas com vídeo aula, teoria completa, caso prático e 20 exercícios comentados.
+          <p className="text-xs sm:text-sm text-slate-600">
+            Metas do dia: <span className="text-amber-700 font-bold">Processo Penal</span> e <span className="text-indigo-700 font-bold">Processo Civil</span>.
           </p>
         </div>
 
-        {/* Primary CTA Banner: Duas Aulas de Hoje */}
-        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-amber-900/90 via-slate-900 to-indigo-950 text-white flex flex-col xl:flex-row items-start xl:items-center justify-between gap-5 shadow-xl shadow-amber-950/20 border border-amber-500/30">
-          <div className="space-y-2 max-w-xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-white/20 text-white border border-white/30 backdrop-blur-sm">
-                <Target className="w-3.5 h-3.5 text-amber-300" /> Metas Obrigatórias de Hoje
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider bg-amber-400 text-slate-950 font-black">
-                <Clock className="w-3.5 h-3.5" /> 2 Aulas Programadas
-              </span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black">🎯 2 Aulas de Hoje: Processo Penal & Processo Civil</h2>
-            <p className="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">
-              <strong>1. Processo Penal:</strong> Inquérito Policial (teoria, caso prático, YouTube e 20 questões) • <strong>2. Processo Civil:</strong> Atos Processuais (teoria, caso prático, YouTube e 20 questões).
-            </p>
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-bold text-amber-900">
+            <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
+            <span>{progress.streakDays || 5} dias</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex items-center gap-2.5 w-full xl:w-auto shrink-0">
-            <button
-              onClick={() => handleOpenLesson('processo_penal')}
-              className="px-4 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <span>⚖️ 1. Processo Penal</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={() => handleOpenLesson('processo_civil')}
-              className="px-4 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <span>⚖️ 2. Processo Civil</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={() => onNavigateTab('simulados')}
-              className="px-4 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-black text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer group"
-            >
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
-              <span>🏆 Ranking</span>
-            </button>
-          </div>
+          <button
+            onClick={() => onNavigateTab('simulados')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+          >
+            <Trophy className="w-3.5 h-3.5 text-amber-500" />
+            <span>5º Lugar</span>
+          </button>
         </div>
       </div>
 
-      {/* METAS DO DIA: AS 2 AULAS A SEREM CONCLUÍDAS HOJE */}
-      <div className="space-y-5">
-        <div
-          className={`p-6 sm:p-7 rounded-3xl border shadow-md space-y-5 ${
-            isDarkMode
-              ? 'bg-slate-900 border-slate-800'
-              : 'bg-white border-slate-200'
-          }`}
-        >
-          {/* Header & Daily Progress Stats */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-5 border-slate-200 dark:border-slate-800">
-            <div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-amber-500" />
-                <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                  Metas de Hoje • 2 Aulas Programadas
-                </h2>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Conclua os textos teóricos, responda as questões comentadas, pratique no caso investigativo e assista as vídeo aulas.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <span className="text-xs font-bold text-slate-400 block">Progresso do Dia</span>
-                <span className="text-base font-black text-emerald-600 dark:text-emerald-400">
-                  {completedDailyCount} de {TODAY_PRIMARY_LESSONS.length} aulas ({dailyPercentage}%)
-                </span>
-              </div>
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 font-black text-xs">
-                {dailyPercentage}%
-              </div>
-            </div>
+      {/* 2. 4 Indicadores Rápidos (KPIs) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Metas de Hoje */}
+        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+            <span>Metas de Hoje</span>
+            <Target className="w-4 h-4 text-amber-600" />
           </div>
-
-          {/* Daily Progress Bar */}
-          <div className="space-y-2">
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-3.5 rounded-full overflow-hidden p-0.5 border border-slate-200 dark:border-slate-700">
-              <div
-                className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-500"
-                style={{ width: `${Math.max(5, dailyPercentage)}%` }}
-              />
-            </div>
-            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400">
-              <span>{completedDailyCount} de {TODAY_PRIMARY_LESSONS.length} Aulas Concluídas</span>
-              <span>{inProgressDailyCount > 0 ? `${inProgressDailyCount} Em Andamento` : 'Status Sincronizado'}</span>
-              <span>{TODAY_PRIMARY_LESSONS.length - completedDailyCount} Pendentes</span>
-            </div>
+          <div className="flex items-baseline justify-between">
+            <span className="text-2xl font-black text-slate-900">
+              {completedDailyCount} / {TODAY_PRIMARY_LESSONS.length}
+            </span>
+            <span className="text-xs font-bold text-amber-700 font-mono">
+              {dailyPercentage}%
+            </span>
+          </div>
+          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+            <div
+              className="bg-amber-500 h-full rounded-full transition-all duration-300"
+              style={{ width: `${dailyPercentage}%` }}
+            />
           </div>
         </div>
 
-        {/* 3 Primary Today's Lessons Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {TODAY_PRIMARY_LESSONS.map((lesson) => {
+        {/* Tempo Hoje */}
+        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+            <span>Tempo Hoje</span>
+            <Clock className="w-4 h-4 text-sky-600" />
+          </div>
+          <div className="text-2xl font-black text-slate-900">
+            {timeTodayFormatted}
+          </div>
+          <p className="text-[10px] text-slate-500 truncate">Estudo em tempo real</p>
+        </div>
+
+        {/* Questões Respondidas */}
+        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+            <span>Questões Feitas</span>
+            <HelpCircle className="w-4 h-4 text-emerald-600" />
+          </div>
+          <div className="text-2xl font-black text-slate-900">
+            {questionAttemptsCount}
+          </div>
+          <p className="text-[10px] text-slate-500 truncate">Exercícios e testes</p>
+        </div>
+
+        {/* Progresso no Edital */}
+        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+            <span>Edital Geral</span>
+            <Award className="w-4 h-4 text-indigo-600" />
+          </div>
+          <div className="text-2xl font-black text-slate-900">
+            {realProgressPct}%
+          </div>
+          <p className="text-[10px] text-slate-500 truncate">Assistente Judiciário</p>
+        </div>
+      </div>
+
+      {/* 3. Seção Principal: 2 Aulas Programadas para Hoje */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-amber-600" />
+            <h2 className="text-base font-extrabold text-slate-900">
+              Aulas Programadas para Hoje
+            </h2>
+          </div>
+          <span className="text-xs text-slate-500 font-medium">
+            2 aulas prioritárias
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {TODAY_PRIMARY_LESSONS.map((lesson, idx) => {
             const isCompleted = !!savedLessonsStore[lesson.subjectKey]?.completed;
             const answersCount = savedLessonsStore[lesson.subjectKey]?.selectedAnswers
               ? Object.keys(savedLessonsStore[lesson.subjectKey].selectedAnswers).length
               : 0;
             const isInProgress = !isCompleted && answersCount > 0;
-            const Icon = lesson.icon;
 
             return (
               <div
                 key={lesson.id}
-                className={`p-6 rounded-3xl border shadow-lg space-y-4 transition-all flex flex-col justify-between ${
+                className={`p-5 rounded-2xl border transition-all flex flex-col justify-between space-y-4 shadow-xs ${
                   isCompleted
-                    ? isDarkMode
-                      ? 'bg-slate-900/90 border-emerald-500/40 ring-1 ring-emerald-500/20'
-                      : 'bg-emerald-50/40 border-emerald-200'
-                    : isDarkMode
-                    ? 'bg-slate-900 border-indigo-500/40 ring-1 ring-indigo-500/20'
-                    : 'bg-gradient-to-br from-indigo-50/60 via-white to-sky-50/40 border-indigo-200'
+                    ? 'bg-emerald-50/50 border-emerald-300 ring-1 ring-emerald-200'
+                    : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <div className="space-y-3">
-                  {/* Card Header & Status */}
-                  <div className="flex items-center justify-between gap-2 border-b pb-3 border-slate-200 dark:border-slate-800">
-                    <span className="px-3 py-1 rounded-full bg-slate-500/10 text-slate-700 dark:text-slate-300 font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 border border-slate-300/40 dark:border-slate-700/60">
-                      <Icon className="w-3.5 h-3.5" />
-                      <span>{lesson.tag}</span>
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-[11px] flex items-center gap-1.5 border border-slate-200">
+                      <Scale className="w-3.5 h-3.5 text-amber-600" />
+                      <span>Aula {idx + 1} • {lesson.category}</span>
                     </span>
 
                     {isCompleted ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-extrabold text-[11px]">
-                        <CheckCircle className="w-3.5 h-3.5" /> Concluída
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600" /> Concluída
                       </span>
                     ) : isInProgress ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 font-extrabold text-[11px]">
-                        <Clock className="w-3.5 h-3.5" /> Em andamento ({answersCount} respondidas)
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold text-xs border border-amber-300">
+                        <Clock className="w-3.5 h-3.5 text-amber-600" /> Em andamento
                       </span>
                     ) : (
-                      <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-md border border-indigo-500/20">
-                        {lesson.badge}
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-bold text-xs border border-slate-200">
+                        Pendente
                       </span>
                     )}
                   </div>
 
-                  {/* Title & Description */}
                   <div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 className="text-base font-bold text-slate-900">
                       {lesson.title}
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">
+                    <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                       {lesson.subtitle}
                     </p>
                   </div>
-
-                  {/* Badges / Metrics */}
-                  <div className="grid grid-cols-3 gap-2 pt-1">
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
-                      <Video className="w-3.5 h-3.5 text-rose-500 mb-0.5" />
-                      <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">Vídeo Aula</span>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
-                      <FileText className="w-3.5 h-3.5 text-emerald-500 mb-0.5" />
-                      <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">{lesson.questionsCount} Questões</span>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 flex flex-col items-center justify-center text-center">
-                      <Layers className="w-3.5 h-3.5 text-amber-500 mb-0.5" />
-                      <span className="text-[10px] font-extrabold text-slate-700 dark:text-slate-300">{lesson.cardsCount} Cards</span>
-                    </div>
-                  </div>
                 </div>
 
-                {/* Card Action Button */}
-                <button
-                  onClick={() => handleOpenLesson(lesson.subjectKey)}
-                  className={`w-full py-3.5 rounded-2xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group ${
-                    isCompleted
-                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
-                      : lesson.subjectKey === 'legislacao_tjam'
-                      ? 'bg-purple-600 hover:bg-purple-500 text-white'
-                      : lesson.subjectKey === 'portugues'
-                      ? 'bg-amber-400 hover:bg-amber-300 text-slate-950'
-                      : lesson.subjectKey === 'direito_admin'
-                      ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                      : lesson.subjectKey === 'processo_civil'
-                      ? 'bg-indigo-600 hover:bg-indigo-500 text-white'
-                      : 'bg-teal-600 hover:bg-teal-500 text-white'
-                  }`}
-                >
-                  <span>{isCompleted ? 'Revisar Aula de Hoje' : `Iniciar Aula de Hoje (${lesson.title.split('—')[0].trim()})`}</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 text-xs text-slate-500">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-slate-400" />
+                      {lesson.duration}
+                    </span>
+                    <span>•</span>
+                    <span>20 questões</span>
+                  </div>
+
+                  <button
+                    onClick={() => handleOpenLesson(lesson.subjectKey)}
+                    className={`px-4 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
+                      isCompleted
+                        ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                        : 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-black'
+                    }`}
+                  >
+                    <span>{isCompleted ? 'Revisar Aula' : isInProgress ? 'Continuar' : 'Iniciar Aula'}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* DEMAIS DISCIPLINAS DO PREPARATÓRIO (Ocultado durante Modo de Atualização / Foco, código 100% preservado) */}
-      {false && (
-        <div className="space-y-4 pt-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-              <h2 className="text-lg font-black text-slate-900 dark:text-white">
-                Demais Disciplinas Liberadas do Preparatório
-              </h2>
+      {/* 4. Acesso Rápido às Ferramentas */}
+      <div className="space-y-3">
+        <h2 className="text-base font-extrabold text-slate-900">
+          Acesso Rápido
+        </h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <button
+            onClick={() => onNavigateTab('materias')}
+            className="p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-left transition-all space-y-2 cursor-pointer shadow-xs group"
+          >
+            <div className="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-100 group-hover:scale-105 transition-transform">
+              <BookOpen className="w-4 h-4" />
             </div>
-            <span className="text-xs font-semibold text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
-              {OTHER_AVAILABLE_LESSONS.length} disciplinas disponíveis
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {OTHER_AVAILABLE_LESSONS.map((lesson) => {
-              const isCompleted = !!savedLessonsStore[lesson.subjectKey]?.completed;
-              const answersCount = savedLessonsStore[lesson.subjectKey]?.selectedAnswers
-                ? Object.keys(savedLessonsStore[lesson.subjectKey].selectedAnswers).length
-                : 0;
-              const Icon = lesson.icon;
-
-              return (
-                <div
-                  key={lesson.id}
-                  className={`p-5 rounded-3xl border shadow-sm space-y-3 transition-all flex flex-col justify-between ${
-                    isDarkMode
-                      ? 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
-                      : 'bg-white border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2 border-b pb-2.5 border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                        <Icon className="w-3.5 h-3.5" />
-                        <span>{lesson.tag}</span>
-                      </span>
-                      {isCompleted ? (
-                        <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
-                          ✓ Concluída
-                        </span>
-                      ) : answersCount > 0 ? (
-                        <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
-                          {answersCount} resp.
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-400">
-                          {lesson.duration}
-                        </span>
-                      )}
-                    </div>
-
-                    <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
-                      {lesson.title}
-                    </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                      {lesson.subtitle}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 flex items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800">
-                    <span className="text-[10px] font-semibold text-slate-400">
-                      {lesson.questionsCount} questões • {lesson.cardsCount} cards
-                    </span>
-                    <button
-                      onClick={() => handleOpenLesson(lesson.subjectKey)}
-                      className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>Estudar</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* SIMULADO GERAL TJAM (Ocultado temporariamente para o modo foco de atualização) */}
-      {false && (
-        <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-slate-900 text-slate-950 dark:text-white border border-amber-400/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden">
-          <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-950 text-amber-400">
-                ⭐ Treinamento Oficial
-              </span>
+            <div>
+              <div className="text-xs font-bold text-slate-900">11 Matérias</div>
+              <div className="text-[10px] text-slate-500">Grade completa</div>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-950 dark:text-white leading-tight">
-              Simulado Geral Oficial — TJAM (Assistente Judiciário)
-            </h2>
-            <p className="text-xs font-medium text-slate-950/90 dark:text-slate-200 leading-relaxed">
-              Testes abrangendo Língua Portuguesa, Direito Constitucional, Direito Administrativo, Informática, Processo Civil, Processo Penal, LIBRAS, Geografia do Amazonas, Legislação TJAM e Língua Inglesa. Receba o gabarito comentado, diagnóstico e opção de download em PDF.
-            </p>
-          </div>
+          </button>
 
           <button
             onClick={() => onNavigateTab('simulados')}
-            className="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-900 text-amber-400 font-extrabold text-xs shadow-lg shadow-slate-950/30 flex items-center justify-center gap-2 transition-all cursor-pointer group shrink-0"
+            className="p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-left transition-all space-y-2 cursor-pointer shadow-xs group"
           >
-            <Play className="w-4 h-4 fill-amber-400 group-hover:scale-110 transition-transform" />
-            <span>Fazer Simulado Agora</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 group-hover:scale-105 transition-transform">
+              <Trophy className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-slate-900">Simulados</div>
+              <div className="text-[10px] text-slate-500">80Q e Ranking</div>
+            </div>
           </button>
-        </div>
-      )}
 
-      {/* Ranking da Dupla de Estudos & Ranking Geral de Duplas */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Ranking Individual ou Dupla */}
-        <div
-          className={`p-6 rounded-3xl border shadow-sm space-y-4 ${
-            isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-          }`}
-        >
-          <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
-                <Trophy className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Sua Dupla no Ranking Geral
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Desempenho da Dupla: Pedro Henrique & Eduardo Mateus
-                </p>
-              </div>
+          <button
+            onClick={() => onNavigateTab('flashcards')}
+            className="p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-left transition-all space-y-2 cursor-pointer shadow-xs group"
+          >
+            <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 group-hover:scale-105 transition-transform">
+              <Brain className="w-4 h-4" />
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-              Dupla Oficial • 5º Lugar
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {/* Perfil da Dupla Pedro Henrique & Eduardo Mateus no Ranking */}
-            <div
-              className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                isDarkMode
-                  ? 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20'
-                  : 'bg-emerald-50 border-emerald-200'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-md shrink-0 bg-amber-600 shadow-amber-500/30">
-                  5º
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-sm text-slate-900 dark:text-white">
-                      Pedro Henrique & Eduardo Mateus
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md font-extrabold text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                      Dupla Oficial
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-400/30 font-extrabold text-[10px]">
-                      5º Lugar
-                    </span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-0.5">
-                    <span className="text-xs font-semibold text-emerald-400">
-                      📊 5º Lugar Geral • Dupla Oficial com 30,0% concluído
-                    </span>
-                    <span className="text-[11px] font-bold text-emerald-300">
-                      • ✅ 100% em dia (sem atividades pendentes e sem queda)
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 sm:justify-end">
-                <div className="w-32 bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-500 bg-emerald-500"
-                    style={{ width: '76.9%' }}
-                  ></div>
-                </div>
-                <span className="text-sm font-black min-w-[50px] text-right text-emerald-400">
-                  30,0%
-                </span>
-              </div>
+            <div>
+              <div className="text-xs font-bold text-slate-900">Flashcards</div>
+              <div className="text-[10px] text-slate-500">Revisão ativa</div>
             </div>
-          </div>
-        </div>
+          </button>
 
-        {/* Ranking Geral de Alunos */}
-        <div
-          className={`p-6 rounded-3xl border shadow-sm space-y-4 ${
-            isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-          }`}
-        >
-          <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-500">
-                <Trophy className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Classificação Geral de Alunos e Duplas
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Desempenho comparativo dos estudantes do Preparatório TJAM 2026
-                </p>
-              </div>
+          <button
+            onClick={() => onNavigateTab('caderno-erros')}
+            className="p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-left transition-all space-y-2 cursor-pointer shadow-xs group"
+          >
+            <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 group-hover:scale-105 transition-transform">
+              <HelpCircle className="w-4 h-4" />
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              Ranking Geral
-            </span>
-          </div>
-
-          <div className="space-y-2.5">
-            {[
-              { pos: 1, name: 'Lucas Silveira & Mariana Costa', pct: '39,0%', isUser: false, isSolo: false, barWidth: '100%' },
-              { pos: 2, name: 'Gabriel Souza & Sofia Albuquerque', pct: '36,8%', isUser: false, isSolo: false, barWidth: '94.4%' },
-              { pos: 3, name: 'Letícia Vasconcelos & Guilherme Prado', pct: '34,5%', isUser: false, isSolo: false, barWidth: '88.5%' },
-              { pos: 4, name: 'Arthur Medeiros & Bianca Farias', pct: '32,2%', isUser: false, isSolo: false, barWidth: '82.6%' },
-              { pos: 5, name: 'Pedro Henrique & Eduardo Mateus', pct: '30,0%', isUser: true, isSolo: false, barWidth: '76.9%' },
-              { pos: 6, name: 'Renan Guimarães & Camila Sampaio', pct: '27,5%', isUser: false, isSolo: false, barWidth: '70.5%' },
-              { pos: 7, name: 'Vinícius Pacheco & Débora Antunes', pct: '23,8%', isUser: false, isSolo: false, barWidth: '61.0%' },
-              { pos: 8, name: 'Marcelo Fontana & Jéssica Azevedo', pct: '21,2%', isUser: false, isSolo: false, barWidth: '54.4%' },
-              { pos: 9, name: 'Caio Meireles & Natália Barcellos', pct: '18,6%', isUser: false, isSolo: false, barWidth: '47.7%' },
-              { pos: 10, name: 'Daniel Castilho & Priscila Nogueira', pct: '16,0%', isUser: false, isSolo: false, barWidth: '41.0%' },
-              { pos: 11, name: 'Felipe Albuquerque & Vanessa Toledo', pct: '13,5%', isUser: false, isSolo: false, barWidth: '34.6%' },
-              { pos: 12, name: 'Igor Dornelles & Renata Silvestre', pct: '11,0%', isUser: false, isSolo: false, barWidth: '28.2%' },
-            ].map((aluno) => (
-              <div
-                key={aluno.pos}
-                className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
-                  aluno.isUser
-                    ? isDarkMode
-                      ? 'bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20'
-                      : 'bg-emerald-50 border-emerald-200'
-                    : isDarkMode
-                    ? 'bg-slate-800/40 border-slate-800/80'
-                    : 'bg-slate-50 border-slate-200'
-                }`}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div
-                    className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 shadow-sm ${
-                      aluno.isUser
-                        ? 'bg-amber-600 text-white shadow-amber-500/30'
-                        : aluno.pos === 1
-                        ? 'bg-amber-500 text-slate-950 font-black'
-                        : aluno.pos === 2
-                        ? 'bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
-                        : aluno.pos === 3
-                        ? 'bg-amber-700/60 text-white'
-                        : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                    }`}
-                  >
-                    {aluno.pos}º
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className={`font-extrabold text-xs sm:text-sm truncate ${aluno.isUser ? 'text-emerald-400 dark:text-emerald-300 font-black' : 'text-slate-700 dark:text-slate-300'}`}>
-                        {aluno.name}
-                      </span>
-                      <span className={`px-1.5 py-0.5 rounded font-extrabold text-[9px] whitespace-nowrap hidden sm:inline-block ${
-                        aluno.isSolo
-                          ? 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30'
-                          : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
-                      }`}>
-                        {aluno.isSolo ? 'Sem Dupla' : 'Dupla'}
-                      </span>
-                      {aluno.isUser && (
-                        <span className="px-2 py-0.5 rounded-md border font-extrabold text-[10px] flex items-center gap-1 whitespace-nowrap bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
-                          <span>Sua Dupla (5º Lugar • 100% em dia)</span>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="w-16 sm:w-24 bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
-                    <div
-                      className={`${aluno.isUser ? 'bg-emerald-500' : 'bg-slate-400 dark:bg-slate-600'} h-full rounded-full`}
-                      style={{ width: aluno.barWidth }}
-                    ></div>
-                  </div>
-                  <span className={`text-sm font-black ${aluno.isUser ? 'text-emerald-400 font-extrabold' : 'text-slate-500 dark:text-slate-400'}`}>
-                    {aluno.pct}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+            <div>
+              <div className="text-xs font-bold text-slate-900">Caderno de Erros</div>
+              <div className="text-[10px] text-slate-500">Questões a rever</div>
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* Progress Section */}
-      <div className="space-y-4">
-        <h3 className="text-sm font-black uppercase text-slate-400 tracking-wider">
-          Seu Desempenho e Atividades
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Progresso Geral */}
-          <div
-            className={`p-6 rounded-3xl border shadow-sm space-y-2 ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-          >
-            <div className="flex items-center justify-between text-emerald-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Progresso Geral</span>
-              <Award className="w-5 h-5" />
-            </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{realProgressPct}%</p>
-            <p className="text-[10px] text-slate-400">Progresso total no curso</p>
+      {/* 5. Resumo da Classificação no Ranking */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center font-black text-sm shrink-0">
+            5º
           </div>
-
-          {/* Atividades Concluídas */}
-          <div
-            className={`p-6 rounded-3xl border shadow-sm space-y-2 ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-          >
-            <div className="flex items-center justify-between text-blue-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Atividades Concluídas</span>
-              <BookOpen className="w-5 h-5" />
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold text-slate-900">
+                Pedro Henrique & Eduardo Mateus
+              </span>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                Dupla Oficial
+              </span>
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white truncate">{totalCompletedActivities}</p>
-            <p className="text-[10px] text-slate-400">Exercícios e tarefas finalizadas</p>
-          </div>
-
-          {/* Sequência de estudos */}
-          <div
-            className={`p-6 rounded-3xl border shadow-sm space-y-2 ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-          >
-            <div className="flex items-center justify-between text-amber-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Sequência</span>
-              <Flame className="w-5 h-5" />
-            </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{progress.streakDays || 0} {progress.streakDays === 1 ? 'dia' : 'dias'}</p>
-            <p className="text-[10px] text-slate-400">Estudos consecutivos</p>
-          </div>
-
-          {/* Tempo estudado hoje */}
-          <div
-            className={`p-6 rounded-3xl border shadow-sm space-y-2 ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-          >
-            <div className="flex items-center justify-between text-purple-500">
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Tempo Hoje</span>
-              <Clock className="w-5 h-5" />
-            </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{timeTodayFormatted}</p>
-            <p className="text-[10px] text-slate-400">Tempo de estudo diário</p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              30,0% do edital concluído • 100% das tarefas em dia
+            </p>
           </div>
         </div>
+
+        <button
+          onClick={() => onNavigateTab('simulados')}
+          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 shadow-2xs"
+        >
+          <span>Ver Ranking Completo</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );

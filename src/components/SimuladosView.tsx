@@ -123,13 +123,14 @@ export const SimuladosView: React.FC<SimuladosViewProps> = ({
     if (!activeSimulado) return;
 
     let score = 0;
-    activeSimulado.questions.forEach((q) => {
+    const questions = activeSimulado.questions || [];
+    questions.forEach((q) => {
       if (userAnswers[q.id] === q.correctOptionId) {
         score += 1;
       }
     });
 
-    const maxScore = activeSimulado.questions.length;
+    const maxScore = questions.length;
     const percentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
     const timeSpent = activeSimulado.durationMinutes * 60 - timeRemainingSeconds;
 
@@ -177,9 +178,10 @@ export const SimuladosView: React.FC<SimuladosViewProps> = ({
   const getDisciplineStats = () => {
     if (!activeSimulado) return {};
     const stats: Record<string, { total: number; correct: number }> = {};
+    const questions = activeSimulado.questions || [];
 
-    activeSimulado.questions.forEach((q) => {
-      const discName = q.topicName.split('•')[0].trim();
+    questions.forEach((q) => {
+      const discName = (q.topicName || 'Geral').split('•')[0].trim();
       if (!stats[discName]) {
         stats[discName] = { total: 0, correct: 0 };
       }
@@ -311,9 +313,9 @@ export const SimuladosView: React.FC<SimuladosViewProps> = ({
               </h3>
 
               <div className="space-y-2.5">
-                {progress.simuladoAttempts.map((att) => (
+                {progress.simuladoAttempts.map((att, idx) => (
                   <div
-                    key={att.id}
+                    key={`${att.id || 'sim-attempt'}-${idx}`}
                     className={`p-4 rounded-2xl border flex items-center justify-between text-xs ${
                       isDarkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-200'
                     }`}

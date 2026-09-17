@@ -207,12 +207,12 @@ No universo dos concursos públicos para tribunais (TJAM), é fundamental distin
       }
     ],
     checklist: {
-      watched: true,
-      read: true,
-      summaryStudied: true,
-      mindmapReviewed: true,
-      flashcardsDone: true,
-      questionsAnswered: true,
+      watched: false,
+      read: false,
+      summaryStudied: false,
+      mindmapReviewed: false,
+      flashcardsDone: false,
+      questionsAnswered: false,
       revisionCompleted: false
     }
   },
@@ -322,12 +322,12 @@ Cada elemento gera uma função predominante no texto:
       }
     ],
     checklist: {
-      watched: true,
-      read: true,
-      summaryStudied: true,
-      mindmapReviewed: true,
-      flashcardsDone: true,
-      questionsAnswered: true,
+      watched: false,
+      read: false,
+      summaryStudied: false,
+      mindmapReviewed: false,
+      flashcardsDone: false,
+      questionsAnswered: false,
       revisionCompleted: false
     }
   },
@@ -405,7 +405,7 @@ Palavras que revelam a atitude do autor em relação ao conteúdo:
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -461,7 +461,7 @@ Um texto bem estruturado possui uma **ideia central (tese)** sustentada por **id
       year: 2026,
       institution: 'Cebraspe'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   // ====================================================================
@@ -568,7 +568,7 @@ Kelsen analisa a Constituição sob o prisma puramente normativo, despido de val
         institution: 'FGV'
       }
     ],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -628,7 +628,7 @@ A Constituição da República Federativa do Brasil de 1988 é classificada como
       year: 2026,
       institution: 'Cebraspe'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -685,7 +685,7 @@ A Constituição da República Federativa do Brasil de 1988 é classificada como
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -760,7 +760,7 @@ A Constituição da República Federativa do Brasil de 1988 é classificada como
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   // ====================================================================
@@ -819,7 +819,7 @@ A narração é marcada pelo **deslocamento no tempo**. Um fato inicial é modif
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -874,7 +874,7 @@ A descrição funciona como uma **fotografia verbal**. Não há progressão temp
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -928,7 +928,7 @@ A descrição funciona como uma **fotografia verbal**. Não há progressão temp
       year: 2026,
       institution: 'Cebraspe'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -984,7 +984,7 @@ O texto injuntivo (instrucional ou prescritivo) tem como finalidade **orientar o
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   // ====================================================================
@@ -1050,7 +1050,7 @@ A República Federativa do Brasil, formada pela união indissolúvel dos Estados
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -1110,7 +1110,7 @@ Constituem objetivos fundamentais da República Federativa do Brasil:
       year: 2026,
       institution: 'Cebraspe'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -1176,7 +1176,7 @@ A República Federativa do Brasil rege-se nas suas relações internacionais pel
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -1233,7 +1233,7 @@ Nesta aula, analisamos as pegadinhas mais recorrentes nas bancas que organizam c
       year: 2026,
       institution: 'FGV'
     }],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   },
 
   {
@@ -1453,7 +1453,7 @@ As bancas costumam cobrar:
         institution: 'FGV'
       }
     ],
-    checklist: { watched: true, read: true, summaryStudied: true, mindmapReviewed: true, flashcardsDone: true, questionsAnswered: true, revisionCompleted: false }
+    checklist: { watched: false, read: false, summaryStudied: false, mindmapReviewed: false, flashcardsDone: false, questionsAnswered: false, revisionCompleted: false }
   }
 ];
 

@@ -21,76 +21,71 @@ service cloud.firestore {
       );
     }
 
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     // 1. User Profiles
     match /users/{userId} {
-      allow read: if isSignedIn() || true;
-      allow create, update: if isOwner(userId) || isTeacherOrAdmin() || true;
+      allow read: if isSignedIn();
+      allow create, update: if isOwner(userId) || isTeacherOrAdmin();
       allow delete: if isTeacherOrAdmin();
     }
 
     // 2. User Progress
     match /user_progress/{userId} {
-      allow read: if isOwner(userId) || isTeacherOrAdmin() || true;
-      allow write: if isOwner(userId) || isTeacherOrAdmin() || true;
+      allow read: if isOwner(userId) || isTeacherOrAdmin();
+      allow write: if isOwner(userId) || isTeacherOrAdmin();
     }
 
     // 3. Turmas
     match /turmas/{turmaId} {
       allow read: if true;
-      allow write: if isTeacherOrAdmin() || true;
+      allow write: if isTeacherOrAdmin();
     }
 
     // 4. Materials (PDFs, Resumos, Mapas, Videoaulas)
     match /materials/{materialId} {
       allow read: if true;
-      allow write: if isTeacherOrAdmin() || true;
+      allow write: if isTeacherOrAdmin();
     }
 
     // 5. Simulado Attempts & Rankings
     match /simulado_attempts/{attemptId} {
       allow read: if true;
       allow create: if isSignedIn() || true;
-      allow update, delete: if isTeacherOrAdmin() || true;
+      allow update, delete: if isTeacherOrAdmin();
     }
 
     // 6. Announcements
     match /announcements/{announcementId} {
       allow read: if true;
-      allow write: if isTeacherOrAdmin() || true;
+      allow write: if isTeacherOrAdmin();
     }
 
     // 7. Live Classes
     match /live_classes/{liveId} {
       allow read: if true;
-      allow write: if isTeacherOrAdmin() || true;
+      allow write: if isTeacherOrAdmin();
     }
 
     // 8. Student Submissions
     match /submissions/{submissionId} {
       allow read: if isSignedIn() || true;
       allow create: if isSignedIn() || true;
-      allow update: if isTeacherOrAdmin() || (isSignedIn() && resource.data.studentId == request.auth.uid) || true;
-      allow delete: if isTeacherOrAdmin() || true;
+      allow update: if isTeacherOrAdmin() || (isSignedIn() && resource.data.studentId == request.auth.uid);
+      allow delete: if isTeacherOrAdmin();
     }
 
-    // 9. System Controls (Site lock, stage release, realtime presence)
+    // 9. System Controls (Site lock, stage release)
     match /system_controls/{controlId} {
       allow read: if true;
-      allow write: if isTeacherOrAdmin() || true;
+      allow write: if isTeacherOrAdmin();
     }
 
     // 10. Legacy Applet Data (Guarantees zero data loss and full continuity)
     match /tjam_applet_data/{documentId} {
-      allow read, write: if true;
-    }
-
-    // 11. Student Accounts (Teacher created & managed for student login)
-    match /student_accounts/{accountId} {
-      allow read, write: if true;
-    }
-
-    // 12. Test connection document
-    match /test/{docId} {
       allow read, write: if true;
     }
   }

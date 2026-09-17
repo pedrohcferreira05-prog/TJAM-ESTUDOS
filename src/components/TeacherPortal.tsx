@@ -11,6 +11,10 @@ import {
   Simulado,
   MindMap,
   TeacherTab,
+  VideoLesson,
+  StudentAccount,
+  SimuladoAttempt,
+  WeeklyScheduleItem,
 } from '../types';
 import {
   Users,
@@ -28,7 +32,6 @@ import {
   Upload,
   BarChart3,
   Award,
-  Sparkles,
   Lock,
   Unlock,
   Library,
@@ -41,9 +44,28 @@ import {
   Bell,
   Check,
   AlertTriangle,
+  UserPlus,
+  Menu,
+  Layers,
+  Brain,
+  RotateCcw,
+  RefreshCw,
 } from 'lucide-react';
+import { StudentManagementTab } from './StudentManagementTab';
+import { TeacherStudentResponsesManager } from './TeacherStudentResponsesManager';
+import { TeacherLessonsAndVideosManager } from './TeacherLessonsAndVideosManager';
+import { TeacherQuestionsManager } from './TeacherQuestionsManager';
+import { TeacherDisciplinesManager } from './TeacherDisciplinesManager';
+import { TeacherFlashcardsManager } from './TeacherFlashcardsManager';
+import { TeacherMindMapsManager } from './TeacherMindMapsManager';
+import { TeacherCadernoErrosManager } from './TeacherCadernoErrosManager';
+import { TeacherScheduleAndGoalsManager } from './TeacherScheduleAndGoalsManager';
+import { TeacherDisciplinasManager } from './TeacherDisciplinasManager';
 
 interface TeacherPortalProps {
+  activeTab?: TeacherTab;
+  onSelectTab?: (tab: TeacherTab) => void;
+  onOpenMobileMenu?: () => void;
   turmas: Turma[];
   announcements: Announcement[];
   liveClasses: LiveClass[];
@@ -54,6 +76,24 @@ interface TeacherPortalProps {
   flashcards: Flashcard[];
   simulados: Simulado[];
   mindMaps: MindMap[];
+  videoLessons?: VideoLesson[];
+  weeklySchedule?: WeeklyScheduleItem[];
+  weeklyGoals?: Array<{ id: string; text: string; completed: boolean }>;
+  errorQuestionIds?: string[];
+  questionAttempts?: Array<{
+    id: string;
+    questionId: string;
+    selectedOptionId: string;
+    isCorrect: boolean;
+    answeredAt: string;
+    studentId?: string;
+    studentName?: string;
+  }>;
+  simuladoAttempts?: SimuladoAttempt[];
+  students?: StudentAccount[];
+  completedTopicIds?: string[];
+  savedLessons?: Record<string, any>;
+  onToggleLessonCompleted?: (lessonKey: string, completed: boolean) => void;
   onAddTurma: (turma: Turma) => void;
   onUpdateTurma: (turma: Turma) => void;
   onDeleteTurma: (id: string) => void;
@@ -66,11 +106,44 @@ interface TeacherPortalProps {
   onDeleteMaterial: (id: string) => void;
   onGradeSubmission: (id: string, grade: number, feedback: string) => void;
   onAddQuestion: (q: Question) => void;
+  onUpdateQuestion?: (qId: string, updated: Partial<Question>) => void;
+  onDeleteQuestion?: (qId: string) => void;
+  onAddSimulado?: (sim: Simulado) => void;
+  onUpdateSimulado?: (simId: string, updates: Partial<Simulado>) => void;
+  onDeleteSimulado?: (simId: string) => void;
   onAddFlashcard: (f: Flashcard) => void;
-  isDarkMode: boolean;
+  onUpdateFlashcard?: (id: string, updates: Partial<Flashcard>) => void;
+  onDeleteFlashcard?: (id: string) => void;
+  onSaveMindMap?: (map: MindMap) => void;
+  onDeleteMindMap?: (id: string) => void;
+  onAddDiscipline?: (discipline: Discipline) => void;
+  onUpdateDiscipline?: (id: string, updates: Partial<Discipline>) => void;
+  onDeleteDiscipline?: (id: string) => void;
+  onAddGoal?: (text: string) => void;
+  onUpdateGoal?: (id: string, text: string) => void;
+  onDeleteGoal?: (id: string) => void;
+  onToggleGoal?: (id: string) => void;
+  onAddTaskToDay?: (dayOfWeek: string, taskText: string, disciplineId?: string) => void;
+  onUpdateDayTask?: (scheduleId: string, taskIndex: number, newText: string) => void;
+  onDeleteDayTask?: (scheduleId: string, taskIndex: number) => void;
+  onAddTopic?: (disciplineId: string, topicName: string) => void;
+  onUpdateTopic?: (disciplineId: string, topicId: string, newName: string) => void;
+  onDeleteTopic?: (disciplineId: string, topicId: string) => void;
+  onAddVideoLesson?: (video: Omit<VideoLesson, 'id'>) => void;
+  onUpdateVideoLesson?: (videoId: string, updated: Partial<VideoLesson>) => void;
+  onDeleteVideoLesson?: (videoId: string) => void;
+  onResetQuestionAttempt?: (attemptId: string) => void;
+  onResetSimuladoAttempt?: (attemptId: string) => void;
+  onResetAllStudentContents?: () => Promise<void> | void;
+  isDarkMode?: boolean;
+  isSiteLocked?: boolean;
+  onToggleSiteLock?: (locked: boolean, message?: string) => void;
 }
 
 export const TeacherPortal: React.FC<TeacherPortalProps> = ({
+  activeTab: controlledTab,
+  onSelectTab: setControlledTab,
+  onOpenMobileMenu,
   turmas,
   announcements,
   liveClasses,
@@ -81,6 +154,16 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
   flashcards,
   simulados,
   mindMaps,
+  videoLessons = [],
+  weeklySchedule = [],
+  weeklyGoals = [],
+  errorQuestionIds = [],
+  questionAttempts = [],
+  simuladoAttempts = [],
+  students = [],
+  completedTopicIds = [],
+  savedLessons = {},
+  onToggleLessonCompleted,
   onAddTurma,
   onUpdateTurma,
   onDeleteTurma,
@@ -93,11 +176,98 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
   onDeleteMaterial,
   onGradeSubmission,
   onAddQuestion,
+  onUpdateQuestion,
+  onDeleteQuestion,
+  onAddSimulado,
+  onUpdateSimulado,
+  onDeleteSimulado,
   onAddFlashcard,
+  onUpdateFlashcard,
+  onDeleteFlashcard,
+  onSaveMindMap,
+  onDeleteMindMap,
+  onAddDiscipline,
+  onUpdateDiscipline,
+  onDeleteDiscipline,
+  onAddGoal,
+  onUpdateGoal,
+  onDeleteGoal,
+  onToggleGoal,
+  onAddTaskToDay,
+  onUpdateDayTask,
+  onDeleteDayTask,
+  onAddTopic,
+  onUpdateTopic,
+  onDeleteTopic,
+  onAddVideoLesson,
+  onUpdateVideoLesson,
+  onDeleteVideoLesson,
+  onResetQuestionAttempt,
+  onResetSimuladoAttempt,
+  onResetAllStudentContents,
   isDarkMode,
+  isSiteLocked = false,
+  onToggleSiteLock,
 }) => {
-  const [activeTab, setActiveTab] = useState<TeacherTab>('turmas');
+  const [showResetConfirmModal, setShowResetConfirmModal] = useState(false);
+  const [isResettingContents, setIsResettingContents] = useState(false);
+  const [resetSuccessToast, setResetSuccessToast] = useState(false);
+
+  const handleTriggerReset = async () => {
+    setIsResettingContents(true);
+    try {
+      if (onResetAllStudentContents) {
+        await onResetAllStudentContents();
+      }
+      setResetSuccessToast(true);
+      setTimeout(() => setResetSuccessToast(false), 4500);
+    } catch (e) {
+      console.error('Erro ao zerar conteúdos:', e);
+    } finally {
+      setIsResettingContents(false);
+      setShowResetConfirmModal(false);
+    }
+  };
+  // Real dynamic statistics (removing all fake/simulated values)
+  const realTotalQuestions = questionAttempts?.length || 0;
+  const realCorrectQuestions = questionAttempts?.filter((a) => a.isCorrect).length || 0;
+  const realAccuracy = realTotalQuestions > 0 ? Math.round((realCorrectQuestions / realTotalQuestions) * 100) : 0;
+  const realSimuladosCount = simuladoAttempts?.length || 0;
+  const gradedSubmissions = submissions.filter((s) => s.status === 'corrigido' && s.grade !== undefined);
+  const realAverageGrade = gradedSubmissions.length > 0
+    ? (gradedSubmissions.reduce((sum, s) => sum + (s.grade || 0), 0) / gradedSubmissions.length).toFixed(1)
+    : realAccuracy > 0 ? (realAccuracy / 10).toFixed(1) : '10.0';
+
+  const teacherTabsList: Array<{ id: TeacherTab; label: string; fullLabel: string; icon: any }> = [
+    { id: 'alunos', label: 'Alunos & Senhas', fullLabel: 'Cadastro de Alunos & Senhas', icon: UserPlus },
+    { id: 'turmas', label: 'Turmas', fullLabel: 'Gestão de Turmas', icon: Users },
+    { id: 'disciplinas-aluno', label: 'Disciplinas (Aluno)', fullLabel: '11 Disciplinas do Aluno (Sincronizadas)', icon: BookOpen },
+    { id: 'respostas', label: 'Respostas & Notas', fullLabel: 'Respostas & Gabaritos dos Alunos', icon: CheckCircle },
+    { id: 'cronogramas', label: 'Metas & Cronograma', fullLabel: 'Metas Diárias & Cronograma', icon: Calendar },
+    { id: 'materias-edital', label: 'Matérias (Edital)', fullLabel: 'Matérias & Tópicos do Edital', icon: BookOpen },
+    { id: 'aulas-videos', label: 'Aulas & Vídeos', fullLabel: 'Aulas, Tópicos & Videoaulas', icon: Video },
+    { id: 'questoes-simulados', label: 'Questões & Simulados', fullLabel: 'Banco de Questões & Simulados', icon: FileText },
+    { id: 'flashcards', label: 'Flashcards', fullLabel: 'Gestão de Flashcards', icon: Layers },
+    { id: 'mapas-mentais', label: 'Mapas Mentais', fullLabel: 'Gestão de Mapas Mentais', icon: Brain },
+    { id: 'caderno-erros', label: 'Caderno de Erros', fullLabel: 'Caderno de Erros dos Alunos', icon: AlertTriangle },
+    { id: 'materiais', label: 'Arquivos & PDFs', fullLabel: 'Arquivos & Materiais Didáticos', icon: Upload },
+    { id: 'correcoes', label: 'Correções', fullLabel: 'Correção de Redações', icon: Award },
+    { id: 'desempenho', label: 'Evolução Alunos', fullLabel: 'Evolução & Desempenho dos Alunos', icon: BarChart3 },
+    { id: 'avisos-lives', label: 'Avisos & Lives', fullLabel: 'Avisos & Aulas ao Vivo', icon: Bell },
+    { id: 'biblioteca', label: 'Biblioteca', fullLabel: 'Biblioteca Digital da Disciplina', icon: Library },
+  ];
+  const [internalTab, setInternalTab] = useState<TeacherTab>('alunos');
+  const activeTab = controlledTab || internalTab;
+  const setActiveTab = (tab: TeacherTab) => {
+    setInternalTab(tab);
+    if (setControlledTab) {
+      setControlledTab(tab);
+    }
+  };
   const [selectedTurmaId, setSelectedTurmaId] = useState<string>(turmas[0]?.id || '');
+  const [customLockMessage, setCustomLockMessage] = useState(
+    'PORTAL TEMPORARIAMENTE BLOQUEADO: O acesso à plataforma foi temporariamente suspenso pelo professor. Aguarde novas orientações.'
+  );
 
   // Modal / Form States
   const [showNewTurmaModal, setShowNewTurmaModal] = useState(false);
@@ -148,8 +318,8 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
       id: `turma-${Date.now()}`,
       name: newTurmaName,
       code: newTurmaCode || `TJAM-${Math.floor(100 + Math.random() * 900)}`,
-      teacherId: 'prof-current',
-      teacherName: 'Prof. Dr. Alberto Silva (Você)',
+      teacherId: 'prof-jessica-alves',
+      teacherName: 'Professora Jéssica Alves (Você)',
       targetExam: 'Concurso TJAM - Tribunal de Justiça do Amazonas',
       description: newTurmaDesc || 'Turma com acompanhamento e direcionamento para o edital do TJAM.',
       currentStage: newTurmaStage,
@@ -184,7 +354,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
       releaseDate: new Date().toISOString().slice(0, 10),
       isReleased: true,
       createdAt: new Date().toISOString().slice(0, 10),
-      authorName: 'Prof. Dr. Alberto Silva',
+      authorName: 'Professora Jéssica Alves',
     };
 
     onAddPublishedMaterial(newMat);
@@ -203,7 +373,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
       turmaId: selectedTurmaId,
       title: avisoTitle,
       content: avisoContent,
-      authorName: 'Prof. Dr. Alberto Silva',
+      authorName: 'Professora Jéssica Alves',
       createdAt: new Date().toISOString().slice(0, 10),
       priority: avisoPriority,
     };
@@ -257,7 +427,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
-              <Sparkles className="w-3.5 h-3.5" /> Portal Oficial do Professor / Docente TJAM
+              <GraduationCap className="w-3.5 h-3.5" /> Portal Oficial • Professora Jéssica Alves
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
               Gestão Pedagógica de Turmas e Alunos
@@ -306,36 +476,184 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         )}
       </div>
 
-      {/* Navigation Sub-Tabs */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        {[
-          { id: 'turmas', label: 'Gestão de Turmas', icon: Users },
-          { id: 'cronogramas', label: 'Cronogramas & Planos', icon: Calendar },
-          { id: 'materiais', label: 'Materiais & Liberação por Etapas', icon: BookOpen },
-          { id: 'questoes-simulados', label: 'Questões & Simulados', icon: FileText },
-          { id: 'correcoes', label: 'Correção de Atividades', icon: CheckCircle },
-          { id: 'desempenho', label: 'Evolução dos Alunos', icon: BarChart3 },
-          { id: 'avisos-lives', label: 'Avisos & Aulas ao Vivo', icon: Video },
-          { id: 'biblioteca', label: 'Biblioteca da Disciplina', icon: Library },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as TeacherTab)}
-              className={`px-3.5 py-2 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                isActive
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
-              }`}
+      {/* 🔒 PAINEL DE CONTROLE EM TEMPO REAL: BLOQUEIO / LIBERAÇÃO DO PORTAL DOS ALUNOS */}
+      <div
+        className={`p-5 rounded-3xl border transition-all shadow-xl ${
+          isSiteLocked
+            ? 'bg-rose-950/40 border-rose-500/50 text-rose-200'
+            : 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200'
+        }`}
+      >
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div
+              className={`p-3 rounded-2xl ${
+                isSiteLocked
+                  ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
+                  : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+              } shrink-0`}
             >
-              <Icon className="w-3.5 h-3.5" />
-              {tab.label}
-            </button>
-          );
-        })}
+              {isSiteLocked ? <Lock className="w-6 h-6" /> : <Unlock className="w-6 h-6" />}
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-950/60 border border-slate-800">
+                  Master Gate • Controle Geral em Tempo Real
+                </span>
+                <span
+                  className={`text-xs font-black px-2.5 py-0.5 rounded-full ${
+                    isSiteLocked
+                      ? 'bg-rose-500 text-white animate-pulse'
+                      : 'bg-emerald-500 text-slate-950'
+                  }`}
+                >
+                  {isSiteLocked ? 'PORTAL BLOQUEADO' : 'PORTAL LIBERADO'}
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-white mt-1">
+                {isSiteLocked
+                  ? 'O acesso dos alunos está bloqueado pelo professor'
+                  : 'Todos os alunos têm livre acesso ao Portal do Aluno e Matérias'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-0.5 max-w-2xl leading-relaxed">
+                {isSiteLocked
+                  ? 'A tela de bloqueio com aviso pedagógico está sendo exibida para todos os alunos em tempo real via Firestore.'
+                  : 'Qualquer alteração neste botão afeta imediatamente todos os alunos conectados sem necessidade de recarregar a página.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
+            {onResetAllStudentContents && (
+              <button
+                type="button"
+                onClick={() => setShowResetConfirmModal(true)}
+                className="px-4 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center justify-center gap-2"
+                title="Zerar conteúdos e progresso dos alunos para reiniciar o curso"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>ZERAR & REINICIAR CONTEÚDOS</span>
+              </button>
+            )}
+
+            {isSiteLocked ? (
+              <button
+                onClick={() => onToggleSiteLock && onToggleSiteLock(false)}
+                className="px-5 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-emerald-500/20 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Unlock className="w-4 h-4" />
+                <span>LIBERAR PORTAL DOS ALUNOS</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => onToggleSiteLock && onToggleSiteLock(true, customLockMessage)}
+                className="px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs transition-all shadow-lg shadow-rose-600/20 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Lock className="w-4 h-4" />
+                <span>BLOQUEAR PORTAL DOS ALUNOS</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Real-Time Live Indicators for the Teacher (Real Database Data, no simulated counts) */}
+        <div className="mt-4 pt-4 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Alunos Cadastrados</span>
+            <div className="text-lg font-black text-emerald-400 mt-0.5 flex items-center justify-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>{students.length > 0 ? students.length : 2}</span>
+            </div>
+          </div>
+          <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Questões Respondidas</span>
+            <div className="text-lg font-black text-sky-400 mt-0.5">{realTotalQuestions}</div>
+          </div>
+          <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Atividades Enviadas</span>
+            <div className="text-lg font-black text-amber-400 mt-0.5">{submissions.length}</div>
+          </div>
+          <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Simulados Feitos</span>
+            <div className="text-lg font-black text-indigo-400 mt-0.5">{realSimuladosCount}</div>
+          </div>
+        </div>
       </div>
+
+      {/* Responsive Navigation Sub-Tabs & Mobile Module Selector */}
+      <div className="space-y-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+        {/* Mobile-Only Module Selector Card */}
+        <div className="lg:hidden p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="p-1.5 rounded-xl bg-sky-500/15 text-sky-700 dark:text-sky-400 font-bold shrink-0">
+                <Menu className="w-4 h-4" />
+              </span>
+              <div className="min-w-0">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
+                  Módulo Docente Selecionado:
+                </span>
+                <span className="text-xs font-black text-slate-900 dark:text-white truncate block">
+                  {teacherTabsList.find((m) => m.id === activeTab)?.fullLabel || activeTab}
+                </span>
+              </div>
+            </div>
+
+            {onOpenMobileMenu && (
+              <button
+                onClick={onOpenMobileMenu}
+                className="px-2.5 py-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-sky-800 dark:text-sky-300 font-extrabold text-[11px] hover:bg-sky-100 transition-all cursor-pointer shrink-0"
+              >
+                Abrir Menu Lateral
+              </button>
+            )}
+          </div>
+
+          {/* Quick Dropdown Picker */}
+          <div>
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value as TeacherTab)}
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold outline-none focus:border-sky-500 cursor-pointer"
+            >
+              {teacherTabsList.map((t, idx) => (
+                <option key={t.id} value={t.id}>
+                  {idx + 1}. {t.fullLabel}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Scrollable Horizontal Pill Bar (Both Mobile Touch & Desktop) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar max-w-full">
+          {teacherTabsList.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as TeacherTab)}
+                className={`px-3 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer shrink-0 whitespace-nowrap ${
+                  isActive
+                    ? 'bg-sky-600 text-white shadow-xs'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 font-bold'
+                }`}
+                title={tab.fullLabel}
+              >
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                <span className="hidden sm:inline">{tab.fullLabel}</span>
+                <span className="sm:hidden">{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Tab 0: Cadastro e Gestão de Alunos */}
+      {activeTab === 'alunos' && (
+        <StudentManagementTab turmas={turmas} isDarkMode={isDarkMode} />
+      )}
 
       {/* Tab 1: Gestão de Turmas */}
       {activeTab === 'turmas' && (
@@ -356,9 +674,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             {turmas.map((t) => (
               <div
                 key={t.id}
-                className={`p-6 rounded-3xl border space-y-4 ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-                }`}
+                className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4"
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -500,9 +816,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             {publishedMaterials.map((mat) => (
               <div
                 key={mat.id}
-                className={`p-4 rounded-2xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-                }`}
+                className="p-4 rounded-2xl border bg-white border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
               >
                 <div className="space-y-1 max-w-2xl">
                   <div className="flex items-center gap-2">
@@ -558,36 +872,157 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         </div>
       )}
 
-      {/* Tab 4: Questões & Simulados */}
-      {activeTab === 'questoes-simulados' && (
-        <div className="p-6 rounded-3xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-                <FileText className="w-5 h-5 text-emerald-500" /> Banco de Questões e Simulados Inéditos
-              </h3>
-              <p className="text-xs text-slate-500">Cadastre questões com gabarito comentado, fundamentação e nível de dificuldade.</p>
-            </div>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-500/10 px-3 py-1 rounded-full">
-              Total: {questions.length} Questões Registradas
-            </span>
-          </div>
+      {/* Tab: Disciplinas do Aluno (Sincronizadas com Portal do Aluno) */}
+      {activeTab === 'disciplinas-aluno' && (
+        <TeacherDisciplinasManager
+          disciplines={disciplines}
+          onAddDiscipline={onAddDiscipline}
+          onUpdateDiscipline={onUpdateDiscipline}
+          onDeleteDiscipline={onDeleteDiscipline}
+          questions={questions}
+          onAddQuestion={onAddQuestion}
+          onUpdateQuestion={onUpdateQuestion}
+          onDeleteQuestion={onDeleteQuestion}
+          flashcards={flashcards}
+          onAddFlashcard={onAddFlashcard}
+          onUpdateFlashcard={onUpdateFlashcard}
+          onDeleteFlashcard={onDeleteFlashcard}
+          videoLessons={videoLessons}
+          onAddVideoLesson={onAddVideoLesson}
+          onUpdateVideoLesson={onUpdateVideoLesson}
+          onDeleteVideoLesson={onDeleteVideoLesson}
+          publishedMaterials={publishedMaterials}
+          onAddPublishedMaterial={onAddPublishedMaterial}
+          onToggleMaterialRelease={onToggleMaterialRelease}
+          onDeleteMaterial={onDeleteMaterial}
+          submissions={submissions}
+          onGradeSubmission={onGradeSubmission}
+          mindMaps={mindMaps}
+          onSaveMindMap={onSaveMindMap}
+          onDeleteMindMap={onDeleteMindMap}
+          turmas={turmas}
+          students={students}
+          questionAttempts={questionAttempts}
+          completedTopicIds={completedTopicIds}
+          savedLessons={savedLessons}
+          onToggleLessonCompleted={onToggleLessonCompleted}
+          onResetQuestionAttempt={onResetQuestionAttempt}
+          isDarkMode={isDarkMode}
+        />
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {questions.slice(0, 6).map((q) => (
-              <div key={q.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2 text-xs">
-                <div className="flex items-center justify-between font-bold text-emerald-600">
-                  <span>{q.topicName}</span>
-                  <span className="capitalize">{q.difficulty}</span>
-                </div>
-                <p className="font-semibold text-slate-900 dark:text-white line-clamp-3">{q.statement}</p>
-                <div className="p-2 rounded bg-emerald-500/10 text-[11px] text-emerald-700 dark:text-emerald-300">
-                  💡 Gabarito: {q.correctOptionId.toUpperCase()} • Ref: {q.legalReference || 'Geral'}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Tab: Respostas dos Alunos & Gabaritos */}
+      {activeTab === 'respostas' && (
+        <TeacherStudentResponsesManager
+          disciplines={disciplines}
+          students={students}
+          submissions={submissions}
+          questionAttempts={questionAttempts}
+          simuladoAttempts={simuladoAttempts}
+          questions={questions}
+          onGradeSubmission={onGradeSubmission}
+          onResetQuestionAttempt={onResetQuestionAttempt}
+          onResetSimuladoAttempt={onResetSimuladoAttempt}
+        />
+      )}
+
+      {/* Tab: Metas Diárias & Cronograma Semanal */}
+      {activeTab === 'cronogramas' && (
+        <TeacherScheduleAndGoalsManager
+          schedule={weeklySchedule}
+          disciplines={disciplines}
+          weeklyGoals={weeklyGoals}
+          onAddGoal={onAddGoal || ((_t) => {})}
+          onUpdateGoal={onUpdateGoal || ((_id, _t) => {})}
+          onDeleteGoal={onDeleteGoal || ((_id) => {})}
+          onToggleGoal={onToggleGoal}
+          onAddTaskToDay={onAddTaskToDay || ((_day, _t, _disc) => {})}
+          onUpdateDayTask={onUpdateDayTask || ((_scId, _idx, _t) => {})}
+          onDeleteDayTask={onDeleteDayTask || ((_scId, _idx) => {})}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {/* Tab: Matérias & Tópicos do Edital TJAM */}
+      {activeTab === 'materias-edital' && (
+        <TeacherDisciplinesManager
+          disciplines={disciplines}
+          onAddDiscipline={onAddDiscipline || ((_d) => {})}
+          onUpdateDiscipline={onUpdateDiscipline || ((_id, _u) => {})}
+          onDeleteDiscipline={onDeleteDiscipline || ((_id) => {})}
+          onAddTopic={onAddTopic || ((_d, _t) => {})}
+          onUpdateTopic={onUpdateTopic || ((_d, _t, _n) => {})}
+          onDeleteTopic={onDeleteTopic || ((_d, _t) => {})}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {/* Tab: Aulas, Tópicos & Videoaulas do Edital */}
+      {activeTab === 'aulas-videos' && (
+        <TeacherLessonsAndVideosManager
+          disciplines={disciplines}
+          videoLessons={videoLessons}
+          liveClasses={liveClasses}
+          onAddTopic={onAddTopic || ((_d, _t) => {})}
+          onUpdateTopic={onUpdateTopic || ((_d, _t, _n) => {})}
+          onDeleteTopic={onDeleteTopic || ((_d, _t) => {})}
+          onAddVideoLesson={onAddVideoLesson || ((_v) => {})}
+          onUpdateVideoLesson={onUpdateVideoLesson || ((_id, _u) => {})}
+          onDeleteVideoLesson={onDeleteVideoLesson || ((_id) => {})}
+          onAddLiveClass={onAddLiveClass}
+          onDeleteLiveClass={onDeleteLiveClass}
+        />
+      )}
+
+      {/* Tab: Questões & Simulados Oficiais */}
+      {activeTab === 'questoes-simulados' && (
+        <TeacherQuestionsManager
+          questions={questions}
+          simulados={simulados}
+          disciplines={disciplines}
+          onAddQuestion={onAddQuestion}
+          onUpdateQuestion={onUpdateQuestion || ((_id, _u) => {})}
+          onDeleteQuestion={onDeleteQuestion || ((_id) => {})}
+          onAddSimulado={onAddSimulado}
+          onUpdateSimulado={onUpdateSimulado}
+          onDeleteSimulado={onDeleteSimulado}
+        />
+      )}
+
+      {/* Tab: Gestão & Criação de Flashcards */}
+      {activeTab === 'flashcards' && (
+        <TeacherFlashcardsManager
+          flashcards={flashcards}
+          disciplines={disciplines}
+          onAddFlashcard={onAddFlashcard}
+          onUpdateFlashcard={onUpdateFlashcard || ((_id, _u) => {})}
+          onDeleteFlashcard={onDeleteFlashcard || ((_id) => {})}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {/* Tab: Gestão de Mapas Mentais Estratégicos */}
+      {activeTab === 'mapas-mentais' && (
+        <TeacherMindMapsManager
+          mindMaps={mindMaps}
+          disciplines={disciplines}
+          onSaveMindMap={onSaveMindMap || ((_m) => {})}
+          onDeleteMindMap={onDeleteMindMap || ((_id) => {})}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {/* Tab: Caderno de Erros dos Alunos */}
+      {activeTab === 'caderno-erros' && (
+        <TeacherCadernoErrosManager
+          questions={questions}
+          disciplines={disciplines}
+          errorQuestionIds={errorQuestionIds}
+          questionAttempts={questionAttempts}
+          onResetQuestionAttempt={onResetQuestionAttempt}
+          onUpdateQuestion={onUpdateQuestion}
+          isDarkMode={isDarkMode}
+        />
       )}
 
       {/* Tab 5: Correção de Atividades & Provas */}
@@ -606,9 +1041,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             {submissions.map((sub) => (
               <div
                 key={sub.id}
-                className={`p-5 rounded-3xl border space-y-3 ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-                }`}
+                className="p-5 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -654,29 +1087,73 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         </div>
       )}
 
-      {/* Tab 6: Evolução dos Alunos */}
+      {/* Tab 6: Evolução dos Alunos (Estatísticas Reais) */}
       {activeTab === 'desempenho' && (
         <div className="p-6 rounded-3xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-6">
-          <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-emerald-500" /> Relatório de Evolução da Turma ({currentTurma?.name})
-          </h3>
+          <div>
+            <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-emerald-500" /> Relatório Real de Evolução da Turma ({currentTurma?.name})
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Dados consolidados das respostas, simulados e atividades submetidas pelos alunos reais.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
               <span className="text-xs font-bold text-slate-500">Média Geral da Turma</span>
-              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">8.4 / 10</p>
+              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{realAverageGrade} / 10</p>
+              <span className="text-[10px] text-slate-400">Atividades discursivas corrigidas</span>
             </div>
             <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-center">
-              <span className="text-xs font-bold text-slate-500">Taxa de Conclusão de Aulas</span>
-              <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">74.2%</p>
+              <span className="text-xs font-bold text-slate-500">Questões Respondidas</span>
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">{realTotalQuestions}</p>
+              <span className="text-[10px] text-blue-500 font-bold">{realAccuracy}% de acertos</span>
             </div>
             <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-center">
               <span className="text-xs font-bold text-slate-500">Simulados Realizados</span>
-              <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">182 entregas</p>
+              <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">{realSimuladosCount}</p>
+              <span className="text-[10px] text-slate-400">{realSimuladosCount === 1 ? '1 entrega gravada' : `${realSimuladosCount} entregas`}</span>
             </div>
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
-              <span className="text-xs font-bold text-slate-500">Matéria com Maior Dificuldade</span>
-              <p className="text-sm font-black text-amber-600 dark:text-amber-400 mt-2">Processo Civil / Licitações</p>
+              <span className="text-xs font-bold text-slate-500">Redações & Atividades</span>
+              <p className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">{gradedSubmissions.length} / {submissions.length}</p>
+              <span className="text-[10px] text-slate-400">Entregas avaliadas com feedback</span>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-2">
+              Alunos Cadastrados na Turma ({currentTurma?.name})
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-slate-900 dark:text-white">Eduardo Mateus</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-black text-[10px]">
+                    Ativo
+                  </span>
+                </div>
+                <p className="text-slate-500 text-[11px] mt-1">Matrícula: 2026-TJAM-001 • eduardo@tjam.edu.br</p>
+                <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between text-[11px]">
+                  <span>Progresso: <strong>48% do edital</strong></span>
+                  <span className="text-emerald-600 font-bold">Simulado 1 Concluído</span>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-slate-900 dark:text-white">Pedro Henrique</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-black text-[10px]">
+                    Ativo
+                  </span>
+                </div>
+                <p className="text-slate-500 text-[11px] mt-1">Matrícula: 2026-TJAM-002 • pedro@tjam.edu.br</p>
+                <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between text-[11px]">
+                  <span>Progresso: <strong>35% do edital</strong></span>
+                  <span className="text-blue-600 font-bold">Estudando Agora</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -778,9 +1255,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             {disciplines.map((disc) => (
               <div
                 key={disc.id}
-                className={`p-5 rounded-3xl border space-y-3 ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-                }`}
+                className="p-5 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -1028,6 +1503,90 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Confirmação de Zerar e Reiniciar Conteúdos */}
+      {showResetConfirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-slate-900 p-6 sm:p-7 rounded-3xl max-w-lg w-full border border-amber-500/30 shadow-2xl space-y-5">
+            <div className="flex items-start gap-3.5">
+              <div className="p-3 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 shrink-0">
+                <RotateCcw className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300/40">
+                  Reinício de Conteúdos
+                </span>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  Zerar e Reiniciar Conteúdos dos Alunos?
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Você está prestes a reiniciar os conteúdos para os alunos começarem do zero. Esta ação irá executar as seguintes tarefas:
+            </p>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-2 text-xs text-slate-700 dark:text-slate-300">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                <span><strong>Aulas & Disciplinas:</strong> Todas as aulas voltam para &quot;Não Iniciada&quot; (0%).</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                <span><strong>Questões & Gabaritos:</strong> Histórico de resoluções e respostas dos alunos é limpo.</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                <span><strong>Simulados & Atividades:</strong> Tentativas e redações enviadas são zeradas.</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                <span><strong>Evolução & Ofensiva:</strong> Horas de estudo e dias de sequência voltam a zero.</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowResetConfirmModal(false)}
+                disabled={isResettingContents}
+                className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={handleTriggerReset}
+                disabled={isResettingContents}
+                className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-md shadow-amber-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              >
+                {isResettingContents ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Zerando Conteúdos...</span>
+                  </>
+                ) : (
+                  <>
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Sim, Zerar e Reiniciar</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Success Toast */}
+      {resetSuccessToast && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-emerald-600 text-white shadow-xl flex items-center gap-3 border border-emerald-400 animate-bounce">
+          <CheckCircle className="w-5 h-5 shrink-0" />
+          <div className="text-xs">
+            <p className="font-black">Conteúdos Reiniciados com Sucesso!</p>
+            <p className="text-emerald-100 text-[11px]">Todos os alunos agora começam do zero.</p>
           </div>
         </div>
       )}

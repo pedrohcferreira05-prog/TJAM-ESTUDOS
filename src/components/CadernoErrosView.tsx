@@ -1,18 +1,16 @@
 import React from 'react';
 import { Question, UserProgress } from '../types';
-import { AlertOctagon, HelpCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { AlertOctagon, CheckCircle2 } from 'lucide-react';
 
 interface CadernoErrosViewProps {
   questions: Question[];
   progress: UserProgress;
-  onOpenAIAssistant: (prompt?: string) => void;
   isDarkMode: boolean;
 }
 
 export const CadernoErrosView: React.FC<CadernoErrosViewProps> = ({
   questions,
   progress,
-  onOpenAIAssistant,
   isDarkMode,
 }) => {
   const errorQuestions = questions.filter((q) => progress.errorQuestionIds.includes(q.id));
@@ -65,17 +63,6 @@ export const CadernoErrosView: React.FC<CadernoErrosViewProps> = ({
                   <span className="font-bold text-slate-500 block pt-1">Fundamentação: {q.legalReference}</span>
                 )}
               </div>
-
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(
-                    `Explique de forma detalhada por que cometi um erro na seguinte questão de ${q.topicName}: "${q.statement}".`
-                  )
-                }
-                className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5"
-              >
-                <Sparkles className="w-3.5 h-3.5" /> Pedir Ajuda da IA Gemini
-              </button>
             </div>
           ))}
         </div>

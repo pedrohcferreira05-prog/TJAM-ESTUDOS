@@ -21,14 +21,13 @@ import {
 } from 'lucide-react';
 
 interface InglesContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   isLessonCompleted: boolean;
   onToggleComplete: () => void;
   onNavigateTab: (tab: 'video' | 'questoes' | 'flashcards' | 'mapa' | 'resumo') => void;
 }
 
 export const InglesContent: React.FC<InglesContentProps> = ({
-  isDarkMode,
   isLessonCompleted,
   onToggleComplete,
   onNavigateTab,
@@ -177,9 +176,7 @@ export const InglesContent: React.FC<InglesContentProps> = ({
     <div className="space-y-8 text-slate-800 dark:text-slate-100 animate-in fade-in duration-300">
       {/* 🎯 HEADER DE FOCO DA AULA */}
       <section
-        className={`p-6 rounded-3xl border ${
-          isDarkMode ? 'bg-slate-900 border-indigo-900/50' : 'bg-gradient-to-r from-indigo-50 via-blue-50 to-amber-50 border-indigo-200'
-        }`}
+        className="p-6 rounded-3xl border bg-gradient-to-r from-indigo-50 via-blue-50 to-amber-50 border-indigo-200"
       >
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -263,8 +260,6 @@ export const InglesContent: React.FC<InglesContentProps> = ({
                 className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between group ${
                   speakingText === item.word
                     ? 'bg-indigo-600 text-white ring-2 ring-indigo-400 scale-[1.03]'
-                    : isDarkMode
-                    ? 'bg-slate-800/80 hover:bg-slate-800 border-slate-700 text-slate-200'
                     : 'bg-white hover:bg-indigo-50/50 border-slate-200 text-slate-800 shadow-sm'
                 }`}
               >
@@ -298,8 +293,6 @@ export const InglesContent: React.FC<InglesContentProps> = ({
                 className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between group ${
                   speakingText === item.word
                     ? 'bg-amber-600 text-white ring-2 ring-amber-400 scale-[1.03]'
-                    : isDarkMode
-                    ? 'bg-slate-800/80 hover:bg-slate-800 border-slate-700 text-slate-200'
                     : 'bg-white hover:bg-amber-50/50 border-slate-200 text-slate-800 shadow-sm'
                 }`}
               >
@@ -541,8 +534,6 @@ export const InglesContent: React.FC<InglesContentProps> = ({
               className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between group ${
                 speakingText === item.day
                   ? 'bg-emerald-600 text-white ring-2 ring-emerald-400 scale-[1.03]'
-                  : isDarkMode
-                  ? 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-200'
                   : 'bg-white hover:bg-emerald-50/50 border-slate-200 text-slate-800 shadow-sm'
               }`}
             >
@@ -627,9 +618,7 @@ export const InglesContent: React.FC<InglesContentProps> = ({
 
       {/* 🎯 SEÇÃO 4: CONSTRUTOR DO DESAFIO FINAL */}
       <section
-        className={`p-6 rounded-3xl border ${
-          isDarkMode ? 'bg-slate-900/90 border-amber-500/30' : 'bg-amber-50/70 border-amber-300'
-        } space-y-4`}
+        className="p-6 rounded-3xl border bg-amber-50/70 border-amber-300 space-y-4"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

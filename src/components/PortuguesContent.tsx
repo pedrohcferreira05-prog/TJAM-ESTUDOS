@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 interface PortuguesContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   checklist?: Record<string, boolean>;
   toggleChecklist?: (id: string) => void;
   isLessonCompleted: boolean;
@@ -101,9 +101,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
 
       {/* Objetivos da Aula */}
       <section
-        className={`p-6 rounded-3xl border ${
-          isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/50 border-amber-200/60'
-        }`}
+        className="p-6 rounded-3xl border bg-amber-50/50 border-amber-200/60"
       >
         <h2 className="text-base font-black text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
           <Lightbulb className="w-5 h-5 text-amber-600" /> Objetivos de Aprendizagem — Conjunções & Conectivos
@@ -132,7 +130,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* 🎯 1. O que são conjunções? */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black text-lg shrink-0">
             🎯
@@ -161,7 +159,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* 🔹 2. Conjunções coordenativas */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-5`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-5">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center font-black text-lg shrink-0">
             🔹
@@ -260,7 +258,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* 🔹 3. Conjunções subordinativas */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-5`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-5">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-black text-lg shrink-0">
             🔹
@@ -421,7 +419,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* 🧠 5. Tabela para memorizar */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-lg shrink-0">
             🧠
@@ -501,7 +499,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* 🎯 Para o TJAM */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-3`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black text-lg shrink-0">
             🎯
@@ -525,7 +523,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
       </section>
 
       {/* Vídeo Aula Oficial */}
-      <section className={`p-6 sm:p-7 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-red-500/20 text-red-500 flex items-center justify-center font-black text-lg shrink-0">
@@ -563,9 +561,7 @@ export const PortuguesContent: React.FC<PortuguesContentProps> = ({
 
       {/* Checklist Interativo */}
       <section
-        className={`p-6 sm:p-7 rounded-3xl border ${
-          isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-        } shadow-sm space-y-4`}
+        className="p-6 sm:p-7 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4"
       >
         <div className="flex items-center justify-between flex-wrap gap-2">
           <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">

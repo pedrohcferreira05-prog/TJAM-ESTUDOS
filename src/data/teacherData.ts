@@ -229,27 +229,27 @@ export const INITIAL_PUBLISHED_MATERIALS: PublishedMaterial[] = [
 
 export const INITIAL_SUBMISSIONS: StudentSubmission[] = [
   {
-    id: 'sub-01',
-    studentId: 'st-01',
-    studentName: 'Maria Eduarda Amazonas',
-    turmaId: 'turma-tjam-2026-01',
-    activityTitle: 'Estudo de Caso: Impugnação de Ato Administrativo e Mandado de Segurança perante o Pleno do TJAM',
-    disciplineName: 'Direito Constitucional & Legislação TJAM',
-    submittedAt: '2026-07-30 às 18:45',
-    content: 'Excelentíssimo Senhor Desembargador Relator. A impetrante, servidora pública aprovada no concurso do TJAM, requer a concessão de ordem de segurança contra ato omissivo do Exmo. Sr. Presidente do TJAM...',
-    status: 'corrigido',
-    grade: 9.5,
-    feedback: 'Excelente estruturação argumentativa e fundamentação no Art. 12 do Regimento Interno do TJAM! Citou corretamente a jurisprudência do STF. Parabéns!',
-  },
-  {
-    id: 'sub-02',
-    studentId: 'st-02',
-    studentName: 'João Pedro Solimões',
-    turmaId: 'turma-tjam-2026-01',
-    activityTitle: 'Redação Discursiva: O Princípio do Desenho Universal no Poder Judiciário',
-    disciplineName: 'Acessibilidade & Inclusão',
-    submittedAt: '2026-07-31 às 11:30',
-    content: 'A inclusão social e o desenho universal no âmbito dos órgãos do Judiciário Amazonense representam garantias fundamentais estabelecidas pela Lei 13.146/2015...',
+    id: 'sub-pp-aula1-001',
+    studentId: 'id00120087',
+    studentName: 'Eduardo Mateus',
+    turmaId: 'turma-tjam-2026',
+    activityTitle: 'Aula 1: 5 Questões Escritas — Princípios Fundamentais do Processo Penal',
+    disciplineName: 'Direito Processual Penal',
+    submittedAt: new Date().toISOString(),
+    content: `[Questão 16: Diferença entre princípio do contraditório e princípio da ampla defesa]
+RESPOSTA DO ALUNO: O contraditório é a garantia bilateral de ciência de todos os atos praticados pela parte contrária e a oportunidade de manifestação e reação processual. Já a ampla defesa assegura a utilização de todos os meios e recursos admitidos em direito para defender o acusado, desdobrando-se obrigatoriamente em defesa técnica prestada por advogado ou defensor público e autodefesa exercida pelo próprio réu (como o direito de presença e de audiência).
+
+[Questão 17: Regras decorrentes da presunção de inocência]
+RESPOSTA DO ALUNO: A presunção de inocência (art. 5º, LVII, CF) desdobra-se como regra de tratamento (o investigado deve ser tratado como inocente até condenação irrecorrível, impedindo estigmatizações e antecipação de pena) e regra probatória (o ônus da prova recai exclusivamente sobre a acusação, aplicando-se o in dubio pro reo caso persista dúvida razoável).
+
+[Questão 18: Garantias do princípio do juiz natural]
+RESPOSTA DO ALUNO: O princípio do juiz natural (art. 5º, XXXVII e LIII, CF) assegura que ninguém será processado nem sentenciado senão pela autoridade competente prévia fixada pela lei, sendo absolutamente proibida a criação de tribunal ou juízo de exceção (post factum).
+
+[Questão 19: Consequência processual de prova obtida por meio ilícito]
+RESPOSTA DO ALUNO: Pelo art. 5º, LVI, da CF e art. 157 do CPP, as provas ilícitas são inadmissíveis, devendo ser desentranhadas dos autos e inutilizadas. As provas derivadas da ilícita também são contaminadas (teoria dos frutos da árvore envenenada), ressalvadas as hipóteses legais de fonte independente e descoberta inevitável.
+
+[Questão 20: Características do sistema acusatório]
+RESPOSTA DO ALUNO: O sistema processual acusatório fundamenta-se na nítida separação entre as funções de acusar (Ministério Público), defender e julgar (magistrado neutro e equidistante). Ao contrário do sistema inquisitivo, o juiz não é o protagonista probatório nem investiga, preservando sua estrita imparcialidade.`,
     status: 'pendente',
   },
 ];

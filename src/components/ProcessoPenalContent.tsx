@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
   CheckCircle2,
@@ -21,15 +21,28 @@ import {
   MessageCircle,
   VideoOff,
   Mic,
-  Copy
+  Copy,
+  ChevronDown,
+  ChevronUp,
+  Eye,
+  RotateCcw
 } from 'lucide-react';
-import { procPenalLessonSummaryPoints, procPenalPracticalCase } from '../data/processoPenalLessonData';
+import {
+  procPenalLessonSummaryPoints,
+  procPenalFlashcardsData,
+  procPenalMcQuestionsData,
+  procPenalTfQuestionsData,
+  procPenalDiscursiveQuestionsData,
+  procPenalPracticalCase
+} from '../data/processoPenalLessonData';
+import { saveStudentSubmissionToFirestore } from '../lib/firestoreService';
+import { StudentSubmission } from '../types';
 
 interface ProcessoPenalContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   checklist?: Record<string, boolean>;
   toggleChecklist?: (id: string) => void;
-  isLessonCompleted: boolean;
+  isLessonCompleted?: boolean;
   handleMarkAsCompleted?: () => void;
   onToggleComplete?: () => void;
   setActiveTab?: (tab: any) => void;
@@ -37,18 +50,51 @@ interface ProcessoPenalContentProps {
 }
 
 export const ProcessoPenalContent: React.FC<ProcessoPenalContentProps> = ({
-  isDarkMode,
+  isDarkMode = false,
   checklist: propChecklist,
   toggleChecklist: propToggleChecklist,
-  isLessonCompleted,
+  isLessonCompleted = false,
   handleMarkAsCompleted: propHandleMarkAsCompleted,
   onToggleComplete,
   setActiveTab: propSetActiveTab,
   onNavigateTab,
 }) => {
   const [internalChecklist, setInternalChecklist] = useState<Record<string, boolean>>({});
-  const [videoAnswers, setVideoAnswers] = useState<Record<number, string>>({});
-  const [copiedCase, setCopiedCase] = useState(false);
+  const [activeSection, setActiveSection] = useState<'teoria' | 'atividades' | 'discursivas'>('teoria');
+
+  // Interactive state for multiple-choice questions (Part 1)
+  const [selectedMcAnswers, setSelectedMcAnswers] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_proc_penal_mc_answers');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Interactive state for True/False questions (Part 2)
+  const [selectedTfAnswers, setSelectedTfAnswers] = useState<Record<number, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_proc_penal_tf_answers');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Interactive state for Written questions (Part 3)
+  const [writtenAnswers, setWrittenAnswers] = useState<Record<number, string>>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_proc_penal_written_answers');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const [showAnswerKeys, setShowAnswerKeys] = useState<Record<number, boolean>>({});
+  const [submittedWritten, setSubmittedWritten] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const checklist = propChecklist || internalChecklist;
   const toggleChecklist = propToggleChecklist || ((id: string) => {
@@ -57,569 +103,791 @@ export const ProcessoPenalContent: React.FC<ProcessoPenalContentProps> = ({
   const handleMarkAsCompleted = propHandleMarkAsCompleted || onToggleComplete || (() => {});
   const setActiveTab = propSetActiveTab || onNavigateTab || (() => {});
 
-  const handleCopyQuestions = () => {
-    const text = `EXERCÍCIO PRÁTICO — PROCESSO PENAL (Aula 1 - Inquérito Policial)\nAtividade: "Você é o investigador"\n\nCaso: ${procPenalPracticalCase.caso}\n\nPerguntas para responder no vídeo:\n${procPenalPracticalCase.perguntas.join('\n')}\n\nDesafio de comunicação:\n${procPenalPracticalCase.desafioOral}`;
-    navigator.clipboard.writeText(text);
-    setCopiedCase(true);
-    setTimeout(() => setCopiedCase(false), 2500);
+  const handleSelectMc = (qId: number, optionIdx: number) => {
+    const updated = { ...selectedMcAnswers, [qId]: optionIdx };
+    setSelectedMcAnswers(updated);
+    localStorage.setItem('tjam_proc_penal_mc_answers', JSON.stringify(updated));
+
+    // Also persist student question attempts for teacher access
+    try {
+      const attemptsKey = 'tjam_student_question_attempts';
+      const existing = JSON.parse(localStorage.getItem(attemptsKey) || '[]');
+      const newAttempt = {
+        id: `att-pp-${qId}-${Date.now()}`,
+        questionId: `proc-penal-aula1-q${qId}`,
+        selectedOptionId: `opt-${optionIdx}`,
+        isCorrect: optionIdx === procPenalMcQuestionsData.find(q => q.id === qId)?.correta,
+        answeredAt: new Date().toISOString(),
+        studentName: 'Aluno TJAM',
+        disciplineName: 'Processo Penal',
+        lessonTitle: 'Aula 1: Princípios Fundamentais'
+      };
+      const filtered = existing.filter((a: any) => a.questionId !== `proc-penal-aula1-q${qId}`);
+      filtered.push(newAttempt);
+      localStorage.setItem(attemptsKey, JSON.stringify(filtered));
+    } catch (e) {
+      console.error(e);
+    }
   };
+
+  const handleSelectTf = (qId: number, value: boolean) => {
+    const updated = { ...selectedTfAnswers, [qId]: value };
+    setSelectedTfAnswers(updated);
+    localStorage.setItem('tjam_proc_penal_tf_answers', JSON.stringify(updated));
+  };
+
+  const handleSaveWritten = (qId: number, text: string) => {
+    const updated = { ...writtenAnswers, [qId]: text };
+    setWrittenAnswers(updated);
+    localStorage.setItem('tjam_proc_penal_written_answers', JSON.stringify(updated));
+  };
+
+  const handleSubmitWrittenToTeacher = () => {
+    try {
+      const submissionsKey = 'tjam_student_submissions';
+      const existingSubmissions = JSON.parse(localStorage.getItem(submissionsKey) || '[]');
+      
+      const newSub: StudentSubmission = {
+        id: `sub-pp-aula1-${Date.now()}`,
+        studentId: 'id00120087',
+        studentName: 'Eduardo Mateus',
+        turmaId: 'turma-tjam-2026',
+        activityTitle: 'Aula 1: 5 Questões Escritas — Princípios Fundamentais do Processo Penal',
+        disciplineName: 'Direito Processual Penal',
+        submittedAt: new Date().toISOString(),
+        content: procPenalDiscursiveQuestionsData.map(q => `[Questão ${q.id - 200}: ${q.enunciado}]\nRESPOSTA DO ALUNO: ${writtenAnswers[q.id] || '(Não respondida)'}\n`).join('\n\n'),
+        status: 'pendente',
+      };
+
+      const filtered = existingSubmissions.filter((s: any) => s.id !== newSub.id);
+      filtered.unshift(newSub);
+      localStorage.setItem(submissionsKey, JSON.stringify(filtered));
+
+      // Also sync to global tjam_submissions for Teacher Portal
+      try {
+        const globalSubmissions = JSON.parse(localStorage.getItem('tjam_submissions') || '[]');
+        const updatedGlobal = [newSub, ...globalSubmissions.filter((s: any) => s.id !== newSub.id)];
+        localStorage.setItem('tjam_submissions', JSON.stringify(updatedGlobal));
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Also persist to Firestore
+      saveStudentSubmissionToFirestore(newSub).catch(() => {});
+
+      setSubmittedWritten(true);
+      setToastMessage('Suas respostas escritas foram enviadas ao Professor para correção e atribuição de nota!');
+      setTimeout(() => setToastMessage(null), 5000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const mcCorrectCount = procPenalMcQuestionsData.filter(q => selectedMcAnswers[q.id] === q.correta).length;
+  const tfCorrectCount = procPenalTfQuestionsData.filter(q => selectedTfAnswers[q.id] === q.correta).length;
 
   return (
     <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
+      {/* Toast Alert */}
+      {toastMessage && (
+        <div className="fixed top-5 right-5 z-50 p-4 rounded-2xl bg-emerald-600 text-white font-bold text-xs shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-4">
+          <CheckCircle2 className="w-5 h-5 shrink-0" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-950/90 via-slate-900 to-emerald-950/80 border border-amber-500/30 text-white space-y-4 shadow-xl">
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-rose-950/90 via-slate-900 to-amber-950/80 border border-rose-500/30 text-white space-y-4 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="px-3.5 py-1 rounded-full text-xs font-black bg-amber-500/20 text-amber-300 border border-amber-400/30 uppercase tracking-wider flex items-center gap-1.5">
-            <Scale className="w-3.5 h-3.5 text-amber-400" />
+          <span className="px-3.5 py-1 rounded-full text-xs font-black bg-rose-500/20 text-rose-300 border border-rose-400/30 uppercase tracking-wider flex items-center gap-1.5">
+            <Scale className="w-3.5 h-3.5 text-rose-400" />
             Processo Penal • 1ª Aula de Hoje
           </span>
           <span className="text-xs font-bold text-slate-400">
-            Decreto-Lei nº 3.689/1941 (CPP) • Foco Concurso TJAM
+            CF/88 & CPP • Nível Intermediário • TJAM 2026
           </span>
         </div>
 
         <div className="space-y-2">
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            ⚖️ Inquérito Policial: Conceito, Finalidade e Características
+            ⚖️ Processo Penal — Aula 1: Princípios Fundamentais do Processo Penal
           </h1>
           <p className="text-sm text-slate-300 max-w-3xl leading-relaxed">
-            O inquérito policial (IP) é o instrumento preparatório e investigativo utilizado pela polícia judiciária para apurar a infração penal e sua autoria, servindo de alicerce indispensável à atuação do Ministério Público ou do ofendido.
+            O Direito Processual Penal estabelece as regras e os procedimentos utilizados pelo Estado para investigar, processar e julgar infrações penais, garantindo o respeito aos direitos e às garantias fundamentais das pessoas envolvidas.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
           <button
             onClick={() => setActiveTab('video')}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition-all cursor-pointer shadow-md"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black transition-all cursor-pointer shadow-md"
           >
             <Video className="w-4 h-4" />
-            <span>Assistir Vídeo Aula (YouTube Live)</span>
+            <span>Assistir Videoaula Oficial (Prof. Marcos Vinicius)</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('questoes')}
+            onClick={() => {
+              setActiveSection('atividades');
+              const el = document.getElementById('atividades-secao');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold border border-amber-500/40 transition-all cursor-pointer"
           >
             <HelpCircle className="w-4 h-4 text-amber-400" />
-            <span>Resolver as 20 Questões Gabaritadas</span>
+            <span>Resolver as 20 Atividades com Gabarito</span>
           </button>
 
           <a
-            href="https://www.youtube.com/live/LKC-WndRbEU?is=ywfl4QJ6usmqhyyv"
+            href="https://youtu.be/N2PakWeTuic?is=bL6rvfVynaQvQrVl"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 font-bold border border-slate-700 transition-all"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            <span>Link do Vídeo</span>
+            <span>Abrir no YouTube</span>
           </a>
         </div>
       </div>
 
-      {/* Destaque Principal: Definição Essencial */}
-      <section className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-teal-500/15 border-2 border-amber-500/40 shadow-md">
-        <div className="flex items-start gap-3">
-          <div className="p-2.5 rounded-2xl bg-amber-500 text-slate-950 shrink-0 mt-0.5 font-black">
-            📌
-          </div>
-          <div className="space-y-1">
-            <span className="text-[11px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              Conceito Fundamental para o TJAM
-            </span>
-            <p className="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-snug">
-              Inquérito Policial = Investigação da Infração Penal + Indícios de Autoria.
-            </p>
-            <p className="text-xs text-slate-600 dark:text-slate-300 pt-0.5">
-              O CPP atribui expressamente à polícia judiciária a função de apurar as infrações penais e sua autoria para fornecer justa causa à ação penal.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Navigation Pill Filters */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <button
+          onClick={() => setActiveSection('teoria')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeSection === 'teoria'
+              ? 'bg-rose-600 text-white shadow-xs'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
+          }`}
+        >
+          <BookOpen className="w-3.5 h-3.5" />
+          <span>Teoria Completa da Aula</span>
+        </button>
 
-      {/* 1. FINALIDADE */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">1</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>🎯 1. Finalidade do Inquérito Policial</span>
-          </h2>
-        </div>
+        <button
+          onClick={() => setActiveSection('atividades')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeSection === 'atividades'
+              ? 'bg-rose-600 text-white shadow-xs'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
+          }`}
+        >
+          <HelpCircle className="w-3.5 h-3.5" />
+          <span>Parte 1 e 2: Marcar e V/F (15)</span>
+          <span className="px-1.5 py-0.5 rounded-full bg-black/20 text-[10px] font-extrabold">
+            {mcCorrectCount + tfCorrectCount}/15
+          </span>
+        </button>
 
-        <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-          O principal objetivo é investigar o fato criminoso, buscando reunir elementos sólidos sobre:
-        </p>
+        <button
+          onClick={() => setActiveSection('discursivas')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeSection === 'discursivas'
+              ? 'bg-rose-600 text-white shadow-xs'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
+          }`}
+        >
+          <FileText className="w-3.5 h-3.5" />
+          <span>Parte 3: 5 Questões Escritas</span>
+          {submittedWritten && (
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          )}
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold">
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span><strong>O que aconteceu:</strong> materialidade do crime.</span>
-          </div>
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span><strong>Como aconteceu:</strong> modus operandi da conduta.</span>
-          </div>
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span><strong>Quem pode ter praticado:</strong> indícios de autoria.</span>
-          </div>
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span><strong>Circunstâncias e provas:</strong> elementos relacionados ao fato.</span>
-          </div>
-        </div>
-
-        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-bold text-center">
-          📌 Memorize: Inquérito = Investigação preliminar para colher elementos informativos.
-        </div>
-      </section>
-
-      {/* 2. QUEM CONDUZ */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">2</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>👮 2. Quem Conduz o Inquérito?</span>
-          </h2>
-        </div>
-
-        <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-          A investigação é realizada pela <strong>polícia judiciária</strong>, sob condução da <strong>autoridade policial</strong> (Delegado de Polícia), conforme a competência legal estabelecida no Art. 4º do CPP.
-        </p>
-
-        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
-          <strong>Art. 4º do CPP:</strong> &ldquo;A polícia judiciária será exercida pelas autoridades policiais no território de suas respectivas circunscrições e terá por fim a apuração das infrações penais e da sua autoria.&rdquo;
-        </div>
-      </section>
-
-      {/* 3. CARACTERÍSTICAS PRINCIPAIS */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">3</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>🔎 3. Características Principais para Prova</span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Administrativo
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              É um procedimento investigativo pré-processual realizado por órgão do Poder Executivo (Polícia Civil ou Federal), <strong>não é um processo judicial</strong>.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Investigativo
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              Busca reunir elementos de informação sobre a infração penal e sua autoria para permitir o ajuizamento da ação penal.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Escrito (Art. 9º CPP)
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              Todas as peças do inquérito policial são reduzidas a escrito ou datilografadas e rubricadas pela autoridade policial.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Dispensável
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              A ação penal pode ser proposta diretamente pelo MP ou querelante quando já existirem elementos suficientes para isso.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Sigiloso (Art. 20 CPP)
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              Pode haver sigilo necessário à investigação, respeitados os direitos da defesa e o acesso aos elementos já documentados (Súmula Vinculante 14).
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
-            <span className="font-extrabold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
-              🔹 Não é Sentença
-            </span>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              O inquérito <strong>não condena nem absolve ninguém</strong>. Apenas o Poder Judiciário tem competência para julgar e condenar.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. COMO O INQUÉRITO PODE COMEÇAR */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">4</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>🚨 4. Como o Inquérito Pode Começar? (Art. 5º CPP)</span>
-          </h2>
-        </div>
-
-        <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-          Nos crimes de <strong>ação pública incondicionada</strong>, o CPP prevê que o inquérito policial pode ser iniciado:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-semibold">
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200">
-            <strong>1. De ofício:</strong> pela própria autoridade policial ao tomar conhecimento da infração.
-          </div>
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200">
-            <strong>2. Mediante requisição:</strong> da autoridade judiciária (juiz) ou do Ministério Público.
-          </div>
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200">
-            <strong>3. Mediante requerimento:</strong> do ofendido (vítima) ou de quem possa representá-lo.
-          </div>
-        </div>
-
-        <p className="text-xs text-slate-600 dark:text-slate-400">
-          * Qualquer pessoa do povo que tenha conhecimento de uma infração de ação pública também pode comunicá-la à autoridade policial (notitia criminis).
-        </p>
-
-        {/* Atenção Especial */}
-        <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-xs space-y-2">
-          <div className="flex items-center gap-2 font-black text-rose-600 dark:text-rose-400 text-sm">
-            <AlertTriangle className="w-4 h-4" /> ⚠️ Atenção Máxima — Pegadinha Clássica de Concurso:
-          </div>
-          <ul className="space-y-1.5 text-slate-700 dark:text-slate-300">
-            <li>• <strong>Ação pública condicionada:</strong> o inquérito <u>NÃO PODE</u> ser iniciado sem a representação da vítima.</li>
-            <li>• <strong>Ação penal privada:</strong> a autoridade policial somente pode proceder ao inquérito mediante requerimento de quem tenha legitimidade para propor a ação.</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* 5. PROVIDÊNCIAS DO ART. 6º */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">5</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>📝 5. O que a Autoridade Policial Pode Fazer? (Art. 6º do CPP)</span>
-          </h2>
-        </div>
-
-        <p className="text-xs text-slate-500 dark:text-slate-400">
-          Entre as providências previstas no Art. 6º do Código de Processo Penal estão:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Preservar o local do crime</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Apreender objetos relacionados (após peritos)</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Colher provas pertinentes</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Ouvir o ofendido (vítima)</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Interrogar e ouvir o indiciado</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Realizar reconhecimento de pessoas e coisas</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Realizar acareações</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Determinar perícias e exame de corpo de delito</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Identificar o indiciado</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Investigar circunstâncias relacionadas ao fato</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. PRAZOS DO CPP */}
-      <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black text-sm">6</span>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>⏰ 6. Prazo — Regra Geral do CPP (Art. 10)</span>
-          </h2>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left border-collapse">
-            <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400 uppercase font-black">
-                <th className="py-2.5 px-4">Situação do Indiciado</th>
-                <th className="py-2.5 px-4">Prazo Legal</th>
-                <th className="py-2.5 px-4">Termo Inicial</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-semibold text-slate-700 dark:text-slate-300">
-              <tr className="bg-rose-500/5">
-                <td className="py-3 px-4 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-rose-500"></span>
-                  <strong>Indiciado PRESO</strong>
-                </td>
-                <td className="py-3 px-4 font-black text-rose-600 dark:text-rose-400 text-sm">10 dias</td>
-                <td className="py-3 px-4 text-slate-500">Contados a partir do dia em que se executar a ordem de prisão preventiva.</td>
-              </tr>
-              <tr className="bg-emerald-500/5">
-                <td className="py-3 px-4 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <strong>Indiciado SOLTO</strong>
-                </td>
-                <td className="py-3 px-4 font-black text-emerald-600 dark:text-emerald-400 text-sm">30 dias</td>
-                <td className="py-3 px-4 text-slate-500">Mediante fiança ou sem ela; prorrogável judicialmente se o fato for de difícil elucidação.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p className="text-[11px] text-slate-500 italic">
-          ⚠️ Nota de Prova: Existem prazos especiais em outras leis (ex.: Lei de Drogas, crimes contra a economia popular, etc.), portanto esses são os prazos da regra geral do Código de Processo Penal.
-        </p>
-      </section>
-
-      {/* 🧠 RESUMO PARA PROVA */}
-      <section className="p-6 rounded-3xl bg-slate-900 text-white border border-amber-500/30 space-y-4 shadow-lg">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">🧠</span>
-          <h3 className="text-lg font-black text-amber-400">
-            RESUMO PARA PROVA — INQUÉRITO POLICIAL
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Investiga:</strong> infração penal + autoria
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Condução:</strong> polícia judiciária (delegado)
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Natureza:</strong> administrativo e investigativo
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Forma:</strong> estritamente escrito (Art. 9º)
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Não é processo:</strong> sem contraditório pleno
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Não condena:</strong> não julga nem absolve
-          </div>
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-            ➡️ <strong>Dispensável:</strong> justa causa dispensa IP
-          </div>
-          <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-600/40 text-rose-300">
-            ➡️ <strong>Preso:</strong> 10 dias (improrrogável)
-          </div>
-          <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-600/40 text-emerald-300">
-            ➡️ <strong>Solto:</strong> 30 dias (prorrogável)
-          </div>
-        </div>
-
-        <div className="pt-2 text-xs font-bold text-slate-400 border-t border-slate-800">
-          Artigos mais importantes desta aula: <strong className="text-amber-300">Arts. 4º, 5º, 6º, 9º e 10 do CPP</strong>.
-        </div>
-      </section>
-
-      {/* 🏠 EXERCÍCIO PRÁTICO: VOCÊ É O INVESTIGADOR */}
-      <section className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-indigo-950/90 via-slate-900 to-purple-950/80 border-2 border-indigo-500/40 text-white space-y-6 shadow-2xl">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🏠</span>
-            <div>
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-indigo-300 block">
-                Atividade Avaliativa Obrigatória
+      {/* ========================================================================= */}
+      {/* SEÇÃO 1: TEORIA COMPLETA (TEXTO OFICIAL ENVIADO) */}
+      {/* ========================================================================= */}
+      {(activeSection === 'teoria' || activeSection === 'atividades') && (
+        <div className="space-y-6">
+          {/* Card Conceitual Geral */}
+          <section className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div className="flex items-center gap-2.5">
+              <span className="p-2 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400">
+                <Scale className="w-5 h-5" />
               </span>
-              <h3 className="text-xl font-black text-white">
-                EXERCÍCIO PRÁTICO — &ldquo;Você é o Investigador&rdquo;
-              </h3>
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+                O que é o Direito Processual Penal?
+              </h2>
+            </div>
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              O <strong>Direito Processual Penal</strong> é o ramo do Direito que estabelece as regras e os procedimentos utilizados pelo Estado para investigar, processar e julgar infrações penais, garantindo o respeito aos direitos e às garantias fundamentais das pessoas envolvidas.
+            </p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+              📌 <strong>Fonte Primária:</strong> O processo penal deve observar princípios previstos principalmente na <strong>Constituição Federal de 1988</strong> e no <strong>Código de Processo Penal (CPP)</strong>.
+            </p>
+          </section>
+
+          {/* Grid dos 11 Princípios Fundamentais */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* 1. Devido Processo Legal */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  1
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio do Devido Processo Legal
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Previsto no <strong>art. 5º, LIV, da Constituição Federal</strong>, estabelece que <em>ninguém será privado de sua liberdade ou de seus bens sem o devido processo legal</em>.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Isso significa que a atuação do Estado deve respeitar as regras e garantias estabelecidas pelo ordenamento jurídico. O devido processo legal possui relação direta com outras garantias processuais, como o contraditório, a ampla defesa e o juiz natural.
+              </p>
+            </div>
+
+            {/* 2. Contraditório */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  2
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio do Contraditório
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                O contraditório está previsto no <strong>art. 5º, LV, da Constituição Federal</strong>. Consiste na garantia de que as partes possam conhecer os atos e argumentos apresentados no processo e tenham oportunidade de se manifestar e reagir.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                No processo penal, o contraditório permite que a defesa tenha conhecimento da acusação, das provas produzidas e dos demais elementos relevantes, podendo apresentar sua manifestação pelos meios legalmente admitidos.
+              </p>
+            </div>
+
+            {/* 3. Ampla Defesa */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  3
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio da Ampla Defesa
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Também previsto no <strong>art. 5º, LV, da Constituição Federal</strong>, garante ao acusado a utilização dos meios legítimos necessários para sua defesa.
+              </p>
+              <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-1 text-xs">
+                <p><strong>• Defesa técnica:</strong> realizada por advogado ou defensor público.</p>
+                <p><strong>• Autodefesa:</strong> exercida pelo próprio acusado, dentro das possibilidades previstas em lei.</p>
+                <p className="text-[11px] text-rose-600 dark:text-rose-400 font-bold pt-1">
+                  ⚠️ A ampla defesa não significa que qualquer meio possa ser utilizado. A defesa deve respeitar os limites estabelecidos pelo ordenamento jurídico (meios lícitos).
+                </p>
+              </div>
+            </div>
+
+            {/* 4. Presunção de Inocência */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  4
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio da Presunção de Inocência
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                O <strong>art. 5º, LVII, da Constituição Federal</strong> estabelece que <em>ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória</em>.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                A existência de uma acusação ou de um processo criminal, por si só, não equivale à declaração definitiva de culpa. A presunção de inocência não impede medidas cautelares previstas em lei (como prisão preventiva), desde que presentes seus requisitos legais.
+              </p>
+            </div>
+
+            {/* 5. Juiz Natural */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  5
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio do Juiz Natural
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Relacionado ao <strong>art. 5º, LIII, da Constituição Federal</strong>, segundo o qual <em>ninguém será processado nem sentenciado senão pela autoridade competente</em>.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                A Constituição também <strong>proíbe a criação de juízo ou tribunal de exceção</strong>. O objetivo é garantir que o julgamento seja realizado pelo órgão jurisdicional competente de acordo com regras previamente estabelecidas.
+              </p>
+            </div>
+
+            {/* 6. Inadmissibilidade das Provas Ilícitas */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  6
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Inadmissibilidade das Provas Ilícitas
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                O <strong>art. 5º, LVI, da Constituição Federal</strong> estabelece que <em>são inadmissíveis, no processo, as provas obtidas por meios ilícitos</em>.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                A prova deve ser produzida de acordo com as regras jurídicas e respeitando os direitos fundamentais. A obtenção ilícita de uma prova pode resultar em seu desentranhamento e inadmissibilidade no processo.
+              </p>
+            </div>
+
+            {/* 7. Publicidade */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  7
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Princípio da Publicidade
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                A publicidade dos atos processuais é uma importante garantia do sistema de Justiça. Como regra, os atos processuais são públicos, permitindo o controle da atividade jurisdicional.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Entretanto, a própria Constituição admite restrições à publicidade quando necessárias à preservação da intimidade ou do interesse social, nos termos da lei. Portanto, a <strong>publicidade é a regra</strong>, com restrições excepcionais.
+              </p>
+            </div>
+
+            {/* 8. Fundamentação das Decisões Judiciais */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  8
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Fundamentação das Decisões Judiciais
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Todas as decisões judiciais devem ser fundamentadas (Art. 93, IX, da CF). A fundamentação permite que as partes conheçam as razões utilizadas pelo julgador para chegar a determinada conclusão.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                A exigência de fundamentação também contribui para o controle das decisões judiciais e para o exercício indispensável do direito de recorrer quando cabível.
+              </p>
+            </div>
+
+            {/* 9. Sistema Acusatório */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  9
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Sistema Acusatório
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                O processo penal brasileiro adota uma <strong>estrutura acusatória</strong>, marcada pela separação das funções de acusar, defender e julgar:
+              </p>
+              <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                <p>• <strong>Acusação:</strong> exercida pelo órgão legitimado (Ministério Público ou querelante).</p>
+                <p>• <strong>Defesa:</strong> exercida em favor do acusado (defesa técnica + autodefesa).</p>
+                <p>• <strong>Julgamento:</strong> compete ao Poder Judiciário, por meio do juiz competente e imparcial.</p>
+              </div>
+            </div>
+
+            {/* 10. Direito ao Silêncio */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  10
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Direito ao Silêncio
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                O acusado possui o direito de permanecer em silêncio. Esse direito está relacionado à garantia constitucional de <strong>não produzir prova contra si mesmo</strong> (<em>nemo tenetur se detegere</em>).
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                O silêncio <strong>não deve ser confundido com confissão</strong>. O acusado não é obrigado a apresentar declarações que possam contribuir para sua própria incriminação.
+              </p>
+            </div>
+
+            {/* 11. Direito à Defesa Técnica */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  11
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Direito à Defesa Técnica
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                A defesa técnica é uma garantia essencial do processo penal. O acusado deve contar com assistência profissional adequada, exercida por advogado ou, nas hipóteses legais, pela Defensoria Pública ou outro defensor legitimamente constituído.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                A defesa técnica busca assegurar que o acusado tenha condições jurídicas reais de exercer plenamente seus direitos durante o processo.
+              </p>
+            </div>
+
+            {/* 12. Aplicação dos Princípios */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs font-black">
+                  12
+                </span>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                  Aplicação dos Princípios no Processo Penal
+                </h3>
+              </div>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                Os princípios fundamentais funcionam como <strong>garantias que limitam a atuação do Estado</strong> na investigação, acusação e julgamento das infrações penais.
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                O processo penal não é apenas um conjunto de procedimentos formais; é um instrumento de proteção dos direitos fundamentais, equilibrando o poder estatal de punir (<em>jus puniendi</em>) com a liberdade individual.
+              </p>
             </div>
           </div>
-          <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold flex items-center gap-1.5">
-            <Video className="w-3.5 h-3.5" /> 3 a 5 minutos sugeridos
-          </span>
-        </div>
 
-        {/* Descrição do Caso */}
-        <div className="p-5 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-black uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
-              📌 Caso Prático para Análise
-            </span>
-            <button
-              onClick={handleCopyQuestions}
-              className="text-xs font-bold text-indigo-300 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
-            >
-              <Copy className="w-3.5 h-3.5" />
-              <span>{copiedCase ? 'Copiado!' : 'Copiar Roteiro'}</span>
-            </button>
-          </div>
-          <blockquote className="text-sm sm:text-base font-semibold text-slate-200 italic border-l-4 border-indigo-400 pl-4 py-1 leading-relaxed">
-            &ldquo;{procPenalPracticalCase.caso}&rdquo;
-          </blockquote>
-          <p className="text-xs text-indigo-200">
-            🎥 <strong>Orientação:</strong> O aluno deverá gravar um vídeo e enviar ao professor, respondendo ao caso prático acima.
-          </p>
-        </div>
-
-        {/* As 7 Perguntas */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-            <Mic className="w-4 h-4 text-indigo-400" /> Perguntas para Responder no Vídeo:
-          </h4>
-
-          <div className="space-y-2 text-xs">
-            {procPenalPracticalCase.perguntas.map((p, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <p className="font-bold text-slate-200">{p}</p>
-                <input
-                  type="text"
-                  placeholder="Esboce sua resposta aqui como guia antes de gravar..."
-                  value={videoAnswers[idx] || ''}
-                  onChange={(e) => setVideoAnswers({ ...videoAnswers, [idx]: e.target.value })}
-                  className="w-full text-xs px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400"
-                />
+          {/* Embedded Video Section */}
+          <div className="p-6 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <Video className="w-5 h-5 text-rose-400" />
+                <h3 className="font-black text-base">Videoaula Oficial da Aula 1</h3>
               </div>
-            ))}
-          </div>
-        </div>
+              <a
+                href="https://youtu.be/N2PakWeTuic?is=bL6rvfVynaQvQrVl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center gap-1"
+              >
+                <span>Assistir no YouTube</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
 
-        {/* Desafio de Comunicação */}
-        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
-          <span className="text-xs font-black uppercase text-amber-400 flex items-center gap-1.5">
-            🗣️ Desafio de Comunicação Oral (Sem Ler!)
-          </span>
-          <p className="text-xs text-slate-200 leading-relaxed font-semibold">
-            {procPenalPracticalCase.desafioOral}
-          </p>
-        </div>
-
-        {/* Critérios de Avaliação */}
-        <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-          <h5 className="text-xs font-black uppercase text-indigo-300 flex items-center gap-1.5">
-            🎯 Critérios Avaliados pelo Professor:
-          </h5>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-slate-300">
-            {procPenalPracticalCase.criteriosAvaliacao.map((c, i) => (
-              <div key={i} className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>{c}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Entrega e Ações */}
-        <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-indigo-500/30">
-          <div className="text-xs text-slate-300">
-            📤 <strong>Entrega:</strong> Gravar um único vídeo com toda a atividade e enviar ao professor.
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleCopyQuestions}
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 text-xs font-bold border border-indigo-500/40 cursor-pointer transition-colors"
-            >
-              {copiedCase ? '✓ Roteiro Copiado' : 'Copiar Roteiro'}
-            </button>
-            <a
-              href={`https://wa.me/?text=${encodeURIComponent(
-                `Olá Professor! Segue minha atividade prática de Processo Penal — Aula 1 (Inquérito Policial: "Você é o Investigador"):\n\nCaso do João e as 7 respostas gravadas em vídeo.\n\nAluno(s): Eduardo Mateus e Pedro Henrique.`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md flex items-center gap-1.5 transition-colors"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>Enviar Atividade via WhatsApp</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Checklist de Conclusão */}
-      <section className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
-              Checklist de Conclusão da Aula 1
-            </h3>
-          </div>
-          <span className="text-xs font-bold text-slate-500">
-            {Object.values(checklist).filter(Boolean).length}/4 Etapas
-          </span>
-        </div>
-
-        <div className="space-y-2 text-xs font-semibold">
-          {[
-            { id: 'pp1_teoria', label: 'Li todo o texto teórico sobre conceito, finalidade e características do Inquérito Policial' },
-            { id: 'pp1_video', label: 'Assisti à Vídeo Aula completa no YouTube' },
-            { id: 'pp1_questoes', label: 'Resolvi as 20 questões gabaritadas de fixação' },
-            { id: 'pp1_pratico', label: 'Preparei o roteiro e gravei a atividade prática "Você é o Investigador"' },
-          ].map((item) => (
-            <label
-              key={item.id}
-              onClick={() => toggleChecklist(item.id)}
-              className={`p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
-                checklist[item.id]
-                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
-                  : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={!!checklist[item.id]}
-                onChange={() => {}}
-                className="w-4 h-4 accent-emerald-500 rounded cursor-pointer"
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-lg">
+              <iframe
+                src="https://www.youtube.com/embed/N2PakWeTuic?autoplay=0&rel=0"
+                title="Processo Penal - Aula 1: Princípios Fundamentais do Processo Penal"
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
-              <span>{item.label}</span>
-            </label>
-          ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SEÇÃO 2: 20 ATIVIDADES OFICIAIS (10 MARCAR + 5 V/F + 5 ESCRITAS) */}
+      {/* ========================================================================= */}
+      <div id="atividades-secao" className="space-y-8 pt-4">
+        {/* PARTE 1 — 10 QUESTÕES DE MARCAR */}
+        <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="p-2.5 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 font-black">
+                🟦
+              </span>
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  PARTE 1 — Questões de Marcar (10 Questões)
+                </h3>
+                <span className="text-xs text-slate-500 font-semibold">
+                  Selecione a alternativa correta e veja o feedback imediato com justificativa.
+                </span>
+              </div>
+            </div>
+
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+              Acertos: {mcCorrectCount} de 10
+            </span>
+          </div>
+
+          <div className="space-y-6 pt-2">
+            {procPenalMcQuestionsData.map((q) => {
+              const selectedOpt = selectedMcAnswers[q.id];
+              const isAnswered = selectedOpt !== undefined;
+              const isCorrect = selectedOpt === q.correta;
+
+              return (
+                <div
+                  key={q.id}
+                  className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-extrabold text-sm text-slate-900 dark:text-white leading-snug">
+                      {q.enunciado}
+                    </p>
+                    {isAnswered && (
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-black shrink-0 ${
+                          isCorrect
+                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+                            : 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300'
+                        }`}
+                      >
+                        {isCorrect ? 'Correto!' : 'Incorreto'}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Options */}
+                  <div className="grid grid-cols-1 gap-2 pt-1">
+                    {(q.opcoes || []).map((opt, idx) => {
+                      const isThisSelected = selectedOpt === idx;
+                      const isThisCorrectOption = idx === q.correta;
+
+                      let btnStyle = 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-rose-300';
+                      if (isAnswered) {
+                        if (isThisSelected && isCorrect) {
+                          btnStyle = 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-900 dark:text-emerald-200 font-bold';
+                        } else if (isThisSelected && !isCorrect) {
+                          btnStyle = 'bg-rose-50 dark:bg-rose-950/60 border-rose-500 text-rose-900 dark:text-rose-200 font-bold';
+                        } else if (isThisCorrectOption) {
+                          btnStyle = 'bg-emerald-50/50 dark:bg-emerald-950/30 border-emerald-400 text-emerald-800 dark:text-emerald-300';
+                        }
+                      }
+
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleSelectMc(q.id, idx)}
+                          className={`w-full text-left px-4 py-3 rounded-xl border text-xs transition-all cursor-pointer flex items-center justify-between gap-3 ${btnStyle}`}
+                        >
+                          <span>{opt}</span>
+                          {isAnswered && isThisCorrectOption && (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Explanation feedback */}
+                  {isAnswered && (
+                    <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                      <strong className="text-slate-900 dark:text-white block">
+                        Gabarito & Fundamentação:
+                      </strong>
+                      <p>{q.explicacao}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* PARTE 2 — 5 QUESTÕES DE VERDADEIRO OU FALSO */}
+        <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="p-2.5 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-black">
+                🟨
+              </span>
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  PARTE 2 — Verdadeiro ou Falso (5 Questões)
+                </h3>
+                <span className="text-xs text-slate-500 font-semibold">
+                  Julgue os itens em Verdadeiro (V) ou Falso (F).
+                </span>
+              </div>
+            </div>
+
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+              Acertos: {tfCorrectCount} de 5
+            </span>
+          </div>
+
+          <div className="space-y-4 pt-2">
+            {procPenalTfQuestionsData.map((q) => {
+              const selectedVal = selectedTfAnswers[q.id];
+              const isAnswered = selectedVal !== undefined;
+              const isCorrect = selectedVal === q.correta;
+
+              return (
+                <div
+                  key={q.id}
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="font-extrabold text-sm text-slate-900 dark:text-white leading-relaxed">
+                      {q.enunciado}
+                    </p>
+                    {isAnswered && (
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-black shrink-0 ${
+                          isCorrect
+                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+                            : 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300'
+                        }`}
+                      >
+                        {isCorrect ? 'Acertou!' : 'Errou!'}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => handleSelectTf(q.id, true)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                        selectedVal === true
+                          ? q.correta
+                            ? 'bg-emerald-500 text-white border-emerald-600'
+                            : 'bg-rose-500 text-white border-rose-600'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-emerald-400'
+                      }`}
+                    >
+                      <Check className="w-3.5 h-3.5" /> (V) Verdadeiro
+                    </button>
+
+                    <button
+                      onClick={() => handleSelectTf(q.id, false)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                        selectedVal === false
+                          ? !q.correta
+                            ? 'bg-emerald-500 text-white border-emerald-600'
+                            : 'bg-rose-500 text-white border-rose-600'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-rose-400'
+                      }`}
+                    >
+                      <span>(F) Falso</span>
+                    </button>
+                  </div>
+
+                  {isAnswered && (
+                    <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
+                      <strong>Gabarito: {q.correta ? 'V — Verdadeiro' : 'F — Falso'}.</strong> {q.explicacao}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* PARTE 3 — 5 QUESTÕES ESCRITAS (DISCURSIVAS) COM RESPOSTAS ESPERADAS */}
+        <section className="space-y-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black">
+                🟩
+              </span>
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  PARTE 3 — Questões Escritas (5 Questões)
+                </h3>
+                <span className="text-xs text-slate-500 font-semibold">
+                  Escreva suas respostas com suas palavras e envie para a correção do professor.
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={handleSubmitWrittenToTeacher}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md cursor-pointer flex items-center gap-2"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Enviar Respostas ao Professor</span>
+            </button>
+          </div>
+
+          <div className="space-y-6 pt-2">
+            {procPenalDiscursiveQuestionsData.map((q) => {
+              const currentText = writtenAnswers[q.id] || '';
+              const showKey = showAnswerKeys[q.id];
+
+              return (
+                <div
+                  key={q.id}
+                  className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3"
+                >
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider block">
+                      Questão Escrita {q.id - 200} de 5
+                    </span>
+                    <h4 className="font-extrabold text-sm text-slate-900 dark:text-white leading-relaxed">
+                      {q.enunciado}
+                    </h4>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block mb-1">
+                      Sua Resposta:
+                    </label>
+                    <textarea
+                      value={currentText}
+                      onChange={(e) => handleSaveWritten(q.id, e.target.value)}
+                      placeholder="Digite sua resposta explicativa aqui com suas próprias palavras..."
+                      rows={4}
+                      className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs outline-none focus:border-emerald-500 transition-all leading-relaxed resize-y"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 pt-1">
+                    <button
+                      onClick={() => setShowAnswerKeys(prev => ({ ...prev, [q.id]: !prev[q.id] }))}
+                      className="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>{showKey ? 'Ocultar Resposta Esperada' : 'Ver Resposta Esperada (Espelho Oficial)'}</span>
+                    </button>
+
+                    <span className="text-[10px] text-slate-400">
+                      {currentText.length} caracteres
+                    </span>
+                  </div>
+
+                  {showKey && (
+                    <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs space-y-1 animate-in fade-in">
+                      <strong className="text-emerald-900 dark:text-emerald-200 block">
+                        ✅ Resposta Esperada Oficial:
+                      </strong>
+                      <p className="text-emerald-800 dark:text-emerald-300 leading-relaxed">
+                        {q.respostaEsperada}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+            <button
+              onClick={handleSubmitWrittenToTeacher}
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-md cursor-pointer flex items-center gap-2"
+            >
+              <Send className="w-4 h-4" />
+              <span>Enviar Todas as 5 Respostas Escritas para o Portal do Professor</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      {/* Completion & Progress Banner */}
+      <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="space-y-1 text-center sm:text-left">
+          <h4 className="font-black text-slate-900 dark:text-white text-base">
+            Conclusão da Aula 1 de Processo Penal
+          </h4>
+          <p className="text-xs text-slate-500">
+            {isLessonCompleted
+              ? '✅ Parabéns! Esta aula já está registrada como concluída no seu plano de estudos.'
+              : 'Clique no botão ao lado para registrar a conclusão da aula e computar seu progresso.'}
+          </p>
         </div>
 
-        <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
-          <button
-            onClick={handleMarkAsCompleted}
-            className={`px-5 py-2.5 rounded-xl text-xs font-black shadow-md transition-all cursor-pointer ${
-              isLessonCompleted
-                ? 'bg-emerald-600 text-white ring-2 ring-emerald-400'
-                : 'bg-slate-900 hover:bg-slate-800 text-white dark:bg-amber-500 dark:hover:bg-amber-400 dark:text-slate-950'
-            }`}
-          >
-            {isLessonCompleted ? '✓ 1ª Aula Concluída no Sistema' : 'Marcar 1ª Aula como Concluída'}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('questoes')}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer"
-          >
-            <span>Ir para as 20 Questões Gabaritadas</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </section>
+        <button
+          onClick={handleMarkAsCompleted}
+          className={`px-6 py-3 rounded-2xl font-black text-xs transition-all cursor-pointer flex items-center gap-2 shadow-md shrink-0 ${
+            isLessonCompleted
+              ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300'
+              : 'bg-rose-600 hover:bg-rose-500 text-white'
+          }`}
+        >
+          <CheckCircle2 className="w-4 h-4" />
+          <span>{isLessonCompleted ? 'Aula Concluída (Clique para Alternar)' : 'Marcar Aula como Concluída'}</span>
+        </button>
+      </div>
     </article>
   );
 };

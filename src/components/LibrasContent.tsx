@@ -17,14 +17,13 @@ import {
 } from 'lucide-react';
 
 interface LibrasContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   isLessonCompleted: boolean;
   onToggleCompleted: () => void;
   onNavigateTab: (tab: 'video' | 'conteudo' | 'flashcards' | 'mapa' | 'questoes' | 'resumo') => void;
 }
 
 export const LibrasContent: React.FC<LibrasContentProps> = ({
-  isDarkMode,
   isLessonCompleted,
   onToggleCompleted,
   onNavigateTab,
@@ -99,9 +98,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
     <article className="space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed font-sans animate-in fade-in duration-300">
       {/* Banner de Introdução da 3ª Aula */}
       <section
-        className={`p-6 sm:p-7 rounded-3xl border ${
-          isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-sky-50/70 border-sky-100'
-        }`}
+        className="p-6 sm:p-7 rounded-3xl border bg-sky-50/70 border-sky-100"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
           <div className="flex items-center gap-2">
@@ -210,8 +207,6 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
                 className={`p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                   isSel
                     ? 'bg-sky-600 text-white border-sky-600 shadow-md ring-2 ring-sky-300/40'
-                    : isDarkMode
-                    ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -230,7 +225,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
           const curr = parametros[selectedParam];
           const Icon = curr.icon;
           return (
-            <div className={`p-6 rounded-3xl border transition-all ${isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+            <div className="p-6 rounded-3xl border transition-all bg-white border-slate-200 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center">
@@ -268,7 +263,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
 
         {/* 5 Parâmetros em Lista Detalhada */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+          <div className="p-5 rounded-2xl border space-y-2 bg-slate-50 border-slate-200">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-emerald-500 text-white font-black text-xs flex items-center justify-center">1</span>
               <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">1️⃣ Configuração de Mão (CM)</h4>
@@ -278,7 +273,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
             </p>
           </div>
 
-          <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+          <div className="p-5 rounded-2xl border space-y-2 bg-slate-50 border-slate-200">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center">2</span>
               <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">2️⃣ Ponto de Articulação (PA)</h4>
@@ -288,7 +283,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
             </p>
           </div>
 
-          <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+          <div className="p-5 rounded-2xl border space-y-2 bg-slate-50 border-slate-200">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center">3</span>
               <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">3️⃣ Movimento (M)</h4>
@@ -298,7 +293,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
             </p>
           </div>
 
-          <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+          <div className="p-5 rounded-2xl border space-y-2 bg-slate-50 border-slate-200">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-purple-500 text-white font-black text-xs flex items-center justify-center">4</span>
               <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">4️⃣ Orientação da Mão (Or)</h4>
@@ -309,7 +304,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
           </div>
         </div>
 
-        <div className={`p-5 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-rose-50/50 border-rose-200'}`}>
+        <div className="p-5 rounded-2xl border space-y-2 bg-rose-50/50 border-rose-200">
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-lg bg-rose-600 text-white font-black text-xs flex items-center justify-center">5</span>
             <h4 className="font-extrabold text-sm text-rose-900 dark:text-rose-300">5️⃣ Expressões Não Manuais (ENM)</h4>
@@ -328,7 +323,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
         <p className="text-sm">
           A alteração de um <strong>único parâmetro</strong> pode diferenciar completamente sinais na Libras.
         </p>
-        <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-sky-50/60 border-sky-200'}`}>
+        <div className="p-5 rounded-2xl border bg-sky-50/60 border-sky-200">
           <p className="text-xs sm:text-sm font-bold text-sky-950 dark:text-sky-300">
             Por isso, ao aprender um sinal, não basta memorizar apenas o movimento!
           </p>
@@ -394,7 +389,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
           Alguns sinais podem apresentar movimentos ou configurações muito parecidas. Para diferenciá-los, é necessário observar todos os parâmetros.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          <div className={`p-4 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+          <div className="p-4 rounded-2xl border space-y-2 bg-white border-slate-200">
             <span className="text-[10px] font-black uppercase text-sky-600 dark:text-sky-400">Exemplo 1: Ponto de Articulação</span>
             <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">APRENDER vs. SÁBADO vs. LARANJA</h4>
             <p className="text-slate-600 dark:text-slate-300">
@@ -406,7 +401,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
             </ul>
           </div>
 
-          <div className={`p-4 rounded-2xl border space-y-2 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+          <div className="p-4 rounded-2xl border space-y-2 bg-white border-slate-200">
             <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400">Exemplo 2: Orientação & Movimento</span>
             <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">TRABALHAR vs. BRINCAR</h4>
             <p className="text-slate-600 dark:text-slate-300">
@@ -452,7 +447,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
       {/* 6. RESUMO PARA MEMORIZAR & PEGADINHA */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Mnemônico */}
-        <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-sky-50/50 border-sky-200'}`}>
+        <div className="p-5 rounded-2xl border space-y-3 bg-sky-50/50 border-sky-200">
           <h3 className="text-sm font-black text-sky-800 dark:text-sky-300 flex items-center gap-2">
             🧠 Resumo para Memorizar
           </h3>
@@ -472,7 +467,7 @@ export const LibrasContent: React.FC<LibrasContentProps> = ({
         </div>
 
         {/* Pegadinha FGV */}
-        <div className={`p-5 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-amber-50/50 border-amber-200'}`}>
+        <div className="p-5 rounded-2xl border space-y-3 bg-amber-50/50 border-amber-200">
           <h3 className="text-sm font-black text-amber-800 dark:text-amber-400 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-amber-500" /> ⚠️ Pegadinha Clássica de Prova
           </h3>

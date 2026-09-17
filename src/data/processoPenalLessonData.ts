@@ -1,4 +1,4 @@
-// Data for Processo Penal — Aula 1: Inquérito Policial (Conceito, Finalidade e Características)
+// Data for Processo Penal — Aula 1: Princípios Fundamentais do Processo Penal
 // Preparatório TJAM — Assistente Judiciário
 // Conteúdo oficial da Aula 1 de Processo Penal
 
@@ -30,370 +30,251 @@ export interface DiscursiveQuestionItem {
 }
 
 export const procPenalLessonSummaryPoints: string[] = [
-  'Inquérito Policial (IP): procedimento de investigação utilizado para apurar uma infração penal e sua autoria, servindo de base para atuação do Ministério Público ou do ofendido.',
-  'Finalidade do IP: investigar o fato criminoso (o que aconteceu, como aconteceu, quem praticou, circunstâncias e provas). Inquérito = investigação.',
-  'Quem conduz: realizado pela polícia judiciária, sob condução da autoridade policial (delegado), conforme a competência legal.',
-  'Característica 1 — Administrativo: é um procedimento investigativo pré-processual, NÃO um processo judicial.',
-  'Característica 2 — Investigativo: busca reunir elementos informativos sobre a infração e sua autoria.',
-  'Característica 3 — Escrito: as peças do inquérito são reduzidas a escrito ou datilografadas (Art. 9º do CPP).',
-  'Característica 4 — Dispensável: a ação penal pode ser proposta sem inquérito se já existirem elementos suficientes (justa causa).',
-  'Característica 5 — Sigiloso: sigilo necessário à eficácia da investigação, ressalvado o direito de acesso do defensor às provas já documentadas (Súmula Vinculante 14 do STF).',
-  'Característica 6 — Não é sentença: o inquérito não condena nem absolve ninguém.',
-  'Início em crimes de Ação Pública: de ofício pela autoridade policial; por requisição judicial ou do MP; por requerimento da vítima; ou notitia criminis por qualquer pessoa.',
-  'Ação Pública Condicionada: NÃO pode ser iniciado sem a prévia representação do ofendido.',
-  'Ação Privada: somente pode ser instaurado mediante requerimento de quem tenha legitimidade para propor a queixa-crime.',
-  'Providências do Art. 6º do CPP: preservar local, apreender objetos, colher provas, ouvir vítima e indiciado, reconhecimento, acareações, perícias/corpo de delito e identificar o indiciado.',
-  'Prazos gerais do CPP (Art. 10): Preso = 10 dias (a partir da execução da prisão preventiva); Solto = 30 dias (mediante fiança ou sem ela).',
-  'Artigos fundamentais para a prova do TJAM: Arts. 4º, 5º, 6º, 9º e 10 do CPP.'
+  'Direito Processual Penal: ramo do Direito que estabelece as regras e procedimentos estatais para investigar, processar e julgar infrações penais, tutelando direitos e garantias fundamentais.',
+  'Devido Processo Legal (Art. 5º, LIV, CF): ninguém será privado de sua liberdade ou de seus bens sem o devido processo legal. É a cláusula geral de garantia do cidadão contra o arbítrio estatal.',
+  'Contraditório (Art. 5º, LV, CF): ciência bilateral dos atos e argumentos do processo somada à possibilidade real de manifestação e reação das partes.',
+  'Ampla Defesa (Art. 5º, LV, CF): utilização de todos os meios legítimos de defesa admitidos em direito. Desdobra-se em Defesa Técnica (indispensável, feita por advogado/defensor) e Autodefesa (direito de audiência e presença).',
+  'Presunção de Inocência (Art. 5º, LVII, CF): ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória. Não impede prisões cautelares devidamente fundamentadas.',
+  'Juiz Natural (Art. 5º, LIII e XXXVII, CF): ninguém será processado nem sentenciado senão pela autoridade competente prévia e abstratamente estabelecida; proibição expressa de tribunais de exceção.',
+  'Inadmissibilidade das Provas Ilícitas (Art. 5º, LVI, CF): são inadmissíveis no processo as provas obtidas por meios ilícitos ou com violação de normas constitucionais/legais.',
+  'Publicidade dos Atos Processuais (Art. 5º, LX e Art. 93, IX, CF): a publicidade é a regra geral, admitindo-se restrições legais unicamente para preservar a intimidade ou o interesse social.',
+  'Fundamentação das Decisões Judiciais (Art. 93, IX, CF): sob pena de nulidade absoluta, todas as decisões judiciais devem indicar os motivos fáticos e jurídicos do convencimento.',
+  'Sistema Acusatório: nítida separação das funções de acusar (Ministério Público/querelante), defender (defensor) e julgar (juiz imparcial), vedando a concentração inquisitorial.',
+  'Direito ao Silêncio (Nemo Tenetur Se Detegere): garantia de não produzir prova contra si mesmo. O silêncio jamais pode ser interpretado como confissão ou culpa.',
+  'Defesa Técnica: garantia irrenunciável e indispensável à validade da persecução penal, exercida por advogado habilitado ou Defensoria Pública.'
 ];
 
 export const procPenalFlashcardsData: FlashcardItem[] = [
   {
-    q: 'O que é o Inquérito Policial (IP) e qual sua base jurídica?',
-    a: 'O inquérito policial é um procedimento administrativo preparatório e investigativo conduzido pela polícia judiciária, cuja finalidade é apurar a infração penal e sua autoria para subsidiar a ação penal do MP ou da vítima (Art. 4º do CPP).'
+    q: 'O que estabelece o Princípio do Devido Processo Legal (Art. 5º, LIV da CF)?',
+    a: 'Ninguém será privado da liberdade ou de seus bens sem o devido processo legal. Exige que a atuação do Estado observe estritamente as regras e procedimentos previamente estabelecidos em lei.'
   },
   {
-    q: 'Qual é a principal finalidade do Inquérito Policial?',
-    a: 'Investigar o fato criminoso, reunindo elementos essenciais: o que aconteceu, como aconteceu, quem praticou (autoria) e a materialidade delitiva (provas). Inquérito = investigação.'
+    q: 'Em que consiste o Princípio do Contraditório no processo penal (Art. 5º, LV da CF)?',
+    a: 'Garante que as partes tenham plena ciência de todos os atos, provas e argumentos do processo, com oportunidade real e efetiva de manifestação e reação.'
   },
   {
-    q: 'Quem conduz o inquérito policial e qual é a sua natureza?',
-    a: 'É conduzido pela autoridade policial (delegado de carreira da polícia judiciária). Trata-se de um procedimento ADMINISTRATIVO preliminar, e não de um processo judicial.'
+    q: 'Como se desdobra o Princípio da Ampla Defesa?',
+    a: 'Desdobra-se em: 1) Defesa Técnica (exercida privativamente por advogado ou defensor público, indeclinável); e 2) Autodefesa (exercida pelo próprio réu, como o direito de presença e de audiência).'
   },
   {
-    q: 'Por que o inquérito policial é considerado dispensável?',
-    a: 'Porque a ação penal pode ser proposta diretamente pelo titular (MP ou querelante) caso já existam elementos e provas suficientes de autoria e materialidade (justa causa), sem necessidade prévia do inquérito.'
+    q: 'Até quando vigora a Presunção de Inocência segundo a CF (Art. 5º, LVII)?',
+    a: 'Ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória. Portanto, a mera existência de inquérito ou processo não equivale a declaração de culpa.'
   },
   {
-    q: 'O inquérito policial pode condenar ou absolver o investigado?',
-    a: 'NÃO! O inquérito policial não é sentença, não julga, não condena e não absolve ninguém. É mero procedimento investigativo para colheita de elementos.'
+    q: 'O que veda expressamente o Princípio do Juiz Natural?',
+    a: 'Veda a criação de juízos ou tribunais de exceção (pós-fato). Determina que ninguém será processado nem sentenciado senão pela autoridade previamente competente.'
   },
   {
-    q: 'O inquérito policial é oral ou escrito?',
-    a: 'É estritamente ESCRITO. Todas as peças e atos do inquérito policial serão reduzidos a escrito ou datilografados e rubricados pela autoridade (Art. 9º do CPP).'
+    q: 'São admitidas provas ilícitas no processo penal brasileiro?',
+    a: 'NÃO! O art. 5º, LVI da Constituição Federal estabelece que são expressamente inadmissíveis no processo as provas obtidas por meios ilícitos.'
   },
   {
-    q: 'Como funciona o sigilo no inquérito policial?',
-    a: 'A autoridade assegurará o sigilo necessário à elucidação do fato ou exigido pelo interesse da sociedade (Art. 20, CPP), garantindo-se ao defensor amplo acesso aos elementos de prova já documentados (Súmula Vinculante 14).'
+    q: 'A publicidade dos atos processuais é absoluta?',
+    a: 'Não. A publicidade é a REGRA geral, mas a lei pode restringi-la quando a defesa da intimidade ou o interesse social o exigirem (Art. 5º, LX, CF).'
   },
   {
-    q: 'Como pode ser instaurado o inquérito nos crimes de ação penal pública incondicionada?',
-    a: 'De ofício pela autoridade policial; mediante requisição do juiz ou do Ministério Público; ou a requerimento do ofendido / representante legal (Art. 5º, I e II, CPP).'
+    q: 'Qual é a consequência de uma decisão judicial sem fundamentação?',
+    a: 'A nulidade absoluta do ato decisório (Art. 93, IX, CF), pois a fundamentação é indispensável para o controle democrático e para o direito de recorrer.'
   },
   {
-    q: 'O inquérito pode ser instaurado sem representação nos crimes de ação pública condicionada?',
-    a: 'NÃO! Nos crimes de ação pública condicionada, o inquérito NÃO PODE ser iniciado sem a prévia representação da vítima ou de seu representante legal (Art. 5º, § 4º, CPP).'
+    q: 'O que caracteriza o Sistema Acusatório adotado pelo processo penal brasileiro?',
+    a: 'A nítida e estrita separação entre os órgãos responsáveis pelas funções de acusar, defender e julgar, assegurando a imparcialidade do julgador.'
   },
   {
-    q: 'Como se inicia o inquérito policial nos crimes de ação penal privada?',
-    a: 'Apenas mediante requerimento formal de quem tenha legitimidade para propor a ação penal privada / queixa-crime (Art. 5º, § 5º, CPP).'
-  },
-  {
-    q: 'Quais providências a autoridade policial deve adotar segundo o Art. 6º do CPP?',
-    a: 'Preservar o local do crime, apreender objetos (após perícia), colher provas, ouvir vítima e indiciado, proceder a reconhecimentos e acareações, e determinar exame de corpo de delito.'
-  },
-  {
-    q: 'Qual o prazo geral do CPP para conclusão do inquérito com o indiciado PRESO?',
-    a: '10 dias, improrrogáveis, contados a partir do dia em que se executar a ordem de prisão (Art. 10 do CPP).'
-  },
-  {
-    q: 'Qual o prazo geral do CPP para conclusão do inquérito com o indiciado SOLTO?',
-    a: '30 dias, podendo ser prorrogado pelo juiz a requerimento da autoridade policial quando o fato for de difícil elucidação (Art. 10 do CPP).'
-  },
-  {
-    q: 'Qualquer pessoa do povo pode comunicar uma infração à autoridade policial?',
-    a: 'SIM! Qualquer pessoa que tiver conhecimento da existência de infração em que caiba ação pública poderá comunicá-la à autoridade policial (notitia criminis, Art. 5º, § 3º, CPP).'
-  },
-  {
-    q: 'Quais os artigos mais cobrados no concurso do TJAM sobre inquérito policial?',
-    a: 'Artigos 4º (competência da polícia judiciária), 5º (formas de instauração), 6º (diligências policiais), 9º (forma escrita) e 10 (prazos de 10 e 30 dias).'
+    q: 'O direito ao silêncio pode ser interpretado em desfavor do acusado?',
+    a: 'NÃO! O silêncio decorre da garantia de não autoincriminação e não importa em confissão nem pode ser interpretado em prejuízo da defesa.'
   }
 ];
 
+// 10 Questões de Múltipla Escolha (Parte 1)
 export const procPenalMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A principal finalidade do inquérito policial é:',
+    enunciado: '1. O princípio do devido processo legal garante que:',
     opcoes: [
-      'A) Aplicar pena ao investigado',
-      'B) Apurar a infração penal e sua autoria',
-      'C) Julgar o acusado',
-      'D) Determinar a sentença'
+      'A) O Estado pode aplicar sanções sem procedimento legal.',
+      'B) Ninguém será privado da liberdade ou de seus bens sem o devido processo legal.',
+      'C) Somente processos civis devem respeitar procedimentos legais.',
+      'D) Toda prisão antes do trânsito em julgado é proibida.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Conforme o Art. 4º do CPP e a doutrina processual penal, o inquérito policial tem como precípua finalidade a apuração da infração penal e de sua respectiva autoria, fornecendo elementos para a ação penal.'
+    explicacao: 'Gabarito B: Previsto no art. 5º, LIV, da Constituição Federal, o princípio do devido processo legal estabelece expressamente que ninguém será privado de sua liberdade ou de seus bens sem o devido processo legal.'
   },
   {
     id: 2,
-    enunciado: '2. O inquérito policial é considerado, em regra:',
+    enunciado: '2. O contraditório garante às partes:',
     opcoes: [
-      'A) Processo judicial',
-      'B) Procedimento administrativo investigativo',
-      'C) Ação penal',
-      'D) Sentença criminal'
+      'A) Apenas o direito de recorrer.',
+      'B) Ciência dos atos processuais e possibilidade de manifestação e reação.',
+      'C) O direito de escolher o juiz.',
+      'D) A utilização de qualquer meio de prova.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: O inquérito policial não é processo nem ação judicial; é um procedimento puramente administrativo de caráter investigatório e informativo preliminar.'
+    explicacao: 'Gabarito B: Previsto no art. 5º, LV, da CF, o contraditório assegura às partes a ciência dos atos processuais e a possibilidade efetiva de se manifestar e reagir.'
   },
   {
     id: 3,
-    enunciado: '3. A condução do inquérito policial cabe, em regra:',
+    enunciado: '3. A ampla defesa compreende:',
     opcoes: [
-      'A) Ao juiz',
-      'B) Ao Ministério Público',
-      'C) À autoridade policial',
-      'D) Ao defensor público'
+      'A) Defesa técnica e autodefesa.',
+      'B) Somente a defesa realizada pelo próprio acusado.',
+      'C) Apenas a apresentação de recursos.',
+      'D) Somente a produção de provas documentais.'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: Nos termos do Art. 4º do CPP, a polícia judiciária será exercida pelas autoridades policiais no território de suas respectivas circunscrições e terá por fim a apuração das infrações penais.'
+    correta: 0, // A
+    explicacao: 'Gabarito A: A ampla defesa abrange a defesa técnica (realizada por advogado ou defensor público) e a autodefesa (exercida pelo próprio acusado dentro das possibilidades legais).'
   },
   {
     id: 4,
-    enunciado: '4. Sobre o inquérito policial, é correto afirmar que:',
+    enunciado: '4. Ninguém será considerado culpado até:',
     opcoes: [
-      'A) Sempre é indispensável para iniciar a ação penal',
-      'B) Pode ser dispensável quando já existirem elementos suficientes para a ação penal',
-      'C) É obrigatório em qualquer situação',
-      'D) Produz automaticamente uma condenação'
+      'A) O recebimento da denúncia.',
+      'B) A sentença de primeiro grau.',
+      'C) O trânsito em julgado de sentença penal condenatória.',
+      'D) O oferecimento da denúncia.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: O inquérito policial é dispensável: se o titular da ação penal (Ministério Público ou querelante) já dispuser de elementos suficientes sobre a autoria e materialidade, poderá ajuizar a denúncia ou queixa de pronto.'
+    correta: 2, // C
+    explicacao: 'Gabarito C: Conforme o art. 5º, LVII, da Constituição Federal, ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.'
   },
   {
     id: 5,
-    enunciado: '5. Uma característica tradicional do inquérito policial é ser:',
+    enunciado: '5. O princípio do juiz natural determina que:',
     opcoes: [
-      'A) Público em qualquer circunstância',
-      'B) Sigiloso quando o sigilo for necessário à investigação',
-      'C) Oral',
-      'D) Judicial'
+      'A) O acusado escolhe seu juiz.',
+      'B) Ninguém será processado ou sentenciado senão pela autoridade competente.',
+      'C) Todo acusado deve ser julgado por tribunal especial.',
+      'D) O juiz pode ser escolhido depois do crime.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Nos termos do Art. 20 do CPP, a autoridade assegurará no inquérito o sigilo necessário à elucidação do fato ou exigido pelo interesse da sociedade.'
+    explicacao: 'Gabarito B: Conforme o art. 5º, LIII, da CF, ninguém será processado nem sentenciado senão pela autoridade competente, sendo vedados juízos ou tribunais de exceção.'
   },
   {
     id: 6,
-    enunciado: '6. As peças do inquérito policial devem ser:',
+    enunciado: '6. Segundo a Constituição Federal, são inadmissíveis:',
     opcoes: [
-      'A) Sempre exclusivamente orais',
-      'B) Reduzidas a escrito',
-      'C) Produzidas somente pelo juiz',
-      'D) Elaboradas apenas pelo Ministério Público'
+      'A) Todas as provas testemunhais.',
+      'B) Todas as provas produzidas no inquérito.',
+      'C) As provas obtidas por meios ilícitos.',
+      'D) Todas as provas apresentadas pela defesa.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: Art. 9º do CPP: "Todas as peças do inquérito policial serão, num só processado, reduzidas a escrito ou datilografadas e, neste caso, rubricadas pela autoridade".'
+    correta: 2, // C
+    explicacao: 'Gabarito C: O art. 5º, LVI, da Constituição Federal estabelece que são inadmissíveis, no processo, as provas obtidas por meios ilícitos.'
   },
   {
     id: 7,
-    enunciado: '7. Nos crimes de ação pública, o inquérito pode ser iniciado:',
+    enunciado: '7. No sistema acusatório:',
     opcoes: [
-      'A) Somente por decisão judicial',
-      'B) De ofício pela autoridade policial, nas hipóteses legais',
-      'C) Somente pelo defensor',
-      'D) Somente pela vítima'
+      'A) O juiz concentra as funções de acusar e julgar.',
+      'B) Acusar, defender e julgar são funções distintas.',
+      'C) Apenas o acusado pode produzir provas.',
+      'D) O Ministério Público realiza o julgamento.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Conforme o Art. 5º, I do CPP, nos crimes de ação pública o inquérito policial será iniciado de ofício pela própria autoridade policial.'
+    explicacao: 'Gabarito B: O sistema acusatório é marcado pela nítida separação entre as funções de acusar, defender e julgar, preservando a imparcialidade do juiz.'
   },
   {
     id: 8,
-    enunciado: '8. Nos crimes de ação pública condicionada à representação, o inquérito policial:',
+    enunciado: '8. O direito ao silêncio está relacionado:',
     opcoes: [
-      'A) Pode ser instaurado sem representação',
-      'B) Depende da representação quando esta for exigida por lei',
-      'C) Nunca pode ser instaurado',
-      'D) Depende exclusivamente do juiz'
+      'A) À obrigação de confessar.',
+      'B) Ao direito de não produzir prova contra si mesmo.',
+      'C) À perda do direito de defesa.',
+      'D) À obrigação de responder ao interrogatório.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Art. 5º, § 4º do CPP: "O inquérito, nos crimes em que a ação pública depender de representação, não poderá sem ela ser iniciado".'
+    explicacao: 'Gabarito B: O direito ao silêncio decorre da garantia constitucional de que ninguém é obrigado a produzir prova contra si mesmo (nemo tenetur se detegere).'
   },
   {
     id: 9,
-    enunciado: '9. Nos crimes de ação privada, a autoridade policial poderá proceder ao inquérito:',
+    enunciado: '9. A publicidade dos atos processuais:',
     opcoes: [
-      'A) De ofício, sempre',
-      'B) Mediante requerimento de quem tenha legitimidade',
-      'C) Somente por determinação do juiz',
-      'D) Somente por determinação do Ministério Público'
+      'A) É sempre proibida.',
+      'B) É a regra, podendo sofrer restrições previstas em lei.',
+      'C) Nunca pode sofrer restrições.',
+      'D) Existe somente para o Ministério Público.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Art. 5º, § 5º do CPP: "Nos crimes de ação privada, a autoridade policial somente poderá proceder a inquérito a requerimento de quem tenha qualidade para intentá-la".'
+    explicacao: 'Gabarito B: Como regra geral, os atos processuais são públicos, mas a própria Constituição e a legislação admitem restrições quando necessárias à preservação da intimidade ou do interesse social.'
   },
   {
     id: 10,
-    enunciado: '10. Durante o inquérito, a autoridade policial pode:',
+    enunciado: '10. A fundamentação das decisões judiciais permite:',
     opcoes: [
-      'A) Aplicar pena criminal',
-      'B) Colher provas e ouvir o ofendido e o indiciado',
-      'C) Proferir sentença',
-      'D) Absolver o investigado'
+      'A) Que o juiz decida sem apresentar razões.',
+      'B) Que as partes conheçam os motivos da decisão.',
+      'C) Que o juiz ignore a legislação.',
+      'D) Que todas as decisões sejam sigilosas.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito B: Entre as atribuições expressas no Art. 6º do CPP estão ouvir a vítima (ofendido), interrogar o indiciado, proceder a acareações e colher provas pertinentes.'
-  },
-  {
-    id: 11,
-    enunciado: '11. Entre as providências previstas no art. 6º do CPP está:',
-    opcoes: [
-      'A) Preservar o local do crime',
-      'B) Condenar o investigado',
-      'C) Fixar a pena',
-      'D) Proferir sentença'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: Art. 6º, I do CPP: Logo que tiver conhecimento da prática da infração penal, a autoridade policial deverá dirigir-se ao local, providenciando para que não se alterem o estado e conservação das coisas.'
-  },
-  {
-    id: 12,
-    enunciado: '12. O inquérito policial:',
-    opcoes: [
-      'A) É uma ação penal',
-      'B) É um processo judicial',
-      'C) É um procedimento destinado à investigação',
-      'D) É uma sentença'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: Trata-se de procedimento administrativo de investigação preliminar destinado à apuração da infração penal e de sua autoria.'
-  },
-  {
-    id: 13,
-    enunciado: '13. No prazo geral previsto no CPP, quando o indiciado estiver preso, o inquérito deverá terminar, em regra, em:',
-    opcoes: [
-      'A) 5 dias',
-      'B) 10 dias',
-      'C) 15 dias',
-      'D) 30 dias'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: Art. 10 do CPP: O inquérito deverá terminar no prazo de 10 dias, se o indiciado tiver sido preso preventivamente, contado esse prazo a partir do dia em que se executar a ordem de prisão.'
-  },
-  {
-    id: 14,
-    enunciado: '14. Quando o indiciado estiver solto, o prazo geral previsto no CPP é de:',
-    opcoes: [
-      'A) 10 dias',
-      'B) 15 dias',
-      'C) 30 dias',
-      'D) 60 dias'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: Art. 10 do CPP: No caso de indiciado solto (mediante fiança ou sem ela), o prazo geral do inquérito é de 30 dias.'
-  },
-  {
-    id: 15,
-    enunciado: '15. O inquérito policial não tem como finalidade:',
-    opcoes: [
-      'A) Investigar a autoria',
-      'B) Apurar circunstâncias do crime',
-      'C) Condenar o investigado',
-      'D) Reunir elementos informativos'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: O inquérito policial JAMAIS condena nem absolve. A condenação penal é competência exclusiva do Poder Judiciário por meio de sentença proferida em processo judicial regular.'
-  },
-  {
-    id: 16,
-    enunciado: '16. O sigilo do inquérito policial existe principalmente para:',
-    opcoes: [
-      'A) Impedir qualquer investigação',
-      'B) Proteger a eficiência e as necessidades da investigação',
-      'C) Impedir o trabalho da defesa',
-      'D) Substituir o processo judicial'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: O sigilo previsto no Art. 20 do CPP visa resguardar a eficácia e o sucesso das diligências investigatórias e proteger a intimidade/interesse social.'
-  },
-  {
-    id: 17,
-    enunciado: '17. Se já existirem elementos suficientes para o oferecimento da ação penal, o inquérito policial:',
-    opcoes: [
-      'A) Pode ser dispensado',
-      'B) Deve obrigatoriamente ser realizado novamente',
-      'C) Deve ser convertido em sentença',
-      'D) Deve resultar em condenação'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: O inquérito policial é peça dispensável e prescindível; dispondo de justa causa, o titular da ação penal pode oferecê-la diretamente (Art. 39, § 5º e 46, § 1º, CPP).'
-  },
-  {
-    id: 18,
-    enunciado: '18. O reconhecimento de pessoas e coisas durante a investigação é:',
-    opcoes: [
-      'A) Vedado',
-      'B) Uma das diligências que podem ser realizadas',
-      'C) Exclusivo do juiz',
-      'D) Exclusivo da defesa'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito B: Art. 6º, VI do CPP: A autoridade policial pode proceder a reconhecimento de pessoas e coisas e a acareações durante o inquérito policial.'
-  },
-  {
-    id: 19,
-    enunciado: '19. O exame de corpo de delito, quando cabível, é uma providência relacionada:',
-    opcoes: [
-      'A) À investigação da infração penal',
-      'B) À aplicação da pena',
-      'C) À sentença civil',
-      'D) À execução da pena'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito A: Conforme o Art. 6º, VII e Art. 158 do CPP, o exame de corpo de delito é providência investigatória fundamental para constatação da materialidade nas infrações que deixam vestígios.'
-  },
-  {
-    id: 20,
-    enunciado: '20. Assinale a alternativa correta:',
-    opcoes: [
-      'A) O inquérito policial condena o investigado.',
-      'B) O inquérito policial é conduzido pelo juiz.',
-      'C) O inquérito policial busca reunir elementos sobre a infração penal e sua autoria.',
-      'D) O inquérito policial sempre é indispensável para a ação penal.'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito C: Perfeita definição do IP: procedimento que visa colher elementos de materialidade da infração penal e indícios suficientes de sua autoria.'
+    explicacao: 'Gabarito B: A fundamentação permite que as partes conheçam as razões fáticas e jurídicas do julgador, viabilizando o controle da decisão e o direito ao recurso.'
   }
 ];
 
+// 5 Questões Verdadeiro ou Falso (Parte 2)
 export const procPenalTfQuestionsData: TfQuestionItem[] = [
   {
     id: 101,
-    enunciado: '1. O inquérito policial é um procedimento administrativo investigativo conduzido pela polícia judiciária e não um processo judicial.',
+    enunciado: '1. ( ) O contraditório permite que a parte tenha conhecimento dos atos processuais e oportunidade de se manifestar.',
     correta: true,
-    explicacao: 'Verdadeiro: O IP é pré-processual, administrativo e conduzido pelo delegado de polícia (Art. 4º do CPP).'
+    explicacao: 'Verdadeiro: O contraditório assegura a ciência dos atos processuais e a possibilidade concreta de reação e manifestação das partes.'
   },
   {
     id: 102,
-    enunciado: '2. Nos crimes de ação penal pública condicionada, a autoridade policial pode instaurar o inquérito de ofício mesmo sem a representação da vítima.',
+    enunciado: '2. ( ) A ampla defesa permite ao acusado utilizar qualquer meio de defesa, inclusive meios ilícitos.',
     correta: false,
-    explicacao: 'Falso: O Art. 5º, § 4º do CPP veda expressamente a instauração de inquérito em crimes de ação pública condicionada sem prévia representação.'
+    explicacao: 'Falso: A ampla defesa garante a utilização de meios LEGÍTIMOS necessários para a defesa; meios ilícitos são expressamente vedados pela Constituição (Art. 5º, LVI).'
   },
   {
     id: 103,
-    enunciado: '3. O inquérito policial é dispensável para a propositura da ação penal se o Ministério Público ou o ofendido já dispuser de elementos suficientes de autoria e materialidade.',
+    enunciado: '3. ( ) A Constituição Federal estabelece que são inadmissíveis as provas obtidas por meios ilícitos.',
     correta: true,
-    explicacao: 'Verdadeiro: O IP possui natureza de procedimento informativo dispensável (prescindível).'
+    explicacao: 'Verdadeiro: Previsto expressamente no art. 5º, LVI da Constituição Federal.'
   },
   {
     id: 104,
-    enunciado: '4. O prazo geral do CPP para conclusão do inquérito policial é de 30 dias para o indiciado preso e de 10 dias para o indiciado solto.',
-    correta: false,
-    explicacao: 'Falso: É o oposto! O prazo é de 10 dias para o indiciado PRESO e de 30 dias para o indiciado SOLTO (Art. 10 do CPP).'
+    enunciado: '4. ( ) O princípio do juiz natural proíbe a criação de tribunal ou juízo de exceção.',
+    correta: true,
+    explicacao: 'Verdadeiro: A Constituição proíbe expressamente a criação de juízos ou tribunais de exceção (art. 5º, XXXVII e LIII).'
+  },
+  {
+    id: 105,
+    enunciado: '5. ( ) A presunção de inocência estabelece que ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.',
+    correta: true,
+    explicacao: 'Verdadeiro: Regra expressa do art. 5º, LVII, da Constituição Federal.'
   }
 ];
 
+// 5 Questões Escritas com Gabarito Oficial / Respostas Esperadas (Parte 3)
 export const procPenalDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 201,
-    enunciado: '1. Explique a finalidade do inquérito policial e aponte três de suas principais características à luz do Código de Processo Penal.',
-    respostaEsperada: 'Gabarito esperado: A finalidade do inquérito policial é apurar a infração penal e identificar sua autoria (materialidade + indícios de autoria), fornecendo subsídios probatórios para que o titular da ação penal (MP ou ofendido) promova a ação judicial. Suas características incluem: 1) Administrativo (conduzido pela autoridade policial, não é processo judicial); 2) Escrito (todas as peças reduzidas a escrito, art. 9º); 3) Dispensável (ação penal pode ser proposta sem inquérito se houver provas suficientes); 4) Sigiloso (art. 20, ressalvada a Súmula Vinculante 14 do STF).'
+    enunciado: '1. Explique, com suas palavras, o que significa o princípio do devido processo legal.',
+    respostaEsperada: 'É a garantia de que ninguém será privado de sua liberdade ou de seus bens sem que seja respeitado o procedimento previsto em lei e as garantias fundamentais.'
   },
   {
     id: 202,
-    enunciado: '2. Quais são os prazos gerais da regra do CPP para a conclusão do inquérito policial quando o indiciado estiver preso e quando estiver solto? A partir de quando se inicia a contagem do prazo do preso?',
-    respostaEsperada: 'Gabarito esperado: Conforme o Artigo 10 do CPP: se o indiciado estiver PRESO preventivamente, o prazo para conclusão do inquérito é de 10 dias improrrogáveis, contados a partir do dia em que se executar a ordem de prisão. Se o indiciado estiver SOLTO (com ou sem fiança), o prazo é de 30 dias, podendo ser prorrogado pelo juiz a pedido da autoridade policial quando o fato for de difícil elucidação.'
+    enunciado: '2. Qual é a diferença entre contraditório e ampla defesa?',
+    respostaEsperada: 'O contraditório garante conhecimento dos atos e possibilidade de manifestação e reação. A ampla defesa garante ao acusado os meios legítimos para exercer sua defesa, incluindo defesa técnica e autodefesa.'
+  },
+  {
+    id: 203,
+    enunciado: '3. Explique o que significa presunção de inocência no processo penal.',
+    respostaEsperada: 'Significa que ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.'
+  },
+  {
+    id: 204,
+    enunciado: '4. Explique o que é o sistema acusatório e qual é a importância da separação entre acusação, defesa e julgamento.',
+    respostaEsperada: 'É a estrutura em que as funções de acusar, defender e julgar são separadas. Essa divisão busca preservar a imparcialidade do julgador e garantir um processo equilibrado.'
+  },
+  {
+    id: 205,
+    enunciado: '5. Um indivíduo está sendo processado criminalmente e decide permanecer em silêncio durante seu interrogatório. Explique qual garantia constitucional está relacionada a essa situação e por que ela é importante no processo penal.',
+    respostaEsperada: 'Está relacionado ao direito ao silêncio e à garantia de não produzir prova contra si mesmo. O acusado não é obrigado a contribuir para sua própria incriminação por meio de declarações.'
   }
 ];
 
-// Exercício Prático Oficial: "Você é o Investigador" (Desafio de Vídeo)
+// Estudo Prático de Caso de Princípios Fundamentais
 export interface PracticalVideoCase {
   titulo: string;
   caso: string;
@@ -404,25 +285,20 @@ export interface PracticalVideoCase {
 }
 
 export const procPenalPracticalCase: PracticalVideoCase = {
-  titulo: 'Atividade Prática: "Você é o Investigador"',
-  caso: 'João estava saindo do trabalho quando teve seu celular roubado. Ele procurou a polícia e informou que o autor do crime era um homem que usava camisa preta e fugiu em uma motocicleta. Uma câmera de segurança próxima ao local registrou parte do ocorrido.',
+  titulo: 'Atividade Prática: "Aplicação dos Princípios Fundamentais"',
+  caso: 'Durante uma operação, a polícia interceptou conversas telefônicas sem autorização judicial prévia e, com base nelas, prendeu Carlos em flagrante. Na delegacia, Carlos optou por permanecer em silêncio e solicitou a presença de um defensor público, tendo seu pedido inicialmente postergado sob o argumento de que a autoridade policial precisava concluir o relatório com urgência.',
   perguntas: [
-    '1. Qual é a finalidade do inquérito policial nesse caso?',
-    '2. Quem será responsável pela condução da investigação?',
-    '3. Quais elementos podem ser buscados durante a investigação?',
-    '4. A câmera de segurança pode ser utilizada como elemento de investigação? Explique.',
-    '5. A autoridade policial pode ouvir a vítima?',
-    '6. Pode procurar identificar e ouvir possíveis testemunhas?',
-    '7. O inquérito policial já significa que João terá seu celular recuperado ou que o suspeito será condenado? Explique.'
+    '1. As provas obtidas pela interceptação telefônica sem autorização judicial são válidas? Qual princípio fundamental foi violado?',
+    '2. O fato de Carlos ter permanecido em silêncio pode ser considerado como confissão de culpa pela autoridade?',
+    '3. A negativa ou adiamento de assistência por defensor público fere qual vertente da ampla defesa?',
+    '4. Qual é a importância da observância estrita do devido processo legal nesse caso?'
   ],
-  desafioOral: 'Depois de responder às perguntas, explique com suas próprias palavras, sem ler: "O que é um inquérito policial e para que ele serve?"',
+  desafioOral: 'Grave um áudio ou vídeo de 2 a 3 minutos explicando com suas palavras a importância do sistema acusatório e por que a separação entre quem acusa e quem julga protege o cidadão.',
   tempoSugerido: '3 a 5 minutos',
   criteriosAvaliacao: [
-    'Clareza ao falar',
-    'Pronúncia e dicção',
-    'Organização das ideias',
-    'Conhecimento do conteúdo jurídico',
-    'Capacidade de explicar sem decorar',
-    'Segurança e postura na resposta'
+    'Domínio dos princípios constitucionais aplicáveis',
+    'Clareza e fundamentação jurídica nos artigos da CF/88',
+    'Capacidade de síntese e expressão oral',
+    'Respeito às regras do sistema acusatório'
   ]
 };

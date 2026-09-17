@@ -28,7 +28,7 @@ import {
 } from '../data/processoCivilLessonData';
 
 interface ProcessoCivilContentProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
   checklist?: Record<string, boolean>;
   toggleChecklist?: (id: string) => void;
   isLessonCompleted: boolean;
@@ -121,7 +121,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </div>
 
       {/* 1. Conceito de Atos Processuais */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">1. 📌</span>
           <h2>Conceito de Atos Processuais</h2>
@@ -158,7 +158,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 2. Quem pode praticar atos processuais? */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">2. 👥</span>
           <h2>Quem pode praticar atos processuais?</h2>
@@ -207,7 +207,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 3. Forma dos atos processuais */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">3. 📝</span>
           <h2>Forma dos Atos Processuais (CPC, art. 188)</h2>
@@ -227,7 +227,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 4. Tempo dos atos processuais */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">4. ⏰</span>
           <h2>Tempo dos Atos Processuais (CPC, art. 212)</h2>
@@ -251,7 +251,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 5. Atos eletrônicos */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">5. 💻</span>
           <h2>Atos Eletrônicos (CPC, arts. 193 a 199)</h2>
@@ -282,7 +282,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 6. Publicidade e Segredo de Justiça */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">6. 📢</span>
           <h2>Publicidade dos Atos Processuais (CPC, art. 189)</h2>
@@ -309,7 +309,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 7. Citação e Intimação */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">7. 📬</span>
           <h2>Citação e Intimação (Não Confunda!)</h2>
@@ -355,7 +355,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 8. Prazos processuais */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">8. ⚠️</span>
           <h2>Prazos Processuais (CPC, art. 219)</h2>
@@ -377,7 +377,7 @@ export const ProcessoCivilContent: React.FC<ProcessoCivilContentProps> = ({
       </section>
 
       {/* 9. Preclusão */}
-      <section className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} shadow-sm space-y-4`}>
+      <section className="p-6 rounded-3xl border bg-white border-slate-200 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-black text-lg">
           <span className="text-xl">9. 🔄</span>
           <h2>Preclusão</h2>

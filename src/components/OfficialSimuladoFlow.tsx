@@ -338,13 +338,14 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   // STRICT RULE: Once closed, it is locked permanently.
   const executeFinalEncerramento = () => {
     let score = 0;
-    simulado.questions.forEach((q) => {
+    const questions = simulado.questions || [];
+    questions.forEach((q) => {
       if (userAnswers[q.id] === q.correctOptionId) {
         score += 1;
       }
     });
 
-    const maxScore = simulado.questions.length;
+    const maxScore = questions.length;
     const percentage = maxScore > 0 ? Math.round((score / maxScore) * 1000) / 10 : 0;
     const timeSpent = simulado.durationMinutes * 60 - timeRemainingSeconds;
 
@@ -393,20 +394,20 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
       finishedAttempt?.userAnswers ||
       (Object.keys(userAnswers).length > 0
         ? userAnswers
-        : simulado.questions.reduce((acc, q, idx) => {
+        : (simulado.questions || []).reduce((acc, q, idx) => {
             acc[q.id] = idx % 5 === 0 ? 'A' : (idx % 3 === 0 ? 'B' : q.correctOptionId);
             return acc;
           }, {} as Record<string, string>));
 
     let calcScore = 0;
-    simulado.questions.forEach((q) => {
+    (simulado.questions || []).forEach((q) => {
       if (effectiveAnswers[q.id] === q.correctOptionId) {
         calcScore += 1;
       }
     });
 
     const score = finishedAttempt ? finishedAttempt.score : calcScore;
-    const maxScore = finishedAttempt ? finishedAttempt.maxScore : simulado.questions.length;
+    const maxScore = finishedAttempt ? finishedAttempt.maxScore : (simulado.questions || []).length;
     const perc = maxScore > 0 ? Math.round((score / maxScore) * 1000) / 10 : 0;
     const errors = maxScore - score;
     const dateStr = new Date().toLocaleString('pt-BR');
@@ -604,7 +605,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
 
     // Calculate stats per discipline
     const statsObj: Record<string, { name: string; total: number; correct: number }> = {};
-    simulado.questions.forEach((q) => {
+    (simulado.questions || []).forEach((q) => {
       const dId = q.disciplineId || 'outros';
       const dName = disciplinesConfig[dId]?.name || dId;
       if (!statsObj[dId]) {
@@ -732,7 +733,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
     doc.addPage();
     let currentTableY = drawTableHeader(2);
 
-    simulado.questions.forEach((q, idx) => {
+    (simulado.questions || []).forEach((q, idx) => {
       // Page break if near bottom
       if (currentTableY > 275) {
         // Footer for current page
@@ -833,7 +834,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   // Discipline breakdown stats
   const disciplineStats = useMemo(() => {
     const stats: Record<string, { name: string; total: number; correct: number }> = {};
-    simulado.questions.forEach((q) => {
+    (simulado.questions || []).forEach((q) => {
       const dId = q.disciplineId || 'outros';
       const dName = disciplinesConfig[dId]?.name || dId;
       if (!stats[dId]) {
@@ -2056,9 +2057,9 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                 </div>
 
                 {closedRankingTab === 'individual' ? (
-                  INDIVIDUAL_SIMULADO_RANKING.map((item) => (
+                  INDIVIDUAL_SIMULADO_RANKING.map((item, idx) => (
                     <div
-                      key={item.rank}
+                      key={`indiv-${item.rank}-${item.name}-${idx}`}
                       className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
                     >
                       <div className="flex items-center gap-3">
@@ -2091,9 +2092,9 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
                     </div>
                   ))
                 ) : (
-                  DUPLAS_RANKING.map((item) => (
+                  DUPLAS_RANKING.map((item, idx) => (
                     <div
-                      key={item.rank}
+                      key={`dupla-${item.rank}-${item.name}-${idx}`}
                       className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-all ${item.bgClass}`}
                     >
                       <div className="flex items-center gap-3">

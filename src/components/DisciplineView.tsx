@@ -60,7 +60,6 @@ interface DisciplineViewProps {
   onAnswerQuestion: (questionId: string, optionId: string) => void;
   onReviewFlashcard: (flashcardId: string, rating: 'fácil' | 'médio' | 'difícil' | 'errei') => void;
   onSavePersonalNote: (topicId: string, text: string) => void;
-  onOpenAIAssistant: (initialPrompt?: string) => void;
   onUpdateMindMap: (map: MindMap) => void;
   isDarkMode: boolean;
   initialSubTab?: string;
@@ -77,7 +76,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
   onAnswerQuestion,
   onReviewFlashcard,
   onSavePersonalNote,
-  onOpenAIAssistant,
   onUpdateMindMap,
   isDarkMode,
   initialSubTab = 'aulas',
@@ -106,8 +104,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
 
   // Selected Question state for interactive quiz
   const [questionAnswers, setQuestionAnswers] = useState<Record<string, string>>({});
-  const [aiExplanationMap, setAiExplanationMap] = useState<Record<string, any>>({});
-  const [loadingAiMap, setLoadingAiMap] = useState<Record<string, boolean>>({});
 
   // Note text state
   const [noteText, setNoteText] = useState(progress.personalNotes[selectedTopicId] || '');
@@ -132,33 +128,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
   const handleSelectOption = (questionId: string, optionId: string) => {
     setQuestionAnswers((prev) => ({ ...prev, [questionId]: optionId }));
     onAnswerQuestion(questionId, optionId);
-  };
-
-  const handleRequestAiExplanation = async (q: Question) => {
-    setLoadingAiMap((prev) => ({ ...prev, [q.id]: true }));
-    try {
-      const res = await fetch('/api/explain-question', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          statement: q.statement,
-          options: q.options,
-          selectedOptionId: questionAnswers[q.id],
-          correctOptionId: q.correctOptionId,
-          disciplineName: discipline.name,
-          topicName: q.topicName,
-        }),
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setAiExplanationMap((prev) => ({ ...prev, [q.id]: data.explanation }));
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoadingAiMap((prev) => ({ ...prev, [q.id]: false }));
-    }
   };
 
   const toggleAccordion = (id: string) => {
@@ -220,20 +189,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
                 </div>
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-0.5">{discipline.name}</h1>
               </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(
-                    `Forneça um guia completo de estudos e estratégia de alta performance para a disciplina ${discipline.name} no concurso do TJAM.`
-                  )
-                }
-                className="px-4 py-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-bold shadow-lg flex items-center gap-2 transition-all"
-              >
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                Guia Estratégico com IA
-              </button>
             </div>
           </div>
 
@@ -802,27 +757,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
                 <p className="text-xs text-slate-400 italic">Sem flashcards cadastrados especificamente para este tópico.</p>
               )}
             </div>
-
-            {/* AI Assistant Callout */}
-            <div className="p-5 rounded-3xl bg-gradient-to-br from-purple-900 via-slate-900 to-indigo-950 text-white border border-purple-500/30 space-y-3 shadow-lg">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <h4 className="font-extrabold text-xs">Tutor IA do Concurso</h4>
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Ficou com dúvida sobre o tópico "{currentTopic?.name}"? Pergunte ao assistente especialista em TJAM.
-              </p>
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(
-                    `Tire minhas dúvidas e me explique em detalhes o tópico "${currentTopic?.name}" da disciplina ${discipline.name}.`
-                  )
-                }
-                className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2"
-              >
-                Abrir Tutor IA agora
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -968,10 +902,10 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-xl font-extrabold">Banco de Questões de Concursos do TJAM</h3>
-              <p className="text-xs text-slate-500">Resolva, receba correção imediata e acione fundamentação e explicações com IA Gemini</p>
+              <p className="text-xs text-slate-500">Resolva, receba correção imediata com fundamentação legal de cada assertiva</p>
             </div>
 
-            <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-purple-500/15 text-purple-600 dark:text-purple-400">
+            <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600">
               {discQuestions.length} Questões Disponíveis
             </span>
           </div>
@@ -982,14 +916,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
               <p className="text-sm font-bold text-slate-600 dark:text-slate-300">
                 Ainda não há questões cadastradas para esta disciplina.
               </p>
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(`Crie 3 questões inéditas do TJAM sobre a disciplina ${discipline.name}.`)
-                }
-                className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-md"
-              >
-                Gerar Questões com IA agora
-              </button>
             </div>
           ) : (
             <div className="space-y-6">
@@ -997,8 +923,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
                 const selectedOpt = questionAnswers[q.id];
                 const isAnswered = selectedOpt !== undefined;
                 const isCorrect = selectedOpt === q.correctOptionId;
-                const aiExplanation = aiExplanationMap[q.id];
-                const isAiLoading = loadingAiMap[q.id];
 
                 return (
                   <div
@@ -1089,32 +1013,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
                             <p className="mt-2 font-bold opacity-80">Fundamentação Legal: {q.legalReference}</p>
                           )}
                         </div>
-
-                        <div className="flex flex-wrap items-center gap-3">
-                          <button
-                            onClick={() => handleRequestAiExplanation(q)}
-                            disabled={isAiLoading}
-                            className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md flex items-center gap-2 transition-all disabled:opacity-50"
-                          >
-                            <Sparkles className="w-3.5 h-3.5" />
-                            {isAiLoading ? 'Analisando com IA...' : 'Explicar com IA Gemini'}
-                          </button>
-                        </div>
-
-                        {aiExplanation && (
-                          <div className="p-4 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-2 text-xs">
-                            <h5 className="font-bold text-purple-400 flex items-center gap-1.5">
-                              <Sparkles className="w-4 h-4" /> Explicação do Tutor IA:
-                            </h5>
-                            <p className="text-slate-300 leading-relaxed">{aiExplanation.summary}</p>
-                            <p className="text-slate-300 leading-relaxed mt-2">{aiExplanation.detailedExplanation}</p>
-                            {aiExplanation.memorizationTip && (
-                              <div className="mt-2 p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 font-semibold text-purple-300">
-                                💡 Dica de Prova: {aiExplanation.memorizationTip}
-                              </div>
-                            )}
-                          </div>
-                        )}
                       </div>
                     )}
                   </div>
@@ -1137,16 +1035,11 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
             <div className="p-12 text-center rounded-3xl border border-dashed border-slate-300 dark:border-slate-800">
               <Brain className="w-12 h-12 text-slate-400 mx-auto mb-3" />
               <p className="text-sm font-bold text-slate-600 dark:text-slate-300">
-                Nenhum flashcard cadastrado para esta disciplina.
+                Nenhum flashcard cadastrado para esta disciplina no momento.
               </p>
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(`Gere 5 flashcards para a disciplina ${discipline.name}.`)
-                }
-                className="mt-4 px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold shadow-md"
-              >
-                Gerar Flashcards com IA agora
-              </button>
+              <p className="text-xs text-slate-400 mt-1">
+                Aguarde a liberação dos cards pela Professora Jéssica Alves.
+              </p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -1242,14 +1135,6 @@ export const DisciplineView: React.FC<DisciplineViewProps> = ({
               <p className="text-sm font-bold text-slate-600 dark:text-slate-300">
                 Nenhum mapa mental cadastrado para esta disciplina.
               </p>
-              <button
-                onClick={() =>
-                  onOpenAIAssistant(`Gere um mapa mental completo para a disciplina ${discipline.name}.`)
-                }
-                className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-md"
-              >
-                Gerar Mapa Mental com IA agora
-              </button>
             </div>
           ) : (
             <div className="space-y-4">
