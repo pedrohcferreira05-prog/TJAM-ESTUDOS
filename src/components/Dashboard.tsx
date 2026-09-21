@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserProgress } from '../types';
+import { UserProgress, TodayLessonConfig } from '../types';
 import {
   Flame,
   Clock,
@@ -14,8 +14,20 @@ import {
   CheckCircle,
   Target,
   Check,
-  ListTodo
+  ListTodo,
+  Play,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
 } from 'lucide-react';
+import {
+  getTodayAttendanceOverview,
+  getLessonAttendanceStatus,
+  formatDurationHMS,
+  formatDigitalClock,
+  endLessonAttendance,
+  getTodayLessonsConfig,
+} from '../lib/attendanceService';
 
 interface DashboardProps {
   progress: UserProgress;
@@ -23,6 +35,7 @@ interface DashboardProps {
   isDarkMode: boolean;
   isDuo?: boolean;
   onToggleGoal?: (goalId: string) => void;
+  todayLessons?: TodayLessonConfig[];
 }
 
 interface ScheduledLesson {
@@ -77,8 +90,34 @@ export const Dashboard: React.FC<DashboardProps> = ({
   progress,
   onNavigateTab,
   onToggleGoal,
+  todayLessons: propTodayLessons,
 }) => {
+  const [todayLessonsList, setTodayLessonsList] = useState<TodayLessonConfig[]>(() => {
+    return propTodayLessons && propTodayLessons.length > 0
+      ? propTodayLessons
+      : getTodayLessonsConfig();
+  });
+
+  useEffect(() => {
+    if (propTodayLessons && propTodayLessons.length > 0) {
+      setTodayLessonsList(propTodayLessons);
+    }
+  }, [propTodayLessons]);
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setTodayLessonsList(getTodayLessonsConfig());
+    };
+    window.addEventListener('tjam_today_lessons_updated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener('tjam_today_lessons_updated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
   const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>({});
+  const [activeElapsed, setActiveElapsed] = useState<number>(0);
 
   const reloadSavedStore = () => {
     try {
@@ -91,30 +130,55 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
   };
 
+  // Real-time ticking if an active lesson attendance timer is running
+  const activeTimer = progress.activeLessonTimer;
+  useEffect(() => {
+    if (!activeTimer?.isRunning || !activeTimer.startedAt) {
+      setActiveElapsed(0);
+      return;
+    }
+    const started = new Date(activeTimer.startedAt).getTime();
+    const updateElapsed = () => {
+      setActiveElapsed(Math.max(0, Math.floor((Date.now() - started) / 1000)));
+    };
+    updateElapsed();
+    const timer = setInterval(updateElapsed, 1000);
+    return () => clearInterval(timer);
+  }, [activeTimer?.isRunning, activeTimer?.startedAt]);
+
   useEffect(() => {
     reloadSavedStore();
     const handleStorage = () => reloadSavedStore();
     window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', handleStorage);
+    window.addEventListener('tjam_attendance_updated', handleStorage);
     return () => {
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', handleStorage);
+      window.removeEventListener('tjam_attendance_updated', handleStorage);
     };
   }, []);
 
-  const completedDailyCount = TODAY_PRIMARY_LESSONS.filter(
-    (l) => savedLessonsStore[l.subjectKey]?.completed
+  const overview = getTodayAttendanceOverview(progress);
+
+  const completedDailyCount = todayLessonsList.filter(
+    (l) => savedLessonsStore[l.subjectKey]?.completed || getLessonAttendanceStatus(progress, l.subjectKey).status === 'completed'
   ).length;
 
-  const dailyPercentage = Math.round((completedDailyCount / TODAY_PRIMARY_LESSONS.length) * 100);
+  const dailyPercentage = todayLessonsList.length > 0
+    ? Math.round((completedDailyCount / todayLessonsList.length) * 100)
+    : 0;
   const completedTopicsCount = progress.completedTopicIds?.length || 0;
   const questionAttemptsCount = progress.questionAttempts?.length || 0;
   const realProgressPct = Math.min(100, Math.round((completedTopicsCount / 30) * 100));
 
-  const timeTodayHours = progress.hoursStudiedToday || 0;
-  const h = Math.floor(timeTodayHours);
-  const m = Math.round((timeTodayHours % 1) * 60);
-  const timeTodayFormatted = h > 0 ? `${h}h ${m}m` : `${m}m`;
+  // Dynamic calculation: saved hours today + active running seconds
+  const totalSecondsToday = (progress.hoursStudiedToday || 0) * 3600 + (activeTimer?.isRunning ? activeElapsed : 0);
+  const totalHoursFloat = totalSecondsToday / 3600;
+  const h = Math.floor(totalHoursFloat);
+  const m = Math.floor((totalHoursFloat % 1) * 60);
+  const s = Math.floor(totalSecondsToday % 60);
+  const timeTodayFormatted = h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
 
   const handleOpenLesson = (subject: string) => {
     try {
@@ -122,6 +186,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
       window.dispatchEvent(new Event('tjam_subject_change'));
     } catch (e) {}
     onNavigateTab('aula-hoje');
+  };
+
+  const handleEndActiveTimerDirectly = () => {
+    if (activeTimer?.lessonId) {
+      endLessonAttendance(activeTimer.lessonId);
+    }
   };
 
   return (
@@ -219,27 +289,106 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* 3. Seção Principal: 2 Aulas Programadas para Hoje */}
-      <div className="space-y-3">
+      {/* 3. Seção Principal: 3 Aulas Programadas com Sistema de Presença */}
+      <div className="space-y-4">
+        {/* Banner de Frequência e Presença */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-sm border border-slate-800 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+                <Clock className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
+                  <span>Presença & Metas das 3 Aulas de Hoje</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                    Obrigatório
+                  </span>
+                </h2>
+                <p className="text-xs text-slate-300">
+                  Marque o início e o fim de cada aula. Encerrar as 3 aulas do dia bate a meta e marca automaticamente +1 dia consecutivo na sequência.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-xs font-black text-amber-300 border border-white/10">
+                <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                <span>{progress.streakDays || 1} dias seguidos</span>
+              </div>
+              <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-black">
+                {overview.completedCount} de 3 aulas
+              </div>
+            </div>
+          </div>
+
+          {/* Active Lesson Timer Banner if running */}
+          {activeTimer?.isRunning && (
+            <div className="p-3.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-pulse">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+                <div>
+                  <span className="text-xs font-black text-amber-200 uppercase tracking-wider block">
+                    Aula em Andamento • Presença de Início Registrada:
+                  </span>
+                  <span className="text-sm font-black text-white">
+                    {activeTimer.subjectTitle}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="font-mono text-base sm:text-lg font-black text-amber-300 bg-slate-900/80 px-3 py-1 rounded-lg border border-amber-400/30">
+                  {formatDigitalClock(activeElapsed)}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleOpenLesson(activeTimer.lessonId)}
+                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                  >
+                    Ir para Aula
+                  </button>
+                  <button
+                    onClick={handleEndActiveTimerDirectly}
+                    className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black transition-all cursor-pointer shadow-sm"
+                  >
+                    Concluir Presença
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Meta Reached Banner */}
+          {overview.allThreeCompleted && (
+            <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 flex items-center justify-between gap-2 text-xs font-bold">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>🎉 Meta Diária Conquistada! Você marcou presença e encerrou as 3 aulas de hoje!</span>
+              </div>
+              <span className="text-amber-300 font-mono font-black">+{progress.streakDays} Dias de Sequência</span>
+            </div>
+          )}
+        </div>
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-amber-600" />
-            <h2 className="text-base font-extrabold text-slate-900">
-              Aulas Programadas para Hoje
-            </h2>
+            <h3 className="text-base font-extrabold text-slate-900">
+              Grade das Aulas de Hoje ({todayLessonsList.length} aulas organizadas pelo professor)
+            </h3>
           </div>
           <span className="text-xs text-slate-500 font-medium">
-            2 aulas prioritárias
+            {todayLessonsList.length} aulas prioritárias obrigatórias
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {TODAY_PRIMARY_LESSONS.map((lesson, idx) => {
-            const isCompleted = !!savedLessonsStore[lesson.subjectKey]?.completed;
-            const answersCount = savedLessonsStore[lesson.subjectKey]?.selectedAnswers
-              ? Object.keys(savedLessonsStore[lesson.subjectKey].selectedAnswers).length
-              : 0;
-            const isInProgress = !isCompleted && answersCount > 0;
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {todayLessonsList.map((lesson, idx) => {
+            const attendanceStatus = getLessonAttendanceStatus(progress, lesson.subjectKey);
+            const isCompleted = attendanceStatus.status === 'completed' || !!savedLessonsStore[lesson.subjectKey]?.completed;
+            const isInProgress = attendanceStatus.isCurrentlyActive;
 
             return (
               <div
@@ -247,6 +396,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 className={`p-5 rounded-2xl border transition-all flex flex-col justify-between space-y-4 shadow-xs ${
                   isCompleted
                     ? 'bg-emerald-50/50 border-emerald-300 ring-1 ring-emerald-200'
+                    : isInProgress
+                    ? 'bg-amber-50/60 border-amber-300 ring-2 ring-amber-400/30'
                     : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}
               >
@@ -254,20 +405,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div className="flex items-center justify-between gap-2">
                     <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-[11px] flex items-center gap-1.5 border border-slate-200">
                       <Scale className="w-3.5 h-3.5 text-amber-600" />
-                      <span>Aula {idx + 1} • {lesson.category}</span>
+                      <span>{lesson.badge || `Aula ${idx + 1}`} • {lesson.category}</span>
                     </span>
 
                     {isCompleted ? (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600" /> Concluída
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600" /> Presença Validada
                       </span>
                     ) : isInProgress ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold text-xs border border-amber-300">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold text-xs border border-amber-300 animate-pulse">
                         <Clock className="w-3.5 h-3.5 text-amber-600" /> Em andamento
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-bold text-xs border border-slate-200">
-                        Pendente
+                        Presença Pendente
                       </span>
                     )}
                   </div>
@@ -280,16 +431,28 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       {lesson.subtitle}
                     </p>
                   </div>
+
+                  {lesson.teacherNotes && (
+                    <div className="text-[11px] font-medium text-amber-800 bg-amber-500/10 px-2.5 py-1.5 rounded-lg border border-amber-300/40">
+                      <span className="font-bold">Orientação Docente:</span> {lesson.teacherNotes}
+                    </div>
+                  )}
+
+                  {attendanceStatus.durationSeconds > 0 && (
+                    <div className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200/60 inline-block">
+                      Tempo computado: {formatDurationHMS(attendanceStatus.durationSeconds)}
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 text-xs text-slate-500">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      {lesson.duration}
+                      {lesson.duration || '40 min'}
                     </span>
                     <span>•</span>
-                    <span>20 questões</span>
+                    <span>{lesson.questionsCount || 20} questões</span>
                   </div>
 
                   <button
@@ -297,10 +460,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     className={`px-4 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
                       isCompleted
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
-                        : 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-black'
+                        : isInProgress
+                        ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-black'
+                        : 'bg-emerald-600 hover:bg-emerald-500 text-white font-black'
                     }`}
                   >
-                    <span>{isCompleted ? 'Revisar Aula' : isInProgress ? 'Continuar' : 'Iniciar Aula'}</span>
+                    <span>
+                      {isCompleted
+                        ? 'Revisar Aula'
+                        : isInProgress
+                        ? 'Continuar Aula'
+                        : 'Pressione para Iniciar'}
+                    </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

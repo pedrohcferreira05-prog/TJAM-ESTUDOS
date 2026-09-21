@@ -312,6 +312,32 @@ export interface Certificate {
   verificationCode: string;
 }
 
+export interface LessonAttendance {
+  lessonId: string; // e.g. 'portugues', 'processo_penal', 'processo_civil'
+  subjectTitle: string;
+  date: string; // YYYY-MM-DD
+  startedAt?: string; // ISO string
+  endedAt?: string; // ISO string
+  durationSeconds: number; // Duration in seconds
+  status: 'not_started' | 'in_progress' | 'completed';
+}
+
+export interface DailyAttendanceRecord {
+  date: string; // YYYY-MM-DD
+  attendedLessonIds: string[]; // List of completed lesson IDs today
+  totalSecondsToday: number;
+  allThreeCompleted: boolean;
+  completedAt?: string;
+}
+
+export interface ActiveLessonTimer {
+  lessonId: string;
+  subjectTitle: string;
+  startedAt: string; // ISO string
+  elapsedSeconds: number;
+  isRunning: boolean;
+}
+
 export interface UserProgress {
   dailyGoalHours: number;
   hoursStudiedToday: number;
@@ -335,6 +361,9 @@ export interface UserProgress {
   submissions?: StudentSubmission[];
   certificates?: Certificate[];
   savedLessons?: Record<string, LessonProgressData>;
+  dailyAttendance?: Record<string, LessonAttendance>; // key: `${date}_${lessonId}`
+  attendanceHistory?: Record<string, DailyAttendanceRecord>; // key: `${date}`
+  activeLessonTimer?: ActiveLessonTimer | null;
 }
 
 export type ViewMode = 'student' | 'teacher' | 'simulado' | 'admin' | 'superadmin';
@@ -399,5 +428,22 @@ export interface AuthSession {
   role: 'teacher' | 'student';
   turmaId?: string;
   turmaName?: string;
+}
+
+export interface TodayLessonConfig {
+  id: string;
+  subjectKey: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  badge?: string;
+  duration: string;
+  order: number;
+  questionsCount?: number;
+  cardsCount?: number;
+  isMandatoryAttendance?: boolean;
+  teacherNotes?: string;
+  customContentText?: string;
+  updatedAt?: string;
 }
 

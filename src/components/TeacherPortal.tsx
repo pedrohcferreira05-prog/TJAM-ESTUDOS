@@ -15,6 +15,7 @@ import {
   StudentAccount,
   SimuladoAttempt,
   WeeklyScheduleItem,
+  TodayLessonConfig,
 } from '../types';
 import {
   Users,
@@ -137,6 +138,8 @@ interface TeacherPortalProps {
   onResetQuestionAttempt?: (attemptId: string) => void;
   onResetSimuladoAttempt?: (attemptId: string) => void;
   onResetAllStudentContents?: () => Promise<void> | void;
+  todayLessons?: TodayLessonConfig[];
+  onUpdateTodayLessons?: (lessons: TodayLessonConfig[]) => void;
   isDarkMode?: boolean;
   isSiteLocked?: boolean;
   onToggleSiteLock?: (locked: boolean, message?: string) => void;
@@ -159,6 +162,8 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
   videoLessons = [],
   weeklySchedule = [],
   weeklyGoals = [],
+  todayLessons,
+  onUpdateTodayLessons,
   errorQuestionIds = [],
   questionAttempts = [],
   simuladoAttempts = [],
@@ -246,7 +251,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
     { id: 'turmas', label: 'Turmas', fullLabel: 'Gestão de Turmas', icon: Users },
     { id: 'disciplinas-aluno', label: 'Disciplinas (Aluno)', fullLabel: '11 Disciplinas do Aluno (Sincronizadas)', icon: BookOpen },
     { id: 'respostas', label: 'Respostas & Notas', fullLabel: 'Respostas & Gabaritos dos Alunos', icon: CheckCircle },
-    { id: 'cronogramas', label: 'Metas & Cronograma', fullLabel: 'Metas Diárias & Cronograma', icon: Calendar },
+    { id: 'cronogramas', label: 'Aulas & Metas', fullLabel: 'Aulas de Hoje, Metas & Cronograma (Professor Organiza)', icon: Calendar },
     { id: 'materias-edital', label: 'Matérias (Edital)', fullLabel: 'Matérias & Tópicos do Edital', icon: BookOpen },
     { id: 'aulas-videos', label: 'Aulas & Vídeos', fullLabel: 'Aulas, Tópicos & Videoaulas', icon: Video },
     { id: 'questoes-simulados', label: 'Questões & Simulados', fullLabel: 'Banco de Questões & Simulados', icon: FileText },
@@ -753,53 +758,23 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         </div>
       )}
 
-      {/* Tab 2: Cronogramas & Planos */}
+      {/* Tab 2: Aulas de Hoje, Metas & Cronograma (Organizadas pelo Professor) */}
       {activeTab === 'cronogramas' && (
-        <div className="p-6 rounded-3xl border space-y-6 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-emerald-500" /> Cronograma de Estudos da Turma ({currentTurma?.name})
-              </h3>
-              <p className="text-xs text-slate-500">Defina metas semanais, sequência lógica de matérias e roteiros de revisão.</p>
-            </div>
-            <button
-              onClick={() => setShowNewAvisoModal(true)}
-              className="px-3.5 py-2 rounded-2xl bg-emerald-600 text-white font-bold text-xs flex items-center gap-1.5"
-            >
-              <Plus className="w-4 h-4" /> Publicar Meta Semanal
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
-              <span className="text-[10px] font-extrabold uppercase text-emerald-600 dark:text-emerald-400">Semana 1 ao 4</span>
-              <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Etapa 1: Base Teórica e Regimento TJAM</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
-                Foco total em Regimento Interno do TJAM (Art. 1 ao 50), Direitos Fundamentais (CF/88) e Ortografia.
-              </p>
-              <div className="pt-2 text-[10px] font-bold text-emerald-600">Status: Concluída ✅</div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-2">
-              <span className="text-[10px] font-extrabold uppercase text-amber-600 dark:text-amber-400">Semana 5 ao 8 (EM ANDAMENTO)</span>
-              <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Etapa 2: Leis Locais & Licitações (Lei 14.133)</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
-                Resolução de 100 questões FGV, análise de jurisprudência do TJAM e Estatuto da Pessoa com Deficiência.
-              </p>
-              <div className="pt-2 text-[10px] font-bold text-amber-600">Status: Liberado para a Turma ⚡</div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
-              <span className="text-[10px] font-extrabold uppercase text-slate-400">Semana 9 ao 12</span>
-              <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">Etapa 3: Simulados Inéditos & Reta Final</h4>
-              <p className="text-xs text-slate-500">
-                Simulados com tempo cronometrado, caderno de erros individualizado e revisão das apostas finais.
-              </p>
-              <div className="pt-2 text-[10px] font-bold text-slate-400">Status: Agendado para Liberação ⏳</div>
-            </div>
-          </div>
-        </div>
+        <TeacherScheduleAndGoalsManager
+          schedule={weeklySchedule}
+          disciplines={disciplines}
+          weeklyGoals={weeklyGoals}
+          todayLessons={todayLessons}
+          onUpdateTodayLessons={onUpdateTodayLessons}
+          onAddGoal={onAddGoal || (() => {})}
+          onUpdateGoal={onUpdateGoal || (() => {})}
+          onDeleteGoal={onDeleteGoal || (() => {})}
+          onToggleGoal={onToggleGoal}
+          onAddTaskToDay={onAddTaskToDay || (() => {})}
+          onUpdateDayTask={onUpdateDayTask || (() => {})}
+          onDeleteDayTask={onDeleteDayTask || (() => {})}
+          isDarkMode={isDarkMode}
+        />
       )}
 
       {/* Tab 3: Materiais & Liberação por Etapas */}

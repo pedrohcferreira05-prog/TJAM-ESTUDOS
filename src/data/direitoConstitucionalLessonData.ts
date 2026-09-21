@@ -32,383 +32,272 @@ export interface DiscursiveQuestionItem {
 export const direitoConstFlashcardsData: FlashcardItem[] = [
   {
     id: 1,
-    q: 'O que é Nacionalidade sob o ponto de vista jurídico?',
-    a: 'É o vínculo jurídico-político que liga um indivíduo a um determinado Estado soberano, tornando-o integrante do povo e gerando direitos e deveres recíprocos.'
+    q: 'O que representam os Princípios Fundamentais (Arts. 1º a 4º da CF/88)?',
+    a: 'São as diretrizes mestras e pilares estruturantes do Estado brasileiro. O Título I da CF/88 abrange: Fundamentos (art. 1º), Separação dos Poderes (art. 2º), Objetivos Fundamentais (art. 3º) e Princípios das Relações Internacionais (art. 4º).'
   },
   {
     id: 2,
-    q: 'Quais são as três hipóteses de Brasileiro Nato previstas no Art. 12, I da CF/88?',
-    a: '1) Nascidos no Brasil (jus soli), mesmo de pais estrangeiros, desde que estes não estejam a serviço de seu país; 2) Nascidos no exterior de pai ou mãe brasileira a serviço da RFB (jus sanguinis funcional); 3) Nascidos no exterior com registro em repartição competente OU residência no Brasil + opção confirmativa após a maioridade.'
+    q: 'Qual é o mnemônico para os cinco Fundamentos da República (Art. 1º)?',
+    a: 'SO – CI – DI – VA – PL:\n• SOberania\n• CIdadania\n• DIgnidade da pessoa humana\n• VAlores sociais do trabalho e da livre iniciativa\n• PLuralismo político'
   },
   {
     id: 3,
-    q: 'Filho de casal de estrangeiros que nasce em Manaus/AM é brasileiro nato?',
-    a: 'SIM, desde que seus pais NÃO estejam a serviço do país deles de origem (Art. 12, I, a). Se estiverem a turismo, trabalho privado ou estudo, o filho é brasileiro nato.'
+    q: 'Como é exercido o poder que "emana do povo" segundo o parágrafo único do art. 1º?',
+    a: 'O poder emana do povo e pode ser exercido: 1) por meio de representantes eleitos (democracia representativa/indireta); ou 2) diretamente, nos termos da Constituição (ex.: plebiscito, referendo, iniciativa popular).'
   },
   {
     id: 4,
-    q: 'O que a Constituição exige para naturalização de originários de países de língua portuguesa?',
-    a: 'Apenas dois requisitos (Art. 12, II, a): 1) Residência ininterrupta por 1 (um) ano no Brasil; e 2) Idoneidade moral comprovada.'
+    q: 'Quais são os Poderes da União e qual é a relação entre eles (Art. 2º)?',
+    a: 'São Poderes da União o Legislativo, o Executivo e o Judiciário. Eles são INDEPENDENTES E HARMÔNICOS entre si. Atenção: a CF NÃO diz que são subordinados uns aos outros.'
   },
   {
     id: 5,
-    q: 'Quais são os requisitos para a chamada Naturalização Extraordinária (estrangeiros em geral)?',
-    a: 'Art. 12, II, b: 1) Mais de 15 anos ininterruptos de residência no Brasil; 2) Ausência de condenação penal; e 3) Requerimento expresso da nacionalidade brasileira.'
+    q: 'Qual é o mnemônico para os quatro Objetivos Fundamentais da República (Art. 3º)?',
+    a: 'CON – GAR – ERR – PRO:\n• CONstruir uma sociedade livre, justa e solidária\n• GARantir o desenvolvimento nacional\n• ERRadicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais\n• PROmover o bem de todos, sem preconceitos e discriminação'
   },
   {
     id: 6,
-    q: 'A lei ordinária pode criar distinções entre brasileiros natos e naturalizados?',
-    a: 'NÃO! O art. 12, § 2º proíbe categoricamente a lei de estabelecer distinções entre natos e naturalizados, SALVO os casos expressamente previstos na própria Constituição Federal.'
+    q: 'Como diferenciar Fundamentos (Art. 1º) de Objetivos Fundamentais (Art. 3º)?',
+    a: '• Fundamentos (Art. 1º): Substantivos que expressam a base sobre a qual o Estado já se apoia (Soberania, Cidadania, Dignidade, etc.).\n• Objetivos (Art. 3º): Iniciam-se sempre por VERBOS no infinitivo que indicam metas a alcançar no futuro (Construir, Garantir, Erradicar, Promover).'
   },
   {
     id: 7,
-    q: 'Qual é o mnemônico para os Cargos Privativos de Brasileiro Nato (Art. 12, § 3º)?',
-    a: 'Mnemônico: P-V-C-S-M-D-O-D -> Presidente da República, Vice-Presidente, Presidente da Câmara, Presidente do Senado, Ministro do STF, Diplomacia, Oficial das Forças Armadas, Ministro da Defesa.'
+    q: 'Quais são os 10 princípios que regem o Brasil nas Relações Internacionais (Art. 4º)?',
+    a: '1) Independência nacional\n2) Prevalência dos direitos humanos\n3) Autodeterminação dos povos\n4) Não intervenção\n5) Igualdade entre os Estados\n6) Defesa da paz\n7) Solução pacífica dos conflitos\n8) Repúdio ao terrorismo e ao racismo\n9) Cooperação entre os povos para o progresso da humanidade\n10) Concessão de asilo político'
   },
   {
     id: 8,
-    q: 'Qualquer Ministro de Tribunal Superior precisa ser brasileiro nato?',
-    a: 'NÃO! Somente os Ministros do SUPREMO TRIBUNAL FEDERAL (STF) são privativos de brasileiro nato. Ministros do STJ, TST, TSE e STM podem ser brasileiros naturalizados (salvo os Oficiais generais no STM).'
+    q: 'O que prevê o parágrafo único do Art. 4º sobre a Integração Latino-Americana?',
+    a: 'A República Federativa do Brasil buscará a integração ECONÔMICA, POLÍTICA, SOCIAL e CULTURAL dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.'
   },
   {
     id: 9,
-    q: 'O que é o Estatuto da Igualdade aplicável aos Portugueses no Brasil (Art. 12, § 1º)?',
-    a: 'Aos portugueses com residência permanente no Brasil, se houver reciprocidade em favor de brasileiros em Portugal, serão atribuídos os direitos inerentes ao brasileiro, salvo as prerrogativas privativas de nato.'
+    q: 'Qual é a pegadinha clássica das bancas FGV e Cebraspe sobre os Princípios Fundamentais?',
+    a: 'Trocar um fundamento do Art. 1º por um objetivo do Art. 3º (ex.: dizer que erradicar a pobreza é fundamento) ou misturar com princípios das relações internacionais do Art. 4º (ex.: dizer que defesa da paz é fundamento).'
   },
   {
     id: 10,
-    q: 'Em quais hipóteses o brasileiro naturalizado pode perder a nacionalidade por sentença judicial?',
-    a: 'Art. 12, § 4º, I: Em virtude de fraude relacionada ao processo de naturalização OU de atentado contra a ordem constitucional e o Estado Democrático.'
-  },
-  {
-    id: 11,
-    q: 'O brasileiro pode pedir para perder a nacionalidade brasileira? Há ressalva?',
-    a: 'SIM, mediante pedido expresso perante autoridade competente, DESDE QUE isso NÃO resulte em situação de apatridia (ninguém pode se tornar apátrida). O interessado pode readquiri-la nos termos da lei.'
-  },
-  {
-    id: 12,
-    q: 'A aquisição voluntária de outra nacionalidade cancela automaticamente a brasileira hoje?',
-    a: 'NÃO! Com a Emenda Constitucional nº 131/2023, adquirir outra nacionalidade NÃO gera mais perda automática da nacionalidade brasileira. A perda só ocorre por cancelamento judicial de naturalização ou renúncia expressa.'
+    q: 'A quem pertence o Ministério Público e a Defensoria Pública na separação dos Poderes (Art. 2º)?',
+    a: 'Eles NÃO são um quarto poder! São Funções Essenciais à Justiça com autonomia funcional e orçamentária, mas os Poderes da União continuam sendo apenas três: Legislativo, Executivo e Judiciário.'
   }
 ];
 
 export const direitoConstMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. De acordo com a Constituição Federal, é brasileiro nato aquele que:',
+    enunciado: '1. Constitui fundamento da República Federativa do Brasil:',
     alternativas: [
-      'Nasce no Brasil, ainda que filho de estrangeiros, independentemente da situação dos pais.',
-      'Nasce no Brasil, salvo se os pais estrangeiros estiverem a serviço de seu país.',
-      'Nasce no exterior e possui qualquer parente brasileiro.',
-      'Obtém naturalização após completar 18 anos.'
+      'Defesa da paz.',
+      'Cidadania.',
+      'Garantia do desenvolvimento nacional.',
+      'Solução pacífica dos conflitos.',
+      'Cooperação entre os povos.'
     ],
     correta: 1, // B
-    explicacao: '✅ Gabarito: B. Conforme o Art. 12, I, "a" da CF/88, são brasileiros natos os nascidos na República Federativa do Brasil, ainda que de pais estrangeiros, desde que estes não estejam a serviço de seu país (critério do jus soli temperado).'
+    explicacao: '✅ Gabarito: B. A cidadania é expressamente um dos cinco fundamentos previstos no art. 1º, inciso II, da CF/88 (SO-CI-DI-VA-PL). As opções A, D e E são princípios das relações internacionais (art. 4º) e a opção C é objetivo fundamental (art. 3º, II).'
   },
   {
     id: 2,
-    enunciado: '2. É brasileiro nato o nascido no estrangeiro de pai brasileiro ou mãe brasileira quando:',
+    enunciado: '2. A respeito dos fundamentos da República Federativa do Brasil, assinale a alternativa correta.',
     alternativas: [
-      'Qualquer deles estiver a serviço de seu país de origem.',
-      'Qualquer deles estiver a serviço da República Federativa do Brasil.',
-      'Os dois pais forem brasileiros naturalizados.',
-      'Residir no exterior por pelo menos cinco anos.'
+      'A soberania constitui objetivo fundamental da República.',
+      'A cidadania constitui princípio das relações internacionais.',
+      'O pluralismo político constitui fundamento da República.',
+      'A defesa da paz constitui fundamento da República.',
+      'A prevalência dos direitos humanos constitui fundamento da República.'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. Nos termos do Art. 12, I, "b" da CF/88, é brasileiro nato o nascido no estrangeiro, de pai brasileiro ou de mãe brasileira, desde que qualquer deles esteja a serviço da República Federativa do Brasil (jus sanguinis funcional).'
+    correta: 2, // C
+    explicacao: '✅ Gabarito: C. O pluralismo político é fundamento da República Federativa do Brasil (art. 1º, V). Soberania é fundamento (não objetivo); cidadania é fundamento (não relações internacionais); defesa da paz e prevalência dos direitos humanos são princípios das relações internacionais (art. 4º).'
   },
   {
     id: 3,
-    enunciado: '3. O brasileiro naturalizado é aquele que:',
+    enunciado: '3. Segundo a Constituição Federal, são Poderes da União:',
     alternativas: [
-      'Nasce em território brasileiro.',
-      'Nasce no exterior de pai brasileiro.',
-      'Adquire a nacionalidade brasileira mediante naturalização.',
-      'Possui necessariamente pai e mãe brasileiros.'
+      'Legislativo, Executivo e Ministério Público.',
+      'Executivo, Judiciário e Tribunal de Contas.',
+      'Legislativo, Executivo e Judiciário.',
+      'Legislativo, Judiciário e Defensoria Pública.',
+      'Executivo, Legislativo e Advocacia Pública.'
     ],
     correta: 2, // C
-    explicacao: '✅ Gabarito: C. A nacionalidade do naturalizado é derivada/adquirida: não decorre do fato natural do nascimento, mas sim de procedimento volitivo de naturalização regulado pelo Art. 12, II da CF e pela legislação ordinária.'
+    explicacao: '✅ Gabarito: C. Conforme o art. 2º da CF/88: "São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário". Ministério Público, Tribunal de Contas, Defensoria e Advocacia Pública exercem funções essenciais e de controle, mas não são Poderes da União.'
   },
   {
     id: 4,
-    enunciado: '4. Para os originários de países de língua portuguesa, a Constituição exige, para a naturalização:',
+    enunciado: '4. Os Poderes da União são:',
     alternativas: [
-      '15 anos de residência e ausência de condenação penal.',
-      '5 anos de residência e aprovação em concurso público.',
-      '1 ano de residência ininterrupta e idoneidade moral.',
-      '10 anos de residência e idoneidade moral.'
+      'independentes e harmônicos entre si.',
+      'independentes e hierarquicamente organizados.',
+      'subordinados entre si e harmônicos.',
+      'autônomos, porém subordinados ao Executivo.',
+      'independentes, mas sem mecanismos de interação.'
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Conforme o Art. 12, II, "a" da CF/88, aos originários de países de língua portuguesa exige-se apenas residência por um ano ininterrupto e idoneidade moral.'
+    correta: 0, // A
+    explicacao: '✅ Gabarito: A. A redação literal do art. 2º da CF estabelece expressamente que os Poderes são "independentes e harmônicos entre si". Não há hierarquia ou subordinação entre eles, havendo o sistema de freios e contrapesos (checks and balances).'
   },
   {
     id: 5,
-    enunciado: '5. Estrangeiro de qualquer nacionalidade poderá requerer a nacionalidade brasileira, conforme a Constituição, após residência no Brasil por:',
+    enunciado: '5. Assinale a alternativa que apresenta somente objetivos fundamentais da República:',
     alternativas: [
-      'Mais de 5 anos.',
-      'Mais de 10 anos.',
-      'Mais de 15 anos ininterruptos, observados os demais requisitos constitucionais.',
-      'Exatamente 20 anos.'
+      'Soberania, cidadania e pluralismo político.',
+      'Dignidade da pessoa humana, soberania e cidadania.',
+      'Construir sociedade livre, justa e solidária; garantir o desenvolvimento nacional; promover o bem de todos.',
+      'Defesa da paz, não intervenção e igualdade entre os Estados.',
+      'Cidadania, dignidade da pessoa humana e livre iniciativa.'
     ],
     correta: 2, // C
-    explicacao: '✅ Gabarito: C. A naturalização extraordinária (Art. 12, II, "b", CF/88) exige residência na República Federativa do Brasil há mais de quinze anos ininterruptos e sem condenação penal, desde que requeiram a nacionalidade brasileira.'
+    explicacao: '✅ Gabarito: C. Os objetivos fundamentais do art. 3º sempre se iniciam por verbos: construir uma sociedade livre, justa e solidária (I); garantir o desenvolvimento nacional (II); e promover o bem de todos (IV). As demais opções trazem fundamentos (art. 1º) ou princípios das relações internacionais (art. 4º).'
   },
   {
     id: 6,
-    enunciado: '6. Qual dos cargos abaixo é privativo de brasileiro nato?',
+    enunciado: '6. Constitui princípio que rege as relações internacionais do Brasil:',
     alternativas: [
-      'Deputado Federal.',
-      'Senador.',
-      'Ministro do Supremo Tribunal Federal.',
-      'Prefeito.'
+      'Pluralismo político.',
+      'Dignidade da pessoa humana.',
+      'Prevalência dos direitos humanos.',
+      'Cidadania.',
+      'Valores sociais do trabalho.'
     ],
     correta: 2, // C
-    explicacao: '✅ Gabarito: C. O Art. 12, § 3º, IV da CF estabelece que o cargo de Ministro do Supremo Tribunal Federal (STF) é privativo de brasileiro nato. Deputados, senadores e prefeitos podem ser naturalizados (com exceção apenas dos Presidentes da Câmara e do Senado).'
+    explicacao: '✅ Gabarito: C. A "prevalência dos direitos humanos" está expressamente prevista no art. 4º, inciso II, como princípio orientador das relações internacionais. Pluralismo político, dignidade da pessoa humana, cidadania e valores sociais do trabalho são fundamentos do art. 1º.'
   },
   {
     id: 7,
-    enunciado: '7. Assinale o cargo que não é privativo de brasileiro nato:',
+    enunciado: '7. João afirmou: “A erradicação da pobreza e a redução das desigualdades sociais e regionais são fundamentos da República.” Considerando a Constituição Federal, a afirmação de João está:',
     alternativas: [
-      'Presidente da República.',
-      'Vice-Presidente da República.',
-      'Presidente do Senado Federal.',
-      'Governador de Estado.'
+      'correta, pois tais elementos estão no art. 1º.',
+      'correta, pois fundamentos e objetivos possuem a mesma natureza constitucional.',
+      'incorreta, pois se trata de princípio das relações internacionais.',
+      'incorreta, pois são objetivos fundamentais previstos no art. 3º.',
+      'incorreta, pois não estão previstos na Constituição.'
     ],
     correta: 3, // D
-    explicacao: '✅ Gabarito: D. O cargo de Governador de Estado NÃO é privativo de brasileiro nato; um brasileiro naturalizado pode se eleger Governador. Já Presidente, Vice e Presidente do Senado compõem a linha sucessória da Presidência da República e são privativos de natos.'
+    explicacao: '✅ Gabarito: D. A afirmação de João está incorreta porque erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais constituem OBJETIVO FUNDAMENTAL previsto no art. 3º, inciso III, da CF/88, e não fundamento do art. 1º.'
   },
   {
     id: 8,
-    enunciado: '8. São cargos privativos de brasileiro nato, exceto:',
+    enunciado: '8. De acordo com a Constituição Federal, todo o poder emana:',
     alternativas: [
-      'Oficial das Forças Armadas.',
-      'Ministro de Estado da Defesa.',
-      'Carreira diplomática.',
-      'Ministro do Superior Tribunal de Justiça.'
+      'da União.',
+      'dos Poderes da República.',
+      'do Congresso Nacional.',
+      'do povo.',
+      'dos Estados.'
     ],
     correta: 3, // D
-    explicacao: '✅ Gabarito: D. Ministro do STJ (Superior Tribunal de Justiça) NÃO é privativo de brasileiro nato. A privação constitucional recai exclusivamente sobre Ministros do STF (Art. 12, § 3º, IV).'
+    explicacao: '✅ Gabarito: D. Art. 1º, parágrafo único, da CF/88: "Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente, nos termos desta Constituição" (princípio da soberania popular).'
   },
   {
     id: 9,
-    enunciado: '9. A Constituição Federal estabelece que a lei não poderá estabelecer distinção entre brasileiros natos e naturalizados:',
+    enunciado: '9. A respeito dos princípios que regem as relações internacionais do Brasil, assinale a alternativa incorreta:',
     alternativas: [
-      'Em nenhuma hipótese.',
-      'Salvo nos casos previstos na própria Constituição.',
-      'Apenas quando houver autorização judicial.',
-      'Somente durante períodos eleitorais.'
+      'Defesa da paz.',
+      'Não intervenção.',
+      'Igualdade entre os Estados.',
+      'Solução pacífica dos conflitos.',
+      'Supremacia econômica brasileira.'
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. De acordo com o Art. 12, § 2º da CF/88: "A lei não poderá estabelecer distinção entre brasileiros natos e naturalizados, salvo nos casos previstos nesta Constituição".'
+    correta: 4, // E
+    explicacao: '✅ Gabarito: E. A "supremacia econômica brasileira" NÃO existe no texto constitucional. O art. 4º consagra a igualdade entre os Estados (inciso V) e a cooperação entre os povos para o progresso da humanidade (inciso IX), e não qualquer supremacia.'
   },
   {
     id: 10,
-    enunciado: '10. Sobre a nacionalidade brasileira, assinale a alternativa correta:',
+    enunciado: '10. Um servidor público afirma que “pluralismo político” e “prevalência dos direitos humanos” pertencem ao mesmo grupo de princípios constitucionais. Considerando os arts. 1º e 4º da Constituição, a afirmação é:',
     alternativas: [
-      'Todo brasileiro naturalizado pode ocupar qualquer cargo público.',
-      'Brasileiro naturalizado pode ocupar cargos privativos de brasileiro nato.',
-      'Existem cargos que a Constituição reserva aos brasileiros natos.',
-      'Brasileiro nato pode perder automaticamente a nacionalidade ao adquirir outra.'
+      'correta, pois ambos são objetivos fundamentais.',
+      'correta, pois ambos são fundamentos.',
+      'incorreta, pois pluralismo político é fundamento e prevalência dos direitos humanos é princípio das relações internacionais.',
+      'incorreta, pois ambos são objetivos fundamentais.',
+      'incorreta, pois pluralismo político não está previsto na Constituição.'
     ],
     correta: 2, // C
-    explicacao: '✅ Gabarito: C. A própria Constituição Federal expressamente reserva um rol taxativo de cargos aos brasileiros natos no Art. 12, § 3º (linha sucessória da Presidência, cúpula militar e diplomacia).'
-  },
-  {
-    id: 11,
-    enunciado: '11. Entre os cargos abaixo, qual é privativo de brasileiro nato?',
-    alternativas: [
-      'Presidente da Câmara dos Deputados.',
-      'Deputado Estadual.',
-      'Vereador.',
-      'Prefeito.'
-    ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. O Presidente da Câmara dos Deputados está na linha sucessória imediata do Presidente da República (Art. 80 da CF), sendo seu cargo privativo de brasileiro nato (Art. 12, § 3º, II).'
-  },
-  {
-    id: 12,
-    enunciado: '12. O cargo de Presidente do Senado Federal é:',
-    alternativas: [
-      'Privativo de brasileiro naturalizado.',
-      'Privativo de brasileiro nato.',
-      'Permitido exclusivamente a estrangeiros naturalizados.',
-      'Permitido apenas a portugueses.'
-    ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O Presidente do Senado Federal integra a linha de substituição e sucessão presidencial e, por expressa disposição do Art. 12, § 3º, III da CF, é privativo de brasileiro nato.'
-  },
-  {
-    id: 13,
-    enunciado: '13. A carreira diplomática é:',
-    alternativas: [
-      'Privativa de brasileiro nato.',
-      'Privativa de brasileiro naturalizado.',
-      'Permitida somente a estrangeiros.',
-      'Livre para qualquer pessoa residente no Brasil.'
-    ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. Conforme o Art. 12, § 3º, V da CF/88, os cargos da carreira diplomática são privativos de brasileiro nato em razão da representação soberana do Estado brasileiro no plano internacional.'
-  },
-  {
-    id: 14,
-    enunciado: '14. Segundo a Constituição, a aquisição de outra nacionalidade por brasileiro:',
-    alternativas: [
-      'Sempre provoca automaticamente a perda da nacionalidade brasileira.',
-      'Nunca produz qualquer efeito jurídico.',
-      'Não provoca, por si só, automaticamente a perda da nacionalidade brasileira, observadas as regras constitucionais.',
-      'Transforma automaticamente o brasileiro em estrangeiro.'
-    ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Regra fundamental atualizada pela Emenda Constitucional nº 131/2023: a mera aquisição de outra nacionalidade NÃO acarreta mais a perda automática da nacionalidade brasileira.'
-  },
-  {
-    id: 15,
-    enunciado: '15. A Constituição prevê possibilidade de perda da nacionalidade brasileira por:',
-    alternativas: [
-      'Cancelamento da naturalização, por sentença judicial, nas hipóteses constitucionais.',
-      'Mudança de residência para outro país.',
-      'Viagem ao exterior por mais de um ano.',
-      'Casamento com estrangeiro.'
-    ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. De acordo com o Art. 12, § 4º, I da CF/88, será declarada a perda da nacionalidade do brasileiro que tiver cancelada sua naturalização, por sentença judicial, em virtude de fraude relacionada ao processo ou atentado contra a ordem constitucional e o Estado Democrático.'
-  },
-  {
-    id: 16,
-    enunciado: '16. O pedido expresso de perda da nacionalidade brasileira:',
-    alternativas: [
-      'Pode ser feito livremente, ainda que cause apatridia.',
-      'É admitido pela Constituição, desde que não resulte em situação de apatridia.',
-      'É proibido em qualquer situação.',
-      'Só pode ser feito por brasileiro naturalizado.'
-    ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O Art. 12, § 4º, II da CF (redação da EC 131/2023) admite a perda por pedido expresso feito perante autoridade brasileira competente, ressalvadas as situações que acarretem apatridia.'
-  },
-  {
-    id: 17,
-    enunciado: '17. Brasileiro nato é aquele que:',
-    alternativas: [
-      'Sempre precisa passar por processo de naturalização.',
-      'Possui nacionalidade brasileira originária nas hipóteses previstas na Constituição.',
-      'Reside no Brasil por mais de 15 anos.',
-      'É obrigatoriamente filho de dois brasileiros.'
-    ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O brasileiro nato possui a chamada nacionalidade originária ou primária, atribuída no momento do nascimento com base nos critérios estabelecidos pelo Art. 12, I da CF/88 (jus soli ou jus sanguinis).'
-  },
-  {
-    id: 18,
-    enunciado: '18. Um brasileiro naturalizado:',
-    alternativas: [
-      'Nunca poderá ser extraditado.',
-      'Pode estar sujeito à extradição nas hipóteses previstas pela Constituição.',
-      'É considerado estrangeiro para todos os efeitos.',
-      'Não possui direitos políticos.'
-    ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. Conforme o Art. 5º, LI da CF, nenhum brasileiro será extraditado, salvo o naturalizado, em caso de crime comum praticado antes da naturalização, ou de comprovado envolvimento em tráfico ilícito de entorpecentes a qualquer tempo.'
-  },
-  {
-    id: 19,
-    enunciado: '19. Assinale a alternativa que apresenta somente cargos privativos de brasileiro nato:',
-    alternativas: [
-      'Presidente da República, Presidente da Câmara e Ministro do STF.',
-      'Governador, Prefeito e Deputado Federal.',
-      'Senador, Deputado Federal e Vereador.',
-      'Ministro do STJ, Governador e Prefeito.'
-    ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. Presidente da República (Art. 12, § 3º, I), Presidente da Câmara dos Deputados (Art. 12, § 3º, II) e Ministro do STF (Art. 12, § 3º, IV) são cargos privativos de brasileiro nato.'
-  },
-  {
-    id: 20,
-    enunciado: '20. Sobre nacionalidade, assinale a alternativa correta:',
-    alternativas: [
-      'Brasileiro nato e naturalizado são exatamente iguais em todas as situações, sem nenhuma exceção constitucional.',
-      'A Constituição permite distinções entre natos e naturalizados somente nas hipóteses que ela própria estabelece.',
-      'Todo naturalizado pode ser Presidente da República.',
-      'Todo estrangeiro residente no Brasil é automaticamente naturalizado.'
-    ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. O princípio geral é a igualdade substancial entre natos e naturalizados (Art. 12, § 2º). Quaisquer distinções (cargos privativos, extradição, função no Conselho da República e propriedade de empresa jornalística) devem emanar da própria Carta Magna.'
+    explicacao: '✅ Gabarito: C. Incorreta: o pluralismo político é um fundamento da República Federativa do Brasil (art. 1º, V), ao passo que a prevalência dos direitos humanos é um princípio que rege o Brasil em suas relações internacionais (art. 4º, II).'
   }
 ];
 
 export const direitoConstTfQuestionsData: TfQuestionItem[] = [
   {
-    id: 1,
-    enunciado: '1. O filho de casal de diplomatas estrangeiros que nasce em Brasília, estando os genitores a serviço oficial de seu país de origem, é considerado brasileiro nato pelo critério do jus soli.',
-    correta: false,
-    explicacao: '✅ Gabarito: Falso. O Art. 12, I, "a" da CF/88 expressamente exclui os nascidos de pais estrangeiros quando estes estiverem a serviço de seu país de origem (exceção ao jus soli).'
-  },
-  {
-    id: 2,
-    enunciado: '2. Para a naturalização de originários de países de língua portuguesa (como Portugal ou Angola), a Constituição exige residência por um ano ininterrupto e comprovação de idoneidade moral.',
+    id: 11,
+    enunciado: '11. A soberania, a cidadania e a dignidade da pessoa humana estão entre os fundamentos da República Federativa do Brasil.',
     correta: true,
-    explicacao: '✅ Gabarito: Verdadeiro. É a hipótese facilitada do Art. 12, II, "a" da CF/88.'
+    explicacao: '✅ Gabarito: CERTO. Os três constam expressamente do rol de cinco fundamentos do art. 1º da CF/88 (incisos I, II e III).'
   },
   {
-    id: 3,
-    enunciado: '3. Qualquer Ministro de Tribunal Superior (como STJ, TST ou STM) obrigatoriamente deve ser brasileiro nato.',
-    correta: false,
-    explicacao: '✅ Gabarito: Falso. Somente os 11 Ministros do Supremo Tribunal Federal (STF) têm exigência constitucional de nacionalidade nata (Art. 12, § 3º, IV). Ministros do STJ ou TST podem ser naturalizados.'
-  },
-  {
-    id: 4,
-    enunciado: '4. Após a promulgação da Emenda Constitucional nº 131/2023, o brasileiro que adquire outra nacionalidade por vontade própria não perde mais automaticamente a nacionalidade brasileira.',
+    id: 12,
+    enunciado: '12. Os Poderes Legislativo, Executivo e Judiciário são independentes e harmônicos entre si.',
     correta: true,
-    explicacao: '✅ Gabarito: Verdadeiro. A EC 131/2023 extinguiu a hipótese de perda automática da nacionalidade brasileira pela mera aquisição voluntária de outra nacionalidade.'
+    explicacao: '✅ Gabarito: CERTO. Literalidade do art. 2º da Constituição da República de 1988.'
   },
   {
-    id: 5,
-    enunciado: '5. A perda da nacionalidade brasileira a pedido expresso do cidadão é válida em qualquer situação, mesmo que resulte em condição de apatridia.',
+    id: 13,
+    enunciado: '13. A construção de uma sociedade livre, justa e solidária constitui princípio das relações internacionais do Brasil.',
     correta: false,
-    explicacao: '✅ Gabarito: Falso. O Art. 12, § 4º, II da CF expressamente ressalva que o pedido de renúncia NÃO será aceito se resultar em situação de apatridia.'
+    explicacao: '✅ Gabarito: ERRADO. Construir uma sociedade livre, justa e solidária é um OBJETIVO FUNDAMENTAL previsto no art. 3º, inciso I, da CF/88, e não princípio das relações internacionais (art. 4º).'
+  },
+  {
+    id: 14,
+    enunciado: '14. A República Federativa do Brasil rege-se, em suas relações internacionais, pela prevalência dos direitos humanos, pela defesa da paz e pela solução pacífica dos conflitos.',
+    correta: true,
+    explicacao: '✅ Gabarito: CERTO. Todos constam expressamente do art. 4º da CF/88: inciso II (prevalência dos direitos humanos), inciso VI (defesa da paz) e inciso VII (solução pacífica dos conflitos).'
+  },
+  {
+    id: 15,
+    enunciado: '15. O pluralismo político constitui um dos objetivos fundamentais da República Federativa do Brasil.',
+    correta: false,
+    explicacao: '✅ Gabarito: ERRADO. O pluralismo político é FUNDAMENTO da República Federativa do Brasil (art. 1º, inciso V), e não objetivo fundamental (que estão no art. 3º).'
   }
 ];
 
 export const direitoConstDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
-    id: 1,
-    enunciado: '1. [Caso Prático] Imagine que uma pessoa nasceu no exterior, mas seu pai é brasileiro. O pai estava trabalhando oficialmente a serviço da República Federativa do Brasil no momento do nascimento. Essa pessoa pode ser considerada brasileira nata? Qual é o dispositivo constitucional aplicável e por quê?',
-    respostaEsperada: 'Gabarito Oficial: Sim, essa pessoa é brasileira nata com base no Art. 12, inciso I, alínea "b" da Constituição Federal de 1988 (jus sanguinis funcional). A norma estabelece que são brasileiros natos os nascidos no estrangeiro, de pai brasileiro ou de mãe brasileira, desde que qualquer deles esteja a serviço da República Federativa do Brasil (União, Estados, DF, Municípios ou suas autarquias/fundações).'
+    id: 16,
+    enunciado: '16. Explique a diferença entre fundamentos da República e objetivos fundamentais, apresentando pelo menos dois exemplos de cada.',
+    respostaEsperada: 'Gabarito Oficial: Os Fundamentos (art. 1º) representam as bases estruturantes, valores e pilares sobre os quais o Estado brasileiro se ergue no presente (ex.: Soberania e Dignidade da pessoa humana). Já os Objetivos Fundamentais (art. 3º) consagram metas programáticas e fins a serem perseguidos ativamente pelo Estado para transformar a realidade social (ex.: Construir uma sociedade livre, justa e solidária e Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais). Gramaticalmente, os fundamentos são substantivos e os objetivos iniciam-se por verbos de ação no infinitivo.'
   },
   {
-    id: 2,
-    enunciado: '2. Explique com suas próprias palavras a diferença fundamental entre brasileiro nato e brasileiro naturalizado, cite 3 cargos que são privativos de brasileiro nato e esclareça se um brasileiro naturalizado pode ocupar a Presidência da República.',
-    respostaEsperada: 'Gabarito Oficial: 1) Diferença: Brasileiro nato possui nacionalidade originária/primária (adquirida no nascimento por critérios do art. 12, I). Brasileiro naturalizado possui nacionalidade adquirida/secundária (adquirida voluntariamente ao longo da vida mediante naturalização, art. 12, II). 2) Cargos privativos de nato (Art. 12, § 3º): Presidente da República, Vice-Presidente, Presidente da Câmara dos Deputados, Presidente do Senado, Ministro do STF, Carreira diplomática, Oficial das Forças Armadas e Ministro da Defesa. 3) Presidência da República: Jamais. O cargo de Presidente e o de Vice-Presidente são privativos de brasileiro nato (Art. 12, § 3º, I), visando resguardar a soberania e segurança nacional.'
+    id: 17,
+    enunciado: '17. Explique o significado da expressão “Estado Democrático de Direito” e sua relação com o exercício do poder público.',
+    respostaEsperada: 'Gabarito Oficial: "Estado de Direito" significa a submissão de governantes e governados ao império da Constituição e das leis (legalidade estrita). A qualificação "Democrático" agrega a legitimação popular do poder ("todo poder emana do povo"), a participação cidadã direta e indireta, a garantia efetiva dos direitos fundamentais e o pluralismo político. Assim, o poder público só pode ser exercido nos limites da lei e com vistas a garantir a dignidade humana e o bem comum.'
   },
   {
-    id: 3,
-    enunciado: '3. A aquisição de outra nacionalidade provoca automaticamente a perda da nacionalidade brasileira? Explique a sistemática constitucional vigente com a promulgação da Emenda Constitucional nº 131/2023 e as hipóteses de perda da nacionalidade.',
-    respostaEsperada: 'Gabarito Oficial: Não! Com a Emenda Constitucional nº 131/2023, a aquisição voluntária de outra nacionalidade estrangeira NÃO gera mais a perda automática da nacionalidade brasileira. Atualmente, o Art. 12, § 4º prevê a perda somente em duas hipóteses: 1) Cancelamento judicial da naturalização por sentença transitada em julgado em caso de fraude no processo de naturalização ou atentado contra a ordem constitucional e o Estado Democrático; 2) Pedido expresso de renúncia perante autoridade competente, com a ressalva fundamental de que não cause apatridia (e com direito de readquirir a nacionalidade originária nos termos da lei).'
+    id: 18,
+    enunciado: '18. Explique o que significa dizer que os Poderes da União são independentes e harmônicos entre si.',
+    respostaEsperada: 'Gabarito Oficial: Significa que Legislativo, Executivo e Judiciário possuem esferas próprias de competência constitucional e independência orgânica/funcional, não havendo qualquer relação de subordinação hierárquica entre eles. A harmonia expressa a necessidade de colaboração mútua e equilíbrio institucional, operando por meio do sistema de freios e contrapesos (checks and balances), no qual um poder fiscaliza e modera o outro nos limites expressos pela CF/88.'
+  },
+  {
+    id: 19,
+    enunciado: '19. Escolha três princípios das relações internacionais previstos no art. 4º da Constituição e explique o significado de cada um.',
+    respostaEsperada: 'Gabarito Oficial: O aluno pode escolher três entre os dez princípios do art. 4º, por exemplo:\n1) Prevalência dos direitos humanos (inciso II): coloca a proteção e a dignidade do ser humano como guia imperativo na atuação externa e celebração de tratados;\n2) Não intervenção (inciso IV): respeito à soberania de outros países, vedando interferências indevidas em assuntos internos de outros Estados;\n3) Defesa da paz e Solução pacífica dos conflitos (incisos VI e VII): priorização da diplomacia, mediação e arbitragem internacional em detrimento da guerra.'
+  },
+  {
+    id: 20,
+    enunciado: '20. Um cidadão procura um órgão público para exercer um direito, mas o servidor responsável pelo atendimento se recusa a prestar o serviço por motivo discriminatório. Com base nos princípios fundamentais estudados, explique quais fundamentos ou objetivos constitucionais podem ser relacionados à situação e justifique sua resposta.',
+    respostaEsperada: 'Gabarito Oficial: A conduta discriminatória do servidor viola frontalmente:\n1) A Dignidade da pessoa humana (art. 1º, III, fundamento): o cidadão é tratado de forma degradante e desigual;\n2) A Cidadania (art. 1º, II, fundamento): é impedido o pleno exercício de um direito legítimo;\n3) O Objetivo de promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação (art. 3º, IV, objetivo fundamental).\nO servidor atua em desconformidade com os postulados do Estado Democrático de Direito, ensejando responsabilização funcional e civil.'
   }
 ];
 
 export const direitoConstSummaryPoints = [
-  'Conceito: Nacionalidade é o vínculo jurídico-político que liga o indivíduo ao Estado, tornando-o parte do povo.',
-  'Brasileiro Nato (Art. 12, I): 1) Nascidos no Brasil (jus soli), salvo pais estrangeiros a serviço de seu país; 2) Nascidos no exterior de pai/mãe a serviço da RFB; 3) Nascidos no exterior com registro ou residência no Brasil + opção confirmativa após a maioridade.',
-  'Brasileiro Naturalizado (Art. 12, II): Países de língua portuguesa (1 ano de residência ininterrupta + idoneidade moral); Demais estrangeiros (mais de 15 anos ininterruptos + sem condenação penal + requerimento).',
-  'Igualdade Constitucional (Art. 12, § 2º): A lei não pode criar distinções entre natos e naturalizados, salvo as previstas na própria Constituição.',
-  'Cargos Privativos de Nato (Art. 12, § 3º): Mnemônico P-V-C-S-M-D-O-D (Presidente, Vice, Pres. Câmara, Pres. Senado, Min. STF, Diplomacia, Oficial Forças Armadas, Min. Defesa).',
-  'Portugueses no Brasil (Art. 12, § 1º): Quase-nacionalidade mediante reciprocidade aos brasileiros em Portugal.',
-  'Perda da Nacionalidade (Art. 12, § 4º pós-EC 131/2023): Cancelamento judicial de naturalização (fraude ou atentado ao Estado Democrático) ou Pedido expresso (vedada a apatridia). Aquisição de outra cidadania NÃO gera mais perda automática!'
+  'Art. 1º — Fundamentos da República: SO-CI-DI-VA-PL (Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho e da livre iniciativa, Pluralismo político).',
+  'Art. 1º, Parágrafo Único: Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente (plebiscito, referendo, iniciativa popular).',
+  'Art. 2º — Poderes da União: Legislativo, Executivo e Judiciário — são INDEPENDENTES E HARMÔNICOS entre si (sem hierarquia nem subordinação).',
+  'Art. 3º — Objetivos Fundamentais: CON-GAR-ERR-PRO (Construir sociedade livre, justa e solidária; Garantir o desenvolvimento nacional; Erradicar a pobreza e marginalização + reduzir desigualdades; Promover o bem de todos sem preconceitos).',
+  'Diferença FGV/Cebraspe: Fundamentos (art. 1º) são substantivos e bases do Estado; Objetivos (art. 3º) são verbos no infinitivo e metas a atingir.',
+  'Art. 4º — Relações Internacionais: 10 princípios (Independência nacional, Direitos humanos, Autodeterminação, Não intervenção, Igualdade entre Estados, Paz, Solução pacífica, Repúdio ao terrorismo/racismo, Cooperação, Asilo político).',
+  'Art. 4º, Parágrafo Único: O Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina visando à formação de uma comunidade latino-americana de nações.',
+  'Dominar nesta Aula 01: Diferença clara entre fundamento (art. 1º) e objetivo (art. 3º); os 3 Poderes e harmonia; parágrafo único do art. 1º e do art. 4º.'
 ];
 
 export const direitoConstVideoPracticalTask = {
-  tema: 'Nacionalidade 🇧🇷',
+  tema: 'Princípios Fundamentais (Arts. 1º a 4º da CF/88) ⚖️',
   disciplina: 'Direito Constitucional',
-  modalidade: 'Vídeo Oral para o Professor',
-  situacaoPratica: 'Imagine que uma pessoa nasceu no exterior, mas seu pai é brasileiro. O pai estava trabalhando oficialmente a serviço da República Federativa do Brasil no momento do nascimento.',
+  modalidade: 'Atividade Prática — Fixação (Atendimento TJAM com envio ao WhatsApp do Professor)',
+  situacaoPratica: 'Imagine que você seja um servidor do Tribunal de Justiça do Amazonas (TJAM) e esteja atendendo um cidadão que procura o setor para buscar informação sobre um serviço público, mas tem dificuldade de compreensão e precisa de orientação adequada e humanizada.',
   perguntas: [
-    '1. Essa pessoa pode ser considerada brasileira nata? Por quê?',
-    '2. Qual dispositivo da Constituição Federal trata das hipóteses de brasileiro nato?',
-    '3. Explique com suas palavras a diferença entre brasileiro nato e brasileiro naturalizado.',
-    '4. Cite 3 cargos privativos de brasileiro nato.',
-    '5. Um brasileiro naturalizado pode ser Presidente da República? Explique.',
-    '6. A aquisição de outra nacionalidade provoca automaticamente a perda da nacionalidade brasileira? Explique conforme a regra constitucional atual.'
+    '1. Escolha DOIS conteúdos estudados na Aula 01 (ex.: Cidadania, Dignidade da Pessoa Humana, Independência dos Poderes, Objetivo do art. 3º, etc.).',
+    '2. Explique o que cada um deles significa conforme o texto constitucional.',
+    '3. Relacione-os diretamente com a situação concreta do atendimento ao cidadão no TJAM.',
+    '4. Explique como esse fundamento ou objetivo orienta a conduta ética e empática de um servidor público judiciário.'
   ],
-  desafioFinal: 'Sem consultar o material, grave uma explicação de 1 a 2 minutos respondendo: "O que é nacionalidade e quais são as principais diferenças entre brasileiro nato e naturalizado?"',
-  entrega: 'Gravar o vídeo e enviar ao professor para verificação do domínio do conteúdo, desenvoltura oral e clareza na exposição de conceitos jurídicos.'
+  desafioFinal: 'Demonstrar na prática que você compreendeu o conteúdo dos arts. 1º a 4º da CF/88 e consegue aplicá-lo em uma situação real de atendimento público no Tribunal de Justiça.',
+  entrega: 'Preencha o modelo e envie pelo WhatsApp ao professor para feedback da aplicação prática dos princípios constitucionais.'
 };

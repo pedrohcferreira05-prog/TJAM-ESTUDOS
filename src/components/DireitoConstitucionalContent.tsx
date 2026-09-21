@@ -6,23 +6,26 @@ import {
   Check,
   Lightbulb,
   AlertTriangle,
-  ArrowRight,
   Sparkles,
   BookOpen,
   Layers,
   HelpCircle,
   FileText,
   ShieldCheck,
-  Bookmark,
-  Building,
-  Target,
   Video,
   Globe,
   Award,
   Send,
   ExternalLink,
   Info,
-  CheckSquare
+  CheckSquare,
+  Users,
+  Vote,
+  HeartHandshake,
+  Briefcase,
+  Copy,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { direitoConstVideoPracticalTask } from '../data/direitoConstitucionalLessonData';
 
@@ -40,78 +43,92 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
 }) => {
   const [checklist, setChecklist] = useState<Record<string, boolean>>(() => {
     try {
-      const saved = localStorage.getItem('tjam_checklist_direito_const_nacionalidade');
+      const saved = localStorage.getItem('tjam_checklist_direito_const_aula01');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     return {
-      conceito: false,
-      nato: false,
-      naturalizado: false,
-      diferencas: false,
-      cargos_privativos: false,
-      portugueses: false,
-      perda_ec131: false
+      cf88_intro: false,
+      fundamentos_socidivapl: false,
+      poder_povo: false,
+      poderes_independentes: false,
+      objetivos_congarerrpro: false,
+      fundamentos_vs_objetivos: false,
+      relacoes_internacionais: false,
+      integracao_latina: false,
     };
   });
 
-  const [videoLink, setVideoLink] = useState('');
-  const [videoStatus, setVideoStatus] = useState<'idle' | 'enviado'>('idle');
-  const [activeTabSub, setActiveTabSub] = useState<'teoria' | 'mapa' | 'pratica'>('teoria');
+  const [activeTabSub, setActiveTabSub] = useState<'teoria' | 'tabela' | 'dominar' | 'pratica'>('teoria');
+  const [expandedFaq, setExpandedFaq] = useState<Record<number, boolean>>({});
+  const [copiedTemplate, setCopiedTemplate] = useState(false);
 
   const toggleCheck = (key: string) => {
     setChecklist(prev => {
       const updated = { ...prev, [key]: !prev[key] };
       try {
-        localStorage.setItem('tjam_checklist_direito_const_nacionalidade', JSON.stringify(updated));
+        localStorage.setItem('tjam_checklist_direito_const_aula01', JSON.stringify(updated));
       } catch (e) {}
       return updated;
     });
   };
 
-  const handleSendVideo = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!videoLink.trim()) return;
-    setVideoStatus('enviado');
-    try {
-      localStorage.setItem('tjam_video_desafio_const_nacionalidade', videoLink);
-    } catch (e) {}
+  const toggleFaq = (idx: number) => {
+    setExpandedFaq(prev => ({ ...prev, [idx]: !prev[idx] }));
+  };
+
+  const practicalTemplateText = `Nome: 
+Turma: TJAM Assistente Judiciário
+Disciplina: Direito Constitucional
+Aula: 01 — Princípios Fundamentais
+
+Conteúdo 1: Dignidade da Pessoa Humana (Art. 1º, III)
+Significado: Reconhece a pessoa humana como elemento central e prioritário de proteção estatal e constitucional.
+Aplicação na situação: Como servidor do Tribunal de Justiça atendendo um cidadão com dificuldade de compreensão, devo tratar a pessoa com total respeito, empatia e paciência, garantindo que ela não se sinta humilhada ou desamparada no órgão judiciário.
+
+Conteúdo 2: Cidadania (Art. 1º, II) e Promover o bem de todos (Art. 3º, IV)
+Significado: O pleno exercício dos direitos civis e políticos e a obrigação do Estado de prestar serviços sem discriminação ou entraves desnecessários.
+Aplicação na situação: Orientar com clareza a linguagem jurídica, traduzindo termos técnicos para que o cidadão possa exercer seu direito de acesso à justiça de forma plena e consciente.`;
+
+  const handleCopyTemplate = () => {
+    navigator.clipboard.writeText(practicalTemplateText);
+    setCopiedTemplate(true);
+    setTimeout(() => setCopiedTemplate(false), 2500);
   };
 
   return (
-    <article
-      className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white text-slate-800 shadow-sm space-y-10 leading-relaxed transition-all"
-    >
-      {/* 1. Header do Conteúdo Oficial */}
-      <section
-        className="p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-emerald-50 via-teal-50/60 to-emerald-100/40 border-emerald-200"
-      >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-          <div>
+    <article className="p-4 sm:p-8 md:p-10 rounded-3xl border border-slate-200 bg-white text-slate-800 shadow-sm space-y-8 leading-relaxed transition-all">
+      {/* 1. Header Oficial da Aula */}
+      <section className="p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-teal-500/15 border-amber-300 shadow-xs space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30">
-                <Sparkles className="w-3.5 h-3.5" /> 🇧🇷 Direito Constitucional — 1ª Aula de Hoje
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5" /> 2ª Aula de Hoje • Cronograma Reiniciado do Zero
               </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30">
-                ⭐ Artigo 12 da CF/88 — Nacionalidade
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-xs">
+                ⚖️ Arts. 1º a 4º da CF/88
+              </span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-slate-900 text-amber-300">
+                Nível: Intermediário — TJAM Assistente Judiciário
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-emerald-950 dark:text-emerald-200 mt-2 flex items-center gap-2">
-              <Landmark className="w-8 h-8 text-emerald-600 dark:text-emerald-400 shrink-0" />
-              <span>Nacionalidade: Nato, Naturalizado e Perda</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-950 mt-1 flex items-center gap-2.5">
+              <Scale className="w-8 h-8 text-amber-600 shrink-0" />
+              <span>Direito Constitucional — Aula 01</span>
             </h2>
-            <p className="text-xs text-emerald-800 dark:text-emerald-300 font-semibold mt-1">
-              Esta é a próxima aula da sequência de Direito Constitucional para o TJAM, após Direitos e Garantias Fundamentais.
+            <p className="text-sm font-bold text-slate-700">
+              Princípios Fundamentais da Constituição Federal de 1988 (Fundamentos, Poderes, Objetivos e Relações Internacionais)
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
             {onNavigateTab && (
               <button
                 onClick={() => onNavigateTab('questoes')}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
               >
                 <HelpCircle className="w-4 h-4" />
-                <span>20 Questões (TJAM)</span>
+                <span>20 Questões da Aula</span>
               </button>
             )}
             {onToggleCompleted && (
@@ -119,76 +136,122 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
                 onClick={onToggleCompleted}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
                   isLessonCompleted
-                    ? 'bg-emerald-500 text-white shadow-emerald-500/20 shadow-md'
-                    : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300'
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300'
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4" />
-                <span>{isLessonCompleted ? 'Concluída' : 'Marcar Concluída'}</span>
+                <span>{isLessonCompleted ? 'Aula Concluída ✓' : 'Marcar como Concluída'}</span>
               </button>
             )}
           </div>
         </div>
 
-        {/* Mini tabs internas */}
-        <div className="flex gap-2 border-t border-emerald-200/50 dark:border-emerald-800/40 pt-4 flex-wrap">
+        {/* Vídeo Aula Incorporado */}
+        <div className="mt-4 p-4 rounded-2xl bg-white border border-amber-200 shadow-sm space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <span className="text-xs font-black uppercase text-amber-900 flex items-center gap-1.5">
+              <Video className="w-4 h-4 text-red-600" />
+              <span>Vídeo Aula Oficial Recomendada para a Aula 01</span>
+            </span>
+            <a
+              href="https://youtu.be/Z2vrJZSz-qc?is=jkFDMpU9S6eJisIX"
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs font-extrabold text-blue-600 hover:underline flex items-center gap-1"
+            >
+              <span>Abrir no YouTube</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+          <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
+            <iframe
+              src="https://www.youtube.com/embed/Z2vrJZSz-qc"
+              title="Vídeo Aula Direito Constitucional Aula 01"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
+          </div>
+        </div>
+
+        {/* Sub-navegação interna */}
+        <div className="flex gap-2 border-t border-amber-200/60 pt-4 flex-wrap">
           <button
             onClick={() => setActiveTabSub('teoria')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTabSub === 'teoria'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
+                ? 'bg-slate-950 text-amber-300 shadow-sm'
+                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Teoria Completa (Art. 12)</span>
+            <span>1. Teoria Completa (Arts. 1º a 4º)</span>
           </button>
           <button
-            onClick={() => setActiveTabSub('mapa')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeTabSub === 'mapa'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
+            onClick={() => setActiveTabSub('tabela')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTabSub === 'tabela'
+                ? 'bg-slate-950 text-amber-300 shadow-sm'
+                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Mapa Mental & Mnemônico</span>
+            <span>2. Tabela FGV/Cebraspe & Mnemônicos</span>
+          </button>
+          <button
+            onClick={() => setActiveTabSub('dominar')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTabSub === 'dominar'
+                ? 'bg-slate-950 text-amber-300 shadow-sm'
+                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
+            }`}
+          >
+            <Award className="w-3.5 h-3.5" />
+            <span>3. O que você precisa dominar (6 Perguntas)</span>
           </button>
           <button
             onClick={() => setActiveTabSub('pratica')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTabSub === 'pratica'
-                ? 'bg-rose-600 text-white'
-                : 'bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-white'
+                ? 'bg-emerald-600 text-white shadow-sm'
+                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
             }`}
           >
-            <Video className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
-            <span>Exercício Prático em Vídeo</span>
+            <Send className="w-3.5 h-3.5 text-emerald-600" />
+            <span>4. Atividade Prática (WhatsApp TJAM)</span>
           </button>
         </div>
 
-        {/* Checklist da Aula */}
-        <div className="mt-4 pt-4 border-t border-emerald-200/40 dark:border-emerald-800/40">
-          <p className="text-[11px] font-black uppercase tracking-wider text-emerald-900 dark:text-emerald-300 mb-2 flex items-center gap-1.5">
-            <CheckSquare className="w-3.5 h-3.5" /> Checklist de Fixação da Aula (7 Metas de Domínio)
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+        {/* Checklist Interativo da Aula */}
+        <div className="pt-3 border-t border-amber-200/60">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+              <CheckSquare className="w-3.5 h-3.5 text-amber-600" />
+              <span>Checklist de Metas de Domínio da Aula 01 (8 Tópicos Essenciais)</span>
+            </span>
+            <span className="text-[11px] font-bold text-amber-800">
+              {Object.values(checklist).filter(Boolean).length}/8 concluídos
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             {[
-              { id: 'conceito', label: '1. Conceito e Vínculo Político' },
-              { id: 'nato', label: '2. Hipóteses de Nato (Art. 12, I)' },
-              { id: 'naturalizado', label: '3. Hipóteses de Naturalizado' },
-              { id: 'diferencas', label: '4. Nato x Naturalizado na CF' },
-              { id: 'cargos_privativos', label: '5. Cargos: P-V-C-S-M-D-O-D' },
-              { id: 'portugueses', label: '6. Estatuto dos Portugueses' },
-              { id: 'perda_ec131', label: '7. Perda e EC 131/2023' }
+              { id: 'cf88_intro', label: '1. CF/88 & Norma Fundamental' },
+              { id: 'fundamentos_socidivapl', label: '2. Art. 1º: SO-CI-DI-VA-PL' },
+              { id: 'poder_povo', label: '3. Parágrafo Único Art. 1º (Poder)' },
+              { id: 'poderes_independentes', label: '4. Art. 2º: 3 Poderes Harmônicos' },
+              { id: 'objetivos_congarerrpro', label: '5. Art. 3º: CON-GAR-ERR-PRO' },
+              { id: 'fundamentos_vs_objetivos', label: '6. Fundamentos × Objetivos' },
+              { id: 'relacoes_internacionais', label: '7. Art. 4º: 10 Princípios' },
+              { id: 'integracao_latina', label: '8. Art. 4º, P. Único (América Latina)' },
             ].map(item => (
               <button
                 key={item.id}
                 onClick={() => toggleCheck(item.id)}
-                className={`p-2 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all border ${
+                className={`p-2 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all border cursor-pointer ${
                   checklist[item.id]
-                    ? 'bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-emerald-200 font-bold'
-                    : 'bg-white/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+                    ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold'
+                    : 'bg-white/80 border-slate-200 text-slate-600 hover:bg-white'
                 }`}
               >
                 <div
@@ -198,7 +261,7 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
                       : 'border-slate-400'
                   }`}
                 >
-                  {checklist[item.id] && <Check className="w-3 h-3" />}
+                  {checklist[item.id] && <Check className="w-3 h-3 stroke-[3]" />}
                 </div>
                 <span className="truncate">{item.label}</span>
               </button>
@@ -207,546 +270,585 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
         </div>
       </section>
 
-      {/* Conteúdo Dinâmico conforme sub-tab */}
+      {/* ABA 1: TEORIA COMPLETA */}
       {activeTabSub === 'teoria' && (
-        <div className="space-y-10">
-          {/* TÓPICO 1: O QUE É NACIONALIDADE */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                1
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">O que é nacionalidade?</h3>
+        <div className="space-y-8 animate-in fade-in duration-200">
+          {/* Introdução do Cronograma */}
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm font-medium flex items-start gap-3">
+            <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-extrabold">Orientações do Professor:</span> Nesta segunda aula de hoje, vamos iniciar Direito Constitucional do zero, porque o cronograma foi reiniciado. A base desta aula está principalmente nos <strong className="font-black">arts. 1º a 4º da Constituição Federal de 1988</strong>, que integram o <em>Título I — Dos Princípios Fundamentais</em>.
             </div>
-            <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-              <strong>Nacionalidade</strong> é o <strong>vínculo jurídico-político</strong> que liga uma pessoa a determinado Estado soberano, tornando-a integrante do seu povo e outorgando-lhe direitos (políticos, civis e diplomáticos) e deveres recíprocos (como a fidelidade à pátria e a obrigação militar).
+          </div>
+
+          {/* 1. Constituição Federal de 1988 */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">1</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Constituição Federal de 1988</h3>
+            </div>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              A <strong>Constituição da República Federativa do Brasil de 1988</strong> é a norma fundamental do Estado brasileiro. Ela estabelece, entre outros aspectos:
             </p>
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-              No Brasil, a <strong>Constituição Federal de 1988 estabelece expressamente quem são os brasileiros natos e os brasileiros naturalizados no art. 12</strong>. Não cabe ao legislador infraconstitucional criar novas formas de nacionalidade originária.
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700">
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Organização do Estado;
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Direitos e garantias fundamentais;
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Organização dos Poderes;
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Princípios fundamentais;
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Competências dos entes federativos;
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span className="text-amber-600 font-bold">•</span> Funcionamento das instituições públicas.
+              </div>
             </div>
+            <p className="text-xs font-bold text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+              🎯 Para esta primeira aula, nosso foco será rigorosamente nos <strong>arts. 1º a 4º</strong>.
+            </p>
           </section>
 
-          {/* TÓPICO 2: BRASILEIRO NATO */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                2
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Brasileiro Nato (Nacionalidade Originária / Primária)</h3>
+          {/* 2. Artigo 1º — Fundamentos da República */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">2</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 1º — Fundamentos da República</h3>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
-              A nacionalidade nata é atribuída no momento do nascimento. São brasileiros natos (Art. 12, I da CF):
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Alínea A */}
-              <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🇧🇷</span>
-                  <h4 className="text-sm font-black text-emerald-900 dark:text-emerald-300">A) Nascidos no Brasil (Jus Soli)</h4>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  É brasileiro nato quem nasce no território brasileiro, mesmo que os pais sejam estrangeiros, <strong>desde que eles não estejam a serviço de seu país</strong> de origem.
-                </p>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-emerald-100 dark:border-emerald-900 text-[11px] text-slate-600 dark:text-slate-400">
-                  <strong className="text-emerald-600 dark:text-emerald-400">Exemplo Prático:</strong> Um casal argentino está no Brasil a passeio e tem um filho em <strong>Manaus/AM</strong>. Se os pais não estiverem a serviço da Argentina, o filho será <strong>brasileiro nato</strong>.
-                </div>
-              </div>
-
-              {/* Alínea B */}
-              <div className="p-5 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200 dark:border-sky-800/60 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🌎</span>
-                  <h4 className="text-sm font-black text-sky-900 dark:text-sky-300">B) No Exterior a Serviço do Brasil</h4>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  É brasileiro nato quem nasce no estrangeiro, sendo filho de pai brasileiro ou mãe brasileira, <strong>quando qualquer deles estiver a serviço da República Federativa do Brasil</strong>.
-                </p>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-sky-100 dark:border-sky-900 text-[11px] text-slate-600 dark:text-slate-400">
-                  <strong className="text-sky-600 dark:text-sky-400">Exemplo Prático:</strong> Um diplomata ou militar brasileiro trabalha na embaixada do Brasil na França e tem um filho em Paris. Esse filho será <strong>brasileiro nato</strong>.
-                </div>
-              </div>
-
-              {/* Alínea C */}
-              <div className="p-5 rounded-2xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/60 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">✈️</span>
-                  <h4 className="text-sm font-black text-purple-900 dark:text-purple-300">C) No Exterior: Registro ou Opção</h4>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Nascido no exterior, de pai ou mãe brasileira:
-                  <br />• Registrado em <strong>repartição brasileira competente</strong> (consulado); OU
-                  <br />• Venha a <strong>residir no Brasil e opte</strong>, a qualquer tempo, depois de atingida a maioridade (18 anos), pela nacionalidade brasileira.
-                </p>
-                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-purple-100 dark:border-purple-900 text-[11px] text-slate-600 dark:text-slate-400">
-                  <strong className="text-purple-600 dark:text-purple-400">Dica:</strong> A opção é potestativa e pode ser feita a qualquer momento após os 18 anos na Justiça Federal.
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* TÓPICO 3: BRASILEIRO NATURALIZADO */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                3
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Brasileiro Naturalizado (Nacionalidade Derivada / Secundária)</h3>
-            </div>
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
-              O brasileiro naturalizado adquire a nacionalidade por ato posterior ao nascimento, preenchendo os requisitos estabelecidos na Constituição (Art. 12, II):
+            <p className="text-sm text-slate-700">
+              O Brasil constitui-se em <strong>Estado Democrático de Direito</strong>. O art. 1º apresenta <strong className="font-extrabold text-amber-700">cinco fundamentos</strong> expressos:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/60 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-amber-500 text-white font-black text-xs">Alínea A</span>
-                  <h4 className="text-sm font-bold text-amber-950 dark:text-amber-300">Originários de Países de Língua Portuguesa</h4>
+            <div className="space-y-2.5">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                  <span>🇧🇷</span> <span>1. Soberania</span>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Requisitos constitucionais facilitados (ex: portugueses, angolanos, cabo-verdianos, moçambicanos):
+                <p className="text-xs text-slate-600 mt-1">
+                  É o poder do Estado brasileiro de se auto-organizar e exercer sua autoridade suprema dentro de seu território, sem submissão a outro Estado.
                 </p>
-                <ul className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Residência por <strong>1 (um) ano ininterrupto</strong> no Brasil;</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span><strong>Idoneidade moral</strong> comprovada.</span>
-                  </li>
-                </ul>
               </div>
 
-              <div className="p-5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/60 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-indigo-500 text-white font-black text-xs">Alínea B</span>
-                  <h4 className="text-sm font-bold text-indigo-950 dark:text-indigo-300">Estrangeiros de Qualquer Nacionalidade (Extraordinária)</h4>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                  <span>👥</span> <span>2. Cidadania</span>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Requisitos constitucionais da naturalização extraordinária:
+                <p className="text-xs text-slate-600 mt-1">
+                  Relaciona-se à participação ativa do indivíduo na vida política e social do Estado e ao exercício de direitos e deveres civis.
                 </p>
-                <ul className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Residência há <strong>mais de 15 anos ininterruptos</strong> no Brasil;</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span><strong>Sem condenação penal</strong>;</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span><strong>Requeiram</strong> formalmente a nacionalidade brasileira.</span>
-                  </li>
-                </ul>
               </div>
-            </div>
-          </section>
 
-          {/* TÓPICO 4: NATO X NATURALIZADO */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                4
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Nato × Naturalizado (Regra de Ouro da CF)</h3>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-xs sm:text-sm text-rose-900 dark:text-rose-300">
-              <strong>Art. 12, § 2º da CF:</strong> <em>"A lei não poderá estabelecer distinção entre brasileiros natos e naturalizados, salvo nos casos previstos nesta Constituição."</em>
-              <br />
-              Ou seja: <strong>O legislador ordinário NÃO PODE criar privilégios ou restrições</strong>. Qualquer diferença deve constar EXPRESSAMENTE do próprio texto constitucional!
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700">
-                <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-black">
-                  <tr>
-                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Critério / Tema</th>
-                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Brasileiro Nato</th>
-                    <th className="p-3.5 border-b border-slate-200 dark:border-slate-700">Brasileiro Naturalizado</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="p-3.5 font-bold">Extradição (Art. 5º, LI)</td>
-                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">NUNCA é extraditado pelo Brasil.</td>
-                    <td className="p-3.5 text-rose-600 dark:text-rose-400">Pode ser extraditado em: 1) Crime comum ANTES da naturalização; OU 2) Tráfico de drogas a qualquer tempo.</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="p-3.5 font-bold">Cargos Públicos</td>
-                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">Pode ocupar qualquer cargo, inclusive os 8 privativos.</td>
-                    <td className="p-3.5">Pode ocupar a imensa maioria dos cargos, EXCETO os 8 privativos de nato (Art. 12, § 3º).</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="p-3.5 font-bold">Conselho da República (Art. 89, VII)</td>
-                    <td className="p-3.5 text-emerald-600 dark:text-emerald-400 font-semibold">Tem 6 vagas reservadas a cidadãos brasileiros natos.</td>
-                    <td className="p-3.5 text-slate-500">Não pode ocupar essas 6 vagas destinadas a cidadãos.</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="p-3.5 font-bold">Perda por sentença judicial</td>
-                    <td className="p-3.5 text-slate-500">Não perde por cancelamento de naturalização.</td>
-                    <td className="p-3.5 text-amber-600 dark:text-amber-400">Pode ter a naturalização cancelada por fraude ou atentado ao Estado Democrático.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* TÓPICO 5: CARGOS PRIVATIVOS DE BRASILEIRO NATO */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                5
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Cargos Privativos de Brasileiro Nato (Art. 12, § 3º)</h3>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 text-xs sm:text-sm">
-              <p className="font-black text-amber-900 dark:text-amber-300 mb-1">
-                🧠 MACETE INFALÍVEL PARA CONCURSO: P - V - C - S - M - D - O - D
-              </p>
-              <p className="text-slate-700 dark:text-slate-300">
-                Os 4 primeiros formam a linha sucessória da Presidência da República (Art. 80 da CF). Os 4 seguintes cuidam da Soberania, Justiça Suprema e Defesa Nacional.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                { letra: 'P', cargo: 'Presidente da República', motivo: 'Chefe de Estado e de Governo (Linha Sucessória)' },
-                { letra: 'V', cargo: 'Vice-Presidente da República', motivo: 'Substituto imediato do Presidente' },
-                { letra: 'C', cargo: 'Presidente da Câmara dos Deputados', motivo: '2º na linha de substituição presidencial' },
-                { letra: 'S', cargo: 'Presidente do Senado Federal', motivo: '3º na linha de substituição presidencial' },
-                { letra: 'M', cargo: 'Ministro do STF (11 Ministros)', motivo: '4º na linha de substituição e cúpula do Judiciário' },
-                { letra: 'D', cargo: 'Carreira Diplomática', motivo: 'Representação soberana do Brasil perante o mundo' },
-                { letra: 'O', cargo: 'Oficial das Forças Armadas', motivo: 'Comando armado (Exército, Marinha e Aeronáutica)' },
-                { letra: 'D', cargo: 'Ministro de Estado da Defesa', motivo: 'Comando civil sobre as Forças Armadas' }
-              ].map((c, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
-                    {c.letra}
-                  </span>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{c.cargo}</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">{c.motivo}</p>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                  <span>👤</span> <span>3. Dignidade da pessoa humana</span>
                 </div>
-              ))}
+                <p className="text-xs text-slate-600 mt-1">
+                  Reconhece a pessoa humana como elemento central e valor supremo de proteção constitucional em todas as esferas.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                  <span>💼</span> <span>4. Valores sociais do trabalho e da livre iniciativa</span>
+                </div>
+                <p className="text-xs text-slate-600 mt-1">
+                  A Constituição harmoniza e valoriza tanto a proteção do trabalho humano quanto a liberdade de empreender e a iniciativa econômica.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                  <span>🗳️</span> <span>5. Pluralismo político</span>
+                </div>
+                <p className="text-xs text-slate-600 mt-1">
+                  Reconhece a existência, convivência pacífica e livre manifestação de diferentes ideias, crenças e posições políticas (não se confunde com mero pluripartidarismo).
+                </p>
+              </div>
             </div>
 
-            {/* Pegadinhas de Concurso */}
-            <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-rose-700 dark:text-rose-400">
-                <AlertTriangle className="w-4 h-4" />
-                <span>⚠️ PEGADINHAS CLÁSSICAS DA FGV E BANCAS DE TRIBUNAIS:</span>
+            {/* Mnemônico SO-CI-DI-VA-PL */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 border-2 border-amber-400">
+              <div className="flex items-center gap-2 font-black text-slate-900 text-sm">
+                <span>🧠</span> <span>Para Memorizar o Art. 1º:</span>
               </div>
-              <ul className="text-xs space-y-1 text-slate-700 dark:text-slate-300">
-                <li>• <strong>Deputado Federal e Senador podem ser naturalizados?</strong> SIM! Apenas o <em>Presidente</em> da Câmara e o <em>Presidente</em> do Senado precisam ser natos.</li>
-                <li>• <strong>Ministro do STJ, TST ou Governador de Estado precisam ser natos?</strong> NÃO! Podem ser normalmente naturalizados. O único tribunal com exigência de nato é o STF!</li>
-              </ul>
+              <div className="text-lg sm:text-xl font-black text-amber-950 tracking-wider mt-1">
+                SO – CI – DI – VA – PL
+              </div>
+              <div className="text-xs font-semibold text-slate-700 mt-1 space-y-0.5">
+                <div>• <strong className="text-amber-800">SO</strong>berania</div>
+                <div>• <strong className="text-amber-800">CI</strong>dadania</div>
+                <div>• <strong className="text-amber-800">DI</strong>gnidade da pessoa humana</div>
+                <div>• <strong className="text-amber-800">VA</strong>lores sociais do trabalho e da livre iniciativa</div>
+                <div>• <strong className="text-amber-800">PL</strong>uralismo político</div>
+              </div>
             </div>
           </section>
 
-          {/* TÓPICO 6: PORTUGUESES NO BRASIL */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                6
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Portugueses no Brasil — Estatuto da Igualdade (Art. 12, § 1º)</h3>
+          {/* 3. Todo poder emana do povo */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">3</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Todo poder emana do povo (Art. 1º, Parágrafo Único)</h3>
             </div>
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              Aos portugueses com <strong>residência permanente no Brasil</strong>, se houver <strong>reciprocidade em favor de brasileiros</strong> em Portugal, serão atribuídos os direitos inerentes ao brasileiro, ressalvadas as hipóteses privativas de brasileiro nato.
+            <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-2">
+              <blockquote className="text-sm sm:text-base font-extrabold italic text-amber-300">
+                “Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente, nos termos desta Constituição.”
+              </blockquote>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-700">
+              A Constituição prevê expressamente duas formas de exercício do poder (democracia semidireta ou participativa):
             </p>
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
-              Trata-se do fenômeno da <strong>quase-nacionalidade</strong>: o português não se torna brasileiro formalmente (não perde a nacionalidade portuguesa nem vira cidadão naturalizado), mas usufrui do gozo de direitos como votar e ser votado, respeitada a reciprocidade.
-            </div>
-          </section>
-
-          {/* TÓPICO 7: PERDA DA NACIONALIDADE E EC 131/2023 */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-                7
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Perda da Nacionalidade (Art. 12, § 4º — Com a EC nº 131/2023)</h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
-                <span className="text-xs font-black text-rose-600 dark:text-rose-400 uppercase">1. Cancelamento da Naturalização</span>
-                <p className="text-xs text-slate-700 dark:text-slate-300">
-                  Apenas para <strong>brasileiro naturalizado</strong>, por meio de <strong>sentença judicial transitada em julgado</strong>, em duas situações:
-                </p>
-                <ul className="text-xs space-y-1 font-semibold text-slate-600 dark:text-slate-400">
-                  <li>• Em virtude de <strong>fraude</strong> relacionada ao processo de naturalização; OU</li>
-                  <li>• Em razão de <strong>atentado contra a ordem constitucional e o Estado Democrático</strong>.</li>
-                </ul>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
-                <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase">2. Pedido Expresso (Renúncia)</span>
-                <p className="text-xs text-slate-700 dark:text-slate-300">
-                  O cidadão (nato ou naturalizado) pode requerer a perda da nacionalidade brasileira perante autoridade competente:
-                </p>
-                <ul className="text-xs space-y-1 font-semibold text-slate-600 dark:text-slate-400">
-                  <li>• <strong>Ressalva da Apatridia:</strong> O pedido NÃO será aceito se resultar em situação de apatridia!</li>
-                  <li>• <strong>Readquisição:</strong> A pessoa pode readquirir a nacionalidade brasileira originária nos termos da lei.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500/40 space-y-2">
-              <div className="flex items-center gap-2 text-sm font-black text-emerald-900 dark:text-emerald-300">
-                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <span>MUDANÇA CRUCIAL DA EMENDA CONSTITUCIONAL Nº 131/2023:</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                Antes da EC 131/2023, o brasileiro que adquirisse outra nacionalidade por vontade própria perdia a brasileira (regra antiga). 
-                <strong> HOJE, A REGRA MUDOU TOTALMENTE:</strong> adquirir outra nacionalidade <strong>NÃO provoca automaticamente a perda da nacionalidade brasileira!</strong> O brasileiro pode ter dupla ou múltipla cidadania sem medo de perder a brasileira.
-              </p>
-            </div>
-          </section>
-
-          {/* O QUE VOCÊ PRECISA SABER PARA A PROVA */}
-          <section className="p-6 rounded-3xl bg-slate-900 text-slate-100 space-y-4">
-            <h4 className="text-lg font-black text-amber-400 flex items-center gap-2">
-              <Target className="w-5 h-5 text-amber-400" />
-              <span>🎯 O que você precisa saber para a prova (Gabarito Garantido no TJAM)</span>
-            </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="font-bold text-amber-300">1. Art. 12 da CF:</span>
-                <p className="text-slate-300 mt-1">Conheça as 3 hipóteses de nato (solo temperado, a serviço do Brasil, registro/opção após os 18 anos) e as 2 de naturalizado.</p>
+              <div className="p-3 rounded-xl bg-blue-50 border border-blue-200">
+                <span className="font-extrabold text-blue-950 block text-sm">Por meio de representantes eleitos</span>
+                <span className="text-blue-800">Ex.: vereadores, prefeitos, deputados, senadores, presidente (democracia indireta/representativa).</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="font-bold text-emerald-300">2. Princípio da Não-Distinção:</span>
-                <p className="text-slate-300 mt-1">A lei ordinária não pode criar distinções entre natos e naturalizados. Apenas a própria CF tem autoridade para isso.</p>
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                <span className="font-extrabold text-emerald-950 block text-sm">Diretamente, nos termos da CF</span>
+                <span className="text-emerald-800">Ex.: plebiscito, referendo, iniciativa popular de lei e ação popular (art. 14 da CF).</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="font-bold text-sky-300">3. 8 Cargos Privativos de Nato:</span>
-                <p className="text-slate-300 mt-1">Decore o P-V-C-S-M-D-O-D. Lembre-se: STF (todos os 11). Pres. da Câmara e do Senado (não os membros comuns).</p>
+            </div>
+          </section>
+
+          {/* 4. Artigo 2º — Os três Poderes */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">4</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 2º — Os três Poderes da União</h3>
+            </div>
+            <p className="text-sm text-slate-700">
+              O art. 2º estabelece que são Poderes da União:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
+                  <span>🏛️</span> <span>Legislativo</span>
+                </div>
+                <p className="text-slate-600">
+                  Responsável, em linhas gerais, pela função típica normativa (legislar) e pelo exercício da fiscalização contábil e política prevista constitucionalmente.
+                </p>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="font-bold text-rose-300">4. Perda e EC 131/2023:</span>
-                <p className="text-slate-300 mt-1">Perda só por sentença judicial transitada em julgado (naturalizado) ou pedido expresso sem gerar apatridia. Adquirir outra não cancela a do Brasil.</p>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
+                  <span>🏛️</span> <span>Executivo</span>
+                </div>
+                <p className="text-slate-600">
+                  Exerce, em linhas gerais, as funções típicas relacionadas à administração pública, chefia de Estado, chefia de governo e execução das leis.
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
+                  <span>⚖️</span> <span>Judiciário</span>
+                </div>
+                <p className="text-slate-600">
+                  Exerce a função típica jurisdicional, solucionando conflitos com definitividade e aplicando a ordem jurídica aos casos submetidos à sua apreciação.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-xs sm:text-sm text-amber-950 space-y-1.5">
+              <div className="flex items-center gap-2 font-black text-amber-900">
+                <AlertTriangle className="w-4 h-4 text-amber-600" />
+                <span>⚠️ ATENÇÃO MÁXIMA PARA PROVA (FGV & CEBRASPE):</span>
+              </div>
+              <p>
+                A Constituição <strong>NÃO diz</strong> que os Poderes são subordinados uns aos outros. Ela estabelece expressamente que são:
+              </p>
+              <div className="p-2 rounded-lg bg-white border border-amber-300 font-black text-center text-slate-950">
+                ➡️ “independentes e harmônicos entre si”
+              </div>
+            </div>
+          </section>
+
+          {/* 5. Artigo 3º — Objetivos fundamentais */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">5</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 3º — Objetivos Fundamentais</h3>
+            </div>
+            <p className="text-sm text-slate-700">
+              Aqui existe uma diferença crucial de banca:
+            </p>
+            <div className="p-3 rounded-xl bg-slate-100 font-bold text-xs sm:text-sm text-slate-900">
+              📌 <strong className="text-blue-700">Art. 1º = fundamentos</strong> (bases atuais) &nbsp;×&nbsp; 📌 <strong className="text-emerald-700">Art. 3º = objetivos fundamentais</strong> (metas futuras a alcançar).
+            </div>
+            <p className="text-xs sm:text-sm text-slate-700">
+              A Constituição estabelece quatro objetivos essenciais:
+            </p>
+            <div className="space-y-2 text-xs sm:text-sm">
+              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
+                <span className="font-black text-emerald-900">I —</span>
+                <div>
+                  <strong className="font-extrabold text-emerald-950">Construir uma sociedade livre, justa e solidária</strong>
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
+                <span className="font-black text-emerald-900">II —</span>
+                <div>
+                  <strong className="font-extrabold text-emerald-950">Garantir o desenvolvimento nacional</strong>
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
+                <span className="font-black text-emerald-900">III —</span>
+                <div>
+                  <strong className="font-extrabold text-emerald-950">Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais</strong>
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
+                <span className="font-black text-emerald-900">IV —</span>
+                <div>
+                  <strong className="font-extrabold text-emerald-950">Promover o bem de todos</strong>, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.
+                </div>
+              </div>
+            </div>
+
+            {/* Mnemônico CON-GAR-ERR-PRO */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-400/10 to-emerald-500/20 border-2 border-emerald-400">
+              <div className="flex items-center gap-2 font-black text-slate-900 text-sm">
+                <span>🧠</span> <span>Mnemônico dos Objetivos Fundamentais (Art. 3º):</span>
+              </div>
+              <div className="text-lg sm:text-xl font-black text-emerald-950 tracking-wider mt-1">
+                CON – GAR – ERR – PRO
+              </div>
+              <div className="text-xs font-semibold text-slate-700 mt-1 space-y-0.5">
+                <div>• <strong className="text-emerald-800">CON</strong>struir sociedade livre, justa e solidária;</div>
+                <div>• <strong className="text-emerald-800">GAR</strong>antir o desenvolvimento nacional;</div>
+                <div>• <strong className="text-emerald-800">ERR</strong>adicar pobreza e marginalização + reduzir desigualdades;</div>
+                <div>• <strong className="text-emerald-800">PRO</strong>mover o bem de todos.</div>
+              </div>
+            </div>
+          </section>
+
+          {/* 7. Artigo 4º — Relações internacionais */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">7</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 4º — Relações Internacionais</h3>
+            </div>
+            <p className="text-sm text-slate-700">
+              O art. 4º apresenta os <strong>10 princípios</strong> que regem a República Federativa do Brasil em suas relações com outros países:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              {[
+                { n: 'I', t: 'Independência nacional' },
+                { n: 'II', t: 'Prevalência dos direitos humanos' },
+                { n: 'III', t: 'Autodeterminação dos povos' },
+                { n: 'IV', t: 'Não intervenção' },
+                { n: 'V', t: 'Igualdade entre os Estados' },
+                { n: 'VI', t: 'Defesa da paz' },
+                { n: 'VII', t: 'Solução pacífica dos conflitos' },
+                { n: 'VIII', t: 'Repúdio ao terrorismo e ao racismo' },
+                { n: 'IX', t: 'Cooperação entre os povos para o progresso da humanidade' },
+                { n: 'X', t: 'Concessão de asilo político' },
+              ].map(item => (
+                <div key={item.n} className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+                  <span className="font-extrabold text-amber-700">{item.n}.</span>
+                  <span className="font-semibold text-slate-800">{item.t}</span>
+                </div>
+              ))}
+            </div>
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-950 font-semibold flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>Atenção: Esses princípios pertencem ao art. 4º, portanto não devem ser confundidos com os fundamentos do art. 1º ou os objetivos do art. 3º!</span>
+            </div>
+          </section>
+
+          {/* 8. Integração latino-americana */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">8</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Integração Latino-Americana (Art. 4º, Parágrafo Único)</h3>
+            </div>
+            <p className="text-sm text-slate-700">
+              O parágrafo único do art. 4º estabelece que o Brasil buscará a integração em quatro áreas essenciais:
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-black">
+              <div className="p-3 rounded-xl bg-amber-100 text-amber-950 border border-amber-300">
+                Econômica
+              </div>
+              <div className="p-3 rounded-xl bg-blue-100 text-blue-950 border border-blue-300">
+                Política
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-100 text-emerald-950 border border-emerald-300">
+                Social
+              </div>
+              <div className="p-3 rounded-xl bg-purple-100 text-purple-950 border border-purple-300">
+                Cultural
+              </div>
+            </div>
+            <p className="text-xs text-slate-600 font-medium italic text-center">
+              “...dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.”
+            </p>
+          </section>
+
+          {/* 9. Resumo para prova */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">9</span>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight">Resumo de Memorização para Prova</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
+                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 1º — FUNDAMENTOS</span>
+                <p className="text-slate-300 leading-relaxed">
+                  Soberania • Cidadania • Dignidade da pessoa humana • Valores sociais do trabalho e da livre iniciativa • Pluralismo político.
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
+                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 2º — PODERES</span>
+                <p className="text-slate-300 leading-relaxed">
+                  Legislativo + Executivo + Judiciário ➡️ <strong className="text-emerald-300">Independentes e harmônicos entre si</strong>.
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
+                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 3º — OBJETIVOS</span>
+                <p className="text-slate-300 leading-relaxed">
+                  Construir sociedade livre, justa e solidária • Garantir desenvolvimento nacional • Erradicar pobreza/marginalização e reduzir desigualdades • Promover o bem de todos.
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
+                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 4º — RELAÇÕES INTERNACIONAIS</span>
+                <p className="text-slate-300 leading-relaxed">
+                  Independência nacional, direitos humanos, autodeterminação, não intervenção, igualdade entre Estados, paz, solução pacífica, repúdio ao terrorismo/racismo, cooperação e asilo político.
+                </p>
               </div>
             </div>
           </section>
         </div>
       )}
 
-      {/* SUBTAB 2: MAPA MENTAL */}
-      {activeTabSub === 'mapa' && (
-        <section className="space-y-6">
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-sm">
-              🧠
-            </span>
-            <h3 className="text-xl sm:text-2xl font-bold">Mapa Mental — Nacionalidade 🇧🇷</h3>
+      {/* ABA 2: TABELA COMPARATIVA & MNEMÔNICOS */}
+      {activeTabSub === 'tabela' && (
+        <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm">
+            <span className="font-black text-amber-900">Pegadinha Clássica de FGV e Cebraspe:</span> A banca adora trocar um fundamento (Art. 1º) por um objetivo (Art. 3º) ou princípio internacional (Art. 4º). Fique atento à regra de ouro: <strong>Fundamentos são substantivos</strong>; <strong>Objetivos começam por verbos no infinitivo</strong>!
           </div>
 
-          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-6">
-            {/* Núcleo Central */}
-            <div className="text-center max-w-md mx-auto p-4 rounded-2xl bg-emerald-600 text-white font-black text-base shadow-lg">
-              NACIONALIDADE (Art. 12 da CF/88)
-              <span className="block text-xs font-normal opacity-90 mt-1">Vínculo Político-Jurídico com o Estado Brasileiro</span>
-            </div>
-
-            {/* Ramificações Principais */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Ramo 1: Brasileiro Nato */}
-              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 rounded-md bg-emerald-500 text-white font-black text-xs">ORIGINÁRIA</span>
-                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Brasileiro Nato</h4>
-                </div>
-                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>1. Jus Soli:</strong> Nascido no Brasil, salvo se ambos os pais estrangeiros estiverem a serviço de seu país.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>2. Jus Sanguinis Funcional:</strong> Nascido no exterior com pai ou mãe a serviço da República Federativa do Brasil.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>3. Registro ou Residência + Opção:</strong> Registro no consulado OU residência no Brasil + opção confirmativa após a maioridade.
-                  </div>
-                </div>
-              </div>
-
-              {/* Ramo 2: Brasileiro Naturalizado */}
-              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-sky-300 dark:border-sky-800 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 rounded-md bg-sky-500 text-white font-black text-xs">DERIVADA</span>
-                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Brasileiro Naturalizado</h4>
-                </div>
-                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>Países de Língua Portuguesa:</strong> 1 ano ininterrupto de residência + idoneidade moral.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>Extraordinária (Qualquer País):</strong> Mais de 15 anos ininterruptos + sem condenação penal + requerimento formal.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>Extradição:</strong> Permitida para crime comum antes da naturalização ou tráfico ilícito a qualquer tempo.
-                  </div>
-                </div>
-              </div>
-
-              {/* Ramo 3: Cargos Privativos */}
-              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 rounded-md bg-amber-500 text-white font-black text-xs">P-V-C-S-M-D-O-D</span>
-                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Cargos Privativos de Nato</h4>
-                </div>
-                <div className="grid grid-cols-2 gap-1.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">👑 Pres. República</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🏛️ Vice-Pres. República</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">📜 Pres. Câmara Deputados</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">⚖️ Pres. Senado Federal</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">⚖️ Min. STF (11 vagas)</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🌐 Carreira Diplomática</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🎖️ Oficial Forças Armadas</div>
-                  <div className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/40">🛡️ Ministro da Defesa</div>
-                </div>
-              </div>
-
-              {/* Ramo 4: Perda da Nacionalidade */}
-              <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-800 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 rounded-md bg-rose-500 text-white font-black text-xs">EC 131/2023</span>
-                  <h4 className="text-sm font-black text-slate-900 dark:text-slate-100">Perda da Nacionalidade</h4>
-                </div>
-                <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>1. Cancelamento Judicial:</strong> Sentença transitada em julgado por fraude na naturalização ou atentado à ordem democrática.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                    <strong>2. Pedido Expresso:</strong> Apenas se NÃO gerar apatridia (vedada a perda que torne a pessoa apátrida).
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 font-bold">
-                    ⚠️ Adquirir outra cidadania NÃO cancela a brasileira automaticamente!
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="overflow-x-auto rounded-2xl border border-slate-200">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="bg-slate-950 text-white">
+                  <th className="p-3.5 font-black border-r border-slate-800 w-1/2">
+                    🏛️ Art. 1º — Fundamentos (SO-CI-DI-VA-PL)
+                  </th>
+                  <th className="p-3.5 font-black w-1/2">
+                    🎯 Art. 3º — Objetivos Fundamentais (CON-GAR-ERR-PRO)
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200">
+                <tr className="bg-white">
+                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
+                    <strong>Soberania</strong> (autoridade do Estado no território)
+                  </td>
+                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                    <strong>Construir</strong> uma sociedade livre, justa e solidária
+                  </td>
+                </tr>
+                <tr className="bg-slate-50/60">
+                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
+                    <strong>Cidadania</strong> (direitos e deveres na sociedade)
+                  </td>
+                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                    <strong>Garantir</strong> o desenvolvimento nacional
+                  </td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
+                    <strong>Dignidade da pessoa humana</strong> (valor supremo)
+                  </td>
+                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                    <strong>Erradicar</strong> a pobreza e marginalização
+                  </td>
+                </tr>
+                <tr className="bg-slate-50/60">
+                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
+                    <strong>Valores sociais do trabalho e livre iniciativa</strong>
+                  </td>
+                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                    <strong>Reduzir</strong> as desigualdades sociais e regionais
+                  </td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
+                    <strong>Pluralismo político</strong> (liberdade de ideias)
+                  </td>
+                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                    <strong>Promover</strong> o bem de todos (sem preconceitos)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </section>
-      )}
 
-      {/* SUBTAB 3: EXERCÍCIO PRÁTICO EM VÍDEO */}
-      {activeTabSub === 'pratica' && (
-        <section className="space-y-6">
-          <div className="p-6 rounded-3xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-emerald-500/10 border border-rose-500/20 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-rose-500 text-white">
-                <Video className="w-5 h-5" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300 space-y-2">
+              <span className="text-xs font-black text-amber-900 uppercase tracking-wider block">
+                Regra Gramatical de Ouro
               </span>
-              <div>
-                <span className="text-[11px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                  Desafio de Comunicação e Domínio Jurídico
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100">
-                  Exercício Prático — Gravação de Vídeo para o Professor
-                </h3>
-              </div>
+              <p className="text-xs text-slate-700 leading-relaxed">
+                Olhou para a alternativa e viu um <strong>verbo no infinitivo</strong> (Construir, Garantir, Erradicar, Reduzir, Promover)? Trata-se de um <strong>OBJETIVO FUNDAMENTAL (Art. 3º)</strong>. Viu um substantivo puro (Soberania, Cidadania, Dignidade)? Trata-se de um <strong>FUNDAMENTO (Art. 1º)</strong>!
+              </p>
             </div>
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-              O concurseiro de alta performance não apenas lê e memoriza: ele <strong>ensina e articula o direito oralmente com segurança</strong>. Esta prática desenvolve a retenção permanente para as provas discursivas e orais.
-            </p>
-          </div>
 
-          {/* Situação Prática */}
-          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
-            <h4 className="text-sm font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              <span>Situação Prática para Resolução Oral:</span>
-            </h4>
-            <p className="text-sm italic p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
-              "{direitoConstVideoPracticalTask.situacaoPratica}"
-            </p>
-          </div>
-
-          {/* As 6 Perguntas para Responder no Vídeo */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-emerald-500" />
-              <span>Roteiro de 6 Perguntas Obrigatórias para Abordar:</span>
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {direitoConstVideoPracticalTask.perguntas.map((p, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-                    {idx + 1}
-                  </span>
-                  <span>{p.replace(/^[0-9]+\.\s*/, '')}</span>
-                </div>
-              ))}
+            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 space-y-2">
+              <span className="text-xs font-black text-blue-900 uppercase tracking-wider block">
+                Art. 2º: Não há subordinação
+              </span>
+              <p className="text-xs text-slate-700 leading-relaxed">
+                Se a questão afirmar que o Judiciário é subordinado ao Executivo ou vice-versa, a afirmação está <strong>ERRADA</strong>. Eles são <em>independentes e harmônicos entre si</em> através do mecanismo de freios e contrapesos.
+              </p>
             </div>
           </div>
-
-          {/* Desafio Final */}
-          <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
-            <h4 className="text-xs font-black uppercase text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4" /> Desafio Final Oral (1 a 2 minutos sem consulta)
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-semibold">
-              "{direitoConstVideoPracticalTask.desafioFinal}"
-            </p>
-          </div>
-
-          {/* Formulário de Registro / Envio do Aluno */}
-          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-4">
-            <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <Send className="w-4 h-4 text-rose-500" />
-              <span>Entrega do Vídeo da Prática ao Professor</span>
-            </h4>
-            <p className="text-xs text-slate-600 dark:text-slate-400">
-              Cole o link do seu vídeo (YouTube, Google Drive, Loom ou gravação celular) para registrar o cumprimento desta meta de comunicação:
-            </p>
-
-            <form onSubmit={handleSendVideo} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="url"
-                value={videoLink}
-                onChange={e => setVideoLink(e.target.value)}
-                placeholder="https://youtu.be/... ou https://drive.google.com/..."
-                className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
-              />
-              <button
-                type="submit"
-                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
-              >
-                <Send className="w-4 h-4" />
-                <span>Registrar Envio</span>
-              </button>
-            </form>
-
-            {videoStatus === 'enviado' && (
-              <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Vídeo registrado com sucesso! O professor verificará a desenvoltura oral, a clareza técnica e a precisão do enquadramento constitucional.</span>
-              </div>
-            )}
-          </div>
-        </section>
+        </div>
       )}
 
-      {/* Rodapé da Lição */}
-      <footer className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-4 h-4 text-emerald-500" />
-          <span>Direito Constitucional • 1ª Aula de Hoje • TJAM 2026</span>
+      {/* ABA 3: O QUE VOCÊ PRECISA DOMINAR (6 PERGUNTAS-CHAVE) */}
+      {activeTabSub === 'dominar' && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-1">
+            <span className="text-xs font-black uppercase text-amber-400">Autoavaliação de Domínio — Aula 01</span>
+            <h4 className="text-base sm:text-lg font-black">
+              🎯 Ao terminar a aula, você deve conseguir responder sem consultar o material:
+            </h4>
+            <p className="text-xs text-slate-300">
+              Clique em cada pergunta para conferir o gabarito mental e testar sua fixação:
+            </p>
+          </div>
+
+          <div className="space-y-2.5">
+            {[
+              {
+                id: 1,
+                q: '1. Quais são os cinco fundamentos do art. 1º?',
+                a: 'São cinco (SO-CI-DI-VA-PL): 1) Soberania; 2) Cidadania; 3) Dignidade da pessoa humana; 4) Valores sociais do trabalho e da livre iniciativa; 5) Pluralismo político.'
+              },
+              {
+                id: 2,
+                q: '2. Quais são os três Poderes da União?',
+                a: 'São Poderes da União o Legislativo, o Executivo e o Judiciário (art. 2º).'
+              },
+              {
+                id: 3,
+                q: '3. O que significa dizer que os Poderes são independentes e harmônicos?',
+                a: 'Significa que cada um possui atribuições constitucionais próprias e independência funcional, sem relação de subordinação hierárquica entre si, atuando em harmonia e equilíbrio recíproco (freios e contrapesos).'
+              },
+              {
+                id: 4,
+                q: '4. Quais são os quatro objetivos fundamentais do art. 3º?',
+                a: 'São quatro (CON-GAR-ERR-PRO): I - Construir uma sociedade livre, justa e solidária; II - Garantir o desenvolvimento nacional; III - Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais; IV - Promover o bem de todos, sem preconceitos e discriminações.'
+              },
+              {
+                id: 5,
+                q: '5. Qual é a diferença entre fundamento e objetivo fundamental?',
+                a: 'Fundamentos (art. 1º) são os pilares e valores básicos sobre os quais a República se sustenta no presente (substantivos). Objetivos fundamentais (art. 3º) são metas programáticas e diretrizes que o Estado deve buscar alcançar no futuro (verbos de ação no infinitivo).'
+              },
+              {
+                id: 6,
+                q: '6. Quais são os principais princípios do art. 4º?',
+                a: 'Independência nacional, prevalência dos direitos humanos, autodeterminação dos povos, não intervenção, igualdade entre os Estados, defesa da paz, solução pacífica dos conflitos, repúdio ao terrorismo e ao racismo, cooperação entre os povos e concessão de asilo político.'
+              }
+            ].map(item => (
+              <div key={item.id} className="rounded-2xl border border-slate-200 overflow-hidden bg-white">
+                <button
+                  onClick={() => toggleFaq(item.id)}
+                  className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-slate-900 hover:bg-slate-50 cursor-pointer"
+                >
+                  <span>{item.q}</span>
+                  {expandedFaq[item.id] ? (
+                    <ChevronUp className="w-4 h-4 text-amber-600 shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                  )}
+                </button>
+                {expandedFaq[item.id] && (
+                  <div className="p-4 pt-0 text-xs sm:text-sm text-slate-700 bg-amber-50/50 border-t border-slate-100 leading-relaxed font-medium">
+                    <strong className="text-emerald-700 font-extrabold">Resposta esperada:</strong> {item.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-        {onNavigateTab && (
-          <button
-            onClick={() => onNavigateTab('questoes')}
-            className="inline-flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
-          >
-            <span>Ir para as 20 Questões de Prova</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        )}
-      </footer>
+      )}
+
+      {/* ABA 4: ATIVIDADE PRÁTICA — WHATSAPP TJAM */}
+      {activeTabSub === 'pratica' && (
+        <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-800 text-white space-y-3 shadow-md">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🎯</span>
+              <h4 className="text-lg sm:text-xl font-black">
+                Atividade Prática de Fixação — Envio pelo WhatsApp ao Professor
+              </h4>
+            </div>
+            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+              Não é uma questão de prova. Esta atividade serve para verificar se você consegue aplicar o conteúdo da aula em uma situação prática e concreta de trabalho judiciário.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-3 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 font-black text-amber-950 text-base">
+              <span>🏛️</span> <span>Situação Concreta no Tribunal de Justiça:</span>
+            </div>
+            <p className="text-slate-800 leading-relaxed">
+              Imagine que você seja um <strong>servidor do Tribunal de Justiça</strong> e esteja atendendo um cidadão. O cidadão chega ao setor para buscar uma informação sobre um serviço público. Durante o atendimento, você percebe que ele possui dificuldade para compreender os procedimentos e precisa de orientação.
+            </p>
+            <div className="p-3 rounded-xl bg-white border border-amber-200 space-y-1 text-xs">
+              <span className="font-extrabold text-slate-900 block">Sua tarefa:</span>
+              <p className="text-slate-700">
+                Escolha <strong>DOIS</strong> dos conteúdos estudados na Aula 01 (ex.: Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho, Pluralismo político, Independência e harmonia entre os Poderes, Objetivo do art. 3º ou Princípio do art. 4º).
+              </p>
+              <ol className="list-decimal list-inside text-slate-700 space-y-0.5 pt-1">
+                <li>Explique o que cada um significa;</li>
+                <li>Relacione-o com a situação apresentada;</li>
+                <li>Explique como esse princípio orienta a conduta do servidor público.</li>
+              </ol>
+            </div>
+          </div>
+
+          {/* Card com o Modelo para Enviar */}
+          <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="text-xs font-black uppercase text-amber-400 flex items-center gap-1.5">
+                <span>📲</span> Modelo Formatado para Enviar
+              </span>
+              <button
+                onClick={handleCopyTemplate}
+                className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
+                <Copy className="w-3.5 h-3.5" />
+                <span>{copiedTemplate ? 'Copiado para a Área de Transferência!' : 'Copiar Modelo Pronto'}</span>
+              </button>
+            </div>
+
+            <pre className="p-4 rounded-xl bg-slate-950 text-slate-200 text-xs font-mono whitespace-pre-wrap leading-relaxed border border-slate-800 overflow-x-auto">
+              {practicalTemplateText}
+            </pre>
+
+            <div className="pt-2 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <span className="text-slate-400">
+                Após preencher, envie no WhatsApp individual do professor.
+              </span>
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(practicalTemplateText)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black flex items-center gap-1.5 shadow-md cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Enviar pelo WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </article>
   );
 };

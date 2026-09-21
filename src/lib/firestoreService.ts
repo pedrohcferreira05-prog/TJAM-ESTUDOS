@@ -21,7 +21,8 @@ import {
   PublishedMaterial,
   StudentSubmission,
   SimuladoAttempt,
-  WeeklyScheduleItem
+  WeeklyScheduleItem,
+  TodayLessonConfig
 } from '../types';
 import { Week1Lesson } from '../data/tjamWeek1Data';
 import { DUPLAS_RANKING, INDIVIDUAL_SIMULADO_RANKING, RankingDuplaItem, RankingIndividualItem } from '../data/rankingsData';
@@ -786,6 +787,49 @@ export function subscribeToWeeklySchedule(
   }, (err) => {
     handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/shared_weekly_schedule`);
     onUpdate(fallback);
+  });
+}
+
+// -------------------------------------------------------------
+// 14. TODAY'S LESSONS CONFIG REAL-TIME SYNC (PROFESSOR ORGANIZA)
+// -------------------------------------------------------------
+export async function saveTodayLessonsConfigToFirestore(lessons: TodayLessonConfig[]): Promise<void> {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, 'today_lessons_config');
+    await setDoc(docRef, {
+      lessons,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    handleFirestoreError(err, OperationType.WRITE, `${COLLECTION_NAME}/today_lessons_config`);
+  }
+}
+
+export function subscribeToTodayLessonsConfig(
+  fallbackOrOnUpdate: TodayLessonConfig[] | ((lessons: TodayLessonConfig[]) => void),
+  maybeOnUpdate?: (lessons: TodayLessonConfig[]) => void
+): Unsubscribe {
+  const fallback = typeof fallbackOrOnUpdate === 'function' ? [] : fallbackOrOnUpdate;
+  const onUpdate = typeof fallbackOrOnUpdate === 'function' ? fallbackOrOnUpdate : (maybeOnUpdate || (() => {}));
+
+  const docRef = doc(db, COLLECTION_NAME, 'today_lessons_config');
+  return onSnapshot(docRef, (snapshot) => {
+    if (snapshot && typeof snapshot.exists === 'function' && snapshot.exists() && snapshot.data().lessons) {
+      const data = snapshot.data().lessons as TodayLessonConfig[];
+      if (Array.isArray(data) && data.length > 0) {
+        onUpdate(data);
+        return;
+      }
+    }
+    if (fallback && fallback.length > 0) {
+      onUpdate(fallback);
+      saveTodayLessonsConfigToFirestore(fallback).catch(() => {});
+    }
+  }, (err) => {
+    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/today_lessons_config`);
+    if (fallback && fallback.length > 0) {
+      onUpdate(fallback);
+    }
   });
 }
 

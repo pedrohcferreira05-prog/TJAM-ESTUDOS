@@ -36,455 +36,365 @@ export interface DiscursiveQuestionItem {
 export const inglesFlashcardsData: FlashcardItem[] = [
   {
     id: 1,
-    q: 'Como se diz "12" em inglês e qual a pronúncia aproximada?',
-    a: '"Twelve" — Pronúncia aproximada: "tuélv". Cuidado para não confundir com twenty (20).',
-    frente: '12 — Twelve',
-    verso: 'Twelve (Pronúncia: "tuélv"). Número 12 em inglês.',
-    categoria: 'Números 1-20',
-    dica: 'Termina com som de "v".',
-    pronuncia: 'twelve (tuélv)'
+    q: 'Qual é a diferença de uso entre "Good evening" e "Good night"?',
+    a: '"Good evening" é usado como cumprimento ao chegar ou iniciar uma conversa à noite. "Good night" é usado estritamente como despedida ao sair ou antes de dormir.',
+    frente: 'Good evening vs. Good night',
+    verso: 'Good evening = cumprimento ao chegar à noite. Good night = despedida ao ir embora ou dormir.',
+    categoria: 'Cumprimentos (Greetings)',
+    dica: 'Chegou à noite? Good evening! Vai embora ou dormir? Good night!',
+    pronuncia: 'gud ívning / gud náit'
   },
   {
     id: 2,
-    q: 'Como se escreve o número 40 em inglês e qual o erro comum a evitar?',
-    a: 'Escreve-se "Forty" (sem a letra "u"). Erro comum: escrever "fourty" (incorreto). Quatro é "four", quatorze é "fourteen", mas quarenta é "forty".',
-    frente: '40 — Forty (atenção à ortografia!)',
-    verso: 'Forty (sem a letra "u"). Quatro é "four", mas 40 perde o "u" e fica "forty".',
-    categoria: 'Dezenas',
-    dica: 'Não tem a letra "u"!',
-    pronuncia: 'forty (fórti)'
+    q: 'Quais são os 7 pronomes pessoais (Subject Pronouns) da língua inglesa e seus significados?',
+    a: 'I (eu), You (você/vocês), He (ele), She (ela), It (ele/ela para coisas/animais/situações), We (nós), They (eles/elas).',
+    frente: 'Personal Pronouns (Pronomes Pessoais)',
+    verso: 'I (eu), You (você/vocês), He (ele), She (ela), It (coisas/animais), We (nós), They (eles/elas).',
+    categoria: 'Pronomes Pessoais',
+    dica: '"They" serve tanto para pessoas no plural quanto para coisas/animais no plural.',
+    pronuncia: 'ái, iú, hí, xí, it, uí, dêi'
   },
   {
     id: 3,
-    q: 'Como se formam números compostos como 25, 48 e 99 em inglês?',
-    a: 'Junta-se a dezena com a unidade separada por hífen (-): 25 = twenty-five; 48 = forty-eight; 99 = ninety-nine.',
-    frente: 'Formação de Números Compostos (21 a 99)',
-    verso: 'Dezena + hífen + unidade. Ex: 25 = twenty-five; 99 = ninety-nine.',
-    categoria: 'Formação de Números',
-    dica: 'Sempre com hífen entre a dezena e a unidade.',
-    pronuncia: 'twenty-five / ninety-nine'
+    q: 'Como se conjuga o verbo TO BE no presente afirmativo para todas as pessoas?',
+    a: 'I am | You are | He is | She is | It is | We are | They are.',
+    frente: 'Conjugação do Verbo TO BE (Presente)',
+    verso: 'I am | You are | He/She/It is | We are | They are. Significa "ser" ou "estar".',
+    categoria: 'Verbo TO BE',
+    dica: 'Lembre-se do trio singular: He, She, It usam sempre "is"!',
+    pronuncia: 'am, ar, iz'
   },
   {
     id: 4,
-    q: 'Como se diz 100 em inglês?',
-    a: '"One hundred" (ou "a hundred"). Pronúncia aproximada: "uán rândred".',
-    frente: '100 — One hundred',
-    verso: 'One hundred (ou a hundred). Significa cem / cento.',
-    categoria: 'Números',
-    dica: 'hundred = cem/cento.',
-    pronuncia: 'one hundred (uán rândred)'
+    q: 'Quais são as formas contraídas afirmativas do verbo TO BE com os pronomes?',
+    a: 'I am → I\'m | You are → You\'re | He is → He\'s | She is → She\'s | It is → It\'s | We are → We\'re | They are → They\'re.',
+    frente: 'Formas Contraídas Afirmativas (TO BE)',
+    verso: 'I\'m, You\'re, He\'s, She\'s, It\'s, We\'re, They\'re. São amplamente usadas na fala e na escrita informal/cotidiana.',
+    categoria: 'Contrações',
+    dica: 'Substitui-se a primeira vogal do verbo pelo apóstrofo (\').',
+    pronuncia: 'áim, iór, híz, xíz, its, uír, dêir'
   },
   {
     id: 5,
-    q: 'Qual a pergunta padrão em inglês para "Que horas são?" e como se responde "São..."?',
-    a: 'Pergunta: "What time is it?" (Que horas são?). Resposta padrão: "It\'s..." (São... / É...).',
-    frente: 'What time is it? / It\'s...',
-    verso: 'Que horas são? / São... (ou É...). Ex: It\'s seven o\'clock (São sete horas).',
-    categoria: 'Horas',
-    dica: 'Usa-se sempre "It\'s" para iniciar a resposta de horários.',
-    pronuncia: 'uót táim iz it? / íts...'
+    q: 'Como se formam frases negativas com o verbo TO BE e quais as contrações possíveis?',
+    a: 'Acrescenta-se "not" após o verbo. Ex: is not = isn\'t | are not = aren\'t | I am not = I\'m not (não existe "amn\'t").',
+    frente: 'Negativas com TO BE (isn\'t / aren\'t)',
+    verso: 'is + not = isn\'t | are + not = aren\'t | I am not = I\'m not. Ex: He isn\'t a student. We aren\'t ready.',
+    categoria: 'Forma Negativa',
+    dica: 'I am not contrai como I\'m not (nunca use amn\'t).',
+    pronuncia: 'íznt, árnt, áim nót'
   },
   {
     id: 6,
-    q: 'Quando devemos usar a expressão "o\'clock" ao informar as horas?',
-    a: 'Usa-se "o\'clock" APENAS para horas exatas (sem minutos). Ex: 07:00 = "It\'s seven o\'clock". Nunca usar com minutos (ex: *seven thirty o\'clock é errado).',
-    frente: 'Regra de ouro do "o\'clock"',
-    verso: 'APENAS para horas redondas/exatas. Ex: It\'s 7:00 = It\'s seven o\'clock.',
-    categoria: 'Horas',
-    dica: 'Hora exata na ponta do ponteiro.',
-    pronuncia: 'o\'clock (ou-clók)'
+    q: 'Como transformar uma frase afirmativa com TO BE em pergunta e como responder de forma curta?',
+    a: 'Inverte-se a posição do verbo para antes do sujeito: "You are Brazilian" → "Are you Brazilian?". Respostas curtas: "Yes, I am." / "No, I\'m not."',
+    frente: 'Perguntas com TO BE (Inversão do Verbo)',
+    verso: 'Verbo antes do sujeito: Are you...? / Is she...? Resposta curta: Yes, I am / No, I\'m not.',
+    categoria: 'Interrogação',
+    dica: 'Nas respostas curtas afirmativas, NUNCA se usa contração (diz-se "Yes, I am", nunca *"Yes, I\'m").',
+    pronuncia: 'ar iú...? / iz xí...?'
   },
   {
     id: 7,
-    q: 'O que significam as siglas "a.m." e "p.m." e quando cada uma é usada?',
-    a: '"a.m." (ante meridiem) = antes do meio-dia (00:00 às 11:59). "p.m." (post meridiem) = após o meio-dia (12:00 às 23:59).',
-    frente: 'a.m. vs. p.m.',
-    verso: 'a.m. = da madrugada até antes do meio-dia. p.m. = do meio-dia até às 23:59 da noite.',
-    categoria: 'Horas',
-    dica: 'a.m. = Antes do Meio-dia (AM). p.m. = Pós-Meio-dia (PM).',
-    pronuncia: 'êi-ém / pí-ém'
+    q: 'O que significam as principais palavras interrogativas (Wh- Questions): What, Where, Who, When, How, Why?',
+    a: 'What = o quê/qual | Where = onde | Who = quem | When = quando | How = como | Why = por quê.',
+    frente: 'Question Words (What, Where, Who, When, How, Why)',
+    verso: 'What (o quê/qual), Where (onde), Who (quem), When (quando), How (como), Why (por quê).',
+    categoria: 'Palavras Interrogativas',
+    dica: 'Where are you from? (De onde você é?) | What is your name? (Qual é seu nome?)',
+    pronuncia: 'uót, uér, rrú, uên, rráu, uái'
   },
   {
     id: 8,
-    q: 'Como dizer 08:30 e 09:45 de forma direta em inglês?',
-    a: '08:30 = "It\'s eight thirty." | 09:45 = "It\'s nine forty-five." Fala-se a hora seguida do número dos minutos.',
-    frente: 'Horas com Minutos (Formato Direto)',
-    verso: '08:30 = It\'s eight thirty. 09:45 = It\'s nine forty-five.',
-    categoria: 'Horas',
-    dica: 'Hora + Minutos. Simples e direto!',
-    pronuncia: 'eight thirty / nine forty-five'
+    q: 'Como se diz "servidor público", "juiz", "advogado" e "tribunal" em inglês?',
+    a: 'Public servant = servidor público | Judge = juiz | Lawyer = advogado | Court = tribunal / vara judicial.',
+    frente: 'Vocabulário Jurídico & Concurso TJAM',
+    verso: 'public servant (servidor público), judge (juiz), lawyer (advogado), court (tribunal).',
+    categoria: 'Vocabulário TJAM',
+    dica: 'Termos fundamentais para provas do Tribunal de Justiça.',
+    pronuncia: 'pâblik sérvant, djâdj, lóier, córt'
   },
   {
     id: 9,
-    q: 'Quais são os 7 dias da semana em inglês e qual regra ortográfica obrigatória eles seguem?',
-    a: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. Regra: Nomes de dias da semana SEMPRE começam com letra MAIÚSCULA em inglês.',
-    frente: 'Dias da Semana (Monday a Sunday)',
-    verso: 'Monday (seg), Tuesday (ter), Wednesday (qua), Thursday (qui), Friday (sex), Saturday (sáb), Sunday (dom). Sempre com inicial maiúscula!',
-    categoria: 'Dias da Semana',
-    dica: 'Wednesday tem o "d" mudo ("uénzdei").',
-    pronuncia: 'mândei, tiúzdei, uénzdei, têrzdei, fráidei, sátêrdei, sândei'
+    q: 'Como expressar nome, origem, moradia e profissão em inglês?',
+    a: 'Nome: My name is... (ou I am...) | Origem: I am from... | Moradia: I live in... | Profissão: I am a student / I am a public servant.',
+    frente: 'Estruturas de Apresentação Pessoal',
+    verso: 'My name is... | I am from [país/cidade] | I live in [cidade] | I am a [profissão].',
+    categoria: 'Apresentação Pessoal',
+    dica: 'Antes de profissão no singular, usa-se o artigo "a" ou "an": I am A public servant.',
+    pronuncia: 'mái néim iz... / ái am frôm... / ái lív in...'
   },
   {
     id: 10,
-    q: 'O que significam "Today", "Tomorrow" e "Yesterday" em inglês?',
-    a: '"Today" = hoje | "Tomorrow" = amanhã | "Yesterday" = ontem.',
-    frente: 'Today, Tomorrow & Yesterday',
-    verso: 'Today = hoje | Tomorrow = amanhã | Yesterday = ontem.',
-    categoria: 'Expressões Temporais',
-    dica: 'Yesterday (passado), Today (presente), Tomorrow (futuro).',
-    pronuncia: 'tudêi, tumórou, iésterdei'
+    q: 'Qual a estratégia fundamental para resolver questões de interpretação em inglês de nível inicial/concurso?',
+    a: 'Localizar informações explícitas no texto: identificar nomes, nacionalidades (Brazilian, English), locais (live in...) e ocupações/objetivos sem se preocupar em traduzir palavra por palavra.',
+    frente: 'Interpretação: Informações Explícitas',
+    verso: 'Buscar palavras-chave (cognatos e vocabulário básico): name, from, live, student, public servant.',
+    categoria: 'Técnicas de Prova TJAM',
+    dica: 'Não tente traduzir cada termo isolado; busque a ideia central e os dados objetivos pedidos pela questão.',
+    pronuncia: 'reading comprehension'
   }
 ];
 
 export const inglesMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: 'Qual é o número correspondente a “twelve”?',
+    enunciado: 'Complete corretamente:\n\n“Maria ___ a student and her parents ___ teachers.”',
     opcoes: [
-      'A) 10',
-      'B) 11',
-      'C) 12',
-      'D) 20'
+      'A) am / is',
+      'B) is / are',
+      'C) are / is',
+      'D) is / am',
+      'E) are / are'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Twelve" corresponde ao número 12. Os outros números são: 10 = ten, 11 = eleven, 20 = twenty.'
+    correta: 1,
+    explicacao: 'Gabarito: B. "Maria" é 3ª pessoa do singular (she), exigindo o verbo "is". "Her parents" (os pais dela) está no plural (they), exigindo o verbo "are". Portanto: "Maria is a student and her parents are teachers."'
   },
   {
     id: 2,
-    enunciado: '“Twenty-five” corresponde a:',
+    enunciado: 'Assinale a alternativa gramaticalmente correta:',
     opcoes: [
-      'A) 15',
-      'B) 20',
-      'C) 25',
-      'D) 35'
+      'A) They is Brazilian.',
+      'B) He are a student.',
+      'C) I am Brazilian.',
+      'D) She are a teacher.',
+      'E) We is ready.'
     ],
     correta: 2,
-    explicacao: 'Gabarito: C. "Twenty" (20) + "five" (5) = twenty-five (25). 15 é fifteen, 20 é twenty, e 35 é thirty-five.'
+    explicacao: 'Gabarito: C. A concordância correta do verbo to be é: I am. As outras alternativas contêm erros de concordância: They are (não is), He is (não are), She is (não are), We are (não is).'
   },
   {
     id: 3,
-    enunciado: 'Como se escreve o número 40 em inglês?',
+    enunciado: 'Leia:\n\n“John is from England. He is a teacher and he lives in London.”\n\nDe acordo com o texto, John:',
     opcoes: [
-      'A) Fourty',
-      'B) Forty',
-      'C) Fourteen',
-      'D) Four'
+      'A) é brasileiro.',
+      'B) mora no Brasil.',
+      'C) é professor.',
+      'D) mora nos Estados Unidos.',
+      'E) é estudante.'
     ],
-    correta: 1,
-    explicacao: 'Gabarito: B. O número 40 em inglês é escrito "Forty", SEM a letra "u". Esta é uma das pegadinhas ortográficas mais clássicas do inglês. Four é 4 e fourteen é 14.'
+    correta: 2,
+    explicacao: 'Gabarito: C. O texto afirma expressamente: "He is a teacher" (Ele é professor). Além disso, ele é da Inglaterra (England) e mora em Londres (London).'
   },
   {
     id: 4,
-    enunciado: '“Seventy” significa:',
+    enunciado: 'Na frase “They are public servants”, o pronome They refere-se a:',
     opcoes: [
-      'A) 17',
-      'B) 60',
-      'C) 70',
-      'D) 80'
+      'A) uma pessoa do sexo masculino.',
+      'B) uma pessoa do sexo feminino.',
+      'C) uma coisa.',
+      'D) duas ou mais pessoas.',
+      'E) somente duas mulheres.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Seventy" significa 70. O sufixo "-ty" indica dezena (seventy = 70). Já o sufixo "-teen" indica os números de 13 a 19 (seventeen = 17). 60 é sixty e 80 é eighty.'
+    correta: 3,
+    explicacao: 'Gabarito: D. O pronome "They" é a 3ª pessoa do plural e significa "eles" ou "elas", referindo-se a duas ou mais pessoas (ou coisas/animais no plural).'
   },
   {
     id: 5,
-    enunciado: 'Como se escreve 99 em inglês?',
+    enunciado: 'Assinale a alternativa que apresenta a forma negativa correta:\n\n“She ___ a lawyer.”',
     opcoes: [
-      'A) Ninety-nine',
-      'B) Nineteen-nine',
-      'C) Ninety-niney',
-      'D) Nine-nine'
+      'A) is not',
+      'B) are not',
+      'C) am not',
+      'D) not is',
+      'E) not are'
     ],
     correta: 0,
-    explicacao: 'Gabarito: A. Escreve-se "Ninety-nine", composto pela dezena "ninety" (90) mais a unidade "nine" (9) ligadas por hífen.'
+    explicacao: 'Gabarito: A. A negação com o verbo to be é formada pelo verbo seguido da partícula "not": "She is not a lawyer" (ou contraído: "She isn\'t a lawyer").'
   },
   {
     id: 6,
-    enunciado: '“What time is it?” significa:',
+    enunciado: 'A pergunta “Where are you from?” significa:',
     opcoes: [
-      'A) Que dia é hoje?',
-      'B) Que horas são?',
-      'C) Qual é o seu nome?',
-      'D) Onde você está?'
+      'A) Qual é o seu nome?',
+      'B) Onde você trabalha?',
+      'C) De onde você é?',
+      'D) Quem é você?',
+      'E) Como você está?'
     ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "What time is it?" é a pergunta padrão em língua inglesa para saber o horário ("Que horas são?"). "Que dia é hoje?" seria "What day is today?".'
+    correta: 2,
+    explicacao: 'Gabarito: C. "Where are you from?" pergunta a origem/nacionalidade de alguém: "De onde você é?". "Qual é o seu nome?" é "What is your name?"; "Como você está?" é "How are you?".'
   },
   {
     id: 7,
-    enunciado: 'Como dizer 7:00 em inglês?',
+    enunciado: 'Complete corretamente:\n\n“___ you Brazilian?”',
     opcoes: [
-      'A) It\'s seven clock.',
-      'B) It\'s seven o\'clock.',
-      'C) It\'s seventh.',
-      'D) It\'s seven time.'
+      'A) Is',
+      'B) Am',
+      'C) Are',
+      'D) Be',
+      'E) Do'
     ],
-    correta: 1,
-    explicacao: 'Gabarito: B. Para horas exatas redondas (sem minutos), usamos "o\'clock" com o apóstrofo: "It\'s seven o\'clock." (São sete horas).'
+    correta: 2,
+    explicacao: 'Gabarito: C. Para fazer uma pergunta com o pronome "you" e o verbo to be, inverte-se o verbo "are" para antes do sujeito: "Are you Brazilian?".'
   },
   {
     id: 8,
-    enunciado: 'Como dizer 8:30 em inglês?',
+    enunciado: 'Leia:\n\n“I am Lucas. I am Brazilian, but I live in London. I am a student.”\n\nÉ correto afirmar que Lucas:',
     opcoes: [
-      'A) It\'s eight thirty.',
-      'B) It\'s eight thirteen.',
-      'C) It\'s thirty eight.',
-      'D) It\'s eight o\'clock.'
+      'A) é inglês.',
+      'B) mora no Brasil.',
+      'C) é brasileiro e mora em Londres.',
+      'D) é professor.',
+      'E) não é estudante.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito: A. No formato digital/direto, lê-se primeiro a hora (eight = 8) e depois os minutos (thirty = 30): "It\'s eight thirty." Cuidado: thirteen é 13.'
+    correta: 2,
+    explicacao: 'Gabarito: C. O texto diz: "I am Brazilian" (sou brasileiro), "but I live in London" (mas moro em Londres) e "I am a student" (sou estudante). Logo, Lucas é brasileiro e mora em Londres.'
   },
   {
     id: 9,
-    enunciado: '“a.m.” é utilizado, normalmente, para indicar:',
+    enunciado: 'Assinale a alternativa em que a contração está correta:',
     opcoes: [
-      'A) Horários depois do meio-dia.',
-      'B) Horários antes do meio-dia.',
-      'C) Somente horários à noite.',
-      'D) Somente meia-noite.'
+      'A) He\'re',
+      'B) She\'re',
+      'C) They\'s',
+      'D) We\'re',
+      'E) I\'s'
     ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "a.m." vem do latim "ante meridiem" e significa "antes do meio-dia", cobrindo o período da meia-noite (00:00) até 11:59 da manhã.'
+    correta: 3,
+    explicacao: 'Gabarito: D. A contração correta para "We are" é "We\'re". As outras opções contêm erros grosseiros: He is = He\'s (não He\'re); She is = She\'s (não She\'re); They are = They\'re (não They\'s); I am = I\'m (não I\'s).'
   },
   {
     id: 10,
-    enunciado: '“It\'s nine forty-five” corresponde a:',
+    enunciado: 'Na frase:\n\n“The employees are at work.”\n\nA palavra employees significa:',
     opcoes: [
-      'A) 9:15',
-      'B) 9:30',
-      'C) 9:45',
-      'D) 10:45'
+      'A) estudantes.',
+      'B) cidadãos.',
+      'C) funcionários.',
+      'D) professores.',
+      'E) juízes.'
     ],
     correta: 2,
-    explicacao: 'Gabarito: C. "Nine" = 9 e "forty-five" = 45. Portanto, "It\'s nine forty-five" corresponde a 9:45.'
-  },
-  {
-    id: 11,
-    enunciado: '“Monday” significa:',
-    opcoes: [
-      'A) Terça-feira',
-      'B) Segunda-feira',
-      'C) Quarta-feira',
-      'D) Domingo'
-    ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "Monday" é a segunda-feira. Terça-feira é Tuesday, quarta-feira é Wednesday e domingo é Sunday.'
-  },
-  {
-    id: 12,
-    enunciado: '“Wednesday” significa:',
-    opcoes: [
-      'A) Segunda-feira',
-      'B) Terça-feira',
-      'C) Quarta-feira',
-      'D) Quinta-feira'
-    ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Wednesday" é quarta-feira (pronuncia-se "uénz-dei", com o "d" mudo). Quinta-feira é Thursday.'
-  },
-  {
-    id: 13,
-    enunciado: 'Qual é o inglês para sexta-feira?',
-    opcoes: [
-      'A) Thursday',
-      'B) Friday',
-      'C) Saturday',
-      'D) Sunday'
-    ],
-    correta: 1,
-    explicacao: 'Gabarito: B. Sexta-feira em inglês é "Friday" (como em "Black Friday" ou "Thank God it\'s Friday - TGIF").'
-  },
-  {
-    id: 14,
-    enunciado: '“Saturday” significa:',
-    opcoes: [
-      'A) Sexta-feira',
-      'B) Domingo',
-      'C) Sábado',
-      'D) Segunda-feira'
-    ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Saturday" significa sábado. Sexta-feira é Friday e domingo é Sunday.'
-  },
-  {
-    id: 15,
-    enunciado: 'Qual é o último dia da semana na sequência apresentada na aula (Monday a Sunday)?',
-    opcoes: [
-      'A) Friday',
-      'B) Saturday',
-      'C) Sunday',
-      'D) Monday'
-    ],
-    correta: 2,
-    explicacao: 'Gabarito: C. Na sequência apresentada na aula iniciando em Monday (segunda-feira), a semana se encerra em Sunday (domingo).'
-  },
-  {
-    id: 16,
-    enunciado: '“Today” significa:',
-    opcoes: [
-      'A) Amanhã',
-      'B) Ontem',
-      'C) Hoje',
-      'D) Semana'
-    ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Today" significa hoje. Amanhã é "tomorrow", ontem é "yesterday" e semana é "week".'
-  },
-  {
-    id: 17,
-    enunciado: '“Tomorrow” significa:',
-    opcoes: [
-      'A) Hoje',
-      'B) Amanhã',
-      'C) Ontem',
-      'D) Tarde'
-    ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "Tomorrow" significa amanhã. Exemplo: "See you tomorrow!" (Vejo você amanhã!).'
-  },
-  {
-    id: 18,
-    enunciado: '“Yesterday” significa:',
-    opcoes: [
-      'A) Amanhã',
-      'B) Hoje',
-      'C) Ontem',
-      'D) Noite'
-    ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Yesterday" significa ontem (famoso pela clássica canção dos Beatles).'
-  },
-  {
-    id: 19,
-    enunciado: '“Morning” significa:',
-    opcoes: [
-      'A) Manhã',
-      'B) Tarde',
-      'C) Noite',
-      'D) Semana'
-    ],
-    correta: 0,
-    explicacao: 'Gabarito: A. "Morning" significa manhã. Daí a saudação "Good morning" (Bom dia / Boa manhã).'
-  },
-  {
-    id: 20,
-    enunciado: '“Day” significa:',
-    opcoes: [
-      'A) Hora',
-      'B) Dia',
-      'C) Mês',
-      'D) Ano'
-    ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "Day" significa dia. Hora é "hour", mês é "month" e ano é "year".'
+    explicacao: 'Gabarito: C. "Employee" significa empregado/funcionário (plural: employees = funcionários). Estudantes = students, cidadãos = citizens, professores = teachers, juízes = judges.'
   }
 ];
 
 export const inglesTfQuestionsData: TfQuestionItem[] = [
   {
     id: 1,
-    enunciado: 'A palavra correspondente ao número 40 em inglês deve ser grafada como "Forty", sem a letra "u".',
+    enunciado: 'Na frase “I am a student”, o verbo to be está corretamente conjugado.',
     correta: true,
-    explicacao: 'VERDADEIRO. Diferente de "four" (4) e "fourteen" (14), o número 40 em inglês perde a letra "u" e escreve-se "forty".'
+    explicacao: 'VERDADEIRO. Com a primeira pessoa do singular ("I"), a conjugação correta do verbo to be no presente é exatamente "am".'
   },
   {
     id: 2,
-    enunciado: 'A expressão "o\'clock" pode ser utilizada tanto para horas exatas (ex: 7:00) quanto para horas com minutos (ex: 7:30).',
+    enunciado: 'A frase “She are Brazilian” está gramaticalmente correta.',
     correta: false,
-    explicacao: 'FALSO. A expressão "o\'clock" é de uso restrito e exclusivo para horas inteiras/exatas (ex: It\'s seven o\'clock). Dizer "It\'s seven thirty o\'clock" é um erro gramatical.'
+    explicacao: 'FALSO. Com o pronome "She" (3ª pessoa do singular), deve-se usar "is". A frase correta é: "She is Brazilian".'
   },
   {
     id: 3,
-    enunciado: 'O período compreendido entre 00:00 (meia-noite) e 11:59 da manhã é representado pela sigla "a.m." (ante meridiem).',
+    enunciado: 'Na frase “They are students”, o pronome they está associado ao verbo are.',
     correta: true,
-    explicacao: 'VERDADEIRO. "a.m." refere-se a todos os horários antes do meio-dia. Das 12:00 às 23:59 utiliza-se "p.m.".'
+    explicacao: 'VERDADEIRO. O pronome "they" (eles/elas) é plural e se associa perfeitamente à forma verbal "are".'
   },
   {
     id: 4,
-    enunciado: 'Em inglês, os nomes dos dias da semana (Monday, Tuesday, etc.) devem ser sempre grafados com inicial maiúscula.',
+    enunciado: 'A frase “He isn\'t a teacher” significa “Ele não é professor”.',
     correta: true,
-    explicacao: 'VERDADEIRO. Diferente do português, na língua inglesa os dias da semana e os meses do ano sempre recebem inicial maiúscula obrigatória.'
+    explicacao: 'VERDADEIRO. "isn\'t" é a forma contraída de "is not", indicando negação: "Ele não é professor".'
   },
   {
     id: 5,
-    enunciado: 'A palavra "Tomorrow" refere-se ao dia que já passou (ontem), enquanto "Yesterday" refere-se ao dia seguinte (amanhã).',
-    correta: false,
-    explicacao: 'FALSO. É exatamente o inverso: "Yesterday" é ontem (passado) e "Tomorrow" é amanhã (futuro).'
+    enunciado: 'A pergunta “What is your name?” pode ser traduzida como “Qual é o seu nome?”.',
+    correta: true,
+    explicacao: 'VERDADEIRO. Trata-se da pergunta básica em inglês para identificação pessoal, traduzindo-se literalmente e contextualmente como "Qual é o seu nome?".'
   }
 ];
 
 export const inglesDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
     id: 1,
-    titulo: '🎥 Exercício Prático Oral — Parte 1: Numbers (Números)',
-    enunciado: 'Sem efetuar leitura de texto:\n1. Conte de 1 a 20 em inglês pausadamente.\n2. Pronuncie com clareza os números: 25, 40, 57, 80 e 99.',
-    respostaEsperada: 'Roteiro de pronúncia esperada:\n1. One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty.\n2. Números compostos e dezenas: twenty-five (25), forty (40), fifty-seven (57), eighty (80), ninety-nine (99).',
+    titulo: 'Questão 16 — Diferença entre I am, You are e He/She is',
+    enunciado: 'Explique a diferença entre "I am", "You are" e "He/She is", indicando a pessoa gramatical e a regra de aplicação.',
+    respostaEsperada: 'Gabarito oficial:\n• "I am" é usado com a 1ª pessoa do singular ("I" = eu);\n• "You are" é usado com a 2ª pessoa ("you" = você ou vocês);\n• "He is" e "She is" são usados com a 3ª pessoa do singular masculino e feminino ("he" = ele, "she" = ela).',
     espelhoCorrecao: [
-      'Contagem completa e correta de 1 até 20 sem hesitações excessivas',
-      'Distinção clara entre sons de -teen e -ty (ex: fourteen vs forty)',
-      'Pronúncia correta de forty (sem som de "u"), eighty e ninety-nine'
+      'Identificação de "I am" como 1ª pessoa do singular (eu)',
+      'Identificação de "You are" como 2ª pessoa (você/vocês)',
+      'Identificação de "He is / She is" como 3ª pessoa do singular (ele/ela)'
     ],
     pontosChave: [
-      'Pronúncia correta de "twelve", "thirteen", "fifteen"',
-      'Não confundir 14 com 40 nem 18 com 80',
-      'Fluência na numeração sem interrupções'
+      'Concordância pessoa + forma do verbo to be',
+      'am exclusivo de I',
+      'is para 3ª pessoa do singular (he, she, it)'
     ]
   },
   {
     id: 2,
-    titulo: '🕐 Exercício Prático Oral — Parte 2: Time (Horários)',
-    enunciado: 'O professor ou responsável mostra os seguintes horários e o aluno fala em inglês:\n• 07:00\n• 08:30\n• 10:15\n• 12:00\n• 14:45\nEm seguida, responda à pergunta: "What time is it?" informando o horário atual.',
-    respostaEsperada: 'Respostas em inglês:\n• 07:00 → It\'s seven o\'clock.\n• 08:30 → It\'s eight thirty.\n• 10:15 → It\'s ten fifteen.\n• 12:00 → It\'s twelve o\'clock (ou It\'s noon / It\'s midday).\n• 14:45 → It\'s two forty-five p.m. (ou It\'s fourteen forty-five).\nResposta ao "What time is it?": "It\'s [hora atual] o\'clock / [hora e minutos]."',
+    titulo: 'Questão 17 — Tradução de Frase Composta',
+    enunciado: 'Traduza para o português a seguinte frase:\n\n“They are Brazilian students and they live in Manaus.”',
+    respostaEsperada: 'Gabarito oficial:\n“Eles são estudantes brasileiros e moram em Manaus.” (ou “Elas são estudantes brasileiras e moram em Manaus.”)',
     espelhoCorrecao: [
-      'Uso correto de "It\'s" no início de cada resposta de horário',
-      'Emprego exclusivo de "o\'clock" apenas nas horas redondas (07:00, 12:00)',
-      'Leitura fluida de minutos compostos (eight thirty, ten fifteen, two forty-five)'
+      'Tradução de "They are Brazilian students" para "Eles são estudantes brasileiros"',
+      'Tradução do conectivo "and" para "e"',
+      'Tradução de "they live in Manaus" para "moram em Manaus / eles vivem em Manaus"'
     ],
     pontosChave: [
-      'Estrutura: It\'s + hora + minutos',
-      'Regra de o\'clock',
-      'Compreensão da pergunta "What time is it?"'
+      'Adequação do pronome they (eles/elas)',
+      'Ordem adjetivo + substantivo no inglês (Brazilian students)',
+      'Verbo live in = morar/viver em'
     ]
   },
   {
     id: 3,
-    titulo: '📅 Exercício Prático Oral — Parte 3: Days (Dias da Semana)',
-    enunciado: '1. Fale os 7 dias da semana em inglês, em ordem sequencial de Monday a Sunday.\n2. Responda em voz alta:\n• What day is today?\n• What day is tomorrow?\n• What day was yesterday?',
-    respostaEsperada: 'Respostas esperadas:\n1. Sequência: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.\n2. Perguntas temporais:\n• "Today is [dia de hoje, ex: Friday]."\n• "Tomorrow is [dia de amanhã, ex: Saturday]."\n• "Yesterday was [dia de ontem, ex: Thursday]."',
+    titulo: 'Questão 18 — Transformação para Forma Negativa',
+    enunciado: 'Passe a seguinte frase para a forma negativa (tanto por extenso quanto na forma contraída):\n\n“She is a public servant.”',
+    respostaEsperada: 'Gabarito oficial:\nForma por extenso: “She is not a public servant.”\nForma contraída: “She isn\'t a public servant.”\n(Significado: Ela não é servidora pública).',
     espelhoCorrecao: [
-      'Recitação sequencial completa dos 7 dias sem pular nenhum',
-      'Pronúncia correta de Tuesday vs Thursday e Wednesday',
-      'Uso adequado do verbo no presente (Today is / Tomorrow is) e no passado (Yesterday was)'
+      'Acréscimo da partícula negativa "not" após o verbo to be ("She is not...")',
+      'Apresentação da forma contraída correta ("She isn\'t...")',
+      'Manutenção do complemento nominal "a public servant"'
     ],
     pontosChave: [
-      '7 dias na ordem correta',
-      'Diferenciação temporal (Today / Tomorrow / Yesterday)',
-      'Uso correto de is vs was'
+      'is not = isn\'t',
+      'Manutenção do artigo indefinido "a"',
+      'Termo public servant (servidor público)'
     ]
   },
   {
     id: 4,
-    titulo: '🎯 Desafio Final — Apresentação Pessoal Gravada em Vídeo',
-    enunciado: 'Grave um vídeo para o professor apresentando oralmente o roteiro completo:\n“Hello! Today is [dia de hoje]. It is [horário] o\'clock. My favorite day is [dia favorito].”\nObjetivo: Praticar fala, pronúncia, memorização e compreensão do inglês com números, horas e dias da semana.',
-    respostaEsperada: 'Exemplo de apresentação modelo no vídeo:\n"Hello! Today is Friday. It is eight o\'clock. My favorite day is Saturday. Nice to meet you!"\nVídeo gravado com postura confiante, boa dicção e enviado ao professor via WhatsApp.',
+    titulo: 'Questão 19 — Pergunta e Respostas Curtas (Short Answers)',
+    enunciado: 'Transforme a frase afirmativa “He is a student” em uma pergunta. Em seguida, escreva uma resposta curta afirmativa e uma resposta curta negativa.',
+    respostaEsperada: 'Gabarito oficial:\n• Pergunta (inversão): “Is he a student?”\n• Resposta curta afirmativa: “Yes, he is.”\n• Resposta curta negativa: “No, he isn\'t.” (ou “No, he is not.”)',
     espelhoCorrecao: [
-      'Saudação calorosa e preenchimento correto dos três dados solicitados',
-      'Concordância precisa entre o dia real e a hora informada',
-      'Clareza e naturalidade na pronúncia das palavras em inglês'
+      'Inversão da ordem verbo-sujeito para formar a pergunta com pontuação de interrogação: "Is he a student?"',
+      'Resposta curta afirmativa correta sem contração: "Yes, he is."',
+      'Resposta curta negativa correta: "No, he isn\'t."'
     ],
     pontosChave: [
-      'Gravação do vídeo com fala audível',
-      'Estrutura: Hello! Today is... It is... o\'clock. My favorite day is...',
-      'Envio do vídeo para o WhatsApp do professor'
+      'Inversão do to be na interrogação',
+      'Pontuação correta (?)',
+      'Regra de não contrair a resposta curta afirmativa ("Yes, he is", não "Yes, he\'s")'
+    ]
+  },
+  {
+    id: 5,
+    titulo: 'Questão 20 — Interpretação de Texto com Respostas em Inglês',
+    enunciado: 'Leia o texto abaixo:\n\n“My name is Ana. I am Brazilian. I live in Manaus. I am a student and I study English every day.”\n\nResponda em inglês:\na) What is her name?\nb) Where is she from?\nc) Where does she live?\nd) Is she a student?',
+    respostaEsperada: 'Gabarito oficial (respostas em inglês):\na) Her name is Ana. (ou She is Ana.)\nb) She is from Brazil. / She is Brazilian.\nc) She lives in Manaus.\nd) Yes, she is.',
+    espelhoCorrecao: [
+      'Item a: "Her name is Ana." ou "Ana."',
+      'Item b: "She is Brazilian." ou "She is from Brazil."',
+      'Item c: "She lives in Manaus." ou "In Manaus."',
+      'Item d: "Yes, she is."'
+    ],
+    pontosChave: [
+      'Localização exata das informações explícitas no texto',
+      'Concordância com a 3ª pessoa feminina (her / she)',
+      'Resposta correta com to be (Yes, she is)'
     ]
   }
 ];
 
 export const inglesSummaryPoints: string[] = [
-  '🔢 Números 1 a 20: one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty.',
-  '🔢 Dezenas e Centena: 30 (thirty), 40 (forty — sem "u"!), 50 (fifty), 60 (sixty), 70 (seventy), 80 (eighty), 90 (ninety), 100 (one hundred).',
-  '🔢 Formação Numérica: Dezena + hífen + unidade (ex: 21 twenty-one, 35 thirty-five, 48 forty-eight, 99 ninety-nine).',
-  '🕐 Horas: Pergunta padrão: "What time is it?" | Resposta: "It\'s..." | Horas exatas usam "o\'clock" (ex: It\'s 7:00 = It\'s seven o\'clock).',
-  '🕐 Minutos e Siglas: Formato direto (8:30 = It\'s eight thirty). "a.m." = antes do meio-dia (00:00 às 11:59) | "p.m." = após o meio-dia (12:00 às 23:59).',
-  '📅 Dias da Semana (sempre com maiúscula): Monday (segunda), Tuesday (terça), Wednesday (quarta), Thursday (quinta), Friday (sexta), Saturday (sábado), Sunday (domingo).',
-  '📅 Expressões Temporais: Today (hoje), Tomorrow (amanhã), Yesterday (ontem), Day (dia), Week (semana), Morning (manhã).'
+  '👋 Cumprimentos (Greetings): Hello! (Olá), Hi! (Oi), Good morning (Bom dia), Good afternoon (Boa tarde), Good evening (Boa noite ao chegar), Good night (Boa noite ao sair/dormir).',
+  '⚠️ Good evening vs. Good night: Good evening é saudação de chegada à noite; Good night é estritamente despedida ao sair ou antes de dormir.',
+  '👤 Pronomes Pessoais (Subject Pronouns): I (eu), You (você/vocês), He (ele), She (ela), It (coisas/animais), We (nós), They (eles/elas — plural geral).',
+  '⚡ Verbo TO BE no Presente: I am | You are | He/She/It is | We are | They are. Significa "ser" ou "estar" dependendo do contexto.',
+  '✂️ Formas Contraídas: I\'m, You\'re, He\'s, She\'s, It\'s, We\'re, They\'re. Muito comuns no inglês cotidiano e diálogos.',
+  '🚫 Forma Negativa: Acrescenta-se "not" após o verbo to be. Formas contraídas: isn\'t (is not) e aren\'t (are not). I am not contrai como I\'m not.',
+  '❓ Perguntas & Inversão: Inverte-se a posição do verbo com o sujeito: "She is a student" → "Is she a student?". Respostas curtas: "Yes, she is." / "No, she isn\'t."',
+  '🔍 Palavras Interrogativas (Wh-): What (o quê/qual), Where (onde), Who (quem), When (quando), How (como), Why (por quê).',
+  '⚖️ Vocabulário Essencial Concurso TJAM: student (estudante), teacher (professor), lawyer (advogado), judge (juiz), employee (funcionário), public servant (servidor público), court (tribunal).',
+  '🎯 Interpretação de Textos: Treinar a localização de dados explícitos (nome, nacionalidade, cidade onde mora, ocupação e objetivos) sem traduzir palavra por palavra.'
 ];

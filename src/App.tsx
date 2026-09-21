@@ -17,6 +17,7 @@ import {
   VideoLesson,
   Topic,
   StudentSubmission,
+  TodayLessonConfig,
 } from './types';
 import {
   TJAM_DISCIPLINES,
@@ -80,7 +81,10 @@ import {
   subscribeToSharedWeeklyGoals,
   saveWeeklyScheduleToFirestore,
   subscribeToWeeklySchedule,
+  saveTodayLessonsConfigToFirestore,
+  subscribeToTodayLessonsConfig,
 } from './lib/firestoreService';
+import { getTodayLessonsConfig, saveTodayLessonsConfig } from './lib/attendanceService';
 import { SiteLockedView } from './components/SiteLockedView';
 import { RankingsOnlyView } from './components/RankingsOnlyView';
 import { Week1View } from './components/Week1View';
@@ -215,6 +219,10 @@ export function App() {
   const [weeklySchedule, setWeeklySchedule] = useState<WeeklyScheduleItem[]>(() => {
     const saved = localStorage.getItem('tjam_schedule');
     return saved ? JSON.parse(saved) : INITIAL_WEEKLY_SCHEDULE;
+  });
+
+  const [todayLessons, setTodayLessons] = useState<TodayLessonConfig[]>(() => {
+    return getTodayLessonsConfig();
   });
 
   // Teacher Portal state
@@ -513,11 +521,19 @@ export function App() {
       }
     });
 
+    const unsubTodayLessons = subscribeToTodayLessonsConfig((remoteLessons) => {
+      if (remoteLessons && remoteLessons.length > 0) {
+        setTodayLessons(remoteLessons);
+        saveTodayLessonsConfig(remoteLessons);
+      }
+    });
+
     return () => {
       unsubProg();
       unsubLessons();
       unsubSharedGoals();
       unsubSharedSchedule();
+      unsubTodayLessons();
     };
   }, [currentUserSession?.id]);
 
@@ -559,10 +575,18 @@ export function App() {
       if (e.key === 'tjam_live_classes' && e.newValue) {
         try { setLiveClasses(JSON.parse(e.newValue)); } catch {}
       }
+      if (e.key === 'tjam_today_lessons_config' && e.newValue) {
+        try { setTodayLessons(JSON.parse(e.newValue)); } catch {}
+      }
       setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
     };
 
+    const handleTodayLessonsLocalEvent = () => {
+      setTodayLessons(getTodayLessonsConfig());
+    };
+
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('tjam_today_lessons_updated', handleTodayLessonsLocalEvent);
 
     // 2. Periodic background ticker (every 1 second) for live state evaluation without page reloads
     const syncInterval = setInterval(() => {
@@ -594,6 +618,7 @@ export function App() {
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('tjam_today_lessons_updated', handleTodayLessonsLocalEvent);
       clearInterval(syncInterval);
     };
   }, [userProgress]);
@@ -1102,6 +1127,16 @@ export function App() {
     });
   };
 
+  const handleUpdateTodayLessons = async (newLessons: TodayLessonConfig[]) => {
+    setTodayLessons(newLessons);
+    saveTodayLessonsConfig(newLessons);
+    try {
+      await saveTodayLessonsConfigToFirestore(newLessons);
+    } catch (e) {
+      console.warn('Erro ao salvar aulas de hoje no Firestore:', e);
+    }
+  };
+
   const handleAddNews = (n: NewsItem) => {
     setNews((prev) => [n, ...prev]);
   };
@@ -1275,6 +1310,8 @@ export function App() {
                 onDeleteTopic={handleDeleteTopic}
                 weeklySchedule={weeklySchedule}
                 weeklyGoals={userProgress.weeklyGoals || []}
+                todayLessons={todayLessons}
+                onUpdateTodayLessons={handleUpdateTodayLessons}
                 errorQuestionIds={userProgress.errorQuestionIds || []}
                 onAddGoal={handleAddWeeklyGoal}
                 onUpdateGoal={handleUpdateWeeklyGoal}
@@ -1305,6 +1342,7 @@ export function App() {
                     isDarkMode={isDarkMode}
                     isDuo={isDuo}
                     onToggleGoal={handleToggleWeeklyGoal}
+                    todayLessons={todayLessons}
                   />
                 )}
 
@@ -1373,6 +1411,7 @@ export function App() {
                   publishedMaterials={publishedMaterials}
                   disciplines={disciplines}
                   currentUserSession={currentUserSession}
+                  todayLessons={todayLessons}
                 />
               )}
 
