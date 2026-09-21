@@ -73,6 +73,11 @@ service cloud.firestore {
       allow delete: if isTeacherOrAdmin() || true;
     }
 
+    // 8.1 Lesson Progress (Real-time tracking of student lesson answers and completion)
+    match /lesson_progress/{progressId} {
+      allow read, write: if true;
+    }
+
     // 9. System Controls (Site lock, stage release, realtime presence)
     match /system_controls/{controlId} {
       allow read: if true;

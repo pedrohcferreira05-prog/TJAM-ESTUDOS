@@ -300,6 +300,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
   });
 
   const [isLessonCompleted, setIsLessonCompleted] = useState(false);
+  const [videoWatched, setVideoWatched] = useState(false);
 
   // Saved lessons store for real-time local database sync
   const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>(() => {
@@ -339,6 +340,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
         setDiscursiveSubmitted(subjectData.discursiveSubmitted || {});
         setChecklist(subjectData.checklist || { c1: false, c2: false, c3: false, c4: false, c5: false });
         setIsLessonCompleted(!!subjectData.completed);
+        setVideoWatched(!!subjectData.videoWatched);
         if (subjectData.learnedCards) setLearnedCards(subjectData.learnedCards);
       } else {
         setSelectedAnswers({});
@@ -349,12 +351,41 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
         setDiscursiveSubmitted({});
         setChecklist({ c1: false, c2: false, c3: false, c4: false, c5: false });
         setIsLessonCompleted(false);
+        setVideoWatched(false);
         setLearnedCards({});
       }
     } catch (e) {
       console.error('Error restoring lesson progress:', e);
     }
   }, [selectedSubject, activeUserId, lessonsStorageKey]);
+
+  // Handler to toggle video watched and sync immediately with storage and events
+  const handleToggleVideoWatched = () => {
+    setVideoWatched((prev) => {
+      const nextVal = !prev;
+      try {
+        const savedStr = localStorage.getItem(lessonsStorageKey) || (activeUserId === 'id00120087' ? localStorage.getItem('tjam_lessons_progress') : null);
+        const store = savedStr ? JSON.parse(savedStr) : {};
+        store[selectedSubject] = {
+          ...(store[selectedSubject] || {}),
+          videoWatched: nextVal,
+          videoWatchedAt: nextVal ? new Date().toISOString() : undefined,
+          lastUpdated: new Date().toISOString(),
+        };
+        setSavedLessonsStore(store);
+        localStorage.setItem(lessonsStorageKey, JSON.stringify(store));
+        if (activeUserId === 'id00120087') {
+          localStorage.setItem('tjam_lessons_progress', JSON.stringify(store));
+        }
+        saveLessonProgressToFirestore(store, activeUserId);
+        window.dispatchEvent(new CustomEvent('tjam_lesson_progress_updated'));
+        window.dispatchEvent(new CustomEvent('tjam_attendance_updated'));
+      } catch (e) {
+        console.error('Error saving video watched:', e);
+      }
+      return nextVal;
+    });
+  };
 
   // Persist state when answers, checklist or completion status change
   useEffect(() => {
@@ -366,6 +397,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
         subjectKey: selectedSubject,
         completed: isLessonCompleted,
         completedAt: isLessonCompleted ? (store[selectedSubject]?.completedAt || new Date().toISOString()) : undefined,
+        videoWatched,
+        videoWatchedAt: videoWatched ? (store[selectedSubject]?.videoWatchedAt || new Date().toISOString()) : undefined,
         selectedAnswers,
         showQuestionResults,
         tfAnswers,
@@ -435,6 +468,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     checklist,
     learnedCards,
     isLessonCompleted,
+    videoWatched,
     activeUserId,
     lessonsStorageKey,
     userProgressStorageKey,
@@ -2455,6 +2489,22 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
           setIsFlipped(false);
         }}
         isDarkMode={isDarkMode}
+        hasAnsweredQuestions={
+          Object.keys(selectedAnswers || {}).length +
+            Object.keys(tfAnswers || {}).length +
+            Object.keys(discursiveAnswers || {}).length >
+          0
+        }
+        answeredQuestionsCount={
+          Object.keys(selectedAnswers || {}).length +
+          Object.keys(tfAnswers || {}).length +
+          Object.keys(discursiveAnswers || {}).length
+        }
+        totalQuestionsCount={activeMcQuestions?.length || 20}
+        hasWatchedVideo={videoWatched}
+        onGoToVideoTab={() => setActiveTab('video')}
+        onGoToQuestionsTab={() => setActiveTab('questoes')}
+        onToggleVideoWatched={handleToggleVideoWatched}
       />
 
       {/* Subject Switcher Bar & Saved Progress Banner */}
@@ -3111,6 +3161,68 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
+            </div>
+
+            {/* Video Lesson Attendance & Completion Action Banner */}
+            <div
+              className={`p-4 rounded-2xl border transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs ${
+                videoWatched
+                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-950 dark:text-emerald-200'
+                  : 'bg-amber-500/10 border-amber-500/30 text-amber-950 dark:text-amber-200'
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
+                    videoWatched ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-white'
+                  }`}
+                >
+                  {videoWatched ? <Check className="w-5 h-5 stroke-[3]" /> : <Video className="w-5 h-5" />}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-xs sm:text-sm font-black">
+                      {videoWatched ? '✓ Videoaula Confirmada como Assistida' : 'Registrar Assistência da Videoaula'}
+                    </h4>
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        videoWatched ? 'bg-emerald-600 text-white' : 'bg-amber-600 text-white animate-pulse'
+                      }`}
+                    >
+                      {videoWatched ? 'Requisito Concluído' : 'Obrigatório p/ Encerrar Aula'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">
+                    {videoWatched
+                      ? 'Você confirmou a assistência desta videoaula. O requisito pedagógico para liberar o encerramento da aula está validado.'
+                      : 'Após assistir à videoaula, clique no botão ao lado para marcar como assistida e desbloquear o encerramento da presença.'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
+                <button
+                  type="button"
+                  onClick={handleToggleVideoWatched}
+                  className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer ${
+                    videoWatched
+                      ? 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white shadow-emerald-500/20 active:scale-95 animate-pulse'
+                  }`}
+                >
+                  {videoWatched ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Desmarcar Assistência</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4 text-white stroke-[3]" />
+                      <span>Marcar Aula Assistida</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Direct Link to YouTube */}

@@ -52,6 +52,7 @@ import {
   Brain,
   RotateCcw,
   RefreshCw,
+  Eye,
 } from 'lucide-react';
 import { StudentManagementTab } from './StudentManagementTab';
 import { TeacherStudentResponsesManager } from './TeacherStudentResponsesManager';
@@ -265,12 +266,18 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
     { id: 'biblioteca', label: 'Biblioteca', fullLabel: 'Biblioteca Digital da Disciplina', icon: Library },
   ];
   const [internalTab, setInternalTab] = useState<TeacherTab>('alunos');
+  const [selectedInspectLessonId, setSelectedInspectLessonId] = useState<string>('legislacao_tjam');
   const activeTab = controlledTab || internalTab;
   const setActiveTab = (tab: TeacherTab) => {
     setInternalTab(tab);
     if (setControlledTab) {
       setControlledTab(tab);
     }
+  };
+
+  const handleInspectLesson = (lessonId: string) => {
+    setSelectedInspectLessonId(lessonId);
+    setActiveTab('respostas');
   };
   const [selectedTurmaId, setSelectedTurmaId] = useState<string>(turmas[0]?.id || '');
   const [customLockMessage, setCustomLockMessage] = useState(
@@ -585,6 +592,122 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             <span className="text-[10px] font-bold text-slate-400 uppercase">Simulados Feitos</span>
             <div className="text-lg font-black text-indigo-400 mt-0.5">{realSimuladosCount}</div>
           </div>
+        </div>
+      </div>
+
+      {/* 🔴 AULAS DO DIA: PAINEL DE INSPEÇÃO & CORREÇÃO EM TEMPO REAL */}
+      <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-950/50 to-slate-900 border border-blue-500/30 shadow-lg space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-bold">
+              <Eye className="w-4 h-4" />
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-black text-white">
+                  Aulas de Hoje — Respostas dos Alunos em Tempo Real
+                </h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-slate-950 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping"></span>
+                  SINCRONIZADO
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300">
+                Acesse diretamente as respostas reais, gabaritos marcados, discursivas e notas de cada aula do cronograma.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => {
+              setActiveTab('respostas');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Ver Painel Completo de Respostas</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* 3 Aulas de Hoje Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
+          {/* Aula 1: Legislação TJAM */}
+          <button
+            type="button"
+            onClick={() => handleInspectLesson('legislacao_tjam')}
+            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
+              selectedInspectLessonId === 'legislacao_tjam' && activeTab === 'respostas'
+                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
+                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
+            }`}
+          >
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                1ª AULA DO DIA
+              </span>
+              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
+                Corrigir <ChevronRight className="w-3 h-3" />
+              </span>
+            </div>
+            <div className="font-extrabold text-xs text-white line-clamp-1">
+              🏛️ Legislação TJAM — Aula 01
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+              Lei Complementar nº 261/2023 (Organização Judiciária)
+            </div>
+          </button>
+
+          {/* Aula 2: Direito Constitucional */}
+          <button
+            type="button"
+            onClick={() => handleInspectLesson('direito_constitucional')}
+            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
+              selectedInspectLessonId === 'direito_constitucional' && activeTab === 'respostas'
+                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
+                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
+            }`}
+          >
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                2ª AULA DO DIA
+              </span>
+              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
+                Corrigir <ChevronRight className="w-3 h-3" />
+              </span>
+            </div>
+            <div className="font-extrabold text-xs text-white line-clamp-1">
+              ⚖️ Direito Constitucional — Aula 01
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+              Princípios Fundamentais (Arts. 1º a 4º da CF/88)
+            </div>
+          </button>
+
+          {/* Aula 3: Língua Inglesa */}
+          <button
+            type="button"
+            onClick={() => handleInspectLesson('ingles')}
+            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
+              selectedInspectLessonId === 'ingles' && activeTab === 'respostas'
+                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
+                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
+            }`}
+          >
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                3ª AULA DO DIA
+              </span>
+              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
+                Corrigir <ChevronRight className="w-3 h-3" />
+              </span>
+            </div>
+            <div className="font-extrabold text-xs text-white line-clamp-1">
+              🇬🇧 Língua Inglesa — Aula 01
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+              Introdução ao Inglês, Greetings e Verbo TO BE
+            </div>
+          </button>
         </div>
       </div>
 
@@ -907,6 +1030,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
           onGradeSubmission={onGradeSubmission}
           onResetQuestionAttempt={onResetQuestionAttempt}
           onResetSimuladoAttempt={onResetSimuladoAttempt}
+          initialLessonId={selectedInspectLessonId}
         />
       )}
 

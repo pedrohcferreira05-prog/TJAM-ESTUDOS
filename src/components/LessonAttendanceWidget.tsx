@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Clock,
   Play,
@@ -9,6 +9,11 @@ import {
   RotateCcw,
   Sparkles,
   BookOpen,
+  Lock,
+  Video,
+  HelpCircle,
+  ArrowRight,
+  ShieldCheck,
 } from 'lucide-react';
 import { UserProgress, AuthSession } from '../types';
 import {
@@ -27,7 +32,16 @@ interface LessonAttendanceWidgetProps {
   currentUserSession?: AuthSession | null;
   onNavigateSubject?: (subjectKey: string) => void;
   isDarkMode?: boolean;
+  hasAnsweredQuestions?: boolean;
+  hasWatchedVideo?: boolean;
+  answeredQuestionsCount?: number;
+  totalQuestionsCount?: number;
+  onGoToVideoTab?: () => void;
+  onGoToQuestionsTab?: () => void;
+  onToggleVideoWatched?: () => void;
 }
+
+const HOLD_DURATION_MS = 5000; // 5 segundos obrigatórios de pressão
 
 export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
   lessonId,
@@ -35,6 +49,13 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
   currentUserSession,
   onNavigateSubject,
   isDarkMode = false,
+  hasAnsweredQuestions,
+  hasWatchedVideo,
+  answeredQuestionsCount,
+  totalQuestionsCount = 20,
+  onGoToVideoTab,
+  onGoToQuestionsTab,
+  onToggleVideoWatched,
 }) => {
   const activeUserId = currentUserSession?.id || 'id00120087';
 
@@ -70,6 +91,39 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
   const [activeSeconds, setActiveSeconds] = useState<number>(0);
   const [celebrationMessage, setCelebrationMessage] = useState<string | null>(null);
 
+  // States for the 5-second hold requirement
+  const [isHolding, setIsHolding] = useState<boolean>(false);
+  const [holdProgress, setHoldProgress] = useState<number>(0);
+  const [holdSecondsLeft, setHoldSecondsLeft] = useState<number>(5);
+  const [holdWarning, setHoldWarning] = useState<string | null>(null);
+  const holdIntervalRef = useRef<number | null>(null);
+  const holdStartTimeRef = useRef<number>(0);
+
+  // Local fallback check for questions and video watched in case props are not passed
+  const [localAnsweredCount, setLocalAnsweredCount] = useState<number>(0);
+  const [localVideoWatched, setLocalVideoWatched] = useState<boolean>(false);
+
+  const checkLocalLessonStatus = () => {
+    try {
+      const key = activeUserId === 'id00120087' ? 'tjam_lessons_progress' : `tjam_lessons_progress_${activeUserId}`;
+      const raw = localStorage.getItem(key) || localStorage.getItem('tjam_lessons_progress');
+      if (raw) {
+        const store = JSON.parse(raw);
+        const data = store[lessonId] || {};
+        const count =
+          Object.keys(data.selectedAnswers || {}).length +
+          Object.keys(data.tfAnswers || {}).length +
+          Object.keys(data.discursiveAnswers || {}).length;
+        setLocalAnsweredCount(count);
+        setLocalVideoWatched(!!data.videoWatched);
+      }
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    checkLocalLessonStatus();
+  }, [lessonId, activeUserId]);
+
   // Sync with global custom event
   useEffect(() => {
     const handleUpdate = () => {
@@ -79,19 +133,33 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
         if (raw) {
           setProgress(JSON.parse(raw));
         }
+        checkLocalLessonStatus();
       } catch (e) {}
     };
 
     window.addEventListener('tjam_attendance_updated', handleUpdate);
+    window.addEventListener('tjam_lesson_progress_updated', handleUpdate);
     window.addEventListener('storage', handleUpdate);
     return () => {
       window.removeEventListener('tjam_attendance_updated', handleUpdate);
+      window.removeEventListener('tjam_lesson_progress_updated', handleUpdate);
       window.removeEventListener('storage', handleUpdate);
     };
-  }, [activeUserId]);
+  }, [activeUserId, lessonId]);
 
   const attendanceInfo = getLessonAttendanceStatus(progress, lessonId);
   const overview = getTodayAttendanceOverview(progress);
+
+  // Resolve whether criteria are satisfied
+  const isVideoDone = hasWatchedVideo !== undefined ? hasWatchedVideo : localVideoWatched;
+  const isQuestionsDone =
+    hasAnsweredQuestions !== undefined
+      ? hasAnsweredQuestions
+      : (answeredQuestionsCount !== undefined ? answeredQuestionsCount > 0 : localAnsweredCount > 0);
+  const currentAnsweredCount = answeredQuestionsCount !== undefined ? answeredQuestionsCount : localAnsweredCount;
+
+  // The End Lesson button can ONLY appear if both conditions are met!
+  const canEndLesson = isVideoDone && isQuestionsDone;
 
   // Real-time clock interval when active
   useEffect(() => {
@@ -116,12 +184,89 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
   const handleStartAttendance = () => {
     const updated = startLessonAttendance(lessonId, subjectTitle, activeUserId);
     setProgress(updated);
-    setCelebrationMessage('🟢 Presença de início registrada com sucesso! O relógio está cronometrando seu tempo de aula.');
+    setCelebrationMessage('🟢 Presença de início confirmada com sucesso! O relógio está cronometrando sua frequência.');
     setTimeout(() => setCelebrationMessage(null), 5000);
   };
 
+  // Hold-to-Start 5-Second Handlers
+  const startHold = (e: React.SyntheticEvent) => {
+    // Prevent starting hold if already in progress or completed
+    if (attendanceInfo.status === 'in_progress') return;
+
+    // Clear any previous interval
+    if (holdIntervalRef.current) {
+      window.clearInterval(holdIntervalRef.current);
+    }
+
+    setHoldWarning(null);
+    holdStartTimeRef.current = Date.now();
+    setIsHolding(true);
+    setHoldProgress(0);
+    setHoldSecondsLeft(5);
+
+    holdIntervalRef.current = window.setInterval(() => {
+      const elapsed = Date.now() - holdStartTimeRef.current;
+      const progressPct = Math.min(100, (elapsed / HOLD_DURATION_MS) * 100);
+      const secsRemaining = Math.max(0, Math.ceil((HOLD_DURATION_MS - elapsed) / 1000));
+
+      setHoldProgress(progressPct);
+      setHoldSecondsLeft(secsRemaining);
+
+      if (elapsed >= HOLD_DURATION_MS) {
+        if (holdIntervalRef.current) {
+          window.clearInterval(holdIntervalRef.current);
+          holdIntervalRef.current = null;
+        }
+        setIsHolding(false);
+        setHoldProgress(100);
+        setHoldSecondsLeft(0);
+
+        // Haptic feedback if available
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+          try {
+            navigator.vibrate([100, 50, 100]);
+          } catch (e) {}
+        }
+
+        handleStartAttendance();
+      }
+    }, 40);
+  };
+
+  const cancelHold = () => {
+    if (holdIntervalRef.current) {
+      window.clearInterval(holdIntervalRef.current);
+      holdIntervalRef.current = null;
+    }
+
+    if (isHolding) {
+      if (holdProgress > 5 && holdProgress < 100) {
+        setHoldWarning('⚠️ Mantenha o botão pressionado continuamente por 5 segundos para iniciar a aula.');
+        setTimeout(() => setHoldWarning(null), 4000);
+      }
+      setIsHolding(false);
+      setHoldProgress(0);
+      setHoldSecondsLeft(5);
+    }
+  };
+
+  // Clean up interval on unmount
+  useEffect(() => {
+    return () => {
+      if (holdIntervalRef.current) {
+        window.clearInterval(holdIntervalRef.current);
+      }
+    };
+  }, []);
+
   // Handle Finish
   const handleEndAttendance = () => {
+    if (!canEndLesson) {
+      setCelebrationMessage('⚠️ Você precisa responder as questões e marcar a videoaula como assistida antes de encerrar!');
+      setTimeout(() => setCelebrationMessage(null), 5000);
+      return;
+    }
+
     const { updatedProgress, completedThreeAllToday, addedSeconds } = endLessonAttendance(lessonId, activeUserId);
     setProgress(updatedProgress);
 
@@ -132,7 +277,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
     } else {
       const durText = formatDurationHMS(addedSeconds);
       setCelebrationMessage(
-        `✅ Presença final registrada! ${durText} foram somados ao seu Tempo de Hoje com sucesso.`
+        `✅ Presença final registrada com sucesso! ${durText} foram somados ao seu tempo hoje.`
       );
     }
     setTimeout(() => setCelebrationMessage(null), 9000);
@@ -233,47 +378,229 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
               </div>
             </div>
 
-            {/* Buttons */}
-            {attendanceInfo.status !== 'in_progress' && attendanceInfo.status !== 'completed' && (
-              <button
-                type="button"
-                onClick={handleStartAttendance}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-linear-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all transform active:scale-95 cursor-pointer"
-              >
-                <Play className="w-4 h-4 fill-white" />
-                <span>Pressione para Marcar Início da Aula</span>
-              </button>
-            )}
+            {/* Buttons & Status Controller */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              {/* 1. NOT STARTED: HOLD BUTTON FOR 5 SECONDS TO START */}
+              {attendanceInfo.status !== 'in_progress' && attendanceInfo.status !== 'completed' && (
+                <div className="flex flex-col gap-1.5">
+                  <div className="relative group select-none">
+                    <button
+                      type="button"
+                      onMouseDown={startHold}
+                      onMouseUp={cancelHold}
+                      onMouseLeave={cancelHold}
+                      onTouchStart={startHold}
+                      onTouchEnd={cancelHold}
+                      onTouchCancel={cancelHold}
+                      onContextMenu={(e) => e.preventDefault()}
+                      className={`relative overflow-hidden flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl font-black text-sm text-white shadow-lg transition-all cursor-pointer select-none active:scale-[0.98] ${
+                        isHolding
+                          ? 'bg-emerald-700 ring-4 ring-emerald-400/50 shadow-emerald-500/30'
+                          : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500'
+                      }`}
+                    >
+                      {/* Live Animated Fill Progress Layer */}
+                      <div
+                        className="absolute inset-y-0 left-0 bg-emerald-400/40 transition-all duration-75 ease-linear pointer-events-none"
+                        style={{ width: `${holdProgress}%` }}
+                      />
 
-            {attendanceInfo.status === 'in_progress' && (
-              <button
-                type="button"
-                onClick={handleEndAttendance}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-linear-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all transform active:scale-95 cursor-pointer animate-pulse"
-              >
-                <CheckCircle2 className="w-4 h-4 text-white" />
-                <span>Pressione para Concluir & Marcar Presença Final</span>
-              </button>
-            )}
+                      {/* Icon & Label */}
+                      <div className="relative z-10 flex items-center gap-2.5">
+                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${isHolding ? 'bg-amber-400 text-slate-950 font-black animate-spin' : 'bg-white/20 text-white'}`}>
+                          {isHolding ? (
+                            <Clock className="w-4 h-4" />
+                          ) : (
+                            <Play className="w-4 h-4 fill-current ml-0.5" />
+                          )}
+                        </div>
 
-            {attendanceInfo.status === 'completed' && (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Presença Final Registrada ({formatDurationHMS(attendanceInfo.durationSeconds)})</span>
+                        <div className="flex flex-col text-left">
+                          <span className="font-black tracking-tight text-xs sm:text-sm">
+                            {isHolding
+                              ? `Segurando... ${holdSecondsLeft}s restantes`
+                              : 'Segure por 5s para Iniciar a Aula'}
+                          </span>
+                          <span className="text-[10px] text-emerald-100/90 font-medium">
+                            {isHolding
+                              ? `Mantenha pressionado: ${Math.round(holdProgress)}% concluído`
+                              : 'Pressione e mantenha por 5 segundos'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Countdown Badge */}
+                      <div className="relative z-10 px-2 py-1 rounded-lg bg-black/25 text-[11px] font-mono font-black text-amber-300 border border-white/10">
+                        {isHolding ? `${holdSecondsLeft}s` : '5s'}
+                      </div>
+                    </button>
+                  </div>
+
+                  {/* Warning if released before 5 seconds */}
+                  {holdWarning && (
+                    <div className="text-[11px] font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 px-3 py-1.5 rounded-xl border border-amber-300 dark:border-amber-800 animate-pulse">
+                      {holdWarning}
+                    </div>
+                  )}
                 </div>
+              )}
 
-                <button
-                  type="button"
-                  onClick={handleStartAttendance}
-                  title="Continuar estudando e somar mais tempo nesta aula"
-                  className="flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Retomar Aula</span>
-                </button>
-              </div>
-            )}
+              {/* 2. IN PROGRESS: GATED END LESSON (CAN ONLY APPEAR AFTER QUESTIONS & VIDEO COMPLETED) */}
+              {attendanceInfo.status === 'in_progress' && (
+                <div className="flex flex-col gap-2">
+                  {canEndLesson ? (
+                    // Requisitos cumpridos: Botão de Encerrar Liberado!
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-[11px] font-bold">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Requisitos concluídos (Vídeo + Questões)</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleEndAttendance}
+                        className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 via-amber-600 to-emerald-600 hover:from-rose-500 hover:to-emerald-500 text-white font-black text-sm shadow-lg hover:shadow-xl transition-all transform active:scale-95 cursor-pointer animate-pulse"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                        <span>Pressione para Concluir & Encerrar Aula</span>
+                      </button>
+                    </div>
+                  ) : (
+                    // Bloqueado: Botão de Encerrar NÃO aparece. Exibe checklist de pendências!
+                    <div className="p-3 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border-2 border-amber-400/50 text-slate-800 dark:text-slate-200 text-xs space-y-2 max-w-md">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5 text-amber-800 dark:text-amber-300 font-extrabold text-xs">
+                          <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                          <span>Encerramento de Aula Bloqueado</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-800 dark:text-amber-300 font-bold text-[10px]">
+                          2 Pendências
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-tight">
+                        O botão de encerrar aula só aparecerá após você cumprir ambos os requisitos:
+                      </p>
+
+                      <div className="space-y-1.5 pt-0.5">
+                        {/* Requirement 1: Video Lesson Watched */}
+                        <div
+                          className={`flex items-center justify-between p-2 rounded-xl border text-[11px] ${
+                            isVideoDone
+                              ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 text-emerald-800 dark:text-emerald-300 font-semibold'
+                              : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 text-rose-800 dark:text-rose-300 font-semibold'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            {isVideoDone ? (
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            ) : (
+                              <Video className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                            )}
+                            <span>1. Marcar videoaula como assistida</span>
+                          </div>
+
+                          <div className="flex items-center gap-1.5">
+                            {isVideoDone ? (
+                              <span className="text-[10px] font-black text-emerald-600 uppercase">Feito ✓</span>
+                            ) : (
+                              <>
+                                {onToggleVideoWatched ? (
+                                  <button
+                                    type="button"
+                                    onClick={onToggleVideoWatched}
+                                    className="px-2 py-0.5 rounded-lg bg-rose-600 text-white text-[10px] font-bold hover:bg-rose-700 cursor-pointer"
+                                  >
+                                    Marcar Agora
+                                  </button>
+                                ) : onGoToVideoTab ? (
+                                  <button
+                                    type="button"
+                                    onClick={onGoToVideoTab}
+                                    className="px-2 py-0.5 rounded-lg bg-slate-900 text-white text-[10px] font-bold hover:bg-slate-800 cursor-pointer"
+                                  >
+                                    Ir para Vídeo →
+                                  </button>
+                                ) : null}
+                              </>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Requirement 2: Questions Answered */}
+                        <div
+                          className={`flex items-center justify-between p-2 rounded-xl border text-[11px] ${
+                            isQuestionsDone
+                              ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 text-emerald-800 dark:text-emerald-300 font-semibold'
+                              : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 text-rose-800 dark:text-rose-300 font-semibold'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            {isQuestionsDone ? (
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            ) : (
+                              <HelpCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                            )}
+                            <span>
+                              2. Responder as questões da aula{' '}
+                              {currentAnsweredCount > 0 && `(${currentAnsweredCount} respondidas)`}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-1.5">
+                            {isQuestionsDone ? (
+                              <span className="text-[10px] font-black text-emerald-600 uppercase">Feito ✓</span>
+                            ) : (
+                              onGoToQuestionsTab && (
+                                <button
+                                  type="button"
+                                  onClick={onGoToQuestionsTab}
+                                  className="px-2 py-0.5 rounded-lg bg-slate-900 text-white text-[10px] font-bold hover:bg-slate-800 cursor-pointer"
+                                >
+                                  Ir para Questões →
+                                </button>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 3. COMPLETED: BADGE & OPTION TO RESUME */}
+              {attendanceInfo.status === 'completed' && (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>Presença Final Registrada ({formatDurationHMS(attendanceInfo.durationSeconds)})</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onMouseDown={startHold}
+                    onMouseUp={cancelHold}
+                    onMouseLeave={cancelHold}
+                    onTouchStart={startHold}
+                    onTouchEnd={cancelHold}
+                    onTouchCancel={cancelHold}
+                    title="Segure por 5s para retomar aula"
+                    className="relative overflow-hidden flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer select-none"
+                  >
+                    {isHolding && (
+                      <div
+                        className="absolute inset-y-0 left-0 bg-amber-400/40 transition-all duration-75 pointer-events-none"
+                        style={{ width: `${holdProgress}%` }}
+                      />
+                    )}
+                    <RotateCcw className="w-3.5 h-3.5 relative z-10" />
+                    <span className="relative z-10">
+                      {isHolding ? `${holdSecondsLeft}s...` : 'Segure 5s p/ Retomar'}
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

@@ -20,6 +20,9 @@ import {
   Save,
   Download,
   Video,
+  Eye,
+  GraduationCap,
+  Sparkles,
 } from 'lucide-react';
 import {
   StudentAccount,
@@ -29,6 +32,7 @@ import {
   Question,
   Discipline,
 } from '../types';
+import { TeacherLessonRealtimeInspector } from './TeacherLessonRealtimeInspector';
 
 interface ExtendedQuestionAttempt extends QuestionAttempt {
   studentId?: string;
@@ -46,6 +50,8 @@ interface TeacherStudentResponsesManagerProps {
   onGradeSubmission: (submissionId: string, grade: number, feedback: string) => void;
   onResetQuestionAttempt?: (attemptId: string) => void;
   onResetSimuladoAttempt?: (attemptId: string) => void;
+  initialLessonId?: string;
+  onOpenLessonContent?: (lessonId: string) => void;
 }
 
 export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesManagerProps> = ({
@@ -59,7 +65,12 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
   onGradeSubmission,
   onResetQuestionAttempt,
   onResetSimuladoAttempt,
+  initialLessonId = 'legislacao_tjam',
+  onOpenLessonContent,
 }) => {
+  // Main view mode: 'aulas-tempo-real' (Default & primary) or 'historico-geral'
+  const [activeViewMode, setActiveViewMode] = useState<'aulas-tempo-real' | 'historico-geral'>('aulas-tempo-real');
+
   const [selectedStudentFilter, setSelectedStudentFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<'all' | 'questions' | 'discursive' | 'video' | 'anotacoes' | 'simulados'>('all');
   const [resultFilter, setResultFilter] = useState<'all' | 'correct' | 'wrong' | 'pending'>('all');
@@ -207,8 +218,55 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
 
   return (
     <div className="space-y-6">
-      {/* Top Header Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+      {/* SELETOR DE MODO DO SUPERVISOR PEDAGÓGICO */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <button
+            onClick={() => setActiveViewMode('aulas-tempo-real')}
+            className={`flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              activeViewMode === 'aulas-tempo-real'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <Eye className="w-4 h-4 text-amber-300" />
+            <span>👁️ Aulas do Dia & Respostas em Tempo Real</span>
+            <span className="px-1.5 py-0.5 rounded-md text-[10px] bg-amber-400 text-slate-950 font-black">
+              AO VIVO
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveViewMode('historico-geral')}
+            className={`flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              activeViewMode === 'historico-geral'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>📋 Histórico Geral & Filtros Avançados</span>
+          </button>
+        </div>
+
+        <div className="text-xs text-slate-500 flex items-center gap-1.5 self-end sm:self-auto">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>Sincronização bidirecional Firestore ativa</span>
+        </div>
+      </div>
+
+      {/* RENDERIZAÇÃO DO MODO SELECIONADO */}
+      {activeViewMode === 'aulas-tempo-real' ? (
+        <TeacherLessonRealtimeInspector
+          submissions={submissions}
+          onGradeSubmission={onGradeSubmission}
+          initialSelectedLessonId={initialLessonId}
+          onOpenLessonContent={onOpenLessonContent}
+        />
+      ) : (
+        <>
+          {/* Top Header Card */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 mb-2">
@@ -748,6 +806,8 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
             </div>
           )}
         </div>
+      )}
+        </>
       )}
     </div>
   );

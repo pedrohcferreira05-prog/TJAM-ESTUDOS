@@ -311,6 +311,71 @@ export function subscribeToLessonProgress(
   });
 }
 
+export function subscribeToAllLessonProgress(
+  onUpdate: (allLessons: Record<string, Record<string, any>>) => void
+): Unsubscribe {
+  const colRef = collection(db, 'lesson_progress');
+  return onSnapshot(colRef, (snapshot) => {
+    const result: Record<string, Record<string, any>> = {};
+    if (snapshot && typeof snapshot.forEach === 'function') {
+      snapshot.forEach((docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const uid = data.userId || docSnap.id;
+          if (data.store) {
+            result[uid] = data.store;
+          }
+        }
+      });
+    }
+    onUpdate(result);
+  }, (err) => {
+    handleFirestoreError(err, OperationType.LIST, 'lesson_progress');
+  });
+}
+
+export async function saveTeacherCorrectionToLessonProgress(
+  studentId: string,
+  subjectKey: string,
+  correctionData: {
+    questionId?: number;
+    grade?: number;
+    feedback?: string;
+    teacherNotes?: string;
+    gradedAt?: string;
+    status?: 'pendente' | 'corrigido';
+  }
+): Promise<void> {
+  try {
+    const docRef = doc(db, 'lesson_progress', studentId);
+    const snap = await getDoc(docRef);
+    const currentStore = (snap.exists() && snap.data()?.store) ? { ...snap.data().store } : {};
+    
+    if (!currentStore[subjectKey]) {
+      currentStore[subjectKey] = { subjectKey };
+    }
+
+    if (!currentStore[subjectKey].teacherCorrections) {
+      currentStore[subjectKey].teacherCorrections = {};
+    }
+
+    const qId = correctionData.questionId || 1;
+    currentStore[subjectKey].teacherCorrections[qId] = {
+      ...currentStore[subjectKey].teacherCorrections[qId],
+      ...correctionData,
+      gradedAt: new Date().toISOString()
+    };
+
+    await setDoc(docRef, {
+      userId: studentId,
+      store: currentStore,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    handleFirestoreError(err, OperationType.WRITE, `lesson_progress/${studentId}/correction`);
+  }
+}
+
 // -------------------------------------------------------------
 // 5. TURMAS (REAL-TIME SYNC)
 // -------------------------------------------------------------
