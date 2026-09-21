@@ -296,6 +296,9 @@ export interface LessonProgressData {
   checklist: Record<string, boolean>;
   learnedCards?: Record<number, boolean>;
   videoWatched?: boolean;
+  videoWatchedAt?: string;
+  personalNotes?: string;
+  customVideoUrl?: string;
   lastUpdated?: string;
 }
 
@@ -355,6 +358,7 @@ export type StudentTab =
   | 'news' 
   | 'certificados';
 export type TeacherTab =
+  | 'rankings-dupla'
   | 'alunos'
   | 'turmas'
   | 'disciplinas-aluno'

@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
+import { initializeFirestore, getFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import config from '../../firebase-applet-config.json';
 
@@ -13,7 +13,21 @@ const firebaseConfig = {
 };
 
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-export const db = getFirestore(app, config.firestoreDatabaseId || '(default)');
+
+let firestoreDb: ReturnType<typeof getFirestore>;
+try {
+  if (typeof window !== 'undefined') {
+    firestoreDb = initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+    }, config.firestoreDatabaseId || '(default)');
+  } else {
+    firestoreDb = getFirestore(app, config.firestoreDatabaseId || '(default)');
+  }
+} catch {
+  firestoreDb = getFirestore(app, config.firestoreDatabaseId || '(default)');
+}
+
+export const db = firestoreDb;
 export const auth = getAuth(app);
 
 export async function testConnection(): Promise<boolean> {
@@ -21,12 +35,17 @@ export async function testConnection(): Promise<boolean> {
     await getDocFromServer(doc(db, 'test', 'connection'));
     return true;
   } catch (error) {
-    if (error instanceof Error && error.message.includes('the client is offline')) {
-      console.error('Please check your Firebase configuration.');
+    // Retry once if connection was still negotiating
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      await getDocFromServer(doc(db, 'test', 'connection'));
+      return true;
+    } catch (retryError) {
+      if (retryError instanceof Error && retryError.message.includes('the client is offline')) {
+        console.error('Please check your Firebase configuration.');
+      }
       return false;
     }
-    // Any other response means server reached
-    return true;
   }
 }
 

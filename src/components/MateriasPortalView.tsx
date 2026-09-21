@@ -31,7 +31,7 @@ import {
   Trees,
   Bookmark
 } from 'lucide-react';
-import { UserProgress, StudentSubmission, Question } from '../types';
+import { UserProgress, StudentSubmission, Question, AuthSession } from '../types';
 import {
   saveLessonProgressToFirestore,
   loadLessonProgressFromFirestore,
@@ -472,6 +472,7 @@ interface MateriasPortalViewProps {
   onAnswerQuestion?: (questionId: string, optionId: string) => void;
   studentName?: string;
   turmaId?: string;
+  currentUserSession?: AuthSession | null;
 }
 
 export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
@@ -482,7 +483,11 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
   onAnswerQuestion,
   studentName = 'Eduardo Mateus',
   turmaId = 'TJAM-2026-REGULAR',
+  currentUserSession,
 }) => {
+  const activeUserId = currentUserSession?.id || progress?.studentId || 'id00120087';
+  const effectiveStudentName = currentUserSession?.name || studentName || 'Eduardo Mateus';
+
   // Navigation inside the portal:
   // selectedSubject: null = list of all subjects
   // selectedAula: null = subject view with list of aulas
@@ -533,11 +538,11 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
         });
       }
       setLessonStatuses(statuses);
-    });
+    }, activeUserId);
 
     const handleStorageChange = () => {
       try {
-        const raw = localStorage.getItem('tjam_user_progress');
+        const raw = localStorage.getItem(`tjam_user_progress_${activeUserId}`) || localStorage.getItem('tjam_user_progress');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (parsed.questionAttempts) {
@@ -563,7 +568,7 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
       unsub();
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);
+  }, [activeUserId]);
 
   const handleUpdateAulaStatus = async (subjectKey: string, aulaId: string, newStatus: 'nao_iniciada' | 'em_andamento' | 'concluida') => {
     setIsSavingStatus(true);
@@ -571,7 +576,7 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
     setLessonStatuses((prev) => ({ ...prev, [key]: newStatus }));
 
     try {
-      const currentStore = (await loadLessonProgressFromFirestore()) || {};
+      const currentStore = (await loadLessonProgressFromFirestore(activeUserId)) || {};
       currentStore[key] = {
         ...currentStore[key],
         status: newStatus,
@@ -579,11 +584,12 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
         started: newStatus === 'em_andamento' || newStatus === 'concluida',
         updatedAt: new Date().toISOString()
       };
-      await saveLessonProgressToFirestore(currentStore);
+      await saveLessonProgressToFirestore(currentStore, activeUserId);
 
       // Local storage synchronization for instant teacher & student portal sync
       try {
-        const raw = localStorage.getItem('tjam_user_progress');
+        const storageKey = `tjam_user_progress_${activeUserId}`;
+        const raw = localStorage.getItem(storageKey) || localStorage.getItem('tjam_user_progress');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (!parsed.savedLessons) parsed.savedLessons = {};
@@ -596,7 +602,10 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
           } else {
             parsed.completedTopicIds = parsed.completedTopicIds.filter((id: string) => id !== key);
           }
-          localStorage.setItem('tjam_user_progress', JSON.stringify(parsed));
+          localStorage.setItem(storageKey, JSON.stringify(parsed));
+          if (activeUserId === 'id00120087') {
+            localStorage.setItem('tjam_user_progress', JSON.stringify(parsed));
+          }
           window.dispatchEvent(new Event('storage'));
         }
       } catch (err) {
@@ -1103,8 +1112,9 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
           {lessonActiveTab === 'tarefa' && (() => {
             const currentSub = submissions.find(
               (s) =>
-                s.activityTitle.includes(aula.title) ||
-                (s.disciplineName.toLowerCase().includes(selectedSubject.name.toLowerCase()) && s.content)
+                (s.studentId === activeUserId || s.studentName === effectiveStudentName) &&
+                (s.activityTitle.includes(aula.title) ||
+                (s.disciplineName.toLowerCase().includes(selectedSubject.name.toLowerCase()) && s.content))
             );
 
             return (
@@ -1191,8 +1201,8 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
                           if (!taskAnswerText.trim()) return;
                           if (onSubmitTask) {
                             onSubmitTask({
-                              studentId: progress?.studentId || 'eduardo-mateus',
-                              studentName: studentName || 'Eduardo Mateus',
+                              studentId: activeUserId,
+                              studentName: effectiveStudentName,
                               turmaId: turmaId || 'TJAM-2026-REGULAR',
                               disciplineId: selectedSubject.slug || selectedSubject.id,
                               disciplineName: selectedSubject.name,

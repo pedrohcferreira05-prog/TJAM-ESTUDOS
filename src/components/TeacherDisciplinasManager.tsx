@@ -56,6 +56,12 @@ import {
   procPenalDiscursiveQuestionsData,
   procPenalPracticalCase
 } from '../data/processoPenalLessonData';
+import {
+  legislacaoTjamSummaryPoints,
+  legislacaoTjamMcQuestionsData,
+  legislacaoTjamTfQuestionsData,
+  legislacaoTjamDiscursiveQuestionsData,
+} from '../data/legislacaoTjamLessonData';
 
 export interface QuestionAttemptRecord {
   id?: string;
@@ -2267,14 +2273,18 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
         {/* MODAL: VER AULA COMPLETA (VISÃO PEDAGÓGICA DO PROFESSOR COM RESPOSTAS E PROGRESSO) */}
         {previewAula && (() => {
           const isProcPenalAula1 = (previewAula.subject.id === 'processo_penal' || matchesDiscipline(previewAula.subject.id, 'processo_penal')) && previewAula.aula.number === 1;
+          const isLegislacaoTjamAula1 = (previewAula.subject.id === 'legislacao_tjam' || matchesDiscipline(previewAula.subject.id, 'legislacao_tjam')) && previewAula.aula.number === 1;
+          const isSpecialLesson = isProcPenalAula1 || isLegislacaoTjamAula1;
           const aulaKey = `${previewAula.subject.id}_${previewAula.aula.id}`;
           const isComp = (completedTopicIds || []).includes(aulaKey) || (savedLessons && savedLessons[aulaKey]?.completed);
           
           // Filter student submissions related to this subject/aula
           const matchingSubmissions = submissions.filter((s) => {
             const matchSub = matchesDiscipline(s.disciplineName, previewAula.subject.id, previewAula.subject.slug, previewAula.subject.name);
-            const matchLesson = s.activityTitle?.includes(`Aula ${previewAula.aula.number}`) || s.activityTitle?.toLowerCase().includes('princípios') || isProcPenalAula1;
-            return matchSub && matchLesson;
+            const matchLesson = s.activityTitle?.includes(`Aula ${previewAula.aula.number}`) ||
+              (isProcPenalAula1 && (s.activityTitle?.toLowerCase().includes('princípios') || s.disciplineName?.toLowerCase().includes('processual penal'))) ||
+              (isLegislacaoTjamAula1 && (s.activityTitle?.toLowerCase().includes('organização') || s.disciplineName?.toLowerCase().includes('legislação')));
+            return matchSub || matchLesson;
           });
 
           return (
@@ -2293,7 +2303,12 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
                         </span>
                         {isProcPenalAula1 && (
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
-                            ⭐ Aula de Hoje
+                            ⭐ Aula 1 de Hoje
+                          </span>
+                        )}
+                        {isLegislacaoTjamAula1 && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-purple-50 text-purple-800 border border-purple-200">
+                            ⭐ Aula 2 de Hoje
                           </span>
                         )}
                       </div>
@@ -2395,6 +2410,24 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
                           />
                         </div>
                       </div>
+                    ) : isLegislacaoTjamAula1 ? (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-xs font-black uppercase text-slate-700 flex items-center gap-1.5">
+                            <Video className="w-4 h-4 text-purple-600" /> Videoaula Oficial TJAM: Organização Judiciária (LC nº 261/2023)
+                          </h4>
+                          <span className="text-xs text-slate-500 font-medium">Legislação Institucional do TJAM</span>
+                        </div>
+                        <div className="w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-md border border-slate-200">
+                          <iframe
+                            src="https://www.youtube.com/embed/UnVOYgccCP0"
+                            title="Aula 1 Legislação Institucional TJAM"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="w-full h-full border-0"
+                          />
+                        </div>
+                      </div>
                     ) : (
                       previewAula.aula.hasVideo && (
                         <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-xs">
@@ -2408,7 +2441,11 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
                     <div>
                       <h4 className="text-xs font-black uppercase text-slate-700 mb-2 flex items-center gap-1.5">
                         <BookOpen className="w-4 h-4 text-indigo-600" />
-                        {isProcPenalAula1 ? 'Resumo Teórico Estruturado (11 Princípios Fundamentais)' : 'Ementa e Conteúdo Pedagógico'}
+                        {isProcPenalAula1
+                          ? 'Resumo Teórico Estruturado (11 Princípios Fundamentais)'
+                          : isLegislacaoTjamAula1
+                          ? 'Resumo Teórico Estruturado (11 Tópicos da Organização Judiciária - LC 261/2023)'
+                          : 'Ementa e Conteúdo Pedagógico'}
                       </h4>
 
                       {isProcPenalAula1 ? (
@@ -2436,6 +2473,30 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
                             ))}
                           </div>
                         </div>
+                      ) : isLegislacaoTjamAula1 ? (
+                        <div className="space-y-3">
+                          <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-xs text-slate-700 leading-relaxed">
+                            <p className="font-bold text-purple-950 mb-2">Estrutura e Competências do Poder Judiciário do Amazonas:</p>
+                            <p>
+                              A Lei Complementar Estadual nº 261/2023 estabelece a nova organização judiciária do Amazonas, revogando a LC nº 17/1997. Disciplina a divisão em Comarcas e Termos Judiciários, a classificação em 1ª Entrância (interior) e 2ª Entrância (Capital), e as competências dos órgãos e serviços auxiliares para o cargo de Assistente Judiciário.
+                            </p>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {legislacaoTjamSummaryPoints.map((pointText, idx) => (
+                              <div key={idx} className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+                                <div className="flex items-start gap-2">
+                                  <span className="w-6 h-6 rounded-lg bg-purple-50 text-purple-700 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                                    {idx + 1}
+                                  </span>
+                                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                                    {pointText}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       ) : (
                         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
                           {previewAula.aula.description}
@@ -2448,142 +2509,151 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
                 {/* TAB 2: 20 ATIVIDADES & GABARITO OFICIAL */}
                 {previewTab === 'gabarito' && (
                   <div className="space-y-6">
-                    {isProcPenalAula1 ? (
-                      <>
-                        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-wrap items-center justify-between gap-3">
-                          <div>
-                            <h4 className="font-extrabold text-sm text-emerald-950 flex items-center gap-2">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                              Gabarito Oficial Completo das 20 Atividades
-                            </h4>
-                            <p className="text-xs text-emerald-800">
-                              10 Questões de Múltipla Escolha • 5 Questões Certo/Errado • 5 Questões Escritas com Padrão de Resposta
-                            </p>
+                    {isSpecialLesson ? (() => {
+                      const mcList = isProcPenalAula1 ? procPenalMcQuestionsData : legislacaoTjamMcQuestionsData;
+                      const tfList = isProcPenalAula1 ? procPenalTfQuestionsData : legislacaoTjamTfQuestionsData;
+                      const discList = isProcPenalAula1 ? procPenalDiscursiveQuestionsData : legislacaoTjamDiscursiveQuestionsData;
+                      const examBase = isProcPenalAula1 ? 'Base: FGV / TJAM / CF88 / CPP' : 'Base: FGV / TJAM / LC nº 261/2023';
+
+                      return (
+                        <>
+                          <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                              <h4 className="font-extrabold text-sm text-emerald-950 flex items-center gap-2">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                                Gabarito Oficial Completo das 20 Atividades
+                              </h4>
+                              <p className="text-xs text-emerald-800">
+                                10 Questões de Múltipla Escolha • 5 Questões Certo/Errado • 5 Questões Escritas com Padrão de Resposta
+                              </p>
+                            </div>
+                            <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white shadow-2xs">
+                              {examBase}
+                            </span>
                           </div>
-                          <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white shadow-2xs">
-                            Base: FGV / TJAM / CF88 / CPP
-                          </span>
-                        </div>
 
-                        {/* Bloco 1: 10 Questões de Múltipla Escolha */}
-                        <div className="space-y-4">
-                          <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1">
-                            Parte 1: 10 Questões Objetivas de Múltipla Escolha (1 a 10)
-                          </h4>
+                          {/* Bloco 1: 10 Questões de Múltipla Escolha */}
+                          <div className="space-y-4">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1">
+                              Parte 1: 10 Questões Objetivas de Múltipla Escolha (1 a 10)
+                            </h4>
 
-                          <div className="space-y-3">
-                            {procPenalMcQuestionsData.map((q) => {
-                              const alts = q.alternativas || q.opcoes || [];
-                              return (
-                                <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                                  <div className="flex items-start justify-between gap-2">
-                                    <div className="flex items-center gap-2">
-                                      <span className="px-2 py-0.5 rounded-lg bg-sky-100 text-sky-800 font-bold text-xs">
-                                        Questão {q.id}
+                            <div className="space-y-3">
+                              {mcList.map((q, qIndex) => {
+                                const alts = q.alternativas || q.opcoes || [];
+                                const correctIdx = q.correta;
+                                const letters = ['A', 'B', 'C', 'D', 'E'];
+                                return (
+                                  <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                                    <div className="flex items-start justify-between gap-2">
+                                      <div className="flex items-center gap-2">
+                                        <span className="px-2 py-0.5 rounded-lg bg-sky-100 text-sky-800 font-bold text-xs">
+                                          Questão {qIndex + 1}
+                                        </span>
+                                        <span className="text-[11px] font-bold text-slate-500">TJAM / FGV</span>
+                                      </div>
+                                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                        Correta: Opção {letters[correctIdx] || correctIdx}
                                       </span>
-                                      <span className="text-[11px] font-bold text-slate-500">TJAM / FGV</span>
                                     </div>
-                                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                      Correta: Opção {['A', 'B', 'C', 'D'][q.correta]}
+
+                                    <p className="text-xs font-bold text-slate-900 leading-relaxed">{q.enunciado}</p>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                      {alts.map((alt, aIdx) => {
+                                        const isCorrect = aIdx === correctIdx;
+                                        return (
+                                          <div
+                                            key={aIdx}
+                                            className={`p-2.5 rounded-xl border flex items-start gap-2 ${
+                                              isCorrect
+                                                ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950 font-bold'
+                                                : 'bg-white border-slate-200 text-slate-600'
+                                            }`}
+                                          >
+                                            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 ${
+                                              isCorrect ? 'bg-emerald-600 text-white font-black' : 'bg-slate-200 text-slate-600'
+                                            }`}>
+                                              {letters[aIdx] || aIdx + 1}
+                                            </span>
+                                            <span className="leading-snug">{alt}</span>
+                                            {isCorrect && <Check className="w-3.5 h-3.5 text-emerald-600 ml-auto shrink-0" />}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+
+                                    <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-700">
+                                      <span className="font-bold text-slate-900">Fundamentação: </span>
+                                      {q.explicacao}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Bloco 2: 5 Questões Certo ou Errado */}
+                          <div className="space-y-4 pt-4 border-t border-slate-200">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 pb-1">
+                              Parte 2: 5 Questões de Certo ou Errado (11 a 15)
+                            </h4>
+
+                            <div className="space-y-3">
+                              {tfList.map((q, qIndex) => (
+                                <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-900 font-bold text-xs">
+                                      Questão {10 + qIndex + 1}
                                     </span>
+                                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-black ${
+                                      q.correta ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-rose-100 text-rose-800 border border-rose-300'
+                                    }`}>
+                                      Gabarito: {q.correta ? 'CERTO' : 'ERRADO'}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs font-bold text-slate-900 leading-relaxed">{q.enunciado}</p>
+                                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-700">
+                                    <span className="font-bold text-slate-900">Justificativa Oficial: </span>
+                                    {q.explicacao}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Bloco 3: 5 Questões Escritas */}
+                          <div className="space-y-4 pt-4 border-t border-slate-200">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 pb-1">
+                              Parte 3: 5 Questões Escritas Discursivas (16 a 20) com Espelho de Correção
+                            </h4>
+
+                            <div className="space-y-3">
+                              {discList.map((q, qIndex) => (
+                                <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="px-2 py-0.5 rounded-lg bg-indigo-100 text-indigo-900 font-bold text-xs">
+                                      Questão {15 + qIndex + 1}
+                                    </span>
+                                    <span className="text-[11px] font-bold text-indigo-700">Questão Discursiva TJAM</span>
                                   </div>
 
                                   <p className="text-xs font-bold text-slate-900 leading-relaxed">{q.enunciado}</p>
 
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                    {alts.map((alt, aIdx) => {
-                                      const isCorrect = aIdx === q.correta;
-                                      return (
-                                        <div
-                                          key={aIdx}
-                                          className={`p-2.5 rounded-xl border flex items-start gap-2 ${
-                                            isCorrect
-                                              ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950 font-bold'
-                                              : 'bg-white border-slate-200 text-slate-600'
-                                          }`}
-                                        >
-                                          <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 ${
-                                            isCorrect ? 'bg-emerald-600 text-white font-black' : 'bg-slate-200 text-slate-600'
-                                          }`}>
-                                            {['A', 'B', 'C', 'D'][aIdx]}
-                                          </span>
-                                          <span className="leading-snug">{alt}</span>
-                                          {isCorrect && <Check className="w-3.5 h-3.5 text-emerald-600 ml-auto shrink-0" />}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-
-                                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-700">
-                                    <span className="font-bold text-slate-900">Fundamentação: </span>
-                                    {q.explicacao}
+                                  <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-200 text-xs text-indigo-950 space-y-1">
+                                    <span className="font-black text-indigo-900 block flex items-center gap-1.5">
+                                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600" />
+                                      Padrão de Resposta Esperado pelo TJAM:
+                                    </span>
+                                    <p className="leading-relaxed">{q.respostaEsperada}</p>
                                   </div>
                                 </div>
-                              );
-                            })}
+                              ))}
+                            </div>
                           </div>
-                        </div>
-
-                        {/* Bloco 2: 5 Questões Certo ou Errado */}
-                        <div className="space-y-4 pt-4 border-t border-slate-200">
-                          <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 pb-1">
-                            Parte 2: 5 Questões de Certo ou Errado (11 a 15)
-                          </h4>
-
-                          <div className="space-y-3">
-                            {procPenalTfQuestionsData.map((q) => (
-                              <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                                <div className="flex items-center justify-between gap-2">
-                                  <span className="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-900 font-bold text-xs">
-                                    Questão {q.id}
-                                  </span>
-                                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-black ${
-                                    q.correta ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-rose-100 text-rose-800 border border-rose-300'
-                                  }`}>
-                                    Gabarito: {q.correta ? 'CERTO' : 'ERRADO'}
-                                  </span>
-                                </div>
-                                <p className="text-xs font-bold text-slate-900 leading-relaxed">{q.enunciado}</p>
-                                <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-700">
-                                  <span className="font-bold text-slate-900">Justificativa Oficial: </span>
-                                  {q.explicacao}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Bloco 3: 5 Questões Escritas */}
-                        <div className="space-y-4 pt-4 border-t border-slate-200">
-                          <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 pb-1">
-                            Parte 3: 5 Questões Escritas Discursivas (16 a 20) com Espelho de Correção
-                          </h4>
-
-                          <div className="space-y-3">
-                            {procPenalDiscursiveQuestionsData.map((q) => (
-                              <div key={q.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                                <div className="flex items-center justify-between gap-2">
-                                  <span className="px-2 py-0.5 rounded-lg bg-indigo-100 text-indigo-900 font-bold text-xs">
-                                    Questão {q.id - 200 + 15}
-                                  </span>
-                                  <span className="text-[11px] font-bold text-indigo-700">Questão Discursiva TJAM</span>
-                                </div>
-
-                                <p className="text-xs font-bold text-slate-900 leading-relaxed">{q.enunciado}</p>
-
-                                <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-200 text-xs text-indigo-950 space-y-1">
-                                  <span className="font-black text-indigo-900 block flex items-center gap-1.5">
-                                    <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600" />
-                                    Padrão de Resposta Esperado pelo TJAM:
-                                  </span>
-                                  <p className="leading-relaxed">{q.respostaEsperada}</p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </>
-                    ) : (
+                        </>
+                      );
+                    })() : (
                       <div className="p-6 text-center text-xs text-slate-500 bg-slate-50 rounded-2xl">
                         Nenhum gabarito fixo cadastrado para esta aula. Utilize a aba de Questões para gerenciar os itens.
                       </div>

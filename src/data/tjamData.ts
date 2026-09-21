@@ -406,11 +406,12 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-seg',
     dayOfWeek: 'Segunda',
-    disciplineIds: ['direito-constitucional', 'informatica', 'escrita-leitura'],
+    disciplineIds: ['lingua-portuguesa', 'processo-penal', 'processo-civil'],
     tasks: [
-      '1ª Aula: Dir. Constitucional (Aplicabilidade das Normas • 20 Questões)',
-      '2ª Aula: Informática (Segurança da Informação, CID e Backup • 20 Questões)',
-      '3ª Aula: Escrita e Leitura (Comunicação, Dicção, Ortografia e Vídeo Tarefa • 20 Questões)',
+      '1ª Aula: Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos (Nível Intermediário TJAM)',
+      '20 Questões Gabaritadas (10 Objetivas + 5 V/F + 5 Dissertativas) de Interpretação',
+      'Assistir à Videoaula Oficial com Prof. Nelson Sartori (YouTube)',
+      'Fixação das 3 Armadilhas FGV/Cebraspe: Extrapolação, Redução e Contradição',
     ],
     completed: false,
   },
@@ -456,4 +457,12 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
     tasks: ['Lei Seca Intensiva', '1 Simulado Completo ou Bloco de Questões', 'Análise de Desempenho com IA'],
     completed: false,
   },
+];
+
+export const INITIAL_WEEKLY_GOALS = [
+  { id: 'goal-pt-01', text: '📚 Estudar Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos (Nível Intermediário TJAM)', completed: false },
+  { id: 'goal-pt-02', text: '🎬 Assistir à Videoaula de Interpretação de Textos (Prof. Nelson Sartori / TJAM 2026)', completed: false },
+  { id: 'goal-pt-03', text: '📝 Resolver as 20 Questões Gabaritadas (10 Objetivas + 5 Verdadeiro/Falso + 5 Dissertativas)', completed: false },
+  { id: 'goal-pt-04', text: '🎯 Fixar os 3 Erros da Banca FGV/Cebraspe: Extrapolação, Redução e Contradição', completed: false },
+  { id: 'goal-pt-05', text: '⚖️ Revisar os Conceitos de Pressupostos e Subentendidos Textuais', completed: false },
 ];

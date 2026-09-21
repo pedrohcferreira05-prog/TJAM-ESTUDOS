@@ -25,6 +25,7 @@ import {
   INITIAL_SIMULADOS,
   INITIAL_NEWS,
   INITIAL_WEEKLY_SCHEDULE,
+  INITIAL_WEEKLY_GOALS,
   INITIAL_MINDMAPS_TJAM,
 } from './data/tjamData';
 import { INITIAL_VIDEO_LESSONS } from './data/videoLessonsData';
@@ -60,8 +61,10 @@ import { StudentAccountService } from './lib/studentAccountService';
 import {
   saveUserProgressToFirestore,
   loadUserProgressFromFirestore,
+  subscribeToUserProgress,
   saveLessonProgressToFirestore,
   loadLessonProgressFromFirestore,
+  subscribeToLessonProgress,
   subscribeToSystemControls,
   updateSystemControls,
   subscribeToTurmas,
@@ -73,6 +76,10 @@ import {
   gradeStudentSubmissionInFirestore,
   updateUserPresence,
   resetAllStudentProgressAndContentsInFirestore,
+  saveSharedWeeklyGoalsToFirestore,
+  subscribeToSharedWeeklyGoals,
+  saveWeeklyScheduleToFirestore,
+  subscribeToWeeklySchedule,
 } from './lib/firestoreService';
 import { SiteLockedView } from './components/SiteLockedView';
 import { RankingsOnlyView } from './components/RankingsOnlyView';
@@ -287,8 +294,8 @@ export function App() {
         if (parsed.reviewQueue && parsed.reviewQueue.some((r: any) => r.id === 'rev-1')) {
           parsed.reviewQueue = [];
         }
-        if (parsed.weeklyGoals && parsed.weeklyGoals.some((g: any) => g.id === 'g1')) {
-          parsed.weeklyGoals = [];
+        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || parsed.weeklyGoals.some((g: any) => g.id === 'g1')) {
+          parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
         if (Array.isArray(parsed.simuladoAttempts)) {
           const seenAttempts = new Set<string>();
@@ -321,7 +328,7 @@ export function App() {
       nodeNotes: {},
       simuladoAttempts: [],
       reviewQueue: [],
-      weeklyGoals: [],
+      weeklyGoals: INITIAL_WEEKLY_GOALS,
     };
   });
 
@@ -356,24 +363,31 @@ export function App() {
     async function initSiteLaunchSync() {
       try {
         // Se a solicitação de zerar conteúdos ainda não foi aplicada neste browser, zera agora
-        if (localStorage.getItem('tjam_contents_reboot_2026_v2') !== 'true') {
+        if (localStorage.getItem('tjam_contents_reboot_2026_v5') !== 'true') {
           await handleResetAllStudentContents(true);
+          localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
+          localStorage.setItem('tjam_selected_subject', 'legislacao_tjam');
         } else {
           // 1. Fetch remote progress from Firestore or fallback to local
-          const remoteLessons = await loadLessonProgressFromFirestore();
+          const effectiveId = (currentUserSession?.role === 'student' ? currentUserSession.id : null) || 'id00120087';
+          const remoteLessons = await loadLessonProgressFromFirestore(effectiveId);
           if (remoteLessons) {
-            localStorage.setItem('tjam_lessons_progress', JSON.stringify(remoteLessons));
+            localStorage.setItem(`tjam_lessons_progress_${effectiveId}`, JSON.stringify(remoteLessons));
+            if (effectiveId === 'id00120087') {
+              localStorage.setItem('tjam_lessons_progress', JSON.stringify(remoteLessons));
+            }
+            setSavedLessons(remoteLessons);
           }
 
           // 2. Sync student user progress with Firestore
-          const remoteUserProgress = await loadUserProgressFromFirestore();
+          const remoteUserProgress = await loadUserProgressFromFirestore(effectiveId);
           if (remoteUserProgress) {
             setUserProgress(prev => sanitizeUserProgressData({
               ...prev,
               ...remoteUserProgress,
             }));
           } else {
-            await saveUserProgressToFirestore(userProgress);
+            await saveUserProgressToFirestore(userProgress, effectiveId);
           }
         }
 
@@ -433,9 +447,89 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('tjam_user_progress', JSON.stringify(userProgress));
-    saveUserProgressToFirestore(userProgress);
-  }, [userProgress]);
+    const effectiveId = (currentUserSession?.role === 'student' ? currentUserSession.id : null) || 'id00120087';
+    localStorage.setItem(`tjam_user_progress_${effectiveId}`, JSON.stringify(userProgress));
+    if (effectiveId === 'id00120087') {
+      localStorage.setItem('tjam_user_progress', JSON.stringify(userProgress));
+    }
+    saveUserProgressToFirestore(userProgress, effectiveId);
+  }, [userProgress, currentUserSession?.id]);
+
+  // Dynamic user switch listener to load isolated student progress
+  useEffect(() => {
+    if (!currentUserSession || currentUserSession.role !== 'student') return;
+    const studentId = currentUserSession.id;
+
+    // Load local cache if present
+    const cachedLocal = localStorage.getItem(`tjam_user_progress_${studentId}`);
+    if (cachedLocal) {
+      try {
+        setUserProgress(sanitizeUserProgressData(JSON.parse(cachedLocal)));
+      } catch {}
+    }
+
+    loadUserProgressFromFirestore(studentId).then((remoteProg) => {
+      if (remoteProg) {
+        setUserProgress(prev => sanitizeUserProgressData({
+          ...prev,
+          ...remoteProg,
+        }));
+      }
+    });
+
+    loadLessonProgressFromFirestore(studentId).then((remoteLessons) => {
+      if (remoteLessons) {
+        setSavedLessons(remoteLessons);
+      }
+    });
+
+    const unsubProg = subscribeToUserProgress((remote) => {
+      if (remote) {
+        setUserProgress(prev => sanitizeUserProgressData({
+          ...prev,
+          ...remote,
+        }));
+      }
+    }, studentId);
+
+    const unsubLessons = subscribeToLessonProgress((remoteStore) => {
+      if (remoteStore) {
+        setSavedLessons(remoteStore);
+      }
+    }, studentId);
+
+    const unsubSharedGoals = subscribeToSharedWeeklyGoals(INITIAL_WEEKLY_GOALS, (sharedGoals) => {
+      if (sharedGoals && sharedGoals.length > 0) {
+        setUserProgress((prev) => ({
+          ...prev,
+          weeklyGoals: sharedGoals,
+        }));
+      }
+    });
+
+    const unsubSharedSchedule = subscribeToWeeklySchedule(INITIAL_WEEKLY_SCHEDULE, (sharedSchedule) => {
+      if (sharedSchedule && sharedSchedule.length > 0) {
+        setWeeklySchedule(sharedSchedule);
+      }
+    });
+
+    return () => {
+      unsubProg();
+      unsubLessons();
+      unsubSharedGoals();
+      unsubSharedSchedule();
+    };
+  }, [currentUserSession?.id]);
+
+  // Saved Lessons State for instantaneous synchronization between Student Portal and Teacher Portal
+  const [savedLessons, setSavedLessons] = useState<Record<string, any>>(() => {
+    try {
+      const saved = localStorage.getItem('tjam_lessons_progress');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
 
   // Real-time automatic update engine (syncs without reloading page)
   const [lastSyncTime, setLastSyncTime] = useState<string>(() => new Date().toLocaleTimeString('pt-BR'));
@@ -449,6 +543,16 @@ export function App() {
           setUserProgress(parsed);
         } catch {}
       }
+      if (e.key === 'tjam_lessons_progress' && e.newValue) {
+        try {
+          setSavedLessons(JSON.parse(e.newValue));
+        } catch {}
+      }
+      if (e.key === 'tjam_submissions' && e.newValue) {
+        try {
+          setSubmissions(JSON.parse(e.newValue));
+        } catch {}
+      }
       if (e.key === 'tjam_announcements' && e.newValue) {
         try { setAnnouncements(JSON.parse(e.newValue)); } catch {}
       }
@@ -460,7 +564,7 @@ export function App() {
 
     window.addEventListener('storage', handleStorageChange);
 
-    // 2. Periodic background ticker (every 2 seconds) for live state evaluation without page reloads
+    // 2. Periodic background ticker (every 1 second) for live state evaluation without page reloads
     const syncInterval = setInterval(() => {
       setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
       const savedProgress = localStorage.getItem('tjam_user_progress');
@@ -472,7 +576,21 @@ export function App() {
           }
         } catch {}
       }
-    }, 2000);
+      const savedLessonsRaw = localStorage.getItem('tjam_lessons_progress');
+      if (savedLessonsRaw) {
+        try {
+          const parsedLessons = JSON.parse(savedLessonsRaw);
+          setSavedLessons(parsedLessons);
+        } catch {}
+      }
+      const savedSubsRaw = localStorage.getItem('tjam_submissions');
+      if (savedSubsRaw) {
+        try {
+          const parsedSubs = JSON.parse(savedSubsRaw);
+          setSubmissions(parsedSubs);
+        } catch {}
+      }
+    }, 1000);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
@@ -605,23 +723,33 @@ export function App() {
   };
 
   const handleToggleWeeklyGoal = (goalId: string) => {
-    setUserProgress((prev) => ({
-      ...prev,
-      weeklyGoals: prev.weeklyGoals.map((g) => (g.id === goalId ? { ...g, completed: !g.completed } : g)),
-    }));
+    setUserProgress((prev) => {
+      const updatedGoals = prev.weeklyGoals.map((g) => (g.id === goalId ? { ...g, completed: !g.completed } : g));
+      saveSharedWeeklyGoalsToFirestore(updatedGoals).catch(() => {});
+      return {
+        ...prev,
+        weeklyGoals: updatedGoals,
+      };
+    });
   };
 
   const handleAddWeeklyGoal = (text: string) => {
-    setUserProgress((prev) => ({
-      ...prev,
-      weeklyGoals: [...prev.weeklyGoals, { id: `goal-${Date.now()}`, text, completed: false }],
-    }));
+    setUserProgress((prev) => {
+      const updatedGoals = [...prev.weeklyGoals, { id: `goal-${Date.now()}`, text, completed: false }];
+      saveSharedWeeklyGoalsToFirestore(updatedGoals).catch(() => {});
+      return {
+        ...prev,
+        weeklyGoals: updatedGoals,
+      };
+    });
   };
 
   const handleToggleScheduleTask = (scheduleId: string) => {
-    setWeeklySchedule((prev) =>
-      prev.map((s) => (s.id === scheduleId ? { ...s, completed: !s.completed } : s))
-    );
+    setWeeklySchedule((prev) => {
+      const updated = prev.map((s) => (s.id === scheduleId ? { ...s, completed: !s.completed } : s));
+      saveWeeklyScheduleToFirestore(updated).catch(() => {});
+      return updated;
+    });
   };
 
   const handleToggleReviewCompleted = (reviewId: string) => {
@@ -687,7 +815,8 @@ export function App() {
       localStorage.removeItem('tjam_checklist_informatica_redes');
       localStorage.removeItem('tjam_video_desafio_admin_controle');
       localStorage.removeItem('tjam_video_desafio_const_nacionalidade');
-      localStorage.setItem('tjam_contents_reboot_2026_v2', 'true');
+      localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
+      localStorage.setItem('tjam_selected_subject', 'legislacao_tjam');
     } catch (e) {
       console.warn('Erro ao limpar localStorage:', e);
     }
@@ -904,22 +1033,30 @@ export function App() {
   };
 
   const handleUpdateWeeklyGoal = (id: string, text: string) => {
-    setUserProgress((prev) => ({
-      ...prev,
-      weeklyGoals: (prev.weeklyGoals || []).map((g) => (g.id === id ? { ...g, text } : g)),
-    }));
+    setUserProgress((prev) => {
+      const updatedGoals = (prev.weeklyGoals || []).map((g) => (g.id === id ? { ...g, text } : g));
+      saveSharedWeeklyGoalsToFirestore(updatedGoals).catch(() => {});
+      return {
+        ...prev,
+        weeklyGoals: updatedGoals,
+      };
+    });
   };
 
   const handleDeleteWeeklyGoal = (id: string) => {
-    setUserProgress((prev) => ({
-      ...prev,
-      weeklyGoals: (prev.weeklyGoals || []).filter((g) => g.id !== id),
-    }));
+    setUserProgress((prev) => {
+      const updatedGoals = (prev.weeklyGoals || []).filter((g) => g.id !== id);
+      saveSharedWeeklyGoalsToFirestore(updatedGoals).catch(() => {});
+      return {
+        ...prev,
+        weeklyGoals: updatedGoals,
+      };
+    });
   };
 
   const handleAddTaskToDay = (dayOfWeek: string, taskText: string, disciplineId?: string) => {
-    setWeeklySchedule((prev) =>
-      prev.map((item) => {
+    setWeeklySchedule((prev) => {
+      const updated = prev.map((item) => {
         if (item.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase() || item.id === dayOfWeek) {
           return {
             ...item,
@@ -928,26 +1065,30 @@ export function App() {
           };
         }
         return item;
-      })
-    );
+      });
+      saveWeeklyScheduleToFirestore(updated).catch(() => {});
+      return updated;
+    });
   };
 
   const handleUpdateDayTask = (scheduleId: string, taskIndex: number, newText: string) => {
-    setWeeklySchedule((prev) =>
-      prev.map((item) => {
+    setWeeklySchedule((prev) => {
+      const updated = prev.map((item) => {
         if (item.id === scheduleId) {
           const newTasks = [...item.tasks];
           newTasks[taskIndex] = newText;
           return { ...item, tasks: newTasks };
         }
         return item;
-      })
-    );
+      });
+      saveWeeklyScheduleToFirestore(updated).catch(() => {});
+      return updated;
+    });
   };
 
   const handleDeleteDayTask = (scheduleId: string, taskIndex: number) => {
-    setWeeklySchedule((prev) =>
-      prev.map((item) => {
+    setWeeklySchedule((prev) => {
+      const updated = prev.map((item) => {
         if (item.id === scheduleId) {
           return {
             ...item,
@@ -955,8 +1096,10 @@ export function App() {
           };
         }
         return item;
-      })
-    );
+      });
+      saveWeeklyScheduleToFirestore(updated).catch(() => {});
+      return updated;
+    });
   };
 
   const handleAddNews = (n: NewsItem) => {
@@ -1144,7 +1287,7 @@ export function App() {
                 simuladoAttempts={userProgress.simuladoAttempts || []}
                 students={StudentAccountService.getLocalAccounts()}
                 completedTopicIds={userProgress.completedTopicIds || []}
-                savedLessons={userProgress.savedLessons || {}}
+                savedLessons={savedLessons}
                 onToggleLessonCompleted={handleToggleLessonCompleted}
                 onResetQuestionAttempt={handleResetQuestionAttempt}
                 onResetSimuladoAttempt={handleResetSimuladoAttempt}
@@ -1161,6 +1304,7 @@ export function App() {
                     onNavigateTab={setStudentTab}
                     isDarkMode={isDarkMode}
                     isDuo={isDuo}
+                    onToggleGoal={handleToggleWeeklyGoal}
                   />
                 )}
 
@@ -1174,6 +1318,7 @@ export function App() {
                     onAnswerQuestion={handleAnswerQuestion}
                     studentName={userProgress.userName || 'Eduardo Mateus'}
                     turmaId="TJAM-2026-REGULAR"
+                    currentUserSession={currentUserSession}
                   />
                 )}
 
@@ -1227,6 +1372,7 @@ export function App() {
                   videoLessons={videoLessons}
                   publishedMaterials={publishedMaterials}
                   disciplines={disciplines}
+                  currentUserSession={currentUserSession}
                 />
               )}
 

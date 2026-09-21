@@ -1,5 +1,5 @@
-import React from 'react';
-import { UserProgress } from '../types';
+import React, { useState, useEffect } from 'react';
+import { AuthSession, UserProgress } from '../types';
 import {
   Users,
   GraduationCap,
@@ -10,19 +10,60 @@ import {
   CheckCircle2,
   ShieldCheck,
   Trophy,
-  TrendingUp
+  TrendingUp,
+  Sparkles,
 } from 'lucide-react';
+import {
+  ProfileManagementService,
+  DuoProfile,
+  StudentProfileData,
+} from '../lib/profileManagementService';
 
 interface PerfilViewProps {
   progress: UserProgress;
   isDarkMode?: boolean;
   isDuo?: boolean;
+  currentUserSession?: AuthSession | null;
 }
 
 export const PerfilView: React.FC<PerfilViewProps> = ({
   progress,
+  currentUserSession,
 }) => {
-  const hours = progress.hoursStudiedToday || 0;
+  const activeStudentId = currentUserSession?.id || 'id00120087';
+  const partnerStudentId = activeStudentId === 'student-pedro-henrique' ? 'id00120087' : 'student-pedro-henrique';
+
+  const [duoProfile, setDuoProfile] = useState<DuoProfile>(() => ProfileManagementService.getDuoProfile());
+  const [studentProfile, setStudentProfile] = useState<StudentProfileData>(() =>
+    ProfileManagementService.getStudentProfile(activeStudentId)
+  );
+  const [partnerProfile, setPartnerProfile] = useState<StudentProfileData>(() =>
+    ProfileManagementService.getStudentProfile(partnerStudentId)
+  );
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setDuoProfile(ProfileManagementService.getDuoProfile());
+      setStudentProfile(ProfileManagementService.getStudentProfile(activeStudentId));
+      setPartnerProfile(ProfileManagementService.getStudentProfile(partnerStudentId));
+    };
+
+    handleUpdate();
+
+    window.addEventListener('storage', handleUpdate);
+    window.addEventListener('tjam_duo_profile_updated', handleUpdate);
+    window.addEventListener('tjam_student_profile_updated', handleUpdate);
+    window.addEventListener('tjam_rankings_updated', handleUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleUpdate);
+      window.removeEventListener('tjam_duo_profile_updated', handleUpdate);
+      window.removeEventListener('tjam_student_profile_updated', handleUpdate);
+      window.removeEventListener('tjam_rankings_updated', handleUpdate);
+    };
+  }, [activeStudentId, partnerStudentId]);
+
+  const hours = studentProfile.hoursStudiedToday || progress.hoursStudiedToday || 0;
   const h = Math.floor(hours);
   const m = Math.round((hours % 1) * 60);
   const timeTodayFormatted = h > 0 ? `${h}h ${m}m` : `${m}m`;
@@ -38,14 +79,14 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-extrabold text-sm text-slate-900">
-                Perfil da Dupla Oficial: Eduardo Mateus & Pedro Henrique
+                Perfil da Dupla: {duoProfile.name}
               </h3>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                Dupla Oficial
+                Homologada
               </span>
             </div>
             <p className="text-xs text-slate-600 mt-0.5">
-              Eduardo e Pedro formam a dupla oficial de estudos TJAM 2026 em 5º lugar (30,0%), sem pendências.
+              {duoProfile.motto}
             </p>
           </div>
         </div>
@@ -53,7 +94,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           <span className="px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 text-xs font-bold border border-amber-300 flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-amber-600" />
-            <span>5º Lugar Geral (30,0%)</span>
+            <span>{duoProfile.rankText} ({duoProfile.scoreDisplay})</span>
           </span>
         </div>
       </div>
@@ -65,36 +106,44 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
                 <Users className="w-6 h-6 text-emerald-600" />
-                <span>Eduardo Mateus & Pedro Henrique</span>
+                <span>{duoProfile.name}</span>
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                Dupla Oficial de Estudos • Preparatório TJAM 2026 (Assistente Judiciário)
+                {duoProfile.motto}
               </p>
             </div>
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                Dupla Oficial
+                {duoProfile.status}
               </span>
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
                 <Trophy className="w-3.5 h-3.5 text-amber-600" />
-                5º Lugar Geral
+                {duoProfile.rankText}
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Eduardo Mateus */}
+            {/* Active Student (Você) */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4">
               <div className="relative shrink-0">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-600 p-0.5 shadow-xs">
-                  <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256"
-                    alt="Eduardo Mateus"
-                    className="w-full h-full object-cover rounded-[14px]"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
-                    }}
-                  />
+                  {studentProfile.avatarUrl ? (
+                    <img
+                      src={studentProfile.avatarUrl}
+                      alt={studentProfile.name}
+                      className="w-full h-full object-cover rounded-[14px]"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full rounded-[14px] bg-indigo-600 flex items-center justify-center font-black text-white text-lg">
+                      {studentProfile.name
+                        ? studentProfile.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
+                        : 'AL'}
+                    </div>
+                  )}
                 </div>
                 <span className="absolute -bottom-1 -right-1 bg-emerald-600 text-white p-1 rounded-full text-[10px]">
                   <ShieldCheck className="w-3 h-3" />
@@ -102,42 +151,72 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <h3 className="font-extrabold text-sm text-slate-900 truncate">Eduardo Mateus A. Amorim</h3>
+                  <h3 className="font-extrabold text-sm text-slate-900 truncate">
+                    {studentProfile.displayName || studentProfile.name}
+                  </h3>
                   <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-sky-100 text-sky-800 shrink-0">Você</span>
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">Aluno Titular • Foco TJAM</p>
+                <p className="text-xs text-slate-500 mt-0.5">{studentProfile.targetRole || 'Assistente Judiciário'}</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <span className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                    5º Lugar Dupla • 2º Lugar Geral
+                    {duoProfile.rankText} • {studentProfile.individualPosition || 'Classificado'}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Pedro Henrique */}
+            {/* Partner Student */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4">
               <div className="relative shrink-0">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center font-black text-lg text-white shadow-xs">
-                  PH
-                </div>
+                {partnerProfile.avatarUrl ? (
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 p-0.5 shadow-xs">
+                    <img
+                      src={partnerProfile.avatarUrl}
+                      alt={partnerProfile.name}
+                      className="w-full h-full object-cover rounded-[14px]"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center font-black text-lg text-white shadow-xs">
+                    {partnerProfile.name
+                      ? partnerProfile.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
+                      : 'DU'}
+                  </div>
+                )}
                 <span className="absolute -bottom-1 -right-1 bg-emerald-600 text-white p-1 rounded-full text-[10px]">
                   <CheckCircle2 className="w-3 h-3" />
                 </span>
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <h3 className="font-extrabold text-sm text-slate-900 truncate">Pedro Henrique Ferreira</h3>
+                  <h3 className="font-extrabold text-sm text-slate-900 truncate">
+                    {partnerProfile.displayName || partnerProfile.name}
+                  </h3>
                   <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 shrink-0">Parceiro</span>
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">Parceiro de Dupla Oficial</p>
+                <p className="text-xs text-slate-500 mt-0.5">{partnerProfile.targetRole || 'Assistente Judiciário'}</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <span className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                    5º Lugar Dupla • 100% em dia
+                    {duoProfile.rankText} • 100% em dia
                   </span>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Teacher Special Note to Duo if present */}
+          {duoProfile.teacherNotes && (
+            <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="text-xs">
+                <p className="font-bold text-amber-900">Orientação Pedagógica da Professora Jéssica Alves:</p>
+                <p className="text-amber-800 mt-0.5">{duoProfile.teacherNotes}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -149,12 +228,12 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <Award className="w-5 h-5" />
           </div>
           <div className="flex items-baseline gap-2">
-            <p className="text-3xl font-black text-slate-900">30,0%</p>
+            <p className="text-3xl font-black text-slate-900">{duoProfile.scoreDisplay}</p>
             <span className="text-xs font-bold text-emerald-600 flex items-center">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> 5º Lugar
+              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> {duoProfile.rankText}
             </span>
           </div>
-          <p className="text-[11px] text-slate-500">Dupla Oficial: Eduardo & Pedro • 5º Lugar geral</p>
+          <p className="text-[11px] text-slate-500">{duoProfile.name} • {duoProfile.rankText}</p>
         </div>
 
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 bg-white shadow-xs space-y-2">
@@ -162,7 +241,9 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Sequência</span>
             <Flame className="w-5 h-5" />
           </div>
-          <p className="text-3xl font-black text-slate-900">{progress.streakDays || 0} {progress.streakDays === 1 ? 'Dia' : 'Dias'}</p>
+          <p className="text-3xl font-black text-slate-900">
+            {studentProfile.streakDays || progress.streakDays || 0} {studentProfile.streakDays === 1 ? 'Dia' : 'Dias'}
+          </p>
           <p className="text-[11px] text-slate-500">Estudos diários consecutivos</p>
         </div>
 
@@ -172,7 +253,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <Clock className="w-5 h-5" />
           </div>
           <p className="text-3xl font-black text-slate-900">{timeTodayFormatted}</p>
-          <p className="text-[11px] text-slate-500">Meta da dupla: 3h a 4h diárias</p>
+          <p className="text-[11px] text-slate-500">Meta da dupla: {duoProfile.targetDailyHours || 4}h diárias</p>
         </div>
 
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 bg-white shadow-xs space-y-2">

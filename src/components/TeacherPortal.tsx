@@ -32,6 +32,7 @@ import {
   Upload,
   BarChart3,
   Award,
+  Trophy,
   Lock,
   Unlock,
   Library,
@@ -61,6 +62,7 @@ import { TeacherMindMapsManager } from './TeacherMindMapsManager';
 import { TeacherCadernoErrosManager } from './TeacherCadernoErrosManager';
 import { TeacherScheduleAndGoalsManager } from './TeacherScheduleAndGoalsManager';
 import { TeacherDisciplinasManager } from './TeacherDisciplinasManager';
+import { TeacherRankingAndDuplaManager } from './TeacherRankingAndDuplaManager';
 
 interface TeacherPortalProps {
   activeTab?: TeacherTab;
@@ -239,6 +241,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
     : realAccuracy > 0 ? (realAccuracy / 10).toFixed(1) : '10.0';
 
   const teacherTabsList: Array<{ id: TeacherTab; label: string; fullLabel: string; icon: any }> = [
+    { id: 'rankings-dupla', label: 'Rankings & Perfis', fullLabel: 'Rankings & Perfis (Super Admin)', icon: Trophy },
     { id: 'alunos', label: 'Alunos & Senhas', fullLabel: 'Cadastro de Alunos & Senhas', icon: UserPlus },
     { id: 'turmas', label: 'Turmas', fullLabel: 'Gestão de Turmas', icon: Users },
     { id: 'disciplinas-aluno', label: 'Disciplinas (Aluno)', fullLabel: '11 Disciplinas do Aluno (Sincronizadas)', icon: BookOpen },
@@ -650,6 +653,11 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         </div>
       </div>
 
+      {/* Tab Super Admin: Rankings & Perfis */}
+      {activeTab === 'rankings-dupla' && (
+        <TeacherRankingAndDuplaManager isDarkMode={isDarkMode} />
+      )}
+
       {/* Tab 0: Cadastro e Gestão de Alunos */}
       {activeTab === 'alunos' && (
         <StudentManagementTab turmas={turmas} isDarkMode={isDarkMode} />
@@ -920,6 +928,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
           questionAttempts={questionAttempts}
           simuladoAttempts={simuladoAttempts}
           questions={questions}
+          savedLessons={savedLessons}
           onGradeSubmission={onGradeSubmission}
           onResetQuestionAttempt={onResetQuestionAttempt}
           onResetSimuladoAttempt={onResetSimuladoAttempt}

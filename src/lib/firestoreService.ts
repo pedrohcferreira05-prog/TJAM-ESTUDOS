@@ -20,7 +20,8 @@ import {
   LiveClass,
   PublishedMaterial,
   StudentSubmission,
-  SimuladoAttempt
+  SimuladoAttempt,
+  WeeklyScheduleItem
 } from '../types';
 import { Week1Lesson } from '../data/tjamWeek1Data';
 import { DUPLAS_RANKING, INDIVIDUAL_SIMULADO_RANKING, RankingDuplaItem, RankingIndividualItem } from '../data/rankingsData';
@@ -180,93 +181,132 @@ export function subscribeToAllUsers(
 }
 
 // -------------------------------------------------------------
-// 3. STUDENT USER PROGRESS (PERSISTENCE & REALTIME)
+// 3. STUDENT USER PROGRESS (PERSISTENCE & REALTIME - ISOLATED PER USER)
 // -------------------------------------------------------------
-export async function saveUserProgressToFirestore(progress: UserProgress): Promise<void> {
+export async function saveUserProgressToFirestore(progress: UserProgress, userId?: string): Promise<void> {
   try {
-    // 1. Save to legacy location for backward compatibility
-    const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
-    await setDoc(legacyRef, {
+    const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+
+    // 1. Isolated document per student under user_progress collection
+    const docRef = doc(db, COLLECTIONS.USER_PROGRESS, effectiveUserId);
+    await setDoc(docRef, {
       ...progress,
+      userId: effectiveUserId,
       updatedAt: new Date().toISOString()
     }, { merge: true });
 
-    // 2. Save to user_progress collection if authenticated
-    const uid = auth?.currentUser?.uid || 'default_student';
-    const docRef = doc(db, COLLECTIONS.USER_PROGRESS, uid);
-    await setDoc(docRef, {
-      ...progress,
-      updatedAt: new Date().toISOString()
-    }, { merge: true });
+    // 2. Also keep legacy sync for primary titular user
+    if (effectiveUserId === 'id00120087') {
+      const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
+      await setDoc(legacyRef, {
+        ...progress,
+        userId: effectiveUserId,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+    }
   } catch (err) {
-    handleFirestoreError(err, OperationType.WRITE, `${COLLECTION_NAME}/${PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.WRITE, `${COLLECTIONS.USER_PROGRESS}/${userId}`);
   }
 }
 
-export async function loadUserProgressFromFirestore(): Promise<Partial<UserProgress> | null> {
+export async function loadUserProgressFromFirestore(userId?: string): Promise<Partial<UserProgress> | null> {
   try {
-    const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
-    const snap = await getDoc(legacyRef);
+    const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+
+    // 1. Query isolated document
+    const docRef = doc(db, COLLECTIONS.USER_PROGRESS, effectiveUserId);
+    const snap = await getDoc(docRef);
     if (snap.exists()) {
       return snap.data() as Partial<UserProgress>;
     }
+
+    // 2. Fallback to legacy document for primary student
+    if (effectiveUserId === 'id00120087') {
+      const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
+      const legacySnap = await getDoc(legacyRef);
+      if (legacySnap.exists()) {
+        return legacySnap.data() as Partial<UserProgress>;
+      }
+    }
   } catch (err) {
-    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/${PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.GET, `${COLLECTIONS.USER_PROGRESS}/${userId}`);
   }
   return null;
 }
 
 export function subscribeToUserProgress(
-  onUpdate: (progress: Partial<UserProgress>) => void
+  onUpdate: (progress: Partial<UserProgress>) => void,
+  userId?: string
 ): Unsubscribe {
-  const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
-  return onSnapshot(legacyRef, (snap) => {
+  const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+  const docRef = doc(db, COLLECTIONS.USER_PROGRESS, effectiveUserId);
+  return onSnapshot(docRef, (snap) => {
     if (snap.exists()) {
       onUpdate(snap.data() as Partial<UserProgress>);
     }
   }, (err) => {
-    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/${PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.GET, `${COLLECTIONS.USER_PROGRESS}/${effectiveUserId}`);
   });
 }
 
 // -------------------------------------------------------------
-// 4. LESSON PROGRESS STORE (AULAS, EXERCÍCIOS, STATUS)
+// 4. LESSON PROGRESS STORE (AULAS, EXERCÍCIOS, STATUS - ISOLATED PER USER)
 // -------------------------------------------------------------
-export async function saveLessonProgressToFirestore(store: Record<string, any>): Promise<void> {
+export async function saveLessonProgressToFirestore(store: Record<string, any>, userId?: string): Promise<void> {
   try {
-    const docRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+    const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+    const docRef = doc(db, 'lesson_progress', effectiveUserId);
     await setDoc(docRef, {
+      userId: effectiveUserId,
       store,
       updatedAt: new Date().toISOString()
     }, { merge: true });
+
+    if (effectiveUserId === 'id00120087') {
+      const legacyRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+      await setDoc(legacyRef, {
+        store,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+    }
   } catch (err) {
-    handleFirestoreError(err, OperationType.WRITE, `${COLLECTION_NAME}/${LESSON_PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.WRITE, `lesson_progress/${userId}`);
   }
 }
 
-export async function loadLessonProgressFromFirestore(): Promise<Record<string, any> | null> {
+export async function loadLessonProgressFromFirestore(userId?: string): Promise<Record<string, any> | null> {
   try {
-    const docRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+    const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+    const docRef = doc(db, 'lesson_progress', effectiveUserId);
     const snap = await getDoc(docRef);
     if (snap.exists() && snap.data()?.store) {
       return snap.data().store as Record<string, any>;
     }
+    if (effectiveUserId === 'id00120087') {
+      const legacyRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+      const legacySnap = await getDoc(legacyRef);
+      if (legacySnap.exists() && legacySnap.data()?.store) {
+        return legacySnap.data().store as Record<string, any>;
+      }
+    }
   } catch (err) {
-    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/${LESSON_PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.GET, `lesson_progress/${userId}`);
   }
   return null;
 }
 
 export function subscribeToLessonProgress(
-  onUpdate: (store: Record<string, any>) => void
+  onUpdate: (store: Record<string, any>) => void,
+  userId?: string
 ): Unsubscribe {
-  const docRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
+  const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
+  const docRef = doc(db, 'lesson_progress', effectiveUserId);
   return onSnapshot(docRef, (snap) => {
     if (snap.exists() && snap.data()?.store) {
       onUpdate(snap.data().store as Record<string, any>);
     }
   }, (err) => {
-    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/${LESSON_PROGRESS_DOC_ID}`);
+    handleFirestoreError(err, OperationType.GET, `lesson_progress/${effectiveUserId}`);
   });
 }
 
@@ -682,5 +722,70 @@ export async function resetAllStudentProgressAndContentsInFirestore(): Promise<v
   } catch (err) {
     handleFirestoreError(err, OperationType.WRITE, 'reset_all_student_progress');
   }
+}
+
+// -------------------------------------------------------------
+// 13. SHARED TEACHER SCHEDULE & WEEKLY GOALS REAL-TIME SYNC
+// -------------------------------------------------------------
+export async function saveSharedWeeklyGoalsToFirestore(
+  goals: Array<{ id: string; text: string; completed: boolean }>
+): Promise<void> {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, 'shared_weekly_goals');
+    await setDoc(docRef, {
+      goals,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    handleFirestoreError(err, OperationType.WRITE, `${COLLECTION_NAME}/shared_weekly_goals`);
+  }
+}
+
+export function subscribeToSharedWeeklyGoals(
+  fallback: Array<{ id: string; text: string; completed: boolean }>,
+  onUpdate: (goals: Array<{ id: string; text: string; completed: boolean }>) => void
+): Unsubscribe {
+  const docRef = doc(db, COLLECTION_NAME, 'shared_weekly_goals');
+  return onSnapshot(docRef, (snapshot) => {
+    if (snapshot && typeof snapshot.exists === 'function' && snapshot.exists() && snapshot.data().goals) {
+      onUpdate(snapshot.data().goals);
+    } else {
+      onUpdate(fallback);
+      saveSharedWeeklyGoalsToFirestore(fallback).catch(() => {});
+    }
+  }, (err) => {
+    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/shared_weekly_goals`);
+    onUpdate(fallback);
+  });
+}
+
+export async function saveWeeklyScheduleToFirestore(schedule: WeeklyScheduleItem[]): Promise<void> {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, 'shared_weekly_schedule');
+    await setDoc(docRef, {
+      schedule,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    handleFirestoreError(err, OperationType.WRITE, `${COLLECTION_NAME}/shared_weekly_schedule`);
+  }
+}
+
+export function subscribeToWeeklySchedule(
+  fallback: WeeklyScheduleItem[],
+  onUpdate: (schedule: WeeklyScheduleItem[]) => void
+): Unsubscribe {
+  const docRef = doc(db, COLLECTION_NAME, 'shared_weekly_schedule');
+  return onSnapshot(docRef, (snapshot) => {
+    if (snapshot && typeof snapshot.exists === 'function' && snapshot.exists() && snapshot.data().schedule) {
+      onUpdate(snapshot.data().schedule);
+    } else {
+      onUpdate(fallback);
+      saveWeeklyScheduleToFirestore(fallback).catch(() => {});
+    }
+  }, (err) => {
+    handleFirestoreError(err, OperationType.GET, `${COLLECTION_NAME}/shared_weekly_schedule`);
+    onUpdate(fallback);
+  });
 }
 

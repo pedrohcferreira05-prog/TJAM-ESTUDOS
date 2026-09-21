@@ -20,17 +20,23 @@ import {
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
-  DUPLAS_RANKING,
-  INDIVIDUAL_SIMULADO_RANKING,
   RankingDuplaItem,
   RankingIndividualItem,
 } from '../data/rankingsData';
+import { RankingsService } from '../lib/rankingsService';
 
 export const RankingsOnlyView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'both' | 'duplas' | 'individual'>('both');
   const [searchTerm, setSearchTerm] = useState('');
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+
+  const [duplasRanking, setDuplasRanking] = useState<RankingDuplaItem[]>(() =>
+    RankingsService.getDuplasRanking()
+  );
+  const [individualRanking, setIndividualRanking] = useState<RankingIndividualItem[]>(() =>
+    RankingsService.getIndividualRanking()
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,8 +46,23 @@ export const RankingsOnlyView: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleRankingsUpdate = () => {
+      setDuplasRanking(RankingsService.getDuplasRanking());
+      setIndividualRanking(RankingsService.getIndividualRanking());
+    };
+
+    window.addEventListener('storage', handleRankingsUpdate);
+    window.addEventListener('tjam_rankings_updated', handleRankingsUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleRankingsUpdate);
+      window.removeEventListener('tjam_rankings_updated', handleRankingsUpdate);
+    };
+  }, []);
+
   // Filtragem
-  const filteredDuplas = DUPLAS_RANKING.filter(
+  const filteredDuplas = duplasRanking.filter(
     (item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,7 +70,7 @@ export const RankingsOnlyView: React.FC = () => {
         item.disqualificationReason.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const filteredIndividual = INDIVIDUAL_SIMULADO_RANKING.filter(
+  const filteredIndividual = individualRanking.filter(
     (item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.disqualificationReason &&
@@ -582,7 +603,7 @@ export const RankingsOnlyView: React.FC = () => {
               }`}
             >
               <Users className="w-3.5 h-3.5" />
-              <span>Duplas ({DUPLAS_RANKING.length})</span>
+              <span>Duplas ({duplasRanking.length})</span>
             </button>
             <button
               type="button"
@@ -594,7 +615,7 @@ export const RankingsOnlyView: React.FC = () => {
               }`}
             >
               <Award className="w-3.5 h-3.5" />
-              <span>Individual ({INDIVIDUAL_SIMULADO_RANKING.length})</span>
+              <span>Individual ({individualRanking.length})</span>
             </button>
           </div>
 

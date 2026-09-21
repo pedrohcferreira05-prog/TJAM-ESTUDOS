@@ -90,6 +90,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const teacherMenuItems: TeacherMenuItem[] = [
     {
+      id: 'rankings-dupla',
+      label: 'Rankings & Perfis',
+      icon: Trophy,
+      badge: 'Super Admin',
+      description: 'Alterar rankings, dupla e perfis de alunos',
+    },
+    {
       id: 'alunos',
       label: 'Alunos & Senhas',
       icon: UserPlus,

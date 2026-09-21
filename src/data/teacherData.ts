@@ -252,6 +252,30 @@ RESPOSTA DO ALUNO: Pelo art. 5º, LVI, da CF e art. 157 do CPP, as provas ilíci
 RESPOSTA DO ALUNO: O sistema processual acusatório fundamenta-se na nítida separação entre as funções de acusar (Ministério Público), defender e julgar (magistrado neutro e equidistante). Ao contrário do sistema inquisitivo, o juiz não é o protagonista probatório nem investiga, preservando sua estrita imparcialidade.`,
     status: 'pendente',
   },
+  {
+    id: 'sub-ltjam-aula1-001',
+    studentId: 'id00120087',
+    studentName: 'Eduardo Mateus',
+    turmaId: 'turma-tjam-2026',
+    activityTitle: 'Aula 1: 5 Questões Escritas — Organização Judiciária do Estado do Amazonas (LC 261/2023)',
+    disciplineName: 'Legislação Institucional do TJAM',
+    submittedAt: new Date().toISOString(),
+    content: `[Questão 16: O que significa organização judiciária e qual a sua importância para o funcionamento do Poder Judiciário do Amazonas]
+RESPOSTA DO ALUNO: Organização judiciária é a forma pela qual o Poder Judiciário estrutura seus órgãos, unidades, servidores e competências territoriais e materiais para exercer a jurisdição. É essencial para o TJAM porque define com precisão qual órgão tem competência para processar e julgar cada matéria, onde ela deve ser ajuizada (comarcas e termos) e como os serviços auxiliares apoiam os magistrados na prestação jurisdicional célere e eficaz.
+
+[Questão 17: Órgãos que compõem o Poder Judiciário do Estado do Amazonas segundo o art. 3º da LC 261/2023]
+RESPOSTA DO ALUNO: Conforme o art. 3º da LC nº 261/2023, integram o Poder Judiciário do Amazonas: 1) Tribunal de Justiça (órgão de cúpula); 2) Turmas Recursais dos Juizados Especiais; 3) Tribunais do Júri; 4) Juízes de Direito; 5) Juízes Substitutos de Carreira; 6) Auditoria Militar e Conselhos de Justiça; e 7) Juízes de Paz. O Ministério Público e a Defensoria não entram pois são funções essenciais.
+
+[Questão 18: Diferença entre Comarca e Termo Judiciário na organização judiciária do Amazonas]
+RESPOSTA DO ALUNO: A comarca é a unidade territorial da divisão judiciária que abrange um ou mais municípios, delimitando a circunscrição da autoridade jurisdicional de 1º grau. Já o termo judiciário é uma fração territorial que integra a comarca para fins administrativos. A LC 261/2023 dispõe que o território estadual é dividido em Comarcas e Termos Judiciários para administração do Judiciário.
+
+[Questão 19: O que significa dizer que o Tribunal de Justiça possui jurisdição em todo o território do Amazonas]
+RESPOSTA DO ALUNO: Significa que a autoridade jurisdicional do TJAM como tribunal de 2ª Instância alcança a totalidade dos 62 municípios do Estado do Amazonas, tendo competência recursal e originária sobre todo o território amazonense, muito embora sua sede física esteja situada em Manaus.
+
+[Questão 20: Diferença entre Primeira e Segunda Entrância segundo a LC nº 261/2023]
+RESPOSTA DO ALUNO: Na nova lei de organização judiciária (LC 261/2023), existem duas entrâncias: a Primeira Entrância abrange as comarcas situadas nos municípios do interior do Amazonas, enquanto a Segunda Entrância é constituída exclusivamente pela comarca da Capital (Manaus).`,
+    status: 'pendente',
+  },
 ];
 
 export const INITIAL_CERTIFICATES: Certificate[] = [

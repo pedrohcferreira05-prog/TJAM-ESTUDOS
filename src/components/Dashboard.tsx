@@ -12,7 +12,9 @@ import {
   Scale,
   Calendar,
   CheckCircle,
-  Target
+  Target,
+  Check,
+  ListTodo
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -20,6 +22,7 @@ interface DashboardProps {
   onNavigateTab: (tab: any) => void;
   isDarkMode: boolean;
   isDuo?: boolean;
+  onToggleGoal?: (goalId: string) => void;
 }
 
 interface ScheduledLesson {
@@ -35,6 +38,17 @@ interface ScheduledLesson {
 }
 
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
+  {
+    id: 'portugues',
+    subjectKey: 'portugues',
+    title: 'Língua Portuguesa — Aula 01',
+    subtitle: 'Compreensão e Interpretação de Textos • Foco TJAM Intermediário (FGV & Cebraspe) • Teoria, Vídeo Sartori e 20 Questões',
+    category: 'Conhecimentos Básicos TJAM',
+    badge: 'Aula 1 (Segunda)',
+    duration: '45 min',
+    questionsCount: 20,
+    cardsCount: 10,
+  },
   {
     id: 'processo_penal',
     subjectKey: 'processo_penal',
@@ -62,6 +76,7 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
 export const Dashboard: React.FC<DashboardProps> = ({
   progress,
   onNavigateTab,
+  onToggleGoal,
 }) => {
   const [savedLessonsStore, setSavedLessonsStore] = useState<Record<string, any>>({});
 
@@ -123,7 +138,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-600">
-            Metas do dia: <span className="text-amber-700 font-bold">Processo Penal</span> e <span className="text-indigo-700 font-bold">Processo Civil</span>.
+            Metas do dia: <span className="text-amber-700 font-bold">Língua Portuguesa (Aula 01)</span>, <span className="text-rose-700 font-bold">Processo Penal</span> e <span className="text-indigo-700 font-bold">Processo Civil</span>.
           </p>
         </div>
 
@@ -294,6 +309,51 @@ export const Dashboard: React.FC<DashboardProps> = ({
           })}
         </div>
       </div>
+
+      {/* Metas de Estudo Sincronizadas com o Professor */}
+      {progress.weeklyGoals && progress.weeklyGoals.length > 0 && (
+        <div className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ListTodo className="w-4 h-4 text-amber-600" />
+              <h2 className="text-base font-extrabold text-slate-900">
+                Metas do Cronograma (Professor Jéssica Alves)
+              </h2>
+            </div>
+            <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+              {progress.weeklyGoals.filter(g => g.completed).length} de {progress.weeklyGoals.length} concluídas
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {progress.weeklyGoals.map((goal) => (
+              <button
+                key={goal.id}
+                type="button"
+                onClick={() => onToggleGoal && onToggleGoal(goal.id)}
+                className={`p-3 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
+                  goal.completed
+                    ? 'bg-emerald-50/60 border-emerald-300 text-emerald-900'
+                    : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800'
+                }`}
+              >
+                <div
+                  className={`w-4 h-4 rounded mt-0.5 flex items-center justify-center shrink-0 border transition-all ${
+                    goal.completed
+                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                      : 'border-slate-300 bg-white'
+                  }`}
+                >
+                  {goal.completed && <Check className="w-3 h-3 stroke-[3]" />}
+                </div>
+                <span className={`text-xs font-medium leading-relaxed ${goal.completed ? 'line-through opacity-80' : ''}`}>
+                  {goal.text}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 4. Acesso Rápido às Ferramentas */}
       <div className="space-y-3">

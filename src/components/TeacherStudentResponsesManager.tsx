@@ -19,6 +19,7 @@ import {
   ChevronUp,
   Save,
   Download,
+  Video,
 } from 'lucide-react';
 import {
   StudentAccount,
@@ -41,6 +42,7 @@ interface TeacherStudentResponsesManagerProps {
   simuladoAttempts: SimuladoAttempt[];
   questions: Question[];
   disciplines: Discipline[];
+  savedLessons?: Record<string, any>;
   onGradeSubmission: (submissionId: string, grade: number, feedback: string) => void;
   onResetQuestionAttempt?: (attemptId: string) => void;
   onResetSimuladoAttempt?: (attemptId: string) => void;
@@ -53,15 +55,40 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
   simuladoAttempts = [],
   questions = [],
   disciplines = [],
+  savedLessons = {},
   onGradeSubmission,
   onResetQuestionAttempt,
   onResetSimuladoAttempt,
 }) => {
   const [selectedStudentFilter, setSelectedStudentFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<'all' | 'questions' | 'discursive' | 'simulados'>('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | 'questions' | 'discursive' | 'video' | 'anotacoes' | 'simulados'>('all');
   const [resultFilter, setResultFilter] = useState<'all' | 'correct' | 'wrong' | 'pending'>('all');
   const [selectedDisciplineFilter, setSelectedDisciplineFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
+
+  // Extract Video Lessons & Personal Notes from savedLessons for real-time synchronization
+  const lessonEntries = Object.entries(savedLessons || {}) as [string, any][];
+
+  const videoWatchedItems = lessonEntries
+    .filter(([_, data]) => Boolean(data?.videoWatched))
+    .map(([subjectKey, data]) => ({
+      subjectKey,
+      title: subjectKey === 'legislacao_tjam'
+        ? 'Legislação Institucional do TJAM (LC nº 261/2023) — Aula 1'
+        : subjectKey,
+      watchedAt: data.videoWatchedAt || data.lastUpdated || new Date().toISOString(),
+    }));
+
+  const studentNotesItems = lessonEntries
+    .filter(([_, data]) => typeof data?.personalNotes === 'string' && data.personalNotes.trim().length > 0)
+    .map(([subjectKey, data]) => ({
+      subjectKey,
+      title: subjectKey === 'legislacao_tjam'
+        ? 'Legislação Institucional do TJAM (LC nº 261/2023) — Aula 1'
+        : subjectKey,
+      notes: data.personalNotes as string,
+      lastUpdated: data.lastUpdated || new Date().toISOString(),
+    }));
 
   // Grading Modal / Inline State
   const [gradingSubmissionId, setGradingSubmissionId] = useState<string | null>(null);
@@ -265,6 +292,8 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
                 <option value="all">📋 Todos os Tipos de Resposta</option>
                 <option value="questions">📝 Questões Objetivas ({questionAttempts.length})</option>
                 <option value="discursive">✍️ Discursivas & Peças ({submissions.length})</option>
+                <option value="video">🎥 Videoaulas Assistidas ({videoWatchedItems.length})</option>
+                <option value="anotacoes">📒 Anotações dos Alunos ({studentNotesItems.length})</option>
                 <option value="simulados">🏆 Simulados Oficiais ({simuladoAttempts.length})</option>
               </select>
             </div>
@@ -617,6 +646,103 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
                       </button>
                     </div>
                   )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SECTION 4: VIDEO LESSONS ATTENDANCE */}
+      {(typeFilter === 'all' || typeFilter === 'video') && (
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Video className="w-5 h-5 text-rose-500" />
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                Frequência e Visualização de Videoaulas ({videoWatchedItems.length})
+              </h3>
+            </div>
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+              Sincronização em Tempo Real
+            </span>
+          </div>
+
+          {videoWatchedItems.length === 0 ? (
+            <div className="text-center py-8 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+              <Clock className="w-8 h-8 text-slate-400 mx-auto mb-2 opacity-50" />
+              <p className="text-xs font-bold text-slate-500">Nenhuma videoaula marcada como assistida até o momento.</p>
+              <p className="text-[11px] text-slate-400 mt-1">Assim que o aluno assistir e marcar no portal, aparecerá aqui instantaneamente.</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {videoWatchedItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-slate-50 dark:bg-slate-850 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        ✓ Assistida pelo Aluno
+                      </span>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                        {item.title}
+                      </h4>
+                    </div>
+                    <p className="text-[11px] text-slate-500">
+                      Concluída e registrada em: {new Date(item.watchedAt).toLocaleString('pt-BR')}
+                    </p>
+                  </div>
+                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                    <CheckCircle2 className="w-4 h-4" /> 100% Assistida
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SECTION 5: STUDENT PERSONAL NOTES */}
+      {(typeFilter === 'all' || typeFilter === 'anotacoes') && (
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-indigo-500" />
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                Caderno de Anotações do Aluno ({studentNotesItems.length})
+              </h3>
+            </div>
+            <span className="text-xs font-bold text-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">
+              Sincronizado do Portal do Aluno
+            </span>
+          </div>
+
+          {studentNotesItems.length === 0 ? (
+            <div className="text-center py-8 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+              <BookOpen className="w-8 h-8 text-slate-400 mx-auto mb-2 opacity-50" />
+              <p className="text-xs font-bold text-slate-500">O aluno ainda não digitou anotações no caderno desta aula.</p>
+              <p className="text-[11px] text-slate-400 mt-1">Todas as anotações feitas no Caderno de Anotações são sincronizadas aqui em tempo real.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {studentNotesItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-slate-50 dark:bg-slate-850 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
+                    <h4 className="text-xs font-black text-slate-900 dark:text-white">
+                      {item.title}
+                    </h4>
+                    <span className="text-[11px] text-slate-500 font-mono">
+                      Última atualização: {new Date(item.lastUpdated).toLocaleString('pt-BR')}
+                    </span>
+                  </div>
+                  <pre className="p-3.5 rounded-xl bg-white dark:bg-slate-900 text-xs text-slate-800 dark:text-slate-200 font-sans leading-relaxed whitespace-pre-wrap border border-slate-200 dark:border-slate-800">
+                    {item.notes}
+                  </pre>
                 </div>
               ))}
             </div>
