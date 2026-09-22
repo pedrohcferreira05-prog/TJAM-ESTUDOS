@@ -73,10 +73,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isTeacher = currentUserSession?.role === 'teacher';
 
   const studentMenuItems: StudentMenuItem[] = [
-    { id: 'dashboard', label: 'Metas de Hoje', icon: Home, badge: 'Hoje', section: 'estudo' },
-    { id: 'materias', label: 'Matérias (Edital)', icon: BookOpen, badge: '11', section: 'estudo' },
-    { id: 'aula-hoje', label: 'Aulas de Hoje', icon: FileText, section: 'estudo' },
-    { id: 'simulados', label: 'Simulados & Ranking', icon: Trophy, badge: '5º', section: 'estudo' },
+    { id: 'aula-hoje', label: 'Aulas de Hoje', icon: FileText, badge: 'Hoje', section: 'estudo' },
+    { id: 'materias', label: 'Matérias (Demais Aulas)', icon: BookOpen, badge: '11', section: 'estudo' },
+    { id: 'simulados', label: 'Ranking Oficial TJAM', icon: Trophy, badge: 'Ranking', section: 'estudo' },
+    { id: 'dashboard', label: 'Metas & Resumo', icon: Home, section: 'estudo' },
 
     { id: 'questoes', label: 'Questões Comentadas', icon: HelpCircle, section: 'fixacao' },
     { id: 'flashcards', label: 'Flashcards', icon: Brain, section: 'fixacao' },
@@ -90,17 +90,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const teacherMenuItems: TeacherMenuItem[] = [
     {
+      id: 'disciplinas-aluno',
+      label: 'Administrar & Editar Aulas',
+      icon: BookOpen,
+      badge: '11 Disciplinas',
+      description: 'Administrar e editar aulas, videoaulas, questões e PDFs das 11 matérias',
+    },
+    {
+      id: 'cronogramas',
+      label: 'Aulas de Hoje & Metas',
+      icon: Calendar,
+      badge: 'Hoje',
+      description: 'Configurar quais aulas aparecem hoje para os alunos no cronograma',
+    },
+    {
+      id: 'respostas',
+      label: 'Respostas dos Alunos',
+      icon: CheckCircle,
+      badge: 'Tempo Real',
+      description: 'Gabaritos, respostas discursivas e notas em tempo real',
+    },
+    {
       id: 'rankings-dupla',
       label: 'Rankings & Perfis',
       icon: Trophy,
       badge: 'Super Admin',
-      description: 'Alterar rankings, dupla e perfis de alunos',
+      description: 'Editar pontuações, posições do ranking e perfis de alunos',
     },
     {
       id: 'alunos',
       label: 'Alunos & Senhas',
       icon: UserPlus,
-      description: 'Gerenciar matrículas e senhas',
+      description: 'Gerenciar matrículas, senhas e liberações de acesso',
     },
     {
       id: 'turmas',
@@ -109,41 +130,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
       description: 'Turmas e etapas ativas',
     },
     {
-      id: 'disciplinas-aluno',
-      label: 'Disciplinas do Aluno',
-      icon: BookOpen,
-      badge: '11 Matérias',
-      description: 'Gestão, postagens, edição e tarefas por matéria',
-    },
-    {
-      id: 'respostas',
-      label: 'Respostas & Notas',
-      icon: CheckCircle,
-      description: 'Gabaritos, simulados e notas',
-    },
-    {
-      id: 'cronogramas',
-      label: 'Metas & Cronograma',
-      icon: Calendar,
-      description: 'Metas diárias e roteiro semanal',
-    },
-    {
-      id: 'materias-edital',
-      label: 'Matérias (Edital)',
-      icon: BookOpen,
-      description: '11 disciplinas e assuntos TJAM',
-    },
-    {
-      id: 'aulas-videos',
-      label: 'Aulas & Videoaulas',
-      icon: Video,
-      description: 'Controle de aulas e videoaulas',
-    },
-    {
       id: 'questoes-simulados',
       label: 'Questões & Simulados',
       icon: FileText,
       description: 'Banco de itens comentados e simulados',
+    },
+    {
+      id: 'aulas-videos',
+      label: 'Videoaulas & Lives',
+      icon: Video,
+      description: 'Controle de aulas ao vivo e links de vídeo',
+    },
+    {
+      id: 'materiais',
+      label: 'Arquivos & PDFs',
+      icon: BookOpen,
+      description: 'PDFs, apostilas e liberação por etapas',
     },
     {
       id: 'flashcards',
@@ -161,19 +163,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'caderno-erros',
       label: 'Caderno de Erros',
       icon: AlertCircle,
-      description: 'Monitoramento e orientações pedagógicas',
-    },
-    {
-      id: 'materiais',
-      label: 'Arquivos & PDFs',
-      icon: BookOpen,
-      description: 'PDFs, apostilas e liberação',
+      description: 'Monitoramento de erros dos alunos',
     },
     {
       id: 'correcoes',
       label: 'Correção de Redações',
       icon: Award,
-      description: 'Envios de redações e peças',
+      description: 'Envios de redações e peças discursivas',
     },
     {
       id: 'desempenho',
@@ -191,7 +187,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'biblioteca',
       label: 'Biblioteca Digital',
       icon: Library,
-      description: 'Acervo digital completo',
+      description: 'Acervo e livros digitais',
     },
   ];
 

@@ -102,8 +102,8 @@ export const ALL_SUBJECTS: SubjectMeta[] = [
       {
         id: 'aula-1',
         number: 1,
-        title: 'Princípios Fundamentais e Organização Administrativa',
-        description: 'LIMPE, Administração Direta e Indireta, Autarquias, Fundações e Empresas Públicas.',
+        title: 'Organização Administrativa: Administração Direta e Indireta',
+        description: 'Sentido subjetivo e objetivo, Administração Direta e Indireta, Centralização, Descentralização e Desconcentração • Nível Intermediário TJAM.',
         duration: '50 min',
         hasVideo: true,
         hasExercises: true,
@@ -293,9 +293,9 @@ export const ALL_SUBJECTS: SubjectMeta[] = [
       {
         id: 'aula-1',
         number: 1,
-        title: 'Segurança da Informação: Malware, Golpes e Proteção',
-        description: 'Ransomware, Phishing, Engenharia Social, Antivírus, Firewall e Backups 3-2-1.',
-        duration: '50 min',
+        title: 'Windows: arquivos, pastas e operações',
+        description: 'Sistemas operacionais, arquivos, extensões, pastas, caminhos, operações (copiar, mover, renomear, excluir, lixeira), atalhos e Processo Digital (Lei 11.419/2006).',
+        duration: '45 min',
         hasVideo: true,
         hasExercises: true,
         hasMaterials: true,

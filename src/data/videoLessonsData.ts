@@ -37,12 +37,12 @@ export const INITIAL_VIDEO_LESSONS: VideoLesson[] = [
   {
     id: 'vid-adm-01',
     disciplineId: 'direito-administrativo',
-    topicId: 'adm-3',
-    title: 'Poderes Administrativos, Atos e Responsabilidade Civil do Estado',
+    topicId: 'adm-1',
+    title: 'Direito Administrativo — Aula 01: Organização Administrativa',
     durationMinutes: 50,
-    videoUrl: 'https://www.youtube.com/embed/06f_EvjEW6k',
-    summary: 'Poder de polícia originário e delegado, discricionariedade, vinculação e a responsabilidade objetiva do Estado (art. 37, § 6º da CF).',
-    instructor: 'Profª Jéssica Alves',
+    videoUrl: 'https://www.youtube.com/embed/YsrcBEUgoGY',
+    summary: 'Administração Pública em sentido subjetivo e objetivo, Administração Direta e Indireta, Centralização, Descentralização e Desconcentração • TJAM.',
+    instructor: 'Prof. Especialista TJAM',
     isPublished: true,
   },
   {

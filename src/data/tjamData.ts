@@ -418,8 +418,13 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-ter',
     dayOfWeek: 'Terça',
-    disciplineIds: ['direito-administrativo', 'informatica'],
-    tasks: ['Videoaula ou PDF', '15 Questões Licitações/Atos', 'Atualização do Caderno de Erros'],
+    disciplineIds: ['direito-administrativo', 'informatica', 'lingua-portuguesa'],
+    tasks: [
+      '1ª Aula: Direito Administrativo — Aula 01: Organização Administrativa (Direta/Indireta)',
+      '2ª Aula: Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações',
+      '3ª Aula: Redação — Aula 01: Estrutura da Redação (Introdução, Desenvolvimento, Conclusão)',
+      '60 Questões Gabaritadas (20 por aula) + Atividades Práticas e Envio para o Professor',
+    ],
     completed: false,
   },
   {

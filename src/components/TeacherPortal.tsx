@@ -247,25 +247,24 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
     : realAccuracy > 0 ? (realAccuracy / 10).toFixed(1) : '10.0';
 
   const teacherTabsList: Array<{ id: TeacherTab; label: string; fullLabel: string; icon: any }> = [
-    { id: 'rankings-dupla', label: 'Rankings & Perfis', fullLabel: 'Rankings & Perfis (Super Admin)', icon: Trophy },
-    { id: 'alunos', label: 'Alunos & Senhas', fullLabel: 'Cadastro de Alunos & Senhas', icon: UserPlus },
-    { id: 'turmas', label: 'Turmas', fullLabel: 'Gestão de Turmas', icon: Users },
-    { id: 'disciplinas-aluno', label: 'Disciplinas (Aluno)', fullLabel: '11 Disciplinas do Aluno (Sincronizadas)', icon: BookOpen },
-    { id: 'respostas', label: 'Respostas & Notas', fullLabel: 'Respostas & Gabaritos dos Alunos', icon: CheckCircle },
-    { id: 'cronogramas', label: 'Aulas & Metas', fullLabel: 'Aulas de Hoje, Metas & Cronograma (Professor Organiza)', icon: Calendar },
-    { id: 'materias-edital', label: 'Matérias (Edital)', fullLabel: 'Matérias & Tópicos do Edital', icon: BookOpen },
-    { id: 'aulas-videos', label: 'Aulas & Vídeos', fullLabel: 'Aulas, Tópicos & Videoaulas', icon: Video },
-    { id: 'questoes-simulados', label: 'Questões & Simulados', fullLabel: 'Banco de Questões & Simulados', icon: FileText },
-    { id: 'flashcards', label: 'Flashcards', fullLabel: 'Gestão de Flashcards', icon: Layers },
-    { id: 'mapas-mentais', label: 'Mapas Mentais', fullLabel: 'Gestão de Mapas Mentais', icon: Brain },
-    { id: 'caderno-erros', label: 'Caderno de Erros', fullLabel: 'Caderno de Erros dos Alunos', icon: AlertTriangle },
-    { id: 'materiais', label: 'Arquivos & PDFs', fullLabel: 'Arquivos & Materiais Didáticos', icon: Upload },
-    { id: 'correcoes', label: 'Correções', fullLabel: 'Correção de Redações', icon: Award },
-    { id: 'desempenho', label: 'Evolução Alunos', fullLabel: 'Evolução & Desempenho dos Alunos', icon: BarChart3 },
-    { id: 'avisos-lives', label: 'Avisos & Lives', fullLabel: 'Avisos & Aulas ao Vivo', icon: Bell },
-    { id: 'biblioteca', label: 'Biblioteca', fullLabel: 'Biblioteca Digital da Disciplina', icon: Library },
+    { id: 'disciplinas-aluno', label: 'Administrar & Editar Aulas', fullLabel: '📚 Administrar Aulas, Vídeos & Conteúdos (11 Disciplinas)', icon: BookOpen },
+    { id: 'cronogramas', label: 'Aulas de Hoje & Metas', fullLabel: '📅 Configurar Aulas de Hoje & Metas Diárias', icon: Calendar },
+    { id: 'respostas', label: 'Respostas & Notas', fullLabel: '📝 Respostas & Gabaritos dos Alunos (Tempo Real)', icon: CheckCircle },
+    { id: 'rankings-dupla', label: 'Rankings & Perfis', fullLabel: '🏆 Rankings Oficiais & Duplas (Super Admin)', icon: Trophy },
+    { id: 'alunos', label: 'Alunos & Senhas', fullLabel: '👥 Cadastro de Alunos & Senhas de Acesso', icon: UserPlus },
+    { id: 'turmas', label: 'Turmas', fullLabel: '🏫 Gestão de Turmas TJAM', icon: Users },
+    { id: 'questoes-simulados', label: 'Questões & Simulados', fullLabel: '📋 Banco de Questões & Simulados', icon: FileText },
+    { id: 'aulas-videos', label: 'Videoaulas & Lives', fullLabel: '🎬 Videoaulas & Aulas ao Vivo', icon: Video },
+    { id: 'materiais', label: 'Arquivos & PDFs', fullLabel: '📂 Arquivos & Materiais Didáticos', icon: Upload },
+    { id: 'flashcards', label: 'Flashcards', fullLabel: '🎴 Gestão de Flashcards', icon: Layers },
+    { id: 'mapas-mentais', label: 'Mapas Mentais', fullLabel: '🧠 Gestão de Mapas Mentais', icon: Brain },
+    { id: 'caderno-erros', label: 'Caderno de Erros', fullLabel: '⚠️ Caderno de Erros dos Alunos', icon: AlertTriangle },
+    { id: 'correcoes', label: 'Correções', fullLabel: '✍️ Correção de Redações & Discursivas', icon: Award },
+    { id: 'desempenho', label: 'Evolução Alunos', fullLabel: '📊 Evolução & Desempenho dos Alunos', icon: BarChart3 },
+    { id: 'avisos-lives', label: 'Avisos & Lives', fullLabel: '📢 Avisos Oficiais & Lives', icon: Bell },
+    { id: 'biblioteca', label: 'Biblioteca', fullLabel: '🏛️ Biblioteca Digital TJAM', icon: Library },
   ];
-  const [internalTab, setInternalTab] = useState<TeacherTab>('alunos');
+  const [internalTab, setInternalTab] = useState<TeacherTab>('disciplinas-aluno');
   const [selectedInspectLessonId, setSelectedInspectLessonId] = useState<string>('legislacao_tjam');
   const activeTab = controlledTab || internalTab;
   const setActiveTab = (tab: TeacherTab) => {
@@ -595,119 +594,188 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
         </div>
       </div>
 
-      {/* 🔴 AULAS DO DIA: PAINEL DE INSPEÇÃO & CORREÇÃO EM TEMPO REAL */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-950/50 to-slate-900 border border-blue-500/30 shadow-lg space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-bold">
-              <Eye className="w-4 h-4" />
-            </span>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-black text-white">
-                  Aulas de Hoje — Respostas dos Alunos em Tempo Real
+      {/* 🔴 CENTRO DE COMANDO DOCENTE: AÇÕES RÁPIDAS & INSPEÇÃO */}
+      <div className="space-y-4">
+        {/* Quick Action Navigation Buttons for Teacher */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-lg space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="p-2 rounded-2xl bg-amber-500/20 text-amber-400 font-black">
+                <BookOpen className="w-5 h-5" />
+              </span>
+              <div>
+                <h3 className="text-sm font-black text-white flex items-center gap-2">
+                  <span>Painel de Administração e Edição de Aulas</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-slate-950">
+                    Sincronizado Aluno ⇄ Professor
+                  </span>
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-slate-950 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping"></span>
-                  SINCRONIZADO
-                </span>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Selecione abaixo o que você deseja gerenciar ou editar agora:
+                </p>
               </div>
-              <p className="text-[11px] text-slate-300">
-                Acesse diretamente as respostas reais, gabaritos marcados, discursivas e notas de cada aula do cronograma.
-              </p>
             </div>
           </div>
 
-          <button
-            onClick={() => {
-              setActiveTab('respostas');
-            }}
-            className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
-          >
-            <span>Ver Painel Completo de Respostas</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Action 1: Administrar & Editar Aulas */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('disciplinas-aluno')}
+              className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 group ${
+                activeTab === 'disciplinas-aluno'
+                  ? 'bg-emerald-950/40 border-emerald-500 shadow-md ring-2 ring-emerald-500/30'
+                  : 'bg-slate-950/60 hover:bg-slate-800/80 border-slate-800'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 font-black">
+                  <BookOpen className="w-5 h-5" />
+                </span>
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${
+                  activeTab === 'disciplinas-aluno' ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  11 Matérias
+                </span>
+              </div>
+              <div>
+                <h4 className="text-xs font-black text-white group-hover:text-emerald-300 transition-colors">
+                  📚 Administrar & Editar Aulas
+                </h4>
+                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                  Edite aulas, títulos, videoaulas do YouTube, questões, PDFs e materiais de todas as 11 disciplinas.
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-emerald-400 flex items-center gap-1 pt-1">
+                <span>{activeTab === 'disciplinas-aluno' ? '● Módulo Ativo' : 'Abrir Painel de Aulas'}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </div>
+            </button>
 
-        {/* 3 Aulas de Hoje Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-          {/* Aula 1: Legislação TJAM */}
-          <button
-            type="button"
-            onClick={() => handleInspectLesson('legislacao_tjam')}
-            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
-              selectedInspectLessonId === 'legislacao_tjam' && activeTab === 'respostas'
-                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
-                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2 mb-1.5">
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                1ª AULA DO DIA
-              </span>
-              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
-                Corrigir <ChevronRight className="w-3 h-3" />
-              </span>
-            </div>
-            <div className="font-extrabold text-xs text-white line-clamp-1">
-              🏛️ Legislação TJAM — Aula 01
-            </div>
-            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
-              Lei Complementar nº 261/2023 (Organização Judiciária)
-            </div>
-          </button>
+            {/* Action 2: Configurar Aulas do Dia */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('cronogramas')}
+              className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 group ${
+                activeTab === 'cronogramas'
+                  ? 'bg-blue-950/40 border-blue-500 shadow-md ring-2 ring-blue-500/30'
+                  : 'bg-slate-950/60 hover:bg-slate-800/80 border-slate-800'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-blue-500/20 text-blue-400 font-black">
+                  <Calendar className="w-5 h-5" />
+                </span>
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${
+                  activeTab === 'cronogramas' ? 'bg-blue-500 text-white' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  Hoje
+                </span>
+              </div>
+              <div>
+                <h4 className="text-xs font-black text-white group-hover:text-blue-300 transition-colors">
+                  📅 Aulas de Hoje & Metas
+                </h4>
+                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                  Escolha quais são as 3 aulas que aparecem na tela do aluno hoje e configure as metas diárias.
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-blue-400 flex items-center gap-1 pt-1">
+                <span>{activeTab === 'cronogramas' ? '● Módulo Ativo' : 'Organizar Aulas de Hoje'}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </div>
+            </button>
 
-          {/* Aula 2: Direito Constitucional */}
-          <button
-            type="button"
-            onClick={() => handleInspectLesson('direito_constitucional')}
-            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
-              selectedInspectLessonId === 'direito_constitucional' && activeTab === 'respostas'
-                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
-                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2 mb-1.5">
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                2ª AULA DO DIA
-              </span>
-              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
-                Corrigir <ChevronRight className="w-3 h-3" />
-              </span>
-            </div>
-            <div className="font-extrabold text-xs text-white line-clamp-1">
-              ⚖️ Direito Constitucional — Aula 01
-            </div>
-            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
-              Princípios Fundamentais (Arts. 1º a 4º da CF/88)
-            </div>
-          </button>
+            {/* Action 3: Respostas & Gabaritos */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('respostas')}
+              className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 group ${
+                activeTab === 'respostas'
+                  ? 'bg-indigo-950/40 border-indigo-500 shadow-md ring-2 ring-indigo-500/30'
+                  : 'bg-slate-950/60 hover:bg-slate-800/80 border-slate-800'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 font-black">
+                  <CheckCircle className="w-5 h-5" />
+                </span>
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${
+                  activeTab === 'respostas' ? 'bg-indigo-500 text-white' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  Tempo Real
+                </span>
+              </div>
+              <div>
+                <h4 className="text-xs font-black text-white group-hover:text-indigo-300 transition-colors">
+                  📝 Respostas & Gabaritos dos Alunos
+                </h4>
+                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                  Veja as respostas submetidas pelos alunos em tempo real, gabaritos e corrija redações discursivas.
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-indigo-400 flex items-center gap-1 pt-1">
+                <span>{activeTab === 'respostas' ? '● Módulo Ativo' : 'Ver Respostas dos Alunos'}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </div>
+            </button>
+          </div>
 
-          {/* Aula 3: Língua Inglesa */}
-          <button
-            type="button"
-            onClick={() => handleInspectLesson('ingles')}
-            className={`p-3 rounded-2xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
-              selectedInspectLessonId === 'ingles' && activeTab === 'respostas'
-                ? 'bg-blue-600/30 border-blue-400 shadow-md ring-1 ring-blue-400'
-                : 'bg-slate-900/80 hover:bg-slate-800/80 border-slate-700/80'
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2 mb-1.5">
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                3ª AULA DO DIA
-              </span>
-              <span className="text-[11px] font-bold text-slate-400 group-hover:text-blue-300 flex items-center gap-1">
-                Corrigir <ChevronRight className="w-3 h-3" />
-              </span>
+          {/* Atalhos Rápidos para Corrigir as 3 Aulas do Dia */}
+          <div className="pt-2 border-t border-slate-800/80">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+              Atalho Rápido para Inspecionar Respostas das 3 Aulas de Hoje:
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => handleInspectLesson('legislacao_tjam')}
+                className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                  selectedInspectLessonId === 'legislacao_tjam' && activeTab === 'respostas'
+                    ? 'bg-blue-600/30 border-blue-400 text-white'
+                    : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
+                }`}
+              >
+                <div className="truncate">
+                  <span className="text-[10px] font-bold text-amber-400 block">1ª Aula</span>
+                  <span className="text-xs font-extrabold truncate">🏛️ Legislação TJAM — Aula 01</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleInspectLesson('direito_constitucional')}
+                className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                  selectedInspectLessonId === 'direito_constitucional' && activeTab === 'respostas'
+                    ? 'bg-blue-600/30 border-blue-400 text-white'
+                    : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
+                }`}
+              >
+                <div className="truncate">
+                  <span className="text-[10px] font-bold text-indigo-400 block">2ª Aula</span>
+                  <span className="text-xs font-extrabold truncate">⚖️ D. Constitucional — Aula 01</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleInspectLesson('ingles')}
+                className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                  selectedInspectLessonId === 'ingles' && activeTab === 'respostas'
+                    ? 'bg-blue-600/30 border-blue-400 text-white'
+                    : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
+                }`}
+              >
+                <div className="truncate">
+                  <span className="text-[10px] font-bold text-rose-400 block">3ª Aula</span>
+                  <span className="text-xs font-extrabold truncate">🇬🇧 Língua Inglesa — Aula 01</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+              </button>
             </div>
-            <div className="font-extrabold text-xs text-white line-clamp-1">
-              🇬🇧 Língua Inglesa — Aula 01
-            </div>
-            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
-              Introdução ao Inglês, Greetings e Verbo TO BE
-            </div>
-          </button>
+          </div>
         </div>
       </div>
 
@@ -1031,23 +1099,6 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
           onResetQuestionAttempt={onResetQuestionAttempt}
           onResetSimuladoAttempt={onResetSimuladoAttempt}
           initialLessonId={selectedInspectLessonId}
-        />
-      )}
-
-      {/* Tab: Metas Diárias & Cronograma Semanal */}
-      {activeTab === 'cronogramas' && (
-        <TeacherScheduleAndGoalsManager
-          schedule={weeklySchedule}
-          disciplines={disciplines}
-          weeklyGoals={weeklyGoals}
-          onAddGoal={onAddGoal || ((_t) => {})}
-          onUpdateGoal={onUpdateGoal || ((_id, _t) => {})}
-          onDeleteGoal={onDeleteGoal || ((_id) => {})}
-          onToggleGoal={onToggleGoal}
-          onAddTaskToDay={onAddTaskToDay || ((_day, _t, _disc) => {})}
-          onUpdateDayTask={onUpdateDayTask || ((_scId, _idx, _t) => {})}
-          onDeleteDayTask={onDeleteDayTask || ((_scId, _idx) => {})}
-          isDarkMode={isDarkMode}
         />
       )}
 

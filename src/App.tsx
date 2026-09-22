@@ -128,7 +128,7 @@ export function App() {
     return session?.role === 'teacher' ? 'teacher' : 'student';
   });
   const [studentTab, setStudentTab] = useState<StudentTab>('aula-hoje');
-  const [teacherTab, setTeacherTab] = useState<TeacherTab>('alunos');
+  const [teacherTab, setTeacherTab] = useState<TeacherTab>('disciplinas-aluno');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -159,7 +159,7 @@ export function App() {
       setIsStaffAuthenticated(true);
       localStorage.setItem('tjam_staff_auth', 'true');
       setViewMode('teacher');
-      setTeacherTab('alunos');
+      setTeacherTab('disciplinas-aluno');
     } else {
       setViewMode('student');
     }

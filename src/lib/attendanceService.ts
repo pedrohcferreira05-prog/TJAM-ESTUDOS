@@ -8,45 +8,46 @@ import {
 
 export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
   {
-    id: 'portugues',
-    subjectKey: 'portugues',
-    title: 'Língua Portuguesa — Aula 01',
-    subtitle: 'Compreensão e Interpretação de Textos • Foco TJAM Intermediário (FGV & Cebraspe) • Teoria e 20 Questões',
-    category: 'Conhecimentos Básicos TJAM',
-    badge: '1ª Aula de Hoje',
-    duration: '45 min',
+    id: 'direito_admin',
+    subjectKey: 'direito_admin',
+    title: 'Direito Administrativo — Aula 01',
+    subtitle: 'Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração • TJAM',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '1ª Aula de Hoje (Terça-feira)',
+    duration: '50 min',
     order: 1,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
+    teacherNotes: 'Nesta 1ª aula de hoje (Terça-feira), abordamos Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração com 20 questões e situação prática para envio.',
   },
   {
-    id: 'direito_const',
-    subjectKey: 'direito_const',
-    title: 'Direito Constitucional — Aula 01',
-    subtitle: 'Princípios Fundamentais da CF/88 (Arts. 1º a 4º) • Nível Intermediário TJAM • Teoria, Vídeo e 20 Questões',
-    category: 'Conhecimentos Específicos',
-    badge: '2ª Aula de Hoje',
-    duration: '50 min',
+    id: 'informatica',
+    subjectKey: 'informatica',
+    title: 'Informática e Processo Digital — Aula 01',
+    subtitle: 'Windows: arquivos, pastas e operações • Processo Digital (Lei 11.419/2006) • Nível Intermediário TJAM',
+    category: 'Conhecimentos Específicos / Informática TJAM',
+    badge: '2ª Aula de Hoje (Terça-feira)',
+    duration: '45 min',
     order: 2,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta segunda aula de hoje, iniciamos Direito Constitucional do zero (arts. 1º a 4º). Focar na distinção entre Fundamentos (art. 1º) e Objetivos (art. 3º).',
+    teacherNotes: 'Nesta 2ª aula de hoje (Terça-feira), estudamos Windows: arquivos, pastas, operações (copiar, mover, renomear, excluir, lixeira), atalhos e Processo Digital (Lei 11.419/2006) com 20 exercícios gabaritados e desafio prático.',
   },
   {
-    id: 'ingles',
-    subjectKey: 'ingles',
-    title: 'Língua Inglesa — Aula 01',
-    subtitle: 'Introdução ao Inglês: Pronomes Pessoais e Verbo TO BE • Nível Intermediário TJAM • Teoria, Vídeos e 20 Questões',
-    category: 'Conhecimentos Básicos TJAM',
-    badge: '3ª Aula de Hoje',
+    id: 'redacao',
+    subjectKey: 'redacao',
+    title: 'Redação — Aula 01',
+    subtitle: 'Estrutura da Redação: Introdução, Desenvolvimento e Conclusão • Coesão e Coerência • Nível Intermediário TJAM',
+    category: 'Conhecimentos Básicos / Redação TJAM',
+    badge: '3ª Aula de Hoje (Terça-feira)',
     duration: '45 min',
     order: 3,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta terceira aula de hoje, iniciamos Língua Inglesa do zero: cumprimentos, apresentação pessoal, pronomes pessoais e verbo to be (afirmativa, negativa e interrogativa).',
+    teacherNotes: 'Nesta 3ª aula de hoje (Terça-feira), aprendemos a Estrutura da Redação Dissertativa para o TJAM (Introdução, Desenvolvimento, Conclusão, Tese, Argumentos, Coesão e Coerência) com 20 exercícios e Atividade Prática de Fixação (Projeto de Redação).',
   },
 ];
 
@@ -57,6 +58,15 @@ export const TODAY_MANDATORY_LESSONS = DEFAULT_TODAY_LESSONS.map((l) => ({
 
 export function getTodayLessonsConfig(): TodayLessonConfig[] {
   try {
+    const versionKey = 'tjam_today_lessons_version_v6_terca_3aulas';
+    const isUpToDate = localStorage.getItem(versionKey);
+    if (!isUpToDate) {
+      localStorage.setItem('tjam_today_lessons_config', JSON.stringify(DEFAULT_TODAY_LESSONS));
+      localStorage.setItem(versionKey, 'true');
+      localStorage.setItem('tjam_selected_subject', 'direito_admin');
+      return DEFAULT_TODAY_LESSONS;
+    }
+
     const raw = localStorage.getItem('tjam_today_lessons_config');
     if (raw) {
       const parsed = JSON.parse(raw);

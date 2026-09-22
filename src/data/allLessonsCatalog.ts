@@ -86,6 +86,14 @@ import {
   escritaLeituraSummaryPoints,
 } from './escritaLeituraLessonData';
 
+import {
+  redacaoFlashcardsData,
+  redacaoMcQuestionsData,
+  redacaoTfQuestionsData,
+  redacaoDiscursiveQuestionsData,
+  redacaoSummaryPoints,
+} from './redacaoLessonData';
+
 export interface LessonCatalogMcQuestion {
   id: number;
   enunciado: string;
@@ -195,14 +203,14 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
   // 4. INFORMÁTICA
   {
     id: 'informatica',
-    title: 'Informática — Aula 04: Redes de Computadores e Internet',
+    title: 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações',
     disciplineId: 'informatica',
-    disciplineName: 'Noções de Informática',
-    badge: 'Aula 4',
-    isPriorityToday: false,
+    disciplineName: 'Noções de Informática e Processo Digital',
+    badge: '2ª Aula de Hoje (Terça-feira)',
+    isPriorityToday: true,
     emoji: '💻',
-    duration: '40 min',
-    summary: 'Classificação geográfica das redes (LAN, MAN, WAN), protocolos de internet (TCP/IP, HTTP, HTTPS), conexões e segurança.',
+    duration: '45 min',
+    summary: 'Sistemas operacionais, arquivos, extensões (.pdf, .docx, .xlsx, .jpg, .zip), pastas e caminhos, operações (copiar × mover, renomear F2, excluir, lixeira), atalhos de teclado e Processo Digital (Lei nº 11.419/2006).',
     mcQuestions: informaticaMcQuestionsData,
     tfQuestions: informaticaTfQuestionsData,
     discursiveQuestions: informaticaDiscursiveQuestionsData,
@@ -334,5 +342,24 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
     discursiveQuestions: escritaLeituraDiscursiveQuestionsData,
     flashcards: escritaLeituraFlashcardsData,
     summaryPoints: escritaLeituraSummaryPoints,
+  },
+
+  // 12. REDAÇÃO — AULA 01
+  {
+    id: 'redacao',
+    title: 'Redação — Aula 01: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)',
+    disciplineId: 'lingua-portuguesa',
+    disciplineName: 'Redação Dissertativa TJAM',
+    badge: '3ª Aula de Hoje (Terça-feira)',
+    isPriorityToday: true,
+    emoji: '✍️',
+    duration: '45 min',
+    videoUrl: 'https://youtu.be/_0VjL4aVrJo?is=uxQODnxxBek_su0n',
+    summary: 'Estrutura tripartite da redação dissertativa: Introdução (tema e tese), Desenvolvimento (argumentação, causa/consequência, exemplificação), Conclusão, coerência, coesão, conectivos e projeto de texto para o TJAM.',
+    mcQuestions: redacaoMcQuestionsData,
+    tfQuestions: redacaoTfQuestionsData,
+    discursiveQuestions: redacaoDiscursiveQuestionsData,
+    flashcards: redacaoFlashcardsData,
+    summaryPoints: redacaoSummaryPoints,
   },
 ];

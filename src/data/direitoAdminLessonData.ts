@@ -1,4 +1,5 @@
-// Data for Direito Administrativo — 2ª Aula de Hoje: Controle da Administração Pública
+// Data for Direito Administrativo — Aula 01: Organização Administrativa
+// Nível Intermediário — TJAM Assistente Judiciário
 
 export interface FlashcardItem {
   q: string;
@@ -9,7 +10,7 @@ export interface McQuestionItem {
   id: number;
   enunciado: string;
   opcoes: string[];
-  correta: number; // 0 = A, 1 = B, 2 = C, 3 = D
+  correta: number; // 0 = A, 1 = B, 2 = C, 3 = D, 4 = E
   explicacao: string;
 }
 
@@ -33,363 +34,279 @@ export interface PracticalTaskItem {
   perguntasChave: string[];
   desafioCotidiano: string;
   criteriosAvaliacao: string[];
+  whatsappTemplate: string;
 }
 
 export const direitoAdminVideoPracticalTask: PracticalTaskItem = {
-  titulo: 'Exercício Prático em Vídeo — Controle da Administração Pública',
+  titulo: 'Situação Prática: “Você é servidor público” — Descentralização × Desconcentração',
   situacaoProblema:
-    'Você trabalha em um órgão público. O setor responsável pela fiscalização percebeu que um servidor praticou um ato administrativo sem observar uma exigência prevista em lei. Ao mesmo tempo, existe outro ato administrativo que foi praticado corretamente, mas a Administração percebeu que ele não é mais conveniente para o interesse público.',
+    'Imagine que você trabalha como servidor em um órgão público. Seu superior apresenta as seguintes situações:\n• Situação A: uma secretaria divide suas atribuições entre vários departamentos.\n• Situação B: determinada atividade administrativa passa a ser executada por uma entidade com personalidade jurídica própria.',
   tarefa:
-    'Grave um vídeo de 2 a 3 minutos explicando a situação para o seu chefe no órgão público, estruturando a resposta técnica de forma clara e acessível.',
+    'Analise as duas situações e elabore uma resposta técnica de até 10 linhas explicando qual instituto está presente em cada uma, fundamentando a diferença essencial e fornecendo exemplos práticos.',
   perguntasChave: [
-    '1. O que deve acontecer com o primeiro ato, que possui ilegalidade? (Anulação por vício de legalidade, efeito retroativo ex tunc).',
-    '2. O que pode acontecer com o segundo ato, que é válido, mas deixou de ser conveniente? (Revogação por mérito administrativo, efeito prospectivo ex nunc).',
-    '3. Qual a diferença essencial entre anulação e revogação? (Motivo, competência, efeitos temporais e respeito a direitos adquiridos).',
-    '4. Qual tipo de controle está sendo realizado quando a própria Administração fiscaliza seus próprios atos? (Controle interno / administrativo / princípio da autotutela — Súmulas 346 e 473 do STF).'
+    '1. Qual situação representa desconcentração? (Situação A: divisão interna de competências entre departamentos dentro da mesma pessoa jurídica).',
+    '2. Qual situação representa descentralização? (Situação B: transferência da atividade para outra pessoa jurídica com personalidade própria).',
+    '3. Qual é a principal diferença entre elas? (Descentralização envolve pessoas jurídicas distintas; desconcentração ocorre internamente sem criar nova pessoa jurídica).',
+    '4. Dê um exemplo próprio para cada situação (Ex: Criação de delegacias pela Polícia Civil = desconcentração; Criação do Detran ou INSS = descentralização).'
   ],
   desafioCotidiano:
-    'Crie um terceiro exemplo do seu próprio cotidiano de: (a) um ato que deveria ser anulado (com defeito de legalidade); e (b) um ato que poderia ser revogado (que era válido mas deixou de ser útil/conveniente). Explique o motivo de cada um de forma simples.',
+    'Explique como o Tribunal de Justiça do Amazonas (TJAM) aplica a desconcentração ao organizar suas varas, juizados e secretarias judiciais.',
   criteriosAvaliacao: [
-    'Domínio técnico dos conceitos de anulação, revogação e autotutela',
-    'Diferenciação clara entre controle de legalidade e juízo de mérito administrativo',
-    'Clareza na exposição oral simulada para a chefia imediata',
-    'Pertinência e criatividade nos exemplos práticos do cotidiano'
-  ]
+    'Enquadramento correto de cada situação prática (A = desconcentração, B = descentralização)',
+    'Diferenciação clara quanto à titularidade e à existência ou não de nova pessoa jurídica',
+    'Pertinência e coerência dos exemplos práticos apresentados',
+    'Capacidade de síntese e clareza argumentativa dentro do limite proposto'
+  ],
+  whatsappTemplate:
+    'Nome: [Seu Nome]\nTurma: TJAM 2026\nDisciplina: Direito Administrativo\nAula: 01 — Organização Administrativa\nPrática: Descentralização × Desconcentração\nResposta: [Seu texto de até 10 linhas fundamentando as Situações A e B com exemplos]'
 };
 
 export const direitoAdminFlashcardsData: FlashcardItem[] = [
   {
-    q: 'O que é Controle da Administração Pública?',
-    a: 'É o conjunto de mecanismos jurídicos e administrativos utilizados para fiscalizar, acompanhar e verificar se a atuação do Estado está de acordo com a lei e com o interesse público, prevenindo ilegalidades, desvios e desperdício.'
+    q: 'O que é Administração Pública em sentido Subjetivo / Orgânico?',
+    a: 'Refere-se a QUEM exerce a atividade administrativa (os sujeitos: entes federativos União, Estados, DF, Municípios, órgãos públicos e entidades da Administração Indireta como autarquias, fundações, empresas públicas e SEM).\n🎯 Macete: Subjetivo = quem administra.'
   },
   {
-    q: 'O que é Controle Interno e qual o seu macete?',
-    a: 'É aquele realizado dentro da própria estrutura do Poder ou órgão que praticou o ato. Exemplo: setor de auditoria ou corregedoria fiscalizando suas secretarias.\n📌 Macete: Interno = dentro da própria Administração.'
+    q: 'O que é Administração Pública em sentido Objetivo / Material?',
+    a: 'Refere-se à ATIVIDADE administrativa exercida pelo Estado (o que é feito: prestação de serviços públicos, poder de polícia, fiscalização, fomento, intervenção e gestão de bens públicos).\n🎯 Macete: Objetivo = o que é feito pela Administração.'
   },
   {
-    q: 'O que é Controle Externo? Dê o principal exemplo federal.',
-    a: 'É realizado por um órgão ou Poder diferente daquele que praticou o ato. Principal exemplo: Poder Legislativo com o auxílio dos Tribunais de Contas (Congresso Nacional auxiliado pelo TCU no âmbito federal, ou ALEAM com o TCE-AM).'
+    q: 'Quem integra a Administração Direta?',
+    a: 'Os próprios entes federativos (pessoas jurídicas de direito público político):\n• União\n• Estados (ex: Estado do Amazonas)\n• Distrito Federal\n• Municípios (ex: Manaus)\nEles atuam diretamente por meio de seus órgãos internos.'
   },
   {
-    q: 'Qual o papel do Poder Judiciário no Controle Judicial e qual o limite?',
-    a: 'O Judiciário controla a LEGALIDADE dos atos administrativos quando provocado. ⚠️ Limite: o juiz NÃO pode invadir o mérito administrativo (conveniência e oportunidade), nem substituir a escolha discricionária do administrador.'
+    q: 'Quem integra a Administração Indireta?',
+    a: 'Entidades dotadas de personalidade jurídica própria criadas ou autorizadas pelo Estado:\n1. 🏛️ Autarquias (direito público, criadas por lei);\n2. 🏢 Fundações Públicas;\n3. 🏭 Empresas Públicas (direito privado, capital 100% público);\n4. 🏢 Sociedades de Economia Mista (direito privado, capital público + privado, controle estatal).'
   },
   {
-    q: 'O que é Controle Administrativo e Princípio da Autotutela?',
-    a: 'É o controle exercido pela própria Administração sobre seus próprios atos. Permite anular atos ilegais e revogar atos válidos que se tornaram inoportunos ou inconvenientes (Súmulas 346 e 473 do STF).'
+    q: 'Qual a diferença essencial entre Órgão Público e Entidade Administrativa?',
+    a: '• Órgão Público: NÃO possui personalidade jurídica própria. É uma unidade integrante da estrutura interna de uma pessoa jurídica (ex: Secretaria de Estado, TJAM, Ministério).\n• Entidade: POSSUI personalidade jurídica própria (ex: Autarquia, Fundação Pública, Empresa Pública).'
   },
   {
-    q: 'Qual a diferença essencial entre Anulação e Revogação?',
-    a: '• Anulação → incide sobre atos ILEGAIS (efeito retroativo / ex tunc).\n• Revogação → incide sobre atos VÁLIDOS por razões de conveniência e oportunidade (efeito prospectivo / ex nunc).'
+    q: 'O que é Centralização Administrativa?',
+    a: 'Ocorre quando o próprio ente estatal (União, Estado, DF ou Município) executa determinada atividade administrativa diretamente, utilizando seus próprios órgãos e servidores.'
   },
   {
-    q: 'O que é Controle de Legalidade e quem pode exercê-lo?',
-    a: 'Verifica se o ato respeita a Constituição, leis e regulamentos. Havendo ilegalidade, o ato deve ser anulado. Pode ser exercido tanto pela própria Administração (autotutela) quanto pelo Poder Judiciário (quando provocado).'
+    q: 'O que é Descentralização Administrativa e qual a palavra-chave?',
+    a: 'Ocorre quando a atividade administrativa é atribuída a OUTRA pessoa (física ou jurídica), criando ou transferindo a execução para pessoas jurídicas distintas.\n🎯 Palavra-chave: Descentralização = OUTRA pessoa (ex: Estado atribui serviço a uma autarquia).'
   },
   {
-    q: 'O que é Controle de Mérito e o Judiciário pode exercê-lo?',
-    a: 'Relaciona-se à conveniência e oportunidade do ato discricionário. É privativo da própria Administração Pública. O Poder Judiciário NUNCA pode revogar ato do Executivo por mérito, apenas anular por ilegalidade.'
+    q: 'O que é Desconcentração Administrativa e qual a palavra-chave?',
+    a: 'Ocorre quando há uma distribuição interna de competências dentro da MESMA pessoa jurídica, criando ou organizando órgãos públicos.\n🎯 Palavra-chave: Desconcentração = MESMA pessoa jurídica + distribuição interna de órgãos (ex: Estado divide competências entre suas secretarias).'
   },
   {
-    q: 'Como se classifica o controle quanto ao momento de realização?',
-    a: '• Prévio (preventivo): antes da realização do ato (ex: autorização prévia).\n• Concomitante: durante a realização/execução (ex: fiscalização de obra).\n• Posterior (corretivo): após a prática do ato (ex: homologação ou anulação).'
+    q: 'Qual o macete para nunca confundir Descentralização e Desconcentração?',
+    a: '🧠 Macete infalível de prova:\n• DESCENTRALIZAÇÃO → CENTRO → sai para OUTRA pessoa jurídica.\n• DESCONCENTRAÇÃO → CONCENTRAÇÃO interna → divide competências dentro dos ÓRGÃOS da mesma pessoa.'
   },
   {
-    q: 'Quais os temas mais cobrados para o TJAM em Controle?',
-    a: '1) Controle interno × externo × judicial;\n2) Legalidade × mérito;\n3) Anulação (ex tunc) × revogação (ex nunc);\n4) Controle prévio × concomitante × posterior.'
+    q: 'Uma Secretaria de Estado é uma Autarquia? Qual a pegadinha clássica?',
+    a: '⚠️ PEGADINHA: NÃO! Uma Secretaria de Estado não é autarquia nem entidade. Ela é um ÓRGÃO integrante da Administração Direta do Estado, sem personalidade jurídica própria. Autarquia é entidade da Administração Indireta.'
   }
 ];
 
 export const direitoAdminMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. O controle da Administração Pública tem como principal finalidade:',
+    enunciado: '1. Integram a Administração Direta:',
     opcoes: [
-      'A) Aumentar a quantidade de servidores.',
-      'B) Fiscalizar e verificar a regularidade da atuação administrativa.',
-      'C) Substituir todos os atos administrativos por decisões judiciais.',
-      'D) Eliminar a autonomia dos órgãos públicos.'
+      'A) autarquias e fundações públicas.',
+      'B) empresas públicas e sociedades de economia mista.',
+      'C) União, Estados, Distrito Federal e Municípios.',
+      'D) somente União e Estados.',
+      'E) autarquias, empresas públicas e Municípios.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O controle é o conjunto de mecanismos utilizados para fiscalizar, acompanhar e verificar se a atuação da Administração Pública está em conformidade com a lei e com o interesse público.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. A Administração Direta é formada exclusivamente pelos entes federativos políticos: União, Estados, Distrito Federal e Municípios, que exercem suas atribuições por meio de seus órgãos internos despersonalizados.'
   },
   {
     id: 2,
-    enunciado: '2. O controle realizado pela própria Administração sobre seus atos é chamado de:',
+    enunciado: '2. Sobre os órgãos públicos, assinale a alternativa correta:',
     opcoes: [
-      'A) Controle judicial.',
-      'B) Controle externo.',
-      'C) Controle administrativo.',
-      'D) Controle legislativo.'
+      'A) Possuem sempre personalidade jurídica própria.',
+      'B) São necessariamente pessoas jurídicas de direito público.',
+      'C) Integram a estrutura de uma pessoa jurídica e, em regra, não possuem personalidade jurídica própria.',
+      'D) Fazem parte exclusivamente da Administração Indireta.',
+      'E) São entidades administrativas independentes.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. O controle administrativo decorre do poder de autotutela, pelo qual a própria Administração fiscaliza e revê seus próprios atos.'
+    explicacao: 'Gabarito Oficial: C. Os órgãos públicos são centros de competências despersonalizados que integram a estrutura de uma pessoa jurídica (seja da Administração Direta ou Indireta), não possuindo personalidade jurídica própria.'
   },
   {
     id: 3,
-    enunciado: '3. O controle interno é aquele realizado:',
+    enunciado: '3. Uma entidade dotada de personalidade jurídica própria, criada por lei para desempenhar determinada atividade administrativa, enquadra-se, em regra, como:',
     opcoes: [
-      'A) Exclusivamente pelo Poder Judiciário.',
-      'B) Dentro da própria estrutura administrativa.',
-      'C) Somente pelo Congresso Nacional.',
-      'D) Apenas pelos Tribunais de Contas.'
+      'A) órgão público.',
+      'B) autarquia.',
+      'C) secretaria.',
+      'D) departamento.',
+      'E) gabinete.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Controle interno é aquele efetuado pelo mesmo Poder ou órgão que praticou o ato, dentro da sua própria estrutura hierárquica.'
+    explicacao: 'Gabarito Oficial: B. As autarquias são pessoas jurídicas de direito público, criadas diretamente por lei específica, com patrimônio e receita próprios para executar atividades típicas da Administração Pública.'
   },
   {
     id: 4,
-    enunciado: '4. O controle externo, no âmbito federal, é exercido pelo:',
+    enunciado: '4. A Administração Indireta compreende, entre outras entidades:',
     opcoes: [
-      'A) Poder Executivo, exclusivamente.',
-      'B) Congresso Nacional, com auxílio do Tribunal de Contas da União.',
-      'C) Poder Judiciário, exclusivamente.',
-      'D) Ministério Público, exclusivamente.'
+      'A) Ministérios e Secretarias.',
+      'B) Tribunais e Ministérios Públicos.',
+      'C) Autarquias, fundações públicas, empresas públicas e sociedades de economia mista.',
+      'D) União, Estados e Municípios.',
+      'E) apenas empresas públicas e autarquias.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. De acordo com o art. 70 e 71 da CF/88, o controle externo federal compete ao Congresso Nacional com auxílio técnico-pericial do TCU.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. Conforme o Decreto-Lei nº 200/1967 e o art. 37, XIX da CF/88, a Administração Indireta é composta taxativamente por: Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista.'
   },
   {
     id: 5,
-    enunciado: '5. O controle judicial dos atos administrativos é realizado pelo:',
+    enunciado: '5. Quando o Estado distribui competências entre diferentes órgãos que pertencem à sua própria estrutura, ocorre:',
     opcoes: [
-      'A) Poder Executivo.',
-      'B) Poder Legislativo.',
-      'C) Poder Judiciário.',
-      'D) Tribunal de Contas.'
+      'A) descentralização.',
+      'B) privatização.',
+      'C) centralização.',
+      'D) desconcentração.',
+      'E) delegação legislativa.'
     ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. O controle judicial é privativo do Poder Judiciário, em obediência ao princípio da inafastabilidade da jurisdição (art. 5º, XXXV, CF/88).'
+    correta: 3, // D
+    explicacao: 'Gabarito Oficial: D. Desconcentração é a técnica de distribuição interna de competências dentro da mesma pessoa jurídica, que resulta na criação ou organização de órgãos públicos.'
   },
   {
     id: 6,
-    enunciado: '6. Em regra, o Poder Judiciário, ao controlar um ato administrativo, verifica principalmente:',
+    enunciado: '6. A descentralização administrativa caracteriza-se, em termos gerais, pela:',
     opcoes: [
-      'A) A conveniência política do ato.',
-      'B) A legalidade do ato.',
-      'C) A preferência pessoal do administrador.',
-      'D) A quantidade de servidores do órgão.'
+      'A) distribuição interna de competências entre órgãos da mesma pessoa jurídica.',
+      'B) atribuição da execução de determinada atividade a outra pessoa.',
+      'C) extinção dos órgãos públicos.',
+      'D) concentração das competências em um único órgão.',
+      'E) ausência de personalidade jurídica.'
     ],
     correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O juiz atua sob o prisma da estrita legalidade e legitimidade, não podendo substituir a Administração nas suas opções de mérito (conveniência e oportunidade).'
+    explicacao: 'Gabarito Oficial: B. Na descentralização, o Estado atribui a titularidade e/ou a execução de determinada atividade a outra pessoa (física ou jurídica), havendo pessoas jurídicas distintas.'
   },
   {
     id: 7,
-    enunciado: '7. A Administração Pública pode anular seus próprios atos quando:',
+    enunciado: '7. Uma sociedade de economia mista possui:',
     opcoes: [
-      'A) Forem ilegais.',
-      'B) Forem sempre inconvenientes.',
-      'C) O administrador simplesmente mudar de opinião.',
-      'D) O Poder Judiciário determinar em todos os casos.'
+      'A) personalidade jurídica de direito público e capital exclusivamente público.',
+      'B) personalidade jurídica de direito privado e participação pública e privada em seu capital, sob controle estatal.',
+      'C) natureza de órgão público.',
+      'D) personalidade jurídica inexistente.',
+      'E) exclusivamente capital privado.'
     ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A anulação é o instrumento cabível para retirar do ordenamento jurídico atos que contenham vícios de legalidade (Súmula 473 do STF).'
+    correta: 1, // B
+    explicacao: 'Gabarito Oficial: B. A sociedade de economia mista é pessoa jurídica de direito privado, integrante da Administração Indireta, cujo capital social é formado pela conjugação de recursos públicos e privados, devendo a maioria das ações com direito a voto pertencer ao Poder Público.'
   },
   {
     id: 8,
-    enunciado: '8. A revogação de um ato administrativo está relacionada, em regra:',
+    enunciado: '8. Considere a seguinte situação: O Estado do Amazonas possui uma determinada secretaria e, dentro dela, cria departamentos para distribuir internamente as atribuições administrativas. Nesse caso, está presente o fenômeno da:',
     opcoes: [
-      'A) À ilegalidade.',
-      'B) À conveniência e oportunidade.',
-      'C) À inexistência do ato.',
-      'D) À responsabilidade criminal.'
+      'A) descentralização.',
+      'B) privatização.',
+      'C) desconcentração.',
+      'D) concessão.',
+      'E) centralização política.'
     ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. A revogação é o juízo discricionário privativo da Administração sobre atos válidos que deixaram de ser convenientes ou oportunos.'
+    correta: 2, // C
+    explicacao: 'Gabarito Oficial: C. Trata-se de desconcentração, pois a criação de departamentos dentro da secretaria ocorre estritamente dentro da mesma pessoa jurídica (Estado do Amazonas), subdividindo competências entre órgãos.'
   },
   {
     id: 9,
-    enunciado: '9. Assinale a alternativa correta:',
+    enunciado: '9. Assinale a alternativa que apresenta corretamente uma diferença entre descentralização e desconcentração:',
     opcoes: [
-      'A) Anulação ocorre por conveniência; revogação ocorre por ilegalidade.',
-      'B) Anulação e revogação são exatamente a mesma coisa.',
-      'C) Anulação está relacionada à ilegalidade; revogação, à conveniência e oportunidade.',
-      'D) Apenas o Poder Judiciário pode anular atos administrativos.'
+      'A) A descentralização ocorre sempre sem personalidade jurídica.',
+      'B) A desconcentração necessariamente cria uma nova pessoa jurídica.',
+      'C) A descentralização envolve outra pessoa, enquanto a desconcentração distribui competências internamente.',
+      'D) Ambas são exatamente o mesmo fenômeno.',
+      'E) A desconcentração somente pode ocorrer na Administração Indireta.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. Regra indispensável de concurso: Anulação = Ilegalidade; Revogação = Mérito (conveniência e oportunidade).'
+    explicacao: 'Gabarito Oficial: C. A diferença fundamental é: a descentralização envolve pessoas jurídicas distintas (transfere atividade para outra pessoa), enquanto a desconcentração opera uma distribuição interna de competências no âmbito da mesma pessoa jurídica (cria órgãos).'
   },
   {
     id: 10,
-    enunciado: '10. Um controle realizado antes da prática de determinado ato administrativo é chamado de:',
+    enunciado: '10. Sobre a Administração Pública em sentido subjetivo e objetivo, assinale a alternativa correta:',
     opcoes: [
-      'A) Posterior.',
-      'B) Concomitante.',
-      'C) Prévio.',
-      'D) Judicial.'
+      'A) O sentido subjetivo corresponde exclusivamente às atividades administrativas.',
+      'B) O sentido objetivo corresponde às pessoas que exercem a função administrativa.',
+      'C) O sentido subjetivo relaciona-se aos sujeitos que exercem a atividade administrativa; o objetivo, à própria atividade administrativa.',
+      'D) Ambos se referem exclusivamente às autarquias.',
+      'E) Não existe distinção entre os dois sentidos.'
     ],
     correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. Classificação temporal: controle prévio (a priori ou preventivo) é aquele exercido antes da formação ou consumação do ato.'
-  },
-  {
-    id: 11,
-    enunciado: '11. O controle concomitante ocorre:',
-    opcoes: [
-      'A) Antes do ato.',
-      'B) Durante a realização do ato ou atividade.',
-      'C) Somente anos depois do ato.',
-      'D) Exclusivamente após decisão judicial.'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. O controle concomitante ocorre simultaneamente, acompanhando o desenrolar da atividade administrativa.'
-  },
-  {
-    id: 12,
-    enunciado: '12. O controle posterior ocorre:',
-    opcoes: [
-      'A) Antes da prática do ato.',
-      'B) Durante a prática do ato.',
-      'C) Depois da realização do ato.',
-      'D) Somente durante uma eleição.'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. O controle posterior (ou a posteriori) verifica os atos já consumados e executados.'
-  },
-  {
-    id: 13,
-    enunciado: '13. Quando um órgão público fiscaliza seus próprios procedimentos, temos:',
-    opcoes: [
-      'A) Controle interno.',
-      'B) Controle judicial.',
-      'C) Controle externo.',
-      'D) Controle político exclusivamente.'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. Quando a fiscalização é realizada no âmbito interno do próprio órgão ou Poder, temos controle interno.'
-  },
-  {
-    id: 14,
-    enunciado: '14. O controle de legalidade busca verificar se:',
-    opcoes: [
-      'A) O ato é popular.',
-      'B) O ato é conveniente para o servidor.',
-      'C) O ato está de acordo com as normas jurídicas.',
-      'D) O ato possui aprovação da população.'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito Oficial: C. O controle de legalidade afere a estrita conformidade do ato com a Constituição, leis em sentido estrito e regulamentos infralegais.'
-  },
-  {
-    id: 15,
-    enunciado: '15. O mérito administrativo está relacionado principalmente:',
-    opcoes: [
-      'A) À conveniência e oportunidade.',
-      'B) À existência física do órgão.',
-      'C) À nacionalidade do servidor.',
-      'D) À competência criminal.'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. O mérito administrativo consiste na valoração que a lei outorga ao gestor sobre a conveniência e oportunidade de praticar ou manter determinado ato discricionário.'
-  },
-  {
-    id: 16,
-    enunciado: '16. Um ato administrativo válido deixa de ser conveniente para a Administração. Em regra, o instrumento adequado para retirá-lo é:',
-    opcoes: [
-      'A) Anulação.',
-      'B) Revogação.',
-      'C) Cassação judicial obrigatória.',
-      'D) Convalidação.'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Sendo o ato válido, mas tornando-se inconveniente ou inoportuno para o interesse público, a Administração deve proceder à sua revogação.'
-  },
-  {
-    id: 17,
-    enunciado: '17. Um ato administrativo apresenta vício de legalidade. Em regra, poderá ocorrer:',
-    opcoes: [
-      'A) Revogação por mérito.',
-      'B) Anulação.',
-      'C) Promoção do servidor.',
-      'D) Concessão automática de benefício.'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Havendo defeito jurídico ou contrariedade à lei, a medida cogente é a anulação do ato ilegal.'
-  },
-  {
-    id: 18,
-    enunciado: '18. Assinale a alternativa que apresenta somente formas/classificações de controle quanto ao momento:',
-    opcoes: [
-      'A) Prévio, concomitante e posterior.',
-      'B) Civil, penal e tributário.',
-      'C) Federal, estadual e municipal.',
-      'D) Público, privado e misto.'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. A classificação quanto ao momento compreende exclusivamente as modalidades prévia, concomitante e posterior.'
-  },
-  {
-    id: 19,
-    enunciado: '19. Sobre controle administrativo, assinale a correta:',
-    opcoes: [
-      'A) É realizado pela própria Administração.',
-      'B) É sempre realizado pelo Poder Judiciário.',
-      'C) É realizado somente pelo Congresso Nacional.',
-      'D) Não permite revisão dos atos administrativos.'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito Oficial: A. O controle administrativo é aquele exercido pelos órgãos do Poder Executivo ou pelos outros poderes em sua função administrativa típica sobre seus próprios atos.'
-  },
-  {
-    id: 20,
-    enunciado: '20. João praticou um ato administrativo ilegal. O órgão competente identificou a ilegalidade durante uma fiscalização. Nesse caso, o instituto relacionado à retirada do ato por ilegalidade é:',
-    opcoes: [
-      'A) Revogação.',
-      'B) Anulação.',
-      'C) Mérito administrativo.',
-      'D) Controle concomitante.'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito Oficial: B. Tratando-se de ato praticado com ilegalidade manifesta, o instituto de direito administrativo adequado para desfazê-lo é a anulação.'
+    explicacao: 'Gabarito Oficial: C. Sentido subjetivo (orgânico/formal) = QUEM exerce (sujeitos, órgãos e entidades). Sentido objetivo (material/funcional) = O QUE é feito (as atividades administrativas em si, como serviços públicos, fomento e polícia administrativa).'
   }
 ];
 
 export const direitoAdminTfQuestionsData: TfQuestionItem[] = [
   {
-    id: 1,
-    enunciado: '1. O Poder Judiciário pode revogar atos administrativos do Poder Executivo se entender que eles são inoportunos para a população.',
-    correta: false,
-    explicacao: 'Falso: O Poder Judiciário controla apenas a LEGALIDADE dos atos administrativos. O juiz nunca pode revogar atos do Executivo por mérito (conveniência/oportunidade).'
-  },
-  {
-    id: 2,
-    enunciado: '2. A anulação de um ato administrativo opera, em regra, efeitos retroativos (ex tunc), desfazendo as consequências desde a sua origem por se tratar de ato ilegal.',
+    id: 11,
+    enunciado: '11. A Administração Direta é composta pelos entes federativos, enquanto a Administração Indireta é composta por entidades dotadas de personalidade jurídica própria.',
     correta: true,
-    explicacao: 'Verdadeiro: Como o ato ilegal já nasce com defeito congênito, sua anulação retroage à data em que foi editado (efeitos ex tunc).'
+    explicacao: 'Certo: Os entes federativos (União, Estados, DF e Municípios) compõem a Administração Direta. Já a Administração Indireta é formada por entidades personalizadas (autarquias, fundações públicas, empresas públicas e sociedades de economia mista).'
   },
   {
-    id: 3,
-    enunciado: '3. O controle externo no âmbito federal é exercido pelo Congresso Nacional com auxílio do Tribunal de Contas da União (TCU).',
-    correta: true,
-    explicacao: 'Verdadeiro: Esta é a exata disposição dos arts. 70 e 71 da CF/88 para o controle externo financeiro e orçamentário federal.'
-  },
-  {
-    id: 4,
-    enunciado: '4. O controle prévio é aquele exercido durante a execução da atividade administrativa.',
+    id: 12,
+    enunciado: '12. A criação de departamentos dentro de uma mesma pessoa jurídica, com distribuição interna de competências, caracteriza descentralização administrativa.',
     correta: false,
-    explicacao: 'Falso: O controle prévio ocorre ANTES do ato. O controle exercido DURANTE a execução é chamado de concomitante.'
+    explicacao: 'Errado: Trata-se de DESCONCENTRAÇÃO, pois a distribuição de competências ocorre internamente dentro da mesma pessoa jurídica, gerando órgãos e não novas entidades.'
+  },
+  {
+    id: 13,
+    enunciado: '13. As autarquias possuem personalidade jurídica própria e integram a Administração Indireta.',
+    correta: true,
+    explicacao: 'Certo: As autarquias são pessoas jurídicas de direito público criadas por lei específica, com patrimônio e receitas próprios, integrantes da Administração Indireta.'
+  },
+  {
+    id: 14,
+    enunciado: '14. Órgão público e entidade administrativa são expressões equivalentes, pois ambos possuem necessariamente personalidade jurídica própria.',
+    correta: false,
+    explicacao: 'Errado: Órgão público e entidade NÃO são equivalentes. Os órgãos públicos são despersonalizados (não têm personalidade jurídica própria), enquanto as entidades possuem personalidade jurídica autônoma.'
+  },
+  {
+    id: 15,
+    enunciado: '15. Na desconcentração administrativa, ocorre distribuição interna de competências, sem criação de uma nova pessoa jurídica.',
+    correta: true,
+    explicacao: 'Certo: A desconcentração é estritamente intra-entidade; ela cria centros de competência (órgãos) na mesma pessoa jurídica, jamais gerando uma nova pessoa.'
   }
 ];
 
 export const direitoAdminDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
-    id: 1,
-    enunciado: '1. Explique detalhadamente as diferenças essenciais entre a anulação e a revogação de um ato administrativo, abordando motivo, competência e efeitos temporais.',
-    respostaEsperada: 'Gabarito oficial: A anulação incide sobre atos ILEGAIS (com vício em seus elementos constitutivos), pode ser realizada tanto pela própria Administração (autotutela) quanto pelo Poder Judiciário (quando provocado), gerando efeitos retroativos (ex tunc). Já a revogação recai sobre atos VÁLIDOS, decorre exclusivamente de juízo de conveniência e oportunidade da própria Administração (privativo), não podendo ser realizada pelo Judiciário sobre atos alheios, e produz efeitos prospectivos, não retroativos (ex nunc), respeitando-se os direitos adquiridos.'
+    id: 16,
+    enunciado: '16. Explique a diferença entre Administração Direta e Administração Indireta e apresente exemplos de cada uma.',
+    respostaEsperada: 'Gabarito esperado: A Administração Direta é composta pelos próprios entes políticos da federação (União, Estados, Distrito Federal e Municípios), que exercem a função administrativa por meio de seus órgãos internos despersonalizados (ex.: Secretaria de Estado de Saúde, Ministérios). Já a Administração Indireta é formada por pessoas jurídicas autônomas, criadas ou autorizadas pelo Estado para prestar serviços ou exercer atividades específicas, possuindo personalidade jurídica própria, patrimônio e receitas autônomas. Compreende as autarquias (ex.: INSS, Detran), as fundações públicas (ex.: FUNAI, Fiocruz), as empresas públicas (ex.: Caixa Econômica Federal, Correios) e as sociedades de economia mista (ex.: Petrobras, Banco do Brasil).'
   },
   {
-    id: 2,
-    enunciado: '2. Em que consiste o princípio da autotutela administrativa e quais os limites da atuação do Poder Judiciário ao exercer o controle sobre os atos administrativos?',
-    respostaEsperada: 'Gabarito oficial: O princípio da autotutela (consagrado nas Súmulas 346 e 473 do STF e no art. 53 da Lei 9.784/99) confere à Administração o poder-dever de rever seus próprios atos, anulando os eivados de vício de legalidade e revogando os inconvenientes ou inoportunos. Por sua vez, o Poder Judiciário atua sob o império da inafastabilidade da jurisdição (art. 5º, XXXV, CF/88), controlando estritamente a conformidade do ato com a Constituição e as leis (legalidade e legitimidade), sendo-lhe categoricamente vedado ingressar no mérito administrativo para substituir o administrador na escolha discricionária.'
+    id: 17,
+    enunciado: '17. Explique, com suas palavras, a diferença entre descentralização e desconcentração administrativa.',
+    respostaEsperada: 'Gabarito esperado: A descentralização ocorre quando a atividade administrativa é transferida para outra pessoa (física ou jurídica), havendo pelo menos duas pessoas jurídicas distintas envolvidas (ex.: quando o Estado cria uma autarquia para gerir a previdência). Já a desconcentração é a técnica de distribuição puramente interna de atribuições e competências dentro da MESMA pessoa jurídica, ocorrendo a criação ou organização de órgãos públicos subordinados hierarquicamente (ex.: quando um Ministério ou Secretaria subdivide suas tarefas em departamentos, diretorias ou coordenações).'
+  },
+  {
+    id: 18,
+    enunciado: '18. Diferencie órgão público e entidade administrativa quanto à personalidade jurídica.',
+    respostaEsperada: 'Gabarito esperado: Quanto à personalidade jurídica, a distinção é taxativa: o órgão público NÃO possui personalidade jurídica própria; ele é mero centro de competência despersonalizado que integra a estrutura de uma pessoa jurídica. Já a entidade administrativa POSSUI personalidade jurídica própria (de direito público ou de direito privado), sendo sujeito de direitos e obrigações, possuindo patrimônio próprio e capacidade processual autônoma.'
+  },
+  {
+    id: 19,
+    enunciado: '19. Imagine que determinado Estado distribua as competências administrativas entre suas secretarias e departamentos. Explique qual fenômeno administrativo está presente e por quê.',
+    respostaEsperada: 'Gabarito esperado: O fenômeno administrativo presente é a DESCONCENTRAÇÃO. Isso se justifica porque a distribuição de competências se dá dentro da estrutura da própria pessoa jurídica estatal (o Estado-membro), que cria e organiza órgãos internos (secretarias e departamentos) subordinados entre si, sem haver a criação de nenhuma nova pessoa jurídica.'
+  },
+  {
+    id: 20,
+    enunciado: '20. Uma entidade pública possui personalidade jurídica própria e foi criada para executar uma atividade administrativa específica. Explique por que essa característica é importante para diferenciá-la de um órgão público.',
+    respostaEsperada: 'Gabarito esperado: A existência de personalidade jurídica própria é a nota distintiva essencial porque confere à entidade titularidade própria de direitos e obrigações, orçamento e patrimônio segregados, autonomia administrativa e financeira, bem como capacidade de responder judicialmente por seus próprios atos (responsabilidade civil autônoma). Em contrapartida, o órgão público não possui patrimônio nem vontade própria autônoma, imputando-se todos os seus atos diretamente à pessoa jurídica a qual pertence.'
   }
 ];
 
 export const direitoAdminSummaryPoints: string[] = [
-  'Controle da Administração Pública: Mecanismo para fiscalizar, acompanhar e verificar se a atuação atende à lei e ao interesse público.',
-  '⭐ Controle Interno: Exercido pelo próprio Poder ou órgão sobre suas próprias unidades.',
-  '⭐ Controle Externo: Realizado por órgão/Poder diverso (Poder Legislativo com auxílio do Tribunal de Contas).',
-  '⭐ Controle Judicial: Focado exclusivamente na legalidade e legitimidade; depende de provocação; não invade o mérito.',
-  '⭐ Autotutela: A Administração anula atos ilegais e revoga atos inoportunos.',
-  '⭐ Anulação × Revogação: Anulação decorre de ILEGALIDADE (ex tunc); Revogação decorre de CONVENIÊNCIA e OPORTUNIDADE (ex nunc).',
-  '⭐ Classificação Temporal: Prévio (antes do ato), Concomitante (durante a execução) e Posterior (depois de praticado).',
-  '⭐ Prioridade TJAM: Interno × Externo × Judicial; Legalidade × Mérito; Anulação × Revogação; Prévio × Concomitante × Posterior.'
+  'Administração Direta: União + Estados + Distrito Federal + Municípios (entes federativos políticos).',
+  'Administração Indireta: Autarquias + Fundações Públicas + Empresas Públicas + Sociedades de Economia Mista.',
+  '⭐ Sentido Subjetivo/Orgânico: Refere-se a QUEM exerce a função administrativa (sujeitos e órgãos).',
+  '⭐ Sentido Objetivo/Material: Refere-se à ATIVIDADE administrativa exercida pelo Estado.',
+  '⭐ Órgão Público: Não possui personalidade jurídica própria; integra a estrutura de uma pessoa jurídica.',
+  '⭐ Entidade Administrativa: Possui personalidade jurídica própria (direito público ou privado).',
+  '⭐ Centralização: O próprio ente executa a atividade diretamente por seus órgãos.',
+  '⭐ Descentralização: A atividade é atribuída a OUTRA pessoa jurídica (ex: autarquias, concessionárias).',
+  '⭐ Desconcentração: Distribuição INTERNA de competências dentro da mesma pessoa jurídica (cria órgãos).',
+  '🧠 Macete TJAM: Descentralização = sai para outro CENTRO (outra pessoa). Desconcentração = CONCENTRAÇÃO interna (órgãos).'
 ];
