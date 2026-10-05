@@ -36,18 +36,32 @@ export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
     teacherNotes: 'Nesta 2ª aula de hoje (Segunda-feira), estudamos os Direitos e Garantias Fundamentais com foco no Art. 5º da CF/88 (Vida, Liberdade, Igualdade, Segurança e Propriedade), inviolabilidade domiciliar, remédios constitucionais e postura no TJAM com 20 questões gabaritadas e atividade prática.',
   },
   {
-    id: 'oratoria',
-    subjectKey: 'oratoria',
-    title: 'Oratória — Aula 01',
-    subtitle: 'Comunicação Verbal e Não Verbal: Elementos da Comunicação, Escuta Ativa, Tom de Voz, Ruídos e Atendimento no TJAM',
-    category: 'Oratória e Atendimento Forense TJAM',
+    id: 'ingles',
+    subjectKey: 'ingles',
+    title: 'Língua Inglesa — Aula 01',
+    subtitle: 'Alfabeto (The Alphabet), Cumprimentos (Greetings), Apresentação Pessoal, Idade e Profissão • TJAM',
+    category: 'Língua Estrangeira / Conhecimentos Básicos TJAM',
     badge: '3ª Aula de Hoje (Segunda-feira)',
     duration: '45 min',
     order: 3,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 3ª aula de hoje (Segunda-feira), estudamos Oratória e Comunicação Verbal e Não Verbal no Poder Judiciário, escuta ativa, postura corporal, tom de voz e os 4 tipos de ruídos com 20 exercícios gabaritados e atividade prática com áudio.',
+    teacherNotes: 'Nesta 3ª aula de hoje (Segunda-feira), dominamos o Alfabeto inglês com fonética, cumprimentos formais e informais (Good evening vs. Good night), perguntas e respostas de nome, idade (How old are you?), origem e profissão, com 20 questões gabaritadas e desafio prático de áudio.',
+  },
+  {
+    id: 'oratoria',
+    subjectKey: 'oratoria',
+    title: 'Oratória — Aula 01',
+    subtitle: 'Comunicação Verbal e Não Verbal: Elementos da Comunicação, Escuta Ativa, Tom de Voz, Ruídos e Atendimento no TJAM',
+    category: 'Oratória e Atendimento Forense TJAM',
+    badge: 'Aula Complementar TJAM',
+    duration: '45 min',
+    order: 4,
+    questionsCount: 20,
+    cardsCount: 10,
+    isMandatoryAttendance: true,
+    teacherNotes: 'Estudamos Oratória e Comunicação Verbal e Não Verbal no Poder Judiciário, escuta ativa, postura corporal, tom de voz e os 4 tipos de ruídos com 20 exercícios gabaritados e atividade prática com áudio.',
   },
   {
     id: 'direito_admin',
@@ -114,7 +128,7 @@ export const TODAY_MANDATORY_LESSONS = DEFAULT_TODAY_LESSONS.map((l) => ({
 
 export function getTodayLessonsConfig(): TodayLessonConfig[] {
   try {
-    const versionKey = 'tjam_today_lessons_version_v10_portugues3_ortografia';
+    const versionKey = 'tjam_today_lessons_version_v11_portugues_const_ingles';
     const isUpToDate = localStorage.getItem(versionKey);
     if (!isUpToDate) {
       localStorage.setItem('tjam_today_lessons_config', JSON.stringify(DEFAULT_TODAY_LESSONS));

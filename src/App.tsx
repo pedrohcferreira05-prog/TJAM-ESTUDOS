@@ -305,7 +305,10 @@ export function App() {
         const hasMondayGoals =
           Array.isArray(parsed.weeklyGoals) &&
           parsed.weeklyGoals.some((g: any) => g.id === 'goal-seg-01' || g.id === 'goal-seg-02');
-        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !hasMondayGoals) {
+        const hasAllThreeTodayGoals =
+          hasMondayGoals &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-seg-03');
+        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !hasAllThreeTodayGoals) {
           parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
         if (Array.isArray(parsed.simuladoAttempts)) {

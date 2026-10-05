@@ -13,7 +13,7 @@ export interface McQuestionItem {
   id: number;
   enunciado: string;
   opcoes: string[];
-  correta: number;
+  correta: number; // 0 = A, 1 = B, 2 = C, 3 = D, 4 = E
   explicacao: string;
 }
 
@@ -33,368 +33,415 @@ export interface DiscursiveQuestionItem {
   pontosChave: string[];
 }
 
+export interface AlphabetLetter {
+  letter: string;
+  phoneticPt: string;
+  exampleWord: string;
+  translation: string;
+}
+
+export const inglesAlphabetData: AlphabetLetter[] = [
+  { letter: 'A', phoneticPt: 'ei', exampleWord: 'Apple', translation: 'Maçã' },
+  { letter: 'B', phoneticPt: 'bi', exampleWord: 'Book', translation: 'Livro' },
+  { letter: 'C', phoneticPt: 'ci', exampleWord: 'Court', translation: 'Tribunal / Vara' },
+  { letter: 'D', phoneticPt: 'di', exampleWord: 'Desk', translation: 'Mesa / Balcão' },
+  { letter: 'E', phoneticPt: 'i', exampleWord: 'Exam', translation: 'Exame / Prova' },
+  { letter: 'F', phoneticPt: 'éf', exampleWord: 'File', translation: 'Arquivo / Processo' },
+  { letter: 'G', phoneticPt: 'dji', exampleWord: 'Good', translation: 'Bom / Bem' },
+  { letter: 'H', phoneticPt: 'êitch', exampleWord: 'Hello', translation: 'Olá' },
+  { letter: 'I', phoneticPt: 'ai', exampleWord: 'Important', translation: 'Importante' },
+  { letter: 'J', phoneticPt: 'djei', exampleWord: 'Judge', translation: 'Juiz(a)' },
+  { letter: 'K', phoneticPt: 'kei', exampleWord: 'Key', translation: 'Chave / Fundamental' },
+  { letter: 'L', phoneticPt: 'él', exampleWord: 'Lawyer', translation: 'Advogado(a)' },
+  { letter: 'M', phoneticPt: 'ém', exampleWord: 'Morning', translation: 'Manhã' },
+  { letter: 'N', phoneticPt: 'én', exampleWord: 'Name', translation: 'Nome' },
+  { letter: 'O', phoneticPt: 'ou', exampleWord: 'Office', translation: 'Cartório / Gabinete' },
+  { letter: 'P', phoneticPt: 'pi', exampleWord: 'Public servant', translation: 'Servidor público' },
+  { letter: 'Q', phoneticPt: 'kiu', exampleWord: 'Question', translation: 'Questão / Pergunta' },
+  { letter: 'R', phoneticPt: 'ar', exampleWord: 'Report', translation: 'Relatório' },
+  { letter: 'S', phoneticPt: 'és', exampleWord: 'Student', translation: 'Estudante' },
+  { letter: 'T', phoneticPt: 'ti', exampleWord: 'Tomorrow', translation: 'Amanhã' },
+  { letter: 'U', phoneticPt: 'iu', exampleWord: 'Unit', translation: 'Unidade' },
+  { letter: 'V', phoneticPt: 'vi', exampleWord: 'Very', translation: 'Muito' },
+  { letter: 'W', phoneticPt: 'dâbliu', exampleWord: 'Where', translation: 'Onde / De onde' },
+  { letter: 'X', phoneticPt: 'éks', exampleWord: 'X-ray', translation: 'Raio-X' },
+  { letter: 'Y', phoneticPt: 'uai', exampleWord: 'You', translation: 'Você' },
+  { letter: 'Z', phoneticPt: 'zi / zéd', exampleWord: 'Zone', translation: 'Zona' },
+];
+
 export const inglesFlashcardsData: FlashcardItem[] = [
   {
     id: 1,
-    q: 'Qual é a diferença de uso entre "Good evening" e "Good night"?',
-    a: '"Good evening" é usado como cumprimento ao chegar ou iniciar uma conversa à noite. "Good night" é usado estritamente como despedida ao sair ou antes de dormir.',
+    q: 'Qual é a diferença fundamental entre "Good evening" e "Good night"?',
+    a: '• "Good evening": é utilizado como CUMPRIMENTO ao encontrar alguém no período da noite (ao chegar).\n• "Good night": é utilizado estritamente na DESPEDIDA à noite (ao ir embora ou antes de dormir).',
     frente: 'Good evening vs. Good night',
-    verso: 'Good evening = cumprimento ao chegar à noite. Good night = despedida ao ir embora ou dormir.',
+    verso: 'Good evening = cumprimento ao chegar à noite.\nGood night = despedida ao sair ou dormir.',
     categoria: 'Cumprimentos (Greetings)',
-    dica: 'Chegou à noite? Good evening! Vai embora ou dormir? Good night!',
+    dica: 'Chegou a uma reunião noturna? Diga "Good evening!". Vai embora? Diga "Good night!".',
     pronuncia: 'gud ívning / gud náit'
   },
   {
     id: 2,
-    q: 'Quais são os 7 pronomes pessoais (Subject Pronouns) da língua inglesa e seus significados?',
-    a: 'I (eu), You (você/vocês), He (ele), She (ela), It (ele/ela para coisas/animais/situações), We (nós), They (eles/elas).',
-    frente: 'Personal Pronouns (Pronomes Pessoais)',
-    verso: 'I (eu), You (você/vocês), He (ele), She (ela), It (coisas/animais), We (nós), They (eles/elas).',
-    categoria: 'Pronomes Pessoais',
-    dica: '"They" serve tanto para pessoas no plural quanto para coisas/animais no plural.',
-    pronuncia: 'ái, iú, hí, xí, it, uí, dêi'
+    q: 'Como se pergunta e como se responde a idade corretamente em inglês?',
+    a: 'Pergunta: "How old are you?" (Quantos anos você tem?).\nResposta: "I am [idade] years old" (ou simplesmente "I\'m [idade]").\n⚠️ ATENÇÃO: NUNCA diga *"I have 25 years"*!',
+    frente: 'Idade em Inglês: How old are you?',
+    verso: 'Pergunta: "How old are you?"\nResposta: "I am 25 years old." (NUNCA usar o verbo "have" para idade).',
+    categoria: 'Apresentação Pessoal',
+    dica: 'Em inglês, a idade é um estado de ser (verbo TO BE), e não uma posse (have).',
+    pronuncia: 'háo ôuld ar iú? / áim... íers ôuld'
   },
   {
     id: 3,
-    q: 'Como se conjuga o verbo TO BE no presente afirmativo para todas as pessoas?',
-    a: 'I am | You are | He is | She is | It is | We are | They are.',
-    frente: 'Conjugação do Verbo TO BE (Presente)',
-    verso: 'I am | You are | He/She/It is | We are | They are. Significa "ser" ou "estar".',
-    categoria: 'Verbo TO BE',
-    dica: 'Lembre-se do trio singular: He, She, It usam sempre "is"!',
-    pronuncia: 'am, ar, iz'
+    q: 'Como perguntar e responder a origem / nacionalidade de uma pessoa?',
+    a: 'Pergunta: "Where are you from?" (De onde você é?).\nResposta: "I am from Brazil." (Sou do Brasil) ou "I\'m from Manaus." (Sou de Manaus).',
+    frente: 'Origem: Where are you from?',
+    verso: 'Pergunta: "Where are you from?"\nResposta: "I\'m from Brazil / I\'m from Manaus."',
+    categoria: 'Origem e Procedência',
+    dica: 'A preposição "from" indica procedência / ponto de partida.',
+    pronuncia: 'uér ar iú frôm? / áim frôm brazíl'
   },
   {
     id: 4,
-    q: 'Quais são as formas contraídas afirmativas do verbo TO BE com os pronomes?',
-    a: 'I am → I\'m | You are → You\'re | He is → He\'s | She is → She\'s | It is → It\'s | We are → We\'re | They are → They\'re.',
-    frente: 'Formas Contraídas Afirmativas (TO BE)',
-    verso: 'I\'m, You\'re, He\'s, She\'s, It\'s, We\'re, They\'re. São amplamente usadas na fala e na escrita informal/cotidiana.',
-    categoria: 'Contrações',
-    dica: 'Substitui-se a primeira vogal do verbo pelo apóstrofo (\').',
-    pronuncia: 'áim, iór, híz, xíz, its, uír, dêir'
+    q: 'Como perguntar e informar a profissão de forma natural?',
+    a: 'Pergunta: "What do you do?" (O que você faz? / Qual é sua profissão?).\nRespostas:\n• "I\'m a public servant." (Sou servidor público).\n• "I\'m a student." (Sou estudante).\n• "I\'m a lawyer." (Sou advogado).',
+    frente: 'Profissão: What do you do?',
+    verso: 'Pergunta: "What do you do?"\nResposta: "I\'m a public servant" / "I\'m a student". Lembre-se do artigo "a" antes da profissão.',
+    categoria: 'Profissão',
+    dica: 'No singular, use sempre "a" antes de som consonantal: a student, a public servant, a teacher.',
+    pronuncia: 'uót du iú du? / áim a pâblik sérvant'
   },
   {
     id: 5,
-    q: 'Como se formam frases negativas com o verbo TO BE e quais as contrações possíveis?',
-    a: 'Acrescenta-se "not" após o verbo. Ex: is not = isn\'t | are not = aren\'t | I am not = I\'m not (não existe "amn\'t").',
-    frente: 'Negativas com TO BE (isn\'t / aren\'t)',
-    verso: 'is + not = isn\'t | are + not = aren\'t | I am not = I\'m not. Ex: He isn\'t a student. We aren\'t ready.',
-    categoria: 'Forma Negativa',
-    dica: 'I am not contrai como I\'m not (nunca use amn\'t).',
-    pronuncia: 'íznt, árnt, áim nót'
+    q: 'Quais são os cumprimentos formais e informais mais comuns em inglês?',
+    a: '• Informais: Hi! (Oi!), Hello! (Olá!), Hey! (Ei/Oi!).\n• Formais: Good morning! (Bom dia), Good afternoon! (Boa tarde), Good evening! (Boa noite ao chegar).',
+    frente: 'Cumprimentos (Formais x Informais)',
+    verso: 'Informais: Hi, Hello, Hey.\nFormais: Good morning, Good afternoon, Good evening.',
+    categoria: 'Cumprimentos (Greetings)',
+    dica: '"Hello" transita bem tanto em situações formais quanto casuais.',
+    pronuncia: 'hái, relôu, rêi / gud mórning, gud áfternun, gud ívning'
   },
   {
     id: 6,
-    q: 'Como transformar uma frase afirmativa com TO BE em pergunta e como responder de forma curta?',
-    a: 'Inverte-se a posição do verbo para antes do sujeito: "You are Brazilian" → "Are you Brazilian?". Respostas curtas: "Yes, I am." / "No, I\'m not."',
-    frente: 'Perguntas com TO BE (Inversão do Verbo)',
-    verso: 'Verbo antes do sujeito: Are you...? / Is she...? Resposta curta: Yes, I am / No, I\'m not.',
-    categoria: 'Interrogação',
-    dica: 'Nas respostas curtas afirmativas, NUNCA se usa contração (diz-se "Yes, I am", nunca *"Yes, I\'m").',
-    pronuncia: 'ar iú...? / iz xí...?'
+    q: 'Quais são as principais expressões de despedida (Goodbyes)?',
+    a: '• Goodbye! (Adeus/Tchau)\n• Bye! (Tchau)\n• See you! (Até mais)\n• See you later! (Até mais tarde)\n• See you tomorrow! (Até amanhã)\n• Have a nice day! (Tenha um bom dia)',
+    frente: 'Despedidas (Goodbyes)',
+    verso: 'Goodbye, Bye, See you later, See you tomorrow, Have a nice day!',
+    categoria: 'Despedidas',
+    dica: '"See you tomorrow" é perfeito para despedidas no cartório ou tribunal com colegas de trabalho.',
+    pronuncia: 'gudbái, bái, sí iú lêiter, sí iú tumórou'
   },
   {
     id: 7,
-    q: 'O que significam as principais palavras interrogativas (Wh- Questions): What, Where, Who, When, How, Why?',
-    a: 'What = o quê/qual | Where = onde | Who = quem | When = quando | How = como | Why = por quê.',
-    frente: 'Question Words (What, Where, Who, When, How, Why)',
-    verso: 'What (o quê/qual), Where (onde), Who (quem), When (quando), How (como), Why (por quê).',
-    categoria: 'Palavras Interrogativas',
-    dica: 'Where are you from? (De onde você é?) | What is your name? (Qual é seu nome?)',
-    pronuncia: 'uót, uér, rrú, uên, rráu, uái'
+    q: 'Como responder à pergunta "How are you?" (Como você está?)?',
+    a: '• I\'m fine, thank you. (Estou bem, obrigado)\n• I\'m good. (Estou bem)\n• I\'m great. (Estou ótimo/a)\n• I\'m okay. (Estou bem / OK)\nTambém se pode perguntar: "How are you doing?".',
+    frente: 'Como vai?: How are you?',
+    verso: 'I\'m fine, thank you / I\'m good / I\'m great / I\'m okay.',
+    categoria: 'Cumprimentos',
+    dica: 'Acrescente sempre "thank you, and you?" (obrigado, e você?) para demonstrar polidez.',
+    pronuncia: 'háo ar iú? / áim fáin, tänk iú'
   },
   {
     id: 8,
-    q: 'Como se diz "servidor público", "juiz", "advogado" e "tribunal" em inglês?',
-    a: 'Public servant = servidor público | Judge = juiz | Lawyer = advogado | Court = tribunal / vara judicial.',
-    frente: 'Vocabulário Jurídico & Concurso TJAM',
-    verso: 'public servant (servidor público), judge (juiz), lawyer (advogado), court (tribunal).',
-    categoria: 'Vocabulário TJAM',
-    dica: 'Termos fundamentais para provas do Tribunal de Justiça.',
-    pronuncia: 'pâblik sérvant, djâdj, lóier, córt'
+    q: 'O que significa a expressão de cortesia "Nice to meet you!"?',
+    a: 'Significa "Prazer em conhecê-lo(a)!". É usada quando duas pessoas se conhecem pela primeira vez. A resposta padrão é: "Nice to meet you too!" (Prazer em conhecê-lo também!).',
+    frente: 'Nice to meet you!',
+    verso: 'Prazer em conhecê-lo(a)!\nResposta: "Nice to meet you too!" (com o "too" no final = também).',
+    categoria: 'Apresentação',
+    dica: 'Usado estritamente no primeiro encontro. Em encontros posteriores, use "Good to see you!".',
+    pronuncia: 'náis tu mít iú / náis tu mít iú tú'
   },
   {
     id: 9,
-    q: 'Como expressar nome, origem, moradia e profissão em inglês?',
-    a: 'Nome: My name is... (ou I am...) | Origem: I am from... | Moradia: I live in... | Profissão: I am a student / I am a public servant.',
-    frente: 'Estruturas de Apresentação Pessoal',
-    verso: 'My name is... | I am from [país/cidade] | I live in [cidade] | I am a [profissão].',
-    categoria: 'Apresentação Pessoal',
-    dica: 'Antes de profissão no singular, usa-se o artigo "a" ou "an": I am A public servant.',
-    pronuncia: 'mái néim iz... / ái am frôm... / ái lív in...'
+    q: 'Como soletramos vogais e consoantes desafiadoras do alfabeto inglês (A, E, I, G, J, H, R, Y)?',
+    a: '• A = "ei" | E = "i" | I = "ai"\n• G = "dji" | J = "djei"\n• H = "êitch"\n• R = "ar"\n• Y = "uai"',
+    frente: 'Pegadinhas Fonéticas do Alfabeto',
+    verso: 'A (ei), E (i), I (ai), G (dji), J (djei), H (êitch), R (ar), Y (uai).',
+    categoria: 'Alfabeto Fonético',
+    dica: 'Muito comum em bancas de tribunal pedir soletração (spelling) de nomes e códigos.',
+    pronuncia: 'spelling: ei, i, ai, dji, djei, êitch'
   },
   {
     id: 10,
-    q: 'Qual a estratégia fundamental para resolver questões de interpretação em inglês de nível inicial/concurso?',
-    a: 'Localizar informações explícitas no texto: identificar nomes, nacionalidades (Brazilian, English), locais (live in...) e ocupações/objetivos sem se preocupar em traduzir palavra por palavra.',
-    frente: 'Interpretação: Informações Explícitas',
-    verso: 'Buscar palavras-chave (cognatos e vocabulário básico): name, from, live, student, public servant.',
-    categoria: 'Técnicas de Prova TJAM',
-    dica: 'Não tente traduzir cada termo isolado; busque a ideia central e os dados objetivos pedidos pela questão.',
-    pronuncia: 'reading comprehension'
+    q: 'Como funciona uma apresentação pessoal completa e formal em 4 passos?',
+    a: '1. Saudação: "Hello! Good morning!"\n2. Nome e idade: "My name is Pedro. I am 28 years old."\n3. Origem e localidade: "I\'m from Brazil and I live in Manaus."\n4. Profissão: "I am a public servant at the TJAM court."',
+    frente: 'Estrutura da Apresentação Pessoal',
+    verso: '1. Saudação → 2. Nome/Idade → 3. Origem/Cidade → 4. Profissão/Ocupação.',
+    categoria: 'Prática Forense TJAM',
+    dica: 'Essa estrutura atende ao desafio oral gravado em áudio para o professor.',
+    pronuncia: 'personal presentation'
   }
 ];
 
+// 10 Questões Objetivas Oficiais (Parte 1: 1 a 10)
 export const inglesMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: 'Complete corretamente:\n\n“Maria ___ a student and her parents ___ teachers.”',
+    enunciado: '1. A expressão “Good morning!” significa:',
     opcoes: [
-      'A) am / is',
-      'B) is / are',
-      'C) are / is',
-      'D) is / am',
-      'E) are / are'
+      'A) Boa noite.',
+      'B) Boa tarde.',
+      'C) Bom dia.',
+      'D) Até amanhã.',
+      'E) Até mais.'
     ],
-    correta: 1,
-    explicacao: 'Gabarito: B. "Maria" é 3ª pessoa do singular (she), exigindo o verbo "is". "Her parents" (os pais dela) está no plural (they), exigindo o verbo "are". Portanto: "Maria is a student and her parents are teachers."'
+    correta: 2, // C
+    explicacao: 'Gabarito oficial: C. "Good morning!" é a saudação formal utilizada no período da manhã e significa "Bom dia!". Boa tarde é "Good afternoon" e boa noite ao chegar é "Good evening".'
   },
   {
     id: 2,
-    enunciado: 'Assinale a alternativa gramaticalmente correta:',
+    enunciado: '2. A pergunta “What\'s your name?” significa:',
     opcoes: [
-      'A) They is Brazilian.',
-      'B) He are a student.',
-      'C) I am Brazilian.',
-      'D) She are a teacher.',
-      'E) We is ready.'
+      'A) Onde você mora?',
+      'B) Qual é o seu nome?',
+      'C) Qual é sua profissão?',
+      'D) Quantos anos você tem?',
+      'E) De onde você é?'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. A concordância correta do verbo to be é: I am. As outras alternativas contêm erros de concordância: They are (não is), He is (não are), She is (não are), We are (não is).'
+    correta: 1, // B
+    explicacao: 'Gabarito oficial: B. "What\'s your name?" (contração de "What is your name?") significa "Qual é o seu nome?". Onde você mora é "Where do you live?", profissão é "What do you do?" e idade é "How old are you?".'
   },
   {
     id: 3,
-    enunciado: 'Leia:\n\n“John is from England. He is a teacher and he lives in London.”\n\nDe acordo com o texto, John:',
+    enunciado: '3. Assinale a alternativa que apresenta uma resposta adequada para “How are you?”:',
     opcoes: [
-      'A) é brasileiro.',
-      'B) mora no Brasil.',
-      'C) é professor.',
-      'D) mora nos Estados Unidos.',
-      'E) é estudante.'
+      'A) I\'m from Brazil.',
+      'B) I\'m 25 years old.',
+      'C) I\'m fine, thank you.',
+      'D) My name is John.',
+      'E) I\'m a student.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. O texto afirma expressamente: "He is a teacher" (Ele é professor). Além disso, ele é da Inglaterra (England) e mora em Londres (London).'
+    correta: 2, // C
+    explicacao: 'Gabarito oficial: C. "How are you?" pergunta sobre o estado de espírito ou saúde da pessoa ("Como você está?"). A resposta natural e cortês é "I\'m fine, thank you." (Estou bem, obrigado).'
   },
   {
     id: 4,
-    enunciado: 'Na frase “They are public servants”, o pronome They refere-se a:',
+    enunciado: '4. A expressão “Where are you from?” é utilizada para perguntar:',
     opcoes: [
-      'A) uma pessoa do sexo masculino.',
-      'B) uma pessoa do sexo feminino.',
-      'C) uma coisa.',
-      'D) duas ou mais pessoas.',
-      'E) somente duas mulheres.'
+      'A) a idade de uma pessoa.',
+      'B) o nome de uma pessoa.',
+      'C) a profissão de uma pessoa.',
+      'D) a origem de uma pessoa.',
+      'E) o endereço de uma pessoa.'
     ],
-    correta: 3,
-    explicacao: 'Gabarito: D. O pronome "They" é a 3ª pessoa do plural e significa "eles" ou "elas", referindo-se a duas ou mais pessoas (ou coisas/animais no plural).'
+    correta: 3, // D
+    explicacao: 'Gabarito oficial: D. A preposição "from" indica procedência ou origem. Portanto, "Where are you from?" pergunta "De onde você é?", investigando a cidade, estado ou país de origem.'
   },
   {
     id: 5,
-    enunciado: 'Assinale a alternativa que apresenta a forma negativa correta:\n\n“She ___ a lawyer.”',
+    enunciado: '5. Qual alternativa apresenta uma forma correta de dizer “Eu sou do Brasil”?',
     opcoes: [
-      'A) is not',
-      'B) are not',
-      'C) am not',
-      'D) not is',
-      'E) not are'
+      'A) I have Brazil.',
+      'B) I am from Brazil.',
+      'C) I from Brazil.',
+      'D) I have from Brazil.',
+      'E) I Brazil.'
     ],
-    correta: 0,
-    explicacao: 'Gabarito: A. A negação com o verbo to be é formada pelo verbo seguido da partícula "not": "She is not a lawyer" (ou contraído: "She isn\'t a lawyer").'
+    correta: 1, // B
+    explicacao: 'Gabarito oficial: B. A construção gramatical correta exige o pronome sujeito ("I"), o verbo to be conjugado ("am") e a preposição de origem ("from"): "I am from Brazil" (ou na forma contraída, "I\'m from Brazil").'
   },
   {
     id: 6,
-    enunciado: 'A pergunta “Where are you from?” significa:',
+    enunciado: '6. A expressão “Nice to meet you!” significa:',
     opcoes: [
-      'A) Qual é o seu nome?',
-      'B) Onde você trabalha?',
-      'C) De onde você é?',
-      'D) Quem é você?',
-      'E) Como você está?'
+      'A) Até amanhã!',
+      'B) Como você está?',
+      'C) Prazer em conhecê-lo(a)!',
+      'D) Qual é o seu nome?',
+      'E) Tenha um bom dia!'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Where are you from?" pergunta a origem/nacionalidade de alguém: "De onde você é?". "Qual é o seu nome?" é "What is your name?"; "Como você está?" é "How are you?".'
+    correta: 2, // C
+    explicacao: 'Gabarito oficial: C. "Nice to meet you!" é uma expressão de polidez e cortesia utilizada no momento da apresentação inicial de duas pessoas, significando "Prazer em conhecê-lo(a)!".'
   },
   {
     id: 7,
-    enunciado: 'Complete corretamente:\n\n“___ you Brazilian?”',
+    enunciado: '7. Qual alternativa apresenta uma forma correta de informar a idade?',
     opcoes: [
-      'A) Is',
-      'B) Am',
-      'C) Are',
-      'D) Be',
-      'E) Do'
+      'A) I have 20 years.',
+      'B) I am 20 years old.',
+      'C) I have 20 old.',
+      'D) I am have 20 years.',
+      'E) I 20 years.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. Para fazer uma pergunta com o pronome "you" e o verbo to be, inverte-se o verbo "are" para antes do sujeito: "Are you Brazilian?".'
+    correta: 1, // B
+    explicacao: 'Gabarito oficial: B. Em inglês, a idade é expressa com o verbo TO BE ("I am..."), seguido do numeral e da locução "years old": "I am 20 years old". É um erro clássico de brasileiros traduzir ao pé da letra com o verbo "have" (*I have 20 years*).'
   },
   {
     id: 8,
-    enunciado: 'Leia:\n\n“I am Lucas. I am Brazilian, but I live in London. I am a student.”\n\nÉ correto afirmar que Lucas:',
+    enunciado: '8. Em inglês, “Good evening” é normalmente utilizado:',
     opcoes: [
-      'A) é inglês.',
-      'B) mora no Brasil.',
-      'C) é brasileiro e mora em Londres.',
-      'D) é professor.',
-      'E) não é estudante.'
+      'A) para cumprimentar alguém no período da noite.',
+      'B) exclusivamente para despedidas.',
+      'C) somente pela manhã.',
+      'D) somente ao meio-dia.',
+      'E) para perguntar a idade.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. O texto diz: "I am Brazilian" (sou brasileiro), "but I live in London" (mas moro em Londres) e "I am a student" (sou estudante). Logo, Lucas é brasileiro e mora em Londres.'
+    correta: 0, // A
+    explicacao: 'Gabarito oficial: A. "Good evening" é uma saudação (cumprimento de chegada) empregada no período noturno (a partir do pôr do sol ou 18h). A despedida noturna é "Good night".'
   },
   {
     id: 9,
-    enunciado: 'Assinale a alternativa em que a contração está correta:',
+    enunciado: '9. Assinale a alternativa que apresenta uma despedida:',
     opcoes: [
-      'A) He\'re',
-      'B) She\'re',
-      'C) They\'s',
-      'D) We\'re',
-      'E) I\'s'
+      'A) Hello.',
+      'B) Good morning.',
+      'C) How are you?',
+      'D) See you later.',
+      'E) What\'s your name?'
     ],
-    correta: 3,
-    explicacao: 'Gabarito: D. A contração correta para "We are" é "We\'re". As outras opções contêm erros grosseiros: He is = He\'s (não He\'re); She is = She\'s (não She\'re); They are = They\'re (não They\'s); I am = I\'m (não I\'s).'
+    correta: 3, // D
+    explicacao: 'Gabarito oficial: D. "See you later" significa "Até mais tarde" ou "Vejo você mais tarde", configurando uma clássica expressão de despedida (goodbye). As demais opções são cumprimentos ou perguntas de apresentação.'
   },
   {
     id: 10,
-    enunciado: 'Na frase:\n\n“The employees are at work.”\n\nA palavra employees significa:',
+    enunciado: '10. Observe o diálogo:\n\nA: Hello! What\'s your name?\nB: My name is Daniel.\nA: Where are you from?\nB: I\'m from Brazil.\n\nDe acordo com o diálogo, Daniel:',
     opcoes: [
-      'A) estudantes.',
-      'B) cidadãos.',
-      'C) funcionários.',
-      'D) professores.',
-      'E) juízes.'
+      'A) é professor.',
+      'B) tem 20 anos.',
+      'C) é brasileiro ou vem do Brasil.',
+      'D) mora necessariamente em Manaus.',
+      'E) trabalha no Brasil.'
     ],
-    correta: 2,
-    explicacao: 'Gabarito: C. "Employee" significa empregado/funcionário (plural: employees = funcionários). Estudantes = students, cidadãos = citizens, professores = teachers, juízes = judges.'
+    correta: 2, // C
+    explicacao: 'Gabarito oficial: C. Ao responder "I\'m from Brazil", Daniel informa explicitamente que é do Brasil (brasileiro/proveniente do país). O texto não menciona sua idade, profissão nem a cidade específica onde reside.'
   }
 ];
 
+// 5 Questões Certo ou Errado (Parte 2: 11 a 15) — Estilo Cebraspe
 export const inglesTfQuestionsData: TfQuestionItem[] = [
   {
-    id: 1,
-    enunciado: 'Na frase “I am a student”, o verbo to be está corretamente conjugado.',
+    id: 11,
+    enunciado: '11. “Hello” e “Hi” podem ser utilizados como cumprimentos.',
     correta: true,
-    explicacao: 'VERDADEIRO. Com a primeira pessoa do singular ("I"), a conjugação correta do verbo to be no presente é exatamente "am".'
+    explicacao: 'Gabarito oficial: CERTO. Ambos são saudações clássicas em inglês, sendo "Hello" mais neutro/formal e "Hi" mais casual e coloquial.'
   },
   {
-    id: 2,
-    enunciado: 'A frase “She are Brazilian” está gramaticalmente correta.',
+    id: 12,
+    enunciado: '12. “How old are you?” significa “Qual é o seu nome?”.',
     correta: false,
-    explicacao: 'FALSO. Com o pronome "She" (3ª pessoa do singular), deve-se usar "is". A frase correta é: "She is Brazilian".'
+    explicacao: 'Gabarito oficial: ERRADO. "How old are you?" significa "Quantos anos você tem?" (pergunta a idade). "Qual é o seu nome?" é "What\'s your name?".'
   },
   {
-    id: 3,
-    enunciado: 'Na frase “They are students”, o pronome they está associado ao verbo are.',
+    id: 13,
+    enunciado: '13. “I\'m a student” significa “Eu sou estudante”.',
     correta: true,
-    explicacao: 'VERDADEIRO. O pronome "they" (eles/elas) é plural e se associa perfeitamente à forma verbal "are".'
+    explicacao: 'Gabarito oficial: CERTO. "I\'m" é a contração de "I am" (eu sou), seguido do artigo indefinido "a" e do substantivo "student" (estudante).'
   },
   {
-    id: 4,
-    enunciado: 'A frase “He isn\'t a teacher” significa “Ele não é professor”.',
-    correta: true,
-    explicacao: 'VERDADEIRO. "isn\'t" é a forma contraída de "is not", indicando negação: "Ele não é professor".'
+    id: 14,
+    enunciado: '14. “Good night” é normalmente utilizado como cumprimento equivalente a “Good morning”.',
+    correta: false,
+    explicacao: 'Gabarito oficial: ERRADO. "Good morning" é uma saudação de chegada matutina. Já "Good night" é uma DESPEDIDA noturna (usada ao sair ou antes de dormir). O cumprimento de chegada noturno equivalente é "Good evening".'
   },
   {
-    id: 5,
-    enunciado: 'A pergunta “What is your name?” pode ser traduzida como “Qual é o seu nome?”.',
+    id: 15,
+    enunciado: '15. “See you tomorrow” significa “Até amanhã”.',
     correta: true,
-    explicacao: 'VERDADEIRO. Trata-se da pergunta básica em inglês para identificação pessoal, traduzindo-se literalmente e contextualmente como "Qual é o seu nome?".'
+    explicacao: 'Gabarito oficial: CERTO. "See you" (vejo você / até) + "tomorrow" (amanhã) traduz-se com exatidão como "Até amanhã!".'
   }
 ];
 
+// 5 Questões Dissertativas Oficiais (Parte 3: 16 a 20) com Espelho Oficial
 export const inglesDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
   {
-    id: 1,
-    titulo: 'Questão 16 — Diferença entre I am, You are e He/She is',
-    enunciado: 'Explique a diferença entre "I am", "You are" e "He/She is", indicando a pessoa gramatical e a regra de aplicação.',
-    respostaEsperada: 'Gabarito oficial:\n• "I am" é usado com a 1ª pessoa do singular ("I" = eu);\n• "You are" é usado com a 2ª pessoa ("you" = você ou vocês);\n• "He is" e "She is" são usados com a 3ª pessoa do singular masculino e feminino ("he" = ele, "she" = ela).',
+    id: 16,
+    titulo: 'Questão 16 — Tradução Direta de Apresentação',
+    enunciado: 'Traduza para o português a seguinte frase de apresentação pessoal:\n\n“Hello! My name is Anna. I\'m from Brazil.”',
+    respostaEsperada: 'Gabarito oficial:\n“Olá! Meu nome é Anna. Eu sou do Brasil.” (ou “Olá! Meu nome é Anna. Sou brasileira / Venho do Brasil.”)',
     espelhoCorrecao: [
-      'Identificação de "I am" como 1ª pessoa do singular (eu)',
-      'Identificação de "You are" como 2ª pessoa (você/vocês)',
-      'Identificação de "He is / She is" como 3ª pessoa do singular (ele/ela)'
+      'Tradução adequada da saudação: "Hello!" → "Olá!" ou "Oi!"',
+      'Identificação do nome: "My name is Anna" → "Meu nome é Anna"',
+      'Indicação correta da procedência/país: "I\'m from Brazil" → "Eu sou do Brasil" / "Sou do Brasil"'
     ],
     pontosChave: [
-      'Concordância pessoa + forma do verbo to be',
-      'am exclusivo de I',
-      'is para 3ª pessoa do singular (he, she, it)'
+      'Tradução do cumprimento Hello',
+      'Pronome possessivo My (meu)',
+      'Preposição from (do / de)'
     ]
   },
   {
-    id: 2,
-    titulo: 'Questão 17 — Tradução de Frase Composta',
-    enunciado: 'Traduza para o português a seguinte frase:\n\n“They are Brazilian students and they live in Manaus.”',
-    respostaEsperada: 'Gabarito oficial:\n“Eles são estudantes brasileiros e moram em Manaus.” (ou “Elas são estudantes brasileiras e moram em Manaus.”)',
+    id: 17,
+    titulo: 'Questão 17 — Formulação de Perguntas em Inglês',
+    enunciado: 'Escreva em inglês:\na) Uma pergunta para saber o nome de uma pessoa.\nb) Uma pergunta para saber de onde essa pessoa é.',
+    respostaEsperada: 'Gabarito oficial:\na) Pergunta para saber o nome: “What\'s your name?” (ou “What is your name?”).\nb) Pergunta para saber a origem: “Where are you from?”.',
     espelhoCorrecao: [
-      'Tradução de "They are Brazilian students" para "Eles são estudantes brasileiros"',
-      'Tradução do conectivo "and" para "e"',
-      'Tradução de "they live in Manaus" para "moram em Manaus / eles vivem em Manaus"'
+      'Item a: Utilização correta de "What\'s your name?" ou "What is your name?" com ponto de interrogação.',
+      'Item b: Utilização correta de "Where are you from?" com a preposição "from" ao final e ponto de interrogação.'
     ],
     pontosChave: [
-      'Adequação do pronome they (eles/elas)',
-      'Ordem adjetivo + substantivo no inglês (Brazilian students)',
-      'Verbo live in = morar/viver em'
+      'Palavra interrogativa What para nome',
+      'Palavra interrogativa Where + from para origem',
+      'Presença indispensável do ponto de interrogação'
     ]
   },
   {
-    id: 3,
-    titulo: 'Questão 18 — Transformação para Forma Negativa',
-    enunciado: 'Passe a seguinte frase para a forma negativa (tanto por extenso quanto na forma contraída):\n\n“She is a public servant.”',
-    respostaEsperada: 'Gabarito oficial:\nForma por extenso: “She is not a public servant.”\nForma contraída: “She isn\'t a public servant.”\n(Significado: Ela não é servidora pública).',
+    id: 18,
+    titulo: 'Questão 18 — Distinção Semântica: Good evening vs. Good night',
+    enunciado: 'Explique detalhadamente a diferença de contexto e uso entre as expressões “Good evening” e “Good night”.',
+    respostaEsperada: 'Gabarito oficial:\n• “Good evening” é uma saudação (cumprimento de chegada) utilizada a partir do final da tarde / início da noite (por volta das 18h) quando você encontra alguém ou inicia uma palestra/conversa.\n• “Good night” é exclusivamente uma expressão de despedida, empregada quando você está indo embora de um local no período noturno ou quando vai dormir.',
     espelhoCorrecao: [
-      'Acréscimo da partícula negativa "not" após o verbo to be ("She is not...")',
-      'Apresentação da forma contraída correta ("She isn\'t...")',
-      'Manutenção do complemento nominal "a public servant"'
+      'Identificação de "Good evening" como saudação/cumprimento de chegada noturno',
+      'Identificação de "Good night" como despedida ao sair ou antes de dormir',
+      'Menção ao contexto temporal (período noturno para ambos, mas funções comunicativas opostas)'
     ],
     pontosChave: [
-      'is not = isn\'t',
-      'Manutenção do artigo indefinido "a"',
-      'Termo public servant (servidor público)'
+      'Good evening = chegada / cumprimento',
+      'Good night = saída / despedida / dormir',
+      'Diferença clássica cobrada pela FGV e Cebraspe'
     ]
   },
   {
-    id: 4,
-    titulo: 'Questão 19 — Pergunta e Respostas Curtas (Short Answers)',
-    enunciado: 'Transforme a frase afirmativa “He is a student” em uma pergunta. Em seguida, escreva uma resposta curta afirmativa e uma resposta curta negativa.',
-    respostaEsperada: 'Gabarito oficial:\n• Pergunta (inversão): “Is he a student?”\n• Resposta curta afirmativa: “Yes, he is.”\n• Resposta curta negativa: “No, he isn\'t.” (ou “No, he is not.”)',
+    id: 19,
+    titulo: 'Questão 19 — Diálogo Básico de Apresentação',
+    enunciado: 'Imagine que você está conhecendo um colega pela primeira vez. Escreva um pequeno diálogo em inglês contendo obrigatoriamente:\n1) Cumprimento;\n2) Apresentação do nome;\n3) Pergunta sobre a origem;\n4) Despedida.',
+    respostaEsperada: 'Gabarito oficial (modelo sugerido):\n\nA: Hello! Good morning! My name is Carlos. What\'s your name?\nB: Hi Carlos! I\'m Maria. Nice to meet you!\nA: Nice to meet you too! Where are you from?\nB: I\'m from Manaus, Brazil. And you?\nA: I\'m from Brazil too. Great! See you later, Maria!\nB: Goodbye! Have a nice day!',
     espelhoCorrecao: [
-      'Inversão da ordem verbo-sujeito para formar a pergunta com pontuação de interrogação: "Is he a student?"',
-      'Resposta curta afirmativa correta sem contração: "Yes, he is."',
-      'Resposta curta negativa correta: "No, he isn\'t."'
+      'Presença de cumprimento (Hello, Hi, Good morning)',
+      'Troca de nomes e cortesia (My name is..., Nice to meet you)',
+      'Pergunta e resposta sobre local de origem (Where are you from? I\'m from...)',
+      'Despedida formal ou informal adequada (See you later, Goodbye, Bye)'
     ],
     pontosChave: [
-      'Inversão do to be na interrogação',
-      'Pontuação correta (?)',
-      'Regra de não contrair a resposta curta afirmativa ("Yes, he is", não "Yes, he\'s")'
+      'Estrutura em formato de diálogo (interlocutores A e B)',
+      'Coerência e sequência comunicativa lógica',
+      'Atendimento aos 4 requisitos expressos no enunciado'
     ]
   },
   {
-    id: 5,
-    titulo: 'Questão 20 — Interpretação de Texto com Respostas em Inglês',
-    enunciado: 'Leia o texto abaixo:\n\n“My name is Ana. I am Brazilian. I live in Manaus. I am a student and I study English every day.”\n\nResponda em inglês:\na) What is her name?\nb) Where is she from?\nc) Where does she live?\nd) Is she a student?',
-    respostaEsperada: 'Gabarito oficial (respostas em inglês):\na) Her name is Ana. (ou She is Ana.)\nb) She is from Brazil. / She is Brazilian.\nc) She lives in Manaus.\nd) Yes, she is.',
+    id: 20,
+    titulo: 'Questão 20 — Apresentação Pessoal Completa',
+    enunciado: 'Escreva uma apresentação pessoal curta em inglês contendo:\n• seu nome;\n• sua idade;\n• de onde você é;\n• sua profissão ou condição de estudante.',
+    respostaEsperada: 'Gabarito oficial (modelo sugerido):\n\n“Hello! My name is Pedro. I am 25 years old. I am from Manaus, Brazil. I am a public servant / I am a student preparing for the TJAM examination. Nice to meet you!”',
     espelhoCorrecao: [
-      'Item a: "Her name is Ana." ou "Ana."',
-      'Item b: "She is Brazilian." ou "She is from Brazil."',
-      'Item c: "She lives in Manaus." ou "In Manaus."',
-      'Item d: "Yes, she is."'
+      'Apresentação do nome ("My name is..." ou "I am...")',
+      'Indicação correta da idade com o verbo to be ("I am ... years old")',
+      'Indicação da origem com preposição ("I am from...")',
+      'Indicação da ocupação com o artigo "a" ("I am a student" / "I am a public servant")'
     ],
     pontosChave: [
-      'Localização exata das informações explícitas no texto',
-      'Concordância com a 3ª pessoa feminina (her / she)',
-      'Resposta correta com to be (Yes, she is)'
+      'Uso correto de I am... years old (sem utilizar have)',
+      'Emprego do artigo indefinido "a" antes de profissão',
+      'Construção coesa e gramaticalmente correta'
     ]
   }
 ];
 
 export const inglesSummaryPoints: string[] = [
-  '👋 Cumprimentos (Greetings): Hello! (Olá), Hi! (Oi), Good morning (Bom dia), Good afternoon (Boa tarde), Good evening (Boa noite ao chegar), Good night (Boa noite ao sair/dormir).',
-  '⚠️ Good evening vs. Good night: Good evening é saudação de chegada à noite; Good night é estritamente despedida ao sair ou antes de dormir.',
-  '👤 Pronomes Pessoais (Subject Pronouns): I (eu), You (você/vocês), He (ele), She (ela), It (coisas/animais), We (nós), They (eles/elas — plural geral).',
-  '⚡ Verbo TO BE no Presente: I am | You are | He/She/It is | We are | They are. Significa "ser" ou "estar" dependendo do contexto.',
-  '✂️ Formas Contraídas: I\'m, You\'re, He\'s, She\'s, It\'s, We\'re, They\'re. Muito comuns no inglês cotidiano e diálogos.',
-  '🚫 Forma Negativa: Acrescenta-se "not" após o verbo to be. Formas contraídas: isn\'t (is not) e aren\'t (are not). I am not contrai como I\'m not.',
-  '❓ Perguntas & Inversão: Inverte-se a posição do verbo com o sujeito: "She is a student" → "Is she a student?". Respostas curtas: "Yes, she is." / "No, she isn\'t."',
-  '🔍 Palavras Interrogativas (Wh-): What (o quê/qual), Where (onde), Who (quem), When (quando), How (como), Why (por quê).',
-  '⚖️ Vocabulário Essencial Concurso TJAM: student (estudante), teacher (professor), lawyer (advogado), judge (juiz), employee (funcionário), public servant (servidor público), court (tribunal).',
-  '🎯 Interpretação de Textos: Treinar a localização de dados explícitos (nome, nacionalidade, cidade onde mora, ocupação e objetivos) sem traduzir palavra por palavra.'
+  '🔤 Alfabeto Inglês (26 letras): Possui fonética distinta do português. Memorize: A (ei), E (i), I (ai), G (dji), J (djei), H (êitch), R (ar), Y (uai), W (dâbliu).',
+  '👋 Cumprimentos (Greetings): Informais: Hi!, Hello!, Hey! | Formais: Good morning (manhã), Good afternoon (tarde), Good evening (noite ao chegar).',
+  '⚠️ Regra de Ouro: "Good evening" é saudação de chegada à noite; "Good night" é estritamente despedida ao sair ou antes de dormir.',
+  '💬 Perguntando Como Está: "How are you?" ou "How are you doing?" → Respostas: "I\'m fine, thank you", "I\'m good", "I\'m great", "I\'m okay".',
+  '🤝 Apresentação do Nome: "What\'s your name?" → "My name is [Nome]" ou "I\'m [Nome]". Cortesia: "Nice to meet you!" (Prazer em conhecê-lo).',
+  '🎂 Idade com Verbo TO BE: Pergunta-se "How old are you?". Responde-se "I am 25 years old". NUNCA use o verbo have (*I have 25 years*).',
+  '🌎 Origem & Nacionalidade: "Where are you from?" → "I\'m from Brazil" / "I\'m from Manaus". Preposição "from" indica procedência.',
+  '💼 Profissão & Artigo "A": "What do you do?" → "I\'m a public servant" (servidor público), "I\'m a student" (estudante), "I\'m a lawyer" (advogado).',
+  '👋 Despedidas (Goodbyes): Goodbye!, Bye!, See you!, See you later! (Até mais tarde), See you tomorrow! (Até amanhã), Have a nice day! (Tenha um bom dia).',
+  '📱 Desafio Prático TJAM: Gravação de áudio de 30 a 60 segundos com apresentação pessoal e envio ao professor via WhatsApp.'
 ];
+
+export const inglesVideoInfo = {
+  title: 'Inglês — Aula 01: Alfabeto, Cumprimentos e Apresentação',
+  subtitle: 'Nível Intermediário — TJAM Assistente Judiciário',
+  videoUrl: 'https://www.youtube.com/embed/prAINVhqreQ?autoplay=0&rel=0',
+  videoId: 'prAINVhqreQ',
+  duration: '45 min'
+};
