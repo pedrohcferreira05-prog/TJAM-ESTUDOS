@@ -52,7 +52,15 @@ import {
   portuguesAula3TfQuestionsData,
   portuguesAula3DiscursiveQuestionsData,
   portuguesAula3SummaryPoints,
-} from './portuguesLessonData';
+} from './portuguesAula3LessonData';
+
+import {
+  portuguesAula2FlashcardsData,
+  portuguesAula2McQuestionsData,
+  portuguesAula2TfQuestionsData,
+  portuguesAula2DiscursiveQuestionsData,
+  portuguesAula2SummaryPoints,
+} from './portuguesAula2LessonData';
 
 import {
   procCivilFlashcardsData,
@@ -93,6 +101,22 @@ import {
   redacaoDiscursiveQuestionsData,
   redacaoSummaryPoints,
 } from './redacaoLessonData';
+
+import {
+  acessibilidadeFlashcardsData,
+  acessibilidadeMcQuestionsData,
+  acessibilidadeTfQuestionsData,
+  acessibilidadeDiscursiveQuestionsData,
+  acessibilidadeSummaryPoints,
+} from './acessibilidadeLessonData';
+
+import {
+  oratoriaFlashcardsData,
+  oratoriaMcQuestionsData,
+  oratoriaTfQuestionsData,
+  oratoriaDiscursiveQuestionsData,
+  oratoriaSummaryPoints,
+} from './oratoriaLessonData';
 
 export interface LessonCatalogMcQuestion {
   id: number;
@@ -290,17 +314,17 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
     summaryPoints: procCivilAula2SummaryPoints,
   },
 
-  // 9. LÍNGUA PORTUGUESA
+  // 9. LÍNGUA PORTUGUESA — AULA 03
   {
     id: 'portugues',
-    title: 'Língua Portuguesa — Aula 03: Interpretação de Textos e Tipologias',
+    title: 'Língua Portuguesa — Aula 03: Ortografia Oficial',
     disciplineId: 'lingua-portuguesa',
     disciplineName: 'Língua Portuguesa',
-    badge: 'Aula 3',
-    isPriorityToday: false,
-    emoji: '📖',
-    duration: '45 min',
-    summary: 'Interpretação e compreensão textual pela banca FGV, inferências válidas, extrapolação e identificação de tese argumentativa.',
+    badge: '1ª Aula de Hoje (Segunda-feira)',
+    isPriorityToday: true,
+    emoji: '📚',
+    duration: '50 min',
+    summary: 'Ortografia Oficial TJAM: emprego de S, SS, C, Ç, X, CH, G, J (viagem x viajem), homônimos (sessão x seção x cessão), parônimos (ratificar x retificar), hífen e Acordo Ortográfico.',
     mcQuestions: portuguesAula3McQuestionsData,
     tfQuestions: portuguesAula3TfQuestionsData,
     discursiveQuestions: portuguesAula3DiscursiveQuestionsData,
@@ -361,5 +385,43 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
     discursiveQuestions: redacaoDiscursiveQuestionsData,
     flashcards: redacaoFlashcardsData,
     summaryPoints: redacaoSummaryPoints,
+  },
+
+  // 13. ACESSIBILIDADE E LEGISLAÇÃO CORRELATA — AULA 01: LBI
+  {
+    id: 'acessibilidade',
+    title: 'Acessibilidade e Legislação Correlata — Aula 01: Lei Brasileira de Inclusão (Lei 13.146/2015)',
+    disciplineId: 'acessibilidade-inclusao',
+    disciplineName: 'Acessibilidade e Inclusão (LBI)',
+    badge: 'Aula 01',
+    isPriorityToday: true,
+    emoji: '♿',
+    duration: '45 min',
+    videoUrl: 'https://www.youtube.com/live/O_-84rZ5sQk?is=6xLso14nzTC-j8C7',
+    summary: 'Lei nº 13.146/2015 (Estatuto da Pessoa com Deficiência): Modelo biopsicossocial, impedimentos de longo prazo x barreiras, princípios, atendimento prioritário, 6 tipos de barreiras, tecnologia assistiva e condutas do Assistente Judiciário no TJAM.',
+    mcQuestions: acessibilidadeMcQuestionsData,
+    tfQuestions: acessibilidadeTfQuestionsData,
+    discursiveQuestions: acessibilidadeDiscursiveQuestionsData,
+    flashcards: acessibilidadeFlashcardsData,
+    summaryPoints: acessibilidadeSummaryPoints,
+  },
+
+  // 14. ORATÓRIA — AULA 01: COMUNICAÇÃO VERBAL E NÃO VERBAL
+  {
+    id: 'oratoria',
+    title: 'Oratória — Aula 01: Comunicação Verbal e Não Verbal',
+    disciplineId: 'oratoria',
+    disciplineName: 'Oratória e Comunicação Forense',
+    badge: 'Terceira Aula do Dia',
+    isPriorityToday: true,
+    emoji: '🎤',
+    duration: '45 min',
+    videoUrl: 'https://youtu.be/o9cFzsKDTB4?is=sSsRHeGyYjnFHUwE',
+    summary: 'Comunicação verbal (oral e escrita) e não verbal (postura, contato visual, tom vocal), escuta ativa, os 4 tipos de ruídos e atendimento empático no TJAM.',
+    mcQuestions: oratoriaMcQuestionsData,
+    tfQuestions: oratoriaTfQuestionsData,
+    discursiveQuestions: oratoriaDiscursiveQuestionsData,
+    flashcards: oratoriaFlashcardsData,
+    summaryPoints: oratoriaSummaryPoints,
   },
 ];

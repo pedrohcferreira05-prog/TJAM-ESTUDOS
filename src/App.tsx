@@ -302,7 +302,10 @@ export function App() {
         if (parsed.reviewQueue && parsed.reviewQueue.some((r: any) => r.id === 'rev-1')) {
           parsed.reviewQueue = [];
         }
-        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || parsed.weeklyGoals.some((g: any) => g.id === 'g1')) {
+        const hasMondayGoals =
+          Array.isArray(parsed.weeklyGoals) &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-seg-01' || g.id === 'goal-seg-02');
+        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !hasMondayGoals) {
           parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
         if (Array.isArray(parsed.simuladoAttempts)) {
@@ -506,12 +509,25 @@ export function App() {
       }
     }, studentId);
 
+    // Proactively sync Monday goals to Firestore on app startup
+    saveSharedWeeklyGoalsToFirestore(INITIAL_WEEKLY_GOALS).catch(() => {});
+
     const unsubSharedGoals = subscribeToSharedWeeklyGoals(INITIAL_WEEKLY_GOALS, (sharedGoals) => {
       if (sharedGoals && sharedGoals.length > 0) {
-        setUserProgress((prev) => ({
-          ...prev,
-          weeklyGoals: sharedGoals,
-        }));
+        const hasMondayGoals = sharedGoals.some((g) => g.id === 'goal-seg-01' || g.id === 'goal-seg-02');
+        if (hasMondayGoals) {
+          setUserProgress((prev) => ({
+            ...prev,
+            weeklyGoals: sharedGoals,
+          }));
+        } else {
+          // If remote goals were from old classes, immediately update remote Firestore to Monday's goals!
+          saveSharedWeeklyGoalsToFirestore(INITIAL_WEEKLY_GOALS).catch(() => {});
+          setUserProgress((prev) => ({
+            ...prev,
+            weeklyGoals: INITIAL_WEEKLY_GOALS,
+          }));
+        }
       }
     });
 
@@ -754,6 +770,16 @@ export function App() {
       return {
         ...prev,
         weeklyGoals: updatedGoals,
+      };
+    });
+  };
+
+  const handleResetGoalsToToday = () => {
+    setUserProgress((prev) => {
+      saveSharedWeeklyGoalsToFirestore(INITIAL_WEEKLY_GOALS).catch(() => {});
+      return {
+        ...prev,
+        weeklyGoals: INITIAL_WEEKLY_GOALS,
       };
     });
   };
@@ -1342,6 +1368,7 @@ export function App() {
                     isDarkMode={isDarkMode}
                     isDuo={isDuo}
                     onToggleGoal={handleToggleWeeklyGoal}
+                    onResetGoalsToToday={handleResetGoalsToToday}
                     todayLessons={todayLessons}
                   />
                 )}

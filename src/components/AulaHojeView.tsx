@@ -72,12 +72,21 @@ import {
   portuguesAula3TfQuestionsData,
   portuguesAula3DiscursiveQuestionsData,
   portuguesAula3SummaryPoints
-} from '../data/portuguesLessonData';
+} from '../data/portuguesAula3LessonData';
+import {
+  portuguesAula2FlashcardsData,
+  portuguesAula2McQuestionsData,
+  portuguesAula2TfQuestionsData,
+  portuguesAula2DiscursiveQuestionsData,
+  portuguesAula2SummaryPoints
+} from '../data/portuguesAula2LessonData';
 import { LegislacaoTjamContent } from './LegislacaoTjamContent';
 import { GeografiaAmazonasContent } from './GeografiaAmazonasContent';
 import { InglesContent } from './InglesContent';
 import { DireitoAdminContent } from './DireitoAdminContent';
 import { PortuguesContent } from './PortuguesContent';
+import { PortuguesAula2Content } from './PortuguesAula2Content';
+import { PortuguesAula3Content } from './PortuguesAula3Content';
 import {
   procCivilFlashcardsData,
   procCivilAula2McQuestionsData as procCivilMcQuestionsData,
@@ -96,13 +105,13 @@ import {
 } from '../data/processoPenalLessonData';
 import { ProcessoPenalContent } from './ProcessoPenalContent';
 import {
-  direitoConstFlashcardsData,
-  direitoConstMcQuestionsData,
-  direitoConstTfQuestionsData,
-  direitoConstDiscursiveQuestionsData,
-  direitoConstSummaryPoints
-} from '../data/direitoConstitucionalLessonData';
-import { DireitoConstitucionalContent } from './DireitoConstitucionalContent';
+  direitoConstAula2FlashcardsData,
+  direitoConstAula2McQuestionsData,
+  direitoConstAula2TfQuestionsData,
+  direitoConstAula2DiscursiveQuestionsData,
+  direitoConstAula2SummaryPoints
+} from '../data/direitoConstitucionalAula2LessonData';
+import { DireitoConstitucionalAula2Content } from './DireitoConstitucionalAula2Content';
 import {
   informaticaFlashcardsData,
   informaticaMcQuestionsData,
@@ -136,6 +145,22 @@ import {
   redacaoSummaryPoints,
 } from '../data/redacaoLessonData';
 import { RedacaoContent } from './RedacaoContent';
+import {
+  acessibilidadeFlashcardsData,
+  acessibilidadeMcQuestionsData,
+  acessibilidadeTfQuestionsData,
+  acessibilidadeDiscursiveQuestionsData,
+  acessibilidadeSummaryPoints,
+} from '../data/acessibilidadeLessonData';
+import { AcessibilidadeContent } from './AcessibilidadeContent';
+import {
+  oratoriaFlashcardsData,
+  oratoriaMcQuestionsData,
+  oratoriaTfQuestionsData,
+  oratoriaDiscursiveQuestionsData,
+  oratoriaSummaryPoints,
+} from '../data/oratoriaLessonData';
+import { OratoriaContent } from './OratoriaContent';
 import { LessonAttendanceWidget } from './LessonAttendanceWidget';
 import { getTodayLessonsConfig } from '../lib/attendanceService';
 
@@ -199,16 +224,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
   });
 
   // Selected Subject State
-  type SubjectKey = 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura' | 'redacao';
+  type SubjectKey = 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura' | 'redacao' | 'acessibilidade' | 'oratoria';
 
   const [selectedSubject, setSelectedSubjectState] = useState<SubjectKey>(() => {
     try {
       const saved = localStorage.getItem('tjam_selected_subject');
-      if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura', 'redacao'].includes(saved)) {
+      if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura', 'redacao', 'acessibilidade', 'oratoria'].includes(saved)) {
         return saved as any;
       }
     } catch (e) {}
-    return 'direito_admin';
+    return 'oratoria';
   });
 
   const setSelectedSubject = (subject: SubjectKey) => {
@@ -222,7 +247,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     const handleSubjectChange = () => {
       try {
         const saved = localStorage.getItem('tjam_selected_subject');
-        if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura', 'redacao'].includes(saved)) {
+        if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura', 'redacao', 'acessibilidade', 'oratoria'].includes(saved)) {
           setSelectedSubjectState(saved as any);
         }
       } catch (e) {}
@@ -250,6 +275,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     geografia_amazonas: 'geografia-historia-am',
     escrita_leitura: 'lingua-portuguesa',
     redacao: 'lingua-portuguesa',
+    acessibilidade: 'acessibilidade-inclusao',
+    oratoria: 'oratoria',
   };
 
   const currentDisciplineId = subjectToDisciplineId[selectedSubject] || 'direito-constitucional';
@@ -2022,6 +2049,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
   // Active Questions & Flashcards Selection based on selectedSubject
   const flashcardsData = selectedSubject === 'ingles'
     ? inglesFlashcardsData
+    : selectedSubject === 'oratoria'
+    ? oratoriaFlashcardsData
+    : selectedSubject === 'acessibilidade'
+    ? acessibilidadeFlashcardsData
     : selectedSubject === 'redacao'
     ? redacaoFlashcardsData
     : selectedSubject === 'legislacao_tjam'
@@ -2039,7 +2070,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'informatica'
     ? informaticaFlashcardsData
     : selectedSubject === 'direito_const'
-    ? direitoConstFlashcardsData
+    ? direitoConstAula2FlashcardsData
     : selectedSubject === 'escrita_leitura'
     ? escritaLeituraFlashcardsData
     : selectedSubject === 'direito_admin'
@@ -2048,6 +2079,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const activeMcQuestions = selectedSubject === 'ingles'
     ? inglesMcQuestionsData
+    : selectedSubject === 'oratoria'
+    ? oratoriaMcQuestionsData
+    : selectedSubject === 'acessibilidade'
+    ? acessibilidadeMcQuestionsData
     : selectedSubject === 'redacao'
     ? redacaoMcQuestionsData
     : selectedSubject === 'legislacao_tjam'
@@ -2065,7 +2100,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'informatica'
     ? informaticaMcQuestionsData
     : selectedSubject === 'direito_const'
-    ? direitoConstMcQuestionsData
+    ? direitoConstAula2McQuestionsData
     : selectedSubject === 'escrita_leitura'
     ? escritaLeituraMcQuestionsData
     : selectedSubject === 'direito_admin'
@@ -2074,6 +2109,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const activeTfQuestions = selectedSubject === 'ingles'
     ? inglesTfQuestionsData
+    : selectedSubject === 'oratoria'
+    ? oratoriaTfQuestionsData
+    : selectedSubject === 'acessibilidade'
+    ? acessibilidadeTfQuestionsData
     : selectedSubject === 'redacao'
     ? redacaoTfQuestionsData
     : selectedSubject === 'legislacao_tjam'
@@ -2091,7 +2130,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'informatica'
     ? informaticaTfQuestionsData
     : selectedSubject === 'direito_const'
-    ? direitoConstTfQuestionsData
+    ? direitoConstAula2TfQuestionsData
     : selectedSubject === 'escrita_leitura'
     ? escritaLeituraTfQuestionsData
     : selectedSubject === 'direito_admin'
@@ -2100,6 +2139,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const activeDiscursiveQuestions = selectedSubject === 'ingles'
     ? inglesDiscursiveQuestionsData
+    : selectedSubject === 'oratoria'
+    ? oratoriaDiscursiveQuestionsData
+    : selectedSubject === 'acessibilidade'
+    ? acessibilidadeDiscursiveQuestionsData
     : selectedSubject === 'redacao'
     ? redacaoDiscursiveQuestionsData
     : selectedSubject === 'legislacao_tjam'
@@ -2117,7 +2160,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'informatica'
     ? informaticaDiscursiveQuestionsData
     : selectedSubject === 'direito_const'
-    ? direitoConstDiscursiveQuestionsData
+    ? direitoConstAula2DiscursiveQuestionsData
     : selectedSubject === 'escrita_leitura'
     ? escritaLeituraDiscursiveQuestionsData
     : selectedSubject === 'direito_admin'
@@ -2320,10 +2363,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const getSubjectDisplayName = (subj: string) => {
     switch (subj) {
-      case 'portugues': return 'Língua Portuguesa — Compreensão e Interpretação (Aula 01)';
+      case 'portugues': return 'Língua Portuguesa — Aula 03: Ortografia Oficial';
+      case 'direito_const': return 'Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais';
+      case 'oratoria': return 'Oratória — Aula 01: Comunicação Verbal e Não Verbal';
       case 'processo_penal': return 'Processo Penal — Inquérito Policial (Aula 1)';
       case 'processo_civil': return 'Processo Civil — Atos Processuais (Aula 2)';
-      case 'direito_const': return 'Direito Constitucional — Princípios Fundamentais (Aula 01)';
       case 'direito_admin': return 'Direito Administrativo — Organização Administrativa (Aula 01)';
       case 'informatica': return 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações';
       case 'libras': return 'LIBRAS — Introdução e Legislação (Aula 3)';
@@ -2331,6 +2375,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
       case 'ingles': return 'Língua Inglesa — Introdução ao Inglês: Cumprimentos, Pronomes e Verbo TO BE (Aula 01)';
       case 'legislacao_tjam': return 'Legislação do TJAM (Aula 1)';
       case 'escrita_leitura': return 'Laboratório de Escrita e Leitura';
+      case 'redacao': return 'Redação — Aula 01: Estrutura da Redação';
+      case 'acessibilidade': return 'Acessibilidade e Legislação Correlata — Aula 01: Lei Brasileira de Inclusão (LBI)';
       default: return 'Aula Preparatória TJAM 2026';
     }
   };
@@ -2370,11 +2416,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5 shrink-0" /> {
-                  selectedSubject === 'redacao' ? '3ª Aula de Hoje (Terça-feira): Redação'
-                  : selectedSubject === 'direito_const' ? '2ª Aula de Hoje: Direito Constitucional'
-                  : selectedSubject === 'direito_admin' ? '1ª Aula de Hoje (Terça-feira): Direito Administrativo'
-                  : selectedSubject === 'ingles' ? '3ª Aula de Hoje: Língua Inglesa'
-                  : selectedSubject === 'informatica' ? '2ª Aula de Hoje (Terça-feira): Informática e Processo Digital'
+                  selectedSubject === 'portugues' ? '1ª Aula de Hoje (Segunda-feira): Língua Portuguesa (Aula 03)'
+                  : selectedSubject === 'direito_const' ? '2ª Aula de Hoje (Segunda-feira): Direito Constitucional (Aula 02)'
+                  : selectedSubject === 'oratoria' ? '3ª Aula de Hoje (Segunda-feira): Oratória (Aula 01)'
+                  : selectedSubject === 'acessibilidade' ? 'Aula de Hoje: Acessibilidade e Inclusão (LBI)'
+                  : selectedSubject === 'redacao' ? 'Redação Dissertativa TJAM'
+                  : selectedSubject === 'direito_admin' ? 'Aula Complementar: Direito Administrativo'
+                  : selectedSubject === 'ingles' ? 'Língua Inglesa'
+                  : selectedSubject === 'informatica' ? 'Informática e Processo Digital'
                   : selectedSubject === 'processo_penal' ? 'Proc. Penal: Aula 1'
                   : selectedSubject === 'processo_civil' ? 'Proc. Civil: Aula 2'
                   : selectedSubject === 'libras' ? 'LIBRAS: 3ª Aula'
@@ -2387,8 +2436,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200 block">
                 {
-                  selectedSubject === 'redacao' ? '✍️ Redação TJAM • Estrutura da Redação (Introdução, Desenvolvimento, Conclusão, Coesão e Coerência)'
-                  : selectedSubject === 'direito_const' ? '🇧🇷 Direito Constitucional • Princípios Fundamentais da CF/88 (Arts. 1º a 4º)'
+                  selectedSubject === 'portugues' ? '📚 Língua Portuguesa TJAM • Aula 03: Ortografia Oficial • S/SS/C/Ç, G/J, Parônimos, Hífen e Acordo Ortográfico'
+                  : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Direitos e Garantias Fundamentais (Art. 5º da CF/88) • Remédios Constitucionais'
+                  : selectedSubject === 'oratoria' ? '🎤 Oratória TJAM • Aula 01: Comunicação Verbal e Não Verbal • Linguagem Corporal, Tom de Voz e Escuta Ativa'
+                  : selectedSubject === 'acessibilidade' ? '♿ Acessibilidade TJAM • Lei Brasileira de Inclusão (Lei nº 13.146/2015) • Modelo Biopsicossocial e 6 Barreiras'
+                  : selectedSubject === 'redacao' ? '✍️ Redação TJAM • Estrutura da Redação (Introdução, Desenvolvimento, Conclusão, Coesão e Coerência)'
                   : selectedSubject === 'direito_admin' ? '⚖️ Direito Administrativo • Organização Administrativa (Direta, Indireta, Centralização, Descentralização e Desconcentração)'
                   : selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Introdução ao Inglês (Pronomes Pessoais e Verbo TO BE)'
                   : selectedSubject === 'informatica' ? '💻 Informática e Processo Digital • Windows: arquivos, pastas e operações • TJAM'
@@ -2401,8 +2453,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </span>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white">
                 {
-                  selectedSubject === 'redacao' ? 'Redação — Aula 01: Estrutura da Redação'
-                  : selectedSubject === 'direito_const' ? 'Direito Constitucional — Aula 01: Princípios Fundamentais (Arts. 1º a 4º)'
+                  selectedSubject === 'portugues' ? 'Língua Portuguesa — Aula 03: Ortografia Oficial'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais'
+                  : selectedSubject === 'oratoria' ? 'Oratória — Aula 01: Comunicação Verbal e Não Verbal'
+                  : selectedSubject === 'acessibilidade' ? 'Acessibilidade — Aula 01: Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
+                  : selectedSubject === 'redacao' ? 'Redação — Aula 01: Estrutura da Redação'
                   : selectedSubject === 'direito_admin' ? 'Direito Administrativo — Aula 01: Organização Administrativa'
                   : selectedSubject === 'ingles' ? 'Língua Inglesa — Aula 01: Introdução ao Inglês'
                   : selectedSubject === 'informatica' ? 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações'
@@ -2535,13 +2590,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             </span>
           </div>
 
-          <div className={`grid grid-cols-1 sm:grid-cols-2 ${todayLessonsList.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-sky-50/80 border-2 border-amber-300/80 shadow-xs`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${todayLessonsList.length >= 5 ? 'lg:grid-cols-5' : todayLessonsList.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-sky-50/80 border-2 border-amber-300/80 shadow-xs`}>
             {todayLessonsList.map((lesson, idx) => {
               const isSelected = selectedSubject === lesson.subjectKey;
               const isCompleted = !!savedLessonsStore[lesson.subjectKey]?.completed;
               const hasAnswers = !!savedLessonsStore[lesson.subjectKey]?.selectedAnswers && Object.keys(savedLessonsStore[lesson.subjectKey].selectedAnswers).length > 0;
               const emoji = lesson.subjectKey.includes('const') ? '🇧🇷'
                 : lesson.subjectKey.includes('admin') ? '⚖️'
+                : lesson.subjectKey.includes('portugues') ? '📚'
+                : lesson.subjectKey.includes('oratoria') ? '🎤'
+                : lesson.subjectKey.includes('acess') ? '♿'
                 : lesson.subjectKey.includes('redacao') ? '✍️'
                 : lesson.subjectKey.includes('penal') ? '⚖️'
                 : lesson.subjectKey.includes('civil') ? '📚'
@@ -2624,7 +2682,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-semibold text-sky-800 leading-normal">
           <span>
-            {selectedSubject === 'redacao'
+            {selectedSubject === 'acessibilidade'
+              ? 'Acessibilidade e Legislação Correlata'
+              : selectedSubject === 'oratoria'
+              ? 'Oratória e Comunicação Forense'
+              : selectedSubject === 'redacao'
               ? 'Redação e Língua Portuguesa'
               : selectedSubject === 'ingles'
               ? 'Língua Inglesa'
@@ -2648,7 +2710,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
           </span>
           <span className="text-slate-400">•</span>
           <span>
-            {selectedSubject === 'redacao'
+            {selectedSubject === 'acessibilidade'
+              ? 'Lei nº 13.146/2015 — Lei Brasileira de Inclusão da Pessoa com Deficiência (LBI)'
+              : selectedSubject === 'oratoria'
+              ? 'Unidade 1 — Comunicação Verbal e Não Verbal no Poder Judiciário'
+              : selectedSubject === 'redacao'
               ? 'Unidade 1 — Estrutura da Redação: Introdução, Desenvolvimento e Conclusão'
               : selectedSubject === 'ingles'
               ? 'Unidade 1 — Introdução ao Inglês: Pronomes Pessoais e Verbo TO BE'
@@ -2657,7 +2723,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               : selectedSubject === 'legislacao_tjam'
               ? 'Unidade 1 — Nova Organização Judiciária (LC nº 261/2023)'
               : selectedSubject === 'portugues'
-              ? 'Compreensão & Interpretação de Textos'
+              ? 'Unidade 3 — Ortografia Oficial, Emprego de Letras, Hífen e Acordo Ortográfico'
               : selectedSubject === 'libras'
               ? 'Unidade 1 — Fundamentos & Comunicação em LIBRAS'
               : selectedSubject === 'processo_penal'
@@ -2667,12 +2733,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               : selectedSubject === 'informatica'
               ? 'Unidade 1 — Windows: Arquivos, Pastas e Operações'
               : selectedSubject === 'direito_const'
-              ? 'Nacionalidade (Art. 12 da CF/88)'
+              ? 'Unidade 2 — Direitos e Garantias Fundamentais (Art. 5º da CF/88)'
               : 'Unidade 4 — Agentes Públicos'}
           </span>
           <span className="text-slate-400">•</span>
           <span className="text-slate-600">
-            {selectedSubject === 'redacao'
+            {selectedSubject === 'acessibilidade'
+              ? 'Aula 01 — Modelo Biopsicossocial, Barreiras e Atendimento Acessível TJAM'
+              : selectedSubject === 'oratoria'
+              ? '3ª Aula de Hoje — Elementos da Comunicação, Linguagem Corporal e Tom de Voz'
+              : selectedSubject === 'redacao'
               ? '3ª Aula de Hoje (Terça-feira) — Estrutura Dissertativa, Coesão e Coerência'
               : selectedSubject === 'processo_penal'
               ? '1ª Aula de Hoje — Princípios Fundamentais do Processo Penal'
@@ -2685,13 +2755,13 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               : selectedSubject === 'libras'
               ? 'Aula 2 — Prática de Comunicação e Cumprimentos'
               : selectedSubject === 'portugues'
-              ? '1ª Aula de Segunda-feira — Compreensão e Interpretação de Textos'
+              ? '1ª Aula de Hoje (Segunda-feira) — Ortografia Oficial, Emprego de Letras e Hífen'
               : selectedSubject === 'processo_civil'
               ? 'Aula 5 — Atos Processuais'
               : selectedSubject === 'informatica'
               ? '2ª Aula de Hoje (Terça-feira) — Windows, Pastas, Atalhos e Processo Digital'
               : selectedSubject === 'direito_const'
-              ? 'Aula — Nacionalidade (Nato e Naturalizado)'
+              ? '2ª Aula de Hoje (Segunda-feira) — Direitos e Garantias Fundamentais & Remédios Constitucionais'
               : 'Aula 4 — Agentes Públicos (Conceito e Regimes)'}
           </span>
         </div>
@@ -2699,41 +2769,49 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-slate-200">
           <div>
             <span className="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300 mb-2">
-              {selectedSubject === 'redacao'
+              {selectedSubject === 'portugues'
+                ? '⭐ 1ª AULA DE SEGUNDA-FEIRA • 📚 Língua Portuguesa (Aula 03: Ortografia)'
+                : selectedSubject === 'direito_const'
+                ? '⭐ 2ª AULA DE SEGUNDA-FEIRA • ⚖️ Direito Constitucional (Aula 02: Art. 5º CF/88)'
+                : selectedSubject === 'oratoria'
+                ? '⭐ 3ª AULA DE SEGUNDA-FEIRA • 🎤 Oratória TJAM (Aula 01)'
+                : selectedSubject === 'acessibilidade'
+                ? '⭐ AULA DE HOJE • ♿ Acessibilidade e Inclusão'
+                : selectedSubject === 'redacao'
                 ? '⭐ 3ª AULA DE HOJE • ✍️ Redação TJAM'
                 : selectedSubject === 'processo_penal'
                 ? '⭐ 1ª AULA DE HOJE • ⚖️ Processo Penal'
                 : selectedSubject === 'legislacao_tjam'
                 ? '⭐ 2ª AULA DE HOJE • 🏛️ Legislação do TJAM'
-                : selectedSubject === 'direito_const'
-                ? '🇧🇷 Direito Constitucional'
                 : selectedSubject === 'direito_admin'
                 ? '⚖️ Direito Administrativo'
                 : selectedSubject === 'ingles'
                 ? '🇬🇧 3ª AULA DE HOJE • Língua Inglesa'
                 : selectedSubject === 'informatica'
                 ? '⭐ 2ª AULA DE HOJE • 💻 Informática e Processo Digital'
-                : selectedSubject === 'portugues'
-                ? '⭐ 1ª AULA DE SEGUNDA-FEIRA • 📖 Língua Portuguesa'
                 : '📚 TJAM 2026'}
             </span>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-950 leading-tight">
-              {selectedSubject === 'redacao'
+              {selectedSubject === 'portugues'
+                ? '📚 Língua Portuguesa — Aula 03: Ortografia Oficial (Nível Intermediário — TJAM)'
+                : selectedSubject === 'direito_const'
+                ? '⚖️ Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88)'
+                : selectedSubject === 'oratoria'
+                ? '🎤 Oratória — Aula 01: Comunicação Verbal e Não Verbal (Nível Intermediário — TJAM)'
+                : selectedSubject === 'acessibilidade'
+                ? '♿ Acessibilidade e Legislação Correlata — Aula 01: Lei Brasileira de Inclusão (LBI)'
+                : selectedSubject === 'redacao'
                 ? '✍️ Redação — Aula 01: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)'
                 : selectedSubject === 'processo_penal'
                 ? '⚖️ Processo Penal — 1ª Aula de Hoje: Princípios Fundamentais do Processo Penal'
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação Institucional do TJAM — 2ª Aula de Hoje: Organização Judiciária do Estado do Amazonas (LC nº 261/2023)'
-                : selectedSubject === 'direito_const'
-                ? '🇧🇷 Direito Constitucional — Nacionalidade: Nato, Naturalizado e Cargos (Art. 12 da CF/88)'
                 : selectedSubject === 'direito_admin'
                 ? '⚖️ Direito Administrativo — Aula 01: Organização Administrativa'
                 : selectedSubject === 'ingles'
                 ? '🇬🇧 Língua Inglesa — Aula 01: Introdução ao Inglês (Pronomes Pessoais e Verbo TO BE)'
                 : selectedSubject === 'informatica'
                 ? '💻 Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações'
-                : selectedSubject === 'portugues'
-                ? '📚 Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos (Nível Intermediário — TJAM)'
                 : 'Aula TJAM 2026'}
             </h1>
           </div>
@@ -2857,7 +2935,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <Video className="w-3.5 h-3.5" /> Vídeo Aula Exclusiva
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                  {selectedSubject === 'redacao'
+                  {selectedSubject === 'acessibilidade'
+                    ? '♿ Acessibilidade e Inclusão — Aula 01: Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
+                    : selectedSubject === 'redacao'
                     ? '✍️ Redação — 3ª Aula de Hoje: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)'
                     : selectedSubject === 'ingles'
                     ? '🇬🇧 Língua Inglesa — 3ª Aula de Hoje: Introdução, Pronomes Pessoais e Verbo TO BE'
@@ -2884,7 +2964,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : 'Aula 7 — Direito Administrativo: Poderes da Administração Pública'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {selectedSubject === 'redacao'
+                  {selectedSubject === 'acessibilidade'
+                    ? 'Aula 01 • Lei nº 13.146/2015 (Estatuto da Pessoa com Deficiência), Modelo Biopsicossocial, 6 Tipos de Barreiras, Atendimento Prioritário e Prática Judiciária no TJAM'
+                    : selectedSubject === 'redacao'
                     ? '3ª Aula de Hoje (Terça-feira) • Estrutura Dissertativa, Introdução, Tese, Desenvolvimento (D1 e D2), Conclusão, Coesão, Coerência e Projeto de Texto'
                     : selectedSubject === 'processo_civil'
                     ? '2ª Aula de Hoje • Atos Processuais (Conceito, Forma, Tempo, Citação x Intimação, Prazos e Preclusão)'
@@ -3008,6 +3090,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 src={
                   activeCustomVideo
                     ? formatEmbedUrl(activeCustomVideo.videoUrl)
+                    : selectedSubject === 'acessibilidade'
+                    ? 'https://www.youtube.com/embed/O_-84rZ5sQk?autoplay=0&rel=0'
+                    : selectedSubject === 'oratoria'
+                    ? 'https://www.youtube.com/embed/o9cFzsKDTB4?autoplay=0&rel=0'
+                    : selectedSubject === 'redacao'
+                    ? 'https://www.youtube.com/embed/_0VjL4aVrJo?autoplay=0&rel=0'
                     : selectedSubject === 'ingles'
                     ? selectedVideoPart === 'video2'
                       ? 'https://www.youtube.com/embed/FNmuogi6Nt0?autoplay=0&rel=0'
@@ -3019,7 +3107,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'legislacao_tjam'
                     ? 'https://www.youtube.com/embed/UnVOYgccCP0?autoplay=0&rel=0'
                     : selectedSubject === 'portugues'
-                    ? 'https://www.youtube.com/embed/ptbiYTNF_i4?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/IMEVLUzWnNs?autoplay=0&rel=0'
                     : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/j6Ugm67dx8s?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
@@ -3029,13 +3117,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/muheWXjnHvA?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
-                    ? 'https://www.youtube.com/embed/Z2vrJZSz-qc?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/jLYXwMY9lQQ?autoplay=0&rel=0'
                     : selectedSubject === 'direito_admin'
                     ? 'https://www.youtube.com/embed/YsrcBEUgoGY?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
                 }
                 title={
-                  selectedSubject === 'ingles'
+                  selectedSubject === 'acessibilidade'
+                    ? 'Vídeo Aula - Acessibilidade e Inclusão: Aula 01 — Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
+                    : selectedSubject === 'oratoria'
+                    ? 'Vídeo Aula - Oratória e Comunicação Forense: Aula 01 — Comunicação Verbal e Não Verbal (TJAM)'
+                    : selectedSubject === 'redacao'
+                    ? 'Vídeo Aula - Redação TJAM: 3ª Aula de Hoje — Estrutura da Redação (Introdução, Desenvolvimento, Conclusão)'
+                    : selectedSubject === 'ingles'
                     ? `Vídeo Aula - Língua Inglesa: 3ª Aula de Hoje — ${
                         selectedVideoPart === 'video2'
                           ? 'Vídeo Aula 2 (Verbo TO BE, Formas Contraídas, Negativas e Interrogativas)'
@@ -3048,7 +3142,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'legislacao_tjam'
                     ? 'Vídeo Aula - Legislação Institucional do TJAM: 2ª Aula de Hoje — Organização Judiciária do Estado do Amazonas (LC nº 261/2023)'
                     : selectedSubject === 'portugues'
-                    ? 'Vídeo Aula - Língua Portuguesa: Aula 01 — Compreensão e Interpretação de Textos (TJAM 2026)'
+                    ? 'Vídeo Aula - Língua Portuguesa: Aula 03 — Ortografia Oficial (TJAM 2026)'
                     : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: 3ª Aula de Hoje — Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_penal'
@@ -3058,7 +3152,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Informática e Processo Digital: 2ª Aula de Hoje — Windows: arquivos, pastas e operações (Aula 01)'
                     : selectedSubject === 'direito_const'
-                    ? 'Vídeo Aula - Direito Constitucional: 2ª Aula de Hoje — Princípios Fundamentais da CF/88 (Arts. 1º a 4º)'
+                    ? 'Vídeo Aula - Direito Constitucional: 2ª Aula de Hoje — Direitos e Garantias Fundamentais & Remédios Constitucionais (Art. 5º da CF/88)'
                     : selectedSubject === 'direito_admin'
                     ? 'Vídeo Aula - Direito Administrativo: 1ª Aula de Hoje — Organização Administrativa (Aula 01)'
                     : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
@@ -3134,7 +3228,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             <div className="flex justify-end">
               <a
                 href={
-                  selectedSubject === 'ingles'
+                  selectedSubject === 'acessibilidade'
+                    ? 'https://www.youtube.com/live/O_-84rZ5sQk?is=6xLso14nzTC-j8C7'
+                    : selectedSubject === 'redacao'
+                    ? 'https://youtu.be/_0VjL4aVrJo?is=uxQODnxxBek_su0n'
+                    : selectedSubject === 'ingles'
                     ? selectedVideoPart === 'video2'
                       ? 'https://youtu.be/FNmuogi6Nt0?is=rRyYo63_zlP8l96q'
                       : 'https://youtu.be/bSeZlT7Og8I?is=u45hQhMtCHO13dfY'
@@ -3145,7 +3243,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'legislacao_tjam'
                     ? 'https://youtu.be/UnVOYgccCP0'
                     : selectedSubject === 'portugues'
-                    ? 'https://youtu.be/ptbiYTNF_i4?is=9glRz1XeWpvLLHT6'
+                    ? 'https://youtu.be/Yj0cJ3D9WUg?is=ciraZvHs4DbtVOBL'
                     : selectedSubject === 'libras'
                     ? 'https://youtu.be/j6Ugm67dx8s?is=_LtHw0g9ekgfU7gN'
                     : selectedSubject === 'processo_penal'
@@ -3271,28 +3369,51 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 ) : selectedSubject === 'portugues' ? (
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Compreensão textual (Intelecção): Identificar fatos e ideias explicitamente declarados no texto.</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span><strong>Regras de S, SS, C, Ç, X e CH:</strong> O Ç somente antes de A, O, U (nunca antes de E ou I); SS entre vogais para som /s/ (processo, necessário, assessoria).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span><strong>G versus J:</strong> "Viagem" com G é substantivo; "Viajem" com J é verbo ("Espero que eles viajem").</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span><strong>Homônimos do Judiciário:</strong> Sessão (reunião/tempo), Seção (divisão/repartição) e Cessão (ato de ceder/transferir).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span><strong>Parônimos Frequentes:</strong> Ratificar (confirmar/validar) × Retificar (corrigir/emendar); Eminente (ilustre) × Iminente (prestes a ocorrer).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span><strong>Hífen & Acordo Ortográfico:</strong> Fim do trema (linguiça); sem acento em ditongos abertos de paroxítonas (ideia, assembleia); vogais iguais têm hífen (micro-ondas), diferentes juntam (autoescola).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Interpretação textual (Inferência): Deduções e conclusões lógicas apoiadas nas pistas deixadas pelo autor.</span>
+                      <span><strong>Pegadinhas de Concurso:</strong> Exceção (com XC e Ç), privilégio (com I inicial), assessoria (com SS e SS) e necessário (com C e SS).</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'oratoria' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>🗣️ <strong>Comunicação Verbal (Oral e Escrita):</strong> Uso de palavras e signos linguísticos com clareza, concisão e adequação ao cidadão.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Diferença crucial para provas TJAM: Comandos de compreensão (&quot;o texto diz que&quot;) vs. interpretação (&quot;conclui-se que&quot;).</span>
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>👁️ <strong>Comunicação Não Verbal:</strong> Contato visual, expressão facial serena, postura aberta e controle do ritmo e tom da voz.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Pressupostos vs. Subentendidos: Marcas linguísticas expressas versus pistas contextuais dedutíveis.</span>
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>⚖️ <strong>Alinhamento & Credibilidade:</strong> A coerência entre fala e corpo é crucial; na dúvida, o ouvinte prioriza os sinais não verbais.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Os 3 erros fatais de leitura: Extrapolação, Redução e Contradição com o texto-base.</span>
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>👂 <strong>Escuta Ativa Forense:</strong> Ouvir atentamente sem interrupções precipitadas e checar a compreensão do jurisdicionado.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Bateria completa de 20 questões gabaritadas (10 Objetivas + 5 V/F + 5 Dissertativas).</span>
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>🚫 <strong>Neutralização de Ruídos:</strong> Superar barreiras físicas, técnicas e o excesso de juridiquês inacessível no atendimento ao público.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'libras' ? (
@@ -3403,23 +3524,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🇧🇷 <strong>Artigo 12 da CF/88:</strong> Vínculo jurídico-político que define quem são os brasileiros natos e naturalizados.</span>
+                      <span>⚖️ <strong>Art. 5º, Caput (Mnemônico V-L-I-S-P):</strong> Inviolabilidade do direito à Vida, Liberdade, Igualdade, Segurança e Propriedade.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>👶 <strong>Brasileiro Nato:</strong> Nascidos no Brasil (jus soli temperado), no exterior a serviço da RFB ou registro consular / opção após 18 anos.</span>
+                      <span>🏠 <strong>Inviolabilidade Domiciliar (Inciso XI):</strong> Flagrante delito, desastre e socorro a qualquer hora; determinação judicial SOMENTE DURANTE O DIA.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
-                      <span>🌎 <strong>Naturalização:</strong> Países de língua portuguesa (1 ano + idoneidade); Demais estrangeiros (15+ anos + sem condenação penal + requerimento).</span>
+                      <span>🕊️ <strong>Liberdades Individuais:</strong> Manifestação do pensamento livre com vedação ao anonimato (inc. IV); reunião pacífica com prévio aviso sem autorização (inc. XVI).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                      <span>🎖️ <strong>Mnemônico P-V-C-S-M-D-O-D:</strong> 8 cargos privativos de nato (Pres., Vice, Pres. Câmara, Pres. Senado, Min. STF, Diplomata, Oficial Forças Armadas, Min. Defesa).</span>
+                      <span>🛡️ <strong>Remédios Constitucionais:</strong> Habeas Corpus (locomoção - gratuito), Habeas Data (dados pessoais - gratuito), Mandado de Segurança (direito líquido e certo), Mandado de Injunção e Ação Popular.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                      <span>⚡ <strong>Regra Atual (EC 131/2023):</strong> Adquirir outra nacionalidade NÃO acarreta mais a perda automática da nacionalidade brasileira!</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span>🏛️ <strong>Aplicação no TJAM:</strong> Isonomia e urbanidade no atendimento do balcão cartorário, respeito à ampla defesa e preservação de autos sob segredo de justiça.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'direito_admin' ? (
@@ -3447,6 +3568,52 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                       <span>⚠️ <strong>Órgão Público × Entidade:</strong> Órgão NÃO tem personalidade jurídica própria; Entidade POSSUI personalidade jurídica própria.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'redacao' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>✍️ <strong>Estrutura Tripartite:</strong> Introdução (apresentar), Desenvolvimento (sustentar com argumentos) e Conclusão (encerrar com síntese).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🎯 <strong>Introdução Eficaz:</strong> Contextualização do tema, apresentação do recorte temático e tese clara.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>💡 <strong>Desenvolvimento Sólido:</strong> Fórmula da argumentação: Tópico frasal + Explicação do porquê + Consequência/Exemplo.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>🔗 <strong>Coesão e Coerência:</strong> Coesão = amarras gramaticais e conectivos adequados; Coerência = lógica sem contradições.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>⚠️ <strong>Assunto x Tema x Fuga:</strong> O tema é o recorte delimitado pela banca; fuga ao tema zera ou penaliza gravemente a prova dissertativa.</span>
+                    </li>
+                  </ul>
+                ) : selectedSubject === 'acessibilidade' ? (
+                  <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                      <span>♿ <strong>Marco Legal LBI (Lei 13.146/2015):</strong> Paradigma dos Direitos Humanos, autonomia, cidadania e inclusão plena da pessoa com deficiência.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                      <span>🧩 <strong>Conceito Legal:</strong> Impedimento de longo prazo (físico, mental, intelectual ou sensorial) + Interação com barreiras.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                      <span>🧬 <strong>Avaliação Biopsicossocial:</strong> Abordagem multiprofissional (corpo, ambiente, limitações e restrições de participação social).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                      <span>🚫 <strong>Os 6 Tipos de Barreiras:</strong> Urbanísticas, Arquitetônicas, nos Transportes, Comunicacionais, Atitudinais e Tecnológicas.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                      <span>🏛️ <strong>Deveres do Servidor TJAM:</strong> Atendimento prioritário, comunicação acessível, respeito à autonomia e vedação à discriminação.</span>
                     </li>
                   </ul>
                 ) : (
@@ -3548,17 +3715,18 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'direito_const' ? (
-          <DireitoConstitucionalContent
+          <DireitoConstitucionalAula2Content
             isDarkMode={isDarkMode}
             isLessonCompleted={isLessonCompleted}
             onToggleCompleted={handleMarkAsCompleted}
             onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'portugues' ? (
-          <PortuguesContent
+          <PortuguesAula3Content
             isDarkMode={isDarkMode}
             isLessonCompleted={isLessonCompleted}
             onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'libras' ? (
           <LibrasContent
@@ -3594,6 +3762,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
           />
         ) : selectedSubject === 'escrita_leitura' ? (
           <EscritaLeituraContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
+        ) : selectedSubject === 'redacao' ? (
+          <RedacaoContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
+        ) : selectedSubject === 'acessibilidade' ? (
+          <AcessibilidadeContent
+            isDarkMode={isDarkMode}
+            isLessonCompleted={isLessonCompleted}
+            onToggleCompleted={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
+          />
+        ) : selectedSubject === 'oratoria' ? (
+          <OratoriaContent
             isDarkMode={isDarkMode}
             isLessonCompleted={isLessonCompleted}
             onToggleCompleted={handleMarkAsCompleted}
@@ -4000,16 +4189,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 Esquema Visual de Fixação
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'ingles'
+                {selectedSubject === 'acessibilidade'
+                  ? 'Mapa Mental — Acessibilidade: Lei Brasileira de Inclusão (LBI - Lei 13.146/2015)'
+                  : selectedSubject === 'redacao'
+                  ? 'Mapa Mental — Redação: Estrutura Tripartite, Introdução, Desenvolvimento e Conclusão'
+                  : selectedSubject === 'ingles'
                   ? 'Mapa Mental — Língua Inglesa: Greetings, Pronouns & Verb TO BE'
                   : selectedSubject === 'portugues'
-                  ? 'Mapa Mental — Língua Portuguesa: Compreensão vs. Interpretação de Textos'
+                  ? 'Mapa Mental — Língua Portuguesa: Tipos e Gêneros Textuais (Aula 02)'
                   : selectedSubject === 'libras'
                   ? 'Mapa Mental — Aula 1: Conceitos Básicos de LIBRAS e Legislação'
                   : selectedSubject === 'informatica'
                   ? 'Mapa Mental — Informática: Windows, Arquivos, Pastas e Atalhos'
                   : selectedSubject === 'direito_const'
-                  ? 'Mapa Mental — Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
+                  ? 'Mapa Mental — Direito Constitucional: Direitos e Garantias Fundamentais (Art. 5º da CF/88)'
                   : selectedSubject === 'processo_penal'
                   ? 'Mapa Mental — Aula 1: Princípios Fundamentais do Processo Penal'
                   : selectedSubject === 'processo_civil'
@@ -4017,16 +4210,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Administração Pública'}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {selectedSubject === 'ingles'
+                {selectedSubject === 'acessibilidade'
+                  ? 'Esquema visual sobre a Lei nº 13.146/2015 (LBI), modelo biopsicossocial, impedimentos x barreiras, 6 tipos de barreiras, tecnologia assistiva e deveres do servidor judiciário'
+                  : selectedSubject === 'redacao'
+                  ? 'Esquema visual sobre projeto de texto, contextualização, tese, parágrafo-padrão argumentativo (ideia central + explicação + exemplo), conectivos de coesão e coerência textual'
+                  : selectedSubject === 'ingles'
                   ? 'Esquema visual sobre Greetings (Good morning vs. Good night), Pronomes Pessoais (I, You, He, She, It, We, They), Verbo TO BE (am/is/are), Formas Negativas e Wh- Words'
                   : selectedSubject === 'portugues'
-                  ? 'Esquema visual sobre Intelecção Literal, Inferência Lógica, Pressupostos, Subentendidos e os 3 Erros Fatais (FGV/Cebraspe)'
+                  ? 'Esquema visual sobre os 5 Tipos Textuais (Narração, Descrição, Exposição, Argumentação, Injunção) versus Gêneros Forenses TJAM (Edital, Ofício, Ata, Notícia)'
                   : selectedSubject === 'libras'
                   ? 'Esquema visual sobre LIBRAS, Parâmetros dos Sinais, Datilologia, Lei 10.436/2002 e Decreto 5.626/2005'
                   : selectedSubject === 'informatica'
                   ? 'Esquema visual sobre Windows, Estrutura de Pastas, Copiar x Mover, Atalhos (Ctrl+C, Ctrl+X, F2), Lixeira e Processo Digital (Lei 11.419/2006)'
                   : selectedSubject === 'direito_const'
-                  ? 'Esquema visual sobre Fundamentos (SO-CI-DI-VA-PLU), Separação dos Poderes (Art. 2º), Objetivos Fundamentais (CON-GA-ER-PRO) e Relações Internacionais (Art. 4º)'
+                  ? 'Esquema visual sobre Art. 5º (Vida, Liberdade, Igualdade, Segurança, Propriedade), Inviolabilidade Domiciliar, Manifestação sem Anonimato e Remédios Constitucionais (HC, HD, MS, MI, AP)'
                   : selectedSubject === 'processo_penal'
                   ? 'Esquema visual sobre Princípios Fundamentais do Processo Penal, devido processo legal, ampla defesa, juiz natural e sistema acusatório'
                   : selectedSubject === 'processo_civil'
@@ -4073,10 +4270,16 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             {/* Palavras-Chave & Download Controls */}
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap justify-center gap-2">
-                {(selectedSubject === 'ingles'
+                {(selectedSubject === 'acessibilidade'
+                  ? ['Acessibilidade', 'LBI', 'Lei 13.146/2015', 'Modelo Biopsicossocial', '6 Barreiras', 'Tecnologia Assistiva', 'Atendimento Prioritário', 'TJAM']
+                  : selectedSubject === 'redacao'
+                  ? ['Redação TJAM', 'Estrutura Tripartite', 'Introdução', 'Tese', 'Desenvolvimento', 'Conclusão', 'Coesão', 'Coerência', 'Conectivos']
+                  : selectedSubject === 'ingles'
                   ? ['Língua Inglesa', 'Greetings', 'Personal Pronouns', 'Verb TO BE', 'am / is / are', 'Negative Forms', 'Wh- Words', 'TJAM 2026']
                   : selectedSubject === 'portugues'
-                  ? ['Língua Portuguesa', 'Conjunções', 'Coordenativas', 'Subordinativas', 'Adversativas', 'Concessivas', 'FGV TJAM']
+                  ? ['Língua Portuguesa', 'Ortografia', 'S e SS', 'C e Ç', 'G e J', 'viagem x viajem', 'sessão x seção x cessão', 'ratificar x retificar', 'Hífen', 'Acordo Ortográfico', 'TJAM']
+                  : selectedSubject === 'oratoria'
+                  ? ['Oratória TJAM', 'Comunicação Verbal', 'Comunicação Não Verbal', 'Linguagem Corporal', 'Tom de Voz', 'Escuta Ativa', 'Ruídos', 'Atendimento Humanizado']
                   : selectedSubject === 'libras'
                   ? ['LIBRAS', 'Lei 10.436/2002', 'Decreto 5.626/2005', 'Datilologia', 'Parâmetros dos Sinais', 'Acessibilidade', 'TJAM']
                   : selectedSubject === 'informatica'
@@ -4695,16 +4898,22 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 Síntese Rápida
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                {selectedSubject === 'ingles'
+                {selectedSubject === 'acessibilidade'
+                  ? 'Resumo — Acessibilidade: Lei Brasileira de Inclusão (LBI - Lei 13.146/2015)'
+                  : selectedSubject === 'redacao'
+                  ? 'Resumo — Redação: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)'
+                  : selectedSubject === 'ingles'
                   ? 'Resumo — Língua Inglesa: Apresentação e Comunicação Básica (Aula 3)'
                   : selectedSubject === 'geografia_amazonas'
                   ? 'Resumo — Geografia do Amazonas: Aspectos Humanos e Econômicos (2ª Aula de Hoje)'
                   : selectedSubject === 'legislacao_tjam'
                   ? 'Resumo — Legislação do TJAM: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
                   : selectedSubject === 'portugues'
-                  ? 'Resumo — Língua Portuguesa: Compreensão e Interpretação de Textos (Aula 01)'
+                  ? 'Resumo — Língua Portuguesa: Ortografia Oficial (Aula 03)'
                   : selectedSubject === 'direito_const'
-                  ? 'Resumo — Direito Constitucional: Princípios Fundamentais (Arts. 1º a 4º da CF/88)'
+                  ? 'Resumo — Direito Constitucional: Direitos e Garantias Fundamentais (Art. 5º da CF/88 — Aula 02)'
+                  : selectedSubject === 'oratoria'
+                  ? 'Resumo — Oratória: Comunicação Verbal e Não Verbal (Aula 01)'
                   : selectedSubject === 'libras'
                   ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_civil'
@@ -4794,7 +5003,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   const desc = parts.slice(1).join(': ');
                   return (
                     <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                      <span className="text-amber-500 font-bold text-base">•</span>
+                      <span className="text-indigo-500 font-bold text-base">•</span>
                       <span><strong>{title}:</strong> {desc}</span>
                     </li>
                   );
@@ -4802,7 +5011,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </ul>
             ) : selectedSubject === 'direito_const' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                {direitoConstSummaryPoints.map((pt, idx) => {
+                {direitoConstAula2SummaryPoints.map((pt, idx) => {
                   const parts = pt.split(': ');
                   const title = parts[0];
                   const desc = parts.slice(1).join(': ');
@@ -4883,6 +5092,48 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   );
                 })}
               </ul>
+            ) : selectedSubject === 'redacao' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {redacaoSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : selectedSubject === 'acessibilidade' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {acessibilidadeSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-teal-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : selectedSubject === 'oratoria' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {oratoriaSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-violet-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             ) : (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
@@ -4915,6 +5166,43 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 </li>
               </ul>
             )}
+
+            {/* Metas de Aulas de Hoje (Segunda-feira) */}
+            <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🎯</span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-amber-950 dark:text-amber-200">
+                    Metas de Aulas de Hoje (Segunda-feira)
+                  </h3>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200/80 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
+                  3 Aulas Liberadas
+                </span>
+              </div>
+              <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-500 font-bold">✓</span>
+                  <span><strong>1ª Aula:</strong> Língua Portuguesa — Aula 03: Ortografia Oficial (S/SS/C/Ç, G/J, Parônimos)</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-500 font-bold">✓</span>
+                  <span><strong>2ª Aula:</strong> Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88)</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-500 font-bold">✓</span>
+                  <span><strong>3ª Aula:</strong> Oratória — Aula 01: Comunicação Verbal e Não Verbal no Poder Judiciário</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-500 font-bold">✓</span>
+                  <span><strong>Exercícios:</strong> 60 Questões Gabaritadas (30 Objetivas + 15 Cebraspe C/E + 15 Dissertativas)</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-indigo-500 font-bold">✓</span>
+                  <span><strong>Prática Forense:</strong> Minuta, Análise Constitucional e Simulação com envio via WhatsApp</span>
+                </li>
+              </ul>
+            </div>
 
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-center">
               <button

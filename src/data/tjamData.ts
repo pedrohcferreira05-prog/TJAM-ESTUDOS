@@ -406,12 +406,13 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-seg',
     dayOfWeek: 'Segunda',
-    disciplineIds: ['lingua-portuguesa', 'processo-penal', 'processo-civil'],
+    disciplineIds: ['lingua-portuguesa', 'direito-constitucional', 'oratoria'],
     tasks: [
-      '1ª Aula: Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos (Nível Intermediário TJAM)',
-      '20 Questões Gabaritadas (10 Objetivas + 5 V/F + 5 Dissertativas) de Interpretação',
-      'Assistir à Videoaula Oficial com Prof. Nelson Sartori (YouTube)',
-      'Fixação das 3 Armadilhas FGV/Cebraspe: Extrapolação, Redução e Contradição',
+      '1ª Aula: Língua Portuguesa — Aula 03: Ortografia Oficial (S/SS/C/Ç, G/J, Homônimos, Parônimos e Acordo Ortográfico)',
+      '2ª Aula: Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88 e Remédios Constitucionais)',
+      '3ª Aula: Oratória e Comunicação Forense — Aula 01: Comunicação Verbal e Não Verbal no TJAM',
+      '60 Questões Gabaritadas (20 por aula: Múltipla Escolha + Certo/Errado + Dissertativas com Espelho)',
+      'Atividades Práticas Forenses com Envio ao Professor via WhatsApp',
     ],
     completed: false,
   },
@@ -465,9 +466,10 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
 ];
 
 export const INITIAL_WEEKLY_GOALS = [
-  { id: 'goal-pt-01', text: '📚 Estudar Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos (Nível Intermediário TJAM)', completed: false },
-  { id: 'goal-pt-02', text: '🎬 Assistir à Videoaula de Interpretação de Textos (Prof. Nelson Sartori / TJAM 2026)', completed: false },
-  { id: 'goal-pt-03', text: '📝 Resolver as 20 Questões Gabaritadas (10 Objetivas + 5 Verdadeiro/Falso + 5 Dissertativas)', completed: false },
-  { id: 'goal-pt-04', text: '🎯 Fixar os 3 Erros da Banca FGV/Cebraspe: Extrapolação, Redução e Contradição', completed: false },
-  { id: 'goal-pt-05', text: '⚖️ Revisar os Conceitos de Pressupostos e Subentendidos Textuais', completed: false },
+  { id: 'goal-seg-01', text: '📚 1ª Aula: Língua Portuguesa — Aula 03: Ortografia Oficial (S, SS, C, Ç, X, CH, G, J, Homônimos e Parônimos)', completed: false },
+  { id: 'goal-seg-02', text: '⚖️ 2ª Aula: Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88 e Remédios Constitucionais)', completed: false },
+  { id: 'goal-seg-03', text: '🎤 3ª Aula: Oratória — Aula 01: Comunicação Verbal e Não Verbal no Poder Judiciário (Escuta Ativa e Ruídos)', completed: false },
+  { id: 'goal-seg-04', text: '📝 Resolver os 60 Exercícios Gabaritados de Hoje (30 Múltipla Escolha + 15 Cebraspe C/E + 15 Dissertativas)', completed: false },
+  { id: 'goal-seg-05', text: '🎯 Dominar as Pegadinhas Críticas: Mandado Judicial diurno × Flagrante noturno, Vedação ao Anonimato e Distinção Direito × Garantia', completed: false },
+  { id: 'goal-seg-06', text: '💬 Executar as 3 Atividades Práticas Forenses (Correção de Minuta, Análise de Direitos e Simulação de Atendimento) com Envio via WhatsApp', completed: false },
 ];

@@ -8,18 +8,60 @@ import {
 
 export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
   {
-    id: 'direito_admin',
-    subjectKey: 'direito_admin',
-    title: 'Direito Administrativo — Aula 01',
-    subtitle: 'Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração • TJAM',
-    category: 'Conhecimentos Específicos TJAM',
-    badge: '1ª Aula de Hoje (Terça-feira)',
+    id: 'portugues',
+    subjectKey: 'portugues',
+    title: 'Língua Portuguesa — Aula 03',
+    subtitle: 'Ortografia Oficial: S, SS, C, Ç, X, CH, G, J, Homônimos, Parônimos, Hífen e Acordo Ortográfico • TJAM',
+    category: 'Conhecimentos Básicos TJAM',
+    badge: '1ª Aula de Hoje (Segunda-feira)',
     duration: '50 min',
     order: 1,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 1ª aula de hoje (Terça-feira), abordamos Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração com 20 questões e situação prática para envio.',
+    teacherNotes: 'Nesta 1ª aula de hoje (Segunda-feira), dominamos Ortografia Oficial para o TJAM: S/SS/C/Ç, G/J (viagem x viajem), ratificar x retificar, sessão x seção x cessão, hífen e Acordo Ortográfico com 20 questões gabaritadas e atividade prática.',
+  },
+  {
+    id: 'direito_const',
+    subjectKey: 'direito_const',
+    title: 'Direito Constitucional — Aula 02',
+    subtitle: 'Direitos e Garantias Fundamentais: Art. 5º da CF/88, Remédios Constitucionais e Aplicação Forense TJAM',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '2ª Aula de Hoje (Segunda-feira)',
+    duration: '50 min',
+    order: 2,
+    questionsCount: 20,
+    cardsCount: 10,
+    isMandatoryAttendance: true,
+    teacherNotes: 'Nesta 2ª aula de hoje (Segunda-feira), estudamos os Direitos e Garantias Fundamentais com foco no Art. 5º da CF/88 (Vida, Liberdade, Igualdade, Segurança e Propriedade), inviolabilidade domiciliar, remédios constitucionais e postura no TJAM com 20 questões gabaritadas e atividade prática.',
+  },
+  {
+    id: 'oratoria',
+    subjectKey: 'oratoria',
+    title: 'Oratória — Aula 01',
+    subtitle: 'Comunicação Verbal e Não Verbal: Elementos da Comunicação, Escuta Ativa, Tom de Voz, Ruídos e Atendimento no TJAM',
+    category: 'Oratória e Atendimento Forense TJAM',
+    badge: '3ª Aula de Hoje (Segunda-feira)',
+    duration: '45 min',
+    order: 3,
+    questionsCount: 20,
+    cardsCount: 10,
+    isMandatoryAttendance: true,
+    teacherNotes: 'Nesta 3ª aula de hoje (Segunda-feira), estudamos Oratória e Comunicação Verbal e Não Verbal no Poder Judiciário, escuta ativa, postura corporal, tom de voz e os 4 tipos de ruídos com 20 exercícios gabaritados e atividade prática com áudio.',
+  },
+  {
+    id: 'direito_admin',
+    subjectKey: 'direito_admin',
+    title: 'Direito Administrativo — Aula 01',
+    subtitle: 'Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração • TJAM',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: 'Aula Complementar TJAM',
+    duration: '50 min',
+    order: 4,
+    questionsCount: 20,
+    cardsCount: 10,
+    isMandatoryAttendance: true,
+    teacherNotes: 'Abordamos Organização Administrativa: Administração Direta e Indireta, Centralização, Descentralização e Desconcentração com 20 questões e situação prática para envio.',
   },
   {
     id: 'informatica',
@@ -27,13 +69,13 @@ export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
     title: 'Informática e Processo Digital — Aula 01',
     subtitle: 'Windows: arquivos, pastas e operações • Processo Digital (Lei 11.419/2006) • Nível Intermediário TJAM',
     category: 'Conhecimentos Específicos / Informática TJAM',
-    badge: '2ª Aula de Hoje (Terça-feira)',
+    badge: 'Informática • Aula 01',
     duration: '45 min',
-    order: 2,
+    order: 4,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 2ª aula de hoje (Terça-feira), estudamos Windows: arquivos, pastas, operações (copiar, mover, renomear, excluir, lixeira), atalhos e Processo Digital (Lei 11.419/2006) com 20 exercícios gabaritados e desafio prático.',
+    teacherNotes: 'Estudamos Windows: arquivos, pastas, operações (copiar, mover, renomear, excluir, lixeira), atalhos e Processo Digital (Lei 11.419/2006) com 20 exercícios gabaritados e desafio prático.',
   },
   {
     id: 'redacao',
@@ -41,13 +83,27 @@ export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
     title: 'Redação — Aula 01',
     subtitle: 'Estrutura da Redação: Introdução, Desenvolvimento e Conclusão • Coesão e Coerência • Nível Intermediário TJAM',
     category: 'Conhecimentos Básicos / Redação TJAM',
-    badge: '3ª Aula de Hoje (Terça-feira)',
+    badge: 'Redação • Aula 01',
     duration: '45 min',
-    order: 3,
+    order: 5,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 3ª aula de hoje (Terça-feira), aprendemos a Estrutura da Redação Dissertativa para o TJAM (Introdução, Desenvolvimento, Conclusão, Tese, Argumentos, Coesão e Coerência) com 20 exercícios e Atividade Prática de Fixação (Projeto de Redação).',
+    teacherNotes: 'Estrutura da Redação Dissertativa para o TJAM (Introdução, Desenvolvimento, Conclusão, Tese, Argumentos, Coesão e Coerência) com 20 exercícios e Atividade Prática de Fixação.',
+  },
+  {
+    id: 'acessibilidade',
+    subjectKey: 'acessibilidade',
+    title: 'Acessibilidade — Aula 01',
+    subtitle: 'Lei Brasileira de Inclusão (LBI - Lei nº 13.146/2015): Modelo Biopsicossocial, 6 Barreiras e Atendimento Acessível TJAM',
+    category: 'Legislação Específica / Inclusão TJAM',
+    badge: 'Aula 01 • LBI',
+    duration: '45 min',
+    order: 6,
+    questionsCount: 20,
+    cardsCount: 10,
+    isMandatoryAttendance: true,
+    teacherNotes: 'Nesta aula de Acessibilidade e Legislação Correlata, dominamos a Lei nº 13.146/2015 (Estatuto da Pessoa com Deficiência), impedimento de longo prazo x barreiras, avaliação biopsicossocial, atendimento prioritário e aplicação prática no TJAM com 20 questões e simulador de atendimento.',
   },
 ];
 
@@ -58,12 +114,12 @@ export const TODAY_MANDATORY_LESSONS = DEFAULT_TODAY_LESSONS.map((l) => ({
 
 export function getTodayLessonsConfig(): TodayLessonConfig[] {
   try {
-    const versionKey = 'tjam_today_lessons_version_v6_terca_3aulas';
+    const versionKey = 'tjam_today_lessons_version_v10_portugues3_ortografia';
     const isUpToDate = localStorage.getItem(versionKey);
     if (!isUpToDate) {
       localStorage.setItem('tjam_today_lessons_config', JSON.stringify(DEFAULT_TODAY_LESSONS));
       localStorage.setItem(versionKey, 'true');
-      localStorage.setItem('tjam_selected_subject', 'direito_admin');
+      localStorage.setItem('tjam_selected_subject', 'portugues');
       return DEFAULT_TODAY_LESSONS;
     }
 

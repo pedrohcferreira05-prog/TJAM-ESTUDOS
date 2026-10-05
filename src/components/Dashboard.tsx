@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Sparkles,
+  RotateCcw,
 } from 'lucide-react';
 import {
   getTodayAttendanceOverview,
@@ -35,6 +36,7 @@ interface DashboardProps {
   isDarkMode: boolean;
   isDuo?: boolean;
   onToggleGoal?: (goalId: string) => void;
+  onResetGoalsToToday?: () => void;
   todayLessons?: TodayLessonConfig[];
 }
 
@@ -54,35 +56,35 @@ const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
     id: 'portugues',
     subjectKey: 'portugues',
-    title: 'Língua Portuguesa — Aula 01',
-    subtitle: 'Compreensão e Interpretação de Textos • Foco TJAM Intermediário (FGV & Cebraspe) • Teoria, Vídeo Sartori e 20 Questões',
+    title: 'Língua Portuguesa — Aula 03',
+    subtitle: 'Ortografia Oficial: S/SS/C/Ç, G/J, Homônimos, Parônimos, Hífen e Acordo Ortográfico • TJAM',
     category: 'Conhecimentos Básicos TJAM',
-    badge: 'Aula 1 (Segunda)',
-    duration: '45 min',
+    badge: '1ª Aula de Hoje (Segunda)',
+    duration: '50 min',
     questionsCount: 20,
     cardsCount: 10,
   },
   {
-    id: 'processo_penal',
-    subjectKey: 'processo_penal',
-    title: 'Processo Penal — Aula 1',
-    subtitle: 'Inquérito Policial: conceito, características, instauração e valor probatório • Teoria, caso prático e 20 questões',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 1',
-    duration: '40 min',
+    id: 'direito_const',
+    subjectKey: 'direito_const',
+    title: 'Direito Constitucional — Aula 02',
+    subtitle: 'Direitos e Garantias Fundamentais: Art. 5º da CF/88, Remédios Constitucionais e Aplicação Forense • TJAM',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '2ª Aula de Hoje (Segunda)',
+    duration: '50 min',
     questionsCount: 20,
-    cardsCount: 15,
+    cardsCount: 10,
   },
   {
-    id: 'processo_civil',
-    subjectKey: 'processo_civil',
-    title: 'Processo Civil — Aula 2',
-    subtitle: 'Atos Processuais: forma, tempo, prazos em dias úteis, citação e intimação • Teoria, caso prático e 20 questões',
-    category: 'Conhecimentos Específicos',
-    badge: 'Aula 2',
+    id: 'oratoria',
+    subjectKey: 'oratoria',
+    title: 'Oratória — Aula 01',
+    subtitle: 'Comunicação Verbal e Não Verbal no Poder Judiciário: Escuta Ativa, Postura, Tom de Voz e Ruídos • TJAM',
+    category: 'Oratória Forense TJAM',
+    badge: '3ª Aula de Hoje (Segunda)',
     duration: '45 min',
     questionsCount: 20,
-    cardsCount: 15,
+    cardsCount: 10,
   },
 ];
 
@@ -90,6 +92,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   progress,
   onNavigateTab,
   onToggleGoal,
+  onResetGoalsToToday,
   todayLessons: propTodayLessons,
 }) => {
   const [todayLessonsList, setTodayLessonsList] = useState<TodayLessonConfig[]>(() => {
@@ -484,16 +487,49 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* Metas de Estudo Sincronizadas com o Professor */}
       {progress.weeklyGoals && progress.weeklyGoals.length > 0 && (
         <div className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <ListTodo className="w-4 h-4 text-amber-600" />
-              <h2 className="text-base font-extrabold text-slate-900">
-                Metas do Cronograma (Professor Jéssica Alves)
-              </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <ListTodo className="w-5 h-5 text-amber-600" />
+                <h2 className="text-base font-extrabold text-slate-900">
+                  🎯 Metas de Aulas de Hoje (Segunda-feira)
+                </h2>
+              </div>
+              <p className="text-xs text-slate-500 font-medium">
+                3 Aulas do Dia: 📚 Língua Portuguesa (Aula 03) • ⚖️ Direito Constitucional (Aula 02) • 🎤 Oratória (Aula 01)
+              </p>
             </div>
-            <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-              {progress.weeklyGoals.filter(g => g.completed).length} de {progress.weeklyGoals.length} concluídas
-            </span>
+
+            <div className="flex items-center gap-2 self-start sm:self-center">
+              <span className="text-xs font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                {progress.weeklyGoals.filter(g => g.completed).length} de {progress.weeklyGoals.length} concluídas
+              </span>
+              {onResetGoalsToToday && (
+                <button
+                  type="button"
+                  onClick={onResetGoalsToToday}
+                  className="px-3 py-1 rounded-full bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 text-xs font-bold transition-all border border-slate-200 flex items-center gap-1 cursor-pointer active:scale-95"
+                  title="Recarregar metas oficiais das 3 aulas de hoje"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Sincronizar Metas</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Barra de Progresso Visual das Metas */}
+          <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+            <div
+              className="bg-gradient-to-r from-amber-500 to-emerald-500 h-full transition-all duration-500 rounded-full"
+              style={{
+                width: `${Math.round(
+                  (progress.weeklyGoals.filter(g => g.completed).length /
+                    progress.weeklyGoals.length) *
+                    100
+                )}%`
+              }}
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
