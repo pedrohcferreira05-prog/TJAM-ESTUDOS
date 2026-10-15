@@ -187,8 +187,18 @@ export function App() {
   });
 
   const [videoLessons, setVideoLessons] = useState<VideoLesson[]>(() => {
-    const saved = localStorage.getItem('tjam_video_lessons');
-    return saved ? JSON.parse(saved) : INITIAL_VIDEO_LESSONS;
+    try {
+      const vKey = 'tjam_video_lessons_v6_qui_acao_penal';
+      if (!localStorage.getItem(vKey)) {
+        localStorage.setItem('tjam_video_lessons', JSON.stringify(INITIAL_VIDEO_LESSONS));
+        localStorage.setItem(vKey, 'true');
+        return INITIAL_VIDEO_LESSONS;
+      }
+      const saved = localStorage.getItem('tjam_video_lessons');
+      return saved ? JSON.parse(saved) : INITIAL_VIDEO_LESSONS;
+    } catch {
+      return INITIAL_VIDEO_LESSONS;
+    }
   });
 
   const [mindMaps, setMindMaps] = useState<MindMap[]>(() => {
@@ -302,13 +312,12 @@ export function App() {
         if (parsed.reviewQueue && parsed.reviewQueue.some((r: any) => r.id === 'rev-1')) {
           parsed.reviewQueue = [];
         }
-        const hasMondayGoals =
+        const isStrictTodayGoal =
           Array.isArray(parsed.weeklyGoals) &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-seg-01' || g.id === 'goal-seg-02');
-        const hasAllThreeTodayGoals =
-          hasMondayGoals &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-seg-03');
-        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !hasAllThreeTodayGoals) {
+          parsed.weeklyGoals.length === 2 &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qui-01') &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qui-02');
+        if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !isStrictTodayGoal) {
           parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
         if (Array.isArray(parsed.simuladoAttempts)) {

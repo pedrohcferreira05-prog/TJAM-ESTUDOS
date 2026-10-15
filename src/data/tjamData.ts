@@ -408,11 +408,9 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
     dayOfWeek: 'Segunda',
     disciplineIds: ['lingua-portuguesa', 'direito-constitucional', 'ingles'],
     tasks: [
-      '1ª Aula: Língua Portuguesa — Aula 03: Ortografia Oficial (S/SS/C/Ç, G/J, Homônimos, Parônimos e Acordo Ortográfico)',
-      '2ª Aula: Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88 e Remédios Constitucionais)',
-      '3ª Aula: Inglês — Aula 01: Alfabeto, Cumprimentos e Apresentação Pessoal (Nível Intermediário TJAM)',
-      '60 Questões Gabaritadas (20 por aula: Múltipla Escolha + Certo/Errado + Dissertativas com Espelho)',
-      'Gravação de Áudio de Apresentação em Inglês e Atividades Práticas com Envio ao Professor via WhatsApp',
+      '1ª Aula: Língua Portuguesa — Aula 03: Ortografia',
+      '2ª Aula: Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais',
+      '3ª Aula: Inglês — Aula 01: Alfabeto, Cumprimentos e Apresentação',
     ],
     completed: false,
   },
@@ -438,8 +436,11 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-qui',
     dayOfWeek: 'Quinta',
-    disciplineIds: ['processo-penal'],
-    tasks: ['Inquérito e Prisões em Flagrante', '15 Questões Comentadas', 'Revisão 24h'],
+    disciplineIds: ['processo-penal', 'legislacao-tjam'],
+    tasks: [
+      '1ª Aula: Direito Processual Penal — Aula 02: Ação Penal',
+      '2ª Aula: Legislação Institucional — Aula 02: Lei Complementar Estadual nº 261/2023',
+    ],
     completed: false,
   },
   {
@@ -466,10 +467,6 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
 ];
 
 export const INITIAL_WEEKLY_GOALS = [
-  { id: 'goal-seg-01', text: '📚 1ª Aula: Língua Portuguesa — Aula 03: Ortografia Oficial (S, SS, C, Ç, X, CH, G, J, Homônimos e Parônimos)', completed: false },
-  { id: 'goal-seg-02', text: '⚖️ 2ª Aula: Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais (Art. 5º da CF/88 e Remédios Constitucionais)', completed: false },
-  { id: 'goal-seg-03', text: '🇬🇧 3ª Aula: Inglês — Aula 01: Alfabeto (The Alphabet), Cumprimentos (Greetings) e Apresentação Pessoal', completed: false },
-  { id: 'goal-seg-04', text: '📝 Resolver os 60 Exercícios Gabaritados de Hoje (30 Múltipla Escolha + 15 Cebraspe C/E + 15 Dissertativas)', completed: false },
-  { id: 'goal-seg-05', text: '🎯 Dominar as Pegadinhas Críticas: "Good evening" × "Good night", idade com verbo to be (How old are you?), mandado diurno e ortografia', completed: false },
-  { id: 'goal-seg-06', text: '📱 Gravar o Áudio de Apresentação em Inglês (30-60s) e Enviar a Atividade Prática via WhatsApp para o Professor', completed: false },
+  { id: 'goal-qui-01', text: '📚 1ª Aula: Direito Processual Penal — Aula 02: Ação Penal', completed: false },
+  { id: 'goal-qui-02', text: '🏛️ 2ª Aula: Legislação Institucional — Aula 02: Lei Complementar Estadual nº 261/2023', completed: false },
 ];

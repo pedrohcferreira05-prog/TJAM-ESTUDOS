@@ -97,13 +97,13 @@ import {
 import { saveLessonProgressToFirestore, saveUserProgressToFirestore, saveStudentSubmissionToFirestore } from '../lib/firestoreService';
 import { ProcessoCivilContent } from './ProcessoCivilContent';
 import {
-  procPenalFlashcardsData,
-  procPenalMcQuestionsData,
-  procPenalTfQuestionsData,
-  procPenalDiscursiveQuestionsData,
-  procPenalLessonSummaryPoints as procPenalSummaryPoints
-} from '../data/processoPenalLessonData';
-import { ProcessoPenalContent } from './ProcessoPenalContent';
+  procPenalAula2FlashcardsData,
+  procPenalAula2McQuestionsData,
+  procPenalAula2TfQuestionsData,
+  procPenalAula2DiscursiveQuestionsData,
+  procPenalAula2SummaryPoints
+} from '../data/processoPenalAula2LessonData';
+import { ProcessoPenalAula2Content } from './ProcessoPenalAula2Content';
 import {
   direitoConstAula2FlashcardsData,
   direitoConstAula2McQuestionsData,
@@ -227,13 +227,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
   type SubjectKey = 'ingles' | 'geografia_amazonas' | 'legislacao_tjam' | 'portugues' | 'libras' | 'processo_penal' | 'processo_civil' | 'informatica' | 'direito_admin' | 'direito_const' | 'escrita_leitura' | 'redacao' | 'acessibilidade' | 'oratoria';
 
   const [selectedSubject, setSelectedSubjectState] = useState<SubjectKey>(() => {
+    const lessons = propTodayLessons && propTodayLessons.length > 0 ? propTodayLessons : getTodayLessonsConfig();
+    const firstLessonKey = (lessons[0]?.subjectKey as SubjectKey) || 'processo_penal';
     try {
       const saved = localStorage.getItem('tjam_selected_subject');
-      if (saved && ['ingles', 'geografia_amazonas', 'legislacao_tjam', 'portugues', 'libras', 'processo_penal', 'processo_civil', 'informatica', 'direito_admin', 'direito_const', 'escrita_leitura', 'redacao', 'acessibilidade', 'oratoria'].includes(saved)) {
+      if (saved && lessons.some((l) => l.subjectKey === saved)) {
         return saved as any;
       }
     } catch (e) {}
-    return 'oratoria';
+    return firstLessonKey;
   });
 
   const setSelectedSubject = (subject: SubjectKey) => {
@@ -241,7 +243,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
       localStorage.setItem('tjam_selected_subject', subject);
     } catch (e) {}
     setSelectedSubjectState(subject);
+    setCustomSelectedVideoId(null);
   };
+
+  useEffect(() => {
+    if (todayLessonsList.length > 0 && !todayLessonsList.some((l) => l.subjectKey === selectedSubject)) {
+      setSelectedSubject((todayLessonsList[0].subjectKey as SubjectKey) || 'processo_penal');
+    }
+  }, [todayLessonsList, selectedSubject]);
 
   useEffect(() => {
     const handleSubjectChange = () => {
@@ -2064,7 +2073,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'libras'
     ? librasFlashcardsData
     : selectedSubject === 'processo_penal'
-    ? procPenalFlashcardsData
+    ? procPenalAula2FlashcardsData
     : selectedSubject === 'processo_civil'
     ? procCivilFlashcardsData
     : selectedSubject === 'informatica'
@@ -2094,7 +2103,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'libras'
     ? librasMcQuestionsData
     : selectedSubject === 'processo_penal'
-    ? procPenalMcQuestionsData
+    ? procPenalAula2McQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilMcQuestionsData
     : selectedSubject === 'informatica'
@@ -2124,7 +2133,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'libras'
     ? librasTfQuestionsData
     : selectedSubject === 'processo_penal'
-    ? procPenalTfQuestionsData
+    ? procPenalAula2TfQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilTfQuestionsData
     : selectedSubject === 'informatica'
@@ -2154,7 +2163,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
     : selectedSubject === 'libras'
     ? librasDiscursiveQuestionsData
     : selectedSubject === 'processo_penal'
-    ? procPenalDiscursiveQuestionsData
+    ? procPenalAula2DiscursiveQuestionsData
     : selectedSubject === 'processo_civil'
     ? procCivilDiscursiveQuestionsData
     : selectedSubject === 'informatica'
@@ -2357,8 +2366,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const activeCustomVideo = customSelectedVideoId
     ? disciplineVideoLessons.find((v) => v.id === customSelectedVideoId)
-    : disciplineVideoLessons.length > 0
-    ? disciplineVideoLessons[0]
     : null;
 
   const getSubjectDisplayName = (subj: string) => {
@@ -2366,7 +2373,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
       case 'portugues': return 'Língua Portuguesa — Aula 03: Ortografia Oficial';
       case 'direito_const': return 'Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais';
       case 'oratoria': return 'Oratória — Aula 01: Comunicação Verbal e Não Verbal';
-      case 'processo_penal': return 'Processo Penal — Inquérito Policial (Aula 1)';
+      case 'processo_penal': return 'Direito Processual Penal — Aula 02: Ação Penal';
       case 'processo_civil': return 'Processo Civil — Atos Processuais (Aula 2)';
       case 'direito_admin': return 'Direito Administrativo — Organização Administrativa (Aula 01)';
       case 'informatica': return 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações';
@@ -2416,15 +2423,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                 <Clock className="w-3.5 h-3.5 shrink-0" /> {
-                  selectedSubject === 'portugues' ? '1ª Aula de Hoje (Segunda-feira): Língua Portuguesa (Aula 03)'
-                  : selectedSubject === 'direito_const' ? '2ª Aula de Hoje (Segunda-feira): Direito Constitucional (Aula 02)'
-                  : selectedSubject === 'oratoria' ? '3ª Aula de Hoje (Segunda-feira): Oratória (Aula 01)'
-                  : selectedSubject === 'acessibilidade' ? 'Aula de Hoje: Acessibilidade e Inclusão (LBI)'
+                  selectedSubject === 'processo_penal' ? '1ª Aula de Hoje (Quinta-feira): Processo Penal (Aula 02)'
+                  : selectedSubject === 'portugues' ? 'Língua Portuguesa (Aula 03)'
+                  : selectedSubject === 'direito_const' ? 'Direito Constitucional (Aula 02)'
+                  : selectedSubject === 'oratoria' ? 'Oratória (Aula 01)'
+                  : selectedSubject === 'acessibilidade' ? 'Acessibilidade e Inclusão (LBI)'
                   : selectedSubject === 'redacao' ? 'Redação Dissertativa TJAM'
-                  : selectedSubject === 'direito_admin' ? 'Aula Complementar: Direito Administrativo'
+                  : selectedSubject === 'direito_admin' ? 'Direito Administrativo'
                   : selectedSubject === 'ingles' ? 'Língua Inglesa'
                   : selectedSubject === 'informatica' ? 'Informática e Processo Digital'
-                  : selectedSubject === 'processo_penal' ? 'Proc. Penal: Aula 1'
                   : selectedSubject === 'processo_civil' ? 'Proc. Civil: Aula 2'
                   : selectedSubject === 'libras' ? 'LIBRAS: 3ª Aula'
                   : selectedSubject === 'geografia_amazonas' ? 'Geografia AM: 2ª Aula'
@@ -2436,15 +2443,15 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-emerald-200 block">
                 {
-                  selectedSubject === 'portugues' ? '📚 Língua Portuguesa TJAM • Aula 03: Ortografia Oficial • S/SS/C/Ç, G/J, Parônimos, Hífen e Acordo Ortográfico'
-                  : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Direitos e Garantias Fundamentais (Art. 5º da CF/88) • Remédios Constitucionais'
-                  : selectedSubject === 'oratoria' ? '🎤 Oratória TJAM • Aula 01: Comunicação Verbal e Não Verbal • Linguagem Corporal, Tom de Voz e Escuta Ativa'
-                  : selectedSubject === 'acessibilidade' ? '♿ Acessibilidade TJAM • Lei Brasileira de Inclusão (Lei nº 13.146/2015) • Modelo Biopsicossocial e 6 Barreiras'
-                  : selectedSubject === 'redacao' ? '✍️ Redação TJAM • Estrutura da Redação (Introdução, Desenvolvimento, Conclusão, Coesão e Coerência)'
-                  : selectedSubject === 'direito_admin' ? '⚖️ Direito Administrativo • Organização Administrativa (Direta, Indireta, Centralização, Descentralização e Desconcentração)'
-                  : selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Introdução ao Inglês (Pronomes Pessoais e Verbo TO BE)'
-                  : selectedSubject === 'informatica' ? '💻 Informática e Processo Digital • Windows: arquivos, pastas e operações • TJAM'
-                  : selectedSubject === 'processo_penal' ? '⚖️ Processo Penal • Princípios Fundamentais do Processo Penal'
+                  selectedSubject === 'processo_penal' ? '⚖️ Processo Penal TJAM • Aula 02: Ação Penal (Pública Incondicionada, Condicionada e Privada)'
+                  : selectedSubject === 'portugues' ? '📚 Língua Portuguesa TJAM • Aula 03: Ortografia Oficial'
+                  : selectedSubject === 'direito_const' ? '⚖️ Direito Constitucional • Direitos e Garantias Fundamentais (Art. 5º da CF/88)'
+                  : selectedSubject === 'oratoria' ? '🎤 Oratória TJAM • Aula 01: Comunicação Verbal e Não Verbal'
+                  : selectedSubject === 'acessibilidade' ? '♿ Acessibilidade TJAM • Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
+                  : selectedSubject === 'redacao' ? '✍️ Redação TJAM • Estrutura da Redação'
+                  : selectedSubject === 'direito_admin' ? '⚖️ Direito Administrativo • Organização Administrativa'
+                  : selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Introdução ao Inglês'
+                  : selectedSubject === 'informatica' ? '💻 Informática e Processo Digital • Windows: arquivos, pastas e operações'
                   : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Atos Processuais e Prazos'
                   : selectedSubject === 'libras' ? '🤟 LIBRAS • Prática de Comunicação e Atendimento'
                   : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia AM • População, Manaus e ZFM'
@@ -2453,7 +2460,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </span>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white">
                 {
-                  selectedSubject === 'portugues' ? 'Língua Portuguesa — Aula 03: Ortografia Oficial'
+                  selectedSubject === 'processo_penal' ? 'Direito Processual Penal — Aula 02: Ação Penal'
+                  : selectedSubject === 'portugues' ? 'Língua Portuguesa — Aula 03: Ortografia Oficial'
                   : selectedSubject === 'direito_const' ? 'Direito Constitucional — Aula 02: Direitos e Garantias Fundamentais'
                   : selectedSubject === 'oratoria' ? 'Oratória — Aula 01: Comunicação Verbal e Não Verbal'
                   : selectedSubject === 'acessibilidade' ? 'Acessibilidade — Aula 01: Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
@@ -2461,7 +2469,6 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'direito_admin' ? 'Direito Administrativo — Aula 01: Organização Administrativa'
                   : selectedSubject === 'ingles' ? 'Língua Inglesa — Aula 01: Introdução ao Inglês'
                   : selectedSubject === 'informatica' ? 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações'
-                  : selectedSubject === 'processo_penal' ? 'Aula 1 — Princípios Fundamentais do Processo Penal'
                   : selectedSubject === 'processo_civil' ? 'Aula 2 — Atos Processuais'
                   : selectedSubject === 'libras' ? '3ª Aula — Fundamentos de LIBRAS'
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Geografia do Amazonas'
@@ -2803,9 +2810,9 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 : selectedSubject === 'redacao'
                 ? '✍️ Redação — Aula 01: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)'
                 : selectedSubject === 'processo_penal'
-                ? '⚖️ Processo Penal — 1ª Aula de Hoje: Princípios Fundamentais do Processo Penal'
+                ? '⚖️ Direito Processual Penal — Aula 02: Ação Penal (Nível Intermediário — TJAM)'
                 : selectedSubject === 'legislacao_tjam'
-                ? '🏛️ Legislação Institucional do TJAM — 2ª Aula de Hoje: Organização Judiciária do Estado do Amazonas (LC nº 261/2023)'
+                ? '🏛️ Legislação Institucional e do Poder Judiciário — Aula 02: Lei Complementar Estadual nº 261/2023'
                 : selectedSubject === 'direito_admin'
                 ? '⚖️ Direito Administrativo — Aula 01: Organização Administrativa'
                 : selectedSubject === 'ingles'
@@ -2946,7 +2953,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                         selectedVideoPart === 'video2' ? 'Vídeo Aula 2' : 'Vídeo Aula 1'
                       })`
                     : selectedSubject === 'legislacao_tjam'
-                    ? '🏛️ Legislação do TJAM — Aula 1: Estrutura do Poder Judiciário do Amazonas (LC 261/2023)'
+                    ? '🏛️ Legislação Institucional do TJAM — Aula 02: Lei Complementar Estadual nº 261/2023'
                     : selectedSubject === 'portugues'
                     ? '📚 Língua Portuguesa — Aula 01: Compreensão e Interpretação de Textos'
                     : selectedSubject === 'libras'
@@ -2956,7 +2963,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'informatica'
                     ? '💻 Informática e Processo Digital — 2ª Aula de Hoje: Windows: arquivos, pastas e operações'
                     : selectedSubject === 'processo_penal'
-                    ? '⚖️ Processo Penal — Aula 1: Princípios Fundamentais do Processo Penal'
+                    ? '⚖️ Processo Penal — Aula 02: Ação Penal (Quinta-feira)'
                     : selectedSubject === 'direito_const'
                     ? '🇧🇷 Direito Constitucional — Aula 1: Nacionalidade (Art. 12 da CF/88)'
                     : selectedSubject === 'direito_admin'
@@ -2971,7 +2978,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'processo_civil'
                     ? '2ª Aula de Hoje • Atos Processuais (Conceito, Forma, Tempo, Citação x Intimação, Prazos e Preclusão)'
                     : selectedSubject === 'processo_penal'
-                    ? '1ª Aula de Hoje • Princípios Fundamentais do Processo Penal (Devido Processo, Ampla Defesa, Contraditório, Juiz Natural e Sistema Acusatório)'
+                    ? '1ª Aula de Hoje (Quinta-feira) • Ação Penal Pública (Incondicionada/Condicionada) e Privada • Princípios, Prazos Decadenciais e 20 Exercícios'
                     : selectedSubject === 'ingles'
                     ? '3ª Aula de Hoje • Pronomes Pessoais (I, you, he, she, it, we, they) • Verbo TO BE (am, is, are) • Cumprimentos & Apresentação Pessoal'
                     : selectedSubject === 'informatica'
@@ -2979,7 +2986,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'geografia_amazonas'
                     ? '2ª Aula de Hoje • Aspectos Humanos e Econômicos • População, Manaus, Zona Franca (PIM) e Rios'
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'Aula 1 de 3 de Hoje • Lei Complementar nº 261/2023 • Órgãos, Sedes e Organização Forense'
+                    ? '2ª Aula de Hoje (Quinta-feira) • Lei Judiciária do Estado do Amazonas (LC nº 261/2023) • Comarcas, Órgãos do PJ (art. 3º), Serviços Auxiliares e Mapa Conceitual'
                     : selectedSubject === 'libras'
                     ? '3ª Aula de Hoje • Os 5 Parâmetros da Libras (CM, PA, M, Or, ENM) • Exercícios no WhatsApp'
                     : selectedSubject === 'direito_const'
@@ -3105,19 +3112,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                       ? 'https://www.youtube.com/embed/5JQQf2fcuz4?autoplay=0&rel=0'
                       : 'https://www.youtube.com/embed/AfVC14NN3-s?autoplay=0&rel=0'
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'https://www.youtube.com/embed/UnVOYgccCP0?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/m1pl6Uc5mzQ?autoplay=0&rel=0'
                     : selectedSubject === 'portugues'
                     ? 'https://www.youtube.com/embed/IMEVLUzWnNs?autoplay=0&rel=0'
                     : selectedSubject === 'libras'
                     ? 'https://www.youtube.com/embed/j6Ugm67dx8s?autoplay=0&rel=0'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://www.youtube.com/embed/N2PakWeTuic?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/2bABDff7NAE?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
                     ? 'https://www.youtube.com/embed/N5oBz1cC2xY?autoplay=0&rel=0'
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/muheWXjnHvA?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
-                    ? 'https://www.youtube.com/embed/jLYXwMY9lQQ?autoplay=0&rel=0'
+                    ? 'https://www.youtube.com/embed/D_AdM_M810Q?autoplay=0&rel=0'
                     : selectedSubject === 'direito_admin'
                     ? 'https://www.youtube.com/embed/YsrcBEUgoGY?autoplay=0&rel=0'
                     : 'https://www.youtube.com/embed/CZYzEjUKwzY?autoplay=0&rel=0'
@@ -3130,23 +3137,19 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'redacao'
                     ? 'Vídeo Aula - Redação TJAM: 3ª Aula de Hoje — Estrutura da Redação (Introdução, Desenvolvimento, Conclusão)'
                     : selectedSubject === 'ingles'
-                    ? `Vídeo Aula - Língua Inglesa: 3ª Aula de Hoje — ${
-                        selectedVideoPart === 'video2'
-                          ? 'Vídeo Aula 2 (Verbo TO BE, Formas Contraídas, Negativas e Interrogativas)'
-                          : 'Vídeo Aula 1 (Introdução, Cumprimentos, Apresentação e Pronomes Pessoais)'
-                      }`
+                    ? 'Vídeo Aula - Língua Inglesa: 3ª Aula de Hoje — Alfabeto, Cumprimentos e Apresentação Pessoal'
                     : selectedSubject === 'geografia_amazonas'
                     ? `Vídeo Aula - Geografia do Amazonas: Aspectos Humanos e Econômicos (${
                         selectedVideoPart === 'video2' ? 'Vídeo 2' : 'Vídeo 1'
                       })`
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'Vídeo Aula - Legislação Institucional do TJAM: 2ª Aula de Hoje — Organização Judiciária do Estado do Amazonas (LC nº 261/2023)'
+                    ? 'Vídeo Aula - Legislação Institucional do TJAM: 2ª Aula de Hoje — Lei Complementar Estadual nº 261/2023 (TJAM 2026)'
                     : selectedSubject === 'portugues'
                     ? 'Vídeo Aula - Língua Portuguesa: Aula 03 — Ortografia Oficial (TJAM 2026)'
                     : selectedSubject === 'libras'
                     ? 'Vídeo Aula - LIBRAS: 3ª Aula de Hoje — Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_penal'
-                    ? 'Vídeo Aula - Processo Penal: Aula 1 — Princípios Fundamentais do Processo Penal'
+                    ? 'Vídeo Aula - Processo Penal: 1ª Aula de Hoje — Ação Penal (TJAM)'
                     : selectedSubject === 'processo_civil'
                     ? 'Vídeo Aula - Processo Civil: Aula 2 — Atos Processuais (CPC/2015)'
                     : selectedSubject === 'informatica'
@@ -3233,27 +3236,25 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'redacao'
                     ? 'https://youtu.be/_0VjL4aVrJo?is=uxQODnxxBek_su0n'
                     : selectedSubject === 'ingles'
-                    ? selectedVideoPart === 'video2'
-                      ? 'https://youtu.be/FNmuogi6Nt0?is=rRyYo63_zlP8l96q'
-                      : 'https://youtu.be/bSeZlT7Og8I?is=u45hQhMtCHO13dfY'
+                    ? 'https://youtu.be/prAINVhqreQ?is=3j45itcmxq3zYd_i'
                     : selectedSubject === 'geografia_amazonas'
                     ? selectedVideoPart === 'video2'
                       ? 'https://www.youtube.com/live/5JQQf2fcuz4?is=XkxoK8KS9pA_IUS3'
                       : 'https://youtu.be/AfVC14NN3-s?is=N4xZqcIcQJukY8M9'
                     : selectedSubject === 'legislacao_tjam'
-                    ? 'https://youtu.be/UnVOYgccCP0'
+                    ? 'https://www.youtube.com/live/m1pl6Uc5mzQ?is=FkVdxpKFYPhjEwea'
                     : selectedSubject === 'portugues'
-                    ? 'https://youtu.be/Yj0cJ3D9WUg?is=ciraZvHs4DbtVOBL'
+                    ? 'https://youtu.be/IMEVLUzWnNs?is=CdVYLz3YAcGTdRFU'
                     : selectedSubject === 'libras'
                     ? 'https://youtu.be/j6Ugm67dx8s?is=_LtHw0g9ekgfU7gN'
                     : selectedSubject === 'processo_penal'
-                    ? 'https://youtu.be/N2PakWeTuic?is=bL6rvfVynaQvQrVl'
+                    ? 'https://youtu.be/2bABDff7NAE?is=Jssch4xWxKy3jTxt'
                     : selectedSubject === 'processo_civil'
                     ? 'https://youtu.be/N5oBz1cC2xY?is=kLX-4lDE-WmOVM8c'
                     : selectedSubject === 'informatica'
                     ? 'https://youtu.be/muheWXjnHvA?is=KiTn_nN9SbWVq-cV'
                     : selectedSubject === 'direito_const'
-                    ? 'https://youtu.be/Z2vrJZSz-qc?is=jkFDMpU9S6eJisIX'
+                    ? 'https://www.youtube.com/live/D_AdM_M810Q?is=16r0bkB_Ni1w704O'
                     : selectedSubject === 'direito_admin'
                     ? 'https://youtu.be/06f_EvjEW6k?is=kGenVS9-jH57s7_h'
                     : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
@@ -3343,27 +3344,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Estrutura do TJAM: 2ª instância, sede na Capital (Manaus), jurisdição em todo o AM e 26 desembargadores.</span>
+                      <span><strong>LC Estadual nº 261/2023:</strong> Vigência em 01/01/2024, revogando a LC nº 17/1997 e disciplinando a Lei Judiciária do Estado do Amazonas.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Órgãos julgadores: Tribunal Pleno, Câmaras Reunidas e Câmaras Isoladas (1ª e 2ª Câmaras Cíveis e Câmara Criminal).</span>
+                      <span><strong>Órgãos do Judiciário (Art. 3º):</strong> TJAM, Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos, Auditoria Militar e Juízes de Paz.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Composição dos órgãos fracionários e quóruns de julgamento da LC nº 261/2023.</span>
+                      <span><strong>Divisão Judiciária:</strong> Comarcas (unidade territorial com um ou mais municípios), Termos Judiciários e Unidades Judiciárias (varas e juizados).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Órgãos de direção: Presidência, Vice-Presidência e Corregedoria-Geral de Justiça (mandato de 2 anos, vedada reeleição).</span>
+                      <span><strong>Aplicação Prática:</strong> Reorganização do atendimento judicial obedece a critérios legais objetivos, vedada alteração informal de unidades.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Primeira Instância: Juízes de Direito, Varas Especializadas, Juizados Especiais e Tribunal do Júri.</span>
+                      <span><strong>Serviços Auxiliares e Notariais:</strong> Suporte indispensável ao funcionamento judicial e atribuição de fé pública e segurança aos atos jurídicos.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Divisão Judiciária: Comarcas de Entrância Inicial e Entrância Final (Capital).</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span><strong>📝 Atividade Prática Obrigatória:</strong> Mapa conceitual com 5 ramificações e resumo com envio ao professor até 19h30.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'portugues' ? (
@@ -3447,27 +3448,27 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Devido Processo Legal (Art. 5º, LIV, CF): cláusula de garantia de que ninguém será privado de sua liberdade ou bens sem o devido processo legal.</span>
+                      <span>🏛️ <strong>Ação Penal Pública Incondicionada:</strong> Promovida privativamente pelo Ministério Público por Denúncia, sem depender de autorização da vítima (regra geral).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Contraditório e Ampla Defesa (Art. 5º, LV, CF): ciência e oportunidade de manifestação das partes; desdobra-se em defesa técnica (indispensável) e autodefesa.</span>
+                      <span>⏳ <strong>Ação Penal Pública Condicionada:</strong> Depende de representação da vítima ou requisição do Ministro da Justiça (prazo decadencial de 6 meses da ciência da autoria).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Presunção de Inocência (Art. 5º, LVII, CF): ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória.</span>
+                      <span>👤 <strong>Ação Penal Privada:</strong> Proposta pelo ofendido (querelante) por Queixa-Crime mediante advogado habilitado com poderes especiais (art. 44 do CPP).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Juiz Natural (Art. 5º, LIII e XXXVII, CF): julgamento por autoridade competente prévia e proibição constitucional de juízo ou tribunal de exceção.</span>
+                      <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>🚫 <strong>Princípio da Indisponibilidade (Art. 42, CPP):</strong> Uma vez proposta a ação penal pública, o Ministério Público NÃO pode dela desistir.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Inadmissibilidade das Provas Ilícitas (Art. 5º, LVI, CF): são inadmissíveis no processo as provas obtidas por meios ilícitos.</span>
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>🛡️ <strong>Princípio da Intranscendência (Art. 5º, XLV, CF):</strong> A ação penal e a pena jamais passam da pessoa física do autor do delito.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Sistema Acusatório & Direito ao Silêncio: separação rígida entre acusar, defender e julgar; e garantia de não produzir prova contra si mesmo.</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span>📜 <strong>Requisitos do Art. 41 do CPP:</strong> Fato criminoso circunstanciado, qualificação do acusado, classificação jurídica e rol de testemunhas.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'processo_civil' ? (
@@ -3736,7 +3737,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'processo_penal' ? (
-          <ProcessoPenalContent
+          <ProcessoPenalAula2Content
             isDarkMode={isDarkMode}
             checklist={checklist}
             toggleChecklist={toggleChecklist}
@@ -4921,7 +4922,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'informatica'
                   ? 'Resumo — Informática e Processo Digital: Windows: arquivos, pastas e operações (2ª Aula de Hoje)'
                   : selectedSubject === 'processo_penal'
-                  ? 'Resumo — Processo Penal: Princípios Fundamentais do Processo Penal'
+                  ? 'Resumo — Direito Processual Penal: Aula 02 — Ação Penal'
                   : 'Resumo — Direito Administrativo: Agentes Públicos (Aula 4)'}
               </h2>
             </div>
@@ -4970,30 +4971,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </ul>
             ) : selectedSubject === 'legislacao_tjam' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Lei de Organização Judiciária (LC nº 261/2023):</strong> Regula a divisão, organização judiciária, Magistratura, serviços auxiliares e serviços notariais e registrais no Estado do Amazonas.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>7 Órgãos do Poder Judiciário (Art. 3º):</strong> Tribunal de Justiça (TJAM), Turmas Recursais, Tribunais do Júri, Juízes de Direito, Juízes Substitutos de Carreira, Auditoria Militar e Juízes de Paz.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Sede e Jurisdição (Art. 4º):</strong> O Tribunal de Justiça tem sede na Capital (Manaus) e jurisdição em todo o território do Estado do Amazonas.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Órgãos Julgadores do TJAM:</strong> Tribunal Pleno, Câmaras Reunidas (Cíveis e Criminais em sessão conjunta) e Câmaras Isoladas (Cíveis e Criminais).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Cargos de Direção:</strong> Presidente, Vice-Presidente e Corregedor-Geral de Justiça, eleitos pelo Tribunal Pleno para mandato bienal.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Divisão Judiciária do Estado:</strong> Comarcas de Entrância Final (Capital - Manaus) e Comarcas de Entrância Inicial (Interior), além de Termos Judiciários vinculados.</span>
-                </li>
+                {legislacaoTjamSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : selectedSubject === 'portugues' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
@@ -5033,6 +5021,20 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
                       <span className="text-emerald-500 font-bold text-base">•</span>
                       <span><strong>{title}:</strong>{desc}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : selectedSubject === 'processo_penal' ? (
+              <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {procPenalAula2SummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-indigo-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
                     </li>
                   );
                 })}

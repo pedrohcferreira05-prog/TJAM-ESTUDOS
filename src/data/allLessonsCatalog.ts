@@ -71,12 +71,12 @@ import {
 } from './processoCivilLessonData';
 
 import {
-  procPenalFlashcardsData,
-  procPenalMcQuestionsData,
-  procPenalTfQuestionsData,
-  procPenalDiscursiveQuestionsData,
-  procPenalLessonSummaryPoints,
-} from './processoPenalLessonData';
+  procPenalAula2FlashcardsData as procPenalFlashcardsData,
+  procPenalAula2McQuestionsData as procPenalMcQuestionsData,
+  procPenalAula2TfQuestionsData as procPenalTfQuestionsData,
+  procPenalAula2DiscursiveQuestionsData as procPenalDiscursiveQuestionsData,
+  procPenalAula2SummaryPoints as procPenalLessonSummaryPoints,
+} from './processoPenalAula2LessonData';
 
 import {
   geografiaAmazonasFlashcardsData,
@@ -281,19 +281,20 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
   // 7. PROCESSO PENAL
   {
     id: 'processo_penal',
-    title: 'Processo Penal — Aula 01: Princípios Fundamentais do Processo Penal',
+    title: 'Processo Penal — Aula 02: Ação Penal',
     disciplineId: 'processo-penal',
     disciplineName: 'Direito Processual Penal',
-    badge: 'Aula 1',
-    isPriorityToday: false,
+    badge: 'Aula 2',
+    isPriorityToday: true,
     emoji: '⚖️',
-    duration: '45 min',
-    summary: 'Presunção de inocência, contraditório, ampla defesa, paridade de armas, juiz natural e sistema acusatório no CPP.',
+    duration: '50 min',
+    summary: 'Ação penal pública incondicionada, condicionada e privada, princípios da indisponibilidade e intranscendência, prazo decadencial de 6 meses e requisitos do art. 41 do CPP.',
     mcQuestions: procPenalMcQuestionsData,
     tfQuestions: procPenalTfQuestionsData,
     discursiveQuestions: procPenalDiscursiveQuestionsData,
     flashcards: procPenalFlashcardsData,
     summaryPoints: procPenalLessonSummaryPoints,
+    videoUrl: 'https://youtu.be/2bABDff7NAE?is=Jssch4xWxKy3jTxt',
   },
 
   // 8. PROCESSO CIVIL

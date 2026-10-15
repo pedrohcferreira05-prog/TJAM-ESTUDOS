@@ -41,7 +41,7 @@ import { SAMPLE_QUESTIONS } from '../data/tjamData';
 import { DireitoAdminContent } from './DireitoAdminContent';
 import { DireitoConstitucionalContent } from './DireitoConstitucionalContent';
 import { ProcessoCivilContent } from './ProcessoCivilContent';
-import { ProcessoPenalContent } from './ProcessoPenalContent';
+import { ProcessoPenalAula2Content } from './ProcessoPenalAula2Content';
 import { PortuguesContent } from './PortuguesContent';
 import { LegislacaoTjamContent } from './LegislacaoTjamContent';
 import { GeografiaAmazonasContent } from './GeografiaAmazonasContent';
@@ -54,7 +54,7 @@ import { EscritaLeituraContent } from './EscritaLeituraContent';
 import { direitoAdminFlashcardsData, direitoAdminSummaryPoints } from '../data/direitoAdminLessonData';
 import { direitoConstFlashcardsData, direitoConstSummaryPoints } from '../data/direitoConstitucionalLessonData';
 import { procCivilFlashcardsData, procCivilAula2SummaryPoints } from '../data/processoCivilLessonData';
-import { procPenalFlashcardsData, procPenalLessonSummaryPoints } from '../data/processoPenalLessonData';
+import { procPenalAula2FlashcardsData as procPenalFlashcardsData, procPenalAula2SummaryPoints as procPenalLessonSummaryPoints } from '../data/processoPenalAula2LessonData';
 import { legislacaoTjamFlashcardsData, legislacaoTjamSummaryPoints } from '../data/legislacaoTjamLessonData';
 import { geografiaAmazonasFlashcardsData, geografiaAmazonasSummaryPoints } from '../data/geografiaAmazonasLessonData';
 import { librasFlashcardsData, librasSummaryPoints } from '../data/librasLessonData';
@@ -850,7 +850,7 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
               {selectedSubject.id === 'direito_admin' && <DireitoAdminContent />}
               {selectedSubject.id === 'direito_const' && <DireitoConstitucionalContent />}
               {selectedSubject.id === 'processo_civil' && <ProcessoCivilContent />}
-              {selectedSubject.id === 'processo_penal' && <ProcessoPenalContent />}
+              {selectedSubject.id === 'processo_penal' && <ProcessoPenalAula2Content />}
               {selectedSubject.id === 'portugues' && <PortuguesContent />}
               {selectedSubject.id === 'legislacao_tjam' && <LegislacaoTjamContent />}
               {selectedSubject.id === 'geografia_amazonas' && <GeografiaAmazonasContent />}
