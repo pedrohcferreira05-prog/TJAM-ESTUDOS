@@ -18,6 +18,7 @@ import {
   DuoProfile,
   StudentProfileData,
 } from '../lib/profileManagementService';
+import { getTodayLessonsConfig } from '../lib/attendanceService';
 
 interface PerfilViewProps {
   progress: UserProgress;
@@ -261,8 +262,19 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Disciplina Atual</span>
             <BookOpen className="w-5 h-5" />
           </div>
-          <p className="text-lg font-black text-slate-900 truncate">Legislação TJAM</p>
-          <p className="text-[11px] text-slate-500">Aula 2: Org. Judiciária (LC 261/2023)</p>
+          {(() => {
+            const activeTodayLesson = getTodayLessonsConfig()[0];
+            return (
+              <>
+                <p className="text-lg font-black text-slate-900 truncate">
+                  {activeTodayLesson?.title || 'Língua Inglesa — Aula 01'}
+                </p>
+                <p className="text-[11px] text-slate-500 truncate">
+                  {activeTodayLesson?.subtitle || 'Reading Comprehension — TJAM'}
+                </p>
+              </>
+            );
+          })()}
         </div>
       </div>
     </div>

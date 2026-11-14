@@ -14,6 +14,7 @@ export interface McQuestionItem {
   alternativas: string[];
   correta: number;
   explicacao: string;
+  textoApoio?: string;
 }
 
 export interface TfQuestionItem {
@@ -32,272 +33,282 @@ export interface DiscursiveQuestionItem {
 export const direitoConstFlashcardsData: FlashcardItem[] = [
   {
     id: 1,
-    q: 'O que representam os Princípios Fundamentais (Arts. 1º a 4º da CF/88)?',
-    a: 'São as diretrizes mestras e pilares estruturantes do Estado brasileiro. O Título I da CF/88 abrange: Fundamentos (art. 1º), Separação dos Poderes (art. 2º), Objetivos Fundamentais (art. 3º) e Princípios das Relações Internacionais (art. 4º).'
+    q: 'O que é Direito Constitucional e qual o papel da Constituição Federal de 1988?',
+    a: 'É o ramo do Direito Público responsável pelo estudo da Constituição Federal, que estabelece a organização do Estado, a estrutura dos Poderes, os direitos e garantias fundamentais, os deveres do Estado e os princípios que orientam a República. A CF/88 é a lei fundamental e suprema do Brasil.',
   },
   {
     id: 2,
-    q: 'Qual é o mnemônico para os cinco Fundamentos da República (Art. 1º)?',
-    a: 'SO – CI – DI – VA – PL:\n• SOberania\n• CIdadania\n• DIgnidade da pessoa humana\n• VAlores sociais do trabalho e da livre iniciativa\n• PLuralismo político'
+    q: 'Qual é o mnemônico dos cinco fundamentos da República (Art. 1º da CF/88)?',
+    a: 'SO – CI – DI – VA – PLU:\n• SOberania\n• CIdadania\n• DIgnidade da pessoa humana\n• VAlores sociais do trabalho e da livre iniciativa\n• PLUralismo político',
   },
   {
     id: 3,
-    q: 'Como é exercido o poder que "emana do povo" segundo o parágrafo único do art. 1º?',
-    a: 'O poder emana do povo e pode ser exercido: 1) por meio de representantes eleitos (democracia representativa/indireta); ou 2) diretamente, nos termos da Constituição (ex.: plebiscito, referendo, iniciativa popular).'
+    q: 'O que significam Soberania e Cidadania no Art. 1º da CF/88?',
+    a: '• Soberania: poder do Estado de se organizar e tomar decisões sem submissão a outro Estado.\n• Cidadania: participação do indivíduo na vida política e social.',
   },
   {
     id: 4,
-    q: 'Quais são os Poderes da União e qual é a relação entre eles (Art. 2º)?',
-    a: 'São Poderes da União o Legislativo, o Executivo e o Judiciário. Eles são INDEPENDENTES E HARMÔNICOS entre si. Atenção: a CF NÃO diz que são subordinados uns aos outros.'
+    q: 'O que significam Dignidade da pessoa humana e Pluralismo político (Art. 1º)?',
+    a: '• Dignidade da pessoa humana: respeito e proteção à dignidade de cada pessoa.\n• Pluralismo político: reconhecimento da diversidade de ideias e posições políticas.',
   },
   {
     id: 5,
-    q: 'Qual é o mnemônico para os quatro Objetivos Fundamentais da República (Art. 3º)?',
-    a: 'CON – GAR – ERR – PRO:\n• CONstruir uma sociedade livre, justa e solidária\n• GARantir o desenvolvimento nacional\n• ERRadicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais\n• PROmover o bem de todos, sem preconceitos e discriminação'
+    q: 'Quais são os Poderes da União e como devem atuar segundo o Art. 2º?',
+    a: 'São Poderes da União o Legislativo (elabora leis e fiscaliza), o Executivo (administra o Estado e executa leis) e o Judiciário (exerce função jurisdicional, solucionando conflitos). Eles são INDEPENDENTES E HARMÔNICOS entre si (sem subordinação).',
   },
   {
     id: 6,
-    q: 'Como diferenciar Fundamentos (Art. 1º) de Objetivos Fundamentais (Art. 3º)?',
-    a: '• Fundamentos (Art. 1º): Substantivos que expressam a base sobre a qual o Estado já se apoia (Soberania, Cidadania, Dignidade, etc.).\n• Objetivos (Art. 3º): Iniciam-se sempre por VERBOS no infinitivo que indicam metas a alcançar no futuro (Construir, Garantir, Erradicar, Promover).'
+    q: 'Quais são os quatro objetivos fundamentais da República (Art. 3º da CF/88)?',
+    a: '1) Construir uma sociedade livre, justa e solidária;\n2) Garantir o desenvolvimento nacional;\n3) Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais;\n4) Promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.',
   },
   {
     id: 7,
-    q: 'Quais são os 10 princípios que regem o Brasil nas Relações Internacionais (Art. 4º)?',
-    a: '1) Independência nacional\n2) Prevalência dos direitos humanos\n3) Autodeterminação dos povos\n4) Não intervenção\n5) Igualdade entre os Estados\n6) Defesa da paz\n7) Solução pacífica dos conflitos\n8) Repúdio ao terrorismo e ao racismo\n9) Cooperação entre os povos para o progresso da humanidade\n10) Concessão de asilo político'
+    q: 'Como não confundir Fundamentos (Art. 1º) com Objetivos Fundamentais (Art. 3º)?',
+    a: '• Fundamentos (Art. 1º): são a base/pilares de sustentação do Estado (substantivos: Soberania, Cidadania, Dignidade, Valores sociais, Pluralismo político).\n• Objetivos Fundamentais (Art. 3º): são metas e finalidades a serem alcançadas pelo Estado (iniciam com verbos: Construir, Garantir, Erradicar, Promover).',
   },
   {
     id: 8,
-    q: 'O que prevê o parágrafo único do Art. 4º sobre a Integração Latino-Americana?',
-    a: 'A República Federativa do Brasil buscará a integração ECONÔMICA, POLÍTICA, SOCIAL e CULTURAL dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.'
+    q: 'Quais são os 10 princípios que regem o Brasil nas Relações Internacionais (Art. 4º)?',
+    a: '1) Independência nacional; 2) Prevalência dos direitos humanos; 3) Autodeterminação dos povos; 4) Não intervenção; 5) Igualdade entre os Estados; 6) Defesa da paz; 7) Solução pacífica dos conflitos; 8) Repúdio ao terrorismo e ao racismo; 9) Cooperação entre os povos para o progresso da humanidade; 10) Concessão de asilo político.',
   },
   {
     id: 9,
-    q: 'Qual é a pegadinha clássica das bancas FGV e Cebraspe sobre os Princípios Fundamentais?',
-    a: 'Trocar um fundamento do Art. 1º por um objetivo do Art. 3º (ex.: dizer que erradicar a pobreza é fundamento) ou misturar com princípios das relações internacionais do Art. 4º (ex.: dizer que defesa da paz é fundamento).'
+    q: 'O que determina o Parágrafo Único do Art. 4º sobre a América Latina?',
+    a: 'O Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.',
   },
   {
     id: 10,
-    q: 'A quem pertence o Ministério Público e a Defensoria Pública na separação dos Poderes (Art. 2º)?',
-    a: 'Eles NÃO são um quarto poder! São Funções Essenciais à Justiça com autonomia funcional e orçamentária, mas os Poderes da União continuam sendo apenas três: Legislativo, Executivo e Judiciário.'
-  }
+    q: 'Qual é o resumo dos quatro artigos inaugurais da CF/88 (Arts. 1º ao 4º)?',
+    a: '• Art. 1º → Fundamentos da República\n• Art. 2º → Poderes da União (Legislativo, Executivo e Judiciário)\n• Art. 3º → Objetivos fundamentais\n• Art. 4º → Princípios das relações internacionais',
+  },
 ];
 
+// Parte I (1 a 10) + Parte III — Interpretação e Aplicação (17 e 18)
 export const direitoConstMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. Constitui fundamento da República Federativa do Brasil:',
+    enunciado: '1. Qual dos itens abaixo é um fundamento da República Federativa do Brasil?',
     alternativas: [
-      'Defesa da paz.',
-      'Cidadania.',
-      'Garantia do desenvolvimento nacional.',
-      'Solução pacífica dos conflitos.',
-      'Cooperação entre os povos.'
+      'Erradicar a pobreza',
+      'Garantir o desenvolvimento nacional',
+      'Cidadania',
+      'Defesa da paz',
     ],
-    correta: 1, // B
-    explicacao: '✅ Gabarito: B. A cidadania é expressamente um dos cinco fundamentos previstos no art. 1º, inciso II, da CF/88 (SO-CI-DI-VA-PL). As opções A, D e E são princípios das relações internacionais (art. 4º) e a opção C é objetivo fundamental (art. 3º, II).'
+    correta: 2, // C
+    explicacao: 'Gabarito: C (Cidadania). A cidadania é um dos cinco fundamentos previstos no art. 1º, II, da CF/88 (SO-CI-DI-VA-PLU). Erradicar a pobreza e garantir o desenvolvimento nacional são objetivos fundamentais (art. 3º); defesa da paz é princípio das relações internacionais (art. 4º).',
   },
   {
     id: 2,
-    enunciado: '2. A respeito dos fundamentos da República Federativa do Brasil, assinale a alternativa correta.',
+    enunciado: '2. Qual mnemônico ajuda a lembrar dos fundamentos da República previstos no art. 1º?',
     alternativas: [
-      'A soberania constitui objetivo fundamental da República.',
-      'A cidadania constitui princípio das relações internacionais.',
-      'O pluralismo político constitui fundamento da República.',
-      'A defesa da paz constitui fundamento da República.',
-      'A prevalência dos direitos humanos constitui fundamento da República.'
+      'SO-CI-DI-VA-PLU',
+      'LIMPE',
+      'CF-88',
+      'POD-3',
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. O pluralismo político é fundamento da República Federativa do Brasil (art. 1º, V). Soberania é fundamento (não objetivo); cidadania é fundamento (não relações internacionais); defesa da paz e prevalência dos direitos humanos são princípios das relações internacionais (art. 4º).'
+    correta: 0, // A
+    explicacao: 'Gabarito: A (SO-CI-DI-VA-PLU). SOberania, CIdadania, DIgnidade da pessoa humana, VAlores sociais do trabalho e da livre iniciativa, PLUralismo político.',
   },
   {
     id: 3,
-    enunciado: '3. Segundo a Constituição Federal, são Poderes da União:',
+    enunciado: '3. Em qual artigo da Constituição Federal estão os fundamentos da República?',
     alternativas: [
-      'Legislativo, Executivo e Ministério Público.',
-      'Executivo, Judiciário e Tribunal de Contas.',
-      'Legislativo, Executivo e Judiciário.',
-      'Legislativo, Judiciário e Defensoria Pública.',
-      'Executivo, Legislativo e Advocacia Pública.'
+      'Art. 1º',
+      'Art. 2º',
+      'Art. 3º',
+      'Art. 4º',
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Conforme o art. 2º da CF/88: "São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário". Ministério Público, Tribunal de Contas, Defensoria e Advocacia Pública exercem funções essenciais e de controle, mas não são Poderes da União.'
+    correta: 0, // A
+    explicacao: 'Gabarito: A (Art. 1º). O art. 1º traz os fundamentos da República; o art. 2º trata dos Poderes da União; o art. 3º traz os objetivos fundamentais; e o art. 4º dispõe sobre as relações internacionais.',
   },
   {
     id: 4,
-    enunciado: '4. Os Poderes da União são:',
+    enunciado: '4. Quais são os três Poderes da União previstos na Constituição?',
     alternativas: [
-      'independentes e harmônicos entre si.',
-      'independentes e hierarquicamente organizados.',
-      'subordinados entre si e harmônicos.',
-      'autônomos, porém subordinados ao Executivo.',
-      'independentes, mas sem mecanismos de interação.'
+      'Executivo, Ministério Público e Polícia',
+      'Legislativo, Executivo e Judiciário',
+      'Judiciário, Senado e Prefeitura',
+      'Legislativo, Polícia e Executivo',
     ],
-    correta: 0, // A
-    explicacao: '✅ Gabarito: A. A redação literal do art. 2º da CF estabelece expressamente que os Poderes são "independentes e harmônicos entre si". Não há hierarquia ou subordinação entre eles, havendo o sistema de freios e contrapesos (checks and balances).'
+    correta: 1, // B
+    explicacao: 'Gabarito: B (Legislativo, Executivo e Judiciário). Conforme o art. 2º da CF/88: "São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário."',
   },
   {
     id: 5,
-    enunciado: '5. Assinale a alternativa que apresenta somente objetivos fundamentais da República:',
+    enunciado: '5. Segundo o art. 2º da Constituição Federal, os Poderes da União são:',
     alternativas: [
-      'Soberania, cidadania e pluralismo político.',
-      'Dignidade da pessoa humana, soberania e cidadania.',
-      'Construir sociedade livre, justa e solidária; garantir o desenvolvimento nacional; promover o bem de todos.',
-      'Defesa da paz, não intervenção e igualdade entre os Estados.',
-      'Cidadania, dignidade da pessoa humana e livre iniciativa.'
+      'dependentes e subordinados',
+      'independentes e harmônicos entre si',
+      'hierárquicos e dependentes',
+      'isolados e sem relação',
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Os objetivos fundamentais do art. 3º sempre se iniciam por verbos: construir uma sociedade livre, justa e solidária (I); garantir o desenvolvimento nacional (II); e promover o bem de todos (IV). As demais opções trazem fundamentos (art. 1º) ou princípios das relações internacionais (art. 4º).'
+    correta: 1, // B
+    explicacao: 'Gabarito: B (independentes e harmônicos entre si). Cada Poder exerce suas funções constitucionais sem subordinação hierárquica, mantendo equilíbrio e cooperação institucional.',
   },
   {
     id: 6,
-    enunciado: '6. Constitui princípio que rege as relações internacionais do Brasil:',
+    enunciado: '6. Qual alternativa apresenta um objetivo fundamental da República?',
     alternativas: [
-      'Pluralismo político.',
-      'Dignidade da pessoa humana.',
-      'Prevalência dos direitos humanos.',
-      'Cidadania.',
-      'Valores sociais do trabalho.'
+      'Soberania',
+      'Garantir o desenvolvimento nacional',
+      'Pluralismo político',
+      'Não intervenção',
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. A "prevalência dos direitos humanos" está expressamente prevista no art. 4º, inciso II, como princípio orientador das relações internacionais. Pluralismo político, dignidade da pessoa humana, cidadania e valores sociais do trabalho são fundamentos do art. 1º.'
+    correta: 1, // B
+    explicacao: 'Gabarito: B (Garantir o desenvolvimento nacional). É o objetivo fundamental do art. 3º, inciso II (inicia com verbo no infinitivo). Soberania e pluralismo político são fundamentos (art. 1º); não intervenção é princípio das relações internacionais (art. 4º).',
   },
   {
     id: 7,
-    enunciado: '7. João afirmou: “A erradicação da pobreza e a redução das desigualdades sociais e regionais são fundamentos da República.” Considerando a Constituição Federal, a afirmação de João está:',
+    enunciado: '7. Construir uma sociedade livre, justa e solidária é:',
     alternativas: [
-      'correta, pois tais elementos estão no art. 1º.',
-      'correta, pois fundamentos e objetivos possuem a mesma natureza constitucional.',
-      'incorreta, pois se trata de princípio das relações internacionais.',
-      'incorreta, pois são objetivos fundamentais previstos no art. 3º.',
-      'incorreta, pois não estão previstos na Constituição.'
+      'fundamento da República',
+      'princípio internacional',
+      'objetivo fundamental',
+      'regra de processo civil',
     ],
-    correta: 3, // D
-    explicacao: '✅ Gabarito: D. A afirmação de João está incorreta porque erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais constituem OBJETIVO FUNDAMENTAL previsto no art. 3º, inciso III, da CF/88, e não fundamento do art. 1º.'
+    correta: 2, // C
+    explicacao: 'Gabarito: C (objetivo fundamental). Trata-se do inciso I do art. 3º da CF/88: "construir uma sociedade livre, justa e solidária".',
   },
   {
     id: 8,
-    enunciado: '8. De acordo com a Constituição Federal, todo o poder emana:',
+    enunciado: '8. O que significa pluralismo político?',
     alternativas: [
-      'da União.',
-      'dos Poderes da República.',
-      'do Congresso Nacional.',
-      'do povo.',
-      'dos Estados.'
+      'Existência de apenas um partido político',
+      'Proibição de opiniões contrárias',
+      'Reconhecimento da diversidade de ideias e posições políticas',
+      'Poder concentrado em uma só autoridade',
     ],
-    correta: 3, // D
-    explicacao: '✅ Gabarito: D. Art. 1º, parágrafo único, da CF/88: "Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente, nos termos desta Constituição" (princípio da soberania popular).'
+    correta: 2, // C
+    explicacao: 'Gabarito: C (Reconhecimento da diversidade de ideias e posições políticas). O pluralismo político (art. 1º, V) assegura o convívio democrático entre distintas visões políticas e ideológicas.',
   },
   {
     id: 9,
-    enunciado: '9. A respeito dos princípios que regem as relações internacionais do Brasil, assinale a alternativa incorreta:',
+    enunciado: '9. A defesa da paz e a solução pacífica dos conflitos são princípios relacionados:',
     alternativas: [
-      'Defesa da paz.',
-      'Não intervenção.',
-      'Igualdade entre os Estados.',
-      'Solução pacífica dos conflitos.',
-      'Supremacia econômica brasileira.'
+      'à separação dos Poderes',
+      'às relações internacionais',
+      'apenas ao direito municipal',
+      'ao orçamento público',
     ],
-    correta: 4, // E
-    explicacao: '✅ Gabarito: E. A "supremacia econômica brasileira" NÃO existe no texto constitucional. O art. 4º consagra a igualdade entre os Estados (inciso V) e a cooperação entre os povos para o progresso da humanidade (inciso IX), e não qualquer supremacia.'
+    correta: 1, // B
+    explicacao: 'Gabarito: B (às relações internacionais). Tanto a defesa da paz (inciso VI) quanto a solução pacífica dos conflitos (inciso VII) estão previstas no art. 4º da CF/88.',
   },
   {
     id: 10,
-    enunciado: '10. Um servidor público afirma que “pluralismo político” e “prevalência dos direitos humanos” pertencem ao mesmo grupo de princípios constitucionais. Considerando os arts. 1º e 4º da Constituição, a afirmação é:',
+    enunciado: '10. O artigo 4º da Constituição Federal trata:',
     alternativas: [
-      'correta, pois ambos são objetivos fundamentais.',
-      'correta, pois ambos são fundamentos.',
-      'incorreta, pois pluralismo político é fundamento e prevalência dos direitos humanos é princípio das relações internacionais.',
-      'incorreta, pois ambos são objetivos fundamentais.',
-      'incorreta, pois pluralismo político não está previsto na Constituição.'
+      'dos direitos trabalhistas',
+      'das relações internacionais do Brasil',
+      'dos impostos municipais',
+      'dos crimes militares',
     ],
-    correta: 2, // C
-    explicacao: '✅ Gabarito: C. Incorreta: o pluralismo político é um fundamento da República Federativa do Brasil (art. 1º, V), ao passo que a prevalência dos direitos humanos é um princípio que rege o Brasil em suas relações internacionais (art. 4º, II).'
-  }
-];
-
-export const direitoConstTfQuestionsData: TfQuestionItem[] = [
-  {
-    id: 11,
-    enunciado: '11. A soberania, a cidadania e a dignidade da pessoa humana estão entre os fundamentos da República Federativa do Brasil.',
-    correta: true,
-    explicacao: '✅ Gabarito: CERTO. Os três constam expressamente do rol de cinco fundamentos do art. 1º da CF/88 (incisos I, II e III).'
-  },
-  {
-    id: 12,
-    enunciado: '12. Os Poderes Legislativo, Executivo e Judiciário são independentes e harmônicos entre si.',
-    correta: true,
-    explicacao: '✅ Gabarito: CERTO. Literalidade do art. 2º da Constituição da República de 1988.'
-  },
-  {
-    id: 13,
-    enunciado: '13. A construção de uma sociedade livre, justa e solidária constitui princípio das relações internacionais do Brasil.',
-    correta: false,
-    explicacao: '✅ Gabarito: ERRADO. Construir uma sociedade livre, justa e solidária é um OBJETIVO FUNDAMENTAL previsto no art. 3º, inciso I, da CF/88, e não princípio das relações internacionais (art. 4º).'
-  },
-  {
-    id: 14,
-    enunciado: '14. A República Federativa do Brasil rege-se, em suas relações internacionais, pela prevalência dos direitos humanos, pela defesa da paz e pela solução pacífica dos conflitos.',
-    correta: true,
-    explicacao: '✅ Gabarito: CERTO. Todos constam expressamente do art. 4º da CF/88: inciso II (prevalência dos direitos humanos), inciso VI (defesa da paz) e inciso VII (solução pacífica dos conflitos).'
-  },
-  {
-    id: 15,
-    enunciado: '15. O pluralismo político constitui um dos objetivos fundamentais da República Federativa do Brasil.',
-    correta: false,
-    explicacao: '✅ Gabarito: ERRADO. O pluralismo político é FUNDAMENTO da República Federativa do Brasil (art. 1º, inciso V), e não objetivo fundamental (que estão no art. 3º).'
-  }
-];
-
-export const direitoConstDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
-  {
-    id: 16,
-    enunciado: '16. Explique a diferença entre fundamentos da República e objetivos fundamentais, apresentando pelo menos dois exemplos de cada.',
-    respostaEsperada: 'Gabarito Oficial: Os Fundamentos (art. 1º) representam as bases estruturantes, valores e pilares sobre os quais o Estado brasileiro se ergue no presente (ex.: Soberania e Dignidade da pessoa humana). Já os Objetivos Fundamentais (art. 3º) consagram metas programáticas e fins a serem perseguidos ativamente pelo Estado para transformar a realidade social (ex.: Construir uma sociedade livre, justa e solidária e Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais). Gramaticalmente, os fundamentos são substantivos e os objetivos iniciam-se por verbos de ação no infinitivo.'
+    correta: 1, // B
+    explicacao: 'Gabarito: B (das relações internacionais do Brasil). O art. 4º elenca os dez princípios que regem a República Federativa do Brasil nas suas relações internacionais, além do parágrafo único sobre integração latino-americana.',
   },
   {
     id: 17,
-    enunciado: '17. Explique o significado da expressão “Estado Democrático de Direito” e sua relação com o exercício do poder público.',
-    respostaEsperada: 'Gabarito Oficial: "Estado de Direito" significa a submissão de governantes e governados ao império da Constituição e das leis (legalidade estrita). A qualificação "Democrático" agrega a legitimação popular do poder ("todo poder emana do povo"), a participação cidadã direta e indireta, a garantia efetiva dos direitos fundamentais e o pluralismo político. Assim, o poder público só pode ser exercido nos limites da lei e com vistas a garantir a dignidade humana e o bem comum.'
+    textoApoio: 'Um cidadão afirma que diferentes grupos políticos devem poder expressar suas ideias dentro da lei.',
+    enunciado: '17. Essa afirmação está diretamente relacionada ao fundamento constitucional chamado:',
+    alternativas: [
+      'Soberania',
+      'Pluralismo político',
+      'Desenvolvimento nacional',
+      'Não intervenção',
+    ],
+    correta: 1, // B
+    explicacao: 'Gabarito: B (Pluralismo político). O reconhecimento de que diferentes grupos e correntes políticas podem manifestar suas ideias no espaço democrático expressa diretamente o fundamento do pluralismo político (art. 1º, V).',
   },
   {
     id: 18,
-    enunciado: '18. Explique o que significa dizer que os Poderes da União são independentes e harmônicos entre si.',
-    respostaEsperada: 'Gabarito Oficial: Significa que Legislativo, Executivo e Judiciário possuem esferas próprias de competência constitucional e independência orgânica/funcional, não havendo qualquer relação de subordinação hierárquica entre eles. A harmonia expressa a necessidade de colaboração mútua e equilíbrio institucional, operando por meio do sistema de freios e contrapesos (checks and balances), no qual um poder fiscaliza e modera o outro nos limites expressos pela CF/88.'
+    textoApoio: 'O Estado desenvolve ações para ampliar a justiça social e fortalecer a solidariedade na sociedade.',
+    enunciado: '18. Essa ação está ligada principalmente ao:',
+    alternativas: [
+      'Artigo 1º',
+      'Artigo 2º',
+      'Artigo 3º',
+      'Artigo 4º',
+    ],
+    correta: 2, // C
+    explicacao: 'Gabarito: C (Artigo 3º). Construir uma sociedade livre, justa e solidária e reduzir as desigualdades sociais são objetivos fundamentais da República previstos no art. 3º da CF/88.',
+  },
+];
+
+// Parte II — Verdadeiro ou Falso (11 a 16)
+export const direitoConstTfQuestionsData: TfQuestionItem[] = [
+  {
+    id: 11,
+    enunciado: '11. A soberania é um dos fundamentos da República Federativa do Brasil.',
+    correta: true,
+    explicacao: 'Gabarito: V (Verdadeiro). A soberania é o primeiro fundamento listado no art. 1º, inciso I, da Constituição Federal.',
   },
   {
+    id: 12,
+    enunciado: '12. Garantir o desenvolvimento nacional é um fundamento previsto no art. 1º da Constituição.',
+    correta: false,
+    explicacao: 'Gabarito: F (Falso). Garantir o desenvolvimento nacional é um OBJETIVO FUNDAMENTAL previsto no art. 3º, inciso II, da CF/88, e não um fundamento do art. 1º.',
+  },
+  {
+    id: 13,
+    enunciado: '13. O Poder Judiciário é um dos três Poderes da União.',
+    correta: true,
+    explicacao: 'Gabarito: V (Verdadeiro). Conforme o art. 2º da CF/88, os três Poderes da União são o Legislativo, o Executivo e o Judiciário.',
+  },
+  {
+    id: 14,
+    enunciado: '14. Os Poderes da União devem atuar de forma independente e harmônica.',
+    correta: true,
+    explicacao: 'Gabarito: V (Verdadeiro). Literalidade do art. 2º da Constituição Federal: "São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário."',
+  },
+  {
+    id: 15,
+    enunciado: '15. Promover o bem de todos, sem preconceitos, é um objetivo fundamental da República.',
+    correta: true,
+    explicacao: 'Gabarito: V (Verdadeiro). Trata-se do inciso IV do art. 3º da CF/88: promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.',
+  },
+  {
+    id: 16,
+    enunciado: '16. A não intervenção é um princípio que orienta as relações internacionais do Brasil.',
+    correta: true,
+    explicacao: 'Gabarito: V (Verdadeiro). A não intervenção consta expressamente no art. 4º, inciso IV, da Constituição Federal.',
+  },
+];
+
+// Parte IV — Questões Dissertativas (19 e 20)
+export const direitoConstDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
+  {
     id: 19,
-    enunciado: '19. Escolha três princípios das relações internacionais previstos no art. 4º da Constituição e explique o significado de cada um.',
-    respostaEsperada: 'Gabarito Oficial: O aluno pode escolher três entre os dez princípios do art. 4º, por exemplo:\n1) Prevalência dos direitos humanos (inciso II): coloca a proteção e a dignidade do ser humano como guia imperativo na atuação externa e celebração de tratados;\n2) Não intervenção (inciso IV): respeito à soberania de outros países, vedando interferências indevidas em assuntos internos de outros Estados;\n3) Defesa da paz e Solução pacífica dos conflitos (incisos VI e VII): priorização da diplomacia, mediação e arbitragem internacional em detrimento da guerra.'
+    enunciado: '19. Explique a diferença entre fundamentos da República e objetivos fundamentais, citando dois exemplos de cada.',
+    respostaEsperada: 'Os fundamentos da República (art. 1º da CF/88) representam os pilares essenciais que sustentam o Estado brasileiro (em regra expressos por substantivos), como a soberania e a dignidade da pessoa humana (ou cidadania, valores sociais do trabalho e da livre iniciativa e pluralismo político). Já os objetivos fundamentais (art. 3º da CF/88) são as metas e finalidades que o Estado deve buscar alcançar (expressos por verbos no infinitivo), como construir uma sociedade livre, justa e solidária e garantir o desenvolvimento nacional (ou erradicar a pobreza e a marginalização e promover o bem de todos sem preconceitos).',
   },
   {
     id: 20,
-    enunciado: '20. Um cidadão procura um órgão público para exercer um direito, mas o servidor responsável pelo atendimento se recusa a prestar o serviço por motivo discriminatório. Com base nos princípios fundamentais estudados, explique quais fundamentos ou objetivos constitucionais podem ser relacionados à situação e justifique sua resposta.',
-    respostaEsperada: 'Gabarito Oficial: A conduta discriminatória do servidor viola frontalmente:\n1) A Dignidade da pessoa humana (art. 1º, III, fundamento): o cidadão é tratado de forma degradante e desigual;\n2) A Cidadania (art. 1º, II, fundamento): é impedido o pleno exercício de um direito legítimo;\n3) O Objetivo de promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação (art. 3º, IV, objetivo fundamental).\nO servidor atua em desconformidade com os postulados do Estado Democrático de Direito, ensejando responsabilização funcional e civil.'
-  }
+    enunciado: '20. Explique por que a independência e a harmonia entre os Poderes são importantes para o funcionamento do Estado Democrático de Direito.',
+    respostaEsperada: 'A independência impede que o poder fique concentrado em um único órgão, evitando abusos e garantindo que Legislativo, Executivo e Judiciário desempenhem suas atribuições constitucionais com autonomia. A harmonia assegura cooperação, equilíbrio e respeito mútuo entre os Poderes (sistema de freios e contrapesos), permitindo que as instituições funcionem de maneira estável para proteger a Constituição, as leis e os direitos dos cidadãos no Estado Democrático de Direito.',
+  },
 ];
 
 export const direitoConstSummaryPoints = [
-  'Art. 1º — Fundamentos da República: SO-CI-DI-VA-PL (Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho e da livre iniciativa, Pluralismo político).',
-  'Art. 1º, Parágrafo Único: Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente (plebiscito, referendo, iniciativa popular).',
-  'Art. 2º — Poderes da União: Legislativo, Executivo e Judiciário — são INDEPENDENTES E HARMÔNICOS entre si (sem hierarquia nem subordinação).',
-  'Art. 3º — Objetivos Fundamentais: CON-GAR-ERR-PRO (Construir sociedade livre, justa e solidária; Garantir o desenvolvimento nacional; Erradicar a pobreza e marginalização + reduzir desigualdades; Promover o bem de todos sem preconceitos).',
-  'Diferença FGV/Cebraspe: Fundamentos (art. 1º) são substantivos e bases do Estado; Objetivos (art. 3º) são verbos no infinitivo e metas a atingir.',
-  'Art. 4º — Relações Internacionais: 10 princípios (Independência nacional, Direitos humanos, Autodeterminação, Não intervenção, Igualdade entre Estados, Paz, Solução pacífica, Repúdio ao terrorismo/racismo, Cooperação, Asilo político).',
-  'Art. 4º, Parágrafo Único: O Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina visando à formação de uma comunidade latino-americana de nações.',
-  'Dominar nesta Aula 01: Diferença clara entre fundamento (art. 1º) e objetivo (art. 3º); os 3 Poderes e harmonia; parágrafo único do art. 1º e do art. 4º.'
+  'O que é Direito Constitucional: Ramo do Direito Público que estuda a Constituição Federal (CF/88), lei fundamental e suprema do Brasil que organiza o Estado, os Poderes, os direitos fundamentais e os princípios da República.',
+  'Art. 1º — Fundamentos da República (SO-CI-DI-VA-PLU): Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho e da livre iniciativa e Pluralismo político.',
+  'Art. 2º — Separação dos Poderes: Legislativo (elabora leis e fiscaliza), Executivo (administra o Estado e executa leis) e Judiciário (exerce função jurisdicional, solucionando conflitos), independentes e harmônicos entre si.',
+  'Art. 3º — Objetivos Fundamentais: Construir sociedade livre, justa e solidária; garantir o desenvolvimento nacional; erradicar pobreza/marginalização e reduzir desigualdades sociais/regionais; promover o bem de todos sem preconceitos.',
+  'Diferença para provas: Fundamentos (art. 1º) são os pilares do Estado; Objetivos fundamentais (art. 3º) são as metas iniciadas por verbos que o Estado busca alcançar.',
+  'Art. 4º — Relações Internacionais: 10 princípios (Independência nacional, Prevalência dos direitos humanos, Autodeterminação dos povos, Não intervenção, Igualdade entre os Estados, Defesa da paz, Solução pacífica dos conflitos, Repúdio ao terrorismo e ao racismo, Cooperação entre os povos, Concessão de asilo político).',
+  'Art. 4º, Parágrafo Único: O Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina.',
+  'Objetivo da Aula 01: Compreender a base constitucional do Estado brasileiro (Arts. 1º ao 4º da CF/88) e avançar para os 20 exercícios gabaritados.',
 ];
 
 export const direitoConstVideoPracticalTask = {
-  tema: 'Princípios Fundamentais (Arts. 1º a 4º da CF/88) ⚖️',
+  tema: 'Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
   disciplina: 'Direito Constitucional',
-  modalidade: 'Atividade Prática — Fixação (Atendimento TJAM com envio ao WhatsApp do Professor)',
-  situacaoPratica: 'Imagine que você seja um servidor do Tribunal de Justiça do Amazonas (TJAM) e esteja atendendo um cidadão que procura o setor para buscar informação sobre um serviço público, mas tem dificuldade de compreensão e precisa de orientação adequada e humanizada.',
+  modalidade: 'Fixação e Aplicação Prática — TJAM Assistente Judiciário',
+  situacaoPratica: 'Durante o atendimento ou tramitação processual no Tribunal de Justiça do Amazonas, o servidor deve zelar pelo cumprimento da Constituição Federal de 1988, equilibrando os fundamentos da República, os limites entre os Poderes e os objetivos fundamentais.',
   perguntas: [
-    '1. Escolha DOIS conteúdos estudados na Aula 01 (ex.: Cidadania, Dignidade da Pessoa Humana, Independência dos Poderes, Objetivo do art. 3º, etc.).',
-    '2. Explique o que cada um deles significa conforme o texto constitucional.',
-    '3. Relacione-os diretamente com a situação concreta do atendimento ao cidadão no TJAM.',
-    '4. Explique como esse fundamento ou objetivo orienta a conduta ética e empática de um servidor público judiciário.'
+    '1. Liste os cinco fundamentos do Art. 1º usando o mnemônico SO-CI-DI-VA-PLU.',
+    '2. Diferencie as funções típicas de Legislativo, Executivo e Judiciário no Art. 2º.',
+    '3. Aponte os quatro objetivos fundamentais do Art. 3º e explique como se diferenciam dos fundamentos.',
+    '4. Cite pelo menos cinco princípios do Art. 4º e a regra do parágrafo único sobre a América Latina.',
   ],
-  desafioFinal: 'Demonstrar na prática que você compreendeu o conteúdo dos arts. 1º a 4º da CF/88 e consegue aplicá-lo em uma situação real de atendimento público no Tribunal de Justiça.',
-  entrega: 'Preencha o modelo e envie pelo WhatsApp ao professor para feedback da aplicação prática dos princípios constitucionais.'
+  desafioFinal: 'Responder às 20 questões da Aula 01 sem consultar o gabarito e revisar os pontos de dúvida diretamente no texto constitucional (arts. 1º a 4º).',
+  entrega: 'Copie suas 20 respostas ao final da aba Questões para enviar e acompanhar seu desempenho (0 a 10).',
 };

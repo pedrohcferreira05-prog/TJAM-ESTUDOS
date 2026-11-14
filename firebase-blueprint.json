@@ -192,6 +192,28 @@
         "notes": { "type": "string", "description": "Pedagogical notes" }
       },
       "required": ["id", "name", "email", "password", "status"]
+    },
+    "LessonProgressStore": {
+      "title": "LessonProgressStore",
+      "description": "Per-student saved lesson answers, checklists, video status and teacher corrections",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Student user ID" },
+        "store": { "type": "object", "description": "Map of subjectKey to lesson progress state" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["userId", "store", "updatedAt"]
+    },
+    "RankingsData": {
+      "title": "RankingsData",
+      "description": "Official TJAM 2026 duo and individual rankings",
+      "type": "object",
+      "properties": {
+        "duplas": { "type": "array", "description": "Duos ranking entries" },
+        "individual": { "type": "array", "description": "Individual ranking entries" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["duplas", "individual", "updatedAt"]
     }
   },
   "firestore": {
@@ -238,6 +260,14 @@
     "/tjam_applet_data/{documentId}": {
       "schema": "LegacyAppletData",
       "description": "Preserved existing database documents ensuring no data loss"
+    },
+    "/lesson_progress/{userId}": {
+      "schema": "LessonProgressStore",
+      "description": "Per-student saved lesson answers, checklists, video status and corrections"
+    },
+    "/rankings/{rankingId}": {
+      "schema": "RankingsData",
+      "description": "Official duo and individual simulado rankings"
     }
   }
 }

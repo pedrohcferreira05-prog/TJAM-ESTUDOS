@@ -80,17 +80,16 @@ export const SimuladosView: React.FC<SimuladosViewProps> = ({
     if (!testMode || !hasStartedExam || isFinished || timeRemainingSeconds <= 0) return;
 
     const timer = setInterval(() => {
-      setTimeRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleFinishTest();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [testMode, hasStartedExam, isFinished, timeRemainingSeconds > 0]);
+
+  useEffect(() => {
+    if (testMode && hasStartedExam && !isFinished && timeRemainingSeconds === 0) {
+      handleFinishTest();
+    }
   }, [testMode, hasStartedExam, isFinished, timeRemainingSeconds]);
 
   const handleSelectSimuladoToStart = (sim: Simulado) => {

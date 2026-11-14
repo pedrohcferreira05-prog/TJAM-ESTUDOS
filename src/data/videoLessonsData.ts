@@ -2,6 +2,17 @@ import { VideoLesson } from '../types';
 
 export const INITIAL_VIDEO_LESSONS: VideoLesson[] = [
   {
+    id: 'vid-ing-01',
+    disciplineId: 'lingua-inglesa',
+    topicId: 'ing-4',
+    title: 'Aula 1 — Língua Inglesa: Reading Comprehension (Interpretação de Textos em Inglês)',
+    durationMinutes: 45,
+    videoUrl: 'https://www.youtube.com/embed/0OKwcAaV_gQ',
+    summary: 'Estratégias de leitura (Skimming, Scanning, Reading for detail), vocabulário jurídico e administrativo (15 termos), pronomes e palavras interrogativas (Wh- words) e interpretação de texto ("The Importance of Justice").',
+    instructor: 'Profª Jéssica Alves',
+    isPublished: true,
+  },
+  {
     id: 'vid-port-01',
     disciplineId: 'lingua-portuguesa',
     topicId: 'port-1',
@@ -26,11 +37,11 @@ export const INITIAL_VIDEO_LESSONS: VideoLesson[] = [
   {
     id: 'vid-const-01',
     disciplineId: 'direito-constitucional',
-    topicId: 'const-4',
-    title: 'Direitos e Garantias Fundamentais & Remédios Constitucionais',
-    durationMinutes: 48,
-    videoUrl: 'https://www.youtube.com/embed/D_AdM_M810Q',
-    summary: 'Habeas Corpus, Mandado de Segurança individual e coletivo, Mandado de Injunção e Ação Popular com foco nas decisões recentes do STF.',
+    topicId: 'const-3',
+    title: 'Aula 1 — Direito Constitucional: Princípios Fundamentais (Arts. 1º ao 4º da CF/88)',
+    durationMinutes: 45,
+    videoUrl: 'https://www.youtube.com/embed/dHTXl5s239M',
+    summary: 'O que é Direito Constitucional, Art. 1º (SO-CI-DI-VA-PLU), Art. 2º (Separação dos Poderes independentes e harmônicos), Art. 3º (Objetivos fundamentais) e Art. 4º (Relações internacionais e América Latina).',
     instructor: 'Profª Jéssica Alves',
     isPublished: true,
   },

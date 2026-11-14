@@ -19,6 +19,7 @@ try {
   if (typeof window !== 'undefined') {
     firestoreDb = initializeFirestore(app, {
       experimentalForceLongPolling: true,
+      ignoreUndefinedProperties: true,
     }, config.firestoreDatabaseId || '(default)');
   } else {
     firestoreDb = getFirestore(app, config.firestoreDatabaseId || '(default)');

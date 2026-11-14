@@ -244,7 +244,7 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
   const gradedSubmissions = submissions.filter((s) => s.status === 'corrigido' && s.grade !== undefined);
   const realAverageGrade = gradedSubmissions.length > 0
     ? (gradedSubmissions.reduce((sum, s) => sum + (s.grade || 0), 0) / gradedSubmissions.length).toFixed(1)
-    : realAccuracy > 0 ? (realAccuracy / 10).toFixed(1) : '10.0';
+    : realAccuracy > 0 ? (realAccuracy / 10).toFixed(1) : '0.0';
 
   const teacherTabsList: Array<{ id: TeacherTab; label: string; fullLabel: string; icon: any }> = [
     { id: 'disciplinas-aluno', label: 'Administrar & Editar Aulas', fullLabel: '📚 Administrar Aulas, Vídeos & Conteúdos (11 Disciplinas)', icon: BookOpen },
@@ -721,33 +721,33 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
             </button>
           </div>
 
-          {/* Atalhos Rápidos para Corrigir as 3 Aulas do Dia */}
+          {/* Atalhos Rápidos para Corrigir as Aulas do Dia */}
           <div className="pt-2 border-t border-slate-800/80">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
-              Atalho Rápido para Inspecionar Respostas das 3 Aulas de Hoje:
+              Atalho Rápido para Inspecionar Respostas das Aulas de Hoje:
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => handleInspectLesson('legislacao_tjam')}
+                onClick={() => handleInspectLesson('ingles')}
                 className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
-                  selectedInspectLessonId === 'legislacao_tjam' && activeTab === 'respostas'
+                  selectedInspectLessonId === 'ingles' && activeTab === 'respostas'
                     ? 'bg-blue-600/30 border-blue-400 text-white'
                     : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
                 }`}
               >
                 <div className="truncate">
                   <span className="text-[10px] font-bold text-amber-400 block">1ª Aula</span>
-                  <span className="text-xs font-extrabold truncate">🏛️ Legislação TJAM — Aula 01</span>
+                  <span className="text-xs font-extrabold truncate">🇬🇧 Língua Inglesa — Aula 01</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
               </button>
 
               <button
                 type="button"
-                onClick={() => handleInspectLesson('direito_constitucional')}
+                onClick={() => handleInspectLesson('direito_const')}
                 className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
-                  selectedInspectLessonId === 'direito_constitucional' && activeTab === 'respostas'
+                  selectedInspectLessonId === 'direito_const' && activeTab === 'respostas'
                     ? 'bg-blue-600/30 border-blue-400 text-white'
                     : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
                 }`}
@@ -761,16 +761,16 @@ export const TeacherPortal: React.FC<TeacherPortalProps> = ({
 
               <button
                 type="button"
-                onClick={() => handleInspectLesson('ingles')}
+                onClick={() => handleInspectLesson('legislacao_tjam')}
                 className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
-                  selectedInspectLessonId === 'ingles' && activeTab === 'respostas'
+                  selectedInspectLessonId === 'legislacao_tjam' && activeTab === 'respostas'
                     ? 'bg-blue-600/30 border-blue-400 text-white'
                     : 'bg-slate-950/40 hover:bg-slate-800 border-slate-800 text-slate-300'
                 }`}
               >
                 <div className="truncate">
-                  <span className="text-[10px] font-bold text-rose-400 block">3ª Aula</span>
-                  <span className="text-xs font-extrabold truncate">🇬🇧 Língua Inglesa — Aula 01</span>
+                  <span className="text-[10px] font-bold text-rose-400 block">Legislação</span>
+                  <span className="text-xs font-extrabold truncate">🏛️ Legislação TJAM — Aula 01</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
               </button>

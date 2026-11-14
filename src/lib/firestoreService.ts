@@ -25,7 +25,27 @@ import {
   TodayLessonConfig
 } from '../types';
 import { Week1Lesson } from '../data/tjamWeek1Data';
+import { INITIAL_WEEKLY_GOALS } from '../data/tjamData';
 import { DUPLAS_RANKING, INDIVIDUAL_SIMULADO_RANKING, RankingDuplaItem, RankingIndividualItem } from '../data/rankingsData';
+
+function sanitizeForFirestore<T>(value: T): T {
+  if (value === undefined) return value;
+  if (Array.isArray(value)) {
+    return value
+      .filter((item) => item !== undefined)
+      .map((item) => sanitizeForFirestore(item)) as unknown as T;
+  }
+  if (value !== null && typeof value === 'object' && !(value instanceof Date)) {
+    const cleaned: Record<string, any> = {};
+    for (const [k, v] of Object.entries(value as Record<string, any>)) {
+      if (v !== undefined) {
+        cleaned[k] = sanitizeForFirestore(v);
+      }
+    }
+    return cleaned as T;
+  }
+  return value;
+}
 
 // Firestore collections and legacy document constants
 const COLLECTION_NAME = 'tjam_applet_data';
@@ -126,10 +146,10 @@ export function subscribeToSystemControls(
 export async function updateSystemControls(controls: Partial<SystemControlData>): Promise<void> {
   try {
     const docRef = doc(db, COLLECTIONS.SYSTEM_CONTROLS, 'platform_settings');
-    await setDoc(docRef, {
+    await setDoc(docRef, sanitizeForFirestore({
       ...controls,
       updatedAt: new Date().toISOString()
-    }, { merge: true });
+    }), { merge: true });
   } catch (err) {
     handleFirestoreError(err, OperationType.WRITE, `${COLLECTIONS.SYSTEM_CONTROLS}/platform_settings`);
   }
@@ -153,10 +173,10 @@ export interface UserPresenceData {
 export async function updateUserPresence(presence: Partial<UserPresenceData> & { uid: string }): Promise<void> {
   try {
     const docRef = doc(db, COLLECTIONS.USERS, presence.uid);
-    await setDoc(docRef, {
+    await setDoc(docRef, sanitizeForFirestore({
       ...presence,
       lastActive: new Date().toISOString()
-    }, { merge: true });
+    }), { merge: true });
   } catch (err) {
     handleFirestoreError(err, OperationType.WRITE, `${COLLECTIONS.USERS}/${presence.uid}`);
   }
@@ -190,20 +210,20 @@ export async function saveUserProgressToFirestore(progress: UserProgress, userId
 
     // 1. Isolated document per student under user_progress collection
     const docRef = doc(db, COLLECTIONS.USER_PROGRESS, effectiveUserId);
-    await setDoc(docRef, {
+    await setDoc(docRef, sanitizeForFirestore({
       ...progress,
       userId: effectiveUserId,
       updatedAt: new Date().toISOString()
-    }, { merge: true });
+    }), { merge: true });
 
     // 2. Also keep legacy sync for primary titular user
     if (effectiveUserId === 'id00120087') {
       const legacyRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
-      await setDoc(legacyRef, {
+      await setDoc(legacyRef, sanitizeForFirestore({
         ...progress,
         userId: effectiveUserId,
         updatedAt: new Date().toISOString()
-      }, { merge: true });
+      }), { merge: true });
     }
   } catch (err) {
     handleFirestoreError(err, OperationType.WRITE, `${COLLECTIONS.USER_PROGRESS}/${userId}`);
@@ -257,16 +277,17 @@ export async function saveLessonProgressToFirestore(store: Record<string, any>, 
   try {
     const effectiveUserId = userId || auth?.currentUser?.uid || 'id00120087';
     const docRef = doc(db, 'lesson_progress', effectiveUserId);
+    const cleanStore = sanitizeForFirestore(store);
     await setDoc(docRef, {
       userId: effectiveUserId,
-      store,
+      store: cleanStore,
       updatedAt: new Date().toISOString()
     }, { merge: true });
 
     if (effectiveUserId === 'id00120087') {
       const legacyRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
       await setDoc(legacyRef, {
-        store,
+        store: cleanStore,
         updatedAt: new Date().toISOString()
       }, { merge: true });
     }
@@ -740,30 +761,47 @@ export async function resetAllStudentProgressAndContentsInFirestore(): Promise<v
     personalNotes: {},
     nodeNotes: {},
     reviewQueue: [],
-    weeklyGoals: [],
+    weeklyGoals: INITIAL_WEEKLY_GOALS,
     savedLessons: {},
     simuladoAttempts: [],
   };
 
   try {
-    // 1. Reset progress docs
+    // 1. Reset progress docs (primary titular student + legacy + default_student)
+    const nowIso = new Date().toISOString();
     const legacyProgressRef = doc(db, COLLECTION_NAME, PROGRESS_DOC_ID);
-    await setDoc(legacyProgressRef, {
+    await setDoc(legacyProgressRef, sanitizeForFirestore({
       ...cleanProgress,
-      updatedAt: new Date().toISOString(),
-    });
+      userId: 'id00120087',
+      updatedAt: nowIso,
+    }));
+
+    const titularDocRef = doc(db, COLLECTIONS.USER_PROGRESS, 'id00120087');
+    await setDoc(titularDocRef, sanitizeForFirestore({
+      ...cleanProgress,
+      userId: 'id00120087',
+      updatedAt: nowIso,
+    }));
 
     const studentDocRef = doc(db, COLLECTIONS.USER_PROGRESS, 'default_student');
-    await setDoc(studentDocRef, {
+    await setDoc(studentDocRef, sanitizeForFirestore({
       ...cleanProgress,
-      updatedAt: new Date().toISOString(),
+      userId: 'default_student',
+      updatedAt: nowIso,
+    }));
+
+    // 2. Reset lesson progress store (isolated + legacy)
+    const titularLessonRef = doc(db, 'lesson_progress', 'id00120087');
+    await setDoc(titularLessonRef, {
+      userId: 'id00120087',
+      store: {},
+      updatedAt: nowIso,
     });
 
-    // 2. Reset lesson progress store
     const lessonStoreRef = doc(db, COLLECTION_NAME, LESSON_PROGRESS_DOC_ID);
     await setDoc(lessonStoreRef, {
       store: {},
-      updatedAt: new Date().toISOString(),
+      updatedAt: nowIso,
     });
 
     // 3. Clear all student submissions from Firestore

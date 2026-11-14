@@ -85,13 +85,9 @@ export const TeacherLessonsAndVideosManager: React.FC<TeacherLessonsAndVideosMan
   const formatEmbedUrl = (url: string): string => {
     if (!url) return '';
     if (url.includes('/embed/')) return url;
-    if (url.includes('youtube.com/watch?v=')) {
-      const id = url.split('v=')[1]?.split('&')[0];
-      return id ? `https://www.youtube.com/embed/${id}` : url;
-    }
-    if (url.includes('youtu.be/')) {
-      const id = url.split('youtu.be/')[1]?.split('?')[0];
-      return id ? `https://www.youtube.com/embed/${id}` : url;
+    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|live\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    if (match && match[1]) {
+      return `https://www.youtube.com/embed/${match[1]}`;
     }
     return url;
   };

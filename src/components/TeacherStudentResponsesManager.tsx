@@ -33,6 +33,7 @@ import {
   Discipline,
 } from '../types';
 import { TeacherLessonRealtimeInspector } from './TeacherLessonRealtimeInspector';
+import { ALL_LESSONS_CATALOG } from '../data/allLessonsCatalog';
 
 interface ExtendedQuestionAttempt extends QuestionAttempt {
   studentId?: string;
@@ -79,14 +80,14 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
 
   // Extract Video Lessons & Personal Notes from savedLessons for real-time synchronization
   const lessonEntries = Object.entries(savedLessons || {}) as [string, any][];
+  const getCatalogLessonTitle = (subjectKey: string) =>
+    ALL_LESSONS_CATALOG.find((l) => l.id === subjectKey)?.title || subjectKey;
 
   const videoWatchedItems = lessonEntries
     .filter(([_, data]) => Boolean(data?.videoWatched))
     .map(([subjectKey, data]) => ({
       subjectKey,
-      title: subjectKey === 'legislacao_tjam'
-        ? 'Legislação Institucional do TJAM (LC nº 261/2023) — Aula 1'
-        : subjectKey,
+      title: getCatalogLessonTitle(subjectKey),
       watchedAt: data.videoWatchedAt || data.lastUpdated || new Date().toISOString(),
     }));
 
@@ -94,9 +95,7 @@ export const TeacherStudentResponsesManager: React.FC<TeacherStudentResponsesMan
     .filter(([_, data]) => typeof data?.personalNotes === 'string' && data.personalNotes.trim().length > 0)
     .map(([subjectKey, data]) => ({
       subjectKey,
-      title: subjectKey === 'legislacao_tjam'
-        ? 'Legislação Institucional do TJAM (LC nº 261/2023) — Aula 1'
-        : subjectKey,
+      title: getCatalogLessonTitle(subjectKey),
       notes: data.personalNotes as string,
       lastUpdated: data.lastUpdated || new Date().toISOString(),
     }));

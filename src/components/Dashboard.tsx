@@ -54,34 +54,23 @@ interface ScheduledLesson {
 
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
-    id: 'portugues',
-    subjectKey: 'portugues',
-    title: 'Língua Portuguesa — Aula 03',
-    subtitle: 'Ortografia Oficial: S/SS/C/Ç, G/J, Homônimos, Parônimos, Hífen e Acordo Ortográfico • TJAM',
+    id: 'ingles',
+    subjectKey: 'ingles',
+    title: 'Língua Inglesa — Aula 01',
+    subtitle: 'Reading Comprehension — Interpretação de Textos em Inglês • TJAM',
     category: 'Conhecimentos Básicos TJAM',
-    badge: '1ª Aula de Hoje (Segunda)',
-    duration: '50 min',
+    badge: '1ª Aula de Hoje (Sexta-feira)',
+    duration: '45 min',
     questionsCount: 20,
     cardsCount: 10,
   },
   {
     id: 'direito_const',
     subjectKey: 'direito_const',
-    title: 'Direito Constitucional — Aula 02',
-    subtitle: 'Direitos e Garantias Fundamentais: Art. 5º da CF/88, Remédios Constitucionais e Aplicação Forense • TJAM',
+    title: 'Direito Constitucional — Aula 01',
+    subtitle: 'Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
     category: 'Conhecimentos Específicos TJAM',
-    badge: '2ª Aula de Hoje (Segunda)',
-    duration: '50 min',
-    questionsCount: 20,
-    cardsCount: 10,
-  },
-  {
-    id: 'oratoria',
-    subjectKey: 'oratoria',
-    title: 'Oratória — Aula 01',
-    subtitle: 'Comunicação Verbal e Não Verbal no Poder Judiciário: Escuta Ativa, Postura, Tom de Voz e Ruídos • TJAM',
-    category: 'Oratória Forense TJAM',
-    badge: '3ª Aula de Hoje (Segunda)',
+    badge: '2ª Aula de Hoje (Sexta-feira)',
     duration: '45 min',
     questionsCount: 20,
     cardsCount: 10,
@@ -124,10 +113,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   const reloadSavedStore = () => {
     try {
-      const stored = localStorage.getItem('tjam_all_lessons_progress');
-      if (stored) {
-        setSavedLessonsStore(JSON.parse(stored));
-      }
+      const primaryStored = localStorage.getItem('tjam_lessons_progress');
+      const allStored = localStorage.getItem('tjam_all_lessons_progress');
+      const merged = {
+        ...(allStored ? JSON.parse(allStored) : {}),
+        ...(primaryStored ? JSON.parse(primaryStored) : {}),
+      };
+      setSavedLessonsStore(merged);
     } catch (e) {
       console.warn('Erro ao ler progresso local', e);
     }
@@ -155,10 +147,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
     window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', handleStorage);
     window.addEventListener('tjam_attendance_updated', handleStorage);
+    window.addEventListener('tjam_lesson_progress_updated', handleStorage);
     return () => {
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', handleStorage);
       window.removeEventListener('tjam_attendance_updated', handleStorage);
+      window.removeEventListener('tjam_lesson_progress_updated', handleStorage);
     };
   }, []);
 
@@ -211,14 +205,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-600">
-            Metas do dia: <span className="text-amber-700 font-bold">Língua Portuguesa (Aula 01)</span>, <span className="text-rose-700 font-bold">Processo Penal</span> e <span className="text-indigo-700 font-bold">Processo Civil</span>.
+            {todayLessonsList.length === 1 ? 'Meta do dia: ' : 'Metas do dia: '}
+            <span className="text-amber-700 font-bold">
+              {todayLessonsList.map((l) => `${l.title} (${l.subtitle})`).join(' • ')}
+            </span>
+            .
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-bold text-amber-900">
             <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
-            <span>{progress.streakDays || 5} dias</span>
+            <span>{progress.streakDays || 0} {(progress.streakDays || 0) === 1 ? 'dia' : 'dias'}</span>
           </div>
 
           <button
@@ -241,7 +239,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
           <div className="flex items-baseline justify-between">
             <span className="text-2xl font-black text-slate-900">
-              {completedDailyCount} / {TODAY_PRIMARY_LESSONS.length}
+              {completedDailyCount} / {todayLessonsList.length || TODAY_PRIMARY_LESSONS.length}
             </span>
             <span className="text-xs font-bold text-amber-700 font-mono">
               {dailyPercentage}%
@@ -303,13 +301,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
               <div>
                 <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
-                  <span>Presença & Metas das 3 Aulas de Hoje</span>
+                  <span>
+                    {overview.totalRequired === 1
+                      ? 'Presença & Meta da Aula de Hoje'
+                      : `Presença & Metas das ${overview.totalRequired} Aulas de Hoje`}
+                  </span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
                     Obrigatório
                   </span>
                 </h2>
                 <p className="text-xs text-slate-300">
-                  Marque o início e o fim de cada aula. Encerrar as 3 aulas do dia bate a meta e marca automaticamente +1 dia consecutivo na sequência.
+                  Marque o início e o fim de cada aula. Encerrar {overview.totalRequired === 1 ? 'a aula do dia' : `as ${overview.totalRequired} aulas do dia`} bate a meta e marca automaticamente +1 dia consecutivo na sequência.
                 </p>
               </div>
             </div>
@@ -320,7 +322,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <span>{progress.streakDays || 1} dias seguidos</span>
               </div>
               <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-black">
-                {overview.completedCount} de 3 aulas
+                {overview.completedCount} de {overview.totalRequired} {overview.totalRequired === 1 ? 'aula' : 'aulas'}
               </div>
             </div>
           </div>
@@ -368,7 +370,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 flex items-center justify-between gap-2 text-xs font-bold">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>🎉 Meta Diária Conquistada! Você marcou presença e encerrou as 3 aulas de hoje!</span>
+                <span>🎉 Meta Diária Conquistada! Você marcou presença e encerrou {overview.totalRequired === 1 ? 'a aula de hoje' : `as ${overview.totalRequired} aulas de hoje`}!</span>
               </div>
               <span className="text-amber-300 font-mono font-black">+{progress.streakDays} Dias de Sequência</span>
             </div>
@@ -379,15 +381,27 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-amber-600" />
             <h3 className="text-base font-extrabold text-slate-900">
-              Grade das Aulas de Hoje ({todayLessonsList.length} aulas organizadas pelo professor)
+              {todayLessonsList.length === 1
+                ? 'Aula de Hoje (Programada pelo Professor)'
+                : `Grade das Aulas de Hoje (${todayLessonsList.length} aulas organizadas pelo professor)`}
             </h3>
           </div>
           <span className="text-xs text-slate-500 font-medium">
-            {todayLessonsList.length} aulas prioritárias obrigatórias
+            {todayLessonsList.length === 1
+              ? '1 aula prioritária obrigatória'
+              : `${todayLessonsList.length} aulas prioritárias obrigatórias`}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div
+          className={`grid grid-cols-1 ${
+            todayLessonsList.length === 1
+              ? ''
+              : todayLessonsList.length === 2
+              ? 'md:grid-cols-2'
+              : 'md:grid-cols-3'
+          } gap-4`}
+        >
           {todayLessonsList.map((lesson, idx) => {
             const attendanceStatus = getLessonAttendanceStatus(progress, lesson.subjectKey);
             const isCompleted = attendanceStatus.status === 'completed' || !!savedLessonsStore[lesson.subjectKey]?.completed;
@@ -492,11 +506,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <ListTodo className="w-5 h-5 text-amber-600" />
                 <h2 className="text-base font-extrabold text-slate-900">
-                  🎯 Metas de Aulas de Hoje (Segunda-feira)
+                  🎯 Metas de Hoje (Sexta-feira)
                 </h2>
               </div>
               <p className="text-xs text-slate-500 font-medium">
-                3 Aulas do Dia: 📚 Língua Portuguesa (Aula 03) • ⚖️ Direito Constitucional (Aula 02) • 🎤 Oratória (Aula 01)
+                {todayLessonsList.map((l) => l.title).join(' • ')}
               </p>
             </div>
 

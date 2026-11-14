@@ -463,7 +463,7 @@ export const TeacherDisciplinasManager: React.FC<TeacherDisciplinasManagerProps>
         topicId: disc?.topics[0]?.id || `top-${selectedSubject.id}`,
         title: newVideoTitle,
         durationMinutes: Number(newVideoDuration) || 45,
-        videoUrl: newVideoUrl || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        videoUrl: newVideoUrl.trim(),
         summary: newVideoSummary || `Videoaula oficial ministrada por ${selectedSubject.teacher}.`,
         instructor: selectedSubject.teacher,
         isPublished: true,

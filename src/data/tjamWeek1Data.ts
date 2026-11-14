@@ -159,7 +159,7 @@ No universo dos concursos públicos para tribunais (TJAM), é fundamental distin
     materials: [
       { type: 'pdf', title: 'Apostila Completa - Aula 01 Interpretação.pdf', size: '2.4 MB' },
       { type: 'slides', title: 'Slides Apresentação - Aula 01.pdf', size: '1.1 MB' },
-      { type: 'video', title: 'Videoaula Explicativa - Prof. Nelson Sartori', url: 'https://youtube.com' }
+      { type: 'video', title: 'Videoaula Explicativa - Prof. Nelson Sartori', url: 'https://www.youtube.com/watch?v=ptbiYTNF_i4' }
     ],
     mindMap: {
       title: 'Mapa Mental: Compreensão vs Interpretação',

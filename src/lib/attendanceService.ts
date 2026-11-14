@@ -8,32 +8,34 @@ import {
 
 export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
   {
-    id: 'processo_penal',
-    subjectKey: 'processo_penal',
-    title: 'Direito Processual Penal — Aula 02',
-    subtitle: 'Ação Penal',
-    category: 'Conhecimentos Específicos TJAM',
-    badge: '1ª Aula de Hoje (Quinta-feira)',
-    duration: '50 min',
+    id: 'ingles',
+    subjectKey: 'ingles',
+    title: 'Língua Inglesa — Aula 01',
+    subtitle: 'Reading Comprehension — Interpretação de Textos em Inglês',
+    category: 'Conhecimentos Básicos TJAM',
+    badge: '1ª Aula de Hoje (Sexta-feira)',
+    duration: '45 min',
     order: 1,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 1ª aula de hoje (Quinta-feira), estudamos Ação Penal: pública incondicionada, pública condicionada e privada, princípios da obrigatoriedade, indisponibilidade e intranscendência, prazo decadencial de 6 meses e 20 exercícios gabaritados.',
+    teacherNotes:
+      'Nesta Aula 1 de Língua Inglesa (Nível Intermediário — TJAM), estudamos estratégias de leitura (Skimming, Scanning e Reading for detail), 15 termos jurídicos/administrativos, pronomes e palavras interrogativas (Wh- words), texto "The Importance of Justice" e 20 exercícios gabaritados (objetivas, V/F, interpretação e dissertativas).',
   },
   {
-    id: 'legislacao_tjam',
-    subjectKey: 'legislacao_tjam',
-    title: 'Legislação Institucional — Aula 02',
-    subtitle: 'Lei Complementar Estadual nº 261/2023',
-    category: 'Legislação Institucional TJAM',
-    badge: '2ª Aula de Hoje (Quinta-feira)',
-    duration: '50 min',
+    id: 'direito_const',
+    subjectKey: 'direito_const',
+    title: 'Direito Constitucional — Aula 01',
+    subtitle: 'Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '2ª Aula de Hoje (Sexta-feira)',
+    duration: '45 min',
     order: 2,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
-    teacherNotes: 'Nesta 2ª aula de hoje (Quinta-feira), estudamos a Lei Judiciária do Amazonas (LC nº 261/2023), divisão territorial em comarcas e termos, órgãos do art. 3º, serviços auxiliares e mapa conceitual com entrega até 19h30.',
+    teacherNotes:
+      'Nesta Aula 1 de Direito Constitucional (Nível Intermediário — TJAM), estudamos o conceito de Direito Constitucional, os 5 fundamentos da República (SO-CI-DI-VA-PLU — Art. 1º), a Separação dos Poderes (Art. 2º), os 4 objetivos fundamentais (Art. 3º), os 10 princípios das relações internacionais e integração latino-americana (Art. 4º) e 20 exercícios com gabarito.',
   },
 ];
 
@@ -44,10 +46,11 @@ export const TODAY_MANDATORY_LESSONS = DEFAULT_TODAY_LESSONS.map((l) => ({
 
 export function getTodayLessonsConfig(): TodayLessonConfig[] {
   try {
-    const versionKey = 'tjam_today_lessons_version_v16_qui_proc_penal_leg_261';
+    const versionKey = 'tjam_today_lessons_version_v19_sex_ingles_e_const_aula1';
     const isUpToDate = localStorage.getItem(versionKey);
     if (!isUpToDate) {
       localStorage.setItem('tjam_today_lessons_config', JSON.stringify(DEFAULT_TODAY_LESSONS));
+      localStorage.setItem('tjam_selected_subject', 'ingles');
       localStorage.setItem(versionKey, 'true');
       return DEFAULT_TODAY_LESSONS;
     }
@@ -380,7 +383,7 @@ export function endLessonAttendance(
         attendedLessonIds: completedTodayIds,
         totalSecondsToday: ((progress.attendanceHistory?.[today]?.totalSecondsToday || 0) + addedSeconds),
         allThreeCompleted: completedThreeAllToday,
-        completedAt: completedThreeAllToday ? finishTime : undefined,
+        ...(completedThreeAllToday ? { completedAt: finishTime } : {}),
       },
     },
     weeklyGoals: updatedWeeklyGoals,
@@ -395,8 +398,8 @@ export function endLessonAttendance(
     uid: activeUserId,
     isOnline: true,
     activityStatus: 'online',
-    currentSubject: undefined,
-    currentLesson: undefined,
+    currentSubject: '',
+    currentLesson: '',
   }).catch(() => {});
 
   return {

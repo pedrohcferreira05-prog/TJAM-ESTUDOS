@@ -205,22 +205,26 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
     'direito-administrativo': { name: 'Direito Administrativo', color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/30', icon: FileText },
   };
 
+  const [flowNotice, setFlowNotice] = useState<string | null>(null);
+
   // Timer countdown during exam
   useEffect(() => {
     if (currentStep !== 'exam' || timeRemainingSeconds <= 0) return;
 
     const timer = setInterval(() => {
-      setTimeRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleProceedToConfirmPage();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [currentStep, timeRemainingSeconds > 0]);
+
+  // Auto-advance to confirmation when timer hits zero without triggering side effects inside state updater
+  useEffect(() => {
+    if (currentStep === 'exam' && timeRemainingSeconds === 0) {
+      setFlowNotice('Tempo regulamentar encerrado. Revise e confirme o envio do seu simulado.');
+      setCurrentStep('confirm');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [currentStep, timeRemainingSeconds]);
 
   // Format seconds to H:MM:SS
@@ -274,9 +278,10 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   // Start exam from Step 2 to Step 3
   const handleStartExam = () => {
     if (!agreedToRules) {
-      alert('Você deve ler e marcar a declaração de ciência de todas as regras antes de iniciar o simulado.');
+      setFlowNotice('Você deve ler e marcar a declaração de ciência de todas as regras antes de iniciar o simulado.');
       return;
     }
+    setFlowNotice(null);
     setCurrentStep('exam');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -284,9 +289,10 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
   // Advance to confirmation page (Step 4)
   const handleProceedToConfirmPage = () => {
     if (!allQuestionsAnswered) {
-      alert(`Atenção: É obrigatório responder todas as ${totalQuestions} questões antes de encerrar. Restam ${unansweredCount} pendente(s).`);
+      setFlowNotice(`Atenção: É obrigatório responder todas as ${totalQuestions} questões antes de encerrar. Restam ${unansweredCount} pendente(s).`);
       return;
     }
+    setFlowNotice(null);
     setCurrentStep('confirm');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -824,7 +830,7 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
       buildGabaritoPdfDoc();
     } catch (err) {
       console.error('Error generating PDF:', err);
-      alert('Houve um problema ao gerar o PDF. A página de impressão do navegador será aberta.');
+      setFlowNotice('Não foi possível gerar o PDF diretamente. Abrindo a página de impressão do navegador.');
       window.print();
     } finally {
       setIsGeneratingPDF(false);
@@ -853,6 +859,18 @@ export const OfficialSimuladoFlow: React.FC<OfficialSimuladoFlowProps> = ({
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-sky-500/30">
+      {flowNotice && (
+        <div className="w-full bg-amber-500/20 border-b border-amber-400/40 text-amber-200 text-xs font-bold px-4 py-2.5 flex items-center justify-between gap-3">
+          <span>{flowNotice}</span>
+          <button
+            type="button"
+            onClick={() => setFlowNotice(null)}
+            className="text-amber-100 hover:text-white font-black cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       {/* Top Pedagogical Announcement Bar */}
       <div className="w-full bg-slate-900 border-b border-slate-800 text-xs py-2 px-4 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">

@@ -27,6 +27,14 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
+  const parseGeminiJson = (rawText: string) => {
+    const cleaned = (rawText || "").replace(/```json/gi, "").replace(/```/g, "").trim();
+    if (!cleaned) {
+      throw new Error("A IA retornou uma resposta vazia.");
+    }
+    return JSON.parse(cleaned);
+  };
+
   // API Endpoint 1: Generate Mind Map with Gemini AI
   app.post("/api/generate-mindmap", async (req, res) => {
     try {
@@ -37,7 +45,7 @@ async function startServer() {
       }
 
       if (!process.env.GEMINI_API_KEY) {
-        return res.status(500).json({
+        return res.status(503).json({
           error: "A chave da API Gemini não está configurada.",
         });
       }
@@ -102,23 +110,15 @@ ${text}
 """`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.6-flash",
+        model: "gemini-4-hydrogen",
         contents: userPrompt,
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
-          temperature: 0.2,
         },
       });
 
-      const responseText = response.text || "";
-      let parsedData;
-      try {
-        parsedData = JSON.parse(responseText);
-      } catch (e) {
-        const cleaned = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-        parsedData = JSON.parse(cleaned);
-      }
+      const parsedData = parseGeminiJson(response.text || "");
 
       return res.json({ success: true, mindmap: parsedData });
     } catch (error: any) {
@@ -136,6 +136,12 @@ ${text}
 
       if (!statement) {
         return res.status(400).json({ error: "O enunciado da questão é obrigatório." });
+      }
+
+      if (!process.env.GEMINI_API_KEY) {
+        return res.status(503).json({
+          error: "A chave da API Gemini não está configurada.",
+        });
       }
 
       const systemPrompt = `Você é um professor de elite especializado na banca examinadora dos concursos do Tribunal de Justiça do Amazonas (TJAM).
@@ -163,17 +169,15 @@ Alternativa Correta: ${correctOptionId}
 Alternativa Marcada pelo Aluno: ${selectedOptionId || "Nenhuma"}`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.6-flash",
+        model: "gemini-4-hydrogen",
         contents: userPrompt,
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
-          temperature: 0.3,
         },
       });
 
-      const responseText = response.text || "";
-      const parsedData = JSON.parse(responseText.replace(/```json/g, "").replace(/```/g, "").trim());
+      const parsedData = parseGeminiJson(response.text || "");
 
       return res.json({ success: true, explanation: parsedData });
     } catch (error: any) {
@@ -188,6 +192,12 @@ Alternativa Marcada pelo Aluno: ${selectedOptionId || "Nenhuma"}`;
   app.post("/api/generate-flashcards", async (req, res) => {
     try {
       const { disciplineName, topicName, count = 5 } = req.body;
+
+      if (!process.env.GEMINI_API_KEY) {
+        return res.status(503).json({
+          error: "A chave da API Gemini não está configurada.",
+        });
+      }
 
       const systemPrompt = `Você é um especialista em memorização e técnica de repetição espaçada para concursos públicos (TJAM).
 Crie exatamente ${count} flashcards de alta qualidade no formato Pergunta e RespostaDireta para a disciplina e assunto informados.
@@ -205,17 +215,15 @@ Retorne em formato JSON:
 }`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.6-flash",
-        contents: `Disciplina: ${disciplineName}\nAssunto: ${topicName}`,
+        model: "gemini-4-hydrogen",
+        contents: `Disciplina: ${disciplineName || "Geral"}\nAssunto: ${topicName || "Tópico Principal"}`,
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
-          temperature: 0.4,
         },
       });
 
-      const responseText = response.text || "";
-      const parsedData = JSON.parse(responseText.replace(/```json/g, "").replace(/```/g, "").trim());
+      const parsedData = parseGeminiJson(response.text || "");
 
       return res.json({ success: true, flashcards: parsedData.flashcards || [] });
     } catch (error: any) {
@@ -230,6 +238,12 @@ Retorne em formato JSON:
   app.post("/api/analyze-simulado", async (req, res) => {
     try {
       const { score, maxScore, percentage, timeSpentMinutes, wrongDisciplines } = req.body;
+
+      if (!process.env.GEMINI_API_KEY) {
+        return res.status(503).json({
+          error: "A chave da API Gemini não está configurada.",
+        });
+      }
 
       const systemPrompt = `Você é um mentor especialista na preparação para o concurso do Tribunal de Justiça do Amazonas (TJAM).
 Analise o desempenho do aluno no simulado e forneça um relatório diagnóstico motivador e estratégico.
@@ -248,16 +262,15 @@ Tempo gasto: ${timeSpentMinutes} minutos
 Disciplinas com maior taxa de erro: ${wrongDisciplines?.join(", ") || "Nenhuma específica"}`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.6-flash",
+        model: "gemini-4-hydrogen",
         contents: userPrompt,
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
-          temperature: 0.3,
         },
       });
 
-      const parsedData = JSON.parse((response.text || "").replace(/```json/g, "").replace(/```/g, "").trim());
+      const parsedData = parseGeminiJson(response.text || "");
 
       return res.json({ success: true, report: parsedData });
     } catch (error: any) {

@@ -243,7 +243,7 @@ export const TeacherScheduleAndGoalsManager: React.FC<TeacherScheduleAndGoalsMan
 
   const handleDeleteTodayLesson = (lessonId: string) => {
     if (todayLessonsState.length <= 1) {
-      alert('Você deve manter pelo menos uma aula programada para hoje.');
+      triggerToast('Você deve manter pelo menos uma aula programada para hoje.');
       return;
     }
     const updated = todayLessonsState
@@ -357,13 +357,13 @@ export const TeacherScheduleAndGoalsManager: React.FC<TeacherScheduleAndGoalsMan
           title: 'Direito Constitucional — Aula 01',
           subtitle: 'Princípios Fundamentais da CF/88 (Arts. 1º a 4º) • Nível Intermediário TJAM • Teoria, Vídeo e 20 Questões',
           category: 'Conhecimentos Específicos',
-          badge: '2ª Aula de Hoje',
+          badge: '1ª Aula de Hoje',
           duration: '50 min',
-          order: 2,
+          order: 1,
           questionsCount: 20,
           cardsCount: 10,
           isMandatoryAttendance: true,
-          teacherNotes: 'Nesta segunda aula de hoje, iniciamos Direito Constitucional do zero (arts. 1º a 4º). Focar na distinção entre Fundamentos (art. 1º) e Objetivos (art. 3º).',
+          teacherNotes: 'Nesta aula, iniciamos Direito Constitucional do zero (arts. 1º a 4º). Focar na distinção entre Fundamentos (art. 1º) e Objetivos (art. 3º).',
         },
         {
           id: 'direito_admin',

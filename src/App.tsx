@@ -138,9 +138,15 @@ export function App() {
     return session?.role === 'teacher' || localStorage.getItem('tjam_staff_auth') === 'true';
   });
 
+  const [appNotice, setAppNotice] = useState<{ text: string; type: 'info' | 'success' | 'error' } | null>(null);
+  const showAppNotice = (text: string, type: 'info' | 'success' | 'error' = 'info') => {
+    setAppNotice({ text, type });
+    setTimeout(() => setAppNotice((prev) => (prev?.text === text ? null : prev)), 5000);
+  };
+
   const handleSetViewMode = (mode: ViewMode) => {
     if (currentUserSession?.role === 'student' && (mode === 'teacher' || mode === 'admin' || mode === 'superadmin')) {
-      alert('Acesso Restrito: Sua conta de aluno não possui permissão para acessar o Portal do Docente.');
+      showAppNotice('Acesso Restrito: Sua conta de aluno não possui permissão para acessar o Portal do Docente.', 'error');
       return;
     }
     setViewMode(mode);
@@ -188,7 +194,7 @@ export function App() {
 
   const [videoLessons, setVideoLessons] = useState<VideoLesson[]>(() => {
     try {
-      const vKey = 'tjam_video_lessons_v6_qui_acao_penal';
+      const vKey = 'tjam_video_lessons_v8_sex_ingles_const';
       if (!localStorage.getItem(vKey)) {
         localStorage.setItem('tjam_video_lessons', JSON.stringify(INITIAL_VIDEO_LESSONS));
         localStorage.setItem(vKey, 'true');
@@ -315,8 +321,8 @@ export function App() {
         const isStrictTodayGoal =
           Array.isArray(parsed.weeklyGoals) &&
           parsed.weeklyGoals.length === 2 &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qui-01') &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qui-02');
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-sex-01') &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-sex-02');
         if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !isStrictTodayGoal) {
           parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
@@ -389,7 +395,7 @@ export function App() {
         if (localStorage.getItem('tjam_contents_reboot_2026_v5') !== 'true') {
           await handleResetAllStudentContents(true);
           localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
-          localStorage.setItem('tjam_selected_subject', 'legislacao_tjam');
+          localStorage.setItem('tjam_selected_subject', 'ingles');
         } else {
           // 1. Fetch remote progress from Firestore or fallback to local
           const effectiveId = (currentUserSession?.role === 'student' ? currentUserSession.id : null) || 'id00120087';
@@ -521,19 +527,22 @@ export function App() {
       }
     }, studentId);
 
-    // Proactively sync Monday goals to Firestore on app startup
+    // Proactively sync today's goals to Firestore on app startup
     saveSharedWeeklyGoalsToFirestore(INITIAL_WEEKLY_GOALS).catch(() => {});
 
     const unsubSharedGoals = subscribeToSharedWeeklyGoals(INITIAL_WEEKLY_GOALS, (sharedGoals) => {
       if (sharedGoals && sharedGoals.length > 0) {
-        const hasMondayGoals = sharedGoals.some((g) => g.id === 'goal-seg-01' || g.id === 'goal-seg-02');
-        if (hasMondayGoals) {
+        const isCurrentTodayGoal =
+          sharedGoals.length === 2 &&
+          sharedGoals.some((g) => g.id === 'goal-sex-01') &&
+          sharedGoals.some((g) => g.id === 'goal-sex-02');
+        if (isCurrentTodayGoal) {
           setUserProgress((prev) => ({
             ...prev,
             weeklyGoals: sharedGoals,
           }));
         } else {
-          // If remote goals were from old classes, immediately update remote Firestore to Monday's goals!
+          // If remote goals were from old classes, immediately update remote Firestore to today's goal!
           saveSharedWeeklyGoalsToFirestore(INITIAL_WEEKLY_GOALS).catch(() => {});
           setUserProgress((prev) => ({
             ...prev,
@@ -551,8 +560,18 @@ export function App() {
 
     const unsubTodayLessons = subscribeToTodayLessonsConfig((remoteLessons) => {
       if (remoteLessons && remoteLessons.length > 0) {
-        setTodayLessons(remoteLessons);
-        saveTodayLessonsConfig(remoteLessons);
+        const isCurrentTodayLesson =
+          remoteLessons.length === 2 &&
+          remoteLessons.some((l) => l.subjectKey === 'ingles') &&
+          remoteLessons.some((l) => l.subjectKey === 'direito_const');
+        if (isCurrentTodayLesson) {
+          setTodayLessons(remoteLessons);
+          saveTodayLessonsConfig(remoteLessons);
+        } else {
+          const freshDefaults = getTodayLessonsConfig();
+          setTodayLessons(freshDefaults);
+          saveTodayLessonsConfig(freshDefaults);
+        }
       }
     });
 
@@ -568,31 +587,70 @@ export function App() {
   // Saved Lessons State for instantaneous synchronization between Student Portal and Teacher Portal
   const [savedLessons, setSavedLessons] = useState<Record<string, any>>(() => {
     try {
-      const saved = localStorage.getItem('tjam_lessons_progress');
+      const session = StudentAccountService.getSession();
+      const effectiveId = (session?.role === 'student' ? session.id : null) || 'id00120087';
+      const lessonsKey = effectiveId === 'id00120087' ? 'tjam_lessons_progress' : `tjam_lessons_progress_${effectiveId}`;
+      const saved =
+        localStorage.getItem(lessonsKey) ||
+        (effectiveId === 'id00120087' ? localStorage.getItem('tjam_lessons_progress') : null);
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
     }
   });
 
-  // Real-time automatic update engine (syncs without reloading page)
-  const [lastSyncTime, setLastSyncTime] = useState<string>(() => new Date().toLocaleTimeString('pt-BR'));
-
+  // Real-time automatic update engine (syncs only when underlying storage actually changes)
   useEffect(() => {
-    // 1. Cross-tab storage listener
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'tjam_user_progress' && e.newValue) {
+    const effectiveId = (currentUserSession?.role === 'student' ? currentUserSession.id : null) || 'id00120087';
+    const progressKey = effectiveId === 'id00120087' ? 'tjam_user_progress' : `tjam_user_progress_${effectiveId}`;
+    const lessonsKey = effectiveId === 'id00120087' ? 'tjam_lessons_progress' : `tjam_lessons_progress_${effectiveId}`;
+
+    let lastProgressJson = localStorage.getItem(progressKey) || '';
+    let lastLessonsJson = localStorage.getItem(lessonsKey) || '';
+    let lastSubsJson = localStorage.getItem('tjam_submissions') || '';
+
+    const syncFromLocalIfChanged = () => {
+      const savedProgress = localStorage.getItem(progressKey);
+      if (savedProgress && savedProgress !== lastProgressJson) {
+        lastProgressJson = savedProgress;
         try {
-          const parsed = sanitizeUserProgressData(JSON.parse(e.newValue));
+          const parsed = sanitizeUserProgressData(JSON.parse(savedProgress));
           setUserProgress(parsed);
         } catch {}
       }
-      if (e.key === 'tjam_lessons_progress' && e.newValue) {
+
+      const savedLessonsRaw = localStorage.getItem(lessonsKey);
+      if (savedLessonsRaw && savedLessonsRaw !== lastLessonsJson) {
+        lastLessonsJson = savedLessonsRaw;
+        try {
+          setSavedLessons(JSON.parse(savedLessonsRaw));
+        } catch {}
+      }
+
+      const savedSubsRaw = localStorage.getItem('tjam_submissions');
+      if (savedSubsRaw && savedSubsRaw !== lastSubsJson) {
+        lastSubsJson = savedSubsRaw;
+        try {
+          setSubmissions(JSON.parse(savedSubsRaw));
+        } catch {}
+      }
+    };
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if ((e.key === progressKey || e.key === 'tjam_user_progress') && e.newValue) {
+        lastProgressJson = e.newValue;
+        try {
+          setUserProgress(sanitizeUserProgressData(JSON.parse(e.newValue)));
+        } catch {}
+      }
+      if ((e.key === lessonsKey || e.key === 'tjam_lessons_progress') && e.newValue) {
+        lastLessonsJson = e.newValue;
         try {
           setSavedLessons(JSON.parse(e.newValue));
         } catch {}
       }
       if (e.key === 'tjam_submissions' && e.newValue) {
+        lastSubsJson = e.newValue;
         try {
           setSubmissions(JSON.parse(e.newValue));
         } catch {}
@@ -606,7 +664,6 @@ export function App() {
       if (e.key === 'tjam_today_lessons_config' && e.newValue) {
         try { setTodayLessons(JSON.parse(e.newValue)); } catch {}
       }
-      setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
     };
 
     const handleTodayLessonsLocalEvent = () => {
@@ -615,41 +672,20 @@ export function App() {
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('tjam_today_lessons_updated', handleTodayLessonsLocalEvent);
+    window.addEventListener('tjam_lesson_progress_updated', syncFromLocalIfChanged);
+    window.addEventListener('tjam_attendance_updated', syncFromLocalIfChanged);
 
-    // 2. Periodic background ticker (every 1 second) for live state evaluation without page reloads
-    const syncInterval = setInterval(() => {
-      setLastSyncTime(new Date().toLocaleTimeString('pt-BR'));
-      const savedProgress = localStorage.getItem('tjam_user_progress');
-      if (savedProgress) {
-        try {
-          const parsed = sanitizeUserProgressData(JSON.parse(savedProgress));
-          if (JSON.stringify(parsed) !== JSON.stringify(userProgress)) {
-            setUserProgress(parsed);
-          }
-        } catch {}
-      }
-      const savedLessonsRaw = localStorage.getItem('tjam_lessons_progress');
-      if (savedLessonsRaw) {
-        try {
-          const parsedLessons = JSON.parse(savedLessonsRaw);
-          setSavedLessons(parsedLessons);
-        } catch {}
-      }
-      const savedSubsRaw = localStorage.getItem('tjam_submissions');
-      if (savedSubsRaw) {
-        try {
-          const parsedSubs = JSON.parse(savedSubsRaw);
-          setSubmissions(parsedSubs);
-        } catch {}
-      }
-    }, 1000);
+    // Lightweight diff-checked poll every 2.5s for same-tab localStorage updates from subcomponents
+    const syncInterval = setInterval(syncFromLocalIfChanged, 2500);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('tjam_today_lessons_updated', handleTodayLessonsLocalEvent);
+      window.removeEventListener('tjam_lesson_progress_updated', syncFromLocalIfChanged);
+      window.removeEventListener('tjam_attendance_updated', syncFromLocalIfChanged);
       clearInterval(syncInterval);
     };
-  }, [userProgress]);
+  }, [currentUserSession?.id, currentUserSession?.role]);
 
   // Countdown Timer for Next Class (Tomorrow at 14:00)
   const [timeLeft, setTimeLeft] = useState<{ hours: number; minutes: number; seconds: number }>({ hours: 0, minutes: 0, seconds: 0 });
@@ -851,19 +887,22 @@ export function App() {
       personalNotes: {},
       nodeNotes: {},
       reviewQueue: [],
-      weeklyGoals: [],
+      weeklyGoals: INITIAL_WEEKLY_GOALS,
       savedLessons: {},
       simuladoAttempts: [],
     };
 
     // 1. Reset React local states
     setUserProgress(cleanProgress);
+    setSavedLessons({});
     setSubmissions([]);
 
     // 2. Clear all local storage caches related to student contents and progress
     try {
       localStorage.setItem('tjam_user_progress', JSON.stringify(cleanProgress));
+      localStorage.setItem('tjam_user_progress_id00120087', JSON.stringify(cleanProgress));
       localStorage.setItem('tjam_lessons_progress', JSON.stringify({}));
+      localStorage.setItem('tjam_lessons_progress_id00120087', JSON.stringify({}));
       localStorage.setItem('tjam_all_lessons_progress', JSON.stringify({}));
       localStorage.setItem('tjam_submissions', JSON.stringify([]));
       localStorage.removeItem('tjam_week1_lessons');
@@ -879,7 +918,7 @@ export function App() {
       localStorage.removeItem('tjam_video_desafio_admin_controle');
       localStorage.removeItem('tjam_video_desafio_const_nacionalidade');
       localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
-      localStorage.setItem('tjam_selected_subject', 'legislacao_tjam');
+      localStorage.setItem('tjam_selected_subject', 'ingles');
     } catch (e) {
       console.warn('Erro ao limpar localStorage:', e);
     }
@@ -895,7 +934,7 @@ export function App() {
     }
 
     if (!isSilent) {
-      alert('✅ Todos os conteúdos e o progresso dos alunos foram zerados com sucesso! O curso foi reiniciado para os alunos.');
+      showAppNotice('Todos os conteúdos e o progresso dos alunos foram zerados com sucesso! O curso foi reiniciado para os alunos.', 'success');
     }
   };
 
@@ -1209,9 +1248,9 @@ export function App() {
       if (data.news) setNews(data.news);
       if (data.weeklySchedule) setWeeklySchedule(data.weeklySchedule);
       if (data.userProgress) setUserProgress(sanitizeUserProgressData(data.userProgress));
-      alert('Backup importado com sucesso!');
+      showAppNotice('Backup importado com sucesso!', 'success');
     } catch (e) {
-      alert('Erro ao importar backup JSON.');
+      showAppNotice('Erro ao importar backup JSON.', 'error');
     }
   };
 
@@ -1219,6 +1258,28 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 relative selection:bg-amber-100 selection:text-amber-900">
+      {appNotice && (
+        <div
+          role="status"
+          className={`fixed bottom-4 right-4 z-50 max-w-md px-4 py-3 rounded-2xl border shadow-lg text-xs font-bold flex items-center justify-between gap-3 ${
+            appNotice.type === 'error'
+              ? 'bg-rose-50 border-rose-300 text-rose-800'
+              : appNotice.type === 'success'
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
+              : 'bg-white border-slate-300 text-slate-800'
+          }`}
+        >
+          <span>{appNotice.text}</span>
+          <button
+            type="button"
+            onClick={() => setAppNotice(null)}
+            className="text-slate-500 hover:text-slate-900 font-black cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Navigation Header */}
       <Header
         viewMode={viewMode}
@@ -1485,6 +1546,7 @@ export function App() {
                   progress={userProgress}
                   isDarkMode={isDarkMode}
                   isDuo={isDuo}
+                  currentUserSession={currentUserSession}
                 />
               )}
 
@@ -1509,14 +1571,6 @@ export function App() {
 
               {studentTab === 'simulados' && (
                 <RankingsOnlyView />
-              )}
-
-              {studentTab === 'caderno-erros' && (
-                <CadernoErrosView
-                  questions={questions}
-                  progress={userProgress}
-                  isDarkMode={isDarkMode}
-                />
               )}
 
               {studentTab === 'news' && <NewsView news={news} isDarkMode={isDarkMode} />}

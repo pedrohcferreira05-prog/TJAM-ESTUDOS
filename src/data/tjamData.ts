@@ -446,8 +446,11 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-sex',
     dayOfWeek: 'Sexta',
-    disciplineIds: ['legislacao-tjam', 'geografia-amazonas'],
-    tasks: ['Regimento Interno TJAM (Lei Seca)', 'Geografia: Hidrografia e ZFM', '15 Questões'],
+    disciplineIds: ['ingles', 'direito-constitucional'],
+    tasks: [
+      '1ª Aula: Língua Inglesa — Aula 01: Reading Comprehension (Interpretação de Textos em Inglês)',
+      '2ª Aula: Direito Constitucional — Aula 01: Princípios Fundamentais da CF/88 (Arts. 1º ao 4º)',
+    ],
     completed: false,
   },
   {
@@ -467,6 +470,6 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
 ];
 
 export const INITIAL_WEEKLY_GOALS = [
-  { id: 'goal-qui-01', text: '📚 1ª Aula: Direito Processual Penal — Aula 02: Ação Penal', completed: false },
-  { id: 'goal-qui-02', text: '🏛️ 2ª Aula: Legislação Institucional — Aula 02: Lei Complementar Estadual nº 261/2023', completed: false },
+  { id: 'goal-sex-01', text: '🇬🇧 1ª Aula: Língua Inglesa — Aula 01: Reading Comprehension (Interpretação de Textos em Inglês)', completed: false },
+  { id: 'goal-sex-02', text: '⚖️ 2ª Aula: Direito Constitucional — Aula 01: Princípios Fundamentais da CF/88 (Arts. 1º ao 4º)', completed: false },
 ];

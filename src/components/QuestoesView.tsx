@@ -68,18 +68,19 @@ export const QuestoesView: React.FC<QuestoesViewProps> = ({
     const d = discId.toLowerCase().replace(/[-_]/g, '');
     const t = target.toLowerCase().replace(/[-_]/g, '');
     if (d === t) return true;
-    if (d.includes(t) || t.includes(d)) return true;
-    // Common aliases
-    if ((d.includes('admin') || t.includes('admin')) && (d.includes('direito') || t.includes('direito'))) return true;
-    if ((d.includes('const') || t.includes('const')) && (d.includes('direito') || t.includes('direito'))) return true;
+    if (d.includes('admin') && t.includes('admin')) return true;
+    if (d.includes('const') && t.includes('const')) return true;
     if (d.includes('civil') && t.includes('civil')) return true;
     if (d.includes('penal') && t.includes('penal')) return true;
-    if ((d.includes('port') || t.includes('port')) || (d.includes('lingua') && t.includes('lingua'))) return true;
+    if (d.includes('port') && t.includes('port')) return true;
+    if (d.includes('ingl') && t.includes('ingl')) return true;
     if (d.includes('tjam') && t.includes('tjam')) return true;
     if (d.includes('geo') && t.includes('geo')) return true;
-    if ((d.includes('libra') || t.includes('libra')) || (d.includes('acess') || t.includes('acess'))) return true;
+    if ((d.includes('libra') || d.includes('acess')) && (t.includes('libra') || t.includes('acess'))) return true;
     if (d.includes('info') && t.includes('info')) return true;
-    if (d.includes('ingl') && t.includes('ingl')) return true;
+    if (d.includes('oratoria') && t.includes('oratoria')) return true;
+    if (d.includes('redacao') && t.includes('redacao')) return true;
+    if (d.includes(t) || t.includes(d)) return true;
     return false;
   };
 

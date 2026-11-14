@@ -191,14 +191,15 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
   // 2. SEGUNDA AULA DE HOJE: DIREITO CONSTITUCIONAL
   {
     id: 'direito_const',
-    title: 'Direito Constitucional — Aula 01: Princípios Fundamentais (Arts. 1º a 4º da CF/88)',
+    title: 'Direito Constitucional — Aula 01: Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
     disciplineId: 'direito-constitucional',
     disciplineName: 'Direito Constitucional',
     badge: '2ª Aula de Hoje',
     isPriorityToday: true,
     emoji: '⚖️',
     duration: '45 min',
-    summary: 'Fundamentos da República (SO-CI-DI-VA-PLU), Separação dos Poderes (Art. 2º), Objetivos Fundamentais (Art. 3º) e Relações Internacionais (Art. 4º).',
+    videoUrl: 'https://www.youtube.com/embed/dHTXl5s239M',
+    summary: 'O que é Direito Constitucional, Fundamentos da República (SO-CI-DI-VA-PLU — Art. 1º), Separação dos Poderes (Art. 2º), Objetivos Fundamentais (Art. 3º), Relações Internacionais (Art. 4º) e 20 exercícios gabaritados.',
     mcQuestions: direitoConstMcQuestionsData,
     tfQuestions: direitoConstTfQuestionsData,
     discursiveQuestions: direitoConstDiscursiveQuestionsData,
@@ -206,17 +207,18 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
     summaryPoints: direitoConstSummaryPoints,
   },
 
-  // 3. TERCEIRA AULA DE HOJE: LÍNGUA INGLESA
+  // LÍNGUA INGLESA — AULA 01: READING COMPREHENSION
   {
     id: 'ingles',
-    title: 'Língua Inglesa — Aula 01: Introdução ao Inglês (Cumprimentos, Apresentação & Verbo TO BE)',
+    title: 'Língua Inglesa — Aula 01: Reading Comprehension — Interpretação de Textos em Inglês',
     disciplineId: 'lingua-inglesa',
     disciplineName: 'Língua Inglesa',
-    badge: '3ª Aula de Hoje',
+    badge: '1ª Aula de Hoje',
     isPriorityToday: true,
     emoji: '🇬🇧',
     duration: '45 min',
-    summary: 'Cumprimentos formais e informais, pronomes pessoais retos, conjugação do verbo TO BE no presente e apresentação pessoal.',
+    videoUrl: 'https://www.youtube.com/embed/0OKwcAaV_gQ',
+    summary: 'Estratégias de leitura (Skimming, Scanning e Reading for detail), vocabulário jurídico e administrativo (15 termos), pronomes e palavras interrogativas (Wh- words), texto "The Importance of Justice" e 20 exercícios comentados (objetivas, V/F, interpretação e dissertativas).',
     mcQuestions: inglesMcQuestionsData,
     tfQuestions: inglesTfQuestionsData,
     discursiveQuestions: inglesDiscursiveQuestionsData,

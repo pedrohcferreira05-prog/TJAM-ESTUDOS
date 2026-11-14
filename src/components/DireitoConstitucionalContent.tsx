@@ -1,43 +1,36 @@
 import React, { useState } from 'react';
 import {
-  Landmark,
   Scale,
   CheckCircle2,
   Check,
-  Lightbulb,
   AlertTriangle,
-  Sparkles,
   BookOpen,
   Layers,
   HelpCircle,
-  FileText,
-  ShieldCheck,
   Video,
   Globe,
-  Award,
-  Send,
   ExternalLink,
-  Info,
   CheckSquare,
-  Users,
-  Vote,
-  HeartHandshake,
-  Briefcase,
-  Copy,
-  ChevronDown,
-  ChevronUp
+  Landmark,
+  ShieldCheck,
+  Target,
 } from 'lucide-react';
-import { direitoConstVideoPracticalTask } from '../data/direitoConstitucionalLessonData';
 
 interface DireitoConstitucionalContentProps {
   isDarkMode?: boolean;
-  isLessonCompleted: boolean;
+  isLessonCompleted?: boolean;
+  onToggleComplete?: () => void;
   onToggleCompleted?: () => void;
   onNavigateTab?: (tab: any) => void;
 }
 
+const YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed/dHTXl5s239M?autoplay=0&rel=0';
+const YOUTUBE_DIRECT_URL = 'https://youtu.be/dHTXl5s239M?si=xE1Gl54Z9PYAbxUx';
+const PLANALTO_CF88_URL = 'https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm';
+
 export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContentProps> = ({
-  isLessonCompleted,
+  isLessonCompleted = false,
+  onToggleComplete,
   onToggleCompleted,
   onNavigateTab,
 }) => {
@@ -45,129 +38,116 @@ export const DireitoConstitucionalContent: React.FC<DireitoConstitucionalContent
     try {
       const saved = localStorage.getItem('tjam_checklist_direito_const_aula01');
       if (saved) return JSON.parse(saved);
-    } catch (e) {}
+    } catch {
+      // ignore storage errors
+    }
     return {
-      cf88_intro: false,
-      fundamentos_socidivapl: false,
-      poder_povo: false,
-      poderes_independentes: false,
-      objetivos_congarerrpro: false,
-      fundamentos_vs_objetivos: false,
-      relacoes_internacionais: false,
-      integracao_latina: false,
+      conceito_dc: false,
+      art1_socidivaplu: false,
+      art2_poderes: false,
+      art3_objetivos: false,
+      art4_relacoes: false,
+      diferencas_artigos: false,
+      leitura_cf88: false,
+      fixacao_20q: false,
     };
   });
 
-  const [activeTabSub, setActiveTabSub] = useState<'teoria' | 'tabela' | 'dominar' | 'pratica'>('teoria');
-  const [expandedFaq, setExpandedFaq] = useState<Record<number, boolean>>({});
-  const [copiedTemplate, setCopiedTemplate] = useState(false);
+  const [activeSubView, setActiveSubView] = useState<'teoria' | 'tabela' | 'leitura'>('teoria');
+
+  const handleToggleDone = onToggleComplete || onToggleCompleted;
 
   const toggleCheck = (key: string) => {
-    setChecklist(prev => {
+    setChecklist((prev) => {
       const updated = { ...prev, [key]: !prev[key] };
       try {
         localStorage.setItem('tjam_checklist_direito_const_aula01', JSON.stringify(updated));
-      } catch (e) {}
+      } catch {
+        // ignore storage errors
+      }
       return updated;
     });
   };
 
-  const toggleFaq = (idx: number) => {
-    setExpandedFaq(prev => ({ ...prev, [idx]: !prev[idx] }));
-  };
-
-  const practicalTemplateText = `Nome: 
-Turma: TJAM Assistente Judiciário
-Disciplina: Direito Constitucional
-Aula: 01 — Princípios Fundamentais
-
-Conteúdo 1: Dignidade da Pessoa Humana (Art. 1º, III)
-Significado: Reconhece a pessoa humana como elemento central e prioritário de proteção estatal e constitucional.
-Aplicação na situação: Como servidor do Tribunal de Justiça atendendo um cidadão com dificuldade de compreensão, devo tratar a pessoa com total respeito, empatia e paciência, garantindo que ela não se sinta humilhada ou desamparada no órgão judiciário.
-
-Conteúdo 2: Cidadania (Art. 1º, II) e Promover o bem de todos (Art. 3º, IV)
-Significado: O pleno exercício dos direitos civis e políticos e a obrigação do Estado de prestar serviços sem discriminação ou entraves desnecessários.
-Aplicação na situação: Orientar com clareza a linguagem jurídica, traduzindo termos técnicos para que o cidadão possa exercer seu direito de acesso à justiça de forma plena e consciente.`;
-
-  const handleCopyTemplate = () => {
-    navigator.clipboard.writeText(practicalTemplateText);
-    setCopiedTemplate(true);
-    setTimeout(() => setCopiedTemplate(false), 2500);
-  };
+  const completedChecklistCount = Object.values(checklist).filter(Boolean).length;
 
   return (
-    <article className="p-4 sm:p-8 md:p-10 rounded-3xl border border-slate-200 bg-white text-slate-800 shadow-sm space-y-8 leading-relaxed transition-all">
-      {/* 1. Header Oficial da Aula */}
-      <section className="p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-teal-500/15 border-amber-300 shadow-xs space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-xs">
-                <Sparkles className="w-3.5 h-3.5" /> 2ª Aula de Hoje • Cronograma Reiniciado do Zero
-              </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-xs">
-                ⚖️ Arts. 1º a 4º da CF/88
-              </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-slate-900 text-amber-300">
-                Nível: Intermediário — TJAM Assistente Judiciário
-              </span>
+    <article className="p-5 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 shadow-sm space-y-8 leading-relaxed">
+      {/* Cabeçalho da Aula */}
+      <header className="space-y-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
+              <span>2ª Aula de Hoje</span>
+              <span aria-hidden="true">·</span>
+              <span>Preparatório TJAM — Assistente Judiciário</span>
+              <span aria-hidden="true">·</span>
+              <span>Nível intermediário</span>
+              <span aria-hidden="true">·</span>
+              <span>Aula 01</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-950 mt-1 flex items-center gap-2.5">
-              <Scale className="w-8 h-8 text-amber-600 shrink-0" />
-              <span>Direito Constitucional — Aula 01</span>
+
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white tracking-tight flex items-center gap-2.5">
+              <Scale className="w-7 h-7 text-amber-600 dark:text-amber-400 shrink-0" />
+              <span>AULA 1 — DIREITO CONSTITUCIONAL</span>
             </h2>
-            <p className="text-sm font-bold text-slate-700">
-              Princípios Fundamentais da Constituição Federal de 1988 (Fundamentos, Poderes, Objetivos e Relações Internacionais)
+            <p className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-200">
+              Tema: Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º
+            </p>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
+              Este é um dos conteúdos fundamentais do Direito Constitucional e merece atenção especial na preparação para concursos públicos.
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0 flex-wrap">
             {onNavigateTab && (
               <button
+                type="button"
                 onClick={() => onNavigateTab('questoes')}
-                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
               >
                 <HelpCircle className="w-4 h-4" />
-                <span>20 Questões da Aula</span>
+                <span>Ir para 20 Exercícios</span>
               </button>
             )}
-            {onToggleCompleted && (
+            {handleToggleDone && (
               <button
-                onClick={onToggleCompleted}
-                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                type="button"
+                onClick={handleToggleDone}
+                className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 border ${
                   isLessonCompleted
-                    ? 'bg-emerald-600 text-white shadow-md'
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300'
+                    ? 'bg-emerald-600 text-white border-emerald-600'
+                    : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border-slate-300 dark:border-slate-700'
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4" />
-                <span>{isLessonCompleted ? 'Aula Concluída ✓' : 'Marcar como Concluída'}</span>
+                <span>{isLessonCompleted ? 'Aula Concluída' : 'Marcar como Concluída'}</span>
               </button>
             )}
           </div>
         </div>
 
-        {/* Vídeo Aula Incorporado */}
-        <div className="mt-4 p-4 rounded-2xl bg-white border border-amber-200 shadow-sm space-y-3">
+        {/* Videoaula Integrada */}
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-xs font-black uppercase text-amber-900 flex items-center gap-1.5">
-              <Video className="w-4 h-4 text-red-600" />
-              <span>Vídeo Aula Oficial Recomendada para a Aula 01</span>
+            <span className="text-xs font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+              <Video className="w-4 h-4 text-rose-600" />
+              <span>Videoaula Oficial — Direito Constitucional (Aula 01: Arts. 1º ao 4º)</span>
             </span>
             <a
-              href="https://youtu.be/Z2vrJZSz-qc?is=jkFDMpU9S6eJisIX"
+              href={YOUTUBE_DIRECT_URL}
               target="_blank"
-              rel="noreferrer"
-              className="text-xs font-extrabold text-blue-600 hover:underline flex items-center gap-1"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
             >
-              <span>Abrir no YouTube</span>
+              <span>Assistir no YouTube</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
-          <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
+          <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800">
             <iframe
-              src="https://www.youtube.com/embed/Z2vrJZSz-qc"
-              title="Vídeo Aula Direito Constitucional Aula 01"
+              src={YOUTUBE_EMBED_URL}
+              title="Videoaula Direito Constitucional — Princípios Fundamentais (Arts. 1º ao 4º)"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full border-0"
@@ -175,87 +155,80 @@ Aplicação na situação: Orientar com clareza a linguagem jurídica, traduzind
           </div>
         </div>
 
-        {/* Sub-navegação interna */}
-        <div className="flex gap-2 border-t border-amber-200/60 pt-4 flex-wrap">
+        {/* Controles Segmentados da Aula */}
+        <div className="flex flex-wrap gap-1.5 p-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
           <button
-            onClick={() => setActiveTabSub('teoria')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTabSub === 'teoria'
-                ? 'bg-slate-950 text-amber-300 shadow-sm'
-                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
+            type="button"
+            onClick={() => setActiveSubView('teoria')}
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+              activeSubView === 'teoria'
+                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span>1. Teoria Completa (Arts. 1º a 4º)</span>
+            <span>Conteúdo Completo (1 a 8)</span>
           </button>
           <button
-            onClick={() => setActiveTabSub('tabela')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTabSub === 'tabela'
-                ? 'bg-slate-950 text-amber-300 shadow-sm'
-                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
+            type="button"
+            onClick={() => setActiveSubView('tabela')}
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+              activeSubView === 'tabela'
+                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>2. Tabela FGV/Cebraspe & Mnemônicos</span>
+            <span>Quadro Comparativo (Arts. 1º–4º)</span>
           </button>
           <button
-            onClick={() => setActiveTabSub('dominar')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTabSub === 'dominar'
-                ? 'bg-slate-950 text-amber-300 shadow-sm'
-                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
+            type="button"
+            onClick={() => setActiveSubView('leitura')}
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+              activeSubView === 'leitura'
+                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Award className="w-3.5 h-3.5" />
-            <span>3. O que você precisa dominar (6 Perguntas)</span>
-          </button>
-          <button
-            onClick={() => setActiveTabSub('pratica')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTabSub === 'pratica'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
-            }`}
-          >
-            <Send className="w-3.5 h-3.5 text-emerald-600" />
-            <span>4. Atividade Prática (WhatsApp TJAM)</span>
+            <Landmark className="w-3.5 h-3.5" />
+            <span>Leitura Obrigatória (CF/88)</span>
           </button>
         </div>
 
-        {/* Checklist Interativo da Aula */}
-        <div className="pt-3 border-t border-amber-200/60">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+        {/* Checklist de Estudo */}
+        <div className="pt-2 space-y-2.5">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
               <CheckSquare className="w-3.5 h-3.5 text-amber-600" />
-              <span>Checklist de Metas de Domínio da Aula 01 (8 Tópicos Essenciais)</span>
+              <span>Checklist da Aula 01</span>
             </span>
-            <span className="text-[11px] font-bold text-amber-800">
-              {Object.values(checklist).filter(Boolean).length}/8 concluídos
+            <span className="font-semibold text-slate-600 dark:text-slate-400 tabular-nums">
+              {completedChecklistCount}/8 concluídos
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             {[
-              { id: 'cf88_intro', label: '1. CF/88 & Norma Fundamental' },
-              { id: 'fundamentos_socidivapl', label: '2. Art. 1º: SO-CI-DI-VA-PL' },
-              { id: 'poder_povo', label: '3. Parágrafo Único Art. 1º (Poder)' },
-              { id: 'poderes_independentes', label: '4. Art. 2º: 3 Poderes Harmônicos' },
-              { id: 'objetivos_congarerrpro', label: '5. Art. 3º: CON-GAR-ERR-PRO' },
-              { id: 'fundamentos_vs_objetivos', label: '6. Fundamentos × Objetivos' },
-              { id: 'relacoes_internacionais', label: '7. Art. 4º: 10 Princípios' },
-              { id: 'integracao_latina', label: '8. Art. 4º, P. Único (América Latina)' },
-            ].map(item => (
+              { id: 'conceito_dc', label: '1. O que é Direito Constitucional' },
+              { id: 'art1_socidivaplu', label: '2. Art. 1º — SO-CI-DI-VA-PLU' },
+              { id: 'art2_poderes', label: '3. Art. 2º — Separação dos Poderes' },
+              { id: 'art3_objetivos', label: '4. Art. 3º — Objetivos Fundamentais' },
+              { id: 'art4_relacoes', label: '5. Art. 4º — Relações Internacionais' },
+              { id: 'diferencas_artigos', label: '6. Diferenças Arts. 1º ao 4º' },
+              { id: 'leitura_cf88', label: '7. Leitura dos Arts. 1º a 4º CF/88' },
+              { id: 'fixacao_20q', label: '8. Fixação e 20 Exercícios' },
+            ].map((item) => (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => toggleCheck(item.id)}
-                className={`p-2 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all border cursor-pointer ${
+                className={`p-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-colors border cursor-pointer ${
                   checklist[item.id]
-                    ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold'
-                    : 'bg-white/80 border-slate-200 text-slate-600 hover:bg-white'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-400 text-emerald-950 dark:text-emerald-200'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                  className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
                     checklist[item.id]
                       ? 'bg-emerald-600 border-emerald-600 text-white'
                       : 'border-slate-400'
@@ -268,583 +241,477 @@ Aplicação na situação: Orientar com clareza a linguagem jurídica, traduzind
             ))}
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* ABA 1: TEORIA COMPLETA */}
-      {activeTabSub === 'teoria' && (
-        <div className="space-y-8 animate-in fade-in duration-200">
-          {/* Introdução do Cronograma */}
-          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm font-medium flex items-start gap-3">
-            <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <div>
-              <span className="font-extrabold">Orientações do Professor:</span> Nesta segunda aula de hoje, vamos iniciar Direito Constitucional do zero, porque o cronograma foi reiniciado. A base desta aula está principalmente nos <strong className="font-black">arts. 1º a 4º da Constituição Federal de 1988</strong>, que integram o <em>Título I — Dos Princípios Fundamentais</em>.
-            </div>
-          </div>
-
-          {/* 1. Constituição Federal de 1988 */}
+      {/* ABA 1: TEORIA COMPLETA (TÓPICOS 1 A 8) */}
+      {activeSubView === 'teoria' && (
+        <div className="space-y-8">
+          {/* 1. O que é Direito Constitucional? */}
           <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">1</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Constituição Federal de 1988</h3>
-            </div>
-            <p className="text-sm text-slate-700 leading-relaxed">
-              A <strong>Constituição da República Federativa do Brasil de 1988</strong> é a norma fundamental do Estado brasileiro. Ela estabelece, entre outros aspectos:
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              1. O que é Direito Constitucional?
+            </h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              É o ramo do <strong>Direito Público</strong> responsável pelo estudo da Constituição Federal, que estabelece:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700">
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Organização do Estado;
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Direitos e garantias fundamentais;
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Organização dos Poderes;
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Princípios fundamentais;
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Competências dos entes federativos;
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                <span className="text-amber-600 font-bold">•</span> Funcionamento das instituições públicas.
-              </div>
-            </div>
-            <p className="text-xs font-bold text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-              🎯 Para esta primeira aula, nosso foco será rigorosamente nos <strong>arts. 1º a 4º</strong>.
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-slate-700 dark:text-slate-200">
+              <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                • A organização do Estado.
+              </li>
+              <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                • A estrutura dos Poderes.
+              </li>
+              <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                • Os direitos e garantias fundamentais.
+              </li>
+              <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                • Os deveres do Estado.
+              </li>
+              <li className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 sm:col-span-2">
+                • Os princípios que orientam a República.
+              </li>
+            </ul>
+            <p className="text-sm font-bold text-slate-900 dark:text-amber-200 p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60">
+              A Constituição Federal de 1988 é a lei fundamental e suprema do Brasil.
             </p>
           </section>
 
-          {/* 2. Artigo 1º — Fundamentos da República */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">2</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 1º — Fundamentos da República</h3>
-            </div>
-            <p className="text-sm text-slate-700">
-              O Brasil constitui-se em <strong>Estado Democrático de Direito</strong>. O art. 1º apresenta <strong className="font-extrabold text-amber-700">cinco fundamentos</strong> expressos:
+          {/* 2. Artigo 1º — Fundamentos da República Federativa do Brasil */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              2. Artigo 1º — Fundamentos da República Federativa do Brasil
+            </h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              O Brasil constitui-se em <strong>Estado Democrático de Direito</strong> e possui cinco fundamentos:
             </p>
 
-            <div className="space-y-2.5">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span>🇧🇷</span> <span>1. Soberania</span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  É o poder do Estado brasileiro de se auto-organizar e exercer sua autoridade suprema dentro de seu território, sem submissão a outro Estado.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span>👥</span> <span>2. Cidadania</span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  Relaciona-se à participação ativa do indivíduo na vida política e social do Estado e ao exercício de direitos e deveres civis.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span>👤</span> <span>3. Dignidade da pessoa humana</span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  Reconhece a pessoa humana como elemento central e valor supremo de proteção constitucional em todas as esferas.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span>💼</span> <span>4. Valores sociais do trabalho e da livre iniciativa</span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  A Constituição harmoniza e valoriza tanto a proteção do trabalho humano quanto a liberdade de empreender e a iniciativa econômica.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span>🗳️</span> <span>5. Pluralismo político</span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  Reconhece a existência, convivência pacífica e livre manifestação de diferentes ideias, crenças e posições políticas (não se confunde com mero pluripartidarismo).
-                </p>
+            <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-1.5">
+              <div className="text-xs font-bold text-amber-300">Mnemônico oficial de memorização</div>
+              <div className="text-lg sm:text-xl font-black tracking-wide">
+                Os cinco fundamentos — SO-CI-DI-VA-PLU
               </div>
             </div>
 
-            {/* Mnemônico SO-CI-DI-VA-PL */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 border-2 border-amber-400">
-              <div className="flex items-center gap-2 font-black text-slate-900 text-sm">
-                <span>🧠</span> <span>Para Memorizar o Art. 1º:</span>
+            <div className="space-y-2.5 text-sm">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Soberania:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  poder do Estado de se organizar e tomar decisões sem submissão a outro Estado.
+                </span>
               </div>
-              <div className="text-lg sm:text-xl font-black text-amber-950 tracking-wider mt-1">
-                SO – CI – DI – VA – PL
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Cidadania:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  participação do indivíduo na vida política e social.
+                </span>
               </div>
-              <div className="text-xs font-semibold text-slate-700 mt-1 space-y-0.5">
-                <div>• <strong className="text-amber-800">SO</strong>berania</div>
-                <div>• <strong className="text-amber-800">CI</strong>dadania</div>
-                <div>• <strong className="text-amber-800">DI</strong>gnidade da pessoa humana</div>
-                <div>• <strong className="text-amber-800">VA</strong>lores sociais do trabalho e da livre iniciativa</div>
-                <div>• <strong className="text-amber-800">PL</strong>uralismo político</div>
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Dignidade da pessoa humana:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  respeito e proteção à dignidade de cada pessoa.
+                </span>
               </div>
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Valores sociais do trabalho e da livre iniciativa:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  valorização do trabalho e da liberdade de atividade econômica.
+                </span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Pluralismo político:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  reconhecimento da diversidade de ideias e posições políticas.
+                </span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-950 dark:text-amber-200 flex items-start gap-2.5">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <span>
+                <strong>Atenção para concursos:</strong> não confunda fundamentos da República com objetivos fundamentais.
+              </span>
             </div>
           </section>
 
-          {/* 3. Todo poder emana do povo */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">3</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Todo poder emana do povo (Art. 1º, Parágrafo Único)</h3>
-            </div>
-            <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-2">
-              <blockquote className="text-sm sm:text-base font-extrabold italic text-amber-300">
-                “Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente, nos termos desta Constituição.”
-              </blockquote>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-700">
-              A Constituição prevê expressamente duas formas de exercício do poder (democracia semidireta ou participativa):
+          {/* 3. Artigo 2º — Separação dos Poderes */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              3. Artigo 2º — Separação dos Poderes
+            </h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              São Poderes da União, <strong>independentes e harmônicos entre si</strong>:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl bg-blue-50 border border-blue-200">
-                <span className="font-extrabold text-blue-950 block text-sm">Por meio de representantes eleitos</span>
-                <span className="text-blue-800">Ex.: vereadores, prefeitos, deputados, senadores, presidente (democracia indireta/representativa).</span>
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                <span className="font-extrabold text-emerald-950 block text-sm">Diretamente, nos termos da CF</span>
-                <span className="text-emerald-800">Ex.: plebiscito, referendo, iniciativa popular de lei e ação popular (art. 14 da CF).</span>
-              </div>
-            </div>
-          </section>
 
-          {/* 4. Artigo 2º — Os três Poderes */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">4</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 2º — Os três Poderes da União</h3>
-            </div>
-            <p className="text-sm text-slate-700">
-              O art. 2º estabelece que são Poderes da União:
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
-                  <span>🏛️</span> <span>Legislativo</span>
-                </div>
-                <p className="text-slate-600">
-                  Responsável, em linhas gerais, pela função típica normativa (legislar) e pelo exercício da fiscalização contábil e política prevista constitucionalmente.
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="font-extrabold text-slate-950 dark:text-white">Legislativo</div>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  elabora leis e fiscaliza os atos públicos.
                 </p>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
-                  <span>🏛️</span> <span>Executivo</span>
-                </div>
-                <p className="text-slate-600">
-                  Exerce, em linhas gerais, as funções típicas relacionadas à administração pública, chefia de Estado, chefia de governo e execução das leis.
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="font-extrabold text-slate-950 dark:text-white">Executivo</div>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  administra o Estado e executa as leis.
                 </p>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-                <div className="font-extrabold text-sm text-slate-950 flex items-center gap-1.5 mb-1">
-                  <span>⚖️</span> <span>Judiciário</span>
-                </div>
-                <p className="text-slate-600">
-                  Exerce a função típica jurisdicional, solucionando conflitos com definitividade e aplicando a ordem jurídica aos casos submetidos à sua apreciação.
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="font-extrabold text-slate-950 dark:text-white">Judiciário</div>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  exerce a função jurisdicional, solucionando conflitos.
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-xs sm:text-sm text-amber-950 space-y-1.5">
-              <div className="flex items-center gap-2 font-black text-amber-900">
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span>⚠️ ATENÇÃO MÁXIMA PARA PROVA (FGV & CEBRASPE):</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Independentes:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  cada Poder exerce suas funções sem subordinação aos demais.
+                </span>
               </div>
-              <p>
-                A Constituição <strong>NÃO diz</strong> que os Poderes são subordinados uns aos outros. Ela estabelece expressamente que são:
-              </p>
-              <div className="p-2 rounded-lg bg-white border border-amber-300 font-black text-center text-slate-950">
-                ➡️ “independentes e harmônicos entre si”
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <strong className="text-slate-950 dark:text-white">• Harmônicos:</strong>{' '}
+                <span className="text-slate-700 dark:text-slate-300">
+                  devem atuar em equilíbrio e colaboração para o funcionamento do Estado.
+                </span>
               </div>
+            </div>
+
+            {/* Esquema Visual da Tripartição dos Poderes */}
+            <figure className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+              <div className="p-6 text-center space-y-4">
+                <div className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                  Esquema Visual — Art. 2º da CF/88: Poderes da União (Independentes e Harmônicos entre si)
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+                  <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <Landmark className="w-6 h-6 text-blue-600 mx-auto mb-1.5" />
+                    <div className="font-extrabold text-sm text-slate-900 dark:text-white">Legislativo</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400">Legisla e fiscaliza</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <ShieldCheck className="w-6 h-6 text-emerald-600 mx-auto mb-1.5" />
+                    <div className="font-extrabold text-sm text-slate-900 dark:text-white">Executivo</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400">Administra e executa</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <Scale className="w-6 h-6 text-amber-600 mx-auto mb-1.5" />
+                    <div className="font-extrabold text-sm text-slate-900 dark:text-white">Judiciário</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400">Julga e pacifica conflitos</div>
+                  </div>
+                </div>
+              </div>
+              <figcaption className="px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 text-center">
+                Separação dos Poderes (Art. 2º, CF/88): Legislativo, Executivo e Judiciário independentes e harmônicos entre si.
+              </figcaption>
+            </figure>
+          </section>
+
+          {/* 4. Artigo 3º — Objetivos fundamentais */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              4. Artigo 3º — Objetivos fundamentais
+            </h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              São metas que o Estado brasileiro deve buscar alcançar:
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60">
+                <strong>I.</strong> Construir uma sociedade livre, justa e solidária.
+              </div>
+              <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60">
+                <strong>II.</strong> Garantir o desenvolvimento nacional.
+              </div>
+              <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60">
+                <strong>III.</strong> Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais.
+              </div>
+              <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60">
+                <strong>IV.</strong> Promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-950 dark:text-amber-200">
+              <strong>Dica de prova:</strong> os objetivos fundamentais costumam aparecer iniciando com verbos (construir, garantir, erradicar, promover).
             </div>
           </section>
 
-          {/* 5. Artigo 3º — Objetivos fundamentais */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">5</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 3º — Objetivos Fundamentais</h3>
-            </div>
-            <p className="text-sm text-slate-700">
-              Aqui existe uma diferença crucial de banca:
+          {/* 5. Artigo 4º — Relações Internacionais */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              5. Artigo 4º — Relações Internacionais
+            </h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              O Brasil rege-se, em suas relações internacionais, pelos seguintes princípios:
             </p>
-            <div className="p-3 rounded-xl bg-slate-100 font-bold text-xs sm:text-sm text-slate-900">
-              📌 <strong className="text-blue-700">Art. 1º = fundamentos</strong> (bases atuais) &nbsp;×&nbsp; 📌 <strong className="text-emerald-700">Art. 3º = objetivos fundamentais</strong> (metas futuras a alcançar).
-            </div>
-            <p className="text-xs sm:text-sm text-slate-700">
-              A Constituição estabelece quatro objetivos essenciais:
-            </p>
-            <div className="space-y-2 text-xs sm:text-sm">
-              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
-                <span className="font-black text-emerald-900">I —</span>
-                <div>
-                  <strong className="font-extrabold text-emerald-950">Construir uma sociedade livre, justa e solidária</strong>
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
-                <span className="font-black text-emerald-900">II —</span>
-                <div>
-                  <strong className="font-extrabold text-emerald-950">Garantir o desenvolvimento nacional</strong>
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
-                <span className="font-black text-emerald-900">III —</span>
-                <div>
-                  <strong className="font-extrabold text-emerald-950">Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais</strong>
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start gap-2.5">
-                <span className="font-black text-emerald-900">IV —</span>
-                <div>
-                  <strong className="font-extrabold text-emerald-950">Promover o bem de todos</strong>, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.
-                </div>
-              </div>
-            </div>
-
-            {/* Mnemônico CON-GAR-ERR-PRO */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-400/10 to-emerald-500/20 border-2 border-emerald-400">
-              <div className="flex items-center gap-2 font-black text-slate-900 text-sm">
-                <span>🧠</span> <span>Mnemônico dos Objetivos Fundamentais (Art. 3º):</span>
-              </div>
-              <div className="text-lg sm:text-xl font-black text-emerald-950 tracking-wider mt-1">
-                CON – GAR – ERR – PRO
-              </div>
-              <div className="text-xs font-semibold text-slate-700 mt-1 space-y-0.5">
-                <div>• <strong className="text-emerald-800">CON</strong>struir sociedade livre, justa e solidária;</div>
-                <div>• <strong className="text-emerald-800">GAR</strong>antir o desenvolvimento nacional;</div>
-                <div>• <strong className="text-emerald-800">ERR</strong>adicar pobreza e marginalização + reduzir desigualdades;</div>
-                <div>• <strong className="text-emerald-800">PRO</strong>mover o bem de todos.</div>
-              </div>
-            </div>
-          </section>
-
-          {/* 7. Artigo 4º — Relações internacionais */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">7</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Artigo 4º — Relações Internacionais</h3>
-            </div>
-            <p className="text-sm text-slate-700">
-              O art. 4º apresenta os <strong>10 princípios</strong> que regem a República Federativa do Brasil em suas relações com outros países:
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm">
               {[
-                { n: 'I', t: 'Independência nacional' },
-                { n: 'II', t: 'Prevalência dos direitos humanos' },
-                { n: 'III', t: 'Autodeterminação dos povos' },
-                { n: 'IV', t: 'Não intervenção' },
-                { n: 'V', t: 'Igualdade entre os Estados' },
-                { n: 'VI', t: 'Defesa da paz' },
-                { n: 'VII', t: 'Solução pacífica dos conflitos' },
-                { n: 'VIII', t: 'Repúdio ao terrorismo e ao racismo' },
-                { n: 'IX', t: 'Cooperação entre os povos para o progresso da humanidade' },
-                { n: 'X', t: 'Concessão de asilo político' },
-              ].map(item => (
-                <div key={item.n} className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
-                  <span className="font-extrabold text-amber-700">{item.n}.</span>
-                  <span className="font-semibold text-slate-800">{item.t}</span>
+                'Independência nacional',
+                'Prevalência dos direitos humanos',
+                'Autodeterminação dos povos',
+                'Não intervenção',
+                'Igualdade entre os Estados',
+                'Defesa da paz',
+                'Solução pacífica dos conflitos',
+                'Repúdio ao terrorismo e ao racismo',
+                'Cooperação entre os povos para o progresso da humanidade',
+                'Concessão de asilo político',
+              ].map((item, idx) => (
+                <div
+                  key={item}
+                  className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-start gap-2"
+                >
+                  <span className="font-extrabold text-amber-600 dark:text-amber-400 tabular-nums">
+                    {idx + 1}.
+                  </span>
+                  <span className="font-medium text-slate-800 dark:text-slate-200">{item}</span>
                 </div>
               ))}
             </div>
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-950 font-semibold flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
-              <span>Atenção: Esses princípios pertencem ao art. 4º, portanto não devem ser confundidos com os fundamentos do art. 1º ou os objetivos do art. 3º!</span>
+            <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs sm:text-sm text-blue-950 dark:text-blue-200 flex items-start gap-2.5">
+              <Globe className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+              <span>
+                <strong>Parágrafo único (Art. 4º):</strong> O Brasil também buscará a integração econômica, política, social e cultural dos povos da América Latina.
+              </span>
             </div>
           </section>
 
-          {/* 8. Integração latino-americana */}
+          {/* 6. Diferenças que você precisa memorizar */}
           <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">8</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Integração Latino-Americana (Art. 4º, Parágrafo Único)</h3>
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              6. Diferenças que você precisa memorizar
+            </h3>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                <thead>
+                  <tr className="bg-slate-900 text-white">
+                    <th className="p-3.5 font-extrabold w-1/3">Artigo</th>
+                    <th className="p-3.5 font-extrabold">Conteúdo principal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                  <tr className="bg-white dark:bg-slate-900">
+                    <td className="p-3.5 font-bold text-slate-950 dark:text-white">Art. 1º</td>
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">Fundamentos da República</td>
+                  </tr>
+                  <tr className="bg-slate-50 dark:bg-slate-950">
+                    <td className="p-3.5 font-bold text-slate-950 dark:text-white">Art. 2º</td>
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">Poderes da União</td>
+                  </tr>
+                  <tr className="bg-white dark:bg-slate-900">
+                    <td className="p-3.5 font-bold text-slate-950 dark:text-white">Art. 3º</td>
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">Objetivos fundamentais</td>
+                  </tr>
+                  <tr className="bg-slate-50 dark:bg-slate-950">
+                    <td className="p-3.5 font-bold text-slate-950 dark:text-white">Art. 4º</td>
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">Relações internacionais</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p className="text-sm text-slate-700">
-              O parágrafo único do art. 4º estabelece que o Brasil buscará a integração em quatro áreas essenciais:
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-black">
-              <div className="p-3 rounded-xl bg-amber-100 text-amber-950 border border-amber-300">
-                Econômica
-              </div>
-              <div className="p-3 rounded-xl bg-blue-100 text-blue-950 border border-blue-300">
-                Política
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-100 text-emerald-950 border border-emerald-300">
-                Social
-              </div>
-              <div className="p-3 rounded-xl bg-purple-100 text-purple-950 border border-purple-300">
-                Cultural
-              </div>
-            </div>
-            <p className="text-xs text-slate-600 font-medium italic text-center">
-              “...dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.”
-            </p>
           </section>
 
-          {/* 9. Resumo para prova */}
+          {/* 7. Leitura obrigatória */}
           <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 border-b pb-2">
-              <span className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">9</span>
-              <h3 className="text-lg sm:text-xl font-black tracking-tight">Resumo de Memorização para Prova</h3>
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              7. Leitura obrigatória
+            </h3>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="text-sm font-bold text-slate-950 dark:text-white">
+                  Constituição Federal de 1988 — Ler os artigos 1º a 4º na íntegra
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
+                  Consultar diretamente a Constituição Federal consolida a literalidade cobrada em provas.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setActiveSubView('leitura')}
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-700 cursor-pointer whitespace-nowrap"
+                >
+                  Ler Arts. 1º a 4º aqui
+                </button>
+                <a
+                  href={PLANALTO_CF88_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 inline-flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  <span>Consultar Constituição Federal</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
-                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 1º — FUNDAMENTOS</span>
-                <p className="text-slate-300 leading-relaxed">
-                  Soberania • Cidadania • Dignidade da pessoa humana • Valores sociais do trabalho e da livre iniciativa • Pluralismo político.
-                </p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
-                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 2º — PODERES</span>
-                <p className="text-slate-300 leading-relaxed">
-                  Legislativo + Executivo + Judiciário ➡️ <strong className="text-emerald-300">Independentes e harmônicos entre si</strong>.
-                </p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
-                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 3º — OBJETIVOS</span>
-                <p className="text-slate-300 leading-relaxed">
-                  Construir sociedade livre, justa e solidária • Garantir desenvolvimento nacional • Erradicar pobreza/marginalização e reduzir desigualdades • Promover o bem de todos.
-                </p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-900 text-white space-y-1.5">
-                <span className="font-extrabold text-amber-400 block text-sm">📌 ART. 4º — RELAÇÕES INTERNACIONAIS</span>
-                <p className="text-slate-300 leading-relaxed">
-                  Independência nacional, direitos humanos, autodeterminação, não intervenção, igualdade entre Estados, paz, solução pacífica, repúdio ao terrorismo/racismo, cooperação e asilo político.
-                </p>
+          </section>
+
+          {/* 8. Fixação da aula */}
+          <section className="space-y-3">
+            <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+              8. Fixação da aula
+            </h3>
+            <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-4">
+              <p className="text-sm font-bold text-amber-300">Memorize antes de seguir:</p>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-200">
+                <li>1. Os cinco fundamentos do art. 1º (SO-CI-DI-VA-PLU).</li>
+                <li>2. Os três Poderes do art. 2º e sua independência e harmonia.</li>
+                <li>3. Os quatro objetivos fundamentais do art. 3º.</li>
+                <li>4. Os princípios das relações internacionais do art. 4º.</li>
+              </ul>
+              <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-1 text-xs">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-300">
+                    <Target className="w-4 h-4" />
+                    <span>Objetivo da aula: compreender a base constitucional do Estado brasileiro.</span>
+                  </div>
+                  <div className="text-slate-300">
+                    Próxima etapa: lista de exercícios desta aula (20 questões com gabarito).
+                  </div>
+                </div>
+                {onNavigateTab && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('questoes')}
+                    className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs cursor-pointer whitespace-nowrap shrink-0"
+                  >
+                    Resolver 20 Exercícios
+                  </button>
+                )}
               </div>
             </div>
           </section>
         </div>
       )}
 
-      {/* ABA 2: TABELA COMPARATIVA & MNEMÔNICOS */}
-      {activeTabSub === 'tabela' && (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm">
-            <span className="font-black text-amber-900">Pegadinha Clássica de FGV e Cebraspe:</span> A banca adora trocar um fundamento (Art. 1º) por um objetivo (Art. 3º) ou princípio internacional (Art. 4º). Fique atento à regra de ouro: <strong>Fundamentos são substantivos</strong>; <strong>Objetivos começam por verbos no infinitivo</strong>!
+      {/* ABA 2: QUADRO COMPARATIVO */}
+      {activeSubView === 'tabela' && (
+        <div className="space-y-6">
+          <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-950 dark:text-amber-200">
+            <strong>Regra de prova:</strong> Fundamentos (Art. 1º) são os pilares estruturais (substantivos: Soberania, Cidadania, Dignidade, Valores sociais, Pluralismo político). Objetivos fundamentais (Art. 3º) indicam metas futuras iniciadas por verbos (Construir, Garantir, Erradicar, Promover).
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-slate-200">
-            <table className="w-full text-left text-xs border-collapse">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table className="w-full text-left text-xs sm:text-sm border-collapse">
               <thead>
-                <tr className="bg-slate-950 text-white">
-                  <th className="p-3.5 font-black border-r border-slate-800 w-1/2">
-                    🏛️ Art. 1º — Fundamentos (SO-CI-DI-VA-PL)
+                <tr className="bg-slate-900 text-white">
+                  <th className="p-3.5 font-extrabold border-r border-slate-800 w-1/2">
+                    Art. 1º — Fundamentos (SO-CI-DI-VA-PLU)
                   </th>
-                  <th className="p-3.5 font-black w-1/2">
-                    🎯 Art. 3º — Objetivos Fundamentais (CON-GAR-ERR-PRO)
+                  <th className="p-3.5 font-extrabold w-1/2">
+                    Art. 3º — Objetivos Fundamentais (Verbos)
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
-                <tr className="bg-white">
-                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
-                    <strong>Soberania</strong> (autoridade do Estado no território)
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr className="bg-white dark:bg-slate-900">
+                  <td className="p-3 border-r border-slate-200 dark:border-slate-800">
+                    <strong>Soberania</strong> (decisão sem submissão externa)
                   </td>
-                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                  <td className="p-3 bg-emerald-50/40 dark:bg-emerald-950/20">
                     <strong>Construir</strong> uma sociedade livre, justa e solidária
                   </td>
                 </tr>
-                <tr className="bg-slate-50/60">
-                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
-                    <strong>Cidadania</strong> (direitos e deveres na sociedade)
+                <tr className="bg-slate-50 dark:bg-slate-950">
+                  <td className="p-3 border-r border-slate-200 dark:border-slate-800">
+                    <strong>Cidadania</strong> (participação política e social)
                   </td>
-                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
+                  <td className="p-3 bg-emerald-50/40 dark:bg-emerald-950/20">
                     <strong>Garantir</strong> o desenvolvimento nacional
                   </td>
                 </tr>
-                <tr className="bg-white">
-                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
-                    <strong>Dignidade da pessoa humana</strong> (valor supremo)
+                <tr className="bg-white dark:bg-slate-900">
+                  <td className="p-3 border-r border-slate-200 dark:border-slate-800">
+                    <strong>Dignidade da pessoa humana</strong> (respeito e proteção)
                   </td>
-                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
-                    <strong>Erradicar</strong> a pobreza e marginalização
-                  </td>
-                </tr>
-                <tr className="bg-slate-50/60">
-                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
-                    <strong>Valores sociais do trabalho e livre iniciativa</strong>
-                  </td>
-                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
-                    <strong>Reduzir</strong> as desigualdades sociais e regionais
+                  <td className="p-3 bg-emerald-50/40 dark:bg-emerald-950/20">
+                    <strong>Erradicar</strong> a pobreza e a marginalização e <strong>reduzir</strong> desigualdades sociais e regionais
                   </td>
                 </tr>
-                <tr className="bg-white">
-                  <td className="p-3 font-semibold text-slate-800 border-r border-slate-200">
-                    <strong>Pluralismo político</strong> (liberdade de ideias)
+                <tr className="bg-slate-50 dark:bg-slate-950">
+                  <td className="p-3 border-r border-slate-200 dark:border-slate-800">
+                    <strong>Valores sociais do trabalho e da livre iniciativa</strong>
                   </td>
-                  <td className="p-3 font-semibold text-emerald-950 bg-emerald-50/50">
-                    <strong>Promover</strong> o bem de todos (sem preconceitos)
+                  <td className="p-3 bg-emerald-50/40 dark:bg-emerald-950/20">
+                    <strong>Promover</strong> o bem de todos, sem preconceitos e discriminações
+                  </td>
+                </tr>
+                <tr className="bg-white dark:bg-slate-900">
+                  <td className="p-3 border-r border-slate-200 dark:border-slate-800">
+                    <strong>Pluralismo político</strong> (diversidade de ideias e posições)
+                  </td>
+                  <td className="p-3 bg-emerald-50/40 dark:bg-emerald-950/20 text-slate-600 dark:text-slate-400">
+                    Dica: todos os 4 incisos do Art. 3º iniciam por verbos no infinitivo.
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300 space-y-2">
-              <span className="text-xs font-black text-amber-900 uppercase tracking-wider block">
-                Regra Gramatical de Ouro
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Olhou para a alternativa e viu um <strong>verbo no infinitivo</strong> (Construir, Garantir, Erradicar, Reduzir, Promover)? Trata-se de um <strong>OBJETIVO FUNDAMENTAL (Art. 3º)</strong>. Viu um substantivo puro (Soberania, Cidadania, Dignidade)? Trata-se de um <strong>FUNDAMENTO (Art. 1º)</strong>!
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 space-y-2">
-              <span className="text-xs font-black text-blue-900 uppercase tracking-wider block">
-                Art. 2º: Não há subordinação
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Se a questão afirmar que o Judiciário é subordinado ao Executivo ou vice-versa, a afirmação está <strong>ERRADA</strong>. Eles são <em>independentes e harmônicos entre si</em> através do mecanismo de freios e contrapesos.
-              </p>
-            </div>
-          </div>
         </div>
       )}
 
-      {/* ABA 3: O QUE VOCÊ PRECISA DOMINAR (6 PERGUNTAS-CHAVE) */}
-      {activeTabSub === 'dominar' && (
-        <div className="space-y-4 animate-in fade-in duration-200">
-          <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-1">
-            <span className="text-xs font-black uppercase text-amber-400">Autoavaliação de Domínio — Aula 01</span>
-            <h4 className="text-base sm:text-lg font-black">
-              🎯 Ao terminar a aula, você deve conseguir responder sem consultar o material:
-            </h4>
-            <p className="text-xs text-slate-300">
-              Clique em cada pergunta para conferir o gabarito mental e testar sua fixação:
-            </p>
-          </div>
-
-          <div className="space-y-2.5">
-            {[
-              {
-                id: 1,
-                q: '1. Quais são os cinco fundamentos do art. 1º?',
-                a: 'São cinco (SO-CI-DI-VA-PL): 1) Soberania; 2) Cidadania; 3) Dignidade da pessoa humana; 4) Valores sociais do trabalho e da livre iniciativa; 5) Pluralismo político.'
-              },
-              {
-                id: 2,
-                q: '2. Quais são os três Poderes da União?',
-                a: 'São Poderes da União o Legislativo, o Executivo e o Judiciário (art. 2º).'
-              },
-              {
-                id: 3,
-                q: '3. O que significa dizer que os Poderes são independentes e harmônicos?',
-                a: 'Significa que cada um possui atribuições constitucionais próprias e independência funcional, sem relação de subordinação hierárquica entre si, atuando em harmonia e equilíbrio recíproco (freios e contrapesos).'
-              },
-              {
-                id: 4,
-                q: '4. Quais são os quatro objetivos fundamentais do art. 3º?',
-                a: 'São quatro (CON-GAR-ERR-PRO): I - Construir uma sociedade livre, justa e solidária; II - Garantir o desenvolvimento nacional; III - Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais; IV - Promover o bem de todos, sem preconceitos e discriminações.'
-              },
-              {
-                id: 5,
-                q: '5. Qual é a diferença entre fundamento e objetivo fundamental?',
-                a: 'Fundamentos (art. 1º) são os pilares e valores básicos sobre os quais a República se sustenta no presente (substantivos). Objetivos fundamentais (art. 3º) são metas programáticas e diretrizes que o Estado deve buscar alcançar no futuro (verbos de ação no infinitivo).'
-              },
-              {
-                id: 6,
-                q: '6. Quais são os principais princípios do art. 4º?',
-                a: 'Independência nacional, prevalência dos direitos humanos, autodeterminação dos povos, não intervenção, igualdade entre os Estados, defesa da paz, solução pacífica dos conflitos, repúdio ao terrorismo e ao racismo, cooperação entre os povos e concessão de asilo político.'
-              }
-            ].map(item => (
-              <div key={item.id} className="rounded-2xl border border-slate-200 overflow-hidden bg-white">
-                <button
-                  onClick={() => toggleFaq(item.id)}
-                  className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-slate-900 hover:bg-slate-50 cursor-pointer"
-                >
-                  <span>{item.q}</span>
-                  {expandedFaq[item.id] ? (
-                    <ChevronUp className="w-4 h-4 text-amber-600 shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-                  )}
-                </button>
-                {expandedFaq[item.id] && (
-                  <div className="p-4 pt-0 text-xs sm:text-sm text-slate-700 bg-amber-50/50 border-t border-slate-100 leading-relaxed font-medium">
-                    <strong className="text-emerald-700 font-extrabold">Resposta esperada:</strong> {item.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ABA 4: ATIVIDADE PRÁTICA — WHATSAPP TJAM */}
-      {activeTabSub === 'pratica' && (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-800 text-white space-y-3 shadow-md">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🎯</span>
-              <h4 className="text-lg sm:text-xl font-black">
-                Atividade Prática de Fixação — Envio pelo WhatsApp ao Professor
-              </h4>
-            </div>
-            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
-              Não é uma questão de prova. Esta atividade serve para verificar se você consegue aplicar o conteúdo da aula em uma situação prática e concreta de trabalho judiciário.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-3 text-xs sm:text-sm">
-            <div className="flex items-center gap-2 font-black text-amber-950 text-base">
-              <span>🏛️</span> <span>Situação Concreta no Tribunal de Justiça:</span>
-            </div>
-            <p className="text-slate-800 leading-relaxed">
-              Imagine que você seja um <strong>servidor do Tribunal de Justiça</strong> e esteja atendendo um cidadão. O cidadão chega ao setor para buscar uma informação sobre um serviço público. Durante o atendimento, você percebe que ele possui dificuldade para compreender os procedimentos e precisa de orientação.
-            </p>
-            <div className="p-3 rounded-xl bg-white border border-amber-200 space-y-1 text-xs">
-              <span className="font-extrabold text-slate-900 block">Sua tarefa:</span>
-              <p className="text-slate-700">
-                Escolha <strong>DOIS</strong> dos conteúdos estudados na Aula 01 (ex.: Soberania, Cidadania, Dignidade da pessoa humana, Valores sociais do trabalho, Pluralismo político, Independência e harmonia entre os Poderes, Objetivo do art. 3º ou Princípio do art. 4º).
+      {/* ABA 3: LEITURA OBRIGATÓRIA — TEXTO CONSTITUCIONAL (ARTS. 1º A 4º) */}
+      {activeSubView === 'leitura' && (
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <h3 className="text-lg font-black text-slate-950 dark:text-white">
+                Constituição Federal de 1988 — Título I (Arts. 1º a 4º)
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Texto integral para leitura obrigatória desta aula.
               </p>
-              <ol className="list-decimal list-inside text-slate-700 space-y-0.5 pt-1">
-                <li>Explique o que cada um significa;</li>
-                <li>Relacione-o com a situação apresentada;</li>
-                <li>Explique como esse princípio orienta a conduta do servidor público.</li>
-              </ol>
             </div>
+            <a
+              href={PLANALTO_CF88_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+            >
+              <span>Abrir texto oficial no Planalto</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
 
-          {/* Card com o Modelo para Enviar */}
-          <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="text-xs font-black uppercase text-amber-400 flex items-center gap-1.5">
-                <span>📲</span> Modelo Formatado para Enviar
-              </span>
-              <button
-                onClick={handleCopyTemplate}
-                className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
-              >
-                <Copy className="w-3.5 h-3.5" />
-                <span>{copiedTemplate ? 'Copiado para a Área de Transferência!' : 'Copiar Modelo Pronto'}</span>
-              </button>
+          <div className="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="font-bold text-slate-950 dark:text-white">
+                Art. 1º A República Federativa do Brasil, formada pela união indissolúvel dos Estados e Municípios e do Distrito Federal, constitui-se em Estado Democrático de Direito e tem como fundamentos:
+              </p>
+              <p>I - a soberania;</p>
+              <p>II - a cidadania;</p>
+              <p>III - a dignidade da pessoa humana;</p>
+              <p>IV - os valores sociais do trabalho e da livre iniciativa;</p>
+              <p>V - o pluralismo político.</p>
+              <p className="pt-1 italic">
+                Parágrafo único. Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou diretamente, nos termos desta Constituição.
+              </p>
             </div>
 
-            <pre className="p-4 rounded-xl bg-slate-950 text-slate-200 text-xs font-mono whitespace-pre-wrap leading-relaxed border border-slate-800 overflow-x-auto">
-              {practicalTemplateText}
-            </pre>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <p className="font-bold text-slate-950 dark:text-white">
+                Art. 2º São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário.
+              </p>
+            </div>
 
-            <div className="pt-2 flex items-center justify-between flex-wrap gap-2 text-xs">
-              <span className="text-slate-400">
-                Após preencher, envie no WhatsApp individual do professor.
-              </span>
-              <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(practicalTemplateText)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black flex items-center gap-1.5 shadow-md cursor-pointer"
-              >
-                <Send className="w-3.5 h-3.5" />
-                <span>Enviar pelo WhatsApp</span>
-              </a>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="font-bold text-slate-950 dark:text-white">
+                Art. 3º Constituem objetivos fundamentais da República Federativa do Brasil:
+              </p>
+              <p>I - construir uma sociedade livre, justa e solidária;</p>
+              <p>II - garantir o desenvolvimento nacional;</p>
+              <p>III - erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais;</p>
+              <p>IV - promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
+              <p className="font-bold text-slate-950 dark:text-white">
+                Art. 4º A República Federativa do Brasil rege-se nas suas relações internacionais pelos seguintes princípios:
+              </p>
+              <p>I - independência nacional; II - prevalência dos direitos humanos; III - autodeterminação dos povos; IV - não-intervenção; V - igualdade entre os Estados; VI - defesa da paz; VII - solução pacífica dos conflitos; VIII - repúdio ao terrorismo e ao racismo; IX - cooperação entre os povos para o progresso da humanidade; X - concessão de asilo político.</p>
+              <p className="pt-1 italic">
+                Parágrafo único. A República Federativa do Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina, visando à formação de uma comunidade latino-americana de nações.
+              </p>
             </div>
           </div>
         </div>

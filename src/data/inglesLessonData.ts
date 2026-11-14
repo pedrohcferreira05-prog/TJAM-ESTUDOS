@@ -1,3 +1,7 @@
+// Data for Aula 1 — Língua Inglesa
+// Preparatório TJAM — Assistente Judiciário
+// Nível intermediário • Aula 01 • Tema: Reading Comprehension — Interpretação de Textos em Inglês
+
 export interface FlashcardItem {
   id: number;
   q: string;
@@ -12,8 +16,10 @@ export interface FlashcardItem {
 export interface McQuestionItem {
   id: number;
   enunciado: string;
+  textoApoio?: string;
   opcoes: string[];
-  correta: number; // 0 = A, 1 = B, 2 = C, 3 = D, 4 = E
+  alternativas?: string[];
+  correta: number; // 0 = A, 1 = B, 2 = C, 3 = D
   explicacao: string;
 }
 
@@ -33,415 +39,506 @@ export interface DiscursiveQuestionItem {
   pontosChave: string[];
 }
 
-export interface AlphabetLetter {
-  letter: string;
-  phoneticPt: string;
-  exampleWord: string;
-  translation: string;
+export interface ReadingStrategyItem {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  example: string;
 }
 
-export const inglesAlphabetData: AlphabetLetter[] = [
-  { letter: 'A', phoneticPt: 'ei', exampleWord: 'Apple', translation: 'Maçã' },
-  { letter: 'B', phoneticPt: 'bi', exampleWord: 'Book', translation: 'Livro' },
-  { letter: 'C', phoneticPt: 'ci', exampleWord: 'Court', translation: 'Tribunal / Vara' },
-  { letter: 'D', phoneticPt: 'di', exampleWord: 'Desk', translation: 'Mesa / Balcão' },
-  { letter: 'E', phoneticPt: 'i', exampleWord: 'Exam', translation: 'Exame / Prova' },
-  { letter: 'F', phoneticPt: 'éf', exampleWord: 'File', translation: 'Arquivo / Processo' },
-  { letter: 'G', phoneticPt: 'dji', exampleWord: 'Good', translation: 'Bom / Bem' },
-  { letter: 'H', phoneticPt: 'êitch', exampleWord: 'Hello', translation: 'Olá' },
-  { letter: 'I', phoneticPt: 'ai', exampleWord: 'Important', translation: 'Importante' },
-  { letter: 'J', phoneticPt: 'djei', exampleWord: 'Judge', translation: 'Juiz(a)' },
-  { letter: 'K', phoneticPt: 'kei', exampleWord: 'Key', translation: 'Chave / Fundamental' },
-  { letter: 'L', phoneticPt: 'él', exampleWord: 'Lawyer', translation: 'Advogado(a)' },
-  { letter: 'M', phoneticPt: 'ém', exampleWord: 'Morning', translation: 'Manhã' },
-  { letter: 'N', phoneticPt: 'én', exampleWord: 'Name', translation: 'Nome' },
-  { letter: 'O', phoneticPt: 'ou', exampleWord: 'Office', translation: 'Cartório / Gabinete' },
-  { letter: 'P', phoneticPt: 'pi', exampleWord: 'Public servant', translation: 'Servidor público' },
-  { letter: 'Q', phoneticPt: 'kiu', exampleWord: 'Question', translation: 'Questão / Pergunta' },
-  { letter: 'R', phoneticPt: 'ar', exampleWord: 'Report', translation: 'Relatório' },
-  { letter: 'S', phoneticPt: 'és', exampleWord: 'Student', translation: 'Estudante' },
-  { letter: 'T', phoneticPt: 'ti', exampleWord: 'Tomorrow', translation: 'Amanhã' },
-  { letter: 'U', phoneticPt: 'iu', exampleWord: 'Unit', translation: 'Unidade' },
-  { letter: 'V', phoneticPt: 'vi', exampleWord: 'Very', translation: 'Muito' },
-  { letter: 'W', phoneticPt: 'dâbliu', exampleWord: 'Where', translation: 'Onde / De onde' },
-  { letter: 'X', phoneticPt: 'éks', exampleWord: 'X-ray', translation: 'Raio-X' },
-  { letter: 'Y', phoneticPt: 'uai', exampleWord: 'You', translation: 'Você' },
-  { letter: 'Z', phoneticPt: 'zi / zéd', exampleWord: 'Zone', translation: 'Zona' },
+export interface VocabItem {
+  en: string;
+  pt: string;
+}
+
+export const inglesReadingStrategies: ReadingStrategyItem[] = [
+  {
+    id: 1,
+    title: '1. Skimming — Leitura rápida',
+    subtitle: 'Identificar o assunto principal',
+    description:
+      'Consiste em ler rapidamente o texto (título, primeiras linhas e palavras-chave) para identificar o tema central sem se prender a cada palavra.',
+    example:
+      'Exemplo: ao ler um texto sobre courts (tribunais), você tenta descobrir se o assunto é Justiça, legislação ou direitos.',
+  },
+  {
+    id: 2,
+    title: '2. Scanning — Busca de informações',
+    subtitle: 'Localizar dados pontuais',
+    description:
+      'Consiste em procurar uma informação específica diretamente no texto, sem precisar traduzir todo o parágrafo.',
+    example: 'Exemplo: procurar uma data, nome, número ou local citado no enunciado.',
+  },
+  {
+    id: 3,
+    title: '3. Reading for detail — Leitura detalhada',
+    subtitle: 'Compreensão profunda e inferência',
+    description:
+      'Consiste em ler com atenção para compreender informações específicas, relações entre frases, argumentos e conclusões.',
+    example:
+      'Exemplo: identificar a quem um pronome (como "They") se refere ou qual obrigação foi atribuída aos servidores públicos.',
+  },
+];
+
+export const inglesLegalVocabData: VocabItem[] = [
+  { en: 'Court', pt: 'Tribunal' },
+  { en: 'Judge', pt: 'Juiz' },
+  { en: 'Law', pt: 'Lei' },
+  { en: 'Justice', pt: 'Justiça' },
+  { en: 'Rights', pt: 'Direitos' },
+  { en: 'Duties', pt: 'Deveres' },
+  { en: 'Citizen', pt: 'Cidadão' },
+  { en: 'Government', pt: 'Governo' },
+  { en: 'Public service', pt: 'Serviço público' },
+  { en: 'Employee', pt: 'Funcionário' },
+  { en: 'Law enforcement', pt: 'Aplicação da lei' },
+  { en: 'Legal system', pt: 'Sistema jurídico' },
+  { en: 'Hearing', pt: 'Audiência' },
+  { en: 'Decision', pt: 'Decisão' },
+  { en: 'Justice system', pt: 'Sistema de Justiça' },
+];
+
+export const inglesPronounsAndWhData: VocabItem[] = [
+  { en: 'Who', pt: 'Quem' },
+  { en: 'What', pt: 'O quê / Qual' },
+  { en: 'Where', pt: 'Onde' },
+  { en: 'When', pt: 'Quando' },
+  { en: 'Why', pt: 'Por quê' },
+  { en: 'How', pt: 'Como' },
+  { en: 'Which', pt: 'Qual' },
+  { en: 'They', pt: 'Eles / Elas' },
+  { en: 'Their', pt: 'Deles / Delas' },
+  { en: 'We', pt: 'Nós' },
+  { en: 'It', pt: 'Ele / Ela (coisas e animais)' },
+];
+
+export const inglesReadingTextData = {
+  title: 'The Importance of Justice',
+  level: 'Texto em inglês — nível intermediário',
+  paragraphsEn: [
+    "Justice is essential for a fair and organized society. Courts play an important role in protecting citizens' rights and ensuring that laws are respected.",
+    'Judges analyze cases, examine evidence and make decisions according to the law.',
+    'Public employees also have an important responsibility. They must work with honesty, respect and efficiency to provide good services to the population.',
+  ],
+  vocabulary: [
+    { en: 'Fair', pt: 'justo' },
+    { en: 'Society', pt: 'sociedade' },
+    { en: 'Protecting', pt: 'protegendo' },
+    { en: 'Evidence', pt: 'provas' },
+    { en: 'According to', pt: 'de acordo com' },
+    { en: 'Honesty', pt: 'honestidade' },
+    { en: 'Efficiency', pt: 'eficiência' },
+  ] as VocabItem[],
+  paragraphsPt: [
+    'A Justiça é essencial para uma sociedade justa e organizada. Os tribunais desempenham um papel importante na proteção dos direitos dos cidadãos e na garantia de que as leis sejam respeitadas.',
+    'Os juízes analisam processos, examinam provas e tomam decisões de acordo com a lei.',
+    'Os servidores públicos também têm uma responsabilidade importante. Eles devem trabalhar com honestidade, respeito e eficiência para prestar bons serviços à população.',
+  ],
+};
+
+export const inglesReviewVocabData: VocabItem[] = [
+  { en: 'Court', pt: 'Tribunal' },
+  { en: 'Judge', pt: 'Juiz' },
+  { en: 'Law', pt: 'Lei' },
+  { en: 'Rights', pt: 'Direitos' },
+  { en: 'Duties', pt: 'Deveres' },
+  { en: 'Evidence', pt: 'Provas' },
+  { en: 'Citizen', pt: 'Cidadão' },
+  { en: 'Justice', pt: 'Justiça' },
 ];
 
 export const inglesFlashcardsData: FlashcardItem[] = [
   {
     id: 1,
-    q: 'Qual é a diferença fundamental entre "Good evening" e "Good night"?',
-    a: '• "Good evening": é utilizado como CUMPRIMENTO ao encontrar alguém no período da noite (ao chegar).\n• "Good night": é utilizado estritamente na DESPEDIDA à noite (ao ir embora ou antes de dormir).',
-    frente: 'Good evening vs. Good night',
-    verso: 'Good evening = cumprimento ao chegar à noite.\nGood night = despedida ao sair ou dormir.',
-    categoria: 'Cumprimentos (Greetings)',
-    dica: 'Chegou a uma reunião noturna? Diga "Good evening!". Vai embora? Diga "Good night!".',
-    pronuncia: 'gud ívning / gud náit'
+    q: 'O que é a técnica de leitura Skimming?',
+    a: 'Leitura rápida do texto para identificar o assunto principal (ideia central), sem se deter em cada palavra.',
+    frente: 'Skimming (Leitura rápida)',
+    verso: 'Leitura rápida para captar a ideia central / assunto principal do texto.',
+    categoria: 'Estratégias de Leitura',
+    dica: 'Ex.: perceber rapidamente que o texto trata de courts (tribunais), Justiça ou legislação.',
   },
   {
     id: 2,
-    q: 'Como se pergunta e como se responde a idade corretamente em inglês?',
-    a: 'Pergunta: "How old are you?" (Quantos anos você tem?).\nResposta: "I am [idade] years old" (ou simplesmente "I\'m [idade]").\n⚠️ ATENÇÃO: NUNCA diga *"I have 25 years"*!',
-    frente: 'Idade em Inglês: How old are you?',
-    verso: 'Pergunta: "How old are you?"\nResposta: "I am 25 years old." (NUNCA usar o verbo "have" para idade).',
-    categoria: 'Apresentação Pessoal',
-    dica: 'Em inglês, a idade é um estado de ser (verbo TO BE), e não uma posse (have).',
-    pronuncia: 'háo ôuld ar iú? / áim... íers ôuld'
+    q: 'O que é a técnica de leitura Scanning?',
+    a: 'Busca direta por uma informação específica (data, nome, número ou local), sem precisar traduzir o texto inteiro.',
+    frente: 'Scanning (Busca específica)',
+    verso: 'Varrer o texto procurando dados pontuais (datas, nomes, números, locais).',
+    categoria: 'Estratégias de Leitura',
+    dica: 'Muito útil quando o enunciado pergunta "Who", "When" ou "Where".',
   },
   {
     id: 3,
-    q: 'Como perguntar e responder a origem / nacionalidade de uma pessoa?',
-    a: 'Pergunta: "Where are you from?" (De onde você é?).\nResposta: "I am from Brazil." (Sou do Brasil) ou "I\'m from Manaus." (Sou de Manaus).',
-    frente: 'Origem: Where are you from?',
-    verso: 'Pergunta: "Where are you from?"\nResposta: "I\'m from Brazil / I\'m from Manaus."',
-    categoria: 'Origem e Procedência',
-    dica: 'A preposição "from" indica procedência / ponto de partida.',
-    pronuncia: 'uér ar iú frôm? / áim frôm brazíl'
+    q: 'Para que serve a estratégia Reading for detail?',
+    a: 'Leitura detalhada e atenta para compreender informações específicas, argumentos, referências pronominais e conclusões.',
+    frente: 'Reading for detail',
+    verso: 'Leitura atenta para captar detalhes, argumentos, referentes e conclusões.',
+    categoria: 'Estratégias de Leitura',
+    dica: 'Indispensável para questões de referência (ex.: a quem "They" se refere).',
   },
   {
     id: 4,
-    q: 'Como perguntar e informar a profissão de forma natural?',
-    a: 'Pergunta: "What do you do?" (O que você faz? / Qual é sua profissão?).\nRespostas:\n• "I\'m a public servant." (Sou servidor público).\n• "I\'m a student." (Sou estudante).\n• "I\'m a lawyer." (Sou advogado).',
-    frente: 'Profissão: What do you do?',
-    verso: 'Pergunta: "What do you do?"\nResposta: "I\'m a public servant" / "I\'m a student". Lembre-se do artigo "a" antes da profissão.',
-    categoria: 'Profissão',
-    dica: 'No singular, use sempre "a" antes de som consonantal: a student, a public servant, a teacher.',
-    pronuncia: 'uót du iú du? / áim a pâblik sérvant'
+    q: 'Qual o significado de "Court", "Judge", "Law" e "Justice"?',
+    a: 'Court = Tribunal | Judge = Juiz | Law = Lei | Justice = Justiça.',
+    frente: 'Court / Judge / Law / Justice',
+    verso: 'Tribunal / Juiz / Lei / Justiça.',
+    categoria: 'Vocabulário Jurídico TJAM',
+    dica: 'Base lexical mais frequente em textos institucionais do Judiciário.',
   },
   {
     id: 5,
-    q: 'Quais são os cumprimentos formais e informais mais comuns em inglês?',
-    a: '• Informais: Hi! (Oi!), Hello! (Olá!), Hey! (Ei/Oi!).\n• Formais: Good morning! (Bom dia), Good afternoon! (Boa tarde), Good evening! (Boa noite ao chegar).',
-    frente: 'Cumprimentos (Formais x Informais)',
-    verso: 'Informais: Hi, Hello, Hey.\nFormais: Good morning, Good afternoon, Good evening.',
-    categoria: 'Cumprimentos (Greetings)',
-    dica: '"Hello" transita bem tanto em situações formais quanto casuais.',
-    pronuncia: 'hái, relôu, rêi / gud mórning, gud áfternun, gud ívning'
+    q: 'O que significam "Rights", "Duties", "Hearing" e "Decision"?',
+    a: 'Rights = Direitos | Duties = Deveres | Hearing = Audiência | Decision = Decisão.',
+    frente: 'Rights / Duties / Hearing / Decision',
+    verso: 'Direitos / Deveres / Audiência / Decisão.',
+    categoria: 'Vocabulário Jurídico TJAM',
+    dica: 'Atenção: "Hearing" no contexto jurídico significa audiência (e não apenas audição).',
   },
   {
     id: 6,
-    q: 'Quais são as principais expressões de despedida (Goodbyes)?',
-    a: '• Goodbye! (Adeus/Tchau)\n• Bye! (Tchau)\n• See you! (Até mais)\n• See you later! (Até mais tarde)\n• See you tomorrow! (Até amanhã)\n• Have a nice day! (Tenha um bom dia)',
-    frente: 'Despedidas (Goodbyes)',
-    verso: 'Goodbye, Bye, See you later, See you tomorrow, Have a nice day!',
-    categoria: 'Despedidas',
-    dica: '"See you tomorrow" é perfeito para despedidas no cartório ou tribunal com colegas de trabalho.',
-    pronuncia: 'gudbái, bái, sí iú lêiter, sí iú tumórou'
+    q: 'O que significam "Citizen", "Employee", "Public service" e "Law enforcement"?',
+    a: 'Citizen = Cidadão | Employee = Funcionário | Public service = Serviço público | Law enforcement = Aplicação da lei.',
+    frente: 'Citizen / Employee / Public service / Law enforcement',
+    verso: 'Cidadão / Funcionário / Serviço público / Aplicação da lei.',
+    categoria: 'Vocabulário Administrativo',
+    dica: 'No texto "The Importance of Justice", "Public employees" equivale a servidores públicos.',
   },
   {
     id: 7,
-    q: 'Como responder à pergunta "How are you?" (Como você está?)?',
-    a: '• I\'m fine, thank you. (Estou bem, obrigado)\n• I\'m good. (Estou bem)\n• I\'m great. (Estou ótimo/a)\n• I\'m okay. (Estou bem / OK)\nTambém se pode perguntar: "How are you doing?".',
-    frente: 'Como vai?: How are you?',
-    verso: 'I\'m fine, thank you / I\'m good / I\'m great / I\'m okay.',
-    categoria: 'Cumprimentos',
-    dica: 'Acrescente sempre "thank you, and you?" (obrigado, e você?) para demonstrar polidez.',
-    pronuncia: 'háo ar iú? / áim fáin, tänk iú'
+    q: 'Para que servem as palavras interrogativas Who, What, Where, When, Why, How e Which?',
+    a: 'Who (Quem), What (O quê/Qual), Where (Onde), When (Quando), Why (Por quê), How (Como) e Which (Qual). Elas indicam exatamente o tipo de informação pedida pela questão.',
+    frente: 'Palavras Interrogativas (Wh- Words)',
+    verso: 'Who (quem), What (o quê/qual), Where (onde), When (quando), Why (por quê), How (como), Which (qual).',
+    categoria: 'Interpretação de Questões',
+    dica: 'Identificar a Wh- word no enunciado direciona o Scanning imediatamente.',
   },
   {
     id: 8,
-    q: 'O que significa a expressão de cortesia "Nice to meet you!"?',
-    a: 'Significa "Prazer em conhecê-lo(a)!". É usada quando duas pessoas se conhecem pela primeira vez. A resposta padrão é: "Nice to meet you too!" (Prazer em conhecê-lo também!).',
-    frente: 'Nice to meet you!',
-    verso: 'Prazer em conhecê-lo(a)!\nResposta: "Nice to meet you too!" (com o "too" no final = também).',
-    categoria: 'Apresentação',
-    dica: 'Usado estritamente no primeiro encontro. Em encontros posteriores, use "Good to see you!".',
-    pronuncia: 'náis tu mít iú / náis tu mít iú tú'
+    q: 'Qual a diferença entre "They", "Their", "We" e "It"?',
+    a: 'They = Eles / Elas | Their = Deles / Delas | We = Nós | It = Ele / Ela (para coisas e animais).',
+    frente: 'Pronomes: They / Their / We / It',
+    verso: 'They (eles/elas), Their (deles/delas), We (nós), It (ele/ela - coisas e animais).',
+    categoria: 'Referência Pronominal',
+    dica: 'Provas de interpretação frequentemente perguntam a qual termo anterior "They" ou "Their" se refere.',
   },
   {
     id: 9,
-    q: 'Como soletramos vogais e consoantes desafiadoras do alfabeto inglês (A, E, I, G, J, H, R, Y)?',
-    a: '• A = "ei" | E = "i" | I = "ai"\n• G = "dji" | J = "djei"\n• H = "êitch"\n• R = "ar"\n• Y = "uai"',
-    frente: 'Pegadinhas Fonéticas do Alfabeto',
-    verso: 'A (ei), E (i), I (ai), G (dji), J (djei), H (êitch), R (ar), Y (uai).',
-    categoria: 'Alfabeto Fonético',
-    dica: 'Muito comum em bancas de tribunal pedir soletração (spelling) de nomes e códigos.',
-    pronuncia: 'spelling: ei, i, ai, dji, djei, êitch'
+    q: 'O que significam "Fair", "Evidence" e "According to" no texto "The Importance of Justice"?',
+    a: 'Fair = justo | Evidence = provas | According to = de acordo com.',
+    frente: 'Fair / Evidence / According to',
+    verso: 'Justo / Provas / De acordo com.',
+    categoria: 'Vocabulário do Texto',
+    dica: '"According to the law" = de acordo com a lei; "examine evidence" = examinam provas.',
   },
   {
     id: 10,
-    q: 'Como funciona uma apresentação pessoal completa e formal em 4 passos?',
-    a: '1. Saudação: "Hello! Good morning!"\n2. Nome e idade: "My name is Pedro. I am 28 years old."\n3. Origem e localidade: "I\'m from Brazil and I live in Manaus."\n4. Profissão: "I am a public servant at the TJAM court."',
-    frente: 'Estrutura da Apresentação Pessoal',
-    verso: '1. Saudação → 2. Nome/Idade → 3. Origem/Cidade → 4. Profissão/Ocupação.',
-    categoria: 'Prática Forense TJAM',
-    dica: 'Essa estrutura atende ao desafio oral gravado em áudio para o professor.',
-    pronuncia: 'personal presentation'
-  }
+    q: 'O que significam "Society", "Protecting", "Honesty" e "Efficiency"?',
+    a: 'Society = sociedade | Protecting = protegendo | Honesty = honestidade | Efficiency = eficiência.',
+    frente: 'Society / Protecting / Honesty / Efficiency',
+    verso: 'Sociedade / Protegendo / Honestidade / Eficiência.',
+    categoria: 'Vocabulário do Texto',
+    dica: 'Palavras cognatas ou próximas do português que aceleram o Skimming.',
+  },
 ];
 
-// 10 Questões Objetivas Oficiais (Parte 1: 1 a 10)
+// 6 Questões Rápidas do Texto "The Importance of Justice" — Seção 5 do Texto da Aula
+export const inglesTextFixationQuestionsData: McQuestionItem[] = [
+  {
+    id: 1,
+    enunciado: '1. What is essential for a fair and organized society?',
+    opcoes: ['Education', 'Justice', 'Technology', 'Economy'],
+    alternativas: ['Education', 'Justice', 'Technology', 'Economy'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Justice. A primeira frase do texto afirma textualmente: "Justice is essential for a fair and organized society."',
+  },
+  {
+    id: 2,
+    enunciado: '2. What do courts protect?',
+    opcoes: ['Companies', 'Governments', "Citizens' rights", 'Private businesses'],
+    alternativas: ['Companies', 'Governments', "Citizens' rights", 'Private businesses'],
+    correta: 2, // C
+    explicacao:
+      '✅ Gabarito: C) Citizens\' rights. O texto declara: "Courts play an important role in protecting citizens\' rights and ensuring that laws are respected."',
+  },
+  {
+    id: 3,
+    enunciado: '3. What do judges examine?',
+    opcoes: ['Employees', 'Evidence', 'Buildings', 'Documents only'],
+    alternativas: ['Employees', 'Evidence', 'Buildings', 'Documents only'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Evidence. No segundo parágrafo: "Judges analyze cases, examine evidence and make decisions according to the law." (Evidence = provas).',
+  },
+  {
+    id: 4,
+    enunciado: "4. The word 'Honesty' means:",
+    opcoes: ['Honestidade', 'Eficiência', 'Responsabilidade', 'Liberdade'],
+    alternativas: ['Honestidade', 'Eficiência', 'Responsabilidade', 'Liberdade'],
+    correta: 0, // A
+    explicacao:
+      '✅ Gabarito: A) Honestidade. No vocabulário do texto e no terceiro parágrafo: "honesty" = honestidade, "efficiency" = eficiência.',
+  },
+  {
+    id: 5,
+    enunciado: '5. According to the text, public employees must work with:',
+    opcoes: [
+      'Speed only',
+      'Honesty, respect and efficiency',
+      'Money and power',
+      'Personal interests',
+    ],
+    alternativas: [
+      'Speed only',
+      'Honesty, respect and efficiency',
+      'Money and power',
+      'Personal interests',
+    ],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Honesty, respect and efficiency. O terceiro parágrafo afirma: "They must work with honesty, respect and efficiency to provide good services to the population."',
+  },
+  {
+    id: 6,
+    enunciado: "6. The word 'They' in the last paragraph refers to:",
+    opcoes: ['Judges', 'Citizens', 'Public employees', 'Courts'],
+    alternativas: ['Judges', 'Citizens', 'Public employees', 'Courts'],
+    correta: 2, // C
+    explicacao:
+      '✅ Gabarito: C) Public employees. No último parágrafo: "Public employees also have an important responsibility. They must work with honesty..." — "They" retoma o sujeito da frase anterior ("Public employees").',
+  },
+];
+
+// Exercícios — Aula 1 de Inglês (20 Questões: Parte I 1-8, Parte II 9-14 V/F, Parte III 15-17 Interpretação, Parte IV 18-20 Dissertativas)
 export const inglesMcQuestionsData: McQuestionItem[] = [
   {
     id: 1,
-    enunciado: '1. A expressão “Good morning!” significa:',
-    opcoes: [
-      'A) Boa noite.',
-      'B) Boa tarde.',
-      'C) Bom dia.',
-      'D) Até amanhã.',
-      'E) Até mais.'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito oficial: C. "Good morning!" é a saudação formal utilizada no período da manhã e significa "Bom dia!". Boa tarde é "Good afternoon" e boa noite ao chegar é "Good evening".'
+    enunciado: '1. A palavra Justice significa:',
+    opcoes: ['Liberdade', 'Justiça', 'Igualdade', 'Segurança'],
+    alternativas: ['Liberdade', 'Justiça', 'Igualdade', 'Segurança'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Justiça. No vocabulário jurídico da aula: Justice = Justiça.',
   },
   {
     id: 2,
-    enunciado: '2. A pergunta “What\'s your name?” significa:',
-    opcoes: [
-      'A) Onde você mora?',
-      'B) Qual é o seu nome?',
-      'C) Qual é sua profissão?',
-      'D) Quantos anos você tem?',
-      'E) De onde você é?'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito oficial: B. "What\'s your name?" (contração de "What is your name?") significa "Qual é o seu nome?". Onde você mora é "Where do you live?", profissão é "What do you do?" e idade é "How old are you?".'
+    enunciado: '2. A palavra Court significa:',
+    opcoes: ['Tribunal', 'Escola', 'Empresa', 'Governo'],
+    alternativas: ['Tribunal', 'Escola', 'Empresa', 'Governo'],
+    correta: 0, // A
+    explicacao:
+      '✅ Gabarito: A) Tribunal. Em textos jurídicos e institucionais do TJAM, Court equivale a Tribunal / Corte.',
   },
   {
     id: 3,
-    enunciado: '3. Assinale a alternativa que apresenta uma resposta adequada para “How are you?”:',
-    opcoes: [
-      'A) I\'m from Brazil.',
-      'B) I\'m 25 years old.',
-      'C) I\'m fine, thank you.',
-      'D) My name is John.',
-      'E) I\'m a student.'
-    ],
+    enunciado: '3. Qual alternativa apresenta o significado correto de Judge?',
+    opcoes: ['Advogado', 'Servidor', 'Juiz', 'Cidadão'],
+    alternativas: ['Advogado', 'Servidor', 'Juiz', 'Cidadão'],
     correta: 2, // C
-    explicacao: 'Gabarito oficial: C. "How are you?" pergunta sobre o estado de espírito ou saúde da pessoa ("Como você está?"). A resposta natural e cortês é "I\'m fine, thank you." (Estou bem, obrigado).'
+    explicacao:
+      '✅ Gabarito: C) Juiz. Judge = Juiz (Advogado = Lawyer; Servidor/Funcionário = Employee/Public servant; Cidadão = Citizen).',
   },
   {
     id: 4,
-    enunciado: '4. A expressão “Where are you from?” é utilizada para perguntar:',
-    opcoes: [
-      'A) a idade de uma pessoa.',
-      'B) o nome de uma pessoa.',
-      'C) a profissão de uma pessoa.',
-      'D) a origem de uma pessoa.',
-      'E) o endereço de uma pessoa.'
-    ],
-    correta: 3, // D
-    explicacao: 'Gabarito oficial: D. A preposição "from" indica procedência ou origem. Portanto, "Where are you from?" pergunta "De onde você é?", investigando a cidade, estado ou país de origem.'
+    enunciado: '4. A expressão Public Service significa:',
+    opcoes: ['Serviço privado', 'Serviço público', 'Serviço judicial', 'Serviço comercial'],
+    alternativas: ['Serviço privado', 'Serviço público', 'Serviço judicial', 'Serviço comercial'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Serviço público. Public service refere-se aos serviços prestados à população pelo Estado/Administração Pública.',
   },
   {
     id: 5,
-    enunciado: '5. Qual alternativa apresenta uma forma correta de dizer “Eu sou do Brasil”?',
-    opcoes: [
-      'A) I have Brazil.',
-      'B) I am from Brazil.',
-      'C) I from Brazil.',
-      'D) I have from Brazil.',
-      'E) I Brazil.'
-    ],
-    correta: 1, // B
-    explicacao: 'Gabarito oficial: B. A construção gramatical correta exige o pronome sujeito ("I"), o verbo to be conjugado ("am") e a preposição de origem ("from"): "I am from Brazil" (ou na forma contraída, "I\'m from Brazil").'
+    enunciado: '5. Qual é a tradução de Rights?',
+    opcoes: ['Deveres', 'Leis', 'Direitos', 'Decisões'],
+    alternativas: ['Deveres', 'Leis', 'Direitos', 'Decisões'],
+    correta: 2, // C
+    explicacao:
+      '✅ Gabarito: C) Direitos. Rights = Direitos (enquanto Duties = Deveres, Law = Lei e Decisions = Decisões).',
   },
   {
     id: 6,
-    enunciado: '6. A expressão “Nice to meet you!” significa:',
-    opcoes: [
-      'A) Até amanhã!',
-      'B) Como você está?',
-      'C) Prazer em conhecê-lo(a)!',
-      'D) Qual é o seu nome?',
-      'E) Tenha um bom dia!'
-    ],
+    enunciado: '6. A palavra interrogativa Where é utilizada para perguntar:',
+    opcoes: ['Quem', 'Quando', 'Onde', 'Por quê'],
+    alternativas: ['Quem', 'Quando', 'Onde', 'Por quê'],
     correta: 2, // C
-    explicacao: 'Gabarito oficial: C. "Nice to meet you!" é uma expressão de polidez e cortesia utilizada no momento da apresentação inicial de duas pessoas, significando "Prazer em conhecê-lo(a)!".'
+    explicacao:
+      '✅ Gabarito: C) Onde. Where = Onde (Who = Quem; When = Quando; Why = Por quê).',
   },
   {
     id: 7,
-    enunciado: '7. Qual alternativa apresenta uma forma correta de informar a idade?',
-    opcoes: [
-      'A) I have 20 years.',
-      'B) I am 20 years old.',
-      'C) I have 20 old.',
-      'D) I am have 20 years.',
-      'E) I 20 years.'
-    ],
+    enunciado: '7. O que significa According to the law?',
+    opcoes: ['Contra a lei', 'De acordo com a lei', 'Antes da lei', 'Sem a lei'],
+    alternativas: ['Contra a lei', 'De acordo com a lei', 'Antes da lei', 'Sem a lei'],
     correta: 1, // B
-    explicacao: 'Gabarito oficial: B. Em inglês, a idade é expressa com o verbo TO BE ("I am..."), seguido do numeral e da locução "years old": "I am 20 years old". É um erro clássico de brasileiros traduzir ao pé da letra com o verbo "have" (*I have 20 years*).'
+    explicacao:
+      '✅ Gabarito: B) De acordo com a lei. A locução prepositiva "According to" significa "de acordo com / segundo".',
   },
   {
     id: 8,
-    enunciado: '8. Em inglês, “Good evening” é normalmente utilizado:',
-    opcoes: [
-      'A) para cumprimentar alguém no período da noite.',
-      'B) exclusivamente para despedidas.',
-      'C) somente pela manhã.',
-      'D) somente ao meio-dia.',
-      'E) para perguntar a idade.'
-    ],
-    correta: 0, // A
-    explicacao: 'Gabarito oficial: A. "Good evening" é uma saudação (cumprimento de chegada) empregada no período noturno (a partir do pôr do sol ou 18h). A despedida noturna é "Good night".'
-  },
-  {
-    id: 9,
-    enunciado: '9. Assinale a alternativa que apresenta uma despedida:',
-    opcoes: [
-      'A) Hello.',
-      'B) Good morning.',
-      'C) How are you?',
-      'D) See you later.',
-      'E) What\'s your name?'
-    ],
-    correta: 3, // D
-    explicacao: 'Gabarito oficial: D. "See you later" significa "Até mais tarde" ou "Vejo você mais tarde", configurando uma clássica expressão de despedida (goodbye). As demais opções são cumprimentos ou perguntas de apresentação.'
-  },
-  {
-    id: 10,
-    enunciado: '10. Observe o diálogo:\n\nA: Hello! What\'s your name?\nB: My name is Daniel.\nA: Where are you from?\nB: I\'m from Brazil.\n\nDe acordo com o diálogo, Daniel:',
-    opcoes: [
-      'A) é professor.',
-      'B) tem 20 anos.',
-      'C) é brasileiro ou vem do Brasil.',
-      'D) mora necessariamente em Manaus.',
-      'E) trabalha no Brasil.'
-    ],
-    correta: 2, // C
-    explicacao: 'Gabarito oficial: C. Ao responder "I\'m from Brazil", Daniel informa explicitamente que é do Brasil (brasileiro/proveniente do país). O texto não menciona sua idade, profissão nem a cidade específica onde reside.'
-  }
-];
-
-// 5 Questões Certo ou Errado (Parte 2: 11 a 15) — Estilo Cebraspe
-export const inglesTfQuestionsData: TfQuestionItem[] = [
-  {
-    id: 11,
-    enunciado: '11. “Hello” e “Hi” podem ser utilizados como cumprimentos.',
-    correta: true,
-    explicacao: 'Gabarito oficial: CERTO. Ambos são saudações clássicas em inglês, sendo "Hello" mais neutro/formal e "Hi" mais casual e coloquial.'
-  },
-  {
-    id: 12,
-    enunciado: '12. “How old are you?” significa “Qual é o seu nome?”.',
-    correta: false,
-    explicacao: 'Gabarito oficial: ERRADO. "How old are you?" significa "Quantos anos você tem?" (pergunta a idade). "Qual é o seu nome?" é "What\'s your name?".'
-  },
-  {
-    id: 13,
-    enunciado: '13. “I\'m a student” significa “Eu sou estudante”.',
-    correta: true,
-    explicacao: 'Gabarito oficial: CERTO. "I\'m" é a contração de "I am" (eu sou), seguido do artigo indefinido "a" e do substantivo "student" (estudante).'
-  },
-  {
-    id: 14,
-    enunciado: '14. “Good night” é normalmente utilizado como cumprimento equivalente a “Good morning”.',
-    correta: false,
-    explicacao: 'Gabarito oficial: ERRADO. "Good morning" é uma saudação de chegada matutina. Já "Good night" é uma DESPEDIDA noturna (usada ao sair ou antes de dormir). O cumprimento de chegada noturno equivalente é "Good evening".'
+    enunciado: '8. Qual técnica de leitura consiste em procurar informações específicas em um texto?',
+    opcoes: ['Skimming', 'Scanning', 'Translation', 'Writing'],
+    alternativas: ['Skimming', 'Scanning', 'Translation', 'Writing'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Scanning. Scanning é a busca direcionada por dados específicos (datas, nomes, números ou locais), enquanto Skimming busca o assunto geral.',
   },
   {
     id: 15,
-    enunciado: '15. “See you tomorrow” significa “Até amanhã”.',
-    correta: true,
-    explicacao: 'Gabarito oficial: CERTO. "See you" (vejo você / até) + "tomorrow" (amanhã) traduz-se com exatidão como "Até amanhã!".'
-  }
-];
-
-// 5 Questões Dissertativas Oficiais (Parte 3: 16 a 20) com Espelho Oficial
-export const inglesDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
+    textoApoio:
+      "Public employees play an important role in society. They must respect the law, protect citizens' rights and provide efficient services. Honesty and responsibility are essential qualities for people who work in public administration.",
+    enunciado: '15. (Parte III — Interpretação de texto) Qual é o assunto principal do texto?',
+    opcoes: [
+      'O funcionamento das empresas privadas.',
+      'A importância dos servidores públicos na sociedade.',
+      'O sistema educacional.',
+      'A economia internacional.',
+    ],
+    alternativas: [
+      'O funcionamento das empresas privadas.',
+      'A importância dos servidores públicos na sociedade.',
+      'O sistema educacional.',
+      'A economia internacional.',
+    ],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) A importância dos servidores públicos na sociedade. A primeira frase resume a ideia central: "Public employees play an important role in society."',
+  },
   {
     id: 16,
-    titulo: 'Questão 16 — Tradução Direta de Apresentação',
-    enunciado: 'Traduza para o português a seguinte frase de apresentação pessoal:\n\n“Hello! My name is Anna. I\'m from Brazil.”',
-    respostaEsperada: 'Gabarito oficial:\n“Olá! Meu nome é Anna. Eu sou do Brasil.” (ou “Olá! Meu nome é Anna. Sou brasileira / Venho do Brasil.”)',
-    espelhoCorrecao: [
-      'Tradução adequada da saudação: "Hello!" → "Olá!" ou "Oi!"',
-      'Identificação do nome: "My name is Anna" → "Meu nome é Anna"',
-      'Indicação correta da procedência/país: "I\'m from Brazil" → "Eu sou do Brasil" / "Sou do Brasil"'
+    textoApoio:
+      "Public employees play an important role in society. They must respect the law, protect citizens' rights and provide efficient services. Honesty and responsibility are essential qualities for people who work in public administration.",
+    enunciado: '16. (Parte III — Interpretação de texto) Segundo o texto, os servidores públicos devem:',
+    opcoes: [
+      'Trabalhar apenas com interesses pessoais.',
+      'Ignorar as leis.',
+      'Respeitar a lei e proteger os direitos dos cidadãos.',
+      'Evitar prestar serviços à população.',
     ],
-    pontosChave: [
-      'Tradução do cumprimento Hello',
-      'Pronome possessivo My (meu)',
-      'Preposição from (do / de)'
-    ]
+    alternativas: [
+      'Trabalhar apenas com interesses pessoais.',
+      'Ignorar as leis.',
+      'Respeitar a lei e proteger os direitos dos cidadãos.',
+      'Evitar prestar serviços à população.',
+    ],
+    correta: 2, // C
+    explicacao:
+      '✅ Gabarito: C) Respeitar a lei e proteger os direitos dos cidadãos. O texto diz explicitamente: "They must respect the law, protect citizens\' rights and provide efficient services."',
   },
   {
     id: 17,
-    titulo: 'Questão 17 — Formulação de Perguntas em Inglês',
-    enunciado: 'Escreva em inglês:\na) Uma pergunta para saber o nome de uma pessoa.\nb) Uma pergunta para saber de onde essa pessoa é.',
-    respostaEsperada: 'Gabarito oficial:\na) Pergunta para saber o nome: “What\'s your name?” (ou “What is your name?”).\nb) Pergunta para saber a origem: “Where are you from?”.',
-    espelhoCorrecao: [
-      'Item a: Utilização correta de "What\'s your name?" ou "What is your name?" com ponto de interrogação.',
-      'Item b: Utilização correta de "Where are you from?" com a preposição "from" ao final e ponto de interrogação.'
-    ],
-    pontosChave: [
-      'Palavra interrogativa What para nome',
-      'Palavra interrogativa Where + from para origem',
-      'Presença indispensável do ponto de interrogação'
-    ]
+    textoApoio:
+      "Public employees play an important role in society. They must respect the law, protect citizens' rights and provide efficient services. Honesty and responsibility are essential qualities for people who work in public administration.",
+    enunciado: '17. (Parte III — Interpretação de texto) A palavra Essential significa:',
+    opcoes: ['Desnecessário', 'Essencial', 'Difícil', 'Opcional'],
+    alternativas: ['Desnecessário', 'Essencial', 'Difícil', 'Opcional'],
+    correta: 1, // B
+    explicacao:
+      '✅ Gabarito: B) Essencial. "Essential" é um cognato transparente de "essencial" (honestidade e responsabilidade são qualidades essenciais).',
+  },
+];
+
+export const inglesTfQuestionsData: TfQuestionItem[] = [
+  {
+    id: 9,
+    enunciado: '9. A palavra Law significa lei.',
+    correta: true, // V
+    explicacao: '✅ Gabarito: Verdadeiro (V). No vocabulário jurídico: Law = Lei.',
   },
   {
+    id: 10,
+    enunciado: '10. A palavra Employee significa empregador.',
+    correta: false, // F
+    explicacao:
+      '✅ Gabarito: Falso (F). "Employee" significa funcionário/empregado; quem emprega (empregador) é "Employer".',
+  },
+  {
+    id: 11,
+    enunciado: '11. Skimming é uma técnica de leitura rápida para identificar o assunto geral de um texto.',
+    correta: true, // V
+    explicacao:
+      '✅ Gabarito: Verdadeiro (V). O Skimming consiste justamente em passar os olhos rapidamente para captar a ideia central.',
+  },
+  {
+    id: 12,
+    enunciado: '12. Scanning exige necessariamente a tradução de todas as palavras do texto.',
+    correta: false, // F
+    explicacao:
+      '✅ Gabarito: Falso (F). O Scanning busca informações pontuais (datas, nomes, números, locais) sem precisar traduzir todo o texto.',
+  },
+  {
+    id: 13,
+    enunciado: '13. A palavra Honesty significa honestidade.',
+    correta: true, // V
+    explicacao: '✅ Gabarito: Verdadeiro (V). Honesty = honestidade.',
+  },
+  {
+    id: 14,
+    enunciado: '14. A palavra They pode significar eles ou elas.',
+    correta: true, // V
+    explicacao:
+      '✅ Gabarito: Verdadeiro (V). Em inglês, o pronome pessoal "They" é neutro em gênero e equivale a eles ou elas.',
+  },
+];
+
+export const inglesDiscursiveQuestionsData: DiscursiveQuestionItem[] = [
+  {
     id: 18,
-    titulo: 'Questão 18 — Distinção Semântica: Good evening vs. Good night',
-    enunciado: 'Explique detalhadamente a diferença de contexto e uso entre as expressões “Good evening” e “Good night”.',
-    respostaEsperada: 'Gabarito oficial:\n• “Good evening” é uma saudação (cumprimento de chegada) utilizada a partir do final da tarde / início da noite (por volta das 18h) quando você encontra alguém ou inicia uma palestra/conversa.\n• “Good night” é exclusivamente uma expressão de despedida, empregada quando você está indo embora de um local no período noturno ou quando vai dormir.',
+    titulo: 'Questão 18 — Skimming vs. Scanning',
+    enunciado:
+      '18. Explique a diferença entre Skimming e Scanning e apresente uma situação em que cada técnica pode ser utilizada.',
+    respostaEsperada:
+      'Skimming é a leitura rápida para identificar o assunto geral do texto. Scanning é a busca por uma informação específica, como uma data, nome ou número.',
     espelhoCorrecao: [
-      'Identificação de "Good evening" como saudação/cumprimento de chegada noturno',
-      'Identificação de "Good night" como despedida ao sair ou antes de dormir',
-      'Menção ao contexto temporal (período noturno para ambos, mas funções comunicativas opostas)'
+      'Definir Skimming como leitura rápida para captar o tema/assunto geral.',
+      'Definir Scanning como busca direcionada por dados específicos sem ler/traduzir tudo.',
+      'Apresentar ao menos um exemplo ou situação de uso para cada técnica (ex.: identificar o tema de uma notícia jurídica via Skimming; localizar uma data ou nome no texto via Scanning).',
     ],
-    pontosChave: [
-      'Good evening = chegada / cumprimento',
-      'Good night = saída / despedida / dormir',
-      'Diferença clássica cobrada pela FGV e Cebraspe'
-    ]
+    pontosChave: ['Skimming = ideia geral', 'Scanning = dado específico', 'Situação prática para cada'],
   },
   {
     id: 19,
-    titulo: 'Questão 19 — Diálogo Básico de Apresentação',
-    enunciado: 'Imagine que você está conhecendo um colega pela primeira vez. Escreva um pequeno diálogo em inglês contendo obrigatoriamente:\n1) Cumprimento;\n2) Apresentação do nome;\n3) Pergunta sobre a origem;\n4) Despedida.',
-    respostaEsperada: 'Gabarito oficial (modelo sugerido):\n\nA: Hello! Good morning! My name is Carlos. What\'s your name?\nB: Hi Carlos! I\'m Maria. Nice to meet you!\nA: Nice to meet you too! Where are you from?\nB: I\'m from Manaus, Brazil. And you?\nA: I\'m from Brazil too. Great! See you later, Maria!\nB: Goodbye! Have a nice day!',
+    titulo: 'Questão 19 — Tradução Jurídica',
+    enunciado:
+      '19. Traduza para o português: "Judges analyze cases and make decisions according to the law."',
+    respostaEsperada:
+      '"Os juízes analisam os processos e tomam decisões de acordo com a lei."',
     espelhoCorrecao: [
-      'Presença de cumprimento (Hello, Hi, Good morning)',
-      'Troca de nomes e cortesia (My name is..., Nice to meet you)',
-      'Pergunta e resposta sobre local de origem (Where are you from? I\'m from...)',
-      'Despedida formal ou informal adequada (See you later, Goodbye, Bye)'
+      'Traduzir "Judges" por "Os juízes".',
+      'Traduzir "analyze cases" por "analisam os processos / casos".',
+      'Traduzir "make decisions according to the law" por "tomam decisões de acordo com a lei".',
     ],
-    pontosChave: [
-      'Estrutura em formato de diálogo (interlocutores A e B)',
-      'Coerência e sequência comunicativa lógica',
-      'Atendimento aos 4 requisitos expressos no enunciado'
-    ]
+    pontosChave: ['Os juízes', 'analisam os processos', 'tomam decisões', 'de acordo com a lei'],
   },
   {
     id: 20,
-    titulo: 'Questão 20 — Apresentação Pessoal Completa',
-    enunciado: 'Escreva uma apresentação pessoal curta em inglês contendo:\n• seu nome;\n• sua idade;\n• de onde você é;\n• sua profissão ou condição de estudante.',
-    respostaEsperada: 'Gabarito oficial (modelo sugerido):\n\n“Hello! My name is Pedro. I am 25 years old. I am from Manaus, Brazil. I am a public servant / I am a student preparing for the TJAM examination. Nice to meet you!”',
+    titulo: 'Questão 20 — Importância da Interpretação em Concursos',
+    enunciado:
+      '20. Explique por que a interpretação de textos em inglês é importante para candidatos a concursos públicos.',
+    respostaEsperada:
+      'A interpretação permite compreender textos, identificar informações importantes e responder corretamente às questões, mesmo quando não conhecemos todas as palavras.',
     espelhoCorrecao: [
-      'Apresentação do nome ("My name is..." ou "I am...")',
-      'Indicação correta da idade com o verbo to be ("I am ... years old")',
-      'Indicação da origem com preposição ("I am from...")',
-      'Indicação da ocupação com o artigo "a" ("I am a student" / "I am a public servant")'
+      'Destacar a compreensão global e identificação das informações relevantes do texto.',
+      'Explicar que a interpretação permite acertar questões mesmo sem conhecer todo o vocabulário palavra por palavra.',
     ],
-    pontosChave: [
-      'Uso correto de I am... years old (sem utilizar have)',
-      'Emprego do artigo indefinido "a" antes de profissão',
-      'Construção coesa e gramaticalmente correta'
-    ]
-  }
+    pontosChave: ['Compreender textos', 'Identificar informações importantes', 'Resolver questões sem traduzir tudo'],
+  },
 ];
 
 export const inglesSummaryPoints: string[] = [
-  '🔤 Alfabeto Inglês (26 letras): Possui fonética distinta do português. Memorize: A (ei), E (i), I (ai), G (dji), J (djei), H (êitch), R (ar), Y (uai), W (dâbliu).',
-  '👋 Cumprimentos (Greetings): Informais: Hi!, Hello!, Hey! | Formais: Good morning (manhã), Good afternoon (tarde), Good evening (noite ao chegar).',
-  '⚠️ Regra de Ouro: "Good evening" é saudação de chegada à noite; "Good night" é estritamente despedida ao sair ou antes de dormir.',
-  '💬 Perguntando Como Está: "How are you?" ou "How are you doing?" → Respostas: "I\'m fine, thank you", "I\'m good", "I\'m great", "I\'m okay".',
-  '🤝 Apresentação do Nome: "What\'s your name?" → "My name is [Nome]" ou "I\'m [Nome]". Cortesia: "Nice to meet you!" (Prazer em conhecê-lo).',
-  '🎂 Idade com Verbo TO BE: Pergunta-se "How old are you?". Responde-se "I am 25 years old". NUNCA use o verbo have (*I have 25 years*).',
-  '🌎 Origem & Nacionalidade: "Where are you from?" → "I\'m from Brazil" / "I\'m from Manaus". Preposição "from" indica procedência.',
-  '💼 Profissão & Artigo "A": "What do you do?" → "I\'m a public servant" (servidor público), "I\'m a student" (estudante), "I\'m a lawyer" (advogado).',
-  '👋 Despedidas (Goodbyes): Goodbye!, Bye!, See you!, See you later! (Até mais tarde), See you tomorrow! (Até amanhã), Have a nice day! (Tenha um bom dia).',
-  '📱 Desafio Prático TJAM: Gravação de áudio de 30 a 60 segundos com apresentação pessoal e envio ao professor via WhatsApp.'
+  'Estratégias de Leitura: Skimming (leitura rápida para captar o assunto principal), Scanning (busca de informações específicas como datas, nomes e locais) e Reading for detail (leitura detalhada de argumentos e conclusões).',
+  'Vocabulário Jurídico e Administrativo: Court (Tribunal), Judge (Juiz), Law (Lei), Justice (Justiça), Rights (Direitos), Duties (Deveres), Citizen (Cidadão), Government (Governo), Public service (Serviço público), Employee (Funcionário), Law enforcement (Aplicação da lei), Legal system (Sistema jurídico), Hearing (Audiência), Decision (Decisão) e Justice system (Sistema de Justiça).',
+  'Palavras Interrogativas (Wh- Words): Who (Quem), What (O quê/Qual), Where (Onde), When (Quando), Why (Por quê), How (Como) e Which (Qual) indicam o tipo de informação pedida pela questão.',
+  'Pronomes de Referência: They (Eles/Elas), Their (Deles/Delas), We (Nós) e It (Ele/Ela para coisas e animais) são fundamentais para resolver questões de coesão referencial.',
+  'Vocabulário-Chave do Texto "The Importance of Justice": Fair (justo), Society (sociedade), Protecting (protegendo), Evidence (provas), According to (de acordo com), Honesty (honestidade) e Efficiency (eficiência).',
+  'Avaliação (20 Exercícios): Parte I (1-8 objetivas), Parte II (9-14 V/F), Parte III (15-17 interpretação de texto) e Parte IV (18-20 dissertativas), com critério de desempenho de 0 a 20 acertos.',
 ];
 
 export const inglesVideoInfo = {
-  title: 'Inglês — Aula 01: Alfabeto, Cumprimentos e Apresentação',
-  subtitle: 'Nível Intermediário — TJAM Assistente Judiciário',
-  videoUrl: 'https://www.youtube.com/embed/prAINVhqreQ?autoplay=0&rel=0',
-  videoId: 'prAINVhqreQ',
-  duration: '45 min'
+  title: 'Aula 1 — Língua Inglesa: Reading Comprehension (Interpretação de Textos em Inglês)',
+  subtitle: 'Nível Intermediário • Preparatório TJAM — Assistente Judiciário',
+  videoUrl: 'https://www.youtube.com/embed/0OKwcAaV_gQ?autoplay=0&rel=0',
+  videoId: '0OKwcAaV_gQ',
+  externalUrl: 'https://youtu.be/0OKwcAaV_gQ?si=Kxf6dd3cCimZryLO',
+  duration: '45 min',
 };

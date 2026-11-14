@@ -272,7 +272,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
 
     if (completedThreeAllToday) {
       setCelebrationMessage(
-        `🎉 PARABÉNS! Você marcou presença e encerrou as 3 aulas de hoje! Meta concluída com sucesso e +1 dia consecutivo de estudo adicionado! (Sequência: ${updatedProgress.streakDays} dias)`
+        `🎉 PARABÉNS! Você marcou presença e encerrou ${overview.totalRequired === 1 ? 'a aula de hoje' : `as ${overview.totalRequired} aulas de hoje`}! Meta concluída com sucesso e +1 dia consecutivo de estudo adicionado! (Sequência: ${updatedProgress.streakDays} dias)`
       );
     } else {
       const durText = formatDurationHMS(addedSeconds);
@@ -310,10 +310,10 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 text-xs font-bold text-amber-300 border border-white/10">
             <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-            <span>{progress.streakDays || 1} dias seguidos</span>
+            <span>{progress.streakDays || 0} {(progress.streakDays || 0) === 1 ? 'dia seguido' : 'dias seguidos'}</span>
           </div>
           <div className="text-xs font-bold text-slate-200">
-            {overview.completedCount} de 3 aulas concluídas ({overview.percentComplete}%)
+            {overview.completedCount} de {overview.totalRequired} {overview.totalRequired === 1 ? 'aula concluída' : 'aulas concluídas'} ({overview.percentComplete}%)
           </div>
         </div>
       </div>
@@ -619,16 +619,26 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
-              Grade das 3 Aulas do Dia (Segunda-feira)
+              {TODAY_MANDATORY_LESSONS.length === 1
+                ? 'Grade da Aula de Hoje (Sexta-feira)'
+                : `Grade das ${TODAY_MANDATORY_LESSONS.length} Aulas do Dia`}
             </span>
           </div>
           <span className="text-xs text-slate-500 dark:text-slate-400">
-            Conclua o início e fim das 3 aulas para validar a meta diária e somar dias consecutivos.
+            Conclua o início e fim {TODAY_MANDATORY_LESSONS.length === 1 ? 'da aula' : `das ${TODAY_MANDATORY_LESSONS.length} aulas`} para validar a meta diária e somar dias consecutivos.
           </span>
         </div>
 
-        {/* Cards for each of the 3 lessons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+        {/* Cards for today's mandatory lessons */}
+        <div
+          className={`grid grid-cols-1 ${
+            TODAY_MANDATORY_LESSONS.length === 1
+              ? ''
+              : TODAY_MANDATORY_LESSONS.length === 2
+              ? 'md:grid-cols-2'
+              : 'md:grid-cols-3'
+          } gap-2.5`}
+        >
           {TODAY_MANDATORY_LESSONS.map((item, idx) => {
             const isSelected = item.id === lessonId;
             const statusInfo = getLessonAttendanceStatus(progress, item.id);
@@ -646,7 +656,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
                 <div className="flex items-start justify-between gap-2">
                   <div className="space-y-0.5">
                     <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">
-                      Aula {idx + 1} de 3
+                      Aula {idx + 1} de {TODAY_MANDATORY_LESSONS.length}
                     </span>
                     <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
                       {item.title}
@@ -683,7 +693,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
           })}
         </div>
 
-        {/* Congratulations Banner if All 3 are Completed */}
+        {/* Congratulations Banner if All Today's Lessons are Completed */}
         {overview.allThreeCompleted && (
           <div className="mt-3 p-3.5 rounded-xl bg-linear-to-r from-emerald-500/15 via-teal-500/15 to-emerald-500/15 border border-emerald-400/40 text-emerald-950 dark:text-emerald-200 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
@@ -695,7 +705,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
                   🎉 Meta de Frequência do Dia Conquistada!
                 </h4>
                 <p className="text-[11px] text-emerald-700 dark:text-emerald-300">
-                  Você registrou o início e fim das 3 aulas de hoje. Sua presença foi validada e a sequência de <strong className="font-black">{progress.streakDays} dias consecutivos</strong> foi atualizada!
+                  Você registrou o início e fim {TODAY_MANDATORY_LESSONS.length === 1 ? 'da aula de hoje' : `das ${TODAY_MANDATORY_LESSONS.length} aulas de hoje`}. Sua presença foi validada e a sequência de <strong className="font-black">{progress.streakDays} dias consecutivos</strong> foi atualizada!
                 </p>
               </div>
             </div>

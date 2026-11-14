@@ -56,6 +56,7 @@ export const StudentPortal: React.FC<StudentPortalProps> = ({
   isDarkMode,
 }) => {
   const [subTab, setSubTab] = useState<'plano' | 'liberados' | 'lives' | 'certificados'>('plano');
+  const [certNotice, setCertNotice] = useState<string | null>(null);
 
   const myTurma = turmas.find((t) => t.id === progress.turmaId) || turmas[0];
 
@@ -287,11 +288,16 @@ export const StudentPortal: React.FC<StudentPortalProps> = ({
             </div>
 
             <button
-              onClick={() => alert('Certificado gerado com sucesso! Código de Autenticação: TJAM-CERT-2026-88F9A2')}
-              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-lg inline-flex items-center gap-2"
+              onClick={() => setCertNotice('Certificado gerado com sucesso! Código de Autenticação: TJAM-CERT-2026-88F9A2')}
+              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-lg inline-flex items-center gap-2 cursor-pointer"
             >
               <Printer className="w-4 h-4" /> Imprimir / Baixar Certificado Oficial
             </button>
+            {certNotice && (
+              <div className="max-w-md mx-auto p-3 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-bold">
+                {certNotice}
+              </div>
+            )}
           </div>
         </div>
       )}
