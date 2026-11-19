@@ -54,24 +54,24 @@ interface ScheduledLesson {
 
 const TODAY_PRIMARY_LESSONS: ScheduledLesson[] = [
   {
-    id: 'ingles',
-    subjectKey: 'ingles',
-    title: 'Língua Inglesa — Aula 01',
-    subtitle: 'Reading Comprehension — Interpretação de Textos em Inglês • TJAM',
-    category: 'Conhecimentos Básicos TJAM',
-    badge: '1ª Aula de Hoje (Sexta-feira)',
-    duration: '45 min',
+    id: 'processo_civil',
+    subjectKey: 'processo_civil',
+    title: 'Direito Processual Civil — Aula 01',
+    subtitle: 'Princípios do Processo Civil • Quarta-feira (18/11/2026) • TJAM',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '1ª Aula de Hoje (Quarta-feira)',
+    duration: '50 min',
     questionsCount: 20,
-    cardsCount: 10,
+    cardsCount: 14,
   },
   {
-    id: 'direito_const',
-    subjectKey: 'direito_const',
-    title: 'Direito Constitucional — Aula 01',
-    subtitle: 'Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
+    id: 'direito_admin',
+    subjectKey: 'direito_admin',
+    title: 'Direito Administrativo — Aula 01',
+    subtitle: 'Tema 1: Organização Administrativa • Quarta-feira (18/11/2026) • TJAM',
     category: 'Conhecimentos Específicos TJAM',
-    badge: '2ª Aula de Hoje (Sexta-feira)',
-    duration: '45 min',
+    badge: '2ª Aula de Hoje (Quarta-feira)',
+    duration: '50 min',
     questionsCount: 20,
     cardsCount: 10,
   },
@@ -506,7 +506,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="flex items-center gap-2">
                 <ListTodo className="w-5 h-5 text-amber-600" />
                 <h2 className="text-base font-extrabold text-slate-900">
-                  🎯 Metas de Hoje (Sexta-feira)
+                  🎯 Metas de Hoje (Quarta-feira)
                 </h2>
               </div>
               <p className="text-xs text-slate-500 font-medium">

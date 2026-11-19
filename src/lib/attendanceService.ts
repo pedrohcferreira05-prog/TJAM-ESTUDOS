@@ -8,34 +8,34 @@ import {
 
 export const DEFAULT_TODAY_LESSONS: TodayLessonConfig[] = [
   {
-    id: 'ingles',
-    subjectKey: 'ingles',
-    title: 'Língua Inglesa — Aula 01',
-    subtitle: 'Reading Comprehension — Interpretação de Textos em Inglês',
-    category: 'Conhecimentos Básicos TJAM',
-    badge: '1ª Aula de Hoje (Sexta-feira)',
-    duration: '45 min',
+    id: 'processo_civil',
+    subjectKey: 'processo_civil',
+    title: 'Direito Processual Civil — Aula 01',
+    subtitle: 'Princípios do Processo Civil • Quarta-feira (18/11/2026)',
+    category: 'Conhecimentos Específicos TJAM',
+    badge: '1ª Aula de Hoje (Quarta-feira)',
+    duration: '50 min',
     order: 1,
     questionsCount: 20,
-    cardsCount: 10,
+    cardsCount: 14,
     isMandatoryAttendance: true,
     teacherNotes:
-      'Nesta Aula 1 de Língua Inglesa (Nível Intermediário — TJAM), estudamos estratégias de leitura (Skimming, Scanning e Reading for detail), 15 termos jurídicos/administrativos, pronomes e palavras interrogativas (Wh- words), texto "The Importance of Justice" e 20 exercícios gabaritados (objetivas, V/F, interpretação e dissertativas).',
+      'Nesta 1ª Aula de Hoje (Quarta-feira • 18/11/2026 — Nível Intermediário TJAM), estudamos o conceito de Direito Processual Civil, os princípios processuais fundamentais (CF/88 e CPC arts. 2º ao 11: devido processo legal, contraditório e ampla defesa, inafastabilidade, inércia e impulso oficial, duração razoável, boa-fé, cooperação, isonomia, publicidade, motivação, economia processual e solução consensual) e 20 exercícios com gabarito.',
   },
   {
-    id: 'direito_const',
-    subjectKey: 'direito_const',
-    title: 'Direito Constitucional — Aula 01',
-    subtitle: 'Princípios Fundamentais da Constituição Federal — Arts. 1º ao 4º',
+    id: 'direito_admin',
+    subjectKey: 'direito_admin',
+    title: 'Direito Administrativo — Aula 01',
+    subtitle: 'Tema 1: Organização Administrativa • Quarta-feira (18/11/2026)',
     category: 'Conhecimentos Específicos TJAM',
-    badge: '2ª Aula de Hoje (Sexta-feira)',
-    duration: '45 min',
+    badge: '2ª Aula de Hoje (Quarta-feira)',
+    duration: '50 min',
     order: 2,
     questionsCount: 20,
     cardsCount: 10,
     isMandatoryAttendance: true,
     teacherNotes:
-      'Nesta Aula 1 de Direito Constitucional (Nível Intermediário — TJAM), estudamos o conceito de Direito Constitucional, os 5 fundamentos da República (SO-CI-DI-VA-PLU — Art. 1º), a Separação dos Poderes (Art. 2º), os 4 objetivos fundamentais (Art. 3º), os 10 princípios das relações internacionais e integração latino-americana (Art. 4º) e 20 exercícios com gabarito.',
+      'Nesta 2ª Aula de Hoje (Quarta-feira • 18/11/2026 — 1ª Aula de Direito Administrativo, Nível Intermediário TJAM), estudamos o objeto do Direito Administrativo, sentidos Subjetivo e Objetivo da Administração Pública, Desconcentração, Descentralização, Centralização, Concentração, Administração Direta e Indireta (INSS, IBGE, Caixa, Banco do Brasil) e 20 exercícios gabaritados.',
   },
 ];
 
@@ -46,11 +46,11 @@ export const TODAY_MANDATORY_LESSONS = DEFAULT_TODAY_LESSONS.map((l) => ({
 
 export function getTodayLessonsConfig(): TodayLessonConfig[] {
   try {
-    const versionKey = 'tjam_today_lessons_version_v19_sex_ingles_e_const_aula1';
+    const versionKey = 'tjam_today_lessons_version_v21_qua_proc_civil_e_dir_admin';
     const isUpToDate = localStorage.getItem(versionKey);
     if (!isUpToDate) {
       localStorage.setItem('tjam_today_lessons_config', JSON.stringify(DEFAULT_TODAY_LESSONS));
-      localStorage.setItem('tjam_selected_subject', 'ingles');
+      localStorage.setItem('tjam_selected_subject', 'processo_civil');
       localStorage.setItem(versionKey, 'true');
       return DEFAULT_TODAY_LESSONS;
     }

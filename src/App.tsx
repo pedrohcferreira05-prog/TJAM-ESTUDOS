@@ -321,8 +321,8 @@ export function App() {
         const isStrictTodayGoal =
           Array.isArray(parsed.weeklyGoals) &&
           parsed.weeklyGoals.length === 2 &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-sex-01') &&
-          parsed.weeklyGoals.some((g: any) => g.id === 'goal-sex-02');
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qua-01') &&
+          parsed.weeklyGoals.some((g: any) => g.id === 'goal-qua-02');
         if (!parsed.weeklyGoals || parsed.weeklyGoals.length === 0 || !isStrictTodayGoal) {
           parsed.weeklyGoals = INITIAL_WEEKLY_GOALS;
         }
@@ -395,7 +395,7 @@ export function App() {
         if (localStorage.getItem('tjam_contents_reboot_2026_v5') !== 'true') {
           await handleResetAllStudentContents(true);
           localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
-          localStorage.setItem('tjam_selected_subject', 'ingles');
+          localStorage.setItem('tjam_selected_subject', 'processo_civil');
         } else {
           // 1. Fetch remote progress from Firestore or fallback to local
           const effectiveId = (currentUserSession?.role === 'student' ? currentUserSession.id : null) || 'id00120087';
@@ -534,8 +534,8 @@ export function App() {
       if (sharedGoals && sharedGoals.length > 0) {
         const isCurrentTodayGoal =
           sharedGoals.length === 2 &&
-          sharedGoals.some((g) => g.id === 'goal-sex-01') &&
-          sharedGoals.some((g) => g.id === 'goal-sex-02');
+          sharedGoals.some((g) => g.id === 'goal-qua-01') &&
+          sharedGoals.some((g) => g.id === 'goal-qua-02');
         if (isCurrentTodayGoal) {
           setUserProgress((prev) => ({
             ...prev,
@@ -562,8 +562,8 @@ export function App() {
       if (remoteLessons && remoteLessons.length > 0) {
         const isCurrentTodayLesson =
           remoteLessons.length === 2 &&
-          remoteLessons.some((l) => l.subjectKey === 'ingles') &&
-          remoteLessons.some((l) => l.subjectKey === 'direito_const');
+          remoteLessons.some((l) => l.subjectKey === 'processo_civil') &&
+          remoteLessons.some((l) => l.subjectKey === 'direito_admin');
         if (isCurrentTodayLesson) {
           setTodayLessons(remoteLessons);
           saveTodayLessonsConfig(remoteLessons);
@@ -918,7 +918,7 @@ export function App() {
       localStorage.removeItem('tjam_video_desafio_admin_controle');
       localStorage.removeItem('tjam_video_desafio_const_nacionalidade');
       localStorage.setItem('tjam_contents_reboot_2026_v5', 'true');
-      localStorage.setItem('tjam_selected_subject', 'ingles');
+      localStorage.setItem('tjam_selected_subject', 'processo_civil');
     } catch (e) {
       console.warn('Erro ao limpar localStorage:', e);
     }

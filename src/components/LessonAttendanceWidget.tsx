@@ -620,7 +620,7 @@ export const LessonAttendanceWidget: React.FC<LessonAttendanceWidgetProps> = ({
             <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
               {TODAY_MANDATORY_LESSONS.length === 1
-                ? 'Grade da Aula de Hoje (Sexta-feira)'
+                ? 'Grade da Aula de Hoje (Quarta-feira)'
                 : `Grade das ${TODAY_MANDATORY_LESSONS.length} Aulas do Dia`}
             </span>
           </div>

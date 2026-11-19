@@ -63,12 +63,13 @@ import {
 } from './portuguesAula2LessonData';
 
 import {
-  procCivilFlashcardsData,
-  procCivilAula2McQuestionsData,
-  procCivilAula2TfQuestionsData,
-  procCivilAula2DiscursiveQuestionsData,
-  procCivilAula2SummaryPoints,
-} from './processoCivilLessonData';
+  procCivilAula1FlashcardsData,
+  procCivilAula1McQuestionsData,
+  procCivilAula1TfQuestionsData,
+  procCivilAula1DiscursiveQuestionsData,
+  procCivilAula1SummaryPoints,
+  procCivilAula1VideoInfo,
+} from './processoCivilAula1LessonData';
 
 import {
   procPenalAula2FlashcardsData as procPenalFlashcardsData,
@@ -302,19 +303,20 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
   // 8. PROCESSO CIVIL
   {
     id: 'processo_civil',
-    title: 'Processo Civil — Aula 02: Atos Processuais e Prazos',
+    title: 'Direito Processual Civil — Aula 01: Princípios do Processo Civil',
     disciplineId: 'processo-civil',
     disciplineName: 'Direito Processual Civil',
-    badge: 'Aula 2',
-    isPriorityToday: false,
-    emoji: '📚',
-    duration: '45 min',
-    summary: 'Atos das partes e dos juízes, contagem de prazos em dias úteis pelo CPC/2015, preclusão e citação/intimação judicial.',
-    mcQuestions: procCivilAula2McQuestionsData,
-    tfQuestions: procCivilAula2TfQuestionsData,
-    discursiveQuestions: procCivilAula2DiscursiveQuestionsData,
-    flashcards: procCivilFlashcardsData,
-    summaryPoints: procCivilAula2SummaryPoints,
+    badge: '1ª Aula de Hoje (Quarta-feira)',
+    isPriorityToday: true,
+    emoji: '⚖️',
+    duration: '50 min',
+    summary: 'O que é Direito Processual Civil e princípios fundamentais (CF/88 e CPC arts. 2º ao 11): devido processo legal, contraditório e ampla defesa, inafastabilidade, inércia e impulso oficial, duração razoável, boa-fé, cooperação, isonomia, publicidade, motivação, economia processual e solução consensual.',
+    mcQuestions: procCivilAula1McQuestionsData,
+    tfQuestions: procCivilAula1TfQuestionsData,
+    discursiveQuestions: procCivilAula1DiscursiveQuestionsData,
+    flashcards: procCivilAula1FlashcardsData,
+    summaryPoints: procCivilAula1SummaryPoints,
+    videoUrl: procCivilAula1VideoInfo.externalUrl,
   },
 
   // 9. LÍNGUA PORTUGUESA — AULA 03
@@ -338,19 +340,20 @@ export const ALL_LESSONS_CATALOG: LessonCatalogItem[] = [
   // 10. DIREITO ADMINISTRATIVO
   {
     id: 'direito_admin',
-    title: 'Direito Administrativo — Aula 02: Controle da Administração Pública',
+    title: 'Direito Administrativo — Aula 01: Organização Administrativa',
     disciplineId: 'direito-administrativo',
     disciplineName: 'Direito Administrativo',
-    badge: 'Aula 2',
-    isPriorityToday: false,
-    emoji: '⚖️',
-    duration: '45 min',
-    summary: 'Controle interno e externo, autotutela administrativa (Súmulas 346 e 473 do STF), controle judicial e limites de mérito.',
+    badge: '2ª Aula de Hoje (Quarta-feira)',
+    isPriorityToday: true,
+    emoji: '🏛️',
+    duration: '50 min',
+    summary: 'Objeto do Direito Administrativo, Administração Pública (sentidos subjetivo e objetivo), desconcentração, descentralização, centralização, concentração, Administração Direta e Indireta (INSS, IBGE, Caixa, Banco do Brasil).',
     mcQuestions: direitoAdminMcQuestionsData,
     tfQuestions: direitoAdminTfQuestionsData,
     discursiveQuestions: direitoAdminDiscursiveQuestionsData,
     flashcards: direitoAdminFlashcardsData,
     summaryPoints: direitoAdminSummaryPoints,
+    videoUrl: 'https://youtu.be/YsrcBEUgoGY?si=un4q_WG8jnsLtwwa',
   },
 
   // 11. ESCRITA E LEITURA (OFICINA)

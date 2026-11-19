@@ -50,12 +50,12 @@ export const AVAILABLE_SUBJECTS = [
   },
   {
     key: 'processo_civil',
-    name: 'Processo Civil',
-    defaultTitle: 'Processo Civil — Aula 2',
-    defaultSub: 'Atos Processuais: forma, tempo, prazos em dias úteis, citação e intimação',
-    defaultCat: 'Conhecimentos Específicos',
-    duration: '45 min',
-    badge: '3ª Aula de Hoje'
+    name: 'Direito Processual Civil',
+    defaultTitle: 'Direito Processual Civil — Aula 01',
+    defaultSub: 'Princípios do Processo Civil • Quarta-feira (18/11/2026)',
+    defaultCat: 'Conhecimentos Específicos TJAM',
+    duration: '50 min',
+    badge: '1ª Aula de Hoje (Quarta-feira)'
   },
   {
     key: 'direito_const',
@@ -69,11 +69,11 @@ export const AVAILABLE_SUBJECTS = [
   {
     key: 'direito_admin',
     name: 'Direito Administrativo',
-    defaultTitle: 'Direito Administrativo — Aula 2',
-    defaultSub: 'Controle da Administração Pública: Interno, Externo, Judicial e Autotutela',
-    defaultCat: 'Conhecimentos Básicos TJAM',
-    duration: '40 min',
-    badge: 'Administrativo'
+    defaultTitle: 'Direito Administrativo — Aula 01',
+    defaultSub: 'Tema 1: Organização Administrativa • Quarta-feira (18/11/2026)',
+    defaultCat: 'Conhecimentos Específicos TJAM',
+    duration: '50 min',
+    badge: '2ª Aula de Hoje (Quarta-feira)'
   },
   {
     key: 'informatica',

@@ -89,14 +89,15 @@ import { PortuguesContent } from './PortuguesContent';
 import { PortuguesAula2Content } from './PortuguesAula2Content';
 import { PortuguesAula3Content } from './PortuguesAula3Content';
 import {
-  procCivilFlashcardsData,
-  procCivilAula2McQuestionsData as procCivilMcQuestionsData,
-  procCivilAula2TfQuestionsData as procCivilTfQuestionsData,
-  procCivilAula2DiscursiveQuestionsData as procCivilDiscursiveQuestionsData,
-  procCivilAula2SummaryPoints as procCivilSummaryPoints,
-} from '../data/processoCivilLessonData';
+  procCivilAula1FlashcardsData as procCivilFlashcardsData,
+  procCivilAula1McQuestionsData as procCivilMcQuestionsData,
+  procCivilAula1TfQuestionsData as procCivilTfQuestionsData,
+  procCivilAula1DiscursiveQuestionsData as procCivilDiscursiveQuestionsData,
+  procCivilAula1SummaryPoints as procCivilSummaryPoints,
+  procCivilAula1VideoInfo,
+} from '../data/processoCivilAula1LessonData';
 import { saveLessonProgressToFirestore, saveUserProgressToFirestore, saveStudentSubmissionToFirestore } from '../lib/firestoreService';
-import { ProcessoCivilContent } from './ProcessoCivilContent';
+import { ProcessoCivilAula1Content } from './ProcessoCivilAula1Content';
 import {
   procPenalAula2FlashcardsData,
   procPenalAula2McQuestionsData,
@@ -229,7 +230,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
 
   const [selectedSubject, setSelectedSubjectState] = useState<SubjectKey>(() => {
     const lessons = propTodayLessons && propTodayLessons.length > 0 ? propTodayLessons : getTodayLessonsConfig();
-    const firstLessonKey = (lessons[0]?.subjectKey as SubjectKey) || 'ingles';
+    const firstLessonKey = (lessons[0]?.subjectKey as SubjectKey) || 'processo_civil';
     try {
       const saved = localStorage.getItem('tjam_selected_subject');
       if (saved && lessons.some((l) => l.subjectKey === saved)) {
@@ -2398,8 +2399,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
       case 'direito_const': return 'Direito Constitucional — Aula 01: Princípios Fundamentais (Arts. 1º ao 4º)';
       case 'oratoria': return 'Oratória — Aula 01: Comunicação Verbal e Não Verbal';
       case 'processo_penal': return 'Direito Processual Penal — Aula 02: Ação Penal';
-      case 'processo_civil': return 'Processo Civil — Atos Processuais (Aula 2)';
-      case 'direito_admin': return 'Direito Administrativo — Organização Administrativa (Aula 01)';
+      case 'processo_civil': return 'Direito Processual Civil — Aula 01: Princípios do Processo Civil';
+      case 'direito_admin': return 'Direito Administrativo — Aula 01: Organização Administrativa';
       case 'informatica': return 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações';
       case 'libras': return 'LIBRAS — Introdução e Legislação (Aula 3)';
       case 'geografia_amazonas': return 'Geografia e História do Amazonas (Aula 2)';
@@ -2453,10 +2454,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'oratoria' ? 'Oratória (Aula 01)'
                   : selectedSubject === 'acessibilidade' ? 'Acessibilidade e Inclusão (LBI)'
                   : selectedSubject === 'redacao' ? 'Redação Dissertativa TJAM'
-                  : selectedSubject === 'direito_admin' ? 'Direito Administrativo'
+                  : selectedSubject === 'direito_admin' ? '2ª Aula de Hoje (Quarta-feira): Direito Admin (Aula 01)'
                   : selectedSubject === 'ingles' ? '1ª Aula de Hoje (Sexta-feira): Língua Inglesa (Aula 01)'
                   : selectedSubject === 'informatica' ? 'Informática e Processo Digital'
-                  : selectedSubject === 'processo_civil' ? 'Proc. Civil: Aula 2'
+                  : selectedSubject === 'processo_civil' ? '1ª Aula de Hoje (Quarta-feira): Proc. Civil (Aula 01)'
                   : selectedSubject === 'libras' ? 'LIBRAS: 3ª Aula'
                   : selectedSubject === 'geografia_amazonas' ? 'Geografia AM: 2ª Aula'
                   : 'Disciplina TJAM'
@@ -2473,10 +2474,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'oratoria' ? '🎤 Oratória TJAM • Aula 01: Comunicação Verbal e Não Verbal'
                   : selectedSubject === 'acessibilidade' ? '♿ Acessibilidade TJAM • Lei Brasileira de Inclusão (Lei nº 13.146/2015)'
                   : selectedSubject === 'redacao' ? '✍️ Redação TJAM • Estrutura da Redação'
-                  : selectedSubject === 'direito_admin' ? '⚖️ Direito Administrativo • Organização Administrativa'
+                  : selectedSubject === 'direito_admin' ? '🏛️ Direito Administrativo • Tema 1: Organização Administrativa (Quarta-feira • 18/11/2026)'
                   : selectedSubject === 'ingles' ? '🇬🇧 Língua Inglesa • Aula 01: Reading Comprehension — Interpretação de Textos em Inglês'
                   : selectedSubject === 'informatica' ? '💻 Informática e Processo Digital • Windows: arquivos, pastas e operações'
-                  : selectedSubject === 'processo_civil' ? '📚 Processo Civil • Atos Processuais e Prazos'
+                  : selectedSubject === 'processo_civil' ? '⚖️ Direito Processual Civil • Aula 01: Princípios do Processo Civil (Quarta-feira • 18/11/2026)'
                   : selectedSubject === 'libras' ? '🤟 LIBRAS • Prática de Comunicação e Atendimento'
                   : selectedSubject === 'geografia_amazonas' ? '🌳 Geografia AM • População, Manaus e ZFM'
                   : '📚 Conteúdo TJAM 2026'
@@ -2493,7 +2494,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'direito_admin' ? 'Direito Administrativo — Aula 01: Organização Administrativa'
                   : selectedSubject === 'ingles' ? 'Língua Inglesa — Aula 01: Reading Comprehension'
                   : selectedSubject === 'informatica' ? 'Informática e Processo Digital — Aula 01: Windows: arquivos, pastas e operações'
-                  : selectedSubject === 'processo_civil' ? 'Aula 2 — Atos Processuais'
+                  : selectedSubject === 'processo_civil' ? 'Direito Processual Civil — Aula 01: Princípios do Processo Civil'
                   : selectedSubject === 'libras' ? '3ª Aula — Fundamentos de LIBRAS'
                   : selectedSubject === 'geografia_amazonas' ? '2ª Aula — Geografia do Amazonas'
                   : 'Aula Preparatória TJAM 2026'
@@ -2760,12 +2761,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               : selectedSubject === 'processo_penal'
               ? 'Unidade 1 — Princípios Fundamentais (CF/88 e CPP)'
               : selectedSubject === 'processo_civil'
-              ? 'Unidade 1 — Atos Processuais'
+              ? 'Unidade 1 — Princípios do Processo Civil (CF/88 e CPC Arts. 2º ao 11)'
               : selectedSubject === 'informatica'
               ? 'Unidade 1 — Windows: Arquivos, Pastas e Operações'
               : selectedSubject === 'direito_const'
               ? 'Unidade 1 — Princípios Fundamentais da Constituição Federal (Arts. 1º ao 4º)'
-              : 'Unidade 4 — Agentes Públicos'}
+              : 'Unidade 1 — Organização Administrativa'}
           </span>
           <span className="text-slate-400">•</span>
           <span className="text-slate-600">
@@ -2788,12 +2789,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               : selectedSubject === 'portugues'
               ? '1ª Aula de Hoje (Segunda-feira) — Ortografia Oficial, Emprego de Letras e Hífen'
               : selectedSubject === 'processo_civil'
-              ? 'Aula 5 — Atos Processuais'
+              ? '1ª Aula de Hoje (Quarta-feira • 18/11/2026) — Princípios do Processo Civil'
               : selectedSubject === 'informatica'
               ? '2ª Aula de Hoje (Terça-feira) — Windows, Pastas, Atalhos e Processo Digital'
               : selectedSubject === 'direito_const'
               ? '2ª Aula de Hoje (Sexta-feira) — Fundamentos, Poderes, Objetivos e Relações Internacionais'
-              : 'Aula 4 — Agentes Públicos (Conceito e Regimes)'}
+              : '2ª Aula de Hoje (Quarta-feira • 18/11/2026) — Tema 1: Organização Administrativa'}
           </span>
         </div>
 
@@ -2812,10 +2813,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 ? '⭐ 3ª AULA DE HOJE • ✍️ Redação TJAM'
                 : selectedSubject === 'processo_penal'
                 ? '⭐ 1ª AULA DE HOJE • ⚖️ Processo Penal'
+                : selectedSubject === 'processo_civil'
+                ? '⚖️ 1ª AULA DE HOJE (QUARTA-FEIRA • 18/11) • Direito Processual Civil'
                 : selectedSubject === 'legislacao_tjam'
                 ? '⭐ 2ª AULA DE HOJE • 🏛️ Legislação do TJAM'
                 : selectedSubject === 'direito_admin'
-                ? '⚖️ Direito Administrativo'
+                ? '🏛️ 2ª AULA DE HOJE (QUARTA-FEIRA • 18/11) • Direito Administrativo'
                 : selectedSubject === 'ingles'
                 ? '🇬🇧 1ª AULA DE HOJE • Língua Inglesa (Aula 01)'
                 : selectedSubject === 'informatica'
@@ -2835,10 +2838,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 ? '✍️ Redação — Aula 01: Estrutura da Redação (Introdução, Desenvolvimento e Conclusão)'
                 : selectedSubject === 'processo_penal'
                 ? '⚖️ Direito Processual Penal — Aula 02: Ação Penal (Nível Intermediário — TJAM)'
+                : selectedSubject === 'processo_civil'
+                ? '⚖️ Direito Processual Civil — Aula 01: Princípios do Processo Civil (Nível Intermediário — TJAM)'
                 : selectedSubject === 'legislacao_tjam'
                 ? '🏛️ Legislação Institucional e do Poder Judiciário — Aula 02: Lei Complementar Estadual nº 261/2023'
                 : selectedSubject === 'direito_admin'
-                ? '⚖️ Direito Administrativo — Aula 01: Organização Administrativa'
+                ? '🏛️ 1ª AULA — Direito Administrativo: Organização Administrativa (Nível Intermediário — TJAM)'
                 : selectedSubject === 'ingles'
                 ? '🇬🇧 Língua Inglesa — Aula 01: Reading Comprehension (Interpretação de Textos em Inglês — TJAM)'
                 : selectedSubject === 'informatica'
@@ -2854,7 +2859,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             </span>
             <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl font-semibold border border-slate-200">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              Nível: {selectedSubject === 'portugues' || selectedSubject === 'ingles' || selectedSubject === 'direito_const' ? 'Intermediário (TJAM)' : 'Iniciante'}
+              Nível: {selectedSubject === 'portugues' || selectedSubject === 'ingles' || selectedSubject === 'direito_const' || selectedSubject === 'processo_civil' || selectedSubject === 'direito_admin' ? 'Intermediário (TJAM)' : 'Iniciante'}
             </span>
           </div>
         </div>
@@ -2983,7 +2988,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'libras'
                     ? '🤟 LIBRAS — 3ª Aula de Hoje: Estrutura e Formação dos Sinais (Os 5 Parâmetros)'
                     : selectedSubject === 'processo_civil'
-                    ? '⚖️ Processo Civil — Aula 2: Atos Processuais (CPC/2015)'
+                    ? '⚖️ Direito Processual Civil — Aula 01: Princípios do Processo Civil'
                     : selectedSubject === 'informatica'
                     ? '💻 Informática e Processo Digital — 2ª Aula de Hoje: Windows: arquivos, pastas e operações'
                     : selectedSubject === 'processo_penal'
@@ -2991,8 +2996,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'direito_const'
                     ? '⚖️ Direito Constitucional — Aula 01: Princípios Fundamentais (Arts. 1º ao 4º)'
                     : selectedSubject === 'direito_admin'
-                    ? '⚖️ Direito Administrativo — Aula 01: Organização Administrativa'
-                    : 'Aula 7 — Direito Administrativo: Poderes da Administração Pública'}
+                    ? '🏛️ 1ª AULA — Direito Administrativo: Tema 1 — Organização Administrativa'
+                    : 'Aula TJAM — Direito Administrativo'}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   {selectedSubject === 'acessibilidade'
@@ -3000,7 +3005,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'redacao'
                     ? '3ª Aula de Hoje (Terça-feira) • Estrutura Dissertativa, Introdução, Tese, Desenvolvimento (D1 e D2), Conclusão, Coesão, Coerência e Projeto de Texto'
                     : selectedSubject === 'processo_civil'
-                    ? '2ª Aula de Hoje • Atos Processuais (Conceito, Forma, Tempo, Citação x Intimação, Prazos e Preclusão)'
+                    ? '1ª Aula de Hoje (Quarta-feira • 18/11/2026) • O que é Direito Processual Civil • Os 12 Princípios Fundamentais (CF/88 e CPC Arts. 2º ao 11) • Quadro de Revisão & 20 Exercícios'
                     : selectedSubject === 'processo_penal'
                     ? '1ª Aula de Hoje (Quinta-feira) • Ação Penal Pública (Incondicionada/Condicionada) e Privada • Princípios, Prazos Decadenciais e 20 Exercícios'
                     : selectedSubject === 'ingles'
@@ -3018,7 +3023,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'portugues'
                     ? 'Língua Portuguesa • Ortografia Oficial, emprego das letras, homônimos, parônimos e Acordo Ortográfico • Foco TJAM'
                     : selectedSubject === 'direito_admin'
-                    ? '1ª Aula de Hoje (Terça-feira) • Administração Direta e Indireta, Centralização, Descentralização e Desconcentração'
+                    ? '2ª Aula de Hoje (Quarta-feira • 18/11/2026) • Administração Direta e Indireta, Centralização, Descentralização, Desconcentração e Concentração • 20 Exercícios'
                     : 'Capítulo 1 • Preparação Completa Assistente Judiciário TJAM / Concursos'}
                 </p>
               </div>
@@ -3114,7 +3119,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'processo_penal'
                     ? 'https://www.youtube.com/embed/2bABDff7NAE?autoplay=0&rel=0'
                     : selectedSubject === 'processo_civil'
-                    ? 'https://www.youtube.com/embed/N5oBz1cC2xY?autoplay=0&rel=0'
+                    ? procCivilAula1VideoInfo.videoUrl
                     : selectedSubject === 'informatica'
                     ? 'https://www.youtube.com/embed/muheWXjnHvA?autoplay=0&rel=0'
                     : selectedSubject === 'direito_const'
@@ -3145,14 +3150,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'processo_penal'
                     ? 'Vídeo Aula - Processo Penal: 1ª Aula de Hoje — Ação Penal (TJAM)'
                     : selectedSubject === 'processo_civil'
-                    ? 'Vídeo Aula - Processo Civil: Aula 2 — Atos Processuais (CPC/2015)'
+                    ? 'Vídeo Aula - Direito Processual Civil: Aula 01 — Princípios do Processo Civil (TJAM)'
                     : selectedSubject === 'informatica'
                     ? 'Vídeo Aula - Informática e Processo Digital: 2ª Aula de Hoje — Windows: arquivos, pastas e operações (Aula 01)'
                     : selectedSubject === 'direito_const'
                     ? 'Vídeo Aula - Direito Constitucional: Aula 01 — Princípios Fundamentais da Constituição Federal (Arts. 1º ao 4º)'
                     : selectedSubject === 'direito_admin'
-                    ? 'Vídeo Aula - Direito Administrativo: 1ª Aula de Hoje — Organização Administrativa (Aula 01)'
-                    : 'Vídeo Aula - Direito Administrativo: Agentes Públicos (Aula 4)'
+                    ? 'Vídeo Aula - Direito Administrativo: 2ª Aula de Hoje — Tema 1: Organização Administrativa (TJAM)'
+                    : 'Vídeo Aula - Direito Administrativo: Organização Administrativa (Aula 01)'
                 }
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -3248,14 +3253,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'processo_penal'
                     ? 'https://youtu.be/2bABDff7NAE?is=Jssch4xWxKy3jTxt'
                     : selectedSubject === 'processo_civil'
-                    ? 'https://youtu.be/N5oBz1cC2xY?is=kLX-4lDE-WmOVM8c'
+                    ? procCivilAula1VideoInfo.externalUrl
                     : selectedSubject === 'informatica'
                     ? 'https://youtu.be/muheWXjnHvA?is=KiTn_nN9SbWVq-cV'
                     : selectedSubject === 'direito_const'
                     ? 'https://youtu.be/dHTXl5s239M?si=xE1Gl54Z9PYAbxUx'
                     : selectedSubject === 'direito_admin'
-                    ? 'https://youtu.be/YsrcBEUgoGY?is=YThxXD7txF8BKAZ4'
-                    : 'https://youtu.be/CZYzEjUKwzY?is=QzpH5SU3oksW5T2N'
+                    ? 'https://youtu.be/YsrcBEUgoGY?si=un4q_WG8jnsLtwwa'
+                    : 'https://youtu.be/YsrcBEUgoGY?si=un4q_WG8jnsLtwwa'
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -3467,23 +3472,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Conceito:</strong> Atos praticados pelo juiz, partes, advogados e auxiliares para produzir efeitos jurídicos e desenvolver o processo.</span>
+                      <span>⚖️ <strong>O que é Direito Processual Civil:</strong> Ramo do Direito que estabelece as regras para resolver conflitos perante o Judiciário (ex.: cobrança judicial de dívida de João contra Pedro).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Forma e Tempo (arts. 188 e 212):</strong> Liberdade das formas (instrumentalidade) e realização em dias úteis das 6h às 20h.</span>
+                      <span>🛡️ <strong>Devido Processo Legal &amp; Contraditório (CF, art. 5º, LIV/LV e CPC, arts. 9º/10):</strong> Respeito às regras e prazos legais, direito de manifestação e proibição da decisão-surpresa.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Publicidade x Segredo de Justiça (art. 189):</strong> A publicidade é a regra geral democrática; o segredo é exceção taxativa na lei.</span>
+                      <Check className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
+                      <span>🚪 <strong>Inafastabilidade, Inércia e Impulso Oficial (CPC, arts. 2º e 3º):</strong> Acesso amplo à Justiça; o processo começa por iniciativa da parte (inércia) e segue por impulso oficial do juiz.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Citação x Intimação:</strong> Citação chama o réu para INTEGRAR o processo (art. 238); Intimação dá CIÊNCIA dos atos (art. 269).</span>
+                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span>🤝 <strong>Duração Razoável, Boa-fé e Cooperação (CPC, arts. 4º, 5º e 6º):</strong> Solução integral do mérito (com atividade satisfativa) em prazo razoável, com lealdade e colaboração de todos os sujeitos.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Prazos e Preclusão (arts. 219 e 223):</strong> Contam-se somente os DIAS ÚTEIS; a perda do prazo gera preclusão temporal.</span>
+                      <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>📢 <strong>Isonomia, Publicidade, Motivação &amp; Autocomposição (CPC, arts. 3º, 7º e 11):</strong> Paridade de armas, publicidade (salvo segredo de justiça), fundamentação obrigatória sob pena de nulidade e estímulo à conciliação/mediação.</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'informatica' ? (
@@ -3540,27 +3545,23 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>🏛️ <strong>Sentido Subjetivo × Objetivo:</strong> Subjetivo = QUEM exerce (entes, órgãos, entidades); Objetivo = O QUE é feito (atividades administrativas).</span>
+                      <span>📘 <strong>Direito Administrativo e Sentidos:</strong> Regula a atividade administrativa estatal (ex.: Prefeitura de Manaus). Sentido Subjetivo/Formal = QUEM exerce (órgãos, entidades, agentes); Objetivo/Material = O QUE é feito (atividade).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                      <span>🏛️ <strong>Administração Direta:</strong> União, Estados (ex: Amazonas), DF e Municípios (ex: Manaus) atuando por meio de órgãos internos despersonalizados.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
-                      <span>🏢 <strong>Administração Indireta:</strong> Entidades com personalidade própria: Autarquias (dir. público), Fundações, Empresas Públicas (100% público) e SEM (misto).</span>
+                      <span>🏛️ <strong>Administração Direta × Indireta:</strong> Direta = União, Estados, DF e Municípios (com órgãos internos). Indireta = Autarquias (INSS, IBGE), Fundações Públicas, Empresas Públicas (Caixa) e Sociedades de Economia Mista (Banco do Brasil).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
-                      <span>🌐 <strong>Centralização × Descentralização:</strong> Centralização = o próprio ente realiza; Descentralização = atividade atribuída a OUTRA pessoa jurídica.</span>
+                      <span>⚡ <strong>Desconcentração × Descentralização:</strong> Desconcentração = divisão interna (cria ÓRGÃOS, mesma PJ, com hierarquia). Descentralização = transferência a OUTRA pessoa (cria ENTIDADES, sem hierarquia — vinculação).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                      <span>⚡ <strong>Desconcentração:</strong> Distribuição interna de competências dentro da MESMA pessoa jurídica (cria órgãos, NÃO cria nova pessoa jurídica).</span>
+                      <span>🔄 <strong>Centralização e Concentração:</strong> Centralização = execução direta pelo próprio ente. Concentração = reunião/extinção de órgãos para centralizar competências internamente.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                      <span>⚠️ <strong>Órgão Público × Entidade:</strong> Órgão NÃO tem personalidade jurídica própria; Entidade POSSUI personalidade jurídica própria.</span>
+                      <span>💡 <strong>Macete de Prova:</strong> DESCONCENTRAÇÃO = ÓRGÃOS (mesma pessoa jurídica) | DESCENTRALIZAÇÃO = ENTIDADES (nova pessoa jurídica).</span>
                     </li>
                   </ul>
                 ) : selectedSubject === 'redacao' ? (
@@ -3738,13 +3739,11 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
             setActiveTab={setActiveTab}
           />
         ) : selectedSubject === 'processo_civil' ? (
-          <ProcessoCivilContent
+          <ProcessoCivilAula1Content
             isDarkMode={isDarkMode}
-            checklist={checklist}
-            toggleChecklist={toggleChecklist}
             isLessonCompleted={isLessonCompleted}
-            handleMarkAsCompleted={handleMarkAsCompleted}
-            setActiveTab={setActiveTab}
+            onToggleComplete={handleMarkAsCompleted}
+            onNavigateTab={setActiveTab}
           />
         ) : selectedSubject === 'informatica' ? (
           <InformaticaContent
@@ -4189,8 +4188,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'processo_penal'
                   ? 'Mapa Mental — Aula 1: Princípios Fundamentais do Processo Penal'
                   : selectedSubject === 'processo_civil'
-                  ? 'Mapa Mental — Aula 2: Atos Processuais (CPC/2015)'
-                  : 'Mapa Mental — Capítulo 1: Conceitos Fundamentais da Administração Pública'}
+                  ? 'Mapa Mental — Aula 01: Princípios do Processo Civil (CF/88 e CPC)'
+                  : selectedSubject === 'direito_admin'
+                  ? 'Mapa Mental — Direito Administrativo: Tema 1 — Organização Administrativa'
+                  : 'Mapa Mental — Organização da Administração Pública'}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 {selectedSubject === 'acessibilidade'
@@ -4210,8 +4211,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'processo_penal'
                   ? 'Esquema visual sobre Princípios Fundamentais do Processo Penal, devido processo legal, ampla defesa, juiz natural e sistema acusatório'
                   : selectedSubject === 'processo_civil'
-                  ? 'Esquema visual sobre Atos Processuais, Forma (Art. 188), Tempo (Art. 212), Citação, Intimação, Prazos e Preclusão'
-                  : 'Resumo visual sobre conceitos, princípios e organização da Administração Pública'}
+                  ? 'Esquema visual sobre os 12 Princípios do Processo Civil: Devido Processo Legal, Contraditório, Inafastabilidade, Inércia, Boa-fé, Cooperação, Publicidade, Motivação e Solução Consensual'
+                  : selectedSubject === 'direito_admin'
+                  ? 'Esquema visual sobre Sentido Subjetivo/Objetivo, Administração Direta e Indireta (INSS, IBGE, Caixa, Banco do Brasil), Desconcentração, Descentralização, Centralização e Concentração'
+                  : 'Resumo visual sobre Organização Administrativa da Administração Pública'}
               </p>
             </div>
 
@@ -4233,7 +4236,7 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     : selectedSubject === 'processo_penal'
                     ? 'Mapa Mental - Processo Penal'
                     : selectedSubject === 'processo_civil'
-                    ? 'Mapa Mental - Processo Civil'
+                    ? 'Mapa Mental - Direito Processual Civil: Princípios do Processo Civil'
                     : 'Mapa Mental - Direito Administrativo'
                 }
                 referrerPolicy="no-referrer"
@@ -4272,8 +4275,8 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'processo_penal'
                   ? ['Processo Penal', 'Inquérito Policial', 'Polícia Judiciária', 'CPP', 'TJAM']
                   : selectedSubject === 'processo_civil'
-                  ? ['Processo Civil', 'Atos Processuais', 'Art. 188 CPC', 'Dias Úteis', 'Citação x Intimação', 'Preclusão', 'TJAM']
-                  : ['Direito Admin', 'Administração Pública', 'Princípios', 'LIMPE', 'TJAM']
+                  ? ['Processo Civil', 'Princípios', 'Devido Processo Legal', 'Contraditório', 'Inafastabilidade', 'Boa-fé', 'Cooperação', 'Publicidade', 'Motivação', 'CPC Arts. 2-11', 'TJAM']
+                  : ['Direito Administrativo', 'Organização Administrativa', 'Desconcentração', 'Descentralização', 'Centralização', 'Concentração', 'Adm. Direta', 'Adm. Indireta', 'INSS', 'IBGE', 'Caixa', 'Banco do Brasil', 'TJAM']
                 ).map(kw => (
                   <span key={kw} className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[11px] font-bold text-slate-600 dark:text-slate-400">
                     #{kw}
@@ -4910,10 +4913,12 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </div>
             )}
 
-            {(selectedSubject === 'ingles' || selectedSubject === 'direito_const') && (() => {
+            {(selectedSubject === 'ingles' || selectedSubject === 'direito_const' || selectedSubject === 'processo_civil' || selectedSubject === 'direito_admin') && (() => {
               const isIngles = selectedSubject === 'ingles';
-              const objTotal = isIngles ? 17 : 18;
-              const discTotal = isIngles ? 3 : 2;
+              const isProcCivil = selectedSubject === 'processo_civil';
+              const isDirAdmin = selectedSubject === 'direito_admin';
+              const objTotal = isIngles ? 17 : (isProcCivil || isDirAdmin) ? 16 : 18;
+              const discTotal = isIngles ? 3 : (isProcCivil || isDirAdmin) ? 4 : 2;
               const mcHits = activeMcQuestions.filter(
                 (q) => showQuestionResults[q.id] && selectedAnswers[q.id] === q.correta
               ).length;
@@ -4947,6 +4952,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                 }
                 const headerLabel = isIngles
                   ? 'Respostas — Aula 1 de Inglês (TJAM Assistente Judiciário)'
+                  : isProcCivil
+                  ? 'Respostas — Aula 1 de Direito Processual Civil (TJAM Assistente Judiciário)'
+                  : isDirAdmin
+                  ? 'Respostas — Aula 1 de Direito Administrativo: Organização Administrativa (TJAM)'
                   : 'Respostas — Aula 1 de Direito Constitucional (TJAM Assistente Judiciário)';
                 const payload = `${headerLabel}\nAcertos objetivos/VF conferidos: ${totalChecked}/${objTotal} | Dissertativas respondidas: ${discDone}/${discTotal}\n\n${lines.join('\n')}`;
                 navigator.clipboard.writeText(payload);
@@ -4963,6 +4972,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                       <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
                         {isIngles
                           ? 'Critério de Avaliação — TJAM Inglês (20 Exercícios)'
+                          : isProcCivil
+                          ? 'Avaliação de Desempenho — TJAM Direito Processual Civil (20 Exercícios)'
+                          : isDirAdmin
+                          ? 'Avaliação de Desempenho — TJAM Direito Administrativo (20 Exercícios)'
                           : 'Avaliação de Desempenho — TJAM Direito Constitucional (20 Exercícios)'}
                       </span>
                       <h3 className="text-base font-black text-slate-900 dark:text-white">
@@ -4998,6 +5011,10 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                     <strong>Orientação:</strong>{' '}
                     {isIngles
                       ? 'faça a avaliação sem consultar o gabarito. Nas questões dissertativas (18 a 20), avalie clareza, compreensão e fidelidade ao texto; depois copie suas 20 respostas para correção individual (nota de 0 a 10).'
+                      : isProcCivil
+                      ? 'tente resolver todas as 20 questões (10 objetivas, 6 V/F e 4 discursivas) antes de consultar o gabarito. Depois copie suas 20 respostas para acompanhamento; após concluir, seguiremos para Direito Administrativo.'
+                      : isDirAdmin
+                      ? 'tente resolver todas as 20 questões (10 objetivas, 6 V/F e 4 discursivas) antes de consultar o gabarito. Depois copie suas 20 respostas para acompanhamento e revisão dos erros.'
                       : 'tente resolver todas as questões antes de consultar o gabarito. Após finalizar as questões objetivas (1–10), V/F (11–16), aplicação (17–18) e dissertativas (19–20), copie suas 20 respostas para correção e nota de 0 a 10.'}
                   </p>
                 </div>
@@ -5036,12 +5053,14 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
                   : selectedSubject === 'libras'
                   ? 'Resumo da Aula — LIBRAS: Conceitos Básicos e Legislação'
                   : selectedSubject === 'processo_civil'
-                  ? 'Resumo da Aula — Processo Civil: Jurisdição'
+                  ? 'Resumo — Direito Processual Civil: Aula 01 — Princípios do Processo Civil'
                   : selectedSubject === 'informatica'
                   ? 'Resumo — Informática e Processo Digital: Windows: arquivos, pastas e operações (2ª Aula de Hoje)'
                   : selectedSubject === 'processo_penal'
                   ? 'Resumo — Direito Processual Penal: Aula 02 — Ação Penal'
-                  : 'Resumo — Direito Administrativo: Agentes Públicos (Aula 4)'}
+                  : selectedSubject === 'direito_admin'
+                  ? 'Resumo — Direito Administrativo: Aula 01 — Tema 1: Organização Administrativa'
+                  : 'Resumo — Direito Administrativo: Organização Administrativa (Aula 01)'}
               </h2>
             </div>
 
@@ -5159,30 +5178,17 @@ export const AulaHojeView: React.FC<AulaHojeViewProps> = ({
               </ul>
             ) : selectedSubject === 'processo_civil' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span>A <strong>jurisdição</strong> é o poder-dever do Estado de solucionar conflitos aplicando o Direito.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span>Sua finalidade principal é <strong>promover a pacificação social</strong>.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span>O juiz atua de forma <strong>imparcial</strong> e somente quando <strong>provocado</strong> (inércia), salvo exceções legais.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span>A jurisdição pode ser <strong>contenciosa</strong> (com litígio) ou <strong>voluntária</strong> (sem litígio).</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span>Os <strong>princípios processuais</strong> (Juiz Natural, Devido Processo Legal, Contraditório, Ampla Defesa, Inafastabilidade) garantem um julgamento justo.</span>
-                </li>
-                <li className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-                  <span className="text-emerald-500 font-bold text-base">•</span>
-                  <span><strong>Jurisdição, Ação e Competência</strong> são institutos distintos e fundamentais para o Direito Processual Civil.</span>
-                </li>
+                {procCivilSummaryPoints.map((pt, idx) => {
+                  const parts = pt.split(': ');
+                  const title = parts[0];
+                  const desc = parts.slice(1).join(': ');
+                  return (
+                    <li key={idx} className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-emerald-500 font-bold text-base">•</span>
+                      <span><strong>{title}:</strong> {desc}</span>
+                    </li>
+                  );
+                })}
               </ul>
             ) : selectedSubject === 'informatica' ? (
               <ul className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">

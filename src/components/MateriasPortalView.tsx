@@ -49,11 +49,15 @@ import { LibrasContent } from './LibrasContent';
 import { InformaticaContent } from './InformaticaContent';
 import { InglesContent } from './InglesContent';
 import { EscritaLeituraContent } from './EscritaLeituraContent';
+import { ProcessoCivilAula1Content } from './ProcessoCivilAula1Content';
 
 // Import data
 import { direitoAdminFlashcardsData, direitoAdminSummaryPoints } from '../data/direitoAdminLessonData';
 import { direitoConstFlashcardsData, direitoConstSummaryPoints } from '../data/direitoConstitucionalLessonData';
-import { procCivilFlashcardsData, procCivilAula2SummaryPoints } from '../data/processoCivilLessonData';
+import {
+  procCivilAula1FlashcardsData as procCivilFlashcardsData,
+  procCivilAula1SummaryPoints as procCivilAula2SummaryPoints,
+} from '../data/processoCivilAula1LessonData';
 import { procPenalAula2FlashcardsData as procPenalFlashcardsData, procPenalAula2SummaryPoints as procPenalLessonSummaryPoints } from '../data/processoPenalAula2LessonData';
 import { legislacaoTjamFlashcardsData, legislacaoTjamSummaryPoints } from '../data/legislacaoTjamLessonData';
 import { geografiaAmazonasFlashcardsData, geografiaAmazonasSummaryPoints } from '../data/geografiaAmazonasLessonData';
@@ -849,7 +853,7 @@ export const MateriasPortalView: React.FC<MateriasPortalViewProps> = ({
             <div className="rounded-2xl bg-white border border-slate-200 p-6 shadow-xs space-y-4">
               {selectedSubject.id === 'direito_admin' && <DireitoAdminContent />}
               {selectedSubject.id === 'direito_const' && <DireitoConstitucionalContent />}
-              {selectedSubject.id === 'processo_civil' && <ProcessoCivilContent />}
+              {selectedSubject.id === 'processo_civil' && <ProcessoCivilAula1Content />}
               {selectedSubject.id === 'processo_penal' && <ProcessoPenalAula2Content />}
               {selectedSubject.id === 'portugues' && <PortuguesContent />}
               {selectedSubject.id === 'legislacao_tjam' && <LegislacaoTjamContent />}

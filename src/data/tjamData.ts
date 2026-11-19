@@ -429,8 +429,12 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
   {
     id: 'sch-qua',
     dayOfWeek: 'Quarta',
-    disciplineIds: ['processo-civil'],
-    tasks: ['Prazos e Atos Processuais no CPC', '20 Questões', 'Anotações Pessoais'],
+    disciplineIds: ['processo-civil', 'direito-administrativo'],
+    tasks: [
+      '1ª Aula: Direito Processual Civil — Aula 01: Princípios do Processo Civil',
+      '2ª Aula: Direito Administrativo — Aula 01: Tema 1 — Organização Administrativa',
+      '40 Questões Gabaritadas (20 por aula) + Legislação Oficial',
+    ],
     completed: false,
   },
   {
@@ -470,6 +474,6 @@ export const INITIAL_WEEKLY_SCHEDULE: WeeklyScheduleItem[] = [
 ];
 
 export const INITIAL_WEEKLY_GOALS = [
-  { id: 'goal-sex-01', text: '🇬🇧 1ª Aula: Língua Inglesa — Aula 01: Reading Comprehension (Interpretação de Textos em Inglês)', completed: false },
-  { id: 'goal-sex-02', text: '⚖️ 2ª Aula: Direito Constitucional — Aula 01: Princípios Fundamentais da CF/88 (Arts. 1º ao 4º)', completed: false },
+  { id: 'goal-qua-01', text: '⚖️ 1ª Aula (Quarta 18/11): Direito Processual Civil — Aula 01: Princípios do Processo Civil', completed: false },
+  { id: 'goal-qua-02', text: '🏛️ 2ª Aula (Quarta 18/11): Direito Administrativo — Aula 01: Organização Administrativa', completed: false },
 ];
